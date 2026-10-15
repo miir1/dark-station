@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0;background:#222">
+<script>
+// 개발 전용: 폭 375px 프레임 안에서 화면을 점검한다. 사용 예: frame.html?q=fixture%3Dmorning1&h=1700
+const p = new URLSearchParams(location.search);
+const f = document.createElement('iframe');
+f.src = '../index.html?' + (p.get('q') || '');
+f.style = 'width:375px;height:' + (p.get('h') || 900) + 'px;border:0;display:block;margin:0';
+document.body.append(f);
+</script>

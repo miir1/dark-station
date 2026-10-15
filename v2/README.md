@@ -1,0 +1,22 @@
+# 어두운 역 v2 — 첫 시연 (수직 슬라이스, 10일)
+
+틀: `../DESIGN.md`. 이 폴더는 배포본(루트)과 별개이며 저장 키도 다르다(`darkstation.v2.save`).
+
+## 실행
+- `C:\dev\dark_station\play_v2.bat` (서버 8512를 켜고 앱 창으로 열기) 또는 http://localhost:8512/v2/
+- 진행은 브라우저 localStorage에 자동 저장. 다른 탭으로 가면 시간이 흐르는 게임이 아니라서 걱정 없음(하루 단위 턴제).
+
+## 구조
+- `data.js` 주민·할 일·공사·원정 사건·약속 사건·밤 사건·달력·프롤로그 (내용 추가는 여기)
+- `engine.js` 규칙. 모든 조작은 `dispatch(state, action)` 하나, 난수는 `state.rng`(저장됨), 화면 없이 Node에서 돌아감
+- `views.js` 상태 → HTML 문자열(순수 함수), `ui.js` DOM 연결·저장
+- `test.js` — `node --test test.js` (36개: 데이터 무결성·결정성·저장/불러오기·불변식·약속 예약/미루기/기한·판정 진실성·부상/사망·침수 발전 정지·순찰 이월·시간 상한·승차 규칙·조사·밤 사건 이름·입력 검증·난이도 구조·화면 스모크)
+- `sim/bots.js` 화면에 보이는 정보만 쓰는 자동 플레이 봇(정책 7종), `sim/report.js` 정책별 결말·사망·자원 곡선, `sim/probe.js` 부상 분포, `sim/bite.js` 위협이 결과를 바꾸는지(배수·경계·치료 금지 비교), `sim/hypotheses.js` 같은 상태에서 출정/잔류 갈라 비교, `sim/ending_stats.js` 마지막 날 재고·정원, `sim/make_fixtures.js` 화면 점검용 상태 파일 생성, `sim/frame.html` 폭 375px 점검 프레임
+
+## 화면 점검 (개발)
+`http://localhost:8512/v2/index.html?fixture=morning1` (localhost에서만 동작, 저장 안 함). 탭/준비 화면: `&tab=map&prep=A`.
+
+## 현재 한계
+- 수치는 봇 기준으로만 조정함(성실한 완전정보 봇). 사람 플레이로 확인 필요.
+- 10일 시연이라 시설 투자의 이득이 늦게 나타난다. 30일 전체에서 다시 조정할 것.
+- PWA(오프라인 설치)와 배포는 아직 연결하지 않음.
