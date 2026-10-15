@@ -1,0 +1,15 @@
+{
+  "name": "어두운 역 v2",
+  "short_name": "어두운 역",
+  "description": "지하철역 대피소를 지키고 구조열차까지 길을 여는 텍스트 생존 게임 (첫 시연 10일)",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d0d0c",
+  "theme_color": "#0d0d0c",
+  "lang": "ko",
+  "icons": [
+    { "src": "../icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "../icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
