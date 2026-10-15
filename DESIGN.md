@@ -1,6 +1,6 @@
 # 《어두운 역》 v2 큰 틀 (2026-10-15 초안, 사용자 승인 대기)
 
-근거 문서(모두 C:\dev\_collab\): `dark_station_framework_brief.md`(기준·측정), `dark_station_framework_claude_final.md`(Claude 설계 패널 최종안 60일판), `dark_station_framework_critiques.md`(경제 시뮬·재미·구현 비판 3건), Codex 독립 제안과 합의안(채팅 기록, 이 문서 아래 요약).
+근거 문서(모두 dark_station\docs\): `dark_station_framework_brief.md`(기준·측정), `dark_station_framework_claude_final.md`(Claude 설계 패널 최종안 60일판), `dark_station_framework_critiques.md`(경제 시뮬·재미·구현 비판 3건), Codex 독립 제안과 합의안(채팅 기록, 이 문서 아래 요약).
 이 문서는 위를 합친 **프로젝트 리드(Claude)의 결론**이다. 최종본에 대한 Codex의 재확인은 아직 받지 않았다.
 
 ## 1. 한 줄
