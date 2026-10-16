@@ -106,3 +106,31 @@ nav button.on { color: var(--fg); border-top: 2px solid var(--accent); }
 button.link { background: none; border: 0; color: var(--dim); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer; min-height: 44px; padding: 0 8px; }
 select:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 @media (min-width: 700px) { body { font-size: 17px; } }
+
+/* ── 그림 (art.js) ── */
+.scene { margin: 0 0 12px; border: 1px solid var(--line-soft); background: #121110; line-height: 0; }
+.scene svg { display: block; width: 100%; height: auto; }
+.scene .lbl { font: 9.5px 'Noto Serif KR', serif; fill: var(--dim); }
+.scene.map .lbl { font-size: 11.5px; } .scene.map .lbl.strong { font-size: 12.5px; }
+.scene .lbl.strong { font-size: 10px; font-weight: 700; fill: var(--fg); }
+.scene .lbl.ok { fill: var(--good); } .scene .lbl.bad { fill: var(--bad); } .scene .lbl.warn { fill: var(--warn); }
+.scene .nm { font: 8.5px 'Noto Serif KR', serif; fill: #cfc8b8; }
+.scene .off { opacity: .55; }
+.portrait { flex: none; vertical-align: middle; }
+.portrait.dead { filter: grayscale(1); opacity: .5; }
+.rhead { align-items: center; }
+.pick .portrait { float: left; margin: 2px 10px 4px 0; }
+.pick::after { content: ''; display: block; clear: both; }
+.roster .portrait { margin-right: 6px; }
+@media (prefers-reduced-motion: no-preference) {
+  .scene .lamp { animation: ds-flicker 7s infinite steps(1); }
+  .scene .fire { animation: ds-fire 1.4s ease-in-out infinite alternate; transform-origin: 176px 112px; }
+  .scene .blink { animation: ds-blink 2.2s infinite; }
+  .scene .wave { animation: ds-wave 3s ease-in-out infinite alternate; }
+  .scene .fig.work { animation: ds-bob 1.8s ease-in-out infinite alternate; }
+}
+@keyframes ds-flicker { 0%, 61%, 64%, 100% { opacity: 1; } 62% { opacity: .35; } 63% { opacity: .8; } }
+@keyframes ds-fire { from { transform: scaleY(1); } to { transform: scaleY(1.12); } }
+@keyframes ds-blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: .15; } }
+@keyframes ds-wave { from { transform: translateY(0); } to { transform: translateY(1.5px); } }
+@keyframes ds-bob { from { transform: translateY(0); } to { transform: translateY(-1px); } }

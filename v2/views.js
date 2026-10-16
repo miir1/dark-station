@@ -3,6 +3,11 @@
   'use strict';
   const E = (typeof module !== 'undefined' && module.exports) ? require('./engine.js') : root.DS2;
   const D = E.D;
+  const A = (typeof module !== 'undefined' && module.exports) ? require('./art.js') : root.DS2_ART;
+  // 이름 → 초상화 id (결말 명부는 이름만 들고 있어서)
+  const idByName = {};
+  for (const [id, p] of Object.entries(D.PEOPLE)) idByName[p.name] = id;
+  for (const [id, a] of Object.entries(D.ALLIES)) idByName[a.name] = id;
 
   const esc = (t) => String(t == null ? '' : t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const pct = (a, b) => Math.max(0, Math.min(100, Math.round((a / b) * 100)));
@@ -78,7 +83,7 @@
       if (row.task === 'rest') out = `스트레스 ${sign(row.stress)}${r.injury === 1 ? ' · 경상 회복' : ''}`;
     }
     const sit = r.injury >= 3 ? `<div class="rout bad">위독 — 치료받지 못하면 D${r.crit}의 밤에 사망</div>` : r.injury === 2 ? '<div class="rout warn">중상 — 치료하지 않으면 하룻밤 뒤 위독</div>' : '';
-    return `<div class="rrow"><div class="rhead"><b>${esc(r.name)}</b><span class="mini">${D.PEOPLE[r.id].age}세 · ${esc(D.PEOPLE[r.id].bio)}</span>${badges(r)}</div>
+    return `<div class="rrow"><div class="rhead">${A.portrait(r.id, r, 32)}<b>${esc(r.name)}</b><span class="mini">${D.PEOPLE[r.id].age}세 · ${esc(D.PEOPLE[r.id].bio)}</span>${badges(r)}</div>
       <div class="rbar"><span class="mini">스트레스 ${r.stress}</span>${bar(r.stress, 100, r.stress >= 70 ? 'hot' : '', [70])}</div>${sel}
       ${sit}<div class="rout ${row && row.bad ? 'bad' : ''}">${esc(out)}${forced ? ' · 몸 상태 때문에 쉼' : ''}</div></div>`;
   }
@@ -105,6 +110,7 @@
     const fc = E.forecast(s);
     let h = '';
     const hurt = E.alive(s).filter((r) => r.injury >= 2);
+    h += A.stationScene(s, pv.ev.plan, { lit: pv.ev.made > 0 });
     if (hurt.length) h += `<section class="card alert"><h3>치료가 필요하다</h3>${hurt.map((r) => `<p class="rep ${r.injury >= 3 ? 'bad' : 'warn'}">${esc(r.name)} — ${r.injury >= 3 ? `위독: D${r.crit}의 밤까지 치료하지 못하면 사망` : '중상: 치료하지 않으면 하룻밤 뒤 위독'} (치료 담당 + 약품 1${s.res.meds < 1 ? ' — 지금 약품이 없다! 약국(시장 방면)이나 밤 사건으로만 구할 수 있다' : ''})</p>`).join('')}</section>`;
     h += goalCard(s);
     if (s.day === 1 && s.phase === 'morning' && !s.expDone) h += '<p class="hint tip">① 오늘의 배치를 확인하고 ② (선택) 지도 탭에서 원정을 보낸 뒤 ③ 아래 [하루를 보낸다]를 누르세요. 원정을 보내면 그 두 사람의 배치는 비니까 원정 후 [추천 배치]로 다시 짜세요.</p>';
@@ -146,7 +152,8 @@
 
   // ── 아침: 지도 ──
   function mapTab(s, ui) {
-    let h = `<section class="card"><h3>지상</h3><p class="hint">하루 한 번, 두 사람이 나가요. 보급(식량·물)은 가방 칸을 차지하고, 시간이 8시간을 넘기면 강행이에요(1시간마다 둘 다 스트레스 +10).</p>`;
+    let h = A.routeMap(s, ui.prep && ui.prep.region);
+    h += `<section class="card"><h3>지상</h3><p class="hint">하루 한 번, 두 사람이 나가요. 보급(식량·물)은 가방 칸을 차지하고, 시간이 8시간을 넘기면 강행이에요(1시간마다 둘 다 스트레스 +10).</p>`;
     if (s.expDone) h += '<p class="rep warn">오늘은 이미 원정을 다녀왔다.</p>';
     for (const k of ['A', 'B']) {
       const R = D.REGIONS[k];
@@ -167,7 +174,7 @@
       const why = r.injury >= 2 ? '중상' : r.stress >= E.STRESS_LIMIT_EXP ? `스트레스 ${r.stress}` : r.breakdown > 0 ? '탈진' : '';
       const on = p.party.includes(r.id);
       const task = s.plan[r.id] && s.plan[r.id] !== 'rest' ? D.TASKS[s.plan[r.id]].name : '';
-      return `<button type="button" class="pick ${on ? 'on' : ''}" data-act="togglePartner" data-arg="${r.id}" aria-pressed="${on}" ${why ? 'disabled' : ''}><b>${on ? '✓ ' : ''}${esc(r.name)}</b><span class="mini">관찰 ${r.skills.obs} 완력 ${r.skills.str} 기술 ${r.skills.tech} 말솜씨 ${r.skills.talk}</span><span class="mini">${esc(D.TRAITS[r.good].name)}·${esc(D.TRAITS[r.bad].name)} / 스트레스 ${r.stress}${task ? ` / 지금 배치: ${esc(task)}` : ''}${why ? ' — 갈 수 없음: ' + esc(why) : ''}</span></button>`;
+      return `<button type="button" class="pick ${on ? 'on' : ''}" data-act="togglePartner" data-arg="${r.id}" aria-pressed="${on}" ${why ? 'disabled' : ''}>${A.portrait(r.id, r, 36)}<b>${on ? '✓ ' : ''}${esc(r.name)}</b><span class="mini">관찰 ${r.skills.obs} 완력 ${r.skills.str} 기술 ${r.skills.tech} 말솜씨 ${r.skills.talk}</span><span class="mini">${esc(D.TRAITS[r.good].name)}·${esc(D.TRAITS[r.bad].name)} / 스트레스 ${r.stress}${task ? ` / 지금 배치: ${esc(task)}` : ''}${why ? ' — 갈 수 없음: ' + esc(why) : ''}</span></button>`;
     }).join('');
     const step = (k, label) => `<div class="step"><span>${label}</span><span><button type="button" class="sb" data-act="pack" data-arg="${k}:-1" aria-label="${label} 줄이기">−</button><b>${p.pack[k]}</b><button type="button" class="sb" data-act="pack" data-arg="${k}:1" aria-label="${label} 늘리기">+</button></span><small>창고 ${s.res[k]}</small></div>`;
     h += `<h4>보급 (가방 칸을 차지해요)</h4>${step('food', '식량')}${step('water', '물')}${step('meds', '약품')}`;
@@ -189,14 +196,14 @@
     for (const r of s.residents) {
       const P = D.PEOPLE[r.id];
       const st = r.status === 'dead' ? '<span class="badge bad">사망</span>' : r.status === 'exp' ? '<span class="badge">원정 중</span>' : badges(r);
-      h += `<section class="card person ${r.status === 'dead' ? 'dead' : ''}"><div class="rhead"><b>${esc(r.name)}</b><span class="mini">${P.age}세 · ${esc(P.bio)}</span>${st}</div>
+      h += `<section class="card person ${r.status === 'dead' ? 'dead' : ''}"><div class="rhead">${A.portrait(r.id, r, 48)}<b>${esc(r.name)}</b><span class="mini">${P.age}세 · ${esc(P.bio)}</span>${st}</div>
         <div class="rbar"><span class="mini">스트레스 ${r.stress}</span>${bar(r.stress, 100, r.stress >= 70 ? 'hot' : '', [70])}</div>
         <p class="mini">관찰 ${r.skills.obs} · 완력 ${r.skills.str} · 기술 ${r.skills.tech} · 말솜씨 ${r.skills.talk}</p>
         <p class="mini">장점 <b>${esc(D.TRAITS[r.good].name)}</b> ${esc(D.TRAITS[r.good].desc)}<br>단점 <b>${esc(D.TRAITS[r.bad].name)}</b> ${esc(D.TRAITS[r.bad].desc)}</p>
         <p class="mini">신뢰 ${trustDots(r.trust)} · 바람: ${esc(P.wish)}</p>
         ${r.mem.length ? `<p class="mem">${r.mem.slice(-3).reverse().map((m) => `D${m.day} ${esc(m.text)}`).join('<br>')}</p>` : ''}</section>`;
     }
-    for (const [id, a] of Object.entries(D.ALLIES)) if (s.allies[id]) h += `<section class="card person"><div class="rhead"><b>${esc(a.name)}</b><span class="mini">${esc(a.bio)}</span><span class="badge good">열차에 함께 간다</span></div></section>`;
+    for (const [id, a] of Object.entries(D.ALLIES)) if (s.allies[id]) h += `<section class="card person"><div class="rhead">${A.portrait(id, {}, 48)}<b>${esc(a.name)}</b><span class="mini">${esc(a.bio)}</span><span class="badge good">열차에 함께 간다</span></div></section>`;
     const hist = s.history.slice(-14).reverse();
     if (hist.length) h += `<section class="card"><h3>일지</h3>${hist.map((x) => `<p class="mini">${x.day ? 'D' + x.day : '프롤로그'} · ${esc(x.text)}</p>`).join('')}</section>`;
     return h;
@@ -267,7 +274,7 @@
       const on = b.picks.includes(p.id);
       const r = p.kind === 'resident' ? E.byId(s, p.id) : null;
       const info = r ? `${esc(D.PEOPLE[p.id].bio)} · 신뢰 ${trustDots(r.trust)} · 스트레스 ${r.stress}${r.injury ? ' · ' + (r.injury >= 3 ? '위독' : r.injury === 2 ? '중상' : '경상') : ''}<br>${esc(r.mem.filter((m) => m.key).slice(-1)[0] ? r.mem.filter((m) => m.key).slice(-1)[0].text : '바람: ' + D.PEOPLE[p.id].wish)}` : '약속을 지켜 준 사람';
-      return `<button type="button" class="pick ${on ? 'on' : ''}" data-act="board" data-arg="${p.id}" aria-pressed="${on}" ${!on && full ? 'disabled' : ''}><b>${on ? '✓ ' : ''}${esc(p.name)}</b><span class="mini">${info}</span></button>`;
+      return `<button type="button" class="pick ${on ? 'on' : ''}" data-act="board" data-arg="${p.id}" aria-pressed="${on}" ${!on && full ? 'disabled' : ''}>${A.portrait(p.id, r || {}, 40)}<b>${on ? '✓ ' : ''}${esc(p.name)}</b><span class="mini">${info}</span></button>`;
     }).join('');
     const left = b.pool.filter((p) => !b.picks.includes(p.id)).map((p) => p.name);
     return h + `</div>${btn('confirmBoarding', '이 사람들을 태운다', { cls: ['primary'], disabled: b.picks.length === 0, confirm: `${b.picks.length}명을 태웁니다.${left.length ? ` 남는 사람: ${left.join(', ')}.` : ''} 확정할까요?` })}`;
@@ -277,7 +284,7 @@
     const e = s.ending;
     const mark = { boarded: '승차', stayed: '남음', dead: '사망' };
     const kind = { kept: '지킨 약속', broken: '버린 약속', late: '못 지킨 약속' };
-    return `<p class="tag">${e.tier === 'wiped' ? '끝' : 'D' + D.GOAL_DAY + ' · 첫 번째 열차'}</p><h2 class="ct end">${esc(e.title)}</h2><p class="text">${esc(e.text)}</p><section class="card"><h3>명부</h3>${e.rows.map((r) => `<p class="roster ${r.status}"><b>${esc(r.name)}</b> <span class="badge ${r.status === 'boarded' ? 'good' : r.status === 'dead' ? 'bad' : ''}">${mark[r.status]}</span><span class="mini"> ${esc(r.line)}</span></p>`).join('')}</section>
+    return `<p class="tag">${e.tier === 'wiped' ? '끝' : 'D' + D.GOAL_DAY + ' · 첫 번째 열차'}</p><h2 class="ct end">${esc(e.title)}</h2><p class="text">${esc(e.text)}</p><section class="card"><h3>명부</h3>${e.rows.map((r) => `<p class="roster ${r.status}">${A.portrait(idByName[r.name], { status: r.status === 'dead' ? 'dead' : '' }, 28)}<b>${esc(r.name)}</b> <span class="badge ${r.status === 'boarded' ? 'good' : r.status === 'dead' ? 'bad' : ''}">${mark[r.status]}</span><span class="mini"> ${esc(r.line)}</span></p>`).join('')}</section>
       ${e.ledger && e.ledger.length ? `<section class="card"><h3>약속</h3>${e.ledger.map((l) => `<p class="rep ${l.kind === 'kept' ? 'good' : l.kind === 'broken' ? 'bad' : 'warn'}">${kind[l.kind]} — ${esc(l.text)}</p>`).join('')}</section>` : ''}
       <p class="hint">전체 게임은 30일이에요. 이번 시연은 첫 열차까지예요. 아래 [플레이 기록 복사]를 눌러 채팅에 붙여 넣어 주시면 어디가 재미있고 어디가 답답했는지 고칠 수 있어요.</p>${btn('copyLog', '플레이 기록 복사')}${btn('restart', '처음부터 다시', { cls: ['primary'] })}`;
   }
