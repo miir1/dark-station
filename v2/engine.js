@@ -238,6 +238,9 @@
       if (r.injury >= 3 && r.crit != null && s.day >= r.crit && !(healed.has(r.id) && r.injury - healed.get(r.id) < 3)) deaths.push(r.name);
     }
     for (const n of deaths) warnings.push({ text: `${J(n, '이/가')} 오늘 밤 사망한다 — 치료를 받지 못한다`, kind: 'bad' });
+    if (surge && flood < 8) warnings.push(flood >= FLOOD_POWER_STOP
+      ? { text: `${D.CALENDAR.surge.title}: 침수 ${flood} — 발전기가 잠겨 내일 전력이 끊긴다`, kind: 'bad' }
+      : { text: `${D.CALENDAR.surge.title}을 버틴다 (침수 ${flood}) — 발전기 무사`, kind: 'good' });
     if (flood >= 8) warnings.push({ text: '침수 8 도달 → 오늘 밤 수위 경보 (식량 −6·부품 −2, 또는 모두 스트레스 +8)', kind: 'bad' });
     if (exposure >= 6 && (s.visitDay == null || s.visitDay > s.day + 1)) warnings.push({ text: '노출 6 이상 → 내일 밤 순찰대가 찾아온다', kind: 'warn' });
     if (short.food) warnings.push({ text: '식량이 모자란다 — 모두 스트레스 +8', kind: 'bad' });
@@ -268,7 +271,7 @@
   function forecast(s) {
     const out = [];
     const cal = D.CALENDAR;
-    if (s.day >= cal.surge.day - cal.surge.forecast && s.day <= cal.surge.day) out.push({ text: `D${cal.surge.day} 밤 ${cal.surge.title} 예보: ${cal.surge.short}${s.day === cal.surge.day ? ' — 오늘 밤!' : ''}`, kind: s.day === cal.surge.day ? 'warn' : '' });
+    if (s.day >= cal.surge.day - cal.surge.forecast && s.day <= cal.surge.day) out.push({ text: `D${cal.surge.day} 밤 ${cal.surge.title} 예보: ${cal.surge.short} — 그날 밤 침수가 4 이하면 버티고, ${FLOOD_POWER_STOP} 이상이면 발전기가 잠기고, 8이면 수위 경보${s.day === cal.surge.day ? ' (오늘 밤!)' : ''}`, kind: s.day === cal.surge.day ? 'warn' : '' });
     if (s.visitDay != null && s.day <= s.visitDay && s.visitDay - s.day <= 3) out.push({ text: `D${s.visitDay} 밤 순찰대 방문 예보${s.visitDay === s.day ? ' — 오늘 밤!' : ''} (경계 2명을 세우면 맞설 수 있다)`, kind: s.visitDay === s.day ? 'warn' : '' });
     if (floodAuto(s.day) > 0) out.push({ text: `오늘 밤 침수 +${floodAuto(s.day)} (배수로 역류)`, kind: '' });
     for (const p of s.promises.slice().sort((a, b) => a.due - b.due)) out.push({ text: `D${p.due} 저녁 약속: ${(D.PROMISES[p.id] || {}).title}`, kind: p.due <= s.day ? 'warn' : '' });
@@ -668,7 +671,12 @@
     const surge = s.day === D.CALENDAR.surge.day ? 3 : 0;
     s.flood = clamp(s.flood + ev.d.flood + floodAuto(s.day) + surge, 0, 8);
     s.exposure = clamp(s.exposure + ev.d.exposure, 0, 8);
-    if (surge) say(s, D.CALENDAR.surge.text, 'warn');
+    if (surge) {
+      say(s, D.CALENDAR.surge.text, 'warn');
+      if (s.flood >= 8) say(s, '대비가 모자랐다. 물이 바닥까지 찼다.', 'bad');
+      else if (s.flood >= FLOOD_POWER_STOP) say(s, `물이 발전기 자리까지 올라왔다. 침수 ${s.flood} — 발전기가 잠겨 내일 전력이 끊긴다. 배수로 물을 빼야 다시 돌린다.`, 'bad');
+      else say(s, `미리 물을 빼 둔 덕에 발전기까지 닿지 않았다. 침수 ${s.flood}.`, 'good');
+    }
     say(s, `침수 ${s.flood}/8 · 노출 ${s.exposure}/8`);
     if (s.exposure >= 6 && (s.visitDay == null || s.visitDay > s.day + 1)) { s.visitDay = s.day + 1; say(s, '노출이 높다. 내일 밤 순찰대가 올 것 같다.', 'warn'); }
     // 3) 공사
@@ -861,6 +869,24 @@
     return plan;
   }
 
+  // 추천 배치의 이유 한 줄 (같은 배치를 세어 말로 풀어 줌)
+  function suggestWhy(s) {
+    const plan = suggestPlan(s);
+    const n = (t) => Object.values(plan).filter((x) => x === t).length;
+    const out = [];
+    if (n('tend')) out.push('부상자 치료');
+    if (n('build')) out.push(s.project && s.project.id === 'repair' ? '통로 공사' : '공사 진행');
+    if (n('drain')) out.push(s.flood >= FLOOD_POWER_STOP ? `침수 ${s.flood}라 발전기가 잠겨 배수 ${n('drain')}명` : `침수 ${s.flood} 낮추기`);
+    if (n('gen') || n('pump')) out.push(s.res.water < 8 ? '물이 모자라 발전·펌프' : '전력·물 확보');
+    if (n('farm')) out.push('재배실 가동');
+    if (n('forage')) out.push('식량 확보');
+    if (n('guard')) out.push(s.visitDay != null && s.visitDay - s.day <= 1 ? '순찰대 대비 경계' : '노출 낮추기 경계');
+    if (n('salvage')) out.push('부품 모으기');
+    const rest = n('rest');
+    if (rest) out.push(`나머지 ${rest}명 휴식`);
+    return out.slice(0, 4).join(' · ');
+  }
+
   // ── 프롤로그 ──
   function proChoose(s, i) {
     if (s.phase !== 'prologue' || s.proResult) return false;
@@ -950,7 +976,7 @@
   const API = {
     D, SAVE_V, NORMAL_HOURS, MAX_HOURS, BASE_LOAD, STRESS_LIMIT_EXP, FLOOD_POWER_STOP, BOARD_PER, BOARD_LITTER, BOARD_LITTER_MAX, J, josa, trainInfo, choiceTags,
     newGame, dispatch, normalize, rand,
-    alive, homeRes, byId, traitVal, hasTag, taskOptions, evalPlan, previewNight, effectivePlan, suggestPlan, forecast, floodAuto,
+    alive, homeRes, byId, traitVal, hasTag, taskOptions, evalPlan, previewNight, effectivePlan, suggestPlan, suggestWhy, forecast, floodAuto,
     expView, canDepart, describeOutcome, choiceState, availableProjects, boardingPool, lootCap, resText, sf,
     nightView: (s) => (s.nightEv ? { title: s.nightEv.ev.title, text: s.nightEv.ev.text, choices: s.nightEv.ev.choices.map((c) => Object.assign({ choice: c }, choiceState(s, c, 'station'))), result: s.nightEv.result || null } : null),
     eveningView: (s) => {

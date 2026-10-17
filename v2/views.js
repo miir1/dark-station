@@ -115,9 +115,10 @@
     const warn = [];
     if (pv.deaths.length) warn.push(`${pv.deaths.join('·')} 오늘 밤 사망`);
     if (s.project && !Object.values(pv.ev.plan).includes('build')) warn.push(`${s.project.id === 'repair' ? '통로' : '공사'} 작업자 미배치`);
-    const other = pv.warnings.filter((w) => !/사망/.test(w.text));
+    const other = pv.warnings.filter((w) => !/사망/.test(w.text) && w.kind !== 'good');
     if (other.length) warn.push(other[0].text);
-    return `<p class="endpv">${nums}${warn.length ? `<br><span class="w">⚠ ${esc(warn.slice(0, 2).join(' · '))}</span>` : ''}</p>`;
+    const good = pv.warnings.filter((w) => w.kind === 'good');
+    return `<p class="endpv">${nums}${warn.length ? `<br><span class="w">⚠ ${esc(warn.slice(0, 2).join(' · '))}</span>` : ''}${good.length ? `<br><span class="g">✓ ${esc(good[0].text)}</span>` : ''}</p>`;
   }
   function stationTab(s) {
     const pv = E.previewNight(s);
@@ -142,7 +143,7 @@
     }
     // 배치
     const home = E.homeRes(s).filter((r) => !s.expParty.includes(r.id));
-    h += `<section class="card"><h3>오늘의 배치</h3><p class="hint">근처에서 구할 수 있는 식량 ${s.forage} · 비상 해체로 뜯어낼 부품 ${s.salvageLeft}개 남음</p><div class="row2">${btn('suggest', '추천 배치')}${btn('repeat', '어제와 같이', { disabled: !Object.keys(s.lastPlan).length })}</div>`;
+    h += `<section class="card"><h3>오늘의 배치</h3><p class="hint">근처에서 구할 수 있는 식량 ${s.forage} · 비상 해체로 뜯어낼 부품 ${s.salvageLeft}개 남음</p><div class="row2">${btn('suggest', '추천 배치')}${btn('repeat', '어제와 같이', { disabled: !Object.keys(s.lastPlan).length })}</div><p class="hint">추천 기준: ${esc(E.suggestWhy(s) || '모두 휴식')}</p>`;
     h += home.map((r) => residentRow(s, r, pv)).join('');
     if (s.expParty.length) h += `<p class="hint">원정에 다녀온 ${s.expParty.map((id) => esc(E.byId(s, id).name)).join('·')}은(는) 오늘 쉰다.</p>`;
     h += '</section>';
