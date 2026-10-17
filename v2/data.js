@@ -60,7 +60,7 @@
     rest: { name: '휴식', desc: '스트레스 −16, 경상 회복', slots: 9, stress: -16 },
     forage: { name: '식량 수색', desc: '식량 3 (근처 남은 양에서)', slots: 2, stress: 4, skill: 'obs' },
     pump: { name: '물 긷기', desc: '물 4, 전력 1', slots: 2, stress: 4, skill: 'tech', power: 1 },
-    salvage: { name: '비상 해체', desc: '빈 상점·객차를 뜯어 부품 1 (총 6회)', slots: 1, stress: 5, skill: 'str' },
+    salvage: { name: '비상 해체', desc: '빈 상점·객차를 뜯어 부품 1 (완력 3이면 2) — 뜯어낼 부품은 모두 6개', slots: 1, stress: 5, skill: 'str' },
     gen: { name: '발전', desc: '전력 3, 노출 +1 (침수 5 이상이면 정지)', slots: 1, stress: 4, skill: 'tech' },
     drain: { name: '배수', desc: '침수 −2', slots: 2, stress: 5, skill: 'str' },
     guard: { name: '경계', desc: '노출 −2, 밤 도둑·순찰 대비', slots: 2, stress: 4, skill: 'str' },
@@ -122,13 +122,13 @@
   // 결과: text, loot{}, res{}(역 창고), lose{}, stress, injure, flood, exposure, flag, promise{id,days}, ally, item, hours, close{region,days}, mem, retry, heal
   // 사건: when{flag} 조건이 맞아야 나옴, prio ≥ 5 이면 그 지역 첫 사건으로 우선
   const EVENTS = {
-    a1_pharmacy: { title: '셔터 내린 약국', prio: 10, text: '유리문 안쪽에서 누군가 손짓한다. 약사 가운을 입은 여자가 갇혀 있다. “문이 안 열려요. 저 혼자 어머니를 돌보고 있어요.”',
+    a1_pharmacy: { title: '셔터 내린 약국', prio: 10, text: '유리문 안쪽에서 약사 가운을 입은 여자가 경계하며 내다본다. 앞 셔터는 반쯤 내려앉아 자물쇠가 굳었다. “혼자 어머니를 돌보고 있어요. 뒷문은 열 수 있는데… 낯선 사람한테 열기가 무서워요.”',
       choices: [
         { text: '자물쇠를 따 준다', check: { skill: 'tech', base: 0.4 },
-          ok: { text: '문이 열렸다. 약사 문은채가 약을 나눠 준다. “병원 쪽에 아는 사람이 있어요. 3일 뒤 소식 가져갈게요.”', loot: { meds: 1 }, promise: { id: 'eunchae_return', days: 3 }, flag: 'met_eunchae', mem: '약국에서 문은채를 도왔다.' },
+          ok: { text: '굳은 자물쇠가 돌아가고 셔터가 올라갔다. 약사 문은채가 그제야 숨을 내쉬며 약을 나눠 준다. “병원 쪽에 아는 사람이 있어요. 3일 뒤 소식 가져갈게요.”', loot: { meds: 1 }, promise: { id: 'eunchae_return', days: 3 }, flag: 'met_eunchae', mem: '약국에서 문은채를 도왔다.' },
           fail: { text: '자물쇠가 굳었다. 손을 다치고 시간만 날렸다.', injure: 1, hours: 1, retry: true } },
-        { text: '약품 1개를 건네고 사정을 듣는다', cost: { meds: 1 },
-          out: { text: '은채가 안쪽에서 빗장을 풀고 약을 되돌려 준다. “빚은 안 질게요. 병원 쪽에 아는 사람이 있어요. 3일 뒤 소식 가져갈게요.”', loot: { meds: 1 }, promise: { id: 'eunchae_return', days: 3 }, flag: 'met_eunchae', mem: '약을 나눠 문은채의 신뢰를 얻었다.' } },
+        { text: '문틈으로 약품 1개를 밀어 넣고 기다린다', cost: { meds: 1 },
+          out: { text: '잠시 뒤 뒷문 빗장이 풀렸다. 은채가 약을 되돌려 준다. “정말 도우러 오셨군요. 빚은 안 질게요. 병원 쪽에 아는 사람이 있어요. 3일 뒤 소식 가져갈게요.”', loot: { meds: 1 }, promise: { id: 'eunchae_return', days: 3 }, flag: 'met_eunchae', mem: '약을 나눠 문은채의 신뢰를 얻었다.' } },
         { text: '지나친다', out: { text: '유리문 너머의 시선이 한참 등에 따라붙는다.', stress: 4, flag: 'skipped_eunchae', mem: '약국의 도움 요청을 지나쳤다.' } },
       ] },
     a2_stall: { title: '무너진 시장 노점', prio: 1, text: '무너진 시장 지붕 아래 몇 사람이 불을 피우고 물건을 늘어놓았다. 우두머리 같은 여자가 당신을 훑어본다.',
@@ -252,14 +252,14 @@
       ] },
     dohyeon_key: { title: '도현의 열쇠', text: '도현이 열쇠를 들고 역에 왔다. “이 열쇠로 지하 통로를 열 수 있어. 하지만 낡아서 같이 고쳐야 해. 부품 3개면 돼.”',
       choices: [
-        { text: '공동 수리를 시작한다', cost: { parts: 3 }, out: { text: '도현이 연장을 풀었다. 건설 담당이 이틀치 작업을 하면 통로가 이어진다.', flag: 'repair_open', ally: 'dohyeon', mem: '권도현과 통로 수리를 시작했다.' } },
+        { text: '부품 3개를 내주고 공동 수리를 약속한다', cost: { parts: 3 }, out: { text: '도현이 연장을 풀었다. “공사는 너희 역에서 시작해. 일손 붙여 주면 이틀이면 이어져.” → 역 탭 [공사 시작]에서 통로 수리를 착공하고, 공사 작업에 사람을 배치하세요.', flag: 'repair_open', ally: 'dohyeon', mem: '권도현과 통로 공동 수리를 약속했다.' } },
         { text: '며칠만 기다려 달라고 한다', delay: 2, req: { noFlag: 'delayed_dohyeon' }, out: { text: '도현은 이틀 뒤에 다시 오겠다고 한다. (한 번만 미룰 수 있다)', promise: { id: 'dohyeon_key', days: 2 }, flag: 'delayed_dohyeon' } },
         { text: '필요 없다고 한다', hint: '거절하면 통로를 이을 수 없다 — 열차가 고지대 역까지 닿지 못한다', out: { text: '도현은 열쇠를 도로 집어넣고 터덜터덜 돌아간다.', flag: 'repair_refused', stress: 3, mem: '통로 수리 제안을 거절했다.' } },
       ] },
     // 통로를 지나쳤을 때의 두 번째 기회 (더 비싸고 늦다)
     dohyeon_second: { title: '도현의 두 번째 찾아옴', text: '며칠 전 침수된 통로에서 외치던 남자가 역 계단을 내려왔다. 팔에 붕대를 감았다. “그날 못 본 척했지. 괜찮아, 나라도 그랬을 거야. 그래도 통로는 열어야지. 이번엔 부품이 더 든다. 5개.”',
       choices: [
-        { text: '공동 수리를 시작한다', cost: { parts: 5 }, out: { text: '도현이 연장을 풀었다. 건설 담당이 이틀치 작업을 하면 통로가 이어진다.', flag: 'repair_open', ally: 'dohyeon', mem: '늦게나마 권도현과 통로 수리를 시작했다.' } },
+        { text: '부품 5개를 내주고 공동 수리를 약속한다', cost: { parts: 5 }, out: { text: '도현이 연장을 풀었다. “공사는 너희 역에서 시작해. 일손 붙여 주면 이틀이면 이어져.” → 역 탭 [공사 시작]에서 통로 수리를 착공하고, 공사 작업에 사람을 배치하세요.', flag: 'repair_open', ally: 'dohyeon', mem: '늦게나마 권도현과 통로 공동 수리를 약속했다.' } },
         { text: '필요 없다고 한다', hint: '거절하면 통로를 이을 수 없다 — 열차가 고지대 역까지 닿지 못한다', out: { text: '도현은 어깨를 으쓱하고 돌아선다.', flag: 'repair_refused', stress: 3, mem: '통로 수리 제안을 거절했다.' } },
       ] },
   };

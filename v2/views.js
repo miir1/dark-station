@@ -98,12 +98,26 @@
   function goalCard(s) {
     const tr = E.trainInfo(s);
     const left = D.GOAL_DAY - s.day;
-    const path = s.flags.passage_secured ? '이어졌다 ✓' : s.project && s.project.id === 'repair' ? `수리 중 ${s.project.progress}/${D.PROJECTS.repair.work}` : s.flags.repair_open ? '수리를 시작하자 (건설 담당 필요)' : s.flags.met_dohyeon ? '도현의 열쇠를 기다린다' : s.flags.skipped_dohyeon ? '아직 닫혀 있다' : '침수 통로에서 도울 사람을 찾는다 (수문 방면)';
+    const repairing = s.project && s.project.id === 'repair';
+    const builders = Object.values(s.plan).filter((t) => t === 'build').length;
+    const path = s.flags.passage_secured ? '개통 ✓' : repairing ? `작업 ${s.project.progress}/${D.PROJECTS.repair.work}${builders ? '' : ' — 아래 배치에서 공사 작업에 사람을 넣으세요'}` : s.flags.repair_open ? (s.project ? `착공 대기 — 지금 공사(${D.PROJECTS[s.project.id].name})가 끝나야 착공할 수 있어요` : '착공 가능 — 아래 [공사 시작]에서 통로 수리를 착공하세요') : s.flags.met_dohyeon ? '도현의 열쇠를 기다린다' : s.flags.skipped_dohyeon ? '아직 닫혀 있다' : '침수 통로에서 도울 사람을 찾는다 (수문 방면)';
     const pact = s.flags.hospital_pact ? '맺었다 ✓' : s.flags.pact_refused ? '거절했다 ✗' : s.flags.met_eunchae ? '은채의 소식을 기다린다' : s.flags.skipped_eunchae ? '놓쳤다 ✗' : '약국에서 도울 사람을 찾는다 (시장 방면)';
     const cap = tr.passage ? `지금 열차가 오면 ${tr.cap}명 (식량·물 ${E.BOARD_PER}개씩 ${tr.base}명${tr.hospital ? ` + 병원 ${tr.hospital}` : ''}${tr.litter ? ` + 들것 ${tr.litter}` : ''})` : '통로가 이어져야 열차가 닿는다';
     return `<section class="card goal"><h3>목표 — D${D.GOAL_DAY} 구조열차${left > 0 ? ` (${left}일 남음)` : ' (오늘!)'}</h3>
       <p><b>통로</b> ${esc(path)}</p><p><b>병원 협정</b> ${esc(pact)}</p><p><b>승차</b> ${esc(cap)}</p>
       <p class="hint">부품 ${E.BOARD_LITTER}개마다 들것 한 벌(좌석 +1, 최대 ${E.BOARD_LITTER_MAX}). 한 사람당 식량·물이 ${E.BOARD_PER}개씩 필요해요.</p></section>`;
+  }
+  // 하루 종료 버튼 바로 위: 이 배치로 밤을 보내면 어떻게 되는지 (가장 급한 경고 하나 + 핵심 숫자)
+  function endPreview(s, pv) {
+    const arrow = (a, b, cls) => `<b class="${cls || ''}">${a}→${b}</b>`;
+    const low = (k) => (pv.res[k] < Math.ceil((1 + E.alive(s).length) * 0.5) * 2 ? 'warn' : '');
+    const nums = `식량 ${arrow(s.res.food, pv.res.food, low('food'))} · 물 ${arrow(s.res.water, pv.res.water, low('water'))} · 침수 ${arrow(s.flood, pv.flood, pv.flood >= E.FLOOD_POWER_STOP ? 'warn' : '')} · 노출 ${arrow(s.exposure, pv.exposure, pv.exposure >= 6 ? 'warn' : '')}`;
+    const warn = [];
+    if (pv.deaths.length) warn.push(`${pv.deaths.join('·')} 오늘 밤 사망`);
+    if (s.project && !Object.values(pv.ev.plan).includes('build')) warn.push(`${s.project.id === 'repair' ? '통로' : '공사'} 작업자 미배치`);
+    const other = pv.warnings.filter((w) => !/사망/.test(w.text));
+    if (other.length) warn.push(other[0].text);
+    return `<p class="endpv">${nums}${warn.length ? `<br><span class="w">⚠ ${esc(warn.slice(0, 2).join(' · '))}</span>` : ''}</p>`;
   }
   function stationTab(s) {
     const pv = E.previewNight(s);
@@ -121,12 +135,14 @@
       h += `<section class="card"><h3>공사: ${esc(P.name)}</h3><p>${bar(s.project.progress, P.work)} ${s.project.progress}/${P.work} — 공사 작업을 맡은 사람이 하루 +1 (손재주 +1)</p></section>`;
     } else {
       const av = E.availableProjects(s);
-      if (av.length) h += `<section class="card"><h3>공사 시작</h3><p class="hint">부품을 먼저 내고, 공사 작업을 맡은 사람이 일해야 완성돼요. 생활 시설은 하나만 지을 수 있어요. ${s.flags.repair_open ? '' : '통로 수리용 부품 3~5개는 따로 남겨 두세요.'}</p>${av.map((p) => btn('startProject', p.name, { arg: p.id, disabled: !p.afford, confirm: `${p.name}: 부품 ${costText(p.cost) || '없음'}을(를) 내고 공사를 시작합니다. 되돌릴 수 없어요.`, sub: `${esc(costText(p.cost) ? '부품 ' + p.cost.parts : '재료 없음')} · 작업 ${p.work}회분 · ${esc(p.desc)}` })).join('')}</section>`;
+      const after = (p) => { const left = s.res.parts - (p.cost.parts || 0); if (!p.cost.parts) return '부품은 그대로'; if (left < 0) return `부품 ${-left}개 모자람`; const seats = (n) => Math.min(E.BOARD_LITTER_MAX, Math.floor(Math.max(0, n) / E.BOARD_LITTER)); const sd = seats(left) - seats(s.res.parts); return `착공 후 부품 ${s.res.parts}→${left}${sd ? ` (들것 좌석 ${sign(sd)})` : ''}`; };
+      const costWord = (p) => (p.cost.parts ? `부품 ${p.cost.parts}개` : '추가 재료비 없음');
+      if (av.length) h += `<section class="card"><h3>공사 시작</h3><p class="hint">부품을 먼저 내고, 공사 작업을 맡은 사람이 일해야 완성돼요. 생활 시설은 하나만 지을 수 있어요. ${s.flags.repair_open ? '' : '통로 수리용 부품 3~5개는 따로 남겨 두세요.'}</p>${av.map((p) => btn('startProject', p.name, { arg: p.id, disabled: !p.afford, confirm: p.cost.parts ? `${p.name}: 부품 ${p.cost.parts}개를 내고 착공합니다. 되돌릴 수 없어요.` : `${p.name}: 추가 재료비 없이 착공합니다.`, sub: `${esc(costWord(p))} · 공사 작업 ${p.work}회분 · ${esc(p.desc)}<br>${esc(after(p))}` })).join('')}</section>`;
       if (s.facility) h += `<p class="hint">시설: ${esc(D.PROJECTS[s.facility].name)} — ${esc(D.PROJECTS[s.facility].desc)}</p>`;
     }
     // 배치
     const home = E.homeRes(s).filter((r) => !s.expParty.includes(r.id));
-    h += `<section class="card"><h3>오늘의 배치</h3><p class="hint">근처에서 구할 수 있는 식량 ${s.forage} · 비상 해체 ${s.salvageLeft}회 남음</p><div class="row2">${btn('suggest', '추천 배치')}${btn('repeat', '어제와 같이', { disabled: !Object.keys(s.lastPlan).length })}</div>`;
+    h += `<section class="card"><h3>오늘의 배치</h3><p class="hint">근처에서 구할 수 있는 식량 ${s.forage} · 비상 해체로 뜯어낼 부품 ${s.salvageLeft}개 남음</p><div class="row2">${btn('suggest', '추천 배치')}${btn('repeat', '어제와 같이', { disabled: !Object.keys(s.lastPlan).length })}</div>`;
     h += home.map((r) => residentRow(s, r, pv)).join('');
     if (s.expParty.length) h += `<p class="hint">원정에 다녀온 ${s.expParty.map((id) => esc(E.byId(s, id).name)).join('·')}은(는) 오늘 쉰다.</p>`;
     h += '</section>';
@@ -146,7 +162,7 @@
     let confirm = '';
     if (pv.deaths.length) confirm = `${pv.deaths.map((n) => E.J(n, '이/가')).join(', ')} 오늘 밤 사망합니다. 그래도 하루를 보낼까요?`;
     else if (allRest && !s.expParty.length) confirm = '모두 휴식이라 아무것도 생산하지 않아요. 그대로 하루를 보낼까요?';
-    h += `<div class="endbar">${btn('endDay', '하루를 보낸다 (저녁으로)', { cls: ['primary'], confirm })}</div>`;
+    h += `<div class="endbar">${endPreview(s, pv)}${btn('endDay', '하루를 보낸다 (저녁으로)', { cls: ['primary'], confirm })}</div>`;
     return h;
   }
 
