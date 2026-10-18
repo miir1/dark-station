@@ -25,6 +25,7 @@ function bestChoice(s, choices, opts) {
     if (c.locked) return;
     let sc = c.chance == null ? 0.8 : c.chance;
     if (c.choice.cost) sc -= 0.05;
+    if (c.choice.taboo) sc -= 0.6;                 // 성실한 봇은 넘을 수 없는 선을 넘지 않는다
     if (!(opts && opts.keepPassive) && PASSIVE.some((w) => c.choice.text.includes(w))) sc -= 1;
     if (opts && opts.avoidTexts && opts.avoidTexts.some((t) => c.choice.text.includes(t))) sc -= 2;
     if (sc > bs) { bs = sc; best = i; }
@@ -33,7 +34,7 @@ function bestChoice(s, choices, opts) {
 }
 
 function pickParty(s) {
-  const fit = E.homeRes(s).filter((r) => r.injury < 2 && r.stress < 60 && r.breakdown <= 0);
+  const fit = E.homeRes(s).filter((r) => r.injury < 2 && r.stress < 60 && r.breakdown <= 0 && !E.noExp(r));
   if (fit.length < 2) return null;
   fit.sort((a, b) => (b.skills.obs + b.skills.str + b.skills.tech) - (a.skills.obs + a.skills.str + a.skills.tech) || a.stress - b.stress);
   return [fit[0].id, fit[1].id];

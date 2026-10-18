@@ -13,6 +13,7 @@
   const BOARD_PER = 2;               // 승차 1명당 식량·물 각각 2
   const BOARD_LITTER = 4;            // 부품 4개로 들것·침낭 한 벌 = 좌석 1개 (최대 2개)
   const BOARD_LITTER_MAX = 2;
+  const EDGE = 80;                   // 스트레스 80부터는 밤마다 무너질 수 있다 (80: 20% … 95: 80%, 100: 반드시)
 
   // ── 난수 (상태에 저장 → 새로고침해도 같은 결과) ──
   function rand(s) {
@@ -39,7 +40,8 @@
   function makeResident(id) {
     const p = D.PEOPLE[id];
     return { id, name: p.name, good: p.good, bad: p.bad, skills: Object.assign({}, p.skills),
-      stress: 20, injury: 0, crit: null, trust: 0, talks: 0, hunger: 0, thirst: 0, breakdown: 0, status: 'home', mem: [] };
+      stress: 20, injury: 0, crit: null, trust: 0, talks: 0, hunger: 0, thirst: 0, breakdown: 0, status: 'home', mem: [],
+      scars: [], affl: null, virtue: false };
   }
   function newGame(seed) {
     seed = (seed == null ? 1 : seed) >>> 0;
@@ -50,7 +52,7 @@
       facility: null, project: null, plan: {}, lastPlan: {}, expParty: [], expDone: false,
       closed: { A: 0, B: 0 }, promises: [], visitDay: D.CALENDAR.patrol.day,
       exp: null, evening: null, nightEv: null, lastNight: null, report: [], log: [], history: [],
-      boarding: null, ending: null, stats: { deaths: 0, expeditions: 0, nights: 0 },
+      boarding: null, ending: null, stats: { deaths: 0, expeditions: 0, nights: 0 }, corpses: [], dark: false,
     };
     return s;
   }
@@ -62,8 +64,11 @@
   function traitVal(r, key) {
     let v = 0;
     for (const t of [r.good, r.bad]) { const m = D.TRAITS[t]; if (m && typeof m[key] === 'number') v += m[key]; }
+    for (const id of r.scars || []) { const m = D.SCARS[id]; if (m && typeof m[key] === 'number') v += m[key]; }
+    if (r.virtue && typeof D.VIRTUE[key] === 'number' && key !== 'chance') v += D.VIRTUE[key];
     return v;
   }
+  const noExp = (r) => (r.scars || []).some((id) => D.SCARS[id] && D.SCARS[id].noExp);
   const hasTag = (r, tag) => [r.good, r.bad].some((t) => D.TRAITS[t] && D.TRAITS[t].tag === tag);
   const resText = (o) => Object.entries(o).filter(([, v]) => v).map(([k, v]) => `${D.RES[k]} ${v > 0 ? '+' : ''}${v}`).join(' · ');
 
@@ -78,19 +83,43 @@
     r.mem.push({ day, text, key: !!key });
     if (r.mem.length > 8) r.mem.shift();
   }
+  // 문장의 {who}/{who2} 자리에 이름을 넣는다. {who:이/가} 처럼 조사도 맞춘다.
+  function fillText(str, names) {
+    return String(str).replace(/\{(who2?)(?::([^}]+))?\}/g, (m, k, pair) => {
+      const n = k === 'who' ? names[0] : (names[1] || names[0]);
+      return pair ? n + josa(n, pair) : n;
+    });
+  }
   function addRes(s, k, v) { s.res[k] = clamp(s.res[k] + v, 0, D.CAP[k]); }
 
+  // 부상. 중상(2)·위독(3)에 처음 닿을 때 영구 상처를 굴린다. 상처가 남으면 그 문장을 돌려준다.
   function injure(s, r, n) {
-    if (!r || r.status === 'dead') return;
+    if (!r || r.status === 'dead') return '';
+    const before = r.injury;
     r.injury = Math.min(3, r.injury + n);
     if (r.injury >= 3 && r.crit == null) r.crit = s.day + 1;
+    for (const lv of [2, 3]) if (before < lv && r.injury >= lv) { const t = rollScar(s, r, lv); if (t) return t; }
+    return '';
+  }
+  function rollScar(s, r, lv) {
+    if (!r.scars) r.scars = [];
+    if (r.scars.length >= 2 || rand(s) >= D.SCAR_CHANCE[lv]) return '';
+    const id = pick(s, Object.keys(D.SCARS).filter((k) => !r.scars.includes(k)));
+    const S = D.SCARS[id];
+    r.scars.push(id);
+    if (S.skill) r.skills[S.skill] = Math.max(0, r.skills[S.skill] - 1);
+    memo(r, s.day, `${J(S.name, '이/가')} 남았다.`, true);
+    s.history.push({ day: s.day, text: `${r.name}: ${S.name} (${S.desc})` });
+    return `${fillText(S.text, [r.name])} — 영구: ${S.name} (${S.desc})`;
   }
   function kill(s, r, why) {
     r.status = 'dead';
     s.plan[r.id] = undefined;
     s.stats.deaths += 1;
-    s.history.push({ day: s.day, text: `${J(r.name, '이/가')} 세상을 떠났다. (${why})` });
-    say(s, `${J(r.name, '이/가')} 세상을 떠났다. (${why})`, 'bad');
+    s.history.push({ day: s.day, text: `${J(r.name, '이/가')} 숨을 거뒀다. (${why})` });
+    say(s, `${J(r.name, '이/가')} 숨을 거뒀다. 마지막 숨은 물 끓는 소리 같았다. 감기지 않은 눈을 누군가 손바닥으로 덮었다. (${why})`, 'bad');
+    if (!s.corpses) s.corpses = [];
+    s.corpses.push({ id: r.id, name: r.name });
     for (const o of alive(s)) o.stress = clamp(o.stress + 5, 0, 100);
     for (const o of alive(s)) memo(o, s.day, `${J(r.name, '을/를')} 잃었다.`, true);
   }
@@ -205,6 +234,10 @@
       }
     }
     for (const r of workers('rest')) rows.push({ rid: r.id, task: 'rest', out: '휴식' });
+    // 전력이 없으면 역이 어둡다 (모두 스트레스 +), 자포자기한 사람이 있으면 밤새 흐느낀다
+    const dark = !genRunning;
+    const sobbing = alive(s).filter((r) => r.affl === 'despair' && r.breakdown > 0).length;
+    const ambient = (dark ? 4 : 0) + sobbing * D.AFFLICTIONS.despair.ambient;
     for (const r of alive(s)) if (plan[r.id] === 'exp') rows.push({ rid: r.id, task: 'exp', out: '원정 중' });
     if (genRunning) d.exposure += 1;
     // 사람마다 스트레스 변화 (화면에 보여 주는 숫자 = 실제 정산 값)
@@ -212,12 +245,12 @@
       const r = byId(s, row.rid);
       if (row.task === 'exp') continue;
       const eff = idle.includes(row.rid) ? 'rest' : row.task;
-      row.stress = eff === 'rest' ? -Math.max(0, 16 - traitVal(r, 'restLess')) : D.TASKS[eff].stress + traitVal(r, 'workStress');
+      row.stress = (eff === 'rest' ? -Math.max(0, 16 - traitVal(r, 'restLess')) : D.TASKS[eff].stress + traitVal(r, 'workStress')) + ambient;
     }
     const away = alive(s).filter((r) => plan[r.id] === 'exp').length;
     const people = 1 + alive(s).length - away;
     const consume = { food: Math.ceil(people * 0.5), water: Math.ceil(people * 0.5) };
-    return { plan, rows, notes, d, made, need, poolUse, salvageUse, progress, heals, genRunning, consume, farmPowered, clinicPowered, people, idle, floodStop };
+    return { plan, rows, notes, d, made, need, poolUse, salvageUse, progress, heals, genRunning, consume, farmPowered, clinicPowered, people, idle, floodStop, dark, sobbing, ambient };
   }
 
   // 내일 아침 예상 상태 (밤 사건의 무작위 결과는 제외). 화면 미리보기와 실제 정산이 같은 계산을 쓴다.
@@ -247,6 +280,8 @@
     if (short.water) warnings.push({ text: '물이 모자란다 — 모두 스트레스 +10', kind: 'bad' });
     if (!short.food && !short.water && (res.food === 0 || res.water === 0)) warnings.push({ text: '창고가 바닥난다 — 내일부터 모자랄 수 있다', kind: 'warn' });
     if (completes) warnings.push({ text: `${D.PROJECTS[s.project.id].name} 완성${s.project.id === 'repair' ? ' (침수 −2)' : ''}`, kind: 'good' });
+    if (ev.dark) warnings.push({ text: '전력 0 — 오늘 밤 역이 어둡다: 모두 스트레스 +4 · 밤 사건 판정 −10%p', kind: 'warn' });
+    if (ev.sobbing) warnings.push({ text: `자포자기한 사람이 밤새 흐느낀다 — 모두 스트레스 +${ev.sobbing * D.AFFLICTIONS.despair.ambient}`, kind: 'warn' });
     if (ev.made > 0 && ev.need === 0 && ev.genRunning) warnings.push({ text: `전력 ${ev.made}이 쓰이지 않는다 — 발전만 돌아 노출 +1`, kind: 'warn' });
     return { ev, res, short, flood, exposure, surge, warnings, deaths };
   }
@@ -306,6 +341,7 @@
     if (check.item && packItems(s).includes(check.item)) c += check.bonus || 0;
     c += traitVal(r, 'expCheck') * (ctx === 'exp' ? 1 : 0);
     if (check.skill === 'talk') c += traitVal(r, 'talkCheck');
+    if (ctx === 'station' && s.phase === 'nightEvent' && s.dark) c -= 0.1;
     return clamp(c, 0.15, 0.9);
   }
   function choiceState(s, ch, ctx) {
@@ -399,12 +435,14 @@
     if (o.injure) {
       const named = (s.nightEv && s.nightEv.who ? s.nightEv.who : []).map((id) => byId(s, id)).filter((r) => r && r.status === 'home');
       const group = ctx === 'exp' ? party : (named.length ? named : homeRes(s).filter((r) => !s.expParty.includes(r.id)));
-      if (group.length) { const t = pick(s, group); injure(s, t, o.injure); lines.push(`${t.name} 부상 ${o.injure}`); if (ctx === 'exp') memo(t, s.day, '원정에서 다쳤다.', true); }
+      if (group.length) { const t = pick(s, group); const scar = injure(s, t, o.injure); lines.push(`${t.name} 부상 ${o.injure}`); if (scar) lines.push(scar); if (ctx === 'exp') memo(t, s.day, '원정에서 다쳤다.', true); }
     }
     if (o.heal) for (const r of homeRes(s)) if (r.injury > 0 && r.injury < 3) r.injury = Math.max(0, r.injury - o.heal);
     if (o.flood) s.flood = clamp(s.flood + o.flood, 0, 8);
     if (o.exposure) s.exposure = clamp(s.exposure + o.exposure, 0, 8);
     if (o.flag) for (const f of [].concat(o.flag)) s.flags[f] = true;
+    if (o.unflag) delete s.flags[o.unflag];
+    if (o.memAll) { for (const r of alive(s)) memo(r, s.day, o.memAll, true); s.history.push({ day: s.day, text: o.memAll }); }
     if (o.promise) addPromise(s, o.promise.id, s.day + o.promise.days);
     if (o.ally) s.allies[o.ally] = true;
     if (o.item) s.items[o.item] = true;
@@ -467,6 +505,7 @@
       if (r.injury >= 2) return `${r.name}: 중상이라 갈 수 없다`;
       if (r.stress >= STRESS_LIMIT_EXP) return `${r.name}: 스트레스 ${STRESS_LIMIT_EXP} 이상이라 갈 수 없다`;
       if (r.breakdown > 0) return `${r.name}: 탈진 상태`;
+      if (noExp(r)) return `${r.name}: 다리를 절어 원정을 갈 수 없다`;
     }
     const p = { food: pack.food | 0, water: pack.water | 0, meds: pack.meds | 0, items: (pack.items || []).filter((i) => s.items[i]) };
     if (p.food < 0 || p.water < 0 || p.meds < 0) return '보급 수량이 잘못됐다';
@@ -638,11 +677,39 @@
   }
   function skipTalk(s) { if (s.phase !== 'evening' || !s.evening || s.evening.type !== 'talk') return false; s.evening = null; return runNight(s); }
 
+  // 스트레스 100: 드물게 각성, 대개는 무너진다 (종류마다 다른 대가)
+  function crack(s, r) {
+    if (!r.virtue && rand(s) < D.VIRTUE.chance) {
+      r.virtue = true; r.stress = 35;
+      for (const o of alive(s)) if (o.id !== r.id) o.stress = clamp(o.stress - 5, 0, 100);
+      say(s, `${fillText(D.VIRTUE.text, [r.name])} — 각성: ${D.VIRTUE.name} (${D.VIRTUE.desc}) · 모두 스트레스 −5`, 'good');
+      memo(r, s.day, '한계에서 버텨 냈다.', true);
+      s.history.push({ day: s.day, text: `${r.name}: 각성 — ${D.VIRTUE.name}` });
+      return;
+    }
+    const others = alive(s).filter((o) => o.id !== r.id);
+    const id = pick(s, Object.keys(D.AFFLICTIONS).filter((k) => !D.AFFLICTIONS[k].hurtOther || others.length));
+    const A = D.AFFLICTIONS[id];
+    const victim = A.hurtOther ? pick(s, others) : null;
+    r.affl = id; r.breakdown = A.days; r.stress = 80;
+    const fx = [];
+    let scar = '';
+    if (A.food) { const lost = Math.min(s.res.food, -A.food); s.res.food -= lost; fx.push(`식량 −${lost}`); }
+    if (A.others) { for (const o of others) o.stress = clamp(o.stress + A.others, 0, 100); fx.push(`모두 스트레스 +${A.others}`); }
+    if (victim) { scar = injure(s, victim, A.hurtOther); fx.push(`${victim.name} 부상 ${A.hurtOther}`); memo(victim, s.day, `${r.name}에게 맞았다.`, true); }
+    if (A.hurtSelf) { scar = injure(s, r, A.hurtSelf); fx.push(`${r.name} 부상 ${A.hurtSelf}`); }
+    say(s, `${fillText(A.text, [r.name, victim ? victim.name : r.name])} — 붕괴: ${A.name} (${fx.join(' · ')}${fx.length ? ' · ' : ''}${A.days}일간 일 못 함)`, 'bad');
+    say(s, scar, 'bad');
+    memo(r, s.day, `한계에 닿아 무너졌다 (${A.name}).`, true);
+    s.history.push({ day: s.day, text: `${r.name}: 붕괴 — ${A.name}` });
+  }
+
   function runNight(s) {
     s.report = [];
     s.stats.nights += 1;
     const ev = evalPlan(s);
     const plan = ev.plan;
+    s.dark = ev.dark;
     s.guardIds = alive(s).filter((r) => plan[r.id] === 'guard').map((r) => r.id);
     // 1) 생산·소모
     s.forage -= ev.poolUse; s.salvageLeft -= ev.salvageUse;
@@ -661,11 +728,11 @@
     if (prod.food) made.push(`식량 +${prod.food}`); if (prod.water) made.push(`물 +${prod.water}`); if (prod.parts) made.push(`부품 +${prod.parts}`);
     say(s, `일과: ${made.join(' · ') || '생산 없음'} / 소모: 식량 −${ev.consume.food} · 물 −${ev.consume.water}`);
     for (const n of ev.notes) say(s, n, 'warn');
-    if (shortFood > 0) say(s, `식량이 모자라 굶었다. 모두 스트레스 +8`, 'bad');
-    if (shortWater > 0) say(s, `물이 모자라 갈증이 났다. 모두 스트레스 +10`, 'bad');
+    if (shortFood > 0) say(s, `식량이 바닥났다. 빈 깡통 바닥을 손가락으로 훑는 소리만 들린다. 모두 스트레스 +8`, 'bad');
+    if (shortWater > 0) say(s, `물이 떨어졌다. 누군가 바닥에 고인 녹물을 핥았다. 모두 스트레스 +10`, 'bad');
     for (const r of home) {
-      if (shortFood > 0) { r.stress = clamp(r.stress + 8, 0, 100); r.hunger += 1; if (r.hunger >= 3) { injure(s, r, 1); r.hunger = 0; say(s, `${J(r.name, '이/가')} 허기로 쓰러졌다. 부상 1`, 'bad'); } } else r.hunger = 0;
-      if (shortWater > 0) { r.stress = clamp(r.stress + 10, 0, 100); r.thirst += 1; if (r.thirst >= 2) { injure(s, r, 1); r.thirst = 0; say(s, `${J(r.name, '이/가')} 탈수로 쓰러졌다. 부상 1`, 'bad'); } } else r.thirst = 0;
+      if (shortFood > 0) { r.stress = clamp(r.stress + 8, 0, 100); r.hunger += 1; if (r.hunger >= 3) { const sc = injure(s, r, 1); r.hunger = 0; say(s, `${J(r.name, '이/가')} 허기에 쓰러졌다. 광대뼈가 살갗을 뚫고 나올 것 같다. 부상 1`, 'bad'); say(s, sc, 'bad'); } } else r.hunger = 0;
+      if (shortWater > 0) { r.stress = clamp(r.stress + 10, 0, 100); r.thirst += 1; if (r.thirst >= 2) { const sc = injure(s, r, 1); r.thirst = 0; say(s, `${r.name}의 입술이 갈라져 피가 맺혔다. 일어서지 못한다. 부상 1`, 'bad'); say(s, sc, 'bad'); } } else r.thirst = 0;
     }
     // 2) 침수·노출
     const surge = s.day === D.CALENDAR.surge.day ? 3 : 0;
@@ -678,6 +745,8 @@
       else say(s, `미리 물을 빼 둔 덕에 발전기까지 닿지 않았다. 침수 ${s.flood}.`, 'good');
     }
     say(s, `침수 ${s.flood}/8 · 노출 ${s.exposure}/8`);
+    if (ev.dark) say(s, '발전기가 돌지 않았다. 역 전체가 어둠에 잠겼다. 모두 스트레스 +4 · 밤 사건 판정 −10%p', 'warn');
+    if (ev.sobbing) say(s, `밤새 흐느끼는 소리가 이어졌다. 모두 스트레스 +${ev.sobbing * D.AFFLICTIONS.despair.ambient}`, 'warn');
     if (s.exposure >= 6 && (s.visitDay == null || s.visitDay > s.day + 1)) { s.visitDay = s.day + 1; say(s, '노출이 높다. 내일 밤 순찰대가 올 것 같다.', 'warn'); }
     // 3) 공사
     if (s.project && ev.progress > 0) {
@@ -696,17 +765,17 @@
       if (t === 'exp') continue;
       if (ev.idle.includes(r.id)) t = 'rest';                  // 전력·약품이 없어 일을 못 한 사람은 쉰다
       if (t === 'rest') {
-        r.stress = clamp(r.stress - Math.max(0, 16 - traitVal(r, 'restLess')), 0, 100);
+        r.stress = clamp(r.stress - Math.max(0, 16 - traitVal(r, 'restLess')) + ev.ambient, 0, 100);
         if (r.injury === 1) r.injury = 0;
-      } else r.stress = clamp(r.stress + D.TASKS[t].stress + traitVal(r, 'workStress'), 0, 100);
-      if (r.breakdown > 0) r.breakdown -= 1;
-      else if (r.stress >= 100) { r.breakdown = 2; r.stress = 80; say(s, `${J(r.name, '이/가')} 한계에 닿아 이틀간 일을 못 한다.`, 'bad'); }
+      } else r.stress = clamp(r.stress + D.TASKS[t].stress + traitVal(r, 'workStress') + ev.ambient, 0, 100);
+      if (r.breakdown > 0) { r.breakdown -= 1; if (r.breakdown === 0) r.affl = null; }
+      else if (r.stress >= 100 || (r.stress >= EDGE && rand(s) < (r.stress - EDGE + 5) / 25)) crack(s, r);
     }
     const healed = new Set(ev.heals.map((h) => h.pid));
     for (const r of alive(s)) {
       if (r.injury >= 2 && r.injury < 3 && !healed.has(r.id)) {
         r.untreated = (r.untreated || 0) + 1;
-        if (r.untreated >= 1) { injure(s, r, 1); r.untreated = 0; say(s, `${r.name}의 상처가 덧났다. 위독 — 내일 밤까지 치료하지 못하면 위험하다.`, 'bad'); }
+        if (r.untreated >= 1) { const sc = injure(s, r, 1); r.untreated = 0; say(s, `${r.name}의 상처가 썩어 들어간다. 붕대를 풀자 구더기가 꿈틀거렸다. 위독 — 내일 밤까지 치료하지 못하면 죽는다.`, 'bad'); say(s, sc, 'bad'); }
       } else r.untreated = 0;
     }
     for (const r of alive(s)) if (r.injury >= 3 && r.crit != null && s.day >= r.crit) kill(s, r, '치료받지 못했다');
@@ -717,16 +786,11 @@
     return advanceDay(s);
   }
   // 사건 문장의 {who}/{who2} 자리에 주민 이름을 넣는다. {who:이/가} 처럼 조사도 맞춘다.
-  function fillNames(obj, names) {
-    const src = JSON.stringify(obj).replace(/\{(who2?)(?::([^}]+))?\}/g, (m, k, pair) => {
-      const n = k === 'who' ? names[0] : (names[1] || names[0]);
-      return pair ? n + josa(n, pair) : n;
-    });
-    return JSON.parse(src);
-  }
+  function fillNames(obj, names) { return JSON.parse(fillText(JSON.stringify(obj), names)); }
   function nextNightEvent(s) {
     if (s.flood >= 8) return { id: 'flood_break', ev: D.FLOOD_BREAK, threat: true };
     if (s.visitDay === s.day) return { id: 'patrol', ev: D.PATROL, threat: true };
+    if (s.corpses && s.corpses.length) return { id: 'corpse', ev: fillNames(D.CORPSE, [s.corpses[0].name]), who: [], threat: false };
     const cand = Object.entries(D.NIGHT).map(([id, n]) => [id, n, typeof n.weight === 'function' ? n.weight(s) : n.weight]).filter(([id, n, w]) => s.day >= n.minDay && id !== s.lastNight && w > 0);
     if (!cand.length) return null;
     const total = cand.reduce((a2, [, , w]) => a2 + w, 0);
@@ -749,6 +813,7 @@
     s.nightEv.result = res;
     s.history.push({ day: s.day, text: `${s.nightEv.ev.title}: ${res.choice}` });
     if (s.nightEv.id === 'patrol') s.visitDay = s.day < D.CALENDAR.patrol.day ? D.CALENDAR.patrol.day : null;
+    else if (s.nightEv.id === 'corpse') s.corpses.shift();
     else if (D.NIGHT[s.nightEv.id]) s.lastNight = s.nightEv.id;
     return true;
   }
@@ -760,6 +825,7 @@
     return advanceDay(s);
   }
   function advanceDay(s) {
+    s.dark = false;
     for (const r of alive(s)) if (r.injury >= 3 && r.crit != null && s.day >= r.crit && r.status !== 'dead') kill(s, r, '치료받지 못했다');
     if (!alive(s).length) return finishGame(s, 'wiped');
     if (s.day >= D.GOAL_DAY) return enterBoarding(s);
@@ -823,10 +889,12 @@
     if (s.flags.passage_secured) ledger.push({ kind: 'kept', text: '지하 통로를 이었다 (권도현)' });
     if (s.flags.pact_refused) ledger.push({ kind: 'broken', text: '병원과의 협정을 거절했다' });
     if (s.flags.repair_refused) ledger.push({ kind: 'broken', text: '통로 공동 수리 제안을 거절했다' });
+    if (s.flags.ate_dead) ledger.push({ kind: 'broken', text: '죽은 동료의 살을 먹었다' });
     if (s.flags.skipped_eunchae) ledger.push({ kind: 'broken', text: '약국의 도움 요청을 지나쳤다' });
     if (s.flags.skipped_dohyeon && !s.flags.met_dohyeon) ledger.push({ kind: 'broken', text: '침수된 통로의 외침을 지나쳤다' });
     for (const p of s.promises) ledger.push({ kind: 'late', text: `${(D.PROMISES[p.id] || {}).title || p.id} — 열차 시간 안에 지키지 못했다` });
     if (s.flags.repair_open && !s.flags.passage_secured) ledger.push({ kind: 'late', text: '통로 수리를 끝내지 못했다' });
+    if (s.flags.ate_dead && kind === 'train') text += ' 열차 안에서 아무도 서로의 얼굴을 보지 않았다.';
     s.ending = { tier, title, text, rows, ledger, day: s.day, flags: Object.assign({}, s.flags) };
     s.phase = 'ended';
     return true;
@@ -855,7 +923,8 @@
     // 2) 침수가 5 이상이면 발전기가 잠기니 배수가 먼저
     if (floodStop) take('drain', 2); else if (s.flood >= 3) take('drain', 1);
     // 3) 물·식량·전력
-    const wantPower = !floodStop && ((waterShort ? 1 : 0) + (s.facility === 'farm' ? 1 : 0) + (s.facility === 'clinic' && patients.length ? 1 : 0));
+    const tense = alive(s).some((r) => r.stress >= 45);
+    const wantPower = !floodStop && ((waterShort ? 1 : 0) + (s.facility === 'farm' ? 1 : 0) + (s.facility === 'clinic' && patients.length ? 1 : 0) + (tense ? 1 : 0));
     if (wantPower > 0) take('gen', 1);
     const powered = Object.values(plan).includes('gen');
     if (powered && waterShort) take('pump', 2); else if (powered && s.res.water < need * 3) take('pump', 1);
@@ -877,7 +946,7 @@
     if (n('tend')) out.push('부상자 치료');
     if (n('build')) out.push(s.project && s.project.id === 'repair' ? '통로 공사' : '공사 진행');
     if (n('drain')) out.push(s.flood >= FLOOD_POWER_STOP ? `침수 ${s.flood}라 발전기가 잠겨 배수 ${n('drain')}명` : `침수 ${s.flood} 낮추기`);
-    if (n('gen') || n('pump')) out.push(s.res.water < 8 ? '물이 모자라 발전·펌프' : '전력·물 확보');
+    if (n('gen') || n('pump')) out.push(s.res.water < 8 ? '물이 모자라 발전·펌프' : n('pump') ? '전력·물 확보' : '불을 켜 어둠 막기');
     if (n('farm')) out.push('재배실 가동');
     if (n('forage')) out.push('식량 확보');
     if (n('guard')) out.push(s.visitDay != null && s.visitDay - s.day <= 1 ? '순찰대 대비 경계' : '노출 낮추기 경계');
@@ -963,20 +1032,20 @@
     for (const k of ['res', 'closed', 'flags', 'items', 'allies', 'plan', 'lastPlan', 'stats']) s[k] = Object.assign({}, base[k], raw[k] || {});
     for (const k of Object.keys(D.CAP)) if (typeof s.res[k] !== 'number' || !isFinite(s.res[k])) s.res[k] = 0;
     if (!Array.isArray(s.residents) || !s.residents.length) s.residents = base.residents;
-    for (const k of ['report', 'log', 'history', 'promises', 'expParty']) if (!Array.isArray(s[k])) s[k] = [];
+    for (const k of ['report', 'log', 'history', 'promises', 'expParty', 'corpses']) if (!Array.isArray(s[k])) s[k] = [];
     if (typeof s.rng !== 'number') s.rng = s.seed >>> 0;
     // 상태 구조가 어긋난 저장은 쓰지 않는다 (불러오면 화면이 깨지므로 새 게임으로)
     const need = { expedition: s.exp, evening: s.evening, nightEvent: s.nightEv, boarding: s.boarding, ended: s.ending };
     if (Object.prototype.hasOwnProperty.call(need, s.phase) && !need[s.phase]) return null;
     if (!['prologue', 'morning', 'expedition', 'evening', 'nightEvent', 'boarding', 'ended'].includes(s.phase)) return null;
-    for (const r of s.residents) { for (const k of ['stress', 'injury', 'trust', 'talks', 'hunger', 'thirst', 'breakdown']) if (!Number.isFinite(r[k])) r[k] = 0; if (!Array.isArray(r.mem)) r.mem = []; }
+    for (const r of s.residents) { for (const k of ['stress', 'injury', 'trust', 'talks', 'hunger', 'thirst', 'breakdown']) if (!Number.isFinite(r[k])) r[k] = 0; if (!Array.isArray(r.mem)) r.mem = []; if (!Array.isArray(r.scars)) r.scars = []; if (r.affl && !D.AFFLICTIONS[r.affl]) r.affl = null; r.virtue = !!r.virtue; }
     return s;
   }
 
   const API = {
-    D, SAVE_V, NORMAL_HOURS, MAX_HOURS, BASE_LOAD, STRESS_LIMIT_EXP, FLOOD_POWER_STOP, BOARD_PER, BOARD_LITTER, BOARD_LITTER_MAX, J, josa, trainInfo, choiceTags,
+    D, SAVE_V, EDGE, NORMAL_HOURS, MAX_HOURS, BASE_LOAD, STRESS_LIMIT_EXP, FLOOD_POWER_STOP, BOARD_PER, BOARD_LITTER, BOARD_LITTER_MAX, J, josa, trainInfo, choiceTags,
     newGame, dispatch, normalize, rand,
-    alive, homeRes, byId, traitVal, hasTag, taskOptions, evalPlan, previewNight, effectivePlan, suggestPlan, suggestWhy, forecast, floodAuto,
+    alive, homeRes, byId, traitVal, hasTag, noExp, fillText, injure, crack, taskOptions, evalPlan, previewNight, effectivePlan, suggestPlan, suggestWhy, forecast, floodAuto,
     expView, canDepart, describeOutcome, choiceState, availableProjects, boardingPool, lootCap, resText, sf,
     nightView: (s) => (s.nightEv ? { title: s.nightEv.ev.title, text: s.nightEv.ev.text, choices: s.nightEv.ev.choices.map((c) => Object.assign({ choice: c }, choiceState(s, c, 'station'))), result: s.nightEv.result || null } : null),
     eveningView: (s) => {

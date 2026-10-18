@@ -126,7 +126,7 @@
       choices: [
         { text: '자물쇠를 따 준다', check: { skill: 'tech', base: 0.4 },
           ok: { text: '굳은 자물쇠가 돌아가고 셔터가 올라갔다. 약사 문은채가 그제야 숨을 내쉬며 약을 나눠 준다. “병원 쪽에 아는 사람이 있어요. 3일 뒤 소식 가져갈게요.”', loot: { meds: 1 }, promise: { id: 'eunchae_return', days: 3 }, flag: 'met_eunchae', mem: '약국에서 문은채를 도왔다.' },
-          fail: { text: '자물쇠가 굳었다. 손을 다치고 시간만 날렸다.', injure: 1, hours: 1, retry: true } },
+          fail: { text: '드라이버가 미끄러져 손바닥을 꿰뚫었다. 셔터에 피가 줄줄 흘렀다. 자물쇠는 그대로다.', injure: 1, hours: 1, retry: true } },
         { text: '문틈으로 약품 1개를 밀어 넣고 기다린다', cost: { meds: 1 },
           out: { text: '잠시 뒤 뒷문 빗장이 풀렸다. 은채가 약을 되돌려 준다. “정말 도우러 오셨군요. 빚은 안 질게요. 병원 쪽에 아는 사람이 있어요. 3일 뒤 소식 가져갈게요.”', loot: { meds: 1 }, promise: { id: 'eunchae_return', days: 3 }, flag: 'met_eunchae', mem: '약을 나눠 문은채의 신뢰를 얻었다.' } },
         { text: '지나친다', out: { text: '유리문 너머의 시선이 한참 등에 따라붙는다.', stress: 4, flag: 'skipped_eunchae', mem: '약국의 도움 요청을 지나쳤다.' } },
@@ -143,7 +143,7 @@
       choices: [
         { text: '구석까지 뒤진다', check: { skill: 'obs', base: 0.5 },
           ok: { text: '벽 틈에 감춘 보급품을 찾았다.', loot: { food: 2, parts: 2 } },
-          fail: { text: '인기척에 서둘러 나왔다. 누군가 이 자리를 지켜보고 있었다. 도망치다 넘어졌다.', stress: 4, exposure: 1, injure: 1 } },
+          fail: { text: '담요 밑에서 무언가 꿈틀했다. 들춰 보니 반쯤 먹힌 사람이었다. 뒤에서 누군가 이쪽을 지켜보고 있었다. 도망치다 철근에 허벅지가 찢겼다.', stress: 6, exposure: 1, injure: 1 } },
         { text: '쇠파이프를 챙긴다', req: { noFlag: 'pipe_taken' }, out: { text: '벽에 기대 둔 쇠파이프를 가방에 꽂았다.', item: 'pipe', flag: 'pipe_taken' } },
         { text: '서둘러 떠난다', out: { text: '' } },
       ] },
@@ -166,7 +166,7 @@
       choices: [
         { text: '물에 들어가 끌어낸다', check: { skill: 'str', base: 0.4 },
           ok: { text: '남자는 권도현이라고 했다. 물을 뱉으며 말한다. “이틀 뒤에 보답하지.”', promise: { id: 'dohyeon_key', days: 2 }, flag: 'met_dohyeon', mem: '침수된 통로에서 권도현을 구했다.' },
-          fail: { text: '끌어내지 못했다. 물만 잔뜩 먹고 물러났다.', injure: 1, hours: 1, retry: true } },
+          fail: { text: '물속에서 남자가 미친 듯이 매달려 함께 가라앉았다. 겨우 떼어 내고 기어 나왔다. 폐에 구정물이 찼다.', injure: 1, hours: 1, retry: true } },
         { text: '밧줄을 던져 끌어낸다', req: { item: 'rope' },
           out: { text: '밧줄을 배수관에 걸어 안전하게 끌어냈다. 남자는 권도현이라고 했다. “이틀 뒤에 보답하지.”', promise: { id: 'dohyeon_key', days: 2 }, flag: 'met_dohyeon', mem: '밧줄로 권도현을 구했다.' } },
         { text: '물이 차오른다, 지나친다', out: { text: '등 뒤에서 부르는 소리가 물소리에 묻혔다. 며칠 뒤에 그 남자가 스스로 빠져나왔다면 다시 찾아올지도 모른다.', stress: 4, flag: 'skipped_dohyeon', promise: { id: 'dohyeon_second', days: 3 }, mem: '침수된 통로의 외침을 지나쳤다.' } },
@@ -184,14 +184,14 @@
         { text: '밧줄로 내려간다', req: { item: 'rope' }, out: { text: '밧줄을 걸고 내려가 상자를 뒤졌다.', loot: { parts: 3, water: 2 } } },
         { text: '뛰어내린다', check: { skill: 'str', base: 0.5 },
           ok: { text: '무릎이 시큰했지만 착지했다. 상자를 챙겼다.', loot: { parts: 3, water: 2 } },
-          fail: { text: '착지하다 발목이 크게 꺾였다.', injure: 2, loot: { parts: 1 } } },
+          fail: { text: '착지하는 순간 발목에서 마른 나뭇가지 부러지는 소리가 났다. 발이 반대쪽을 보고 있다.', injure: 2, loot: { parts: 1 } } },
         { text: '돌아서 간다', out: { text: '먼 길로 돌아 상자 하나만 챙겼다.', loot: { parts: 1 }, hours: 2 } },
       ] },
     b4_tank: { title: '고인 물탱크', prio: 1, text: '대형 물탱크에 물이 가득하다. 투명해 보이지만 냄새가 난다.',
       choices: [
         { text: '냄새와 색을 살펴 퍼 간다', check: { skill: 'obs', base: 0.5 },
           ok: { text: '위쪽 맑은 물만 골라 담았다.', loot: { water: 6 } },
-          fail: { text: '탁한 물이 섞였다. 마신 사람이 심한 배탈이 났다.', loot: { water: 4 }, injure: 2 } },
+          fail: { text: '바닥에 가라앉은 것이 쥐 사체였다는 건 다 마신 뒤에 알았다. 마신 사람이 밤새 피 섞인 물을 쏟았다.', loot: { water: 4 }, injure: 2 } },
         { text: '한 통만 안전하게 떠 간다', out: { text: '맨 위쪽 물만 조금 떴다.', loot: { water: 2 } } },
         { text: '건드리지 않는다', out: { text: '' } },
       ] },
@@ -200,7 +200,7 @@
       choices: [
         { text: '균열을 메운다', check: { skill: 'tech', base: 0.45 },
           ok: { text: '쐐기를 박고 밀봉재를 발랐다. 물줄기가 멎었다.', flood: -2, stress: -2 },
-          fail: { text: '쐐기가 튕겨 손을 다쳤다. 균열은 그대로다.', injure: 1, hours: 1 } },
+          fail: { text: '튕겨 나간 쐐기가 손등을 뚫고 박혔다. 균열은 그대로다.', injure: 1, hours: 1 } },
         { text: '표지만 달아 두고 부품을 챙긴다', out: { text: '위험 구간에 반사 테이프를 감고, 쓰다 남은 부품을 거뒀다.', loot: { parts: 1 } } },
         { text: '그냥 지나간다', out: { text: '' } },
       ] },
@@ -208,13 +208,13 @@
       choices: [
         { text: '약품 1개를 준다', cost: { meds: 1 }, out: { text: '그는 숨을 고르고 부품 꾸러미를 건넨다. “가져가요. 난 더 못 가.”', loot: { parts: 2 }, stress: -3 } },
         { text: '물 1개를 준다', cost: { water: 1 }, out: { text: '그는 물을 마시고 고개를 끄덕인다. 말없이 식량 한 줌을 쥐여 준다.', loot: { food: 2 } } },
-        { text: '지나친다', out: { text: '숨소리가 등 뒤에서 오래 들린다.', stress: 4 } },
+        { text: '지나친다', out: { text: '등 뒤에서 숨소리가 몇 번 이어지다 멎었다. 아무도 돌아보지 않았다.', stress: 4 } },
       ] },
     g2_rats: { title: '쥐떼', prio: 0, text: '하수구에서 개만 한 쥐 수십 마리가 쏟아져 나온다.',
       choices: [
         { text: '맞서 싸운다', check: { skill: 'str', base: 0.45, item: 'pipe', bonus: 0.2 },
           ok: { text: '쥐떼가 흩어졌다. 몇 마리는 저녁거리가 됐다.', loot: { food: 3 } },
-          fail: { text: '물렸다. 상처가 곪기 시작한다.', injure: 2 } },
+          fail: { text: '쥐 세 마리가 종아리에 매달려 살점을 뜯어 갔다. 상처 가장자리가 벌써 검게 변한다.', injure: 2 } },
         { text: '식량 1개를 던지고 물러난다', cost: { food: 1 }, out: { text: '쥐떼가 통조림에 몰려든 사이 빠져나왔다.' } },
         { text: '돌아서 간다', out: { text: '한참을 돌아 나왔다.', hours: 1 } },
       ] },
@@ -222,7 +222,7 @@
       choices: [
         { text: '뚜껑을 비틀어 연다', check: { skill: 'str', base: 0.45 },
           ok: { text: '뚜껑이 요란하게 떨어졌다. 통조림과 부품이 쏟아진다.', loot: { food: 2, parts: 1 } },
-          fail: { text: '손을 베였다. 상자 가장자리의 부품 하나만 챙겼다.', injure: 1, loot: { parts: 1 } } },
+          fail: { text: '휜 철판에 손바닥이 깊이 베였다. 흰 힘줄이 보였다. 부품 하나만 챙겼다.', injure: 1, loot: { parts: 1 } } },
         { text: '쇠파이프로 뚜껑을 쳐서 연다', req: { item: 'pipe' }, out: { text: '두세 번 내리치자 뚜껑이 열렸다. 소리가 멀리 울렸다.', loot: { food: 2, parts: 2 }, exposure: 1 } },
         { text: '바깥에 나온 것만 챙긴다', out: { text: '선반 밖으로 삐져나온 부품 하나를 주웠다.', loot: { parts: 1 } } },
       ] },
@@ -238,7 +238,7 @@
       choices: [
         { text: '식량 1개를 건넨다', cost: { food: 1 }, out: { text: '아이가 깡통에 손을 뻗더니 생수 한 병을 내민다. 말없이 고개만 끄덕인다.', loot: { water: 2 }, stress: -3 } },
         { text: '물 1개를 건넨다', cost: { water: 1 }, out: { text: '아이가 외투 속에서 건빵 봉지를 꺼내 내민다.', loot: { food: 2 }, stress: -3 } },
-        { text: '그냥 지나간다', out: { text: '아이의 시선이 오래 따라온다.', stress: 3 } },
+        { text: '그냥 지나간다', out: { text: '아이의 시선이 오래 따라온다. 돌아오는 길에 같은 자리를 지났다. 깡통만 남아 있었다.', stress: 3 } },
       ] },
   };
 
@@ -264,31 +264,64 @@
       ] },
   };
 
+  // ── 영구 상처: 중상·위독에 이를 때 굴려서 남는다 (사람마다 최대 2개). skill: 그 기술 −1, noExp: 원정 불가, 나머지 키는 특성과 같다 ──
+  const SCARS = {
+    finger: { name: '잘린 손가락', desc: '기술 −1', skill: 'tech', text: '{who}의 손가락 두 마디가 짓이겨져 덜렁거렸다. 녹슨 가위로 잘라 냈다. 비명은 생각보다 짧았다.' },
+    eye: { name: '잃은 눈', desc: '관찰 −1', skill: 'obs', text: '{who}의 왼쪽 눈이 부어오르다 터졌다. 고름이 멎은 자리에는 아무것도 남지 않았다.' },
+    hand: { name: '으스러진 손', desc: '완력 −1', skill: 'str', text: '{who}의 손뼈가 으스러져 손등이 안쪽으로 꺾였다. 다시는 주먹을 쥐지 못한다.' },
+    leg: { name: '저는 다리', desc: '원정 불가', noExp: true, text: '{who}의 정강이뼈가 살을 뚫고 나왔다. 부목을 댔지만 다시는 제대로 걷지 못한다.' },
+    lung: { name: '썩은 폐', desc: '휴식 회복 −4', restLess: 4, text: '{who}의 기침에 검은 피가 섞이기 시작했다. 밤새 멎지 않는다.' },
+    face: { name: '뭉개진 얼굴', desc: '말솜씨 −1', skill: 'talk', text: '{who}의 얼굴 반쪽이 뭉개졌다. 아이들이 {who:을/를} 보면 고개를 돌린다.' },
+  };
+  const SCAR_CHANCE = { 2: 0.45, 3: 0.6 };   // 중상에 이를 때 / 위독에 이를 때
+
+  // ── 붕괴: 스트레스 100에 닿으면 각성하거나 무너진다 (days 동안 일을 못 함) ──
+  const VIRTUE = { name: '굳건함', desc: '일 스트레스 −2', workStress: -2, chance: 0.25,
+    text: '{who:이/가} 벽에 머리를 박고 한참을 서 있었다. 그리고 고개를 들었다. “아직 아니야.” 그 목소리에 다들 숨을 돌린다.' };
+  const AFFLICTIONS = {
+    hoard: { name: '편집증', desc: '식량 −3을 숨김', days: 2, food: -3,
+      text: '{who:이/가} 밤새 창고를 들락거렸다. 아침에 보니 통조림이 비었다. 침낭 속에 감춘 깡통을 껴안고 “내 거야”만 되뇐다.' },
+    despair: { name: '자포자기', desc: '3일간 일 못 함 · 매일 밤 모두 스트레스 +3', days: 3, ambient: 3, others: 4,
+      text: '{who:이/가} 선로 위에 드러누워 움직이지 않는다. 물도 받아먹지 않는다. 밤마다 흐느끼는 소리가 승강장을 채운다.' },
+    violent: { name: '폭력', desc: '다른 주민 부상 1 · 모두 스트레스 +6', days: 2, others: 6, hurtOther: 1,
+      text: '{who:이/가} 아무 말 없이 {who2:을/를} 덮쳤다. 쇠파이프가 세 번 내려가고서야 사람들이 떼어 냈다.' },
+    flee: { name: '도주', desc: '본인 중상', days: 2, hurtSelf: 2,
+      text: '{who:이/가} 비명을 지르며 터널로 뛰쳐나갔다. 새벽에 피투성이로 기어 돌아왔다. 무엇을 봤는지는 말하지 않는다.' },
+  };
+
+  // ── 시신: 누군가 죽은 그날 밤(또는 다음 밤) 반드시 처리해야 한다. taboo는 되돌릴 수 없는 선 ──
+  const CORPSE = { title: '시신', text: '{who}의 몸이 담요 아래서 굳어 간다. 벌써 파리가 꼬인다. 누군가 정해야 한다.',
+    choices: [
+      { text: '선로 끝에 묻고 이름을 불러 준다', cost: { food: 1 }, out: { text: '마지막 건빵 한 조각을 무덤 위에 올렸다. 한 사람씩 {who}의 이름을 불렀다. 우는 사람은 없었다. 울 기운이 없었다.', stress: -8, mem: '{who:을/를} 묻어 주었다.' } },
+      { text: '터널 깊숙이 끌어다 둔다', hint: '시신을 두면 썩는 냄새와 병이 돌 수 있다', out: { text: '발목을 잡고 끌었다. 머리가 침목에 부딪히는 소리가 어둠 속으로 멀어졌다.', stress: 3, flag: 'corpse_left' } },
+      { text: '살을 발라 식량으로 쓴다', taboo: true, hint: '돌아올 수 없는 선이다 — 모두 스트레스 +15, 이 일은 명부에 남는다', out: { text: '아무도 눈을 마주치지 않았다. 칼날이 뼈에 닿을 때마다 누군가 토했다. 그날 밤 모두 배불리 먹었다. 맛에 대해서는 아무도 말하지 않는다.', res: { food: 6 }, stress: 15, flag: 'ate_dead', memAll: '{who:을/를} 먹었다.' } },
+    ] };
+
   // ── 밤 사건 (매일 1장, 달력 사건은 별도). {who}/{who2}는 주민 이름, weight는 숫자 또는 (상태)=>숫자 ──
   const NIGHT = {
     n_knock: { title: '쪽문을 두드리는 소리', weight: 3, minDay: 2, text: '한밤중, 계단 쪽 철문을 누군가 두드린다. “들여보내 주세요… 제발.”',
       choices: [
         { text: '문을 열어 들인다', check: { skill: 'talk', base: 0.45 },
           ok: { text: '지친 얼굴의 사람이 담요를 받아 들고 하룻밤 자고 간다. 아침에 부품 하나를 두고 사라졌다.', res: { food: -2, parts: 1 }, stress: -2 },
-          fail: { text: '문을 연 순간 둘이 밀고 들어와 창고를 털어 달아났다.', res: { food: -3, parts: -1 }, injure: 1, exposure: 1 } },
+          fail: { text: '문을 연 순간 둘이 밀고 들어왔다. 하나가 문지기의 얼굴을 벽돌로 내리쳤다. 창고를 털어 달아났다.', res: { food: -3, parts: -1 }, injure: 1, exposure: 1 } },
         { text: '틈으로 먼저 살핀다', check: { skill: 'obs', base: 0.5 },
           ok: { text: '혼자다. 무기도 없다. 들어온 그는 가방에서 통조림을 꺼내 나눈다.', res: { food: 2 } },
           fail: { text: '어두워서 누군지 알 수 없었다. 문을 열지 못했다.', stress: 2 } },
-        { text: '열지 않는다', out: { text: '두드리는 소리가 한참 이어지다 멎었다. 아무도 그 이야기를 꺼내지 않는다.', stress: 5 } },
+        { text: '열지 않는다', out: { text: '두드리는 소리가 손톱 긁는 소리로 바뀌었다가 멎었다. 아침에 문 밑으로 핏자국이 번져 있었다. 아무도 그 이야기를 꺼내지 않는다.', stress: 5 } },
       ] },
     n_fever: { title: '열병', weight: 2, minDay: 2, who: 1, text: '{who:이/가} 밤새 열에 시달린다. 이마가 불덩이 같다.',
       choices: [
         { text: '약품을 쓴다', cost: { meds: 1 }, out: { text: '해열제를 먹이자 새벽쯤 열이 내렸다.', stress: -2 } },
         { text: '물수건으로 밤새 간호한다', cost: { water: 2 }, check: { skill: 'talk', base: 0.5 },
           ok: { text: '밤을 꼬박 새웠다. 아침엔 열이 내렸다.' },
-          fail: { text: '열은 내리지 않았다. 하루 앓아누울 것 같다.', injure: 1 } },
+          fail: { text: '새벽녘 {who:이/가} 헛소리를 하며 경련했다. 혀를 깨물지 않게 수건을 물렸다.', injure: 1 } },
         { text: '따로 눕혀 두고 지켜본다', out: { text: '열이 오래 갔다.', injure: 1, stress: 2 } },
       ] },
-    n_quarrel: { title: '다툼', weight: 2, minDay: 3, who: 2, text: '배급 문제로 {who:과/와} {who2:이/가} 멱살을 잡았다. 다들 당신을 쳐다본다.',
+    n_quarrel: { title: '다툼', weight: 2, minDay: 3, who: 2, text: '배급 문제로 {who:과/와} {who2:이/가} 서로의 목을 졸랐다. 얼굴이 시퍼레지는데도 손을 놓지 않는다. 다들 당신을 쳐다본다.',
       choices: [
         { text: '사이에 끼어 말린다', check: { skill: 'talk', base: 0.45 },
           ok: { text: '둘은 씩씩대다 결국 악수했다. 분위기가 풀렸다.', stress: -3 },
-          fail: { text: '주먹이 오갔다. 한 사람이 다쳤다.', injure: 1, stress: 3 } },
+          fail: { text: '말리는 손을 뿌리치고 하나가 상대의 귀를 물어뜯었다. 바닥에 귓바퀴 조각이 떨어졌다.', injure: 1, stress: 3 } },
         { text: '내 몫을 나눠 준다', cost: { food: 2 }, out: { text: '당신이 자기 몫을 내밀자 둘 다 머쓱해졌다.', stress: -4 } },
         { text: '못 본 척한다', out: { text: '다툼은 새벽까지 이어졌다.', stress: 6 } },
       ] },
@@ -304,13 +337,29 @@
         { text: '다 같이 둘러앉아 남은 건빵을 나눈다', cost: { food: 1 }, out: { text: '옛날 노래를 하나씩 불렀다. 오랜만에 웃음소리가 났다.', stress: -6 } },
         { text: '일찍 눕는다', out: { text: '푹 잤다. 다친 사람들도 한결 낫다.', stress: -3, heal: 1 } },
       ] },
+      // 전력이 끊긴 밤에만 온다
+    n_dark: { title: '불 꺼진 승강장', weight: (s) => (s.dark ? 5 : 0), minDay: 1, text: '발전기가 멈춘 밤. 승강장 저편 선로 위로 무언가 질질 끌리는 소리가 다가온다. 숨소리가 하나 더 들린다.',
+      choices: [
+        { text: '쇠파이프를 들고 불빛 없이 나간다', check: { skill: 'str', base: 0.4 },
+          ok: { text: '쥐도 사람도 아니었다. 그것은 손전등 불빛이 닿자 선로 아래로 미끄러져 사라졌다. 끈적한 자국만 남았다.', stress: -2 },
+          fail: { text: '어둠 속에서 무언가가 팔을 물고 놓지 않았다. 끌려가기 직전에 겨우 빼냈다. 팔뚝 살점이 한 움큼 없다.', injure: 2, stress: 4 } },
+        { text: '부품을 태워 불을 피운다', cost: { parts: 1 }, out: { text: '전선 피복이 타는 매캐한 냄새와 함께 불빛이 번지자 소리가 멎었다. 연기가 계단 위로 새어 나갔다.', exposure: 1 } },
+        { text: '모두 숨을 죽이고 기다린다', out: { text: '소리는 새벽까지 승강장 가장자리를 맴돌았다. 아무도 눈을 감지 못했다. 아침에 보니 침낭 하나가 갈가리 찢겨 있었다.', stress: 6 } },
+      ] },
+    // 시신을 터널에 버려 두면 온다
+    n_rot: { title: '썩는 냄새', weight: (s) => (s.flags.corpse_left ? 4 : 0), minDay: 2, who: 1, text: '터널 쪽에서 들큼한 냄새가 밀려온다. {who:이/가} 밤새 구역질을 하더니 열이 오르기 시작했다.',
+      choices: [
+        { text: '가서 시신을 태운다', cost: { parts: 1 }, out: { text: '부풀어 오른 몸에 불을 붙였다. 기름 타는 냄새가 사흘 동안 빠지지 않았다.', exposure: 2, stress: 4, unflag: 'corpse_left' } },
+        { text: '약품으로 열을 잡는다', cost: { meds: 1 }, out: { text: '열은 잡았다. 냄새는 그대로다.' } },
+        { text: '코를 막고 버틴다', out: { text: '{who:이/가} 새벽에 피 섞인 설사를 쏟았다. 냄새는 갈수록 짙어진다.', injure: 1, stress: 4 } },
+      ] },
     // 노출이 높을수록 자주 온다. 경계를 세워 두면 막을 수 있다.
     n_thief: { title: '창고를 뒤지는 소리', weight: (s) => Math.max(0, s.exposure - 3), minDay: 2, text: '자정 무렵 누군가 창고를 뒤지는 소리가 들린다. 불빛이 새어 나간 모양이다.',
       choices: [
         { text: '경계를 서던 사람이 막는다', req: { guards: 1 }, out: { text: '경계조가 도둑을 쫓아냈다. 문 밖에 흘린 통조림까지 주웠다.', exposure: -1, stress: -2 } },
         { text: '직접 쫓아간다', check: { skill: 'str', base: 0.45 },
           ok: { text: '계단에서 붙잡아 물건을 되찾았다.', stress: -2 },
-          fail: { text: '놓치고 넘어졌다. 그사이 창고가 털렸다.', res: { food: -3, parts: -1 }, injure: 1 } },
+          fail: { text: '계단에서 붙잡았지만 상대가 칼을 꺼냈다. 옆구리가 뜨거웠다. 그사이 창고가 털렸다.', res: { food: -3, parts: -1 }, injure: 1 } },
         { text: '그냥 둔다', out: { text: '아침에 보니 식량 상자가 가벼워져 있다.', res: { food: -3, parts: -1 } } },
       ] },
   };
@@ -326,19 +375,20 @@
       { text: '식량 4개를 내준다', cost: { food: 4 }, out: { text: '순찰대는 자루를 메고 말없이 올라갔다.', exposure: -3 } },
       { text: '경계를 서던 두 사람과 함께 맞선다', req: { guards: 2 }, check: { skill: 'str', base: 0.45, guards: true },
         ok: { text: '경계조가 계단을 막고 버텼다. 순찰대는 욕을 하며 물러갔다.', exposure: -3, stress: -3 },
-        fail: { text: '몸싸움 끝에 순찰대가 물러갔지만 식량을 빼앗겼다.', res: { food: -3 }, injure: 1, exposure: -1 } },
+        fail: { text: '개머리판이 경계조의 이를 부러뜨렸다. 순찰대는 웃으며 식량 자루를 메고 올라갔다.', res: { food: -3 }, injure: 1, exposure: -1 } },
       { text: '시장 쪽 거래를 2일간 끊는다', out: { text: '순찰대는 “좋아, 며칠은 조용하겠군.” 하고 돌아갔다. 시장 방면 길이 막힌다.', exposure: -2, close: { region: 'A', days: 2 } } },
     ],
   };
   const FLOOD_BREAK = {
     title: '수위 경보', text: '배수 능력을 넘어 물이 역 바닥까지 찼다. 비축품이 젖고 있다.',
     choices: [
-      { text: '비축 창고를 포기하고 물을 뺀다', out: { text: '창고가 물에 잠겼지만 수위가 내려갔다.', res: { food: -6, parts: -2 }, flood: -4 } },
-      { text: '모두 매달려 물을 퍼낸다', out: { text: '밤새 양동이를 날랐다. 수위는 내려갔지만 모두 녹초다.', stress: 8, flood: -4 } },
+      { text: '비축 창고를 포기하고 물을 뺀다', out: { text: '창고 문을 열자 불어 터진 통조림과 쥐 사체가 함께 떠내려갔다. 수위는 내려갔다.', res: { food: -6, parts: -2 }, flood: -4 } },
+      { text: '모두 매달려 물을 퍼낸다', out: { text: '밤새 양동이를 날랐다. 손바닥이 벗겨져 양동이 손잡이가 피로 미끌거렸다. 수위는 내려갔다.', stress: 8, flood: -4 } },
     ],
   };
 
-  const DATA = { GOAL_DAY, SKILLS, RES, CAP, ITEMS, REGION_NAMES, TRAITS, PEOPLE, START_PEOPLE, ALLIES, TASKS, TASK_ORDER, PROJECTS, PROLOGUE, REGIONS, GENERIC, EVENTS, PROMISES, NIGHT, CALENDAR, PATROL, FLOOD_BREAK };
+  const WARNING = '죽음, 신체 훼손, 굶주림, 식인 같은 무겁고 적나라한 장면이 나옵니다. 18세 이상에게 권합니다.';
+  const DATA = { GOAL_DAY, SKILLS, RES, CAP, ITEMS, REGION_NAMES, TRAITS, PEOPLE, START_PEOPLE, ALLIES, TASKS, TASK_ORDER, PROJECTS, PROLOGUE, REGIONS, GENERIC, EVENTS, PROMISES, NIGHT, CALENDAR, PATROL, FLOOD_BREAK, SCARS, SCAR_CHANCE, VIRTUE, AFFLICTIONS, CORPSE, WARNING };
   if (typeof module !== 'undefined' && module.exports) module.exports = DATA;
   else root.DS2_DATA = DATA;
 })(this);

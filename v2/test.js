@@ -27,7 +27,7 @@ function checkInvariants(s, where) {
 }
 
 test('데이터 무결성: 모든 사건의 선택지에 결과가 있고 참조가 유효하다', () => {
-  const all = Object.assign({}, D.EVENTS, D.PROMISES, D.NIGHT, { patrol: D.PATROL, flood_break: D.FLOOD_BREAK });
+  const all = Object.assign({}, D.EVENTS, D.PROMISES, D.NIGHT, { patrol: D.PATROL, flood_break: D.FLOOD_BREAK, corpse: D.CORPSE });
   for (const [id, ev] of Object.entries(all)) {
     assert.ok(ev.choices.length >= 2, `${id}: 선택지 2개 미만`);
     assert.ok(ev.choices.some((c) => !c.cost && !c.req), `${id}: 항상 고를 수 있는 선택지가 없음 (막다른 길)`);
@@ -596,4 +596,87 @@ test('상태는 순수 데이터다: 어느 단계에서도 structuredClone이 �
   E.dispatch = (s, a) => { const r = orig(s, a); check(s, `${a.type}/${s.phase}`); return r; };
   try { for (let seed = 1; seed <= 15; seed++) play(seed, ['balanced', 'rush', 'sloppy'][seed % 3]); }
   finally { E.dispatch = orig; }
+});
+
+// ── 어두운 장치: 영구 상처·붕괴·어둠·시신 ──
+const started = (seed) => { const s = E.newGame(seed); for (let i = 0; i < 4; i++) { E.dispatch(s, { type: 'proChoose', i: 0 }); E.dispatch(s, { type: 'proNext' }); } return s; };
+
+test('영구 상처: 중상에 이르면 확률로 남고, 기술이 깎이며, 최대 2개', () => {
+  let got = 0;
+  for (let seed = 1; seed <= 200; seed++) {
+    const s = started(seed); const r = E.byId(s, 'gicheol');
+    const before = Object.assign({}, r.skills);
+    const text = E.injure(s, r, 2);
+    if (r.scars.length) {
+      got++;
+      assert.ok(text.includes(D.SCARS[r.scars[0]].name), '상처 문장에 이름');
+      const S = D.SCARS[r.scars[0]];
+      if (S.skill) assert.strictEqual(r.skills[S.skill], Math.max(0, before[S.skill] - 1));
+    } else assert.strictEqual(text, '');
+    r.injury = 0; E.injure(s, r, 3); r.injury = 0; E.injure(s, r, 3); r.injury = 0; E.injure(s, r, 3);
+    assert.ok(r.scars.length <= 2, '상처는 최대 2개');
+    assert.strictEqual(new Set(r.scars).size, r.scars.length, '같은 상처 중복 없음');
+  }
+  assert.ok(got > 60 && got < 140, `중상 상처 비율이 대략 45% (${got}/200)`);
+});
+
+test('영구 상처: 저는 다리는 원정을 막는다', () => {
+  const s = started(3); s.res.food = 10; s.res.water = 10;
+  E.byId(s, 'dongha').scars = ['leg'];
+  assert.ok(E.noExp(E.byId(s, 'dongha')));
+  assert.match(E.canDepart(s, 'A', ['dongha', 'seoha'], { food: 2, water: 2, meds: 0, items: [] }), /다리/);
+  assert.strictEqual(E.canDepart(s, 'A', ['gicheol', 'seoha'], { food: 2, water: 2, meds: 0, items: [] }), '');
+});
+
+test('붕괴: 스트레스 100이면 각성하거나 종류별로 무너진다', () => {
+  const kinds = new Set(); let virtue = 0;
+  for (let seed = 1; seed <= 120; seed++) {
+    const s = started(seed); s.res.food = 10;
+    const r = E.byId(s, 'eunji'); r.stress = 100;
+    const others = E.alive(s).filter((o) => o.id !== r.id).map((o) => o.injury);
+    E.crack(s, r);
+    if (r.virtue) { virtue++; assert.strictEqual(r.stress, 35); assert.strictEqual(r.breakdown, 0); continue; }
+    const A = D.AFFLICTIONS[r.affl];
+    assert.ok(A, '붕괴 종류'); kinds.add(r.affl);
+    assert.strictEqual(r.breakdown, A.days);
+    if (r.affl === 'hoard') assert.strictEqual(s.res.food, 7);
+    if (r.affl === 'violent') assert.ok(E.alive(s).filter((o) => o.id !== r.id).some((o, i) => o.injury > others[i]), '다른 주민이 다침');
+    if (r.affl === 'flee') assert.ok(r.injury >= 2);
+  }
+  assert.strictEqual(kinds.size, Object.keys(D.AFFLICTIONS).length, '모든 종류가 나온다');
+  assert.ok(virtue > 10 && virtue < 50, `각성 약 25% (${virtue}/120)`);
+});
+
+test('어둠: 발전이 없으면 모두 스트레스 +4 (미리보기 = 실제)', () => {
+  const s = started(5);
+  E.dispatch(s, { type: 'setPlan', plan: {} });
+  const pv = E.previewNight(s);
+  assert.ok(pv.ev.dark && pv.ev.ambient === 4);
+  assert.ok(pv.warnings.some((w) => /어둡다/.test(w.text)));
+  const r = E.byId(s, 'soonrye'); const before = r.stress;
+  const row = pv.ev.rows.find((x) => x.rid === 'soonrye');
+  E.dispatch(s, { type: 'endDay' }); E.dispatch(s, { type: 'skipTalk' });
+  assert.strictEqual(r.stress, Math.max(0, Math.min(100, before + row.stress)));
+  if (s.phase === 'nightEvent') assert.ok(s.dark, '밤 사건 동안 어둠 유지');
+  const s2 = started(5); E.dispatch(s2, { type: 'setPlan', plan: { seoha: 'gen' } });
+  assert.ok(!E.previewNight(s2).ev.dark);
+});
+
+test('시신: 죽은 날 밤 처리해야 하고, 먹으면 명부에 남는다', () => {
+  const s = started(6); s.res.food = 10; s.res.meds = 0;
+  const d = E.byId(s, 'dongha'); d.injury = 3; d.crit = s.day;
+  E.dispatch(s, { type: 'setPlan', plan: {} }); E.dispatch(s, { type: 'endDay' }); E.dispatch(s, { type: 'skipTalk' });
+  assert.strictEqual(d.status, 'dead');
+  assert.strictEqual(s.phase, 'nightEvent'); assert.strictEqual(s.nightEv.id, 'corpse');
+  assert.ok(s.nightEv.ev.text.includes('한동하'));
+  const food = s.res.food;
+  const i = s.nightEv.ev.choices.findIndex((c) => c.taboo);
+  assert.ok(E.dispatch(s, { type: 'nightChoose', i }).ok);
+  assert.strictEqual(s.res.food, Math.min(D.CAP.food, food + 6));
+  assert.ok(s.flags.ate_dead && s.corpses.length === 0);
+  assert.ok(E.alive(s).every((r) => r.mem.some((m) => /한동하를 먹었다/.test(m.text))));
+  E.dispatch(s, { type: 'nightDone' });
+  s.phase = 'boarding'; s.day = 10; s.boarding = { pool: [], cap: 0, picks: [], passage: false };
+  E.dispatch(s, { type: 'confirmBoarding' });
+  assert.ok(s.ending.ledger.some((l) => /먹었다/.test(l.text)));
 });

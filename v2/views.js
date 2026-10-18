@@ -49,7 +49,7 @@
       const r = s.proResult;
       return `<h2 class="ct">${esc(sc.title)}</h2><div class="result"><p class="picked">▸ ${esc(r.choice)}</p>${r.text ? `<p>${esc(r.text)}</p>` : ''}${lines(r.lines)}</div>${btn('proNext', s.pro + 1 >= D.PROLOGUE.length ? '역에서의 첫날을 시작한다' : '계속', { cls: ['primary'] })}`;
     }
-    return `<h2 class="ct">${esc(sc.title)}</h2><p class="text">${esc(sc.text)}</p><div class="choices">${sc.choices.map((c, i) => btn('proChoose', c.text, { arg: i })).join('')}</div>`;
+    return `${s.pro === 0 ? `<p class="hint tip">${esc(D.WARNING)}</p>` : ''}<h2 class="ct">${esc(sc.title)}</h2><p class="text">${esc(sc.text)}</p><div class="choices">${sc.choices.map((c, i) => btn('proChoose', c.text, { arg: i })).join('')}</div>`;
   }
 
   // ── 선택지 버튼 (판정 확률 + 비용 + 숨은 위험 + 경고) ──
@@ -92,7 +92,9 @@
     if (r.injury === 1) b.push('<span class="badge">경상</span>');
     if (r.injury === 2) b.push('<span class="badge warn">중상</span>');
     if (r.injury >= 3) b.push('<span class="badge bad">위독</span>');
-    if (r.breakdown > 0) b.push('<span class="badge warn">탈진</span>');
+    if (r.breakdown > 0) b.push(`<span class="badge bad">${r.affl && D.AFFLICTIONS[r.affl] ? esc(D.AFFLICTIONS[r.affl].name) : '탈진'}</span>`);
+    if (r.virtue) b.push(`<span class="badge good">${esc(D.VIRTUE.name)}</span>`);
+    for (const id of r.scars || []) b.push(`<span class="badge warn">${esc(D.SCARS[id].name)}</span>`);
     return b.join('');
   }
   function goalCard(s) {
@@ -188,7 +190,7 @@
     const home = E.homeRes(s);
     let h = `<section class="card" id="prep"><h3>${esc(D.REGIONS[p.region].name)} 준비</h3><p class="hint">동행 2명을 고르세요 (${p.party.length}/2). 세 번째를 누르면 가장 먼저 고른 사람이 빠져요.</p>`;
     h += home.map((r) => {
-      const why = r.injury >= 2 ? '중상' : r.stress >= E.STRESS_LIMIT_EXP ? `스트레스 ${r.stress}` : r.breakdown > 0 ? '탈진' : '';
+      const why = r.injury >= 2 ? '중상' : r.stress >= E.STRESS_LIMIT_EXP ? `스트레스 ${r.stress}` : r.breakdown > 0 ? '탈진' : E.noExp(r) ? '다리를 전다' : '';
       const on = p.party.includes(r.id);
       const task = s.plan[r.id] && s.plan[r.id] !== 'rest' ? D.TASKS[s.plan[r.id]].name : '';
       return `<button type="button" class="pick ${on ? 'on' : ''}" data-act="togglePartner" data-arg="${r.id}" aria-pressed="${on}" ${why ? 'disabled' : ''}>${A.portrait(r.id, r, 36)}<b>${on ? '✓ ' : ''}${esc(r.name)}</b><span class="mini">관찰 ${r.skills.obs} 완력 ${r.skills.str} 기술 ${r.skills.tech} 말솜씨 ${r.skills.talk}</span><span class="mini">${esc(D.TRAITS[r.good].name)}·${esc(D.TRAITS[r.bad].name)} / 스트레스 ${r.stress}${task ? ` / 지금 배치: ${esc(task)}` : ''}${why ? ' — 갈 수 없음: ' + esc(why) : ''}</span></button>`;
@@ -217,6 +219,9 @@
         <div class="rbar"><span class="mini">스트레스 ${r.stress}</span>${bar(r.stress, 100, r.stress >= 70 ? 'hot' : '', [70])}</div>
         <p class="mini">관찰 ${r.skills.obs} · 완력 ${r.skills.str} · 기술 ${r.skills.tech} · 말솜씨 ${r.skills.talk}</p>
         <p class="mini">장점 <b>${esc(D.TRAITS[r.good].name)}</b> ${esc(D.TRAITS[r.good].desc)}<br>단점 <b>${esc(D.TRAITS[r.bad].name)}</b> ${esc(D.TRAITS[r.bad].desc)}</p>
+        ${(r.scars || []).length ? `<p class="mini">상처 ${r.scars.map((id) => `<b>${esc(D.SCARS[id].name)}</b> ${esc(D.SCARS[id].desc)}`).join(' · ')}</p>` : ''}
+        ${r.breakdown > 0 && r.affl ? `<p class="mini">붕괴 <b>${esc(D.AFFLICTIONS[r.affl].name)}</b> ${esc(D.AFFLICTIONS[r.affl].desc)} — ${r.breakdown}일 더 일 못 함</p>` : ''}
+        ${r.virtue ? `<p class="mini">각성 <b>${esc(D.VIRTUE.name)}</b> ${esc(D.VIRTUE.desc)}</p>` : ''}
         <p class="mini">신뢰 ${trustDots(r.trust)} · 바람: ${esc(P.wish)}</p>
         ${r.mem.length ? `<p class="mem">${r.mem.slice(-3).reverse().map((m) => `D${m.day} ${esc(m.text)}`).join('<br>')}</p>` : ''}</section>`;
     }
@@ -271,7 +276,7 @@
   // ── 밤 사건 ──
   function night(s) {
     const v = E.nightView(s);
-    const dead = s.report.filter((l) => l.kind === 'bad' && /세상을 떠났다/.test(l.text));
+    const dead = s.report.filter((l) => l.kind === 'bad' && /숨을 거뒀다/.test(l.text));
     let h = `<p class="tag">밤</p>${dead.map((l) => `<section class="card alert"><h3>${esc(l.text)}</h3></section>`).join('')}<section class="card">${repLines(s.report.filter((l) => !dead.includes(l)))}</section><h2 class="ct">${esc(v.title)}</h2><p class="text">${esc(v.text)}</p>`;
     if (!v.result) return h + `<div class="choices">${v.choices.map((c, i) => choiceBtn('nightChoose', i, c)).join('')}</div>`;
     const r = v.result;
