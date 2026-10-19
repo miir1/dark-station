@@ -291,5 +291,45 @@
     return c;
   }
 
-  window.ART = { T, RAMP, tile, prop, flame, personSprite, creatureSprite, portrait, PEOPLE };
+  // ── 32px 시대: Codex가 그린 그림(img/…)이 있으면 그것을, 없으면 위의 코드 그림을 2배로 ──
+  const S = 2, TT = T * S;
+  const up = (c) => { const o = document.createElement('canvas'); o.width = c.width * S; o.height = c.height * S; const g = o.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, o.width, o.height); return o; };
+  const IMG = {};                           // 'sprites/gicheol' → Image
+  const ready = fetch('img/manifest.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : [])).catch(() => []).then((list) => Promise.all(list.map((name) => new Promise((res) => {
+    const im = new Image(); im.onload = () => { IMG[name] = im; res(); }; im.onerror = () => res(); im.src = 'img/' + name + '.png';
+  }))));
+  const toCanvas = (im) => { const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; c.getContext('2d').drawImage(im, 0, 0); return c; };
+  const big = new Map();
+  const once = (key, make) => { if (!big.has(key)) big.set(key, make()); return big.get(key); };
+  function tile2(kind, x, y) {
+    const v = (((x * 73856093) ^ (y * 19349663)) >>> 0) % 4;
+    const name = IMG['tiles/' + kind + '_' + v] ? 'tiles/' + kind + '_' + v : IMG['tiles/' + kind + '_0'] ? 'tiles/' + kind + '_0' : null;
+    return once('t:' + kind + ':' + v + ':' + !!name, () => (name ? toCanvas(IMG[name]) : up(tile(kind, x, y))));
+  }
+  function prop2(id) { return once('p:' + id, () => (IMG['props/' + id] ? toCanvas(IMG['props/' + id]) : up(prop(id)))); }
+  function flame2(frame) { return once('f:' + frame, () => up(flame(frame))); }
+  // 사람 32×48: 걷기는 1px 출렁임, 부상은 피를 덧그림
+  function person2(id, frame, hurt) {
+    return once('h:' + id + ':' + (frame || 0) + ':' + (hurt || 0), () => {
+      const im = IMG['sprites/' + id];
+      if (!im) return up(personSprite(id, frame, hurt));
+      const c = document.createElement('canvas'); c.width = 32; c.height = 48;
+      const g = c.getContext('2d');
+      g.drawImage(im, 0, frame ? (frame === 1 ? -1 : 0) : 0);
+      if (hurt) {
+        g.globalCompositeOperation = 'source-atop';
+        const R = rng(7 + hurt * 31 + id.length);
+        g.fillStyle = hurt >= 3 ? 'rgba(110,16,20,0.85)' : 'rgba(110,16,20,0.7)';
+        for (let i = 0; i < hurt * 5; i++) g.fillRect(6 + R() * 20, 8 + R() * 32, 2 + R() * 3, 2 + R() * 4);
+        g.globalCompositeOperation = 'source-over';
+      }
+      return c;
+    });
+  }
+  function creature2(id) { return once('c:' + id, () => (IMG['creatures/' + id] ? toCanvas(IMG['creatures/' + id]) : up(creatureSprite(id)))); }
+  function portrait2(id, hurt) { return once('o:' + id + ':' + (hurt || 0), () => (IMG['portraits/' + id] ? toCanvas(IMG['portraits/' + id]) : up(up(portrait(id, hurt))))); }
+  const has = (name) => !!IMG[name];
+
+  window.ART = { T: TT, PH: 48, RAMP, tile: tile2, prop: prop2, flame: flame2, personSprite: person2, creatureSprite: creature2, portrait: portrait2, PEOPLE, ready, has,
+    raw: { tile, prop, flame, personSprite, creatureSprite, portrait } };
 })();

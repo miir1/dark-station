@@ -30,6 +30,14 @@
     return r.ok;
   }
 
+  // 사건 그림: 사건 id → 크리처 그림 (그림이 있을 때만 대화창 위에)
+  const EVENT_ART = { g2_rats: 'rats', c_twomouth: 'twomouth', c_drowned: 'drowned', c_bonepicker: 'bonepicker', c_counter: 'child', c_conductor: 'conductor', c_echo: 'echo',
+    n_leeches: 'leeches', n_moths: 'moth', n_lampimp: 'lampimp', n_ghoul: 'ghoul', 'god:seel': 'eye' };
+  function eventArt(key) {
+    const id = EVENT_ART[key];
+    if (!id || !ART.has('creatures/' + id)) return '';
+    return `<p style="text-align:center;margin:0 0 6px"><img alt="" src="${ART.creatureSprite(id).toDataURL()}" style="width:128px;height:128px;image-rendering:pixelated"></p>`;
+  }
   // ── 공통 문장 ──
   const resText = (o) => Object.entries(o).filter(([, v]) => v).map(([k, v]) => `${D.RES[k]} ${v > 0 ? '+' : '−'}${Math.abs(v)}`).join(' · ');
   const reps = (arr) => arr.map((l) => `<p class="rep ${l.kind || ''}">${esc(l.text)}</p>`).join('');
@@ -170,10 +178,11 @@
     const st = $('stage');
     const W = st.clientWidth || 375, H = st.clientHeight || 420;
     const mapRows = Math.min(13, scene.h || 13);
-    const scale = Math.max(2, Math.min(5, Math.floor(H / (T * mapRows)), Math.floor(W / (T * 7))));
+    // 맵 높이가 화면에 꽉 차게 (폰에서는 소수 배율도 허용)
+    const scale = Math.max(1, Math.min(4, H / (T * mapRows), W / (T * 7)));
     view = { cols: Math.ceil(W / (T * scale)), rows: Math.ceil(H / (T * scale)), scale };
     cv.width = view.cols * T; cv.height = view.rows * T;
-    cv.style.width = cv.width * scale + 'px'; cv.style.height = cv.height * scale + 'px';
+    cv.style.width = Math.round(cv.width * scale) + 'px'; cv.style.height = Math.round(cv.height * scale) + 'px';
     ctx.imageSmoothingEnabled = false;
   }
   window.addEventListener('resize', resize);
@@ -211,7 +220,7 @@
       if (t === 'v') ctx.drawImage(ART.prop('stairsDown'), X, Y);
       if (t === 'E') ctx.drawImage(ART.prop('stairsUp'), X, Y);
       if (t === 'o') ctx.drawImage(ART.prop('door'), X, Y);
-      if (t === 'w' && (tick >> 4) % 2) { ctx.fillStyle = 'rgba(134,163,168,0.10)'; ctx.fillRect(X + ((x * 5 + y) % 9), Y + 7, 5, 1); }
+      if (t === 'w' && (tick >> 4) % 2) { ctx.fillStyle = 'rgba(134,163,168,0.10)'; ctx.fillRect(X + ((x * 5 + y) % 9) * 2, Y + 14, 10, 2); }
     }
     const sprites = [];   // [y, draw]
     if (scene.kind === 'station') drawStation(s, sprites);
@@ -222,9 +231,9 @@
       const hurt = Math.min(3, p.r.injury || 0);
       const img = ART.personSprite(p.r.id, 0, hurt);
       sprites.push([p.y, () => {
-        if (p.lying) { ctx.save(); ctx.translate(p.x * T + 16, p.y * T + 4); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0); ctx.restore(); }
-        else ctx.drawImage(img, p.x * T, p.y * T - 8);
-        if (p.r.breakdown > 0 && (tick >> 4) % 2) { ctx.fillStyle = '#9c1e1e'; ctx.fillRect(p.x * T + 7, p.y * T - 12, 2, 3); }
+        if (p.lying) { ctx.save(); ctx.translate(p.x * T + T, p.y * T + T / 4); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0, img.width * 0.67, img.height * 0.67); ctx.restore(); }
+        else ctx.drawImage(img, p.x * T, p.y * T - (ART.PH - T));
+        if (p.r.breakdown > 0 && (tick >> 4) % 2) { ctx.fillStyle = '#9c1e1e'; ctx.fillRect(p.x * T + 14, p.y * T - 26, 4, 6); }
       }]);
     }
     // 주인공과 동행
@@ -238,15 +247,16 @@
     sprites.sort((a, b) => a[0] - b[0]).forEach((d) => d[1]());
     // 앞에 조사할 것이 있으면 ▾
     const tg = target();
-    if (tg && !UI.isOpen() && !busy) { ctx.fillStyle = '#d0a24a'; const bx = tg.x * T + 6, by = tg.y * T - 14 - ((tick >> 4) % 2); ctx.fillRect(bx, by, 4, 2); ctx.fillRect(bx + 1, by + 2, 2, 1); }
+    if (tg && !UI.isOpen() && !busy) { ctx.fillStyle = '#d0a24a'; const bx = tg.x * T + 12, by = tg.y * T - 28 - ((tick >> 4) % 2) * 2; ctx.fillRect(bx, by, 8, 4); ctx.fillRect(bx + 2, by + 4, 4, 2); }
     lighting(mx, my);
     ctx.restore();
     grain();
   }
   function drawPerson(id, x, y, frame, flip, hurt) {
     const img = ART.personSprite(id, frame, Math.min(3, hurt || 0));
-    if (flip) { ctx.save(); ctx.translate(Math.round(x * T) + T, Math.round(y * T) - 8); ctx.scale(-1, 1); ctx.drawImage(img, 0, 0); ctx.restore(); }
-    else ctx.drawImage(img, Math.round(x * T), Math.round(y * T) - 8);
+    const up = ART.PH - T;
+    if (flip) { ctx.save(); ctx.translate(Math.round(x * T) + T, Math.round(y * T) - up); ctx.scale(-1, 1); ctx.drawImage(img, 0, 0); ctx.restore(); }
+    else ctx.drawImage(img, Math.round(x * T), Math.round(y * T) - up);
   }
   // 필름 알갱이·가장자리 어둠
   let vign = null;
@@ -304,10 +314,16 @@
     for (const [y, a] of rowsW) { ctx.globalAlpha = 0.75 * a; for (let x = 1; x < 23; x++) ctx.drawImage(ART.tile('water', x, y), x * T, y * T); ctx.globalAlpha = 1; }
     // 멈춘 2호선 전동차
     const tx = 2 * T, ty = 10 * T;
-    ctx.fillStyle = '#5b5049'; ctx.fillRect(tx, ty + 1, 7 * T, 2 * T - 3);
-    ctx.fillStyle = '#7d7067'; ctx.fillRect(tx, ty + 1, 7 * T, 2);
-    ctx.fillStyle = '#2a6b3c'; ctx.fillRect(tx, ty + 19, 7 * T, 4);
-    for (let k = 0; k < 6; k++) { ctx.fillStyle = '#0d171c'; ctx.fillRect(tx + 6 + k * 18, ty + 6, 11, 9); ctx.fillStyle = 'rgba(134,163,168,0.25)'; ctx.fillRect(tx + 7 + k * 18, ty + 7, 3, 3); }
+    if (ART.has('props/door')) {             // 2호선 전동차: 출입문 그림을 이어 붙인다
+      const door = ART.prop('door');
+      for (let k = 0; k < 7; k++) ctx.drawImage(door, tx + k * T, ty, T, 2 * T);
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(tx, ty, 7 * T, 2 * T);
+    } else {
+    ctx.fillStyle = '#5b5049'; ctx.fillRect(tx, ty + 2, 7 * T, 2 * T - 6);
+    ctx.fillStyle = '#7d7067'; ctx.fillRect(tx, ty + 2, 7 * T, 4);
+    ctx.fillStyle = '#2a6b3c'; ctx.fillRect(tx, ty + 38, 7 * T, 8);
+    for (let k = 0; k < 6; k++) { ctx.fillStyle = '#0d171c'; ctx.fillRect(tx + 12 + k * 36, ty + 12, 22, 18); ctx.fillStyle = 'rgba(134,163,168,0.25)'; ctx.fillRect(tx + 14 + k * 36, ty + 14, 6, 6); }
+    }
     ctx.fillStyle = '#050404'; ctx.fillRect(23 * T, 10 * T, T, 2 * T);
     // 바닥 얼룩·꾸밈
     for (const d of M.STATION.decor || []) if (!d.solid) ctx.drawImage(ART.prop(d.prop), d.x * T, d.y * T);
@@ -323,9 +339,9 @@
       sprites.push([o.y - 0.5, () => ctx.drawImage(ART.prop(pr), o.x * T, o.y * T)]);
     }
     for (const d of M.STATION.decor || []) if (d.solid) sprites.push([d.y - 0.5, () => ctx.drawImage(ART.prop(d.prop), d.x * T, d.y * T)]);
-    for (const o of M.STATION.objects) if (o.lamp) ctx.drawImage(ART.prop('lamp'), o.x * T, (o.y - 1) * T + 6);
+    for (const o of M.STATION.objects) if (o.lamp) ctx.drawImage(ART.prop('lamp'), o.x * T, (o.y - 1) * T + 12);
     if (s.project && s.project.id === 'repair') ctx.drawImage(ART.prop('crate'), 22 * T, 8 * T);
-    sprites.push([7.4, () => ctx.drawImage(ART.flame((tick >> 3) % 2), 11 * T, 6 * T + 2)]);
+    if (!ART.has('props/drum')) sprites.push([7.4, () => ctx.drawImage(ART.flame((tick >> 3) % 2), 11 * T, 6 * T + 4)]);
     if (s.exposure > 0) { ctx.fillStyle = `rgba(150,150,150,${0.05 * s.exposure})`; ctx.fillRect(T, T, 3 * T, 2 * T); }
   }
   function drawDungeon(sprites) {
@@ -555,7 +571,7 @@
     const F = D.FIGHTS[s.exp.eventId];
     const opts = choiceOpts(v.choices);
     if (F) opts.unshift({ label: '전투를 벌인다 (부위를 노린다)', sub: esc(`${F.enemy.name} — 부위를 노리는 턴제 전투. 이기면 전리품, 부러진 부위는 부상과 상처로 남는다`), value: 'fight' });
-    const a = await UI.open(`<p class="tag">${esc(D.REGIONS[s.exp.region].name)} · 깊이 ${s.exp.depth}</p><p class="title">${esc(v.event.title)}</p><p>${esc(v.event.text)}</p>`, { options: opts, full: true });
+    const a = await UI.open(`<p class="tag">${esc(D.REGIONS[s.exp.region].name)} · 깊이 ${s.exp.depth}</p>${eventArt(s.exp.eventId)}<p class="title">${esc(v.event.title)}</p><p>${esc(v.event.text)}</p>`, { options: opts, full: true });
     if (a === 'fight') {
       const party = s.exp.party.map((id) => E.byId(s, id));
       const res = await BATTLE.run(s, F, party, { pipe: s.exp.pack.items.includes('pipe'), id: s.exp.eventId });
@@ -699,7 +715,7 @@
       if (!s._reportShown) {
         await UI.open(`<p class="tag">밤</p>${dead.map((l) => `<p class="rep bad"><b>${esc(l.text)}</b></p>`).join('')}${reps(s.report.filter((l) => !dead.includes(l)))}`, { full: true, next: '그리고…' });
       }
-      const i = await UI.open(`<p class="tag">밤${tag}</p><p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
+      const i = await UI.open(`<p class="tag">밤${tag}</p>${eventArt(s.nightEv.id === 'god' ? 'god:' + s.nightEv.god : s.nightEv.id)}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
       act({ type: 'nightChoose', i });
     }
     const r = E.nightView(state).result;
@@ -810,7 +826,7 @@
     if (label !== lastBtn) { lastBtn = label; $('btnA').textContent = label; }
   }
   function loop() { update(); draw(); overlay(); requestAnimationFrame(loop); }
-  Promise.resolve().then(() => {
+  ART.ready.then(() => {
     resize(); if (state.phase === 'prologue') enterPrologue(); else syncScene(); if (!scene.rows.length) enterStation(true); hud();
     requestAnimationFrame(loop);
     flow(async () => {});

@@ -75,7 +75,7 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 /* 한 줄 대화 */
 #dlg.line { background: transparent; }
 #dlg.line .box { display: flex; gap: 10px; align-items: flex-start; min-height: 96px; cursor: pointer; }
-#dlg.line .face { width: 72px; height: 63px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
+#dlg.line .face { width: 96px; height: 96px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
 #dlg.line .lt { flex: 1; }
 #dlg.line .tw { font-size: 16px; line-height: 1.6; margin: 0 0 4px; min-height: 3.2em; }
 #dlg.line .more { animation: ds-more 1s steps(2) infinite; }

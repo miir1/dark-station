@@ -36,7 +36,7 @@
     function view(actor) {
       const ep = PARTS.map((p) => `<span class="${en.hp[p] <= 0 ? 'broken' : ''}">${PNAME[p]} ${Math.max(0, en.hp[p])}/${en.max[p]}</span>`).join('');
       const tp = team.map((m) => `<div class="person"><b>${esc(m.r.name)}</b>${m.down ? '<span class="badge bad">쓰러짐</span>' : m.guard ? '<span class="badge">방어</span>' : ''}${m === actor ? '<span class="badge good">차례</span>' : ''}<div class="parts">${PARTS.map((p) => `<span class="${m.hp[p] <= 0 ? 'broken' : ''}">${PNAME[p]} ${Math.max(0, m.hp[p])}/${m.max[p]}</span>`).join('')}</div></div>`).join('');
-      return `<div class="battle"><p class="tag">전투</p><div class="enemy">${spriteImg(opts.id, 128)}<p class="title">${esc(en.name)}</p></div>
+      return `<div class="battle"><p class="tag">전투</p><div class="enemy">${spriteImg(opts.id, 160)}<p class="title">${esc(en.name)}</p></div>
         <div class="parts">${ep}</div>
         <p class="mini">머리나 몸통이 무너지면 쓰러진다. 다리를 부수면 반드시 도망칠 수 있고, 팔을 부수면 공격이 약해진다. 사람도 같다 — 부러진 부위는 돌아가서 부상과 영구 상처로 남는다.</p>
         <div class="blog">${log.slice(-3).join('<br>')}</div>${tp}</div>`;
