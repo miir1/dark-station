@@ -794,3 +794,16 @@ test('검표: 지킨 약속이 많으면 승차 정원 +1', () => {
   assert.strictEqual(s.seatMod, 1);
   assert.strictEqual(E.trainInfo(s).seat, 1);
 });
+
+test('전투 결과: 부러진 부위는 부상(+상처 가능), 이기면 전리품', () => {
+  const s = started(14); s.res.food = 10; s.res.water = 10;
+  s.flags.done_a1_pharmacy = true;
+  E.dispatch(s, { type: 'expStart', region: 'A', party: ['gicheol', 'dongha'], pack: { food: 2, water: 2, meds: 0, items: [] } });
+  s.exp.eventId = 'g2_rats';
+  assert.ok(!E.dispatch(s, { type: 'expFight', result: 'nope', wounds: [] }).ok);
+  assert.ok(E.dispatch(s, { type: 'expFight', result: 'win', wounds: [{ rid: 'dongha', part: 'arm' }, { rid: 'stranger', part: 'arm' }] }).ok);
+  assert.strictEqual(E.byId(s, 'dongha').injury, 1);
+  assert.strictEqual(s.exp.loot.food, 3);
+  assert.strictEqual(s.exp.phase, 'result');
+  assert.ok(!E.dispatch(s, { type: 'expFight', result: 'win', wounds: [] }).ok, '결과 화면에서는 다시 싸울 수 없다');
+});

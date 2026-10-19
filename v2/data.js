@@ -551,8 +551,34 @@
     ],
   };
 
+  // ── 전투 (v3 쯔꾸르판): 크리처와 싸우면 부위가 다친다. 부러진 부위 → 부상 + 확률로 그 부위의 영구 상처 ──
+  const BODY = {
+    head: { name: '머리', injure: 2, scarChance: 0.5, scars: ['eye', 'face'] },
+    body: { name: '몸통', injure: 2, scarChance: 0.3, scars: ['lung'] },
+    arm: { name: '팔', injure: 1, scarChance: 0.5, scars: ['hand', 'finger'] },
+    leg: { name: '다리', injure: 1, scarChance: 0.4, scars: ['leg'] },
+  };
+  // enemy.parts: 부위별 체력. 머리나 몸통이 0이면 쓰러진다. 다리가 부러지면 도망이 반드시 성공, 팔이 부러지면 공격 −1.
+  const FIGHTS = {
+    g2_rats: { enemy: { name: '쥐떼', spr: [31, 8], tint: '#a89a86', parts: { head: 2, body: 5, arm: 2, leg: 3 }, atk: 1, acc: 0.7 },
+      win: { text: '쥐떼가 흩어졌다. 몇 마리는 저녁거리가 됐다.', loot: { food: 3 } },
+      lose: { text: '쥐들이 상처를 물고 늘어졌다. 겨우 떨쳐 냈다.', stress: 4 },
+      flee: { text: '쥐떼를 피해 한참을 돌아 나왔다.', hours: 1 } },
+    c_twomouth: { enemy: { name: '입이 둘인 쥐', spr: [31, 8], tint: '#c98a6a', parts: { head: 3, body: 6, arm: 3, leg: 3 }, atk: 2, acc: 0.65 },
+      win: { text: '아래쪽 입까지 짓이겼다. 고기는 고기다.', loot: { food: 3 }, god: { gurmah: 1 } },
+      lose: { text: '아래쪽 입이 살점을 씹어 삼키고 웃었다. 쥐들은 배가 불러 물러갔다.', stress: 5, god: { gurmah: 1 } },
+      flee: { text: '웃음소리를 뒤로하고 달아났다.', hours: 1, stress: 3 } },
+    c_drowned: { enemy: { name: '익사자', spr: [24, 8], tint: '#7fa3b8', parts: { head: 3, body: 8, arm: 4, leg: 5 }, atk: 2, acc: 0.6 },
+      win: { text: '불은 머리가 터지자 물고기들이 쏟아져 나왔다. 주머니에서 부품을 챙겼다.', loot: { parts: 2 }, stress: 4, god: { nereh: -1 } },
+      lose: { text: '물속으로 끌려 들어갔다가 겨우 빠져나왔다. 발목에 손가락 자국이 검게 남았다.', stress: 6, god: { nereh: 1 } },
+      flee: { text: '첨벙거리며 계단을 기어올랐다.', hours: 1 } },
+    c_bonepicker: { enemy: { name: '뼈 줍는 이', spr: [24, 6], tint: '#9c9c9c', parts: { head: 4, body: 9, arm: 4, leg: 4 }, atk: 3, acc: 0.55 },
+      win: { text: '노인의 자루를 빼앗았다. 뼈 사이에 약과 부품이 섞여 있었다. 노인은 쓰러진 채 웃었다. “다 내게 오게 돼 있어.”', loot: { meds: 2, parts: 3 }, stress: 6, god: { osren: 2 } },
+      lose: { text: '노인의 펜치가 손가락 사이를 파고들었다. 노인은 자루를 메고 유유히 사라졌다.', stress: 6, god: { osren: 1 } },
+      flee: { text: '노인의 웃음이 등 뒤에서 오래 따라왔다.', hours: 1, stress: 2 } },
+  };
   const WARNING = '죽음, 신체 훼손, 굶주림, 식인 같은 무겁고 적나라한 장면이 나옵니다. 18세 이상에게 권합니다.';
-  const DATA = { GOAL_DAY, SKILLS, RES, CAP, ITEMS, REGION_NAMES, TRAITS, PEOPLE, START_PEOPLE, ALLIES, TASKS, TASK_ORDER, PROJECTS, PROLOGUE, REGIONS, GENERIC, EVENTS, PROMISES, NIGHT, CALENDAR, PATROL, FLOOD_BREAK, SCARS, SCAR_CHANCE, VIRTUE, AFFLICTIONS, CORPSE, WARNING, GODS, CREATURES };
+  const DATA = { GOAL_DAY, SKILLS, RES, CAP, ITEMS, REGION_NAMES, TRAITS, PEOPLE, START_PEOPLE, ALLIES, TASKS, TASK_ORDER, PROJECTS, PROLOGUE, REGIONS, GENERIC, EVENTS, PROMISES, NIGHT, CALENDAR, PATROL, FLOOD_BREAK, SCARS, SCAR_CHANCE, VIRTUE, AFFLICTIONS, CORPSE, WARNING, GODS, CREATURES, BODY, FIGHTS };
   if (typeof module !== 'undefined' && module.exports) module.exports = DATA;
   else root.DS2_DATA = DATA;
 })(this);

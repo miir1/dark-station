@@ -692,6 +692,30 @@
     if (e.party.some((id) => byId(s, id).injury >= 3)) e.force = true;
     return true;
   }
+  // 전투 결과 (v3 화면에서 싸운 뒤): result 'win'|'lose'|'flee', wounds [{rid, part}] 부러진 부위
+  function expFight(s, result, wounds) {
+    const e = s.exp;
+    if (!e || e.phase !== 'event') return false;
+    const F = D.FIGHTS[e.eventId];
+    if (!F || !F[result]) return false;
+    const lines = [];
+    for (const w of (Array.isArray(wounds) ? wounds : []).slice(0, 8)) {
+      const r = w && byId(s, w.rid), P = w && D.BODY[w.part];
+      if (!r || !P || !e.party.includes(r.id) || r.status === 'dead') continue;
+      const sc = injure(s, r, P.injure);
+      lines.push(`${r.name}: ${J(P.name, "이/가")} 부러졌다 (부상 ${P.injure})`);
+      if (sc) lines.push(sc);
+      else if (rand(s) < P.scarChance) { const sc2 = forceScar(s, r, pick(s, P.scars)); if (sc2) lines.push(sc2); }
+      memo(r, s.day, `${F.enemy.name}에게 ${J(P.name, "을/를")} 다쳤다.`, true);
+    }
+    const o = F[result];
+    const more = applyOutcome(s, o, 'exp', true);
+    e.steps += 1;
+    e.result = { choice: result === 'win' ? `${J(F.enemy.name, "과/와")} 싸워 이겼다` : result === 'lose' ? `${F.enemy.name}에게 졌다` : `${F.enemy.name}에게서 도망쳤다`, text: o.text, lines: lines.concat(more), roll: null, retry: false };
+    e.phase = 'result';
+    if (e.party.some((id) => byId(s, id).injury >= 3)) e.force = true;
+    return true;
+  }
   function expNext(s, mode) {
     const e = s.exp;
     if (!e || e.phase !== 'result') return false;
@@ -1177,6 +1201,7 @@
       }
       case 'expChoose': if (!isIdx(a.i)) break; ok = expChoose(s, a.i); break;
       case 'expNext': if (typeof a.mode !== 'string') break; ok = expNext(s, a.mode); break;
+      case 'expFight': if (typeof a.result !== 'string') break; ok = expFight(s, a.result, a.wounds); break;
       case 'endDay': ok = endDay(s); break;
       case 'eveningChoose': if (!isIdx(a.i)) break; ok = eveningChoose(s, a.i); break;
       case 'talk': if (typeof a.rid !== 'string') break; ok = talk(s, a.rid); break;
