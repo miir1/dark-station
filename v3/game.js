@@ -455,7 +455,7 @@
       const row = pv.ev.rows.find((x) => x.rid === r.id);
       const task = pv.ev.plan[r.id] || 'rest';
       const P = D.PEOPLE[r.id];
-      const body = `<p class="who">${esc(r.name)} <span class="mini">${P.age}세 · ${esc(P.bio)}</span>${badges(r)}</p>
+      const body = `<img alt="" src="${ART.portrait(r.id, r.injury).toDataURL()}" style="float:left;width:84px;height:84px;image-rendering:pixelated;margin:0 10px 6px 0;border:1px solid #3a342b"><p class="who">${esc(r.name)} <span class="mini">${P.age}세 · ${esc(P.bio)}</span>${badges(r)}</p>
         <p class="mini">스트레스 ${r.stress}${bar(r.stress, 100, r.stress >= 70)} · 신뢰 ${'●'.repeat(r.trust)}${'○'.repeat(4 - r.trust)}</p>
         <p class="mini">관찰 ${r.skills.obs} · 완력 ${r.skills.str} · 기술 ${r.skills.tech} · 말솜씨 ${r.skills.talk} · ${esc(D.TRAITS[r.good].name)}/${esc(D.TRAITS[r.bad].name)}</p>
         <p>오늘: <b>${esc(D.TASKS[task].name)}</b>${row ? ` — ${esc(row.out)}${row.stress != null ? ` · 스트레스 ${row.stress > 0 ? '+' : ''}${row.stress}` : ''}${row.infect ? ` · 곪을 위험 ${Math.round(row.infect * 100)}%` : ''}` : ''}</p>
@@ -718,8 +718,9 @@
       const rid = await UI.open('<p class="tag">저녁 · 화로 앞</p><p class="title">누구와 이야기할까</p>', { options: opts });
       if (rid) {
         act({ type: 'talk', rid });
-        const t = state.evening;
-        await UI.open(`<p class="who">${esc(E.byId(state, rid).name)}</p><p>${esc(t.line)}</p>${fx([`스트레스 −${t.delta}`, '신뢰 +1'].concat(t.extra ? [t.extra.trim()] : []))}`, { next: '밤이 된다' });
+        const t = state.evening, who = E.byId(state, rid);
+        await UI.lines(t.line, { name: who.name, face: ART.portrait(rid, who.injury).toDataURL() });
+        UI.toast([`스트레스 −${t.delta}`, '신뢰 +1'].concat(t.extra ? [t.extra.trim()] : []).join(' · '), 2400);
         act({ type: 'eveningDone' });
       } else act({ type: 'skipTalk' });
     } else act({ type: 'eveningDone' });
@@ -731,7 +732,10 @@
       const tag = s.nightEv.id === 'god' ? ` · ${s.nightEv.kind === 'omen' ? '징조' : '강림'} — ${esc(E.godLabel(s, s.nightEv.god))}${ART.has('gods/' + s.nightEv.god) ? ` <img alt="" src="img/gods/${s.nightEv.god}.png" style="width:24px;height:24px;vertical-align:middle;image-rendering:pixelated">` : ''}` : '';
       if (!s._reportShown) {
         const surgeNight = s.report.some((l) => l.text === D.CALENDAR.surge.text);
-        await UI.open(`<p class="tag">밤</p>${surgeNight ? cgImg('surge') : ''}${dead.map((l) => `<p class="rep bad"><b>${esc(l.text)}</b></p>`).join('')}${reps(s.report.filter((l) => !dead.includes(l)))}`, { full: true, next: '그리고…' });
+        const AFF = { 편집증: 'affl_hoard', 자포자기: 'affl_despair', 폭력: 'affl_violent', 도주: 'affl_flee' };
+        const crackLine = s.report.find((l) => /— 붕괴: |— 각성: /.test(l.text));
+        const crackCg = crackLine ? (/각성/.test(crackLine.text) ? 'virtue' : AFF[(crackLine.text.match(/붕괴: (\S+)/) || [])[1]]) : '';
+        await UI.open(`<p class="tag">밤</p>${(crackCg && cgImg(crackCg)) || (surgeNight ? cgImg('surge') : '')}${dead.map((l) => `<p class="rep bad"><b>${esc(l.text)}</b></p>`).join('')}${reps(s.report.filter((l) => !dead.includes(l)))}`, { full: true, next: '그리고…' });
       }
       const i = await UI.open(`<p class="tag">밤${tag}</p>${(s.nightEv.id === 'god' ? cgImg(s.nightEv.god + '_' + s.nightEv.kind) : cgImg(s.nightEv.id)) || eventArt(s.nightEv.id === 'god' ? 'god:' + s.nightEv.god : s.nightEv.id)}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
       act({ type: 'nightChoose', i });

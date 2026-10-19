@@ -331,7 +331,11 @@
     });
   }
   function creature2(id) { return once('c:' + id, () => (IMG['creatures/' + id] ? toCanvas(IMG['creatures/' + id]) : up(creatureSprite(id)))); }
-  function portrait2(id, hurt) { return once('o:' + id + ':' + (hurt || 0), () => (IMG['portraits/' + id] ? toCanvas(IMG['portraits/' + id]) : up(up(portrait(id, hurt))))); }
+  // 중상 이상이면 다친 얼굴 (portraits_hurt/…)
+  function portrait2(id, hurt) {
+    const h = hurt >= 2 && IMG['portraits_hurt/' + id] ? 'portraits_hurt/' + id : 'portraits/' + id;
+    return once('o:' + h, () => (IMG[h] ? toCanvas(IMG[h]) : up(up(portrait(id, hurt)))));
+  }
   const has = (name) => !!IMG[name];
 
   window.ART = { T: TT, PH: 48, RAMP, tile: tile2, prop: prop2, flame: flame2, personSprite: person2, creatureSprite: creature2, portrait: portrait2, PEOPLE, ready, has,
