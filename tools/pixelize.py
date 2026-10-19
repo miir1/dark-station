@@ -9,11 +9,16 @@ ramp_block = ART[ART.index('const RAMP = {'):ART.index('};', ART.index('const RA
 PAL = [tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) for h in re.findall(r"'#([0-9a-fA-F]{6})'", ramp_block)]
 
 
-def pixelize(src, dst, size=96):
+def pixelize(src, dst, size=96, height=None):
     im = Image.open(src).convert('RGB')
     w, h = im.size
-    s = min(w, h)
-    im = im.crop(((w - s) // 2, (h - s) // 2, (w - s) // 2 + s, (h - s) // 2 + s)).resize((size, size), Image.BOX)
+    W, H = size, height or size
+    # 가운데를 목표 비율로 자른다
+    if w / h > W / H:
+        cw, ch = round(h * W / H), h
+    else:
+        cw, ch = w, round(w * H / W)
+    im = im.crop(((w - cw) // 2, (h - ch) // 2, (w - cw) // 2 + cw, (h - ch) // 2 + ch)).resize((W, H), Image.BOX)
     pal = Image.new('P', (1, 1))
     flat = [c for rgb in PAL for c in rgb]
     pal.putpalette(flat + [0] * (768 - len(flat)))
@@ -23,5 +28,5 @@ def pixelize(src, dst, size=96):
 
 
 if __name__ == '__main__':
-    pixelize(sys.argv[1], sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 96)
+    pixelize(sys.argv[1], sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 96, int(sys.argv[4]) if len(sys.argv) > 4 else None)
     print('ok', len(PAL), 'colors')

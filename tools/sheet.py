@@ -144,7 +144,7 @@ def run(src, outdir, names, W, H, min_area=2000):
     return boxes, made
 
 
-if __name__ == '__main__' and '--tiles' not in sys.argv:
+if __name__ == '__main__' and '--tiles' not in sys.argv and '--walk' not in sys.argv:
     src, outdir, names, W, H = sys.argv[1], sys.argv[2], sys.argv[3].split(','), int(sys.argv[4]), int(sys.argv[5])
     mn = int(sys.argv[sys.argv.index('--min') + 1]) if '--min' in sys.argv else 2000
     boxes, made = run(src, outdir, names, W, H, mn)
@@ -190,3 +190,38 @@ def run_tiles(src, outdir, names, size=32):
 if __name__ == '__main__' and '--tiles' in sys.argv:
     bx = run_tiles(sys.argv[1], sys.argv[2], sys.argv[3].split(','))
     print(f'칸 {len(bx)}개')
+
+
+def run_walk(src, dst, W=32, H=48):
+    """걷기 시트(3열×4행, 분홍 바탕) → 같은 배율로 잘라 W×H 칸 3×4 묶음 한 장 (아래·왼·오른·위 / 왼발·섬·오른발)."""
+    im = Image.open(src).convert('RGBA')
+    m = mask_of(im)
+    im.putalpha(m)
+    boxes = components(m, 1500)
+    if len(boxes) != 12:
+        # 덩어리가 12개가 아니면 칸을 고르게 나눠서 각 칸 안의 그림만 잡는다
+        w0, h0 = im.size
+        boxes = []
+        for r in range(4):
+            for c in range(3):
+                cell = (c * w0 // 3, r * h0 // 4, (c + 1) * w0 // 3, (r + 1) * h0 // 4)
+                bb = m.crop(cell).getbbox()
+                boxes.append([cell[0] + bb[0], cell[1] + bb[1], cell[0] + bb[2], cell[1] + bb[3]] if bb else list(cell))
+    hmax = max(b[3] - b[1] for b in boxes)
+    wmax = max(b[2] - b[0] for b in boxes)
+    s = min((H - 2) / hmax, (W - 2) / wmax)
+    atlas = Image.new('RGBA', (W * 3, H * 4), (0, 0, 0, 0))
+    for i, b in enumerate(boxes[:12]):
+        crop = im.crop(b)
+        nw, nh = max(1, round(crop.width * s)), max(1, round(crop.height * s))
+        small = crop.resize((nw, nh), Image.BOX)
+        cell = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+        cell.paste(small, ((W - nw) // 2, H - 1 - nh), small)
+        atlas.paste(outline(quantize_rgba(cell)), ((i % 3) * W, (i // 3) * H))
+    atlas.save(dst)
+    return len(boxes)
+
+
+if __name__ == '__main__' and '--walk' in sys.argv:
+    n = run_walk(sys.argv[1], sys.argv[2])
+    print('덩어리', n)

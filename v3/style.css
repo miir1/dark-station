@@ -82,3 +82,8 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 @keyframes ds-more { 50% { opacity: 0; } }
 #goal { position: absolute; left: 8px; top: 8px; max-width: 70%; font-size: 12px; color: #e0c9a0; background: rgba(10,8,7,.78); border-left: 2px solid #9a7428; padding: 4px 8px; pointer-events: none; }
 #goal[hidden] { display: none; }
+
+/* 장면 그림 */
+#dlg .cg { display: block; width: 100%; image-rendering: pixelated; border: 1px solid #3a342b; margin: 0 0 8px; }
+#dlg.line .box:has(.cg) { flex-wrap: wrap; }
+#dlg.line .box .cg { flex: 0 0 100%; }

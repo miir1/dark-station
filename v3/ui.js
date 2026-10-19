@@ -72,7 +72,7 @@
     const dlg = $('dlg');
     dlg.className = 'line';
     const face = o.face ? `<img class="face" alt="" src="${o.face}">` : '';
-    dlg.innerHTML = `<div class="box">${face}<div class="lt">${o.name ? `<p class="who">${esc(o.name)}</p>` : ''}<p class="tw"></p><p class="more">▼</p></div></div>`;
+    dlg.innerHTML = `<div class="box">${o.cg ? `<img class="cg" alt="" src="${o.cg}">` : ''}${face}<div class="lt">${o.name ? `<p class="who">${esc(o.name)}</p>` : ''}<p class="tw"></p><p class="more">▼</p></div></div>`;
     dlg.hidden = false;
     const el = dlg.querySelector('.tw');
     const chars = Array.from(text);

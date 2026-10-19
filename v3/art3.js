@@ -309,13 +309,17 @@
   function prop2(id) { return once('p:' + id, () => (IMG['props/' + id] ? toCanvas(IMG['props/' + id]) : up(prop(id)))); }
   function flame2(frame) { return once('f:' + frame, () => up(flame(frame))); }
   // 사람 32×48: 걷기는 1px 출렁임, 부상은 피를 덧그림
-  function person2(id, frame, hurt) {
-    return once('h:' + id + ':' + (frame || 0) + ':' + (hurt || 0), () => {
+  // dir: down|left|right|up — 걷기 묶음(walk/…: 3열 왼발·섬·오른발 × 4행 아래·왼·오른·위)이 있으면 방향별 그림
+  const DIR_ROW = { down: 0, left: 1, right: 2, up: 3 };
+  function person2(id, frame, hurt, dir) {
+    const walk = IMG['walk/' + id];
+    return once('h:' + id + ':' + (frame || 0) + ':' + (hurt || 0) + ':' + (walk ? dir || 'down' : ''), () => {
       const im = IMG['sprites/' + id];
-      if (!im) return up(personSprite(id, frame, hurt));
+      if (!im && !walk) return up(personSprite(id, frame, hurt));
       const c = document.createElement('canvas'); c.width = 32; c.height = 48;
       const g = c.getContext('2d');
-      g.drawImage(im, 0, frame ? (frame === 1 ? -1 : 0) : 0);
+      if (walk) { const col = frame === 1 ? 0 : frame === 2 ? 2 : 1; g.drawImage(walk, col * 32, (DIR_ROW[dir] || 0) * 48, 32, 48, 0, 0, 32, 48); }
+      else g.drawImage(im, 0, frame ? (frame === 1 ? -1 : 0) : 0);
       if (hurt) {
         g.globalCompositeOperation = 'source-atop';
         const R = rng(7 + hurt * 31 + id.length);

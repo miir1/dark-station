@@ -38,6 +38,9 @@
     if (!id || !ART.has('creatures/' + id)) return '';
     return `<p style="text-align:center;margin:0 0 6px"><img alt="" src="${ART.creatureSprite(id).toDataURL()}" style="width:128px;height:128px;image-rendering:pixelated"></p>`;
   }
+  // 장면 그림 (img/cg/…) — 있으면 대화창 위에
+  const cgSrc = (key) => (ART.has('cg/' + key) ? 'img/cg/' + key + '.png' : '');
+  const cgImg = (key) => (cgSrc(key) ? `<img class="cg" alt="" src="${cgSrc(key)}">` : '');
   // ── 공통 문장 ──
   const resText = (o) => Object.entries(o).filter(([, v]) => v).map(([k, v]) => `${D.RES[k]} ${v > 0 ? '+' : '−'}${Math.abs(v)}`).join(' · ');
   const reps = (arr) => arr.map((l) => `<p class="rep ${l.kind || ''}">${esc(l.text)}</p>`).join('');
@@ -200,6 +203,7 @@
   }
   let tick = 0;
   function draw() {
+    if (!scene.w || !scene.h) return;               // 맵을 아직 안 불렀다
     tick++;
     const s = state;
     const mx = scene.moving ? scene.px - scene.moving.dx * (1 - scene.moving.t) : scene.px;
@@ -229,7 +233,10 @@
     // 사람 (누워 있는 사람은 눕혀서)
     for (const p of residentsOnMap()) {
       const hurt = Math.min(3, p.r.injury || 0);
-      const img = ART.personSprite(p.r.id, 0, hurt);
+      // 주민은 주인공 쪽을 본다 (가까우면)
+      const dx = scene.px - p.x, dy = scene.py - p.y;
+      const look = Math.abs(dx) + Math.abs(dy) <= 3 ? (Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy < 0 ? 'up' : 'down')) : 'down';
+      const img = ART.personSprite(p.r.id, 0, hurt, p.lying ? 'down' : look);
       sprites.push([p.y, () => {
         if (p.lying) { ctx.save(); ctx.translate(p.x * T + T, p.y * T + T / 4); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0, img.width * 0.67, img.height * 0.67); ctx.restore(); }
         else ctx.drawImage(img, p.x * T, p.y * T - (ART.PH - T));
@@ -239,10 +246,10 @@
     // 주인공과 동행
     const frame = scene.moving ? ((tick >> 3) % 2) + 1 : 0;
     const flip = scene.face === 'left';
-    sprites.push([my, () => drawPerson('player', mx, my, frame, flip)]);
+    sprites.push([my, () => drawPerson('player', mx, my, frame, flip, 0, scene.face)]);
     if (scene.kind === 'dungeon' && state.exp) state.exp.party.forEach((id, i) => {
       const [dx, dy] = DIRS[scene.face]; const fx2 = mx - dx * (i + 1), fy2 = my - dy * (i + 1);
-      if (!blocked(Math.round(fx2), Math.round(fy2))) sprites.push([fy2, () => drawPerson(id, fx2, fy2, frame, flip, E.byId(state, id).injury)]);
+      if (!blocked(Math.round(fx2), Math.round(fy2))) sprites.push([fy2, () => drawPerson(id, fx2, fy2, frame, flip, E.byId(state, id).injury, scene.face)]);
     });
     sprites.sort((a, b) => a[0] - b[0]).forEach((d) => d[1]());
     // 앞에 조사할 것이 있으면 ▾
@@ -252,8 +259,9 @@
     ctx.restore();
     grain();
   }
-  function drawPerson(id, x, y, frame, flip, hurt) {
-    const img = ART.personSprite(id, frame, Math.min(3, hurt || 0));
+  function drawPerson(id, x, y, frame, flip, hurt, dir) {
+    if (ART.has('walk/' + id)) flip = false;          // 방향별 그림이 있으면 뒤집지 않는다
+    const img = ART.personSprite(id, frame, Math.min(3, hurt || 0), dir || scene.face);
     const up = ART.PH - T;
     if (flip) { ctx.save(); ctx.translate(Math.round(x * T) + T, Math.round(y * T) - up); ctx.scale(-1, 1); ctx.drawImage(img, 0, 0); ctx.restore(); }
     else ctx.drawImage(img, Math.round(x * T), Math.round(y * T) - up);
@@ -631,7 +639,9 @@
     if (s.phase !== 'prologue' || introShown[s.pro]) return;
     introShown[s.pro] = true;
     if (s.pro === 0) await UI.line(D.WARNING, { name: '안내' });
-    await UI.lines(D.PROLOGUE[s.pro].text);
+    const cg = cgSrc(['prologue_car', 'prologue_car', 'prologue_tunnel', 'prologue_station'][s.pro]);
+    const parts = UI.splitSentences(D.PROLOGUE[s.pro].text);
+    for (let i = 0; i < parts.length; i++) await UI.line(parts[i], i === 0 && cg ? { cg } : {});
   }
   async function prologueChoose(i, who) {
     const sc = D.PROLOGUE[state.pro];
@@ -713,9 +723,10 @@
     if (!v.result) {
       const tag = s.nightEv.id === 'god' ? ` · ${s.nightEv.kind === 'omen' ? '징조' : '강림'} — ${esc(E.godLabel(s, s.nightEv.god))}` : '';
       if (!s._reportShown) {
-        await UI.open(`<p class="tag">밤</p>${dead.map((l) => `<p class="rep bad"><b>${esc(l.text)}</b></p>`).join('')}${reps(s.report.filter((l) => !dead.includes(l)))}`, { full: true, next: '그리고…' });
+        const surgeNight = s.report.some((l) => l.text === D.CALENDAR.surge.text);
+        await UI.open(`<p class="tag">밤</p>${surgeNight ? cgImg('surge') : ''}${dead.map((l) => `<p class="rep bad"><b>${esc(l.text)}</b></p>`).join('')}${reps(s.report.filter((l) => !dead.includes(l)))}`, { full: true, next: '그리고…' });
       }
-      const i = await UI.open(`<p class="tag">밤${tag}</p>${eventArt(s.nightEv.id === 'god' ? 'god:' + s.nightEv.god : s.nightEv.id)}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
+      const i = await UI.open(`<p class="tag">밤${tag}</p>${s.nightEv.id === 'corpse' ? cgImg('corpse') : s.nightEv.id === 'patrol' ? cgImg('patrol') : s.nightEv.id === 'god' && s.nightEv.kind === 'advent' && cgSrc(s.nightEv.god + '_advent') ? cgImg(s.nightEv.god + '_advent') : eventArt(s.nightEv.id === 'god' ? 'god:' + s.nightEv.god : s.nightEv.id)}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
       act({ type: 'nightChoose', i });
     }
     const r = E.nightView(state).result;
@@ -738,7 +749,7 @@
     const e = state.ending;
     const mark = { boarded: '승차', stayed: '남음', dead: '사망' };
     const kind = { kept: '지킨 약속', broken: '버린 약속', late: '못 지킨 약속' };
-    const a = await UI.open(`<p class="tag">${e.tier === 'wiped' ? '끝' : 'D' + D.GOAL_DAY + ' · 첫 번째 열차'}</p><p class="title">${esc(e.title)}</p><p>${esc(e.text)}</p>
+    const a = await UI.open(`${cgImg({ safe: 'ending_safe', half: 'ending_thin', thin: 'ending_thin', missed: 'ending_missed', wiped: 'ending_wiped' }[e.tier])}<p class="tag">${e.tier === 'wiped' ? '끝' : 'D' + D.GOAL_DAY + ' · 첫 번째 열차'}</p><p class="title">${esc(e.title)}</p><p>${esc(e.text)}</p>
       <p class="tag">명부</p>${e.rows.map((r) => `<p>${esc(r.name)} <span class="badge ${r.status === 'boarded' ? 'good' : r.status === 'dead' ? 'bad' : ''}">${mark[r.status]}</span> <span class="mini">${esc(r.line)}</span></p>`).join('')}
       ${e.ledger && e.ledger.length ? `<p class="tag">약속</p>${e.ledger.map((l) => `<p class="rep ${l.kind === 'kept' ? 'good' : l.kind === 'broken' ? 'bad' : 'warn'}">${kind[l.kind]} — ${esc(l.text)}</p>`).join('')}` : ''}`,
     { full: true, options: [{ label: '플레이 기록 복사', value: 'copy' }, { label: '처음부터 다시', value: 'restart', confirm: '처음부터 다시 시작할까요?' }] });
@@ -829,7 +840,14 @@
   ART.ready.then(() => {
     resize(); if (state.phase === 'prologue') enterPrologue(); else syncScene(); if (!scene.rows.length) enterStation(true); hud();
     requestAnimationFrame(loop);
-    flow(async () => {});
+    flow(() => (devFixture ? Promise.resolve() : titleScreen()));
   });
+  // 타이틀: 진행 중인 판이 있으면 이어하기
+  async function titleScreen() {
+    const fresh = state.phase === 'prologue' && state.pro === 0 && !state.proResult;
+    const opts = fresh ? [{ label: '시작한다', value: 'go' }] : [{ label: `이어서 (${state.phase === 'prologue' ? '프롤로그' : 'D' + Math.min(state.day, D.GOAL_DAY)})`, value: 'go' }, { label: '처음부터', value: 'new', confirm: '저장된 진행이 지워집니다. 처음부터 시작할까요?' }];
+    const a = await UI.open(`${cgImg('title')}<p class="title" style="text-align:center;font-size:24px;letter-spacing:.3em;margin-top:6px">어두운 역</p><p class="mini" style="text-align:center">을지로입구역 · 구조열차까지 열흘</p>`, { options: opts, full: true });
+    if (a === 'new') restart();
+  }
   if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); draw(); overlay(); }, interact, menu, target };
 })();
