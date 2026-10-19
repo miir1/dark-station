@@ -586,7 +586,7 @@
     const F = D.FIGHTS[s.exp.eventId];
     const opts = choiceOpts(v.choices);
     if (F) opts.unshift({ label: '전투를 벌인다 (부위를 노린다)', sub: esc(`${F.enemy.name} — 부위를 노리는 턴제 전투. 이기면 전리품, 부러진 부위는 부상과 상처로 남는다`), value: 'fight' });
-    const a = await UI.open(`<p class="tag">${esc(D.REGIONS[s.exp.region].name)} · 깊이 ${s.exp.depth}</p>${eventArt(s.exp.eventId)}<p class="title">${esc(v.event.title)}</p><p>${esc(v.event.text)}</p>`, { options: opts, full: true });
+    const a = await UI.open(`<p class="tag">${esc(D.REGIONS[s.exp.region].name)} · 깊이 ${s.exp.depth}</p>${cgImg(s.exp.eventId) || eventArt(s.exp.eventId)}<p class="title">${esc(v.event.title)}</p><p>${esc(v.event.text)}</p>`, { options: opts, full: true });
     if (a === 'fight') {
       const party = s.exp.party.map((id) => E.byId(s, id));
       const res = await BATTLE.run(s, F, party, { pipe: s.exp.pack.items.includes('pipe'), id: s.exp.eventId, region: s.exp.region });
@@ -706,7 +706,7 @@
   async function eveningStep() {
     const s = state, v = E.eveningView(s);
     if (v.type === 'promise') {
-      const i = await UI.open(`<p class="tag">저녁 · 약속</p><p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
+      const i = await UI.open(`<p class="tag">저녁 · 약속</p>${cgImg(s.evening.id)}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
       act({ type: 'eveningChoose', i });
       const r = state.evening.result;
       await UI.open(`<p class="tag">저녁 · 약속</p>${resultHtml(r)}`);
@@ -733,7 +733,7 @@
         const surgeNight = s.report.some((l) => l.text === D.CALENDAR.surge.text);
         await UI.open(`<p class="tag">밤</p>${surgeNight ? cgImg('surge') : ''}${dead.map((l) => `<p class="rep bad"><b>${esc(l.text)}</b></p>`).join('')}${reps(s.report.filter((l) => !dead.includes(l)))}`, { full: true, next: '그리고…' });
       }
-      const i = await UI.open(`<p class="tag">밤${tag}</p>${s.nightEv.id === 'corpse' ? cgImg('corpse') : s.nightEv.id === 'patrol' ? cgImg('patrol') : s.nightEv.id === 'god' && s.nightEv.kind === 'advent' && cgSrc(s.nightEv.god + '_advent') ? cgImg(s.nightEv.god + '_advent') : eventArt(s.nightEv.id === 'god' ? 'god:' + s.nightEv.god : s.nightEv.id)}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
+      const i = await UI.open(`<p class="tag">밤${tag}</p>${(s.nightEv.id === 'god' ? cgImg(s.nightEv.god + '_' + s.nightEv.kind) : cgImg(s.nightEv.id)) || eventArt(s.nightEv.id === 'god' ? 'god:' + s.nightEv.god : s.nightEv.id)}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
       act({ type: 'nightChoose', i });
     }
     const r = E.nightView(state).result;
