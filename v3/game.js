@@ -159,6 +159,7 @@
 
   // ── 지나갈 수 있는가 ──
   function tileAt(x, y) { return (scene.rows[y] || '')[x] || '#'; }
+  const blockedRaw = (x, y) => tileAt(x, y) === '#';
   function blocked(x, y) {
     const t = tileAt(x, y);
     if (t === '#' || t === 's' || t === 'i') return true;
@@ -354,7 +355,13 @@
   }
   function drawDungeon(sprites) {
     const d = scene.dun;
-    for (const [spr, x, y] of d.deco || []) { const map = { crate: 'crate', barrel: 'drum', barrel2: 'drum', web: 'bones', shelf: 'crate', skull: 'bones', bones: 'bones', pipeV: 'pump' }; sprites.push([y - 0.5, () => ctx.drawImage(ART.prop(map[spr] || 'bones'), x * T, y * T)]); }
+    // 꾸밈: 그 이름의 그림이 있으면 그것, 없으면 비슷한 예전 소품
+    const FALL = { stall: 'crate', kiosk: 'crate', webs: 'bones', mannequin: 'corpse', cart: 'crate', hooks: 'bones', shrine: 'grave', vending: 'crate', tires: 'crate', bodybag: 'corpse', backpack: 'sack', slab: 'rubble', valve: 'pump', leakbarrel: 'drum', ratnest: 'bones', sludge: 'blood', ladder: 'rubble', chaindoor: 'door' };
+    for (const [spr, x, y] of d.deco || []) {
+      if (blockedRaw(x, y)) continue;
+      const name = ART.has('props/' + spr) ? spr : FALL[spr] || spr;
+      if (spr === 'sludge') ctx.drawImage(ART.prop(name), x * T, y * T); else sprites.push([y - 0.5, () => ctx.drawImage(ART.prop(name), x * T, y * T)]);
+    }
     for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) { const bob = (tick >> 5) % 2; ctx.drawImage(ART.prop('mark'), x * T, y * T - 4 - bob); }
   }
   function drawPrologue(s, sprites) {
@@ -582,7 +589,7 @@
     const a = await UI.open(`<p class="tag">${esc(D.REGIONS[s.exp.region].name)} · 깊이 ${s.exp.depth}</p>${eventArt(s.exp.eventId)}<p class="title">${esc(v.event.title)}</p><p>${esc(v.event.text)}</p>`, { options: opts, full: true });
     if (a === 'fight') {
       const party = s.exp.party.map((id) => E.byId(s, id));
-      const res = await BATTLE.run(s, F, party, { pipe: s.exp.pack.items.includes('pipe'), id: s.exp.eventId });
+      const res = await BATTLE.run(s, F, party, { pipe: s.exp.pack.items.includes('pipe'), id: s.exp.eventId, region: s.exp.region });
       act({ type: 'expFight', result: res.result, wounds: res.wounds });
     } else act({ type: 'expChoose', i: a });
     const v2 = E.expView(s);
@@ -721,7 +728,7 @@
     const s = state, v = E.nightView(s);
     const dead = s.report.filter((l) => l.kind === 'bad' && /숨을 거뒀다|사라졌다/.test(l.text));
     if (!v.result) {
-      const tag = s.nightEv.id === 'god' ? ` · ${s.nightEv.kind === 'omen' ? '징조' : '강림'} — ${esc(E.godLabel(s, s.nightEv.god))}` : '';
+      const tag = s.nightEv.id === 'god' ? ` · ${s.nightEv.kind === 'omen' ? '징조' : '강림'} — ${esc(E.godLabel(s, s.nightEv.god))}${ART.has('gods/' + s.nightEv.god) ? ` <img alt="" src="img/gods/${s.nightEv.god}.png" style="width:24px;height:24px;vertical-align:middle;image-rendering:pixelated">` : ''}` : '';
       if (!s._reportShown) {
         const surgeNight = s.report.some((l) => l.text === D.CALENDAR.surge.text);
         await UI.open(`<p class="tag">밤</p>${surgeNight ? cgImg('surge') : ''}${dead.map((l) => `<p class="rep bad"><b>${esc(l.text)}</b></p>`).join('')}${reps(s.report.filter((l) => !dead.includes(l)))}`, { full: true, next: '그리고…' });
@@ -781,7 +788,7 @@
         if (a === 'gods') {
           const s = state, kn = { hostile: '적대', neutral: '중립', friendly: '우호' };
           const felt = Object.keys(D.GODS).filter((id) => (s.gods[id] || 0) > 0 || (s.godSeen[id] || 0) > 0);
-          await UI.open(`<p class="title">시선</p>${felt.length ? felt.map((id) => { const G = D.GODS[id], v = s.gods[id] || 0; return `<div class="person"><b>${esc(E.godLabel(s, id))}</b> <span class="mini">${s.godSeen[id] ? kn[G.kind] : '정체 모름'} · ${esc(G.hint)}</span><br><span class="mini">시선 ${v}/${E.GOD_ADVENT}${bar(v, E.GOD_ADVENT, v >= E.GOD_ADVENT - 1 && G.kind === 'hostile')}</span><br><span class="mini">${esc(G.raise)}</span></div>`; }).join('') : '<p class="mini">아직 아무것도 느끼지 못했다.</p>'}<p class="mini">시선 ${E.GOD_OMEN}에 징조, ${E.GOD_ADVENT}에 강림.</p>`, { full: true, cancel: true });
+          await UI.open(`<p class="title">시선</p>${felt.length ? felt.map((id) => { const G = D.GODS[id], v = s.gods[id] || 0; return `<div class="person">${ART.has('gods/' + id) && s.godSeen[id] ? `<img alt="" src="img/gods/${id}.png" style="float:left;width:48px;height:48px;image-rendering:pixelated;margin:0 8px 4px 0">` : ''}<b>${esc(E.godLabel(s, id))}</b> <span class="mini">${s.godSeen[id] ? kn[G.kind] : '정체 모름'} · ${esc(G.hint)}</span><br><span class="mini">시선 ${v}/${E.GOD_ADVENT}${bar(v, E.GOD_ADVENT, v >= E.GOD_ADVENT - 1 && G.kind === 'hostile')}</span><br><span class="mini">${esc(G.raise)}</span></div>`; }).join('') : '<p class="mini">아직 아무것도 느끼지 못했다.</p>'}<p class="mini">시선 ${E.GOD_OMEN}에 징조, ${E.GOD_ADVENT}에 강림.</p>`, { full: true, cancel: true });
         }
         if (a === 'log') await UI.open(`<p class="title">일지</p>${state.history.slice(-16).reverse().map((h) => `<p class="mini">${h.day ? 'D' + h.day : '프롤로그'} · ${esc(h.text)}</p>`).join('')}`, { full: true, cancel: true });
       }
@@ -846,7 +853,7 @@
   async function titleScreen() {
     const fresh = state.phase === 'prologue' && state.pro === 0 && !state.proResult;
     const opts = fresh ? [{ label: '시작한다', value: 'go' }] : [{ label: `이어서 (${state.phase === 'prologue' ? '프롤로그' : 'D' + Math.min(state.day, D.GOAL_DAY)})`, value: 'go' }, { label: '처음부터', value: 'new', confirm: '저장된 진행이 지워집니다. 처음부터 시작할까요?' }];
-    const a = await UI.open(`${cgImg('title')}<p class="title" style="text-align:center;font-size:24px;letter-spacing:.3em;margin-top:6px">어두운 역</p><p class="mini" style="text-align:center">을지로입구역 · 구조열차까지 열흘</p>`, { options: opts, full: true });
+    const a = await UI.open(`${cgImg('title')}<p class="title" style="text-align:center;font-size:24px;letter-spacing:.3em;margin-top:6px">어두운 역</p><p class="mini" style="text-align:center">을지로입구역 · 구조열차까지 열흘</p>`, { options: opts, center: true });
     if (a === 'new') restart();
   }
   if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); draw(); overlay(); }, interact, menu, target };

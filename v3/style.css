@@ -87,3 +87,6 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 #dlg .cg { display: block; width: 100%; image-rendering: pixelated; border: 1px solid #3a342b; margin: 0 0 8px; }
 #dlg.line .box:has(.cg) { flex-wrap: wrap; }
 #dlg.line .box .cg { flex: 0 0 100%; }
+
+#dlg.center { justify-content: center; background: #000; }
+#dlg.center .box { margin: 0 8px; }
