@@ -1,7 +1,7 @@
 // 어두운 역 v3 — 쯔꾸르풍 화면. 규칙은 ../v2/engine.js 그대로, 여기서는 맵을 걷고 대화창으로 고른다.
 (function () {
   'use strict';
-  const E = window.DS2, D = E.D, T = SP.T, M = window.MAPS;
+  const E = window.DS2, D = E.D, T = ART.T, M = window.MAPS;
   const esc = UI.esc, J = E.J;
   const SAVE_KEY = 'darkstation.v3.save';
   const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
@@ -77,13 +77,20 @@
     $('hud').innerHTML = h;
   }
 
-  // ── 장면 (역 / 원정) ──
+  // ── 장면 (프롤로그 / 역 / 원정) ──
   const scene = { kind: 'station', map: null, rows: [], w: 0, h: 0, px: 0, py: 0, face: 'down', moving: null, visited: new Set(), key: '' };
-  function stationMap() { return { rows: M.STATION.rows, w: M.STATION.rows[0].length, h: M.STATION.rows.length }; }
+  function setMap(kind, key, rows, start, extra) {
+    Object.assign(scene, { kind, key, rows, w: rows[0].length, h: rows.length }, extra || {});
+    if (start) { scene.px = start[0]; scene.py = start[1]; }
+    resize();
+  }
   function enterStation(atFire) {
-    const m = stationMap();
-    Object.assign(scene, { kind: 'station', rows: m.rows, w: m.w, h: m.h, key: 'station' }); resize();
-    if (atFire || !scene.stationPos) { scene.px = M.STATION.start[0]; scene.py = M.STATION.start[1]; } else { [scene.px, scene.py] = scene.stationPos; }
+    setMap('station', 'station', M.STATION.rows, atFire || !scene.stationPos ? M.STATION.start : scene.stationPos, { map: M.STATION });
+  }
+  function enterPrologue(force) {
+    if (scene.kind === 'prologue' && !force) return;
+    const m = force || (state.pro <= 1 ? M.CAR : M.TUNNEL);
+    setMap('prologue', m.id, m.rows, m.start, { map: m });
   }
   function enterDungeon() {
     const e = state.exp;
@@ -91,63 +98,69 @@
     const d = M.DUNGEONS[key];
     if (scene.key !== key) {
       scene.visited = new Set();
-      const rows = d.rows;
       let sx = 1, sy = 1;
-      rows.forEach((row, y) => { const x = row.indexOf('E'); if (x >= 0) { sx = x; sy = y; } });
-      Object.assign(scene, { kind: 'dungeon', rows, w: rows[0].length, h: rows.length, key, px: sx + 1, py: sy, dun: d }); resize();
+      d.rows.forEach((row, y) => { const x = row.indexOf('E'); if (x >= 0) { sx = x; sy = y; } });
+      setMap('dungeon', key, d.rows, [sx + 1, sy], { dun: d, region: e.region, map: null });
     }
   }
   function syncScene() {
-    if (state.phase === 'expedition' && state.exp) enterDungeon();
+    if (state.phase === 'prologue') enterPrologue();
+    else if (state.phase === 'expedition' && state.exp) enterDungeon();
     else if (scene.kind !== 'station') enterStation(false);
-    else if (!scene.rows.length) enterStation(true);
   }
 
-  // 사람들이 서 있는 자리 (오늘 배치 그대로)
+  // 사람들이 서 있는 자리 (오늘 배치 그대로). lying: 누워 있음
   function residentsOnMap() {
     const s = state;
-    const out = [];
-    if (scene.kind !== 'station') {
-      if (s.exp) s.exp.party.forEach((id, i) => { if (i > 0) return; });
-      return out;
+    if (scene.kind === 'prologue') {
+      if (scene.key === 'car') return M.CAR.npcs.map((n) => ({ r: E.byId(s, n.id) || { id: n.id, name: D.PEOPLE[n.id].name, injury: 0 }, x: n.x, y: n.y, npc: n }));
+      if (scene.key === 'tunnel' && s.pro === 2 && !s.proResult) return M.TUNNEL.npcs.map((n) => ({ r: E.byId(s, n.id), x: n.x, y: n.y, npc: n }));
+      return [];
     }
+    if (scene.kind !== 'station') return [];
     const plan = E.effectivePlan(s);
-    const used = {};
-    const beds = [[17, 2], [19, 1], [17, 3], [20, 3], [15, 2], [15, 4]];
+    const used = {}, out = [];
+    const beds = [[16, 2], [18, 2], [16, 4], [19, 3], [15, 2], [15, 4]];
     let bi = 0;
     for (const r of E.alive(s)) {
       if (r.status !== 'home') continue;
-      if (s.phase === 'morning' && s.expParty.includes(r.id) && false) continue;
-      let pos;
-      if (r.injury >= 2 || r.breakdown > 0) pos = beds[bi++ % beds.length];
+      let pos, lying = false;
+      if (r.injury >= 2 || r.breakdown > 0) { pos = beds[bi++ % beds.length]; lying = r.injury >= 2; }
       else {
-        let task = plan[r.id] || 'rest';
-        if (s.phase !== 'morning') task = 'rest';
-        let key = task === 'build' && s.project && s.project.id === 'repair' ? 'buildRepair' : task;
+        let task = s.phase === 'morning' ? (plan[r.id] || 'rest') : 'rest';
+        const key = task === 'build' && s.project && s.project.id === 'repair' ? 'buildRepair' : task;
         const list = M.STATION.spots[key] || M.STATION.spots.rest;
-        used[key] = (used[key] || 0);
-        pos = list[used[key] % list.length]; used[key]++;
-        if (used[key] > list.length) pos = M.STATION.spots.rest[(used.rest = (used.rest || 0) + 1) % 8];
+        used[key] = used[key] || 0;
+        pos = used[key] < list.length ? list[used[key]] : M.STATION.spots.rest[(used.restX = (used.restX || 0) + 1) % 8];
+        used[key]++;
       }
-      out.push({ r, x: pos[0], y: pos[1] });
+      out.push({ r, x: pos[0], y: pos[1], lying });
     }
     return out;
   }
+  // 조사할 수 있는 물건 (현재 맵)
+  function mapObjects() {
+    if (scene.kind === 'station') return M.STATION.objects;
+    if (scene.kind === 'prologue') return scene.map.objects.filter((o) => !(o.pro < state.pro));
+    return [];
+  }
+  function objectsAt(x, y) { return mapObjects().filter((o) => x >= o.x && x < o.x + (o.w || 1) && y >= o.y && y < o.y + (o.h || 1)); }
 
   // ── 지나갈 수 있는가 ──
   function tileAt(x, y) { return (scene.rows[y] || '')[x] || '#'; }
-  function objectsAt(x, y) {
-    if (scene.kind !== 'station') return [];
-    return M.STATION.objects.filter((o) => x >= o.x && x < o.x + (o.w || 1) && y >= o.y && y < o.y + (o.h || 1));
-  }
   function blocked(x, y) {
     const t = tileAt(x, y);
-    if (t === '#') return true;
+    if (t === '#' || t === 's' || t === 'i') return true;
     if (scene.kind === 'station') {
       if (t === 'R' && !state.flags.passage_secured) return true;
       if (objectsAt(x, y).some((o) => o.solid && !(o.id.startsWith('repair') && state.flags.passage_secured))) return true;
-      if (residentsOnMap().some((p) => p.x === x && p.y === y)) return true;
+      if ((M.STATION.decor || []).some((d) => d.solid && d.x === x && d.y === y)) return true;
     }
+    if (scene.kind === 'prologue') {
+      if (t === 'o' && state.pro < 2) return true;
+      if (objectsAt(x, y).length) return true;
+    }
+    if (residentsOnMap().some((p) => p.x === x && p.y === y)) return true;
     return false;
   }
 
@@ -156,7 +169,6 @@
   function resize() {
     const st = $('stage');
     const W = st.clientWidth || 375, H = st.clientHeight || 420;
-    // 맵 높이(최대 13칸)가 화면 높이에 꽉 차게, 가로는 최소 7칸
     const mapRows = Math.min(13, scene.h || 13);
     const scale = Math.max(2, Math.min(5, Math.floor(H / (T * mapRows)), Math.floor(W / (T * 7))));
     view = { cols: Math.ceil(W / (T * scale)), rows: Math.ceil(H / (T * scale)), scale };
@@ -167,112 +179,165 @@
   window.addEventListener('resize', resize);
   if (window.ResizeObserver) new ResizeObserver(() => resize()).observe($('stage'));
 
-  const COLORS = { '.': '#2b2621', ',': '#332e28', '=': '#332e28', '~': '#1c1a17', d: '#2b2621', S: '#2b2621', T: '#050505', R: '#2b2621', w: '#1e3442', E: '#2a2520', v: '#2a2520', m: '#2a2520' };
+  function tileKind(t) {
+    if (scene.kind === 'dungeon') {
+      const A = scene.region === 'A';
+      if (t === '#') return A ? 'shutter' : 'pipe';
+      if (t === 'w') return 'water';
+      return A ? 'marketFloor' : 'drainFloor';
+    }
+    if (scene.kind === 'prologue' && scene.key === 'car') return t === '#' ? 'wall' : 'concourse';
+    return { '#': 'wall', '.': 'concourse', d: 'concourse', S: 'concourse', ',': 'floor', R: 'floor', '=': 'edge', '~': 'track', i: 'track', x: 'track', T: null, w: 'water', o: 'concourse' }[t] || 'floor';
+  }
   let tick = 0;
   function draw() {
     tick++;
     const s = state;
-    const camX = Math.max(0, Math.min(scene.w * T - cv.width, (scene.px + 0.5) * T - cv.width / 2 + (scene.moving ? scene.moving.dx * scene.moving.t * T - scene.moving.dx * T : 0)));
-    const camY = Math.max(0, Math.min(scene.h * T - cv.height, (scene.py + 0.5) * T - cv.height / 2 + (scene.moving ? scene.moving.dy * scene.moving.t * T - scene.moving.dy * T : 0)));
-    const ox = scene.w * T < cv.width ? (cv.width - scene.w * T) / 2 : -Math.round(camX);
-    const oy = scene.h * T < cv.height ? (cv.height - scene.h * T) / 2 : -Math.round(camY);
-    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, cv.width, cv.height);
+    const mx = scene.moving ? scene.px - scene.moving.dx * (1 - scene.moving.t) : scene.px;
+    const my = scene.moving ? scene.py - scene.moving.dy * (1 - scene.moving.t) : scene.py;
+    const camX = Math.max(0, Math.min(scene.w * T - cv.width, (mx + 0.5) * T - cv.width / 2));
+    const camY = Math.max(0, Math.min(scene.h * T - cv.height, (my + 0.5) * T - cv.height / 2));
+    const ox = scene.w * T < cv.width ? Math.round((cv.width - scene.w * T) / 2) : -Math.round(camX);
+    const oy = scene.h * T < cv.height ? Math.round((cv.height - scene.h * T) / 2) : -Math.round(camY);
+    ctx.fillStyle = '#050404'; ctx.fillRect(0, 0, cv.width, cv.height);
     ctx.save(); ctx.translate(ox, oy);
-    const dun = scene.kind === 'dungeon' ? scene.dun : null;
     // 바닥·벽
     for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) {
       const t = tileAt(x, y), X = x * T, Y = y * T;
-      if (t === '#') { ctx.fillStyle = dun ? dun.wall : '#3a332b'; ctx.fillRect(X, Y, T, T); SP.draw(ctx, SP.SPR.wall, X, Y, dun ? shade(dun.wall, 18) : '#4d453a'); continue; }
-      ctx.fillStyle = dun && '.EvmS'.includes(t) ? dun.floor : (COLORS[t] || '#2b2621'); ctx.fillRect(X, Y, T, T);
-      if (t === '.' || t === ',') { if ((x * 7 + y * 13) % 11 === 0) { ctx.fillStyle = 'rgba(255,255,255,0.04)'; ctx.fillRect(X + 3, Y + 9, 2, 1); } }
-      if (t === '=') { ctx.fillStyle = '#b8932f'; ctx.fillRect(X, Y + T - 4, T, 2); }
-      if (t === '~') { ctx.fillStyle = '#3b342c'; for (let k = 2; k < T; k += 5) ctx.fillRect(X, Y + k, T, 2); ctx.fillStyle = '#77706a'; ctx.fillRect(X, Y + 3, T, 1); ctx.fillRect(X, Y + 12, T, 1); }
-      if (t === 'w') { ctx.fillStyle = (tick >> 4) % 2 ? '#2b4a5e' : '#284558'; ctx.fillRect(X + ((x + y) % 3) * 4, Y + 6, 5, 1); }
-      if (t === 'v') SP.draw(ctx, SP.SPR.stairsDown, X, Y, '#9a8f80');
-      if (t === 'E') SP.draw(ctx, SP.SPR.stairs, X, Y, '#9a8f80');
-      if (t === 'm' && !scene.visited.has(x + ',' + y)) { const bob = (tick >> 5) % 2; SP.draw(ctx, SP.SPR.mark, X, Y - bob, '#e0a24a'); }
+      const k = tileKind(t);
+      if (k) ctx.drawImage(ART.tile(k, x, y), X, Y); else { ctx.fillStyle = '#000'; ctx.fillRect(X, Y, T, T); }
+      if (t === 's') ctx.drawImage(ART.prop('seat'), X, Y);
+      if (t === '#' && tileAt(x, y + 1) !== '#' && y + 1 < scene.h) { ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(X, Y + T, T, 3); }
+      if (t === 'v') ctx.drawImage(ART.prop('stairsDown'), X, Y);
+      if (t === 'E') ctx.drawImage(ART.prop('stairsUp'), X, Y);
+      if (t === 'o') ctx.drawImage(ART.prop('door'), X, Y);
+      if (t === 'w' && (tick >> 4) % 2) { ctx.fillStyle = 'rgba(134,163,168,0.10)'; ctx.fillRect(X + ((x * 5 + y) % 9), Y + 7, 5, 1); }
     }
-    if (scene.kind === 'station') drawStation(s); else drawDungeon(s);
-    // 주인공
-    const pmx = scene.moving ? (scene.px - scene.moving.dx * (1 - scene.moving.t)) : scene.px;
-    const pmy = scene.moving ? (scene.py - scene.moving.dy * (1 - scene.moving.t)) : scene.py;
-    SP.draw(ctx, SP.SPR.player, Math.round(pmx * T), Math.round(pmy * T) - (scene.moving && (tick >> 2) % 2 ? 1 : 0), SP.TINT.player, scene.face === 'left');
+    const sprites = [];   // [y, draw]
+    if (scene.kind === 'station') drawStation(s, sprites);
+    else if (scene.kind === 'dungeon') drawDungeon(sprites);
+    else drawPrologue(s, sprites);
+    // 사람 (누워 있는 사람은 눕혀서)
+    for (const p of residentsOnMap()) {
+      const hurt = Math.min(3, p.r.injury || 0);
+      const img = ART.personSprite(p.r.id, 0, hurt);
+      sprites.push([p.y, () => {
+        if (p.lying) { ctx.save(); ctx.translate(p.x * T + 16, p.y * T + 4); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0); ctx.restore(); }
+        else ctx.drawImage(img, p.x * T, p.y * T - 8);
+        if (p.r.breakdown > 0 && (tick >> 4) % 2) { ctx.fillStyle = '#9c1e1e'; ctx.fillRect(p.x * T + 7, p.y * T - 12, 2, 3); }
+      }]);
+    }
+    // 주인공과 동행
+    const frame = scene.moving ? ((tick >> 3) % 2) + 1 : 0;
+    const flip = scene.face === 'left';
+    sprites.push([my, () => drawPerson('player', mx, my, frame, flip)]);
     if (scene.kind === 'dungeon' && state.exp) state.exp.party.forEach((id, i) => {
-      const r = E.byId(state, id); const fx2 = pmx - (scene.face === 'right' ? 1 + i : scene.face === 'left' ? -1 - i : 0); const fy2 = pmy - (scene.face === 'down' ? 1 + i : scene.face === 'up' ? -1 - i : 0);
-      if (!blocked(Math.round(fx2), Math.round(fy2))) SP.draw(ctx, SP.SPR[id] || SP.SPR.player, Math.round(fx2 * T), Math.round(fy2 * T), SP.TINT[id], scene.face === 'left');
+      const [dx, dy] = DIRS[scene.face]; const fx2 = mx - dx * (i + 1), fy2 = my - dy * (i + 1);
+      if (!blocked(Math.round(fx2), Math.round(fy2))) sprites.push([fy2, () => drawPerson(id, fx2, fy2, frame, flip, E.byId(state, id).injury)]);
     });
-    lighting(pmx, pmy);
+    sprites.sort((a, b) => a[0] - b[0]).forEach((d) => d[1]());
+    // 앞에 조사할 것이 있으면 ▾
+    const tg = target();
+    if (tg && !UI.isOpen() && !busy) { ctx.fillStyle = '#d0a24a'; const bx = tg.x * T + 6, by = tg.y * T - 14 - ((tick >> 4) % 2); ctx.fillRect(bx, by, 4, 2); ctx.fillRect(bx + 1, by + 2, 2, 1); }
+    lighting(mx, my);
     ctx.restore();
+    grain();
   }
-  function shade(hex, d) { const n = parseInt(hex.slice(1), 16); const c = (v) => Math.max(0, Math.min(255, v + d)); return `rgb(${c(n >> 16)},${c((n >> 8) & 255)},${c(n & 255)})`; }
+  function drawPerson(id, x, y, frame, flip, hurt) {
+    const img = ART.personSprite(id, frame, Math.min(3, hurt || 0));
+    if (flip) { ctx.save(); ctx.translate(Math.round(x * T) + T, Math.round(y * T) - 8); ctx.scale(-1, 1); ctx.drawImage(img, 0, 0); ctx.restore(); }
+    else ctx.drawImage(img, Math.round(x * T), Math.round(y * T) - 8);
+  }
+  // 필름 알갱이·가장자리 어둠
+  let vign = null;
+  function grain() {
+    if (!vign || vign.width !== cv.width || vign.height !== cv.height) {
+      vign = document.createElement('canvas'); vign.width = cv.width; vign.height = cv.height;
+      const g = vign.getContext('2d');
+      const gr = g.createRadialGradient(cv.width / 2, cv.height / 2, Math.min(cv.width, cv.height) * 0.3, cv.width / 2, cv.height / 2, Math.max(cv.width, cv.height) * 0.75);
+      gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.75)');
+      g.fillStyle = gr; g.fillRect(0, 0, cv.width, cv.height);
+    }
+    ctx.drawImage(vign, 0, 0);
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    for (let i = 0; i < 40; i++) ctx.fillRect((Math.random() * cv.width) | 0, (Math.random() * cv.height) | 0, 1, 1);
+  }
   let lightCv = null;
   function lighting(pmx, pmy) {
     const s = state;
     if (!lightCv) lightCv = document.createElement('canvas');
-    lightCv.width = scene.w * T; lightCv.height = scene.h * T;
+    if (lightCv.width !== scene.w * T || lightCv.height !== scene.h * T) { lightCv.width = scene.w * T; lightCv.height = scene.h * T; }
     const g = lightCv.getContext('2d');
-    let dark = 0.86, lights = [];
+    g.globalCompositeOperation = 'source-over'; g.clearRect(0, 0, lightCv.width, lightCv.height);
+    let dark = 0.88; const lights = [];
+    let tintRed = false;
     if (scene.kind === 'station') {
       const pv = s.phase === 'morning' ? E.previewNight(s) : null;
       const lit = pv ? !pv.ev.dark : !s.dark;
-      dark = lit ? 0.5 : 0.84;
-      lights.push([11.5, 7.5, 4.6 + ((tick >> 3) % 3) * 0.15]);
+      dark = lit ? 0.55 : 0.86;
+      lights.push([11.5, 7.5, 4.8 + ((tick >> 3) % 3) * 0.2]);
       if (lit) for (const o of M.STATION.objects) if (o.lamp) lights.push([o.x + 0.5, o.y + 0.5, 5.5]);
       if (s.flags.passage_secured) lights.push([23.5, 6.5, 3]);
+    } else if (scene.kind === 'prologue') {
+      dark = 0.9; tintRed = scene.key === 'car';
+      if (scene.key === 'car' && (tick >> 5) % 3 !== 0) for (const x of [4, 11, 18]) lights.push([x + 0.5, 1, 3.5]);
     }
-    lights.push([pmx + 0.5, pmy + 0.5, scene.kind === 'dungeon' ? 3.6 : 2.2]);
+    lights.push([pmx + 0.5, pmy + 0.3, scene.kind === 'station' ? 2.4 : 3.6]);
     g.fillStyle = `rgba(0,0,0,${dark})`; g.fillRect(0, 0, lightCv.width, lightCv.height);
     g.globalCompositeOperation = 'destination-out';
     for (const [x, y, r] of lights) {
       const gr = g.createRadialGradient(x * T, y * T, 0, x * T, y * T, r * T);
-      gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(0.6, 'rgba(0,0,0,0.6)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(0.55, 'rgba(0,0,0,0.65)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
       g.fillStyle = gr; g.beginPath(); g.arc(x * T, y * T, r * T, 0, Math.PI * 2); g.fill();
     }
-    g.globalCompositeOperation = 'source-over';
     ctx.drawImage(lightCv, 0, 0);
-    // 화로 빛
-    if (scene.kind === 'station') { ctx.fillStyle = 'rgba(224,140,60,0.07)'; ctx.beginPath(); ctx.arc(11.5 * T, 7.5 * T, 3.5 * T, 0, Math.PI * 2); ctx.fill(); }
+    if (scene.kind === 'station') { ctx.fillStyle = 'rgba(208,120,50,0.08)'; ctx.beginPath(); ctx.arc(11.5 * T, 7.5 * T, 3.8 * T, 0, Math.PI * 2); ctx.fill(); }
+    if (tintRed && (tick >> 5) % 3 !== 0) { ctx.fillStyle = 'rgba(140,20,20,0.16)'; ctx.fillRect(0, 0, scene.w * T, scene.h * T); }
   }
-  function drawStation(s) {
+  function drawStation(s, sprites) {
     // 침수: 선로부터 물이 찬다
     const fl = s.flood;
-    const waterRows = [];
-    if (fl >= 1) waterRows.push([10, fl >= 3 ? 1 : 0.5], [11, fl >= 2 ? 1 : 0.6]);
-    if (fl >= 5) waterRows.push([9, fl >= 6 ? 0.9 : 0.5]);
-    if (fl >= 7) waterRows.push([8, 0.6]);
-    for (const [y, a] of waterRows) { ctx.fillStyle = `rgba(52,92,120,${0.55 * a})`; ctx.fillRect(T, y * T + (a < 1 ? 8 : 0), 22 * T, a < 1 ? 8 : T); }
-    // 전동차
-    ctx.fillStyle = '#545b60'; ctx.fillRect(2 * T, 10 * T + 1, 7 * T, 2 * T - 2); ctx.fillStyle = '#2d3236'; for (let k = 0; k < 6; k++) ctx.fillRect(2 * T + 6 + k * 18, 10 * T + 5, 10, 8);
-    ctx.fillStyle = '#7a2e26'; ctx.fillRect(2 * T, 11 * T + 6, 7 * T, 2);
-    // 터널
-    ctx.fillStyle = '#000'; ctx.fillRect(23 * T, 10 * T, T, 2 * T);
+    const rowsW = [];
+    if (fl >= 1) rowsW.push([10, fl >= 3 ? 1 : 0.5], [11, fl >= 2 ? 1 : 0.6]);
+    if (fl >= 5) rowsW.push([9, fl >= 6 ? 0.9 : 0.5]);
+    if (fl >= 7) rowsW.push([8, 0.6]);
+    for (const [y, a] of rowsW) { ctx.globalAlpha = 0.75 * a; for (let x = 1; x < 23; x++) ctx.drawImage(ART.tile('water', x, y), x * T, y * T); ctx.globalAlpha = 1; }
+    // 멈춘 2호선 전동차
+    const tx = 2 * T, ty = 10 * T;
+    ctx.fillStyle = '#5b5049'; ctx.fillRect(tx, ty + 1, 7 * T, 2 * T - 3);
+    ctx.fillStyle = '#7d7067'; ctx.fillRect(tx, ty + 1, 7 * T, 2);
+    ctx.fillStyle = '#2a6b3c'; ctx.fillRect(tx, ty + 19, 7 * T, 4);
+    for (let k = 0; k < 6; k++) { ctx.fillStyle = '#0d171c'; ctx.fillRect(tx + 6 + k * 18, ty + 6, 11, 9); ctx.fillStyle = 'rgba(134,163,168,0.25)'; ctx.fillRect(tx + 7 + k * 18, ty + 7, 3, 3); }
+    ctx.fillStyle = '#050404'; ctx.fillRect(23 * T, 10 * T, T, 2 * T);
+    // 바닥 얼룩·꾸밈
+    for (const d of M.STATION.decor || []) if (!d.solid) ctx.drawImage(ART.prop(d.prop), d.x * T, d.y * T);
     // 시설 자리
-    if (s.facility === 'farm') for (const x of [10, 12]) SP.draw(ctx, SP.SPR.mush, x * T, 1 * T, '#9bbf7a');
-    if (s.facility === 'clinic') { SP.draw(ctx, SP.SPR.cross, 11 * T, 1 * T, '#d06a5a'); SP.draw(ctx, SP.SPR.bed, 12 * T, 1 * T, '#cfcfcf'); }
-    if (s.project && s.project.id !== 'repair') { SP.draw(ctx, SP.SPR.crate, 11 * T, 1 * T, '#8c6d4a'); SP.draw(ctx, SP.SPR.rubble2, 12 * T, 1 * T, '#7a705f'); }
-    // 무덤
-    (s.buried || []).forEach((id, i) => SP.draw(ctx, SP.SPR.grave, (16 + i) * T, 4 * T, '#8d8578'));
-    // 물건
+    if (s.facility === 'farm') for (const x of [10, 12]) ctx.drawImage(ART.prop('mush'), x * T, 1 * T);
+    if (s.facility === 'clinic') { ctx.drawImage(ART.prop('cross'), 11 * T, 1 * T); ctx.drawImage(ART.prop('bed'), 12 * T, 1 * T); }
+    if (s.project && s.project.id !== 'repair') { ctx.drawImage(ART.prop('crate'), 11 * T, 1 * T); ctx.drawImage(ART.prop('rubble'), 12 * T, 1 * T); }
+    (s.buried || []).forEach((id, i) => ctx.drawImage(ART.prop('grave'), (19 + i % 3) * T, (3 + Math.floor(i / 3)) * T));
+    const P = { fire: 'drum', board: 'board', gen: 'generator', pump: 'tank', drainpump: 'pump', stash: 'crate', stash2: 'sack', bed1: 'bed', bed2: 'bed', bed3: 'bed', repair: 'rubble', repair2: 'rubble', exitA: 'stairsUp', exitA2: 'stairsUp' };
     for (const o of M.STATION.objects) {
-      if (!o.spr) continue;
+      const pr = P[o.id]; if (!pr) continue;
       if (o.id.startsWith('repair') && s.flags.passage_secured) continue;
-      SP.draw(ctx, SP.SPR[o.spr], o.x * T, o.y * T, o.tint);
+      sprites.push([o.y - 0.5, () => ctx.drawImage(ART.prop(pr), o.x * T, o.y * T)]);
     }
-    if (s.project && s.project.id === 'repair') SP.draw(ctx, SP.SPR.crate, 22 * T, 8 * T, '#8c6d4a');
-    // 화로 불꽃
-    SP.draw(ctx, (tick >> 3) % 2 ? SP.SPR.fire : SP.SPR.fire2, 11 * T, 7 * T, null);
-    // 노출: 계단 위 안개
-    if (s.exposure > 0) { ctx.fillStyle = `rgba(150,150,150,${0.06 * s.exposure})`; ctx.fillRect(T, T, 3 * T, 2 * T); }
-    // 사람
-    for (const p of residentsOnMap()) {
-      const tint = p.r.injury >= 3 ? '#d0574a' : p.r.injury >= 2 ? '#c99a5a' : SP.TINT[p.r.id];
-      SP.draw(ctx, SP.SPR[p.r.id], p.x * T, p.y * T, tint);
-      if (p.r.breakdown > 0 && (tick >> 4) % 2) SP.draw(ctx, SP.SPR.ask, p.x * T, (p.y - 1) * T, '#e07a6b');
-    }
+    for (const d of M.STATION.decor || []) if (d.solid) sprites.push([d.y - 0.5, () => ctx.drawImage(ART.prop(d.prop), d.x * T, d.y * T)]);
+    for (const o of M.STATION.objects) if (o.lamp) ctx.drawImage(ART.prop('lamp'), o.x * T, (o.y - 1) * T + 6);
+    if (s.project && s.project.id === 'repair') ctx.drawImage(ART.prop('crate'), 22 * T, 8 * T);
+    sprites.push([7.4, () => ctx.drawImage(ART.flame((tick >> 3) % 2), 11 * T, 6 * T + 2)]);
+    if (s.exposure > 0) { ctx.fillStyle = `rgba(150,150,150,${0.05 * s.exposure})`; ctx.fillRect(T, T, 3 * T, 2 * T); }
   }
-  function drawDungeon() {
+  function drawDungeon(sprites) {
     const d = scene.dun;
-    for (const [spr, x, y, tint] of d.deco || []) SP.draw(ctx, SP.SPR[spr], x * T, y * T, tint);
+    for (const [spr, x, y] of d.deco || []) { const map = { crate: 'crate', barrel: 'drum', barrel2: 'drum', web: 'bones', shelf: 'crate', skull: 'bones', bones: 'bones', pipeV: 'pump' }; sprites.push([y - 0.5, () => ctx.drawImage(ART.prop(map[spr] || 'bones'), x * T, y * T)]); }
+    for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) { const bob = (tick >> 5) % 2; ctx.drawImage(ART.prop('mark'), x * T, y * T - 4 - bob); }
+  }
+  function drawPrologue(s, sprites) {
+    for (const o of mapObjects()) {
+      if (o.id === 'collapse') { for (let k = 0; k < 3; k++) sprites.push([o.y + k, () => ctx.drawImage(ART.prop('rubble'), o.x * T, (o.y + k) * T)]); continue; }
+      sprites.push([o.y - 0.5, () => ctx.drawImage(ART.prop(o.prop), o.x * T, o.y * T)]);
+    }
   }
 
   // ── 움직임·입력 ──
@@ -293,7 +358,11 @@
     scene.face = dir;
     const [dx, dy] = DIRS[dir];
     const nx = scene.px + dx, ny = scene.py + dy;
-    if (blocked(nx, ny)) return;
+    if (blocked(nx, ny)) {
+      const o = scene.kind === 'prologue' && objectsAt(nx, ny).find((q) => q.walk);
+      if (o) flow(() => prologueObject(o));
+      return;
+    }
     scene.px = nx; scene.py = ny; scene.moving = { dx, dy, t: 0 };
     if (scene.kind === 'station') scene.stationPos = [nx, ny];
   }
@@ -302,6 +371,11 @@
   // ── 걸어서 밟는 곳 ──
   function arrived() {
     const t = tileAt(scene.px, scene.py);
+    if (scene.kind === 'prologue') {
+      if (t === 'o' && state.pro >= 2) { enterPrologue(M.TUNNEL); flow(() => sceneIntro()); }
+      if (t === 'x') flow(() => prologueArrive());
+      return;
+    }
     if (scene.kind === 'station') {
       const o = objectsAt(scene.px, scene.py).find((x) => x.trigger);
       if (o && state.phase === 'morning') flow(() => exitTo(o.id.startsWith('exitA') ? 'A' : 'B'));
@@ -323,16 +397,23 @@
   }
 
   // ── 조사 (A) ──
+  // 바라보는 칸에 무엇이 있나 → { x, y, kind, ref, label }
+  function target() {
+    if (scene.moving) return null;
+    const [fx0, fy0] = front();
+    const p = residentsOnMap().find((q) => q.x === fx0 && q.y === fy0);
+    if (p && (scene.kind === 'prologue' || state.phase === 'morning')) return { x: fx0, y: fy0, kind: 'npc', ref: p, label: '말 걸기' };
+    const o = objectsAt(fx0, fy0).find((q) => q.name) || objectsAt(scene.px, scene.py).find((q) => q.name && !q.trigger);
+    if (o && (scene.kind === 'prologue' || state.phase === 'morning')) return { x: o.x, y: o.y, kind: 'obj', ref: o, label: o.id === 'fire' ? '하루 마치기' : '조사' };
+    return null;
+  }
   function interact() {
     if (busy || UI.isOpen() || scene.moving) return;
     if (scene.kind === 'dungeon') { flow(() => expStatus()); return; }
-    if (state.phase !== 'morning') return;
-    const [fx0, fy0] = front();
-    const p = residentsOnMap().find((q) => q.x === fx0 && q.y === fy0);
-    if (p) { flow(() => talkTo(p.r)); return; }
-    const o = objectsAt(fx0, fy0)[0] || objectsAt(scene.px, scene.py)[0];
-    if (o) { flow(() => useObject(o)); return; }
-    UI.toast('아무것도 없다.', 900);
+    const tg = target();
+    if (!tg) { UI.toast('아무것도 없다.', 900); return; }
+    if (scene.kind === 'prologue') { flow(() => (tg.kind === 'npc' ? prologueNpc(tg.ref.npc) : prologueObject(tg.ref))); return; }
+    if (tg.kind === 'npc') flow(() => talkTo(tg.ref.r)); else flow(() => useObject(tg.ref));
   }
 
   // ── 아침: 사람 ──
@@ -361,7 +442,7 @@
     const s = state;
     const id = o.id.replace(/\d$/, '');
     if (id === 'fire') return endDayFlow();
-    if (id === 'board') return boardFlow();
+    if (id === 'board') { tutDone('board'); return boardFlow(); }
     if (id === 'stash') {
       const items = Object.keys(D.ITEMS).filter((k) => s.items[k]).map((k) => D.ITEMS[k]);
       return UI.open(`<p class="title">창고</p><div class="grid2">${Object.keys(D.RES).map((k) => `<span>${D.RES[k]}</span><b>${s.res[k]} / ${D.CAP[k]}</b>`).join('')}</div><p class="mini">도구: ${esc(items.join(', ') || '없음')} · 근처 식량 ${s.forage} · 비상 해체 부품 ${s.salvageLeft}</p>`);
@@ -416,7 +497,7 @@
       <p class="mini">식량 ${s.res.food}→${pv.res.food} · 물 ${s.res.water}→${pv.res.water} · 침수 ${s.flood}→${pv.flood} · 노출 ${s.exposure}→${pv.exposure}</p>`;
     const deathWarn = pv.deaths.length ? `${pv.deaths.map((n) => J(n, '이/가')).join(', ')} 오늘 밤 사망합니다. 그래도?` : '';
     const a = await UI.open(body, { options: [{ label: '하루를 보낸다 (저녁으로)', value: 'end', confirm: deathWarn }, { label: '아직', value: null }], cancel: true });
-    if (a === 'end') act({ type: 'endDay' });
+    if (a === 'end') { tutDone('ended'); act({ type: 'endDay' }); }
   }
 
   // ── 출구: 원정 준비 ──
@@ -477,7 +558,7 @@
     const a = await UI.open(`<p class="tag">${esc(D.REGIONS[s.exp.region].name)} · 깊이 ${s.exp.depth}</p><p class="title">${esc(v.event.title)}</p><p>${esc(v.event.text)}</p>`, { options: opts, full: true });
     if (a === 'fight') {
       const party = s.exp.party.map((id) => E.byId(s, id));
-      const res = await BATTLE.run(s, F, party, { pipe: s.exp.pack.items.includes('pipe') });
+      const res = await BATTLE.run(s, F, party, { pipe: s.exp.pack.items.includes('pipe'), id: s.exp.eventId });
       act({ type: 'expFight', result: res.result, wounds: res.wounds });
     } else act({ type: 'expChoose', i: a });
     const v2 = E.expView(s);
@@ -518,7 +599,7 @@
   async function phaseFlow() {
     for (let guard = 0; guard < 50; guard++) {
       const s = state;
-      if (s.phase === 'prologue') await prologueStep();
+      if (s.phase === 'prologue') { await prologueStep(); return; }
       else if (s.phase === 'evening') await eveningStep();
       else if (s.phase === 'nightEvent') await nightStep();
       else if (s.phase === 'boarding') await boardingStep();
@@ -527,17 +608,68 @@
       hud();
     }
   }
-  async function prologueStep() {
-    const s = state, sc = D.PROLOGUE[s.pro];
-    if (!s.proResult) {
-      const i = await UI.open(`${s.pro === 0 ? `<p class="rep warn">${esc(D.WARNING)}</p>` : ''}<p class="title">${esc(sc.title)}</p><p>${esc(sc.text)}</p>`, { options: sc.choices.map((c, k) => ({ label: c.text, value: k })), full: true });
-      act({ type: 'proChoose', i });
-    }
-    const r = state.proResult;
-    await UI.open(`<p class="title">${esc(sc.title)}</p><p class="mini">▸ ${esc(r.choice)}</p><p>${esc(r.text)}</p>${fx(r.lines)}`, { next: state.pro + 1 >= D.PROLOGUE.length ? '역에서의 첫날' : '계속' });
-    act({ type: 'proNext' });
-    if (state.phase === 'morning') { enterStation(true); UI.toast('게시판에서 오늘 할 일을, 사람에게 말을 걸어 배치를. 화로에서 하루를 보낸다.', 4200); }
+  // ── 프롤로그: 직접 걷는다 ──
+  const introShown = {};
+  async function sceneIntro() {
+    const s = state;
+    if (s.phase !== 'prologue' || introShown[s.pro]) return;
+    introShown[s.pro] = true;
+    if (s.pro === 0) await UI.line(D.WARNING, { name: '안내' });
+    await UI.lines(D.PROLOGUE[s.pro].text);
   }
+  async function prologueChoose(i, who) {
+    const sc = D.PROLOGUE[state.pro];
+    if (state.proResult || !sc.choices[i]) return;
+    if (!act({ type: 'proChoose', i })) return;
+    const r = state.proResult;
+    await UI.lines(r.text, who ? { name: D.PEOPLE[who].name, face: ART.portrait(who).toDataURL() } : {});
+    if (r.lines.length) UI.toast(r.lines.join(' · '), 2400);
+    act({ type: 'proNext' });
+    if (state.phase === 'morning') { enterStation(true); await dayIntro(); return; }
+    if (state.pro === 1) await sceneIntro();          // 승객들은 같은 칸에 있다. 터널·역 도착 설명은 그 자리에 갔을 때
+  }
+  async function prologueObject(o) {
+    const s = state;
+    if (o.pro === s.pro && o.choice != null) {
+      const ch = D.PROLOGUE[s.pro].choices[o.choice];
+      const ok = await UI.open(`<p class="title">${esc(o.name)}</p>`, { options: [{ label: ch.text, value: true }, { label: '그만둔다', value: false }], cancel: true, cancelValue: false });
+      if (ok) await prologueChoose(o.choice);
+      return;
+    }
+    UI.toast(s.pro === 0 ? '먼저 이 칸을 나갈 방법을 찾아야 한다.' : '지금은 할 게 없다.', 1500);
+  }
+  async function prologueNpc(n) {
+    const s = state;
+    const face = ART.portrait(n.id).toDataURL(), name = D.PEOPLE[n.id].name;
+    if (s.pro === 1 && n.choice != null) {
+      const ch = D.PROLOGUE[1].choices[n.choice];
+      if (n.line) await UI.lines(n.line.replace(/^[^:]+:\s*/, ''), { name, face });
+      const ok = await UI.open(`<p class="who">${esc(name)}</p>`, { options: [{ label: ch.text, value: true }, { label: '다른 사람에게도 말을 건다', value: false }], cancel: true, cancelValue: false });
+      if (ok) await prologueChoose(n.choice, n.id);
+      return;
+    }
+    if (s.pro === 2 && n.choice != null) {
+      const ch = D.PROLOGUE[2].choices[n.choice];
+      const ok = await UI.open(`<p class="who">${esc(name)}</p><p>“앞이 무너졌소. 어떻게 하겠소?”</p>`, { options: [{ label: ch.text, value: true }, { label: '아니, 내가 알아서 하겠다', value: false }], cancel: true, cancelValue: false });
+      if (ok) await prologueChoose(n.choice, n.id);
+      return;
+    }
+    await UI.lines(s.pro === 0 ? '…' : (n.line || '…').replace(/^[^:]+:\s*/, ''), { name, face });
+    if (s.pro === 0) UI.toast('승객들이 웅크려 있다. 먼저 이 칸을 나갈 방법을 찾자.', 1800);
+  }
+  async function prologueArrive() {
+    const s = state;
+    if (s.pro < 3) { UI.toast('앞이 무너져 막혀 있다.', 1500); return; }
+    await sceneIntro();
+    await prologueChoose(0);
+  }
+  async function dayIntro() {
+    hud();
+    await UI.lines('을지로입구역. 승강장 한가운데 드럼통에 불을 피웠다. 일곱 사람이 지낼 만은 하다.');
+    await UI.lines('구조열차는 열흘 뒤 고지대 역에 온다. 그때까지 통로를 잇고, 사람들을 지켜야 한다.');
+    UI.toast('게시판(불 왼쪽)에서 오늘 할 일을 확인하자.', 3500);
+  }
+  async function prologueStep() { await sceneIntro(); }
   async function eveningStep() {
     const s = state, v = E.eveningView(s);
     if (v.type === 'promise') {
@@ -606,7 +738,7 @@
   }
   function restart() {
     state = E.newGame((Date.now() & 0x7fffffff) >>> 0);
-    save(); scene.key = ''; scene.stationPos = null; enterStation(true); hud();
+    save(); scene.key = ''; scene.kind = ''; scene.stationPos = null; for (const k in introShown) delete introShown[k]; enterPrologue(); hud();
     flow(async () => {});
   }
 
@@ -653,11 +785,35 @@
   $('btnB').addEventListener('click', () => { if (UI.isOpen()) UI.key('back'); else menu(); });
 
   // ── 시작 ──
-  function loop() { update(); draw(); requestAnimationFrame(loop); }
-  SP.ready.then(() => {
-    resize(); syncScene(); if (!scene.rows.length) enterStation(true); hud();
+  // 지금 할 일 (화면 왼쪽 위)
+  function objective() {
+    const s = state;
+    if (s.phase === 'prologue') return ['비상 레버나 좌석 밑 가방을 살펴보자', '승객들에게 말을 걸자', '터널을 지나 역으로 (앞이 무너졌다)', '터널 끝으로'][s.pro] || '';
+    if (s.phase === 'expedition') return '빛나는 표시(!)를 살피고, 계단(출구)으로 돌아가자';
+    if (s.phase !== 'morning') return '';
+    if (s.day === 1 && !tut.board) return '게시판(불 왼쪽)에서 오늘 할 일을 확인하자';
+    if (s.day === 1 && !tut.ended) return '사람에게 말을 걸어 일을 바꾸거나, 화로 앞에서 하루를 마치자';
+    if (s.flags.repair_open && !s.flags.passage_secured && !s.project) return '게시판에서 통로 수리를 착공하자';
+    if (!s.flags.met_dohyeon && !s.flags.skipped_dohyeon && !s.expDone) return '수문 방면(오른쪽 아래 터널)에서 도울 사람을 찾자';
+    if (!s.flags.met_eunchae && !s.flags.skipped_eunchae && !s.expDone) return '시장 방면(왼쪽 위 계단)에서 약국을 찾자';
+    return `D${D.GOAL_DAY} 열차까지 ${D.GOAL_DAY - s.day}일 — 통로를 잇고 사람을 지키자`;
+  }
+  let tut = {};
+  try { tut = JSON.parse(localStorage.getItem('darkstation.v3.tut')) || {}; } catch (e) { tut = {}; }
+  function tutDone(k) { if (tut[k]) return; tut[k] = true; try { localStorage.setItem('darkstation.v3.tut', JSON.stringify(tut)); } catch (e) { /* 무시 */ } }
+  let lastGoal = null, lastBtn = null;
+  function overlay() {
+    const g = UI.isOpen() || busy ? '' : objective();
+    if (g !== lastGoal) { lastGoal = g; $('goal').textContent = g ? '◆ ' + g : ''; $('goal').hidden = !g; }
+    const tg = !UI.isOpen() && !busy ? target() : null;
+    const label = UI.isOpen() ? '선택' : tg ? tg.label : scene.kind === 'dungeon' ? '상태' : '조사';
+    if (label !== lastBtn) { lastBtn = label; $('btnA').textContent = label; }
+  }
+  function loop() { update(); draw(); overlay(); requestAnimationFrame(loop); }
+  Promise.resolve().then(() => {
+    resize(); if (state.phase === 'prologue') enterPrologue(); else syncScene(); if (!scene.rows.length) enterStation(true); hud();
     requestAnimationFrame(loop);
     flow(async () => {});
   });
-  if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); draw(); }, interact, menu };
+  if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); draw(); overlay(); }, interact, menu, target };
 })();

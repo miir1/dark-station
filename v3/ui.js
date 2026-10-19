@@ -42,6 +42,7 @@
     close(op.value === undefined ? i : op.value);
   }
   function key(k) {
+    if (lineCur) { if (k === 'ok' || k === 'back') lineCur.next(); return true; }
     if (!cur) return false;
     const n = cur.options.length;
     if (k === 'up' || k === 'down') {
@@ -53,6 +54,7 @@
     return true;
   }
   document.addEventListener('click', (e) => {
+    if (lineCur && e.target.closest('#dlg')) { if (Date.now() - openedAt > 120) lineCur.next(); return; }
     const b = e.target.closest('#dlg .opt');
     if (b) { choose(Number(b.dataset.i)); return; }
     if (cur && cur.cancel && e.target.id === 'dlg') close(cur.cancelValue);
@@ -62,7 +64,30 @@
     const t = $('toast'); t.textContent = text; t.hidden = false;
     clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, ms || 1800);
   }
+  // ── 한 줄씩: 글자가 찍히듯 나오고, 누르면 다 나오거나 다음으로 ──
+  let lineCur = null;
+  function line(text, o) {
+    o = o || {};
+    if (cur) close(undefined);
+    const dlg = $('dlg');
+    dlg.className = 'line';
+    const face = o.face ? `<img class="face" alt="" src="${o.face}">` : '';
+    dlg.innerHTML = `<div class="box">${face}<div class="lt">${o.name ? `<p class="who">${esc(o.name)}</p>` : ''}<p class="tw"></p><p class="more">▼</p></div></div>`;
+    dlg.hidden = false;
+    const el = dlg.querySelector('.tw');
+    const chars = Array.from(text);
+    let i = 0, timer = 0;
+    return new Promise((resolve) => {
+      const done = () => { clearInterval(timer); el.textContent = text; i = chars.length; };
+      timer = setInterval(() => { i++; el.textContent = chars.slice(0, i).join(''); if (i >= chars.length) clearInterval(timer); }, 18);
+      lineCur = { next() { if (i < chars.length) { done(); return; } clearInterval(timer); lineCur = null; dlg.hidden = true; dlg.innerHTML = ''; resolve(); } };
+      openedAt = Date.now();
+    });
+  }
+  // 문장마다 끊어서 차례로
+  const splitSentences = (text) => String(text).split(/(?<=[.!?…”"])\s+(?=\S)/).filter(Boolean);
+  async function lines(text, o) { for (const s of splitSentences(text)) await line(s, o); }
   const say = (body, o) => open(body, o);
-  const isOpen = () => !!cur;
-  window.UI = { open, say, key, isOpen, toast, esc };
+  const isOpen = () => !!cur || !!lineCur;
+  window.UI = { open, say, key, isOpen, toast, esc, line, lines, splitSentences };
 })();

@@ -100,5 +100,56 @@
     ], deco: [['skull', 18, 6, '#ccc'], ['pipeV', 6, 1, '#6d7a82']] },
   };
 
-  window.MAPS = { STATION, DUNGEONS };
+  // 역 꾸밈 (지나갈 수 없는 것은 solid)
+  STATION.decor = [
+    { prop: 'pillar', x: 7, y: 6, solid: true }, { prop: 'pillar', x: 16, y: 6, solid: true },
+    { prop: 'turnstile', x: 4, y: 3, solid: true }, { prop: 'turnstile', x: 5, y: 3, solid: true }, { prop: 'turnstile', x: 7, y: 3, solid: true },
+    { prop: 'blood', x: 14, y: 8 }, { prop: 'blood', x: 3, y: 2 }, { prop: 'bones', x: 21, y: 4 }, { prop: 'corpse', x: 20, y: 11 },
+    { prop: 'sack', x: 22, y: 2, solid: true }, { prop: 'crate', x: 20, y: 1, solid: true },
+  ];
+
+  // ── 프롤로그: 멈춘 전동차 → 어두운 터널 ──
+  // s 좌석(지나갈 수 없음)  D 문  o 열린 문(터널로)
+  const CAR = {
+    id: 'car', rows: [
+      '######################',
+      '#ssssss#ssssss#ssssss#',
+      '#....................#',
+      '#....................o',
+      '#....................#',
+      '#ssssss#ssssss#ssssss#',
+      '######################',
+    ],
+    start: [3, 3],
+    objects: [
+      { id: 'lever', x: 20, y: 2, prop: 'lever', name: '비상 레버', pro: 0, choice: 0 },
+      { id: 'bag', x: 10, y: 4, prop: 'sack', name: '좌석 밑 가방', pro: 0, choice: 1 },
+    ],
+    // 승객들: 프롤로그 2장에서 말을 걸면 선택이 된다
+    npcs: [
+      { id: 'gicheol', x: 16, y: 2, choice: 0, line: '박기철: “앞쪽이 을지로입구역이오. 걸어서 십 분.”' },
+      { id: 'soonrye', x: 17, y: 4, choice: 1, line: '김순례가 떨리는 손으로 손잡이를 붙잡고 있다.' },
+      { id: 'mari', x: 18, y: 3, choice: 2, line: '정마리: “다친 사람 있어요? 붕대는 조금 있어요.”' },
+      { id: 'seoha', x: 15, y: 4, line: '윤서하가 꺼진 휴대폰 화면만 들여다본다. “신호가 안 잡혀요.”' },
+      { id: 'eunji', x: 14, y: 2, line: '최은지: “시장 사람들은 이런 거 익숙해요. …아마도요.”' },
+      { id: 'dongha', x: 13, y: 3, line: '한동하가 은지 곁을 떠나지 않는다. “짐은 제가 들게요.”' },
+    ],
+  };
+  const TUNNEL = {
+    id: 'tunnel', rows: [
+      '##############################',
+      '#~~~~~~~~~~~~~~~~~~~~~~~~~~~~#',
+      'i~~~~~~~~~~~~~~~~~~~~~~~~~~~~x',
+      '#~~~~~~~~~~~~~~~~~~~~~~~~~~~~#',
+      '##############################',
+    ],
+    start: [1, 2],
+    objects: [
+      { id: 'shelter', x: 9, y: 1, prop: 'crate', name: '대피 공간의 비상 상자', pro: 2, choice: 1 },
+      { id: 'collapse', x: 17, y: 1, h: 3, prop: 'rubble', name: '무너진 구간', pro: 2, choice: 2, walk: true },
+    ],
+    npcs: [{ id: 'gicheol', x: 3, y: 1, choice: 0, line: '' }],
+  };
+
+  window.MAPS = { STATION, DUNGEONS, CAR, TUNNEL };
 })();

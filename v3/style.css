@@ -5,7 +5,7 @@
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); overscroll-behavior: none; }
 body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-height: 1.5; -webkit-text-size-adjust: 100%; user-select: none; -webkit-user-select: none; }
-#app { position: relative; height: 100dvh; max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; overflow: hidden; }
+#app { position: relative; height: 100dvh; width: 100%; max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; overflow: hidden; }
 
 #hud { flex: none; padding: max(6px, env(safe-area-inset-top)) 8px 6px; display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: center; font-size: 12px; position: relative; z-index: 2; border-bottom: 1px solid #262219; background: #0e0d0b; }
 #hud b { color: var(--fg); }
@@ -15,8 +15,8 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 #hud .it.warn b { color: var(--warn); }
 #hud .hours { margin-left: auto; color: var(--warn); }
 
-#stage { position: relative; flex: 1 1 auto; display: flex; align-items: center; justify-content: center; min-height: 0; background: #000; overflow: hidden; }
-#cv { image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+#stage { position: relative; flex: 1 1 auto; display: flex; align-items: center; justify-content: center; min-height: 0; min-width: 0; width: 100%; background: #000; overflow: hidden; }
+#cv { image-rendering: pixelated; image-rendering: crisp-edges; display: block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 #toast { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); background: rgba(14, 12, 10, .92); border: 1px solid var(--line); padding: 6px 12px; font-size: 13px; max-width: 92%; pointer-events: none; }
 
 /* 대화창 */
@@ -71,3 +71,14 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 .ab { display: flex; gap: 10px; align-items: center; }
 .ab button { width: 66px; height: 66px; border-radius: 50% !important; }
 #btnA { border-color: var(--accent) !important; }
+
+/* 한 줄 대화 */
+#dlg.line { background: transparent; }
+#dlg.line .box { display: flex; gap: 10px; align-items: flex-start; min-height: 96px; cursor: pointer; }
+#dlg.line .face { width: 72px; height: 63px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
+#dlg.line .lt { flex: 1; }
+#dlg.line .tw { font-size: 16px; line-height: 1.6; margin: 0 0 4px; min-height: 3.2em; }
+#dlg.line .more { animation: ds-more 1s steps(2) infinite; }
+@keyframes ds-more { 50% { opacity: 0; } }
+#goal { position: absolute; left: 8px; top: 8px; max-width: 70%; font-size: 12px; color: #e0c9a0; background: rgba(10,8,7,.78); border-left: 2px solid #9a7428; padding: 4px 8px; pointer-events: none; }
+#goal[hidden] { display: none; }

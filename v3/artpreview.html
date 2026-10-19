@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>그림 미리보기</title>
+<style>body{background:#0b0a09;color:#ccc;font:12px sans-serif;margin:8px} canvas{image-rendering:pixelated;margin:2px;background:#16120f} h3{margin:6px 0 2px}</style></head>
+<body><div id="o"></div>
+<script src="art3.js"></script>
+<script>
+const o = document.getElementById('o');
+const show = (title, list, s) => { const h = document.createElement('h3'); h.textContent = title; o.appendChild(h); for (const c of list) { const x = document.createElement('canvas'); x.width = c.width * s; x.height = c.height * s; const g = x.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, x.width, x.height); o.appendChild(x); } };
+const ids = Object.keys(ART.PEOPLE);
+show('사람', ids.map((id) => ART.personSprite(id, 0, 0)), 4);
+show('걷기·부상 (기철)', [1, 2].map((f) => ART.personSprite('gicheol', f, 0)).concat([1, 2, 3].map((h) => ART.personSprite('gicheol', 0, h))), 4);
+show('크리처', ['rats', 'twomouth', 'drowned', 'bonepicker'].map(ART.creatureSprite), 4);
+show('타일', ['floor', 'concourse', 'wall', 'edge', 'track', 'water', 'shutter', 'pipe', 'drainFloor', 'marketFloor'].map((k) => ART.tile(k, 1, 2)), 4);
+show('소품', ['drum', 'board', 'generator', 'tank', 'pump', 'crate', 'sack', 'bed', 'rubble', 'turnstile', 'pillar', 'grave', 'bones', 'corpse', 'stairsUp', 'stairsDown', 'lamp', 'mark', 'blood', 'mush', 'cross'].map(ART.prop).concat([ART.flame(0), ART.flame(1)]), 4);
+// 바닥 6×4 모자이크
+const m = document.createElement('canvas'); m.width = 16 * 10; m.height = 16 * 5; const g = m.getContext('2d');
+for (let y = 0; y < 5; y++) for (let x = 0; x < 10; x++) g.drawImage(ART.tile(y === 0 ? 'wall' : y === 3 ? 'edge' : y === 4 ? 'track' : 'floor', x, y), x * 16, y * 16);
+g.drawImage(ART.prop('drum'), 48, 16); g.drawImage(ART.flame(0), 48, 6); g.drawImage(ART.personSprite('mari', 0, 0), 80, 24); g.drawImage(ART.personSprite('player', 0, 0), 30, 30); g.drawImage(ART.prop('board'), 112, 16); g.drawImage(ART.prop('blood'), 130, 40);
+show('모자이크', [m], 4);
+</script></body></html>
