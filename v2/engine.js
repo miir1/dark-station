@@ -247,6 +247,7 @@
       if (row.task === 'exp') continue;
       const eff = idle.includes(row.rid) ? 'rest' : row.task;
       row.stress = (eff === 'rest' ? -Math.max(0, 16 - traitVal(r, 'restLess')) : D.TASKS[eff].stress + traitVal(r, 'workStress')) + ambient;
+      if (r.injury === 1 && eff !== 'rest') row.infect = INFECT;
     }
     const away = alive(s).filter((r) => plan[r.id] === 'exp').length;
     const people = 1 + alive(s).length - away;
@@ -277,8 +278,11 @@
       : { text: `${D.CALENDAR.surge.title}을 버틴다 (침수 ${flood}) — 발전기 무사`, kind: 'good' });
     if (flood >= 8) warnings.push({ text: '침수 8 도달 → 오늘 밤 수위 경보 (식량 −6·부품 −2, 또는 모두 스트레스 +8)', kind: 'bad' });
     if (exposure >= 6 && (s.visitDay == null || s.visitDay > s.day + 1)) warnings.push({ text: '노출 6 이상 → 내일 밤 순찰대가 찾아온다', kind: 'warn' });
-    if (short.food) warnings.push({ text: '식량이 모자란다 — 모두 스트레스 +8', kind: 'bad' });
-    if (short.water) warnings.push({ text: '물이 모자란다 — 모두 스트레스 +10', kind: 'bad' });
+    const infected = ev.rows.filter((x) => x.infect).map((x) => byId(s, x.rid).name);
+    if (infected.length) warnings.push({ text: `경상인 채로 일한다: ${infected.join('·')} — 각자 ${Math.round(INFECT * 100)}% 확률로 곪아 중상`, kind: 'warn' });
+    const fainting = (k) => homeRes(s).filter((r) => !s.expParty.includes(r.id) && r[k] >= (k === 'hunger' ? 1 : 0)).map((r) => r.name);
+    if (short.food) { const f = fainting('hunger'); warnings.push({ text: `식량이 모자란다 — 모두 스트레스 +8${f.length ? `, ${f.join('·')} 쓰러진다 (부상 1)` : ', 이틀 연속이면 쓰러진다'}`, kind: 'bad' }); }
+    if (short.water) warnings.push({ text: '물이 모자란다 — 모두 스트레스 +10, 오늘 밤 모두 쓰러진다 (부상 1)', kind: 'bad' });
     if (!short.food && !short.water && (res.food === 0 || res.water === 0)) warnings.push({ text: '창고가 바닥난다 — 내일부터 모자랄 수 있다', kind: 'warn' });
     if (completes) warnings.push({ text: `${D.PROJECTS[s.project.id].name} 완성${s.project.id === 'repair' ? ' (침수 −2)' : ''}`, kind: 'good' });
     if (ev.dark) warnings.push({ text: '전력 0 — 오늘 밤 역이 어둡다: 모두 스트레스 +4 · 밤 사건 판정 −10%p', kind: 'warn' });

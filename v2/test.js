@@ -680,3 +680,14 @@ test('시신: 죽은 날 밤 처리해야 하고, 먹으면 명부에 남는다'
   E.dispatch(s, { type: 'confirmBoarding' });
   assert.ok(s.ending.ledger.some((l) => /먹었다/.test(l.text)));
 });
+
+test('감염 위험은 미리 보인다: 경상인 채로 일하면 행과 예상 경고에 표시', () => {
+  const s = started(5);
+  E.byId(s, 'seoha').injury = 1;
+  E.dispatch(s, { type: 'setPlan', plan: { seoha: 'forage' } });
+  const pv = E.previewNight(s);
+  assert.ok(pv.ev.rows.find((x) => x.rid === 'seoha').infect > 0);
+  assert.ok(pv.warnings.some((w) => /곪아/.test(w.text) && w.text.includes('윤서하')));
+  E.dispatch(s, { type: 'setPlan', plan: { seoha: 'rest' } });
+  assert.ok(!E.previewNight(s).warnings.some((w) => /곪아/.test(w.text)), '쉬면 위험 없음');
+});
