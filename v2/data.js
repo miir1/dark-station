@@ -303,7 +303,7 @@
       choices: [
         { text: '문을 열어 들인다', check: { skill: 'talk', base: 0.45 },
           ok: { text: '지친 얼굴의 사람이 담요를 받아 들고 하룻밤 자고 간다. 아침에 부품 하나를 두고 사라졌다.', res: { food: -2, parts: 1 }, stress: -2 },
-          fail: { text: '문을 연 순간 둘이 밀고 들어왔다. 하나가 문지기의 얼굴을 벽돌로 내리쳤다. 창고를 털어 달아났다.', res: { food: -3, parts: -1 }, injure: 1, exposure: 1 } },
+          fail: { text: '문을 연 순간 둘이 밀고 들어왔다. 하나가 문지기의 얼굴을 벽돌로 내리쳤다. 창고를 털어 달아났다.', res: { food: -3, parts: -1 }, injure: 2, exposure: 1 } },
         { text: '틈으로 먼저 살핀다', check: { skill: 'obs', base: 0.5 },
           ok: { text: '혼자다. 무기도 없다. 들어온 그는 가방에서 통조림을 꺼내 나눈다.', res: { food: 2 } },
           fail: { text: '어두워서 누군지 알 수 없었다. 문을 열지 못했다.', stress: 2 } },
@@ -359,7 +359,7 @@
         { text: '경계를 서던 사람이 막는다', req: { guards: 1 }, out: { text: '경계조가 도둑을 쫓아냈다. 문 밖에 흘린 통조림까지 주웠다.', exposure: -1, stress: -2 } },
         { text: '직접 쫓아간다', check: { skill: 'str', base: 0.45 },
           ok: { text: '계단에서 붙잡아 물건을 되찾았다.', stress: -2 },
-          fail: { text: '계단에서 붙잡았지만 상대가 칼을 꺼냈다. 옆구리가 뜨거웠다. 그사이 창고가 털렸다.', res: { food: -3, parts: -1 }, injure: 1 } },
+          fail: { text: '계단에서 붙잡았지만 상대가 칼을 꺼냈다. 옆구리가 뜨거웠다. 그사이 창고가 털렸다.', res: { food: -3, parts: -1 }, injure: 2 } },
         { text: '그냥 둔다', out: { text: '아침에 보니 식량 상자가 가벼워져 있다.', res: { food: -3, parts: -1 } } },
       ] },
   };
@@ -375,7 +375,7 @@
       { text: '식량 4개를 내준다', cost: { food: 4 }, out: { text: '순찰대는 자루를 메고 말없이 올라갔다.', exposure: -3 } },
       { text: '경계를 서던 두 사람과 함께 맞선다', req: { guards: 2 }, check: { skill: 'str', base: 0.45, guards: true },
         ok: { text: '경계조가 계단을 막고 버텼다. 순찰대는 욕을 하며 물러갔다.', exposure: -3, stress: -3 },
-        fail: { text: '개머리판이 경계조의 이를 부러뜨렸다. 순찰대는 웃으며 식량 자루를 메고 올라갔다.', res: { food: -3 }, injure: 1, exposure: -1 } },
+        fail: { text: '개머리판이 경계조의 이를 부러뜨렸다. 순찰대는 웃으며 식량 자루를 메고 올라갔다.', res: { food: -3 }, injure: 2, exposure: -1 } },
       { text: '시장 쪽 거래를 2일간 끊는다', out: { text: '순찰대는 “좋아, 며칠은 조용하겠군.” 하고 돌아갔다. 시장 방면 길이 막힌다.', exposure: -2, close: { region: 'A', days: 2 } } },
     ],
   };

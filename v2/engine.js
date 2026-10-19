@@ -13,6 +13,7 @@
   const BOARD_PER = 2;               // 승차 1명당 식량·물 각각 2
   const BOARD_LITTER = 4;            // 부품 4개로 들것·침낭 한 벌 = 좌석 1개 (최대 2개)
   const BOARD_LITTER_MAX = 2;
+  const INFECT = 0.3;                // 경상으로 일하면 밤마다 곪을 확률
   const EDGE = 80;                   // 스트레스 80부터는 밤마다 무너질 수 있다 (80: 20% … 95: 80%, 100: 반드시)
 
   // ── 난수 (상태에 저장 → 새로고침해도 같은 결과) ──
@@ -47,7 +48,7 @@
     seed = (seed == null ? 1 : seed) >>> 0;
     const s = {
       v: SAVE_V, seed, rng: seed, day: 1, phase: 'prologue', pro: 0,
-      res: { food: 8, water: 8, parts: 4, meds: 1 }, flood: 0, exposure: 0, forage: 52, salvageLeft: 6,
+      res: { food: 6, water: 6, parts: 4, meds: 1 }, flood: 0, exposure: 0, forage: 52, salvageLeft: 6,
       residents: D.START_PEOPLE.map(makeResident), allies: {}, flags: {}, items: {},
       facility: null, project: null, plan: {}, lastPlan: {}, expParty: [], expDone: false,
       closed: { A: 0, B: 0 }, promises: [], visitDay: D.CALENDAR.patrol.day,
@@ -731,8 +732,8 @@
     if (shortFood > 0) say(s, `식량이 바닥났다. 빈 깡통 바닥을 손가락으로 훑는 소리만 들린다. 모두 스트레스 +8`, 'bad');
     if (shortWater > 0) say(s, `물이 떨어졌다. 누군가 바닥에 고인 녹물을 핥았다. 모두 스트레스 +10`, 'bad');
     for (const r of home) {
-      if (shortFood > 0) { r.stress = clamp(r.stress + 8, 0, 100); r.hunger += 1; if (r.hunger >= 3) { const sc = injure(s, r, 1); r.hunger = 0; say(s, `${J(r.name, '이/가')} 허기에 쓰러졌다. 광대뼈가 살갗을 뚫고 나올 것 같다. 부상 1`, 'bad'); say(s, sc, 'bad'); } } else r.hunger = 0;
-      if (shortWater > 0) { r.stress = clamp(r.stress + 10, 0, 100); r.thirst += 1; if (r.thirst >= 2) { const sc = injure(s, r, 1); r.thirst = 0; say(s, `${r.name}의 입술이 갈라져 피가 맺혔다. 일어서지 못한다. 부상 1`, 'bad'); say(s, sc, 'bad'); } } else r.thirst = 0;
+      if (shortFood > 0) { r.stress = clamp(r.stress + 8, 0, 100); r.hunger += 1; if (r.hunger >= 2) { const sc = injure(s, r, 1); r.hunger = 0; say(s, `${J(r.name, '이/가')} 허기에 쓰러졌다. 광대뼈가 살갗을 뚫고 나올 것 같다. 부상 1`, 'bad'); say(s, sc, 'bad'); } } else r.hunger = 0;
+      if (shortWater > 0) { r.stress = clamp(r.stress + 10, 0, 100); r.thirst += 1; if (r.thirst >= 1) { const sc = injure(s, r, 1); r.thirst = 0; say(s, `${r.name}의 입술이 갈라져 피가 맺혔다. 일어서지 못한다. 부상 1`, 'bad'); say(s, sc, 'bad'); } } else r.thirst = 0;
     }
     // 2) 침수·노출
     const surge = s.day === D.CALENDAR.surge.day ? 3 : 0;
@@ -770,6 +771,14 @@
       } else r.stress = clamp(r.stress + D.TASKS[t].stress + traitVal(r, 'workStress') + ev.ambient, 0, 100);
       if (r.breakdown > 0) { r.breakdown -= 1; if (r.breakdown === 0) r.affl = null; }
       else if (r.stress >= 100 || (r.stress >= EDGE && rand(s) < (r.stress - EDGE + 5) / 25)) crack(s, r);
+    }
+    // 감염: 경상인 채로 일을 하면 상처가 곪는다
+    for (const r of alive(s)) {
+      const t = ev.idle.includes(r.id) ? 'rest' : plan[r.id];
+      if (r.injury === 1 && t && t !== 'rest' && t !== 'exp' && rand(s) < INFECT) {
+        const sc = injure(s, r, 1);
+        say(s, `${r.name}의 상처가 곪았다. 붕대 밑에서 누런 진물이 배어 나온다. 중상`, 'bad'); say(s, sc, 'bad');
+      }
     }
     const healed = new Set(ev.heals.map((h) => h.pid));
     for (const r of alive(s)) {

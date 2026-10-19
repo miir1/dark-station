@@ -58,14 +58,11 @@
     if (c.locked) bits.push('🔒 ' + esc(c.reason));
     else {
       if (c.choice.cost) bits.push(`소모 ${esc(costText(c.choice.cost))}`);
-      if (c.chance != null) bits.push(`${esc(D.SKILLS[c.choice.check.skill])} 판정 ${Math.round(c.chance * 100)}%`);
-      const tags = E.choiceTags(c.choice);
-      if (tags.length) bits.push(`<span class="risk">⚠ ${esc(tags.join(' · '))}</span>`);
+      if (c.chance != null) bits.push(`${esc(D.SKILLS[c.choice.check.skill])} — ${c.chance >= 0.7 ? '해볼 만하다' : c.chance >= 0.45 ? '알 수 없다' : '무모하다'}`);
       if (c.choice.req && (c.choice.req.item || c.choice.req.trait)) bits.push(`조건 충족: ${esc(c.choice.req.item ? D.ITEMS[c.choice.req.item] + ' 사용' : '특성')}`);
       if (c.warn) bits.push(`<span class="risk bad">⚠ ${esc(c.warn)}</span>`);
-      if (c.choice.hint) bits.push(`<span class="risk bad">⚠ ${esc(c.choice.hint)}</span>`);
     }
-    return btn(act, c.choice.text, { arg: i, disabled: c.locked, sub: bits.join('<br>'), cls: c.choice.hint ? ['quiet'] : [], confirm: c.choice.hint && !c.locked ? `${c.choice.text}\n\n${c.choice.hint}\n\n정말 선택할까요?` : '' });
+    return btn(act, c.choice.text, { arg: i, disabled: c.locked, sub: bits.join('<br>'), confirm: c.choice.taboo && !c.locked ? `${c.choice.text}\n\n되돌릴 수 없다.` : '' });
   }
 
   // ── 아침: 역 ──
@@ -79,10 +76,9 @@
     let out = '';
     if (row) {
       out = row.out;
-      if (row.stress != null && !(row.task === 'rest')) out += ` · 스트레스 ${sign(row.stress)}`;
-      if (row.task === 'rest') out = `스트레스 ${sign(row.stress)}${r.injury === 1 ? ' · 경상 회복' : ''}`;
+      if (row.task === 'rest') out = '휴식';
     }
-    const sit = r.injury >= 3 ? `<div class="rout bad">위독 — 치료받지 못하면 D${r.crit}의 밤에 사망</div>` : r.injury === 2 ? '<div class="rout warn">중상 — 치료하지 않으면 하룻밤 뒤 위독</div>' : '';
+    const sit = r.injury >= 3 ? '<div class="rout bad">위독 — 오래 버티지 못한다</div>' : r.injury === 2 ? '<div class="rout warn">중상 — 상처가 썩어 간다</div>' : r.injury === 1 ? '<div class="rout warn">경상 — 일을 시키면 곪을 수 있다</div>' : '';
     return `<div class="rrow"><div class="rhead">${A.portrait(r.id, r, 32)}<b>${esc(r.name)}</b><span class="mini">${D.PEOPLE[r.id].age}세 · ${esc(D.PEOPLE[r.id].bio)}</span>${badges(r)}</div>
       <div class="rbar"><span class="mini">스트레스 ${r.stress}</span>${bar(r.stress, 100, r.stress >= 70 ? 'hot' : '', [70])}</div>${sel}
       ${sit}<div class="rout ${row && row.bad ? 'bad' : ''}">${esc(out)}${forced ? ' · 몸 상태 때문에 쉼' : ''}</div></div>`;
@@ -109,28 +105,15 @@
       <p><b>통로</b> ${esc(path)}</p><p><b>병원 협정</b> ${esc(pact)}</p><p><b>승차</b> ${esc(cap)}</p>
       <p class="hint">부품 ${E.BOARD_LITTER}개마다 들것 한 벌(좌석 +1, 최대 ${E.BOARD_LITTER_MAX}). 한 사람당 식량·물이 ${E.BOARD_PER}개씩 필요해요.</p></section>`;
   }
-  // 하루 종료 버튼 바로 위: 이 배치로 밤을 보내면 어떻게 되는지 (가장 급한 경고 하나 + 핵심 숫자)
-  function endPreview(s, pv) {
-    const arrow = (a, b, cls) => `<b class="${cls || ''}">${a}→${b}</b>`;
-    const low = (k) => (pv.res[k] < Math.ceil((1 + E.alive(s).length) * 0.5) * 2 ? 'warn' : '');
-    const nums = `식량 ${arrow(s.res.food, pv.res.food, low('food'))} · 물 ${arrow(s.res.water, pv.res.water, low('water'))} · 침수 ${arrow(s.flood, pv.flood, pv.flood >= E.FLOOD_POWER_STOP ? 'warn' : '')} · 노출 ${arrow(s.exposure, pv.exposure, pv.exposure >= 6 ? 'warn' : '')}`;
-    const warn = [];
-    if (pv.deaths.length) warn.push(`${pv.deaths.join('·')} 오늘 밤 사망`);
-    if (s.project && !Object.values(pv.ev.plan).includes('build')) warn.push(`${s.project.id === 'repair' ? '통로' : '공사'} 작업자 미배치`);
-    const other = pv.warnings.filter((w) => !/사망/.test(w.text) && w.kind !== 'good');
-    if (other.length) warn.push(other[0].text);
-    const good = pv.warnings.filter((w) => w.kind === 'good');
-    return `<p class="endpv">${nums}${warn.length ? `<br><span class="w">⚠ ${esc(warn.slice(0, 2).join(' · '))}</span>` : ''}${good.length ? `<br><span class="g">✓ ${esc(good[0].text)}</span>` : ''}</p>`;
-  }
   function stationTab(s) {
     const pv = E.previewNight(s);
     const fc = E.forecast(s);
     let h = '';
     const hurt = E.alive(s).filter((r) => r.injury >= 2);
     h += A.stationScene(s, pv.ev.plan, { lit: pv.ev.made > 0 });
-    if (hurt.length) h += `<section class="card alert"><h3>치료가 필요하다</h3>${hurt.map((r) => `<p class="rep ${r.injury >= 3 ? 'bad' : 'warn'}">${esc(r.name)} — ${r.injury >= 3 ? `위독: D${r.crit}의 밤까지 치료하지 못하면 사망` : '중상: 치료하지 않으면 하룻밤 뒤 위독'} (치료 담당 + 약품 1${s.res.meds < 1 ? ' — 지금 약품이 없다! 약국(시장 방면)이나 밤 사건으로만 구할 수 있다' : ''})</p>`).join('')}</section>`;
+    if (hurt.length) h += `<section class="card alert"><h3>치료가 필요하다</h3>${hurt.map((r) => `<p class="rep ${r.injury >= 3 ? 'bad' : 'warn'}">${esc(r.name)} — ${r.injury >= 3 ? '위독' : '중상'}${s.res.meds < 1 ? ' · 약품이 없다' : ''}</p>`).join('')}</section>`;
     h += goalCard(s);
-    if (s.day === 1 && s.phase === 'morning' && !s.expDone) h += '<p class="hint tip">① 오늘의 배치를 확인하고 ② (선택) 지도 탭에서 원정을 보낸 뒤 ③ 아래 [하루를 보낸다]를 누르세요. 원정을 보내면 그 두 사람의 배치는 비니까 원정 후 [추천 배치]로 다시 짜세요.</p>';
+    if (s.day === 1 && s.phase === 'morning' && !s.expDone) h += '<p class="hint tip">아무도 가르쳐 주지 않는다. 일을 정하고, 지상으로 사람을 보내고, 밤을 넘겨라.</p>';
     if (fc.length) h += `<section class="card"><h3>예보와 약속</h3>${repLines(fc)}</section>`;
     // 공사
     if (s.project) {
@@ -145,27 +128,12 @@
     }
     // 배치
     const home = E.homeRes(s).filter((r) => !s.expParty.includes(r.id));
-    h += `<section class="card"><h3>오늘의 배치</h3><p class="hint">근처에서 구할 수 있는 식량 ${s.forage} · 비상 해체로 뜯어낼 부품 ${s.salvageLeft}개 남음</p><div class="row2">${btn('suggest', '추천 배치')}${btn('repeat', '어제와 같이', { disabled: !Object.keys(s.lastPlan).length })}</div><p class="hint">추천 기준: ${esc(E.suggestWhy(s) || '모두 휴식')}</p>`;
+    h += `<section class="card"><h3>오늘의 배치</h3><p class="hint">근처에서 구할 수 있는 식량 ${s.forage} · 비상 해체로 뜯어낼 부품 ${s.salvageLeft}개 남음</p>${btn('repeat', '어제와 같이', { disabled: !Object.keys(s.lastPlan).length })}`;
     h += home.map((r) => residentRow(s, r, pv)).join('');
     if (s.expParty.length) h += `<p class="hint">원정에 다녀온 ${s.expParty.map((id) => esc(E.byId(s, id).name)).join('·')}은(는) 오늘 쉰다.</p>`;
     h += '</section>';
-    // 예상
-    const ev = pv.ev;
-    const made = resLine({ food: ev.d.food, water: ev.d.water, parts: ev.d.parts });
-    h += `<section class="card sum"><h3>내일 아침 예상</h3>${repLines(pv.warnings)}
-      <p>생산 ${esc(made || '없음')}${ev.d.meds ? ` · 약품 ${sign(ev.d.meds)}` : ''}</p>
-      <p>소모 식량 −${ev.consume.food} · 물 −${ev.consume.water} (주민 ${ev.people - 1}명 + 나)</p>
-      <p>전력 ${ev.made}${ev.need ? ` (필요 ${ev.need})` : ''} · 침수 ${s.flood}→${pv.flood} · 노출 ${s.exposure}→${pv.exposure}</p>
-      <p>창고 식량 ${s.res.food}→${pv.res.food} · 물 ${s.res.water}→${pv.res.water} · 부품 ${s.res.parts}→${pv.res.parts} · 약품 ${s.res.meds}→${pv.res.meds}</p>
-      ${ev.notes.map((n) => `<p class="rep warn">${esc(n)}</p>`).join('')}
-      <p class="hint">침수 ${E.FLOOD_POWER_STOP} 이상: 발전기 정지 · 침수 8: 수위 경보 · 노출 6 이상: 순찰대. 밤 사건의 결과는 제외한 예상이에요.</p></section>`;
     if (s.report.length) h += `<details class="card"><summary>지난 밤 기록</summary>${repLines(s.report)}</details>`;
-    // 하루를 보낸다 (되돌릴 수 없는 위험이 있으면 확인)
-    const allRest = home.every((r) => (pv.ev.plan[r.id] || 'rest') === 'rest') && home.length > 0;
-    let confirm = '';
-    if (pv.deaths.length) confirm = `${pv.deaths.map((n) => E.J(n, '이/가')).join(', ')} 오늘 밤 사망합니다. 그래도 하루를 보낼까요?`;
-    else if (allRest && !s.expParty.length) confirm = '모두 휴식이라 아무것도 생산하지 않아요. 그대로 하루를 보낼까요?';
-    h += `<div class="endbar">${endPreview(s, pv)}${btn('endDay', '하루를 보낸다 (저녁으로)', { cls: ['primary'], confirm })}</div>`;
+    h += `<div class="endbar">${btn('endDay', '하루를 보낸다 (저녁으로)', { cls: ['primary'] })}</div>`;
     return h;
   }
 
@@ -248,7 +216,7 @@
       return h + '</div>';
     }
     const r = v.result;
-    h += `<div class="result" aria-live="polite"><p class="picked">▸ ${esc(r.choice)}</p>${r.roll ? `<p class="roll ${r.roll.success ? 'ok' : 'no'}">판정 ${Math.round(r.roll.chance * 100)}% — ${r.roll.success ? '성공' : '실패'}</p>` : ''}${r.text ? `<p>${esc(r.text)}</p>` : ''}${lines(r.lines)}</div>`;
+    h += `<div class="result" aria-live="polite"><p class="picked">▸ ${esc(r.choice)}</p>${r.roll ? `<p class="roll ${r.roll.success ? 'ok' : 'no'}">${r.roll.success ? '성공' : '실패'}</p>` : ''}${r.text ? `<p>${esc(r.text)}</p>` : ''}${lines(r.lines)}</div>`;
     const o = v.options;
     const needFor = (hrs) => v.party.length * Math.ceil(hrs / 4);
     const sub = (x) => `총 ${x.hours}시간${x.over ? ` · 강행(스트레스 +${(x.hours - v.normal) * 10})` : ''} · 필요 식량·물 ${needFor(x.hours)}씩`;
@@ -280,7 +248,7 @@
     let h = `<p class="tag">밤</p>${dead.map((l) => `<section class="card alert"><h3>${esc(l.text)}</h3></section>`).join('')}<section class="card">${repLines(s.report.filter((l) => !dead.includes(l)))}</section><h2 class="ct">${esc(v.title)}</h2><p class="text">${esc(v.text)}</p>`;
     if (!v.result) return h + `<div class="choices">${v.choices.map((c, i) => choiceBtn('nightChoose', i, c)).join('')}</div>`;
     const r = v.result;
-    return h + `<div class="result" aria-live="polite"><p class="picked">▸ ${esc(r.choice)}</p>${r.roll ? `<p class="roll ${r.roll.success ? 'ok' : 'no'}">판정 ${Math.round(r.roll.chance * 100)}% — ${r.roll.success ? '성공' : '실패'}</p>` : ''}${r.text ? `<p>${esc(r.text)}</p>` : ''}${lines(r.lines)}</div>${btn('nightDone', s.nightEv.id === 'flood_break' && s.visitDay === s.day ? '또 한 가지 일이 생겼다' : s.day >= D.GOAL_DAY ? '아침이 밝았다 — 열차 시간' : '다음 날 아침', { cls: ['primary'] })}`;
+    return h + `<div class="result" aria-live="polite"><p class="picked">▸ ${esc(r.choice)}</p>${r.roll ? `<p class="roll ${r.roll.success ? 'ok' : 'no'}">${r.roll.success ? '성공' : '실패'}</p>` : ''}${r.text ? `<p>${esc(r.text)}</p>` : ''}${lines(r.lines)}</div>${btn('nightDone', s.nightEv.id === 'flood_break' && s.visitDay === s.day ? '또 한 가지 일이 생겼다' : s.day >= D.GOAL_DAY ? '아침이 밝았다 — 열차 시간' : '다음 날 아침', { cls: ['primary'] })}`;
   }
   // ── 승차 ──
   function boarding(s) {
