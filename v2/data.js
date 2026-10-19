@@ -152,7 +152,7 @@
         { text: '자물쇠를 연다', check: { skill: 'tech', base: 0.4 },
           ok: { text: '찰칵. 창고 선반에 부품과 약품이 남아 있다.', loot: { parts: 3, meds: 1 } },
           fail: { text: '자물쇠는 꿈쩍도 않는다.', stress: 3 } },
-        { text: '쇠파이프로 부순다', req: { item: 'pipe' }, out: { text: '요란한 소리와 함께 철문이 찌그러졌다. 소리가 오래 울렸다.', loot: { parts: 3, meds: 1 }, exposure: 1 } },
+        { text: '쇠파이프로 부순다', req: { item: 'pipe' }, out: { text: '요란한 소리와 함께 철문이 찌그러졌다. 소리가 오래 울렸다.', loot: { parts: 3, meds: 1 }, exposure: 1, god: { seel: 1 } } },
         { text: '포기하고 돌아선다', out: { text: '' } },
       ] },
     // 협정 뒤 시장 방면의 달라진 모습 (같은 장소가 이전 선택으로 바뀐다)
@@ -169,7 +169,7 @@
           fail: { text: '물속에서 남자가 미친 듯이 매달려 함께 가라앉았다. 겨우 떼어 내고 기어 나왔다. 폐에 구정물이 찼다.', injure: 1, hours: 1, retry: true } },
         { text: '밧줄을 던져 끌어낸다', req: { item: 'rope' },
           out: { text: '밧줄을 배수관에 걸어 안전하게 끌어냈다. 남자는 권도현이라고 했다. “이틀 뒤에 보답하지.”', promise: { id: 'dohyeon_key', days: 2 }, flag: 'met_dohyeon', mem: '밧줄로 권도현을 구했다.' } },
-        { text: '물이 차오른다, 지나친다', out: { text: '등 뒤에서 부르는 소리가 물소리에 묻혔다. 며칠 뒤에 그 남자가 스스로 빠져나왔다면 다시 찾아올지도 모른다.', stress: 4, flag: 'skipped_dohyeon', promise: { id: 'dohyeon_second', days: 3 }, mem: '침수된 통로의 외침을 지나쳤다.' } },
+        { text: '물이 차오른다, 지나친다', out: { text: '등 뒤에서 부르는 소리가 물소리에 묻혔다. 며칠 뒤에 그 남자가 스스로 빠져나왔다면 다시 찾아올지도 모른다.', stress: 4, god: { nereh: 1 }, flag: 'skipped_dohyeon', promise: { id: 'dohyeon_second', days: 3 }, mem: '침수된 통로의 외침을 지나쳤다.' } },
       ] },
     b2_pumproom: { title: '배수 펌프실', prio: 1, text: '벽에 낡은 펌프 세 대가 붙어 있다. 한 대는 모터가 살아 있어 보인다. 구석에 케이블 뭉치가 걸려 있다.',
       choices: [
@@ -223,7 +223,7 @@
         { text: '뚜껑을 비틀어 연다', check: { skill: 'str', base: 0.45 },
           ok: { text: '뚜껑이 요란하게 떨어졌다. 통조림과 부품이 쏟아진다.', loot: { food: 2, parts: 1 } },
           fail: { text: '휜 철판에 손바닥이 깊이 베였다. 흰 힘줄이 보였다. 부품 하나만 챙겼다.', injure: 1, loot: { parts: 1 } } },
-        { text: '쇠파이프로 뚜껑을 쳐서 연다', req: { item: 'pipe' }, out: { text: '두세 번 내리치자 뚜껑이 열렸다. 소리가 멀리 울렸다.', loot: { food: 2, parts: 2 }, exposure: 1 } },
+        { text: '쇠파이프로 뚜껑을 쳐서 연다', req: { item: 'pipe' }, out: { text: '두세 번 내리치자 뚜껑이 열렸다. 소리가 멀리 울렸다.', loot: { food: 2, parts: 2 }, exposure: 1, god: { seel: 1 } } },
         { text: '바깥에 나온 것만 챙긴다', out: { text: '선반 밖으로 삐져나온 부품 하나를 주웠다.', loot: { parts: 1 } } },
       ] },
     g4_map: { title: '벽의 노선도', prio: 0, text: '찢어진 노선도에 누군가 붉은 펜으로 표시를 해 두었다. 몇몇 출구에 X자가 그려져 있다.',
@@ -246,21 +246,21 @@
   const PROMISES = {
     eunchae_return: { title: '은채의 소식', text: '약국에서 만난 은채가 역으로 찾아왔다. “병원 팀과 연락이 닿았어요. 우리 역과 협정을 맺을 수 있대요. 대신 보급과 약을 요구해요.”',
       choices: [
-        { text: '협정을 맺는다', cost: { food: 3, meds: 1 }, out: { text: '은채가 병원 쪽 사람과 악수한다. “이제 고지대 역에 갈 수 있는 곳이 생겼어요.”', flag: 'hospital_pact', ally: 'eunchae', exposure: 1, mem: '병원과 협정을 맺었다.' } },
+        { text: '협정을 맺는다', cost: { food: 3, meds: 1 }, out: { text: '은채가 병원 쪽 사람과 악수한다. “이제 고지대 역에 갈 수 있는 곳이 생겼어요.”', flag: 'hospital_pact', ally: 'eunchae', exposure: 1, mem: '병원과 협정을 맺었다.', god: { termia: 1, ho: 1 } } },
         { text: '며칠만 기다려 달라고 한다', delay: 2, req: { noFlag: 'delayed_eunchae' }, out: { text: '은채는 이틀 뒤에 다시 오겠다고 한다. (한 번만 미룰 수 있다)', promise: { id: 'eunchae_return', days: 2 }, flag: 'delayed_eunchae' } },
-        { text: '거절한다', hint: '거절하면 병원 협정은 사라진다 — 고지대 역에서 병원 팀의 마중이 없다', out: { text: '은채는 말없이 돌아선다. 다시 오지 않을 것 같다.', flag: 'pact_refused', stress: 3, mem: '병원 협정을 거절했다.' } },
+        { text: '거절한다', hint: '거절하면 병원 협정은 사라진다 — 고지대 역에서 병원 팀의 마중이 없다', out: { text: '은채는 말없이 돌아선다. 다시 오지 않을 것 같다.', flag: 'pact_refused', stress: 3, mem: '병원 협정을 거절했다.', god: { termia: 1 } } },
       ] },
     dohyeon_key: { title: '도현의 열쇠', text: '도현이 열쇠를 들고 역에 왔다. “이 열쇠로 지하 통로를 열 수 있어. 하지만 낡아서 같이 고쳐야 해. 부품 3개면 돼.”',
       choices: [
-        { text: '부품 3개를 내주고 공동 수리를 약속한다', cost: { parts: 3 }, out: { text: '도현이 연장을 풀었다. “공사는 너희 역에서 시작해. 일손 붙여 주면 이틀이면 이어져.” → 역 탭 [공사 시작]에서 통로 수리를 착공하고, 공사 작업에 사람을 배치하세요.', flag: 'repair_open', ally: 'dohyeon', mem: '권도현과 통로 공동 수리를 약속했다.' } },
+        { text: '부품 3개를 내주고 공동 수리를 약속한다', cost: { parts: 3 }, out: { text: '도현이 연장을 풀었다. “공사는 너희 역에서 시작해. 일손 붙여 주면 이틀이면 이어져.” → 역 탭 [공사 시작]에서 통로 수리를 착공하고, 공사 작업에 사람을 배치하세요.', flag: 'repair_open', ally: 'dohyeon', mem: '권도현과 통로 공동 수리를 약속했다.', god: { termia: 1, ho: 1 } } },
         { text: '며칠만 기다려 달라고 한다', delay: 2, req: { noFlag: 'delayed_dohyeon' }, out: { text: '도현은 이틀 뒤에 다시 오겠다고 한다. (한 번만 미룰 수 있다)', promise: { id: 'dohyeon_key', days: 2 }, flag: 'delayed_dohyeon' } },
-        { text: '필요 없다고 한다', hint: '거절하면 통로를 이을 수 없다 — 열차가 고지대 역까지 닿지 못한다', out: { text: '도현은 열쇠를 도로 집어넣고 터덜터덜 돌아간다.', flag: 'repair_refused', stress: 3, mem: '통로 수리 제안을 거절했다.' } },
+        { text: '필요 없다고 한다', hint: '거절하면 통로를 이을 수 없다 — 열차가 고지대 역까지 닿지 못한다', out: { text: '도현은 열쇠를 도로 집어넣고 터덜터덜 돌아간다.', flag: 'repair_refused', stress: 3, mem: '통로 수리 제안을 거절했다.', god: { termia: 1 } } },
       ] },
     // 통로를 지나쳤을 때의 두 번째 기회 (더 비싸고 늦다)
     dohyeon_second: { title: '도현의 두 번째 찾아옴', text: '며칠 전 침수된 통로에서 외치던 남자가 역 계단을 내려왔다. 팔에 붕대를 감았다. “그날 못 본 척했지. 괜찮아, 나라도 그랬을 거야. 그래도 통로는 열어야지. 이번엔 부품이 더 든다. 5개.”',
       choices: [
-        { text: '부품 5개를 내주고 공동 수리를 약속한다', cost: { parts: 5 }, out: { text: '도현이 연장을 풀었다. “공사는 너희 역에서 시작해. 일손 붙여 주면 이틀이면 이어져.” → 역 탭 [공사 시작]에서 통로 수리를 착공하고, 공사 작업에 사람을 배치하세요.', flag: 'repair_open', ally: 'dohyeon', mem: '늦게나마 권도현과 통로 공동 수리를 약속했다.' } },
-        { text: '필요 없다고 한다', hint: '거절하면 통로를 이을 수 없다 — 열차가 고지대 역까지 닿지 못한다', out: { text: '도현은 어깨를 으쓱하고 돌아선다.', flag: 'repair_refused', stress: 3, mem: '통로 수리 제안을 거절했다.' } },
+        { text: '부품 5개를 내주고 공동 수리를 약속한다', cost: { parts: 5 }, out: { text: '도현이 연장을 풀었다. “공사는 너희 역에서 시작해. 일손 붙여 주면 이틀이면 이어져.” → 역 탭 [공사 시작]에서 통로 수리를 착공하고, 공사 작업에 사람을 배치하세요.', flag: 'repair_open', ally: 'dohyeon', mem: '늦게나마 권도현과 통로 공동 수리를 약속했다.', god: { termia: 1, ho: 1 } } },
+        { text: '필요 없다고 한다', hint: '거절하면 통로를 이을 수 없다 — 열차가 고지대 역까지 닿지 못한다', out: { text: '도현은 어깨를 으쓱하고 돌아선다.', flag: 'repair_refused', stress: 3, mem: '통로 수리 제안을 거절했다.', god: { termia: 1 } } },
       ] },
   };
 
@@ -292,10 +292,147 @@
   // ── 시신: 누군가 죽은 그날 밤(또는 다음 밤) 반드시 처리해야 한다. taboo는 되돌릴 수 없는 선 ──
   const CORPSE = { title: '시신', text: '{who}의 몸이 담요 아래서 굳어 간다. 벌써 파리가 꼬인다. 누군가 정해야 한다.',
     choices: [
-      { text: '선로 끝에 묻고 이름을 불러 준다', cost: { food: 1 }, out: { text: '마지막 건빵 한 조각을 무덤 위에 올렸다. 한 사람씩 {who}의 이름을 불렀다. 우는 사람은 없었다. 울 기운이 없었다.', stress: -8, mem: '{who:을/를} 묻어 주었다.' } },
-      { text: '터널 깊숙이 끌어다 둔다', hint: '시신을 두면 썩는 냄새와 병이 돌 수 있다', out: { text: '발목을 잡고 끌었다. 머리가 침목에 부딪히는 소리가 어둠 속으로 멀어졌다.', stress: 3, flag: 'corpse_left' } },
-      { text: '살을 발라 식량으로 쓴다', taboo: true, hint: '돌아올 수 없는 선이다 — 모두 스트레스 +15, 이 일은 명부에 남는다', out: { text: '아무도 눈을 마주치지 않았다. 칼날이 뼈에 닿을 때마다 누군가 토했다. 그날 밤 모두 배불리 먹었다. 맛에 대해서는 아무도 말하지 않는다.', res: { food: 6 }, stress: 15, flag: 'ate_dead', memAll: '{who:을/를} 먹었다.' } },
+      { text: '선로 끝에 묻고 이름을 불러 준다', cost: { food: 1 }, out: { text: '마지막 건빵 한 조각을 무덤 위에 올렸다. 한 사람씩 {who}의 이름을 불렀다. 우는 사람은 없었다. 울 기운이 없었다.', stress: -8, mem: '{who:을/를} 묻어 주었다.', buried: true, god: { osren: 1, ho: 2 } } },
+      { text: '터널 깊숙이 끌어다 둔다', hint: '시신을 두면 썩는 냄새와 병이 돌 수 있다', out: { text: '발목을 잡고 끌었다. 머리가 침목에 부딪히는 소리가 어둠 속으로 멀어졌다.', stress: 3, flag: 'corpse_left', god: { osren: 2, gurmah: 1 } } },
+      { text: '살을 발라 식량으로 쓴다', taboo: true, hint: '돌아올 수 없는 선이다 — 모두 스트레스 +15, 이 일은 명부에 남는다', out: { text: '아무도 눈을 마주치지 않았다. 칼날이 뼈에 닿을 때마다 누군가 토했다. 그날 밤 모두 배불리 먹었다. 맛에 대해서는 아무도 말하지 않는다.', res: { food: 6 }, stress: 15, flag: 'ate_dead', memAll: '{who:을/를} 먹었다.', hoGone: true, god: { osren: 2, gurmah: 3 } } },
     ] };
+
+  // ── 바깥 신들 (docs/gods_design.md). 시선 0~6: 3에 닿으면 징조, 6에 닿으면 강림(있는 신만) 뒤 2로 ──
+  // 결과 키(신 전용): god{id:n} 시선, vanish('water'|'random'|'weakest'|'who') 시신 없이 사라짐, foodHalf, possess(who), scarGuard(상처 id),
+  //                  ticket 검표, ashGift 잿빛 선물, reap 거둠, flame 불씨지기(who), noDark 일수, hoCall 다음 붕괴는 각성, hoGone
+  const GODS = {
+    nereh: { name: '네레흐', alias: '바닥의 어미', kind: 'hostile', hint: '배수로 바닥의 숨소리',
+      raise: 'D5 수문 범람 +2 · 침수 4 이상인 밤 +1 · 수문 방면 깊이 2 +1 · 물에 빠진 사람을 버림 +1 / 침수 1 이하인 밤 −1',
+      omen: { title: '물속의 노래', who: 1, text: '배수로 쪽에서 자장가가 들린다. 어머니 목소리다. {who:이/가} 일어나 맨발로 물가를 향해 걸어간다. 눈을 뜬 채 자고 있다.',
+        choices: [
+          { text: '달려가 끌어낸다', check: { skill: 'str', base: 0.5 },
+            ok: { text: '허리를 붙잡고 뒤로 넘어졌다. {who:이/가} 깨어나 비명을 질렀다. 발목에 손자국 같은 멍이 남았다.', stress: 4 },
+            fail: { text: '물속에서 무언가가 {who}의 발목을 잡아당겼다. 겨우 빼냈을 때 다리 살이 물에 불어 하얗게 벗겨져 있었다.', injure: 2, stress: 4, god: { nereh: 1 } } },
+          { text: '다 같이 노래를 덮을 만큼 크게 떠든다', out: { text: '밤새 아무 노래나 고래고래 불렀다. 자장가는 새벽에야 멎었다. 목이 쉬었다.', stress: 6, exposure: 1 } },
+          { text: '보내 준다', out: { text: '{who:은/는} 웃으며 물속으로 걸어 들어갔다. 물결 하나 일지 않았다. 아무도 따라가지 않았다.', vanish: 'who', god: { nereh: 1 } } },
+        ] },
+      advent: { title: '들숨', text: '역 전체가 한 번 크게 기울었다. 배수로의 물이 거꾸로 빨려 들어갔다가 숨을 내쉬듯 쏟아져 나온다. 바닥의 어미가 숨을 쉰다. 물가에서 일하던 사람들의 발목에 검은 물이 감긴다.',
+        choices: [
+          { text: '물가의 사람들부터 끌어올린다', check: { skill: 'str', base: 0.4 },
+            ok: { text: '모두 끌어올렸다. 그사이 창고에 물이 들이쳐 식량 절반이 퉁퉁 불어 썩었다.', flood: 3, foodHalf: true },
+            fail: { text: '한 사람의 손이 미끄러졌다. 검은 물이 그를 삼키고 아무 일 없다는 듯 잔잔해졌다. 창고의 식량 절반도 썩었다.', flood: 3, foodHalf: true, vanish: 'water' } },
+          { text: '창고 문부터 막는다', out: { text: '식량은 지켰다. 물가에서 비명이 한 번 들렸고, 그다음은 조용했다.', flood: 3, vanish: 'water' } },
+        ] } },
+    gurmah: { name: '구르마흐', alias: '빈 입', kind: 'hostile', hint: '굶주린 꿈속의 속삭임',
+      raise: '굶은 밤 +2 · 창고가 하루치도 안 남은 밤 +1 · 시신을 버림 +1 · 시신을 먹음 +3 / 배불리 먹은 밤(식량이 인원×3 이상) −1',
+      omen: { title: '배부른 꿈', who: 2, text: '{who:이/가} 잠결에 {who2}의 팔을 물었다. 깨워도 이를 풀지 않는다. 겨우 떼어 내자 {who:이/가} 웃으며 말한다. “꿈에서 배불리 먹었어. 또 먹고 싶어.”',
+        choices: [
+          { text: '{who:을/를} 밤새 묶어 둔다', out: { text: '밧줄에 묶인 채 {who:이/가} 밤새 입맛을 다셨다. 아무도 잠들지 못했다.', stress: 5 } },
+          { text: '못 들은 걸로 한다', out: { text: '새벽에 {who2}의 팔에 이빨 자국이 하나 더 늘었다.', injure: 1, stress: 3, god: { gurmah: 1 } } },
+        ] },
+      advent: { title: '잔칫상', text: '아침, 승강장 한가운데 김이 나는 고기가 산더미처럼 차려져 있다. 기름이 반짝인다. 누구의 살인지 아무도 모른다. 모두의 배가 울었다.',
+        choices: [
+          { text: '먹는다', out: { text: '처음엔 한 입이었다. 손이 멈추지 않았다. 다 먹고 나서야 고기 사이에서 반지 낀 손가락을 찾았다.', res: { food: 10 }, stress: 20, possess: true, hoGone: true, memAll: '빈 입의 잔칫상을 먹었다.' } },
+          { text: '상을 엎는다', out: { text: '고기가 바닥에 쏟아지자 꿈틀거리며 어둠 속으로 기어갔다. 다음 날 아침, 가장 약한 사람의 침낭이 비어 있었다.', stress: 10, vanish: 'weakest' } },
+        ] } },
+    seel: { name: '세엘', alias: '세는 자', kind: 'hostile', hint: '계단 위 안개 속의 눈',
+      raise: '노출 6 이상인 밤 +1 · 불을 사흘 연속 켬 +1 · 큰 소리를 낸 선택 +1 / 경계 2명을 세운 밤 −1',
+      omen: { title: '세는 소리', text: '밤새 출구 계단 위에서 누군가 숫자를 센다. “하나… 둘… 셋…” 역에 있는 사람 수와 정확히 같은 수에서 멈춘다. 그리고 처음부터 다시 센다.',
+        choices: [
+          { text: '모두 깨어 함께 숫자를 센다', out: { text: '이쪽에서 세는 소리와 저쪽의 소리가 겹쳤다. 하나가 더 많았다. 아무도 다시 세지 않았다.', stress: 6 } },
+          { text: '불을 모두 끄고 숨을 죽인다', out: { text: '어둠 속에서 세는 소리가 승강장 바로 위까지 내려왔다가 멀어졌다.', stress: 3, exposure: -2 } },
+        ] },
+      advent: { title: '눈이 내려온다', text: '안개가 계단을 타고 승강장까지 밀려 내려왔다. 그 한가운데 눈 하나가 떠 있다. 사람의 키만 한 눈이 천천히 사람들을 한 명씩 본다.',
+        choices: [
+          { text: '경계를 서던 사람이 계단 앞을 막는다', req: { guards: 1 }, out: { text: '경계가 눈을 마주 봤다. 안개가 물러났다. 그가 비명을 지르며 얼굴을 감쌌다. 손가락 사이로 피눈물이 흘렀다.', scarGuard: 'eye', exposure: -3 } },
+          { text: '모두 눈을 감고 기다린다', out: { text: '눈을 떴을 때 안개는 걷혀 있었다. 한 사람의 자리가 비어 있었다. 계단 위로 맨발 자국이 이어졌다.', vanish: 'random', exposure: -3 } },
+        ] } },
+    termia: { name: '테르미아', alias: '검표원', kind: 'neutral', hint: '선로 끝에서 오는 규칙',
+      raise: '약속을 지킴 +1 · 약속을 어김 +1 (좋고 나쁨이 아니라 약속 자체에 반응)',
+      omen: { title: '검표', text: '꿈속에서 열차 안이다. 제복의 차장이 통로를 걸어오며 표를 검사한다. 당신 차례다. 차장의 수첩에는 당신이 한 약속과 어긴 약속이 빼곡히 적혀 있다.',
+        choices: [
+          { text: '표를 내민다', out: { text: '차장이 수첩을 넘기다 고개를 끄덕였다. 혹은 저었다. 펀치가 손등에 구멍을 뚫었다. 아침에 손등에 정말 구멍이 나 있었다.', ticket: true } },
+          { text: '고개를 돌린다', out: { text: '차장은 아무 말 없이 다음 칸으로 갔다.', god: { termia: -1 } } },
+        ] } },
+    osren: { name: '오스렌', alias: '잿빛 손', kind: 'neutral', hint: '죽은 이 곁의 잿빛 손',
+      raise: '누군가 죽음 +1 · 장례 +1 · 시신을 버리거나 먹음 +2',
+      omen: { title: '잿빛 손님', text: '저녁 화로 앞에 잿빛 손님이 앉아 있다. 얼굴이 자꾸 아는 사람으로 바뀐다. 손님이 묻는다. “잘 보내 주었나?”',
+        choices: [
+          { text: '자리를 내준다', out: { text: '손님은 불을 쬐다 일어났다. 그가 앉았던 자리에 재가 한 줌 남았다.', ashGift: true } },
+          { text: '불을 들어 쫓는다', out: { text: '손님은 웃으며 재로 흩어졌다. 그 재가 밤새 사람들의 입에 들어갔다.', stress: 3, god: { osren: -1 } } },
+        ] },
+      advent: { title: '거둠', text: '잿빛 손이 승강장 천장에서 천천히 내려온다. 셀 수 없이 많은 손가락이 무언가를 고르듯 사람들 위를 더듬는다.',
+        choices: [
+          { text: '그대로 둔다', out: { text: '손이 한 사람을 골라 쓰다듬고 거두어 갔다.', reap: true } },
+          { text: '손을 붙잡고 말을 건다', check: { skill: 'talk', base: 0.35 },
+            ok: { text: '“아직은 아니야.” 손가락들이 망설이다 천장으로 돌아갔다.', stress: 4 },
+            fail: { text: '손이 말을 건 사람의 입을 쓸고 지나갔다. 그리고 원래 고른 사람을 거두어 갔다.', reap: true, stress: 6 } },
+        ] } },
+    hiska: { name: '히스카', alias: '작은 불', kind: 'friendly', hint: '화로 속의 작은 얼굴',
+      raise: '불을 켠 밤 두 번에 +1 · 어둠 속에서 불을 피움 +1 / 어두운 밤 −1',
+      omen: { title: '불 속의 얼굴', text: '화로 불꽃이 사람 얼굴 모양으로 일렁인다. 아이 얼굴 같기도 하다. 불 곁에 있으면 이상하게 마음이 놓인다.',
+        choices: [
+          { text: '불 앞에 둘러앉는다', out: { text: '오랜만에 다 같이 깊이 잤다. 그 뒤로 이틀 동안 어둠 속의 소리가 들리지 않았다.', stress: -6, noDark: 2 } },
+          { text: '불을 줄인다', out: { text: '얼굴은 작아지다 사라졌다. 조금 쓸쓸했다.', exposure: -1, god: { hiska: -1 } } },
+        ] },
+      advent: { title: '영원의 불씨', who: 1, text: '화로의 불이 스스로 일어나 {who}의 가슴 앞에 멈춘다. 받아 달라는 듯 떨린다. 받으면 이 불은 꺼지지 않는다. 대신 받은 사람은 불 곁을 떠나지 못한다.',
+        choices: [
+          { text: '{who:이/가} 불씨를 받는다', out: { text: '불씨가 {who}의 가슴속으로 들어갔다. 그날부터 역은 밤새 밝다. {who:은/는} 다시는 계단을 오르지 않는다.', flame: true, stress: -4 } },
+          { text: '불씨를 돌려보낸다', out: { text: '불씨는 화로로 돌아가 조용히 사그라들었다.', stress: 2, god: { hiska: -2 } } },
+        ] } },
+    ho: { name: '호', alias: '부르는 소리', kind: 'friendly', hint: '이름을 부를 때의 온기',
+      raise: '저녁 대화 +1 · 장례에서 이름을 부름 +2 · 약속을 지킴 +1 / 사람을 먹으면 영원히 떠남',
+      omen: { title: '부르는 소리', text: '어둠 속에서 누군가 이름을 부른다. 한 사람씩, 아주 다정하게. 아무도 자기 이름이 불리는 걸 무서워하지 않았다.',
+        choices: [
+          { text: '대답한다', out: { text: '“여기 있어요.” 대답한 사람들의 가슴에 작은 온기가 남았다. 누군가 한계에 닿으면 이 소리가 붙잡아 줄 것이다.', hoCall: true, stress: -3 } },
+          { text: '귀를 막는다', out: { text: '소리는 한참 이름을 부르다 멎었다.', god: { ho: -1 } } },
+        ] } },
+  };
+
+  // ── 신의 영향을 받은 크리처 ──
+  // 원정: creature(신 id)가 붙은 사건은 그 신의 시선이 높을수록 자주 나온다. region이 있으면 그 지역에서만.
+  const CREATURE_EVENTS = {
+    c_drowned: { title: '익사자', creature: 'nereh', region: 'B', text: '물속에서 퉁퉁 불은 사람이 일어선다. 눈구멍에 물이 고여 찰랑거린다. 입을 벌리자 배수로 물이 쏟아졌다. 발목을 향해 손을 뻗는다.',
+      choices: [
+        { text: '쇠파이프로 머리를 친다', req: { item: 'pipe' }, out: { text: '머리가 젖은 빵처럼 뭉개졌다. 그 안에서 작은 물고기들이 쏟아져 나왔다. 주머니에서 부품을 챙겼다.', loot: { parts: 2 }, stress: 4, god: { seel: 1 } } },
+        { text: '물 밖으로 달아난다', check: { skill: 'str', base: 0.5 },
+          ok: { text: '첨벙거리며 계단을 기어올랐다. 뒤에서 물이 한숨을 쉬었다.', hours: 1 },
+          fail: { text: '발목을 잡혔다. 물속으로 끌려 들어가다 겨우 빠져나왔다. 발목에 손가락 자국이 검게 남았다.', injure: 2, hours: 1, god: { nereh: 1 } } },
+        { text: '가진 물을 던져 준다', cost: { water: 2 }, out: { text: '그것은 물통을 끌어안고 천천히 가라앉았다. 고맙다는 듯이.', god: { nereh: -1 } } },
+      ] },
+    c_twomouth: { title: '입이 둘인 쥐', creature: 'gurmah', text: '턱 아래에 입이 하나 더 달린 쥐들이 몰려온다. 아래쪽 입에는 사람 이빨이 나 있다. 위쪽 입이 찍찍대는 동안 아래쪽 입이 웃는다.',
+      choices: [
+        { text: '맞서 싸운다', check: { skill: 'str', base: 0.4, item: 'pipe', bonus: 0.2 },
+          ok: { text: '쥐들을 때려잡았다. 고기는 고기다. 아래쪽 입은 잘라 버렸다.', loot: { food: 3 }, god: { gurmah: 1 } },
+          fail: { text: '아래쪽 입이 정강이를 물고 살점을 씹어 삼켰다. 쥐는 사람처럼 트림을 했다.', injure: 2 } },
+        { text: '식량 2개를 던지고 물러난다', cost: { food: 2 }, out: { text: '쥐들이 통조림을 깡통째 씹어 먹는 소리를 뒤로하고 빠져나왔다.' } },
+        { text: '돌아서 간다', out: { text: '한참을 돌아 나왔다. 아래쪽 입의 웃음소리가 오래 따라왔다.', hours: 1, stress: 3 } },
+      ] },
+    c_counter: { title: '세는 아이', creature: 'seel', text: '벽을 보고 선 아이가 숫자를 센다. “하나, 둘.” 당신들 발소리에 맞춰 센다. 돌아보지 않는다.',
+      choices: [
+        { text: '말을 건다', check: { skill: 'talk', base: 0.45 },
+          ok: { text: '아이가 세는 걸 멈추고 손가락으로 벽 틈을 가리켰다. 누군가 숨겨 둔 꾸러미가 있었다. 돌아보니 아이는 없었다.', loot: { parts: 2, meds: 1 }, god: { seel: -1 } },
+          fail: { text: '아이가 돌아봤다. 얼굴에 눈이 없었다. 눈이 있어야 할 자리에서 숫자를 세는 소리가 났다.', stress: 8, exposure: 1, god: { seel: 1 } } },
+        { text: '숨을 죽이고 지나간다', out: { text: '등 뒤에서 아이가 “셋”이라고 말했다. 동행은 둘뿐이었다.', stress: 4 } },
+      ] },
+    c_conductor: { title: '차장', creature: 'termia', text: '물 빠진 터널 한가운데 제복을 갖춰 입은 차장이 서 있다. 모자 밑으로 얼굴이 보이지 않는다. “표를 보여 주시겠습니까.”',
+      choices: [
+        { text: '식량 2개를 운임으로 낸다', cost: { food: 2 }, req: { noFlag: 'punched' }, out: { text: '차장이 펀치로 손등에 구멍을 뚫었다. 피가 나지 않았다. “열차에서 뵙겠습니다.” (승차 정원 +1)', flag: 'punched', seatPlus: 1, god: { termia: 1 } } },
+        { text: '표가 없다고 말한다', out: { text: '차장이 수첩에 무언가 적었다. 펜이 종이를 긁는 소리가 이빨 가는 소리 같았다.', stress: 4, god: { termia: 1 } } },
+        { text: '뒤로 물러선다', out: { text: '돌아보니 차장은 없었다. 선로에 펀치 구멍 같은 동그란 자국만 남았다.', hours: 1 } },
+      ] },
+    c_bonepicker: { title: '뼈 줍는 이', creature: 'osren', text: '잿빛 누더기를 걸친 노인이 자루 가득 뼈를 줍고 있다. 당신들을 보고 이 빠진 입으로 웃는다. “좋은 뼈가 있으면 바꿔 주지.”',
+      choices: [
+        { text: '손가락 하나를 내준다', out: { text: '노인이 녹슨 펜치를 꺼냈다. 뼈가 끊기는 소리는 생각보다 작았다. 노인은 약상자와 부품 꾸러미를 내밀었다.', scarParty: 'finger', loot: { meds: 2, parts: 2 }, god: { osren: 1 } } },
+        { text: '식량 2개를 내민다', cost: { food: 2 }, out: { text: '노인이 통조림을 흔들어 보고 자루에서 약병 하나를 꺼냈다. 병 안에 이빨이 하나 들어 있었다.', loot: { meds: 1 } } },
+        { text: '지나간다', out: { text: '노인이 등 뒤에서 중얼거렸다. “어차피 다 내게 오게 돼 있어.”', stress: 2 } },
+      ] },
+    c_echo: { title: '메아리', creature: 'ho', text: '터널 저편에서 누군가 이름을 부른다. 죽은 줄 알았던 가족의 목소리다. 동행이 걸음을 멈췄다.',
+      choices: [
+        { text: '소리를 따라간다', check: { skill: 'obs', base: 0.5 },
+          ok: { text: '소리가 멈춘 자리에 누군가 남긴 쪽지와 꾸러미가 있었다. 쪽지에는 “살아 있어”라고만 적혀 있었다.', loot: { food: 2, water: 2 }, stress: -4, god: { ho: 1 } },
+          fail: { text: '소리는 점점 아래로 내려갔다. 따라가다 바닥이 꺼졌다. 떨어지는 동안에도 그 목소리가 이름을 불렀다.', injure: 2, hours: 1 } },
+        { text: '이름을 불러 대답한다', out: { text: '“여기 있어!” 메아리가 따뜻하게 돌아왔다. 둘 다 조금 울었다.', stress: -5, god: { ho: 1 } } },
+        { text: '귀를 막고 지나간다', out: { text: '목소리는 한참 따라오다 울음으로 바뀌었다.', stress: 3 } },
+      ] },
+  };
+  const CREATURES = Object.keys(CREATURE_EVENTS);
+  Object.assign(EVENTS, CREATURE_EVENTS);
 
   // ── 밤 사건 (매일 1장, 달력 사건은 별도). {who}/{who2}는 주민 이름, weight는 숫자 또는 (상태)=>숫자 ──
   const NIGHT = {
@@ -338,20 +475,47 @@
         { text: '일찍 눕는다', out: { text: '푹 잤다. 다친 사람들도 한결 낫다.', stress: -3, heal: 1 } },
       ] },
       // 전력이 끊긴 밤에만 온다
-    n_dark: { title: '불 꺼진 승강장', weight: (s) => (s.dark ? 5 : 0), minDay: 1, text: '발전기가 멈춘 밤. 승강장 저편 선로 위로 무언가 질질 끌리는 소리가 다가온다. 숨소리가 하나 더 들린다.',
+    n_dark: { title: '불 꺼진 승강장', weight: (s) => (s.dark && !(s.noDarkUntil >= s.day) ? 5 : 0), minDay: 1, text: '발전기가 멈춘 밤. 승강장 저편 선로 위로 무언가 질질 끌리는 소리가 다가온다. 숨소리가 하나 더 들린다.',
       choices: [
         { text: '쇠파이프를 들고 불빛 없이 나간다', check: { skill: 'str', base: 0.4 },
           ok: { text: '쥐도 사람도 아니었다. 그것은 손전등 불빛이 닿자 선로 아래로 미끄러져 사라졌다. 끈적한 자국만 남았다.', stress: -2 },
           fail: { text: '어둠 속에서 무언가가 팔을 물고 놓지 않았다. 끌려가기 직전에 겨우 빼냈다. 팔뚝 살점이 한 움큼 없다.', injure: 2, stress: 4 } },
-        { text: '부품을 태워 불을 피운다', cost: { parts: 1 }, out: { text: '전선 피복이 타는 매캐한 냄새와 함께 불빛이 번지자 소리가 멎었다. 연기가 계단 위로 새어 나갔다.', exposure: 1 } },
+        { text: '부품을 태워 불을 피운다', cost: { parts: 1 }, out: { text: '전선 피복이 타는 매캐한 냄새와 함께 불빛이 번지자 소리가 멎었다. 연기가 계단 위로 새어 나갔다.', exposure: 1, god: { hiska: 1 } } },
         { text: '모두 숨을 죽이고 기다린다', out: { text: '소리는 새벽까지 승강장 가장자리를 맴돌았다. 아무도 눈을 감지 못했다. 아침에 보니 침낭 하나가 갈가리 찢겨 있었다.', stress: 6 } },
       ] },
     // 시신을 터널에 버려 두면 온다
     n_rot: { title: '썩는 냄새', weight: (s) => (s.flags.corpse_left ? 4 : 0), minDay: 2, who: 1, text: '터널 쪽에서 들큼한 냄새가 밀려온다. {who:이/가} 밤새 구역질을 하더니 열이 오르기 시작했다.',
       choices: [
-        { text: '가서 시신을 태운다', cost: { parts: 1 }, out: { text: '부풀어 오른 몸에 불을 붙였다. 기름 타는 냄새가 사흘 동안 빠지지 않았다.', exposure: 2, stress: 4, unflag: 'corpse_left' } },
+        { text: '가서 시신을 태운다', cost: { parts: 1 }, out: { text: '부풀어 오른 몸에 불을 붙였다. 기름 타는 냄새가 사흘 동안 빠지지 않았다.', exposure: 2, stress: 4, unflag: 'corpse_left', god: { hiska: 1 } } },
         { text: '약품으로 열을 잡는다', cost: { meds: 1 }, out: { text: '열은 잡았다. 냄새는 그대로다.' } },
         { text: '코를 막고 버틴다', out: { text: '{who:이/가} 새벽에 피 섞인 설사를 쏟았다. 냄새는 갈수록 짙어진다.', injure: 1, stress: 4 } },
+      ] },
+    // ── 신의 영향을 받은 밤의 크리처 ──
+    n_leeches: { title: '물거머리', creature: 'nereh', weight: (s) => (s.flood >= 4 ? 1 + (s.gods ? s.gods.nereh : 0) : 0), minDay: 2, who: 1, text: '물이 찬 바닥에서 손가락만 한 검은 거머리들이 기어 올라왔다. 잠든 {who}의 다리에 수십 마리가 붙어 부풀고 있다.',
+      choices: [
+        { text: '부품을 태워 지져 뗀다', cost: { parts: 1 }, out: { text: '불에 닿자 거머리들이 비명 같은 소리를 내며 떨어졌다. 다리에 동그란 자국이 빼곡하다.', stress: 2 } },
+        { text: '손으로 뜯어낸다', out: { text: '뜯을 때마다 살점이 함께 딸려 나왔다. 거머리 몸속에서 피가 아니라 검은 물이 쏟아졌다.', injure: 1, stress: 3, god: { nereh: 1 } } },
+      ] },
+    n_moths: { title: '안개 나방', creature: 'seel', weight: (s) => ((s.litStreak || 0) >= 1 ? 1 + 0.7 * (s.gods ? s.gods.seel : 0) : 0), minDay: 2, text: '불빛에 잿빛 나방들이 몰려든다. 날개를 털 때마다 가루가 흩날리고, 가루가 내려앉은 자리마다 안개가 피어오른다. 날개 무늬가 눈 모양이다.',
+      choices: [
+        { text: '불을 끈다', out: { text: '어둠 속에서 나방들이 사람들 얼굴에 내려앉았다. 날개가 눈꺼풀을 더듬었다.', exposure: -1, stress: 4 } },
+        { text: '잡아서 불에 태운다', check: { skill: 'obs', base: 0.5 },
+          ok: { text: '한 마리씩 불에 던졌다. 타면서 작은 눈들이 터졌다.', exposure: -1 },
+          fail: { text: '나방이 터지면서 가루가 폭발하듯 퍼졌다. 안개가 계단 위로 길을 만들었다.', exposure: 2, god: { seel: 1 } } },
+        { text: '내버려 둔다', out: { text: '아침까지 안개가 승강장에 깔렸다. 누군가 위에서 이쪽을 보고 있다는 느낌이 지워지지 않는다.', exposure: 2 } },
+      ] },
+    n_lampimp: { title: '등잔 도깨비', creature: 'hiska', weight: (s) => (s.gods && s.gods.hiska >= 1 ? 1 + 0.5 * s.gods.hiska : 0), minDay: 2, text: '화로 속에서 손가락만 한 불 도깨비가 기어 나왔다. 부품 더미를 가리키며 손짓한다. 배가 고픈 모양이다.',
+      choices: [
+        { text: '부품 1개를 먹인다', cost: { parts: 1 }, out: { text: '도깨비가 볼트를 우물우물 씹더니 화로 위에 앉아 밤새 불을 지켰다. 어둠 속의 소리가 다가오지 못했다.', stress: -4, noDark: 1, god: { hiska: 1 } } },
+        { text: '쫓아낸다', out: { text: '도깨비가 서럽게 타닥거리며 화로 속으로 사라졌다. 불이 조금 약해진 것 같다.', stress: 2, god: { hiska: -1 } } },
+      ] },
+    n_ghoul: { title: '굶은 자', creature: 'gurmah', weight: (s) => ((s.gods && s.gods.gurmah >= 2) || s.flags.ate_dead ? 1 + (s.gods ? s.gods.gurmah : 0) : 0), minDay: 2, text: '창고 쪽에서 무언가 씹는 소리가 난다. 손전등을 비추자 갈비뼈가 다 드러난 사람이 통조림을 깡통째 씹고 있다. 입이 귀까지 찢어져 있다. 이쪽을 보고 웃는다.',
+      choices: [
+        { text: '경계가 몰아낸다', req: { guards: 1 }, check: { skill: 'str', base: 0.5, guards: true },
+          ok: { text: '쇠파이프에 맞은 그것이 네 발로 계단을 기어 올라갔다. 이빨 몇 개가 바닥에 남았다.', stress: -2 },
+          fail: { text: '그것이 경계의 어깨를 물고 살점을 뜯어 갔다. 씹으면서 웃었다.', injure: 2, stress: 4 } },
+        { text: '식량 3개를 던져 준다', cost: { food: 3 }, out: { text: '그것은 통조림을 안고 어둠 속으로 사라졌다. 내일도 올 것 같다.', god: { gurmah: 1 } } },
+        { text: '숨어서 기다린다', out: { text: '새벽까지 씹는 소리가 이어졌다. 아침에 창고 바닥에 이빨 자국 난 깡통만 굴러다녔다.', res: { food: -4 }, stress: 6 } },
       ] },
     // 노출이 높을수록 자주 온다. 경계를 세워 두면 막을 수 있다.
     n_thief: { title: '창고를 뒤지는 소리', weight: (s) => Math.max(0, s.exposure - 3), minDay: 2, text: '자정 무렵 누군가 창고를 뒤지는 소리가 들린다. 불빛이 새어 나간 모양이다.',
@@ -388,7 +552,7 @@
   };
 
   const WARNING = '죽음, 신체 훼손, 굶주림, 식인 같은 무겁고 적나라한 장면이 나옵니다. 18세 이상에게 권합니다.';
-  const DATA = { GOAL_DAY, SKILLS, RES, CAP, ITEMS, REGION_NAMES, TRAITS, PEOPLE, START_PEOPLE, ALLIES, TASKS, TASK_ORDER, PROJECTS, PROLOGUE, REGIONS, GENERIC, EVENTS, PROMISES, NIGHT, CALENDAR, PATROL, FLOOD_BREAK, SCARS, SCAR_CHANCE, VIRTUE, AFFLICTIONS, CORPSE, WARNING };
+  const DATA = { GOAL_DAY, SKILLS, RES, CAP, ITEMS, REGION_NAMES, TRAITS, PEOPLE, START_PEOPLE, ALLIES, TASKS, TASK_ORDER, PROJECTS, PROLOGUE, REGIONS, GENERIC, EVENTS, PROMISES, NIGHT, CALENDAR, PATROL, FLOOD_BREAK, SCARS, SCAR_CHANCE, VIRTUE, AFFLICTIONS, CORPSE, WARNING, GODS, CREATURES };
   if (typeof module !== 'undefined' && module.exports) module.exports = DATA;
   else root.DS2_DATA = DATA;
 })(this);

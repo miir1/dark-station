@@ -84,11 +84,11 @@
       if (row.infect) out += ` · 곪을 위험 ${Math.round(row.infect * 100)}%`;
     }
     const sit = r.injury >= 3 ? `<div class="rout bad">위독 — 치료받지 못하면 D${r.crit}의 밤에 사망</div>` : r.injury === 2 ? '<div class="rout warn">중상 — 치료하지 않으면 하룻밤 뒤 위독</div>' : '';
-    return `<div class="rrow"><div class="rhead">${A.portrait(r.id, r, 32)}<b>${esc(r.name)}</b><span class="mini">${D.PEOPLE[r.id].age}세 · ${esc(D.PEOPLE[r.id].bio)}</span>${badges(r)}</div>
+    return `<div class="rrow"><div class="rhead">${A.portrait(r.id, r, 32)}<b>${esc(r.name)}</b><span class="mini">${D.PEOPLE[r.id].age}세 · ${esc(D.PEOPLE[r.id].bio)}</span>${badges(r, s)}</div>
       <div class="rbar"><span class="mini">스트레스 ${r.stress}</span>${bar(r.stress, 100, r.stress >= 70 ? 'hot' : '', [70])}</div>${sel}
       ${sit}<div class="rout ${row && row.bad ? 'bad' : ''}">${esc(out)}${forced ? ' · 몸 상태 때문에 쉼' : ''}</div></div>`;
   }
-  function badges(r) {
+  function badges(r, s) {
     const b = [];
     if (r.injury === 1) b.push('<span class="badge">경상</span>');
     if (r.injury === 2) b.push('<span class="badge warn">중상</span>');
@@ -96,6 +96,8 @@
     if (r.breakdown > 0) b.push(`<span class="badge bad">${r.affl && D.AFFLICTIONS[r.affl] ? esc(D.AFFLICTIONS[r.affl].name) : '탈진'}</span>`);
     if (r.virtue) b.push(`<span class="badge good">${esc(D.VIRTUE.name)}</span>`);
     for (const id of r.scars || []) b.push(`<span class="badge warn">${esc(D.SCARS[id].name)}</span>`);
+    if (s && s.possessed === r.id) b.push('<span class="badge bad">허기 들림</span>');
+    if (s && s.flame && s.flame.keeper === r.id) b.push('<span class="badge good">불씨지기</span>');
     return b.join('');
   }
   function goalCard(s) {
@@ -105,7 +107,7 @@
     const builders = Object.values(s.plan).filter((t) => t === 'build').length;
     const path = s.flags.passage_secured ? '개통 ✓' : repairing ? `작업 ${s.project.progress}/${D.PROJECTS.repair.work}${builders ? '' : ' — 아래 배치에서 공사 작업에 사람을 넣으세요'}` : s.flags.repair_open ? (s.project ? `착공 대기 — 지금 공사(${D.PROJECTS[s.project.id].name})가 끝나야 착공할 수 있어요` : '착공 가능 — 아래 [공사 시작]에서 통로 수리를 착공하세요') : s.flags.met_dohyeon ? '도현의 열쇠를 기다린다' : s.flags.skipped_dohyeon ? '아직 닫혀 있다' : '침수 통로에서 도울 사람을 찾는다 (수문 방면)';
     const pact = s.flags.hospital_pact ? '맺었다 ✓' : s.flags.pact_refused ? '거절했다 ✗' : s.flags.met_eunchae ? '은채의 소식을 기다린다' : s.flags.skipped_eunchae ? '놓쳤다 ✗' : '약국에서 도울 사람을 찾는다 (시장 방면)';
-    const cap = tr.passage ? `지금 열차가 오면 ${tr.cap}명 (식량·물 ${E.BOARD_PER}개씩 ${tr.base}명${tr.hospital ? ` + 병원 ${tr.hospital}` : ''}${tr.litter ? ` + 들것 ${tr.litter}` : ''})` : '통로가 이어져야 열차가 닿는다';
+    const cap = tr.passage ? `지금 열차가 오면 ${tr.cap}명 (식량·물 ${E.BOARD_PER}개씩 ${tr.base}명${tr.hospital ? ` + 병원 ${tr.hospital}` : ''}${tr.litter ? ` + 들것 ${tr.litter}` : ''}${tr.seat ? ` ${tr.seat > 0 ? '+' : '−'} 검표 ${Math.abs(tr.seat)}` : ''})` : '통로가 이어져야 열차가 닿는다';
     return `<section class="card goal"><h3>목표 — D${D.GOAL_DAY} 구조열차${left > 0 ? ` (${left}일 남음)` : ' (오늘!)'}</h3>
       <p><b>통로</b> ${esc(path)}</p><p><b>병원 협정</b> ${esc(pact)}</p><p><b>승차</b> ${esc(cap)}</p>
       <p class="hint">부품 ${E.BOARD_LITTER}개마다 들것 한 벌(좌석 +1, 최대 ${E.BOARD_LITTER_MAX}). 한 사람당 식량·물이 ${E.BOARD_PER}개씩 필요해요.</p></section>`;
@@ -211,11 +213,24 @@
   }
 
   // ── 사람 ──
+  // 신들의 시선: 한 번이라도 느낀 신만 보인다. 징조를 겪으면 성향이, 두 번 겪으면 진짜 이름이 드러난다.
+  function godsCard(s) {
+    const kindName = { hostile: '적대', neutral: '중립', friendly: '우호' };
+    const felt = Object.keys(D.GODS).filter((id) => (s.gods[id] || 0) > 0 || (s.godSeen[id] || 0) > 0 || (id === 'ho' && s.flags.ho_gone));
+    if (!felt.length) return '<section class="card"><h3>시선</h3><p class="mini">아직 아무것도 느끼지 못했다.</p></section>';
+    return `<section class="card"><h3>시선</h3>${felt.map((id) => {
+      const G = D.GODS[id], seen = s.godSeen[id] || 0, v = s.gods[id] || 0;
+      const gone = id === 'ho' && s.flags.ho_gone;
+      return `<div class="rrow"><div class="rhead"><b>${esc(E.godLabel(s, id))}</b><span class="mini">${seen ? kindName[G.kind] : '정체 모름'} · ${esc(G.hint)}</span>${gone ? '<span class="badge bad">영원히 떠났다</span>' : ''}</div>
+        <div class="rbar"><span class="mini">시선 ${v}/${E.GOD_ADVENT}</span>${bar(v, E.GOD_ADVENT, v >= E.GOD_ADVENT - 1 && G.kind === 'hostile' ? 'hot' : '', [E.GOD_OMEN, E.GOD_ADVENT])}</div>
+        <p class="mini">${esc(G.raise)}${G.advent ? '' : ' · (강림 없음)'}</p></div>`;
+    }).join('')}<p class="hint">시선 ${E.GOD_OMEN}에 닿으면 그날 밤 징조가, ${E.GOD_ADVENT}에 닿으면 강림이 온다. 강림 뒤 시선은 2로 떨어진다.</p></section>`;
+  }
   function peopleTab(s) {
     let h = '';
     for (const r of s.residents) {
       const P = D.PEOPLE[r.id];
-      const st = r.status === 'dead' ? '<span class="badge bad">사망</span>' : r.status === 'exp' ? '<span class="badge">원정 중</span>' : badges(r);
+      const st = r.status === 'dead' ? '<span class="badge bad">사망</span>' : r.status === 'exp' ? '<span class="badge">원정 중</span>' : badges(r, s);
       h += `<section class="card person ${r.status === 'dead' ? 'dead' : ''}"><div class="rhead">${A.portrait(r.id, r, 48)}<b>${esc(r.name)}</b><span class="mini">${P.age}세 · ${esc(P.bio)}</span>${st}</div>
         <div class="rbar"><span class="mini">스트레스 ${r.stress}</span>${bar(r.stress, 100, r.stress >= 70 ? 'hot' : '', [70])}</div>
         <p class="mini">관찰 ${r.skills.obs} · 완력 ${r.skills.str} · 기술 ${r.skills.tech} · 말솜씨 ${r.skills.talk}</p>
@@ -226,6 +241,7 @@
         <p class="mini">신뢰 ${trustDots(r.trust)} · 바람: ${esc(P.wish)}</p>
         ${r.mem.length ? `<p class="mem">${r.mem.slice(-3).reverse().map((m) => `D${m.day} ${esc(m.text)}`).join('<br>')}</p>` : ''}</section>`;
     }
+    h += godsCard(s);
     for (const [id, a] of Object.entries(D.ALLIES)) if (s.allies[id]) h += `<section class="card person"><div class="rhead">${A.portrait(id, {}, 48)}<b>${esc(a.name)}</b><span class="mini">${esc(a.bio)}</span><span class="badge good">열차에 함께 간다</span></div></section>`;
     const hist = s.history.slice(-14).reverse();
     if (hist.length) h += `<section class="card"><h3>일지</h3>${hist.map((x) => `<p class="mini">${x.day ? 'D' + x.day : '프롤로그'} · ${esc(x.text)}</p>`).join('')}</section>`;
@@ -256,7 +272,7 @@
     h += '<div class="choices">';
     if (v.force) h += '<p class="rep bad">위독한 동료가 있다. 지금 돌아가야 한다.</p>';
     h += btn('expNext', '이 구역을 더 살핀다', { arg: 'more', disabled: !o.more.ok, sub: esc(sub(o.more)) });
-    h += btn('expNext', '더 깊이 내려간다', { arg: 'deeper', disabled: !o.deeper.ok, sub: esc(sub(o.deeper)) });
+    h += btn('expNext', '더 깊이 내려간다', { arg: 'deeper', disabled: !o.deeper.ok, sub: esc(sub(o.deeper) + (v.region === 'B' ? ` · 시선 「${D.GODS.nereh.alias}」 +1` : '')) });
     h += btn('expNext', '여기서 돌아간다', { arg: 'return', cls: ['primary'], sub: esc(`귀환 ${o.back.hours}시간${o.back.over ? ` · 강행(스트레스 +${(o.back.hours - v.normal) * 10})` : ''} · 둘 다 스트레스 +12`) });
     return h + '</div>';
   }
@@ -278,7 +294,8 @@
   function night(s) {
     const v = E.nightView(s);
     const dead = s.report.filter((l) => l.kind === 'bad' && /숨을 거뒀다/.test(l.text));
-    let h = `<p class="tag">밤</p>${dead.map((l) => `<section class="card alert"><h3>${esc(l.text)}</h3></section>`).join('')}<section class="card">${repLines(s.report.filter((l) => !dead.includes(l)))}</section><h2 class="ct">${esc(v.title)}</h2><p class="text">${esc(v.text)}</p>`;
+    const godTag = s.nightEv.id === 'god' ? ` · ${s.nightEv.kind === 'omen' ? '징조' : '강림'} — ${esc(E.godLabel(s, s.nightEv.god))}` : '';
+    let h = `<p class="tag">밤${godTag}</p>${dead.map((l) => `<section class="card alert"><h3>${esc(l.text)}</h3></section>`).join('')}<section class="card">${repLines(s.report.filter((l) => !dead.includes(l)))}</section><h2 class="ct">${esc(v.title)}</h2><p class="text">${esc(v.text)}</p>`;
     if (!v.result) return h + `<div class="choices">${v.choices.map((c, i) => choiceBtn('nightChoose', i, c)).join('')}</div>`;
     const r = v.result;
     return h + `<div class="result" aria-live="polite"><p class="picked">▸ ${esc(r.choice)}</p>${r.roll ? `<p class="roll ${r.roll.success ? 'ok' : 'no'}">판정 ${Math.round(r.roll.chance * 100)}% — ${r.roll.success ? '성공' : '실패'}</p>` : ''}${r.text ? `<p>${esc(r.text)}</p>` : ''}${lines(r.lines)}</div>${btn('nightDone', s.nightEv.id === 'flood_break' && s.visitDay === s.day ? '또 한 가지 일이 생겼다' : s.day >= D.GOAL_DAY ? '아침이 밝았다 — 열차 시간' : '다음 날 아침', { cls: ['primary'] })}`;

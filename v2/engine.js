@@ -54,6 +54,8 @@
       closed: { A: 0, B: 0 }, promises: [], visitDay: D.CALENDAR.patrol.day,
       exp: null, evening: null, nightEv: null, lastNight: null, report: [], log: [], history: [],
       boarding: null, ending: null, stats: { deaths: 0, expeditions: 0, nights: 0 }, corpses: [], dark: false,
+      gods: Object.fromEntries(Object.keys(D.GODS).map((k) => [k, 0])), godSeen: {}, godQueue: [], buried: [], litStreak: 0, litNights: 0, seatMod: 0,
+      possessed: null, flame: null, noDarkUntil: 0, nightPlan: {},
     };
     return s;
   }
@@ -105,7 +107,17 @@
   function rollScar(s, r, lv) {
     if (!r.scars) r.scars = [];
     if (r.scars.length >= 2 || rand(s) >= D.SCAR_CHANCE[lv]) return '';
-    const id = pick(s, Object.keys(D.SCARS).filter((k) => !r.scars.includes(k)));
+    return applyScar(s, r, pick(s, Object.keys(D.SCARS).filter((k) => !r.scars.includes(k))));
+  }
+  // 원하는 상처를 남긴다 (이미 있으면 다른 것, 2개가 차 있으면 아무것도)
+  function forceScar(s, r, want) {
+    if (!r) return '';
+    if (!r.scars) r.scars = [];
+    if (r.scars.length >= 2) return '';
+    const id = r.scars.includes(want) ? pick(s, Object.keys(D.SCARS).filter((k) => !r.scars.includes(k))) : want;
+    return applyScar(s, r, id);
+  }
+  function applyScar(s, r, id) {
     const S = D.SCARS[id];
     r.scars.push(id);
     if (S.skill) r.skills[S.skill] = Math.max(0, r.skills[S.skill] - 1);
@@ -113,17 +125,55 @@
     s.history.push({ day: s.day, text: `${r.name}: ${S.name} (${S.desc})` });
     return `${fillText(S.text, [r.name])} — 영구: ${S.name} (${S.desc})`;
   }
-  function kill(s, r, why) {
+  function kill(s, r, why, noBody) {
     r.status = 'dead';
     s.plan[r.id] = undefined;
     s.stats.deaths += 1;
     s.history.push({ day: s.day, text: `${J(r.name, '이/가')} 숨을 거뒀다. (${why})` });
-    say(s, `${J(r.name, '이/가')} 숨을 거뒀다. 마지막 숨은 물 끓는 소리 같았다. 감기지 않은 눈을 누군가 손바닥으로 덮었다. (${why})`, 'bad');
-    if (!s.corpses) s.corpses = [];
-    s.corpses.push({ id: r.id, name: r.name });
+    say(s, noBody ? `${J(r.name, '이/가')} 사라졌다. 시신조차 남지 않았다. (${why})` : `${J(r.name, '이/가')} 숨을 거뒀다. 마지막 숨은 물 끓는 소리 같았다. 감기지 않은 눈을 누군가 손바닥으로 덮었다. (${why})`, 'bad');
+    if (!noBody) { if (!s.corpses) s.corpses = []; s.corpses.push({ id: r.id, name: r.name }); }
+    if (s.possessed === r.id) s.possessed = null;
+    if (s.flame && s.flame.keeper === r.id) s.flame = null;
+    const g = addAttention(s, 'osren', 1, '죽음'); if (g) say(s, g, 'warn');
     for (const o of alive(s)) o.stress = clamp(o.stress + 5, 0, 100);
     for (const o of alive(s)) memo(o, s.day, `${J(r.name, '을/를')} 잃었다.`, true);
   }
+
+  // ── 바깥 신들: 시선 ──
+  const GOD_OMEN = 3, GOD_ADVENT = 5, GOD_AFTER = 2;
+  function godLabel(s, id) {
+    const G = D.GODS[id];
+    return (s.godSeen && s.godSeen[id] >= 2) ? `${G.name}(「${G.alias}」)` : `「${G.alias}」`;
+  }
+  // 시선을 바꾸고, 3·6에 처음 닿으면 징조·강림을 그날 밤으로 예약한다. 화면에 쓸 짧은 문장을 돌려준다.
+  function addAttention(s, id, n, why) {
+    const G = D.GODS[id];
+    if (!G || !n) return '';
+    if (id === 'ho' && s.flags.ho_gone) return '';
+    const old = s.gods[id] || 0;
+    const nv = clamp(old + n, 0, GOD_ADVENT);
+    if (nv === old) return '';
+    s.gods[id] = nv;
+    const q = (kind) => { if (!s.godQueue.some((x) => x.god === id && x.kind === kind)) s.godQueue.push({ god: id, kind }); };
+    if (old < GOD_OMEN && nv >= GOD_OMEN) q('omen');
+    if (old < GOD_ADVENT && nv >= GOD_ADVENT && G.advent) q('advent');
+    return `시선 ${godLabel(s, id)} ${n > 0 ? '+' : '−'}${Math.abs(n)}${why ? ` (${why})` : ''}`;
+  }
+  // 밤마다 역의 상태가 끄는 시선 (미리보기와 실제가 같은 함수)
+  function godNightDelta(s, o) {
+    const g = s.gods || {};
+    const out = [];
+    const add = (id, n, why) => { if (n < 0 && !(g[id] > 0)) return; out.push({ id, n, why }); };
+    if (o.surge) add('nereh', 2, '수문 범람 — 어미의 들숨');
+    if (o.flood >= 4) add('nereh', 1, '침수 4 이상'); else if (o.flood <= 1 && !o.surge) add('nereh', -1, '침수 1 이하');
+    if (o.shortFood) add('gurmah', 2, '굶주림'); else if (o.foodAfter < Math.ceil(o.people * 0.5)) add('gurmah', 1, '창고가 거의 비었다'); else if (o.foodAfter >= o.people * 3) add('gurmah', -1, '배불리 먹음');
+    if (o.exposure >= 6) add('seel', 1, '노출 6 이상');
+    if (o.lit && (s.litStreak || 0) + 1 >= 3) add('seel', 1, '불을 사흘 연속 켬');
+    if (o.guards >= 2) add('seel', -1, '경계 2명');
+    if (o.lit) { if (((s.litNights || 0) + 1) % 2 === 0) add('hiska', 1, '불을 이틀 켬'); } else add('hiska', -1, '어두운 밤');
+    return out.filter((x) => !(x.id === 'ho' && s.flags.ho_gone));
+  }
+  const boundToFlame = (s, r) => !!(s.flame && r && s.flame.keeper === r.id);
 
   // ── 할 일 / 계획 ──
   function slotsLeft(s, task, plan) {
@@ -138,6 +188,7 @@
     if (r.injury >= 2) return '중상 (휴식만 가능)';
     if (T.facility && s.facility !== T.facility) return '시설 필요';
     if (task === 'build' && !s.project) return '진행 중인 공사 없음';
+    if (task === 'guard' && boundToFlame(s, r)) return '불씨 곁을 떠날 수 없다';
     if (task === 'salvage' && s.salvageLeft <= 0) return '더 해체할 곳 없음';
     if (task === 'forage' && s.forage <= 0) return '근처 식량이 바닥남';
     return '';
@@ -182,6 +233,8 @@
       if (floodStop) { rows.push({ rid: r.id, task: 'gen', out: `침수 ${FLOOD_POWER_STOP} 이상 — 발전기 정지 (쉰다)`, bad: true }); idle.push(r.id); continue; }
       const out = 3 + traitVal(r, 'gen'); made += out; genRunning = true; rows.push({ rid: r.id, task: 'gen', out: `전력 +${out}` });
     }
+    const flameOn = !!(s.flame && byId(s, s.flame.keeper) && byId(s, s.flame.keeper).status !== 'dead');
+    if (flameOn) made += 3;
     if (floodStop && workers('gen').length) notes.push(`침수가 ${FLOOD_POWER_STOP} 이상이라 발전기가 잠긴다. 전력이 끊겨 물 긷기·재배·진료소가 멈춘다 (배수가 먼저다)`);
     power = made;
     // 전력 소비 순서: 물 긷기 → 재배 → 치료(진료소)
@@ -236,7 +289,7 @@
     }
     for (const r of workers('rest')) rows.push({ rid: r.id, task: 'rest', out: '휴식' });
     // 전력이 없으면 역이 어둡다 (모두 스트레스 +), 자포자기한 사람이 있으면 밤새 흐느낀다
-    const dark = !genRunning;
+    const dark = !genRunning && !flameOn;
     const sobbing = alive(s).filter((r) => r.affl === 'despair' && r.breakdown > 0).length;
     const ambient = (dark ? 4 : 0) + sobbing * D.AFFLICTIONS.despair.ambient;
     for (const r of alive(s)) if (plan[r.id] === 'exp') rows.push({ rid: r.id, task: 'exp', out: '원정 중' });
@@ -252,7 +305,9 @@
     const away = alive(s).filter((r) => plan[r.id] === 'exp').length;
     const people = 1 + alive(s).length - away;
     const consume = { food: Math.ceil(people * 0.5), water: Math.ceil(people * 0.5) };
-    return { plan, rows, notes, d, made, need, poolUse, salvageUse, progress, heals, genRunning, consume, farmPowered, clinicPowered, people, idle, floodStop, dark, sobbing, ambient };
+    const possessed = s.possessed && byId(s, s.possessed);
+    if (possessed && possessed.status === 'home') { consume.food += 2; notes.push(`${J(possessed.name, '이/가')} 밤마다 몰래 먹는다 (식량 −2)`); }
+    return { plan, rows, notes, d, made, need, poolUse, salvageUse, progress, heals, genRunning, consume, farmPowered, clinicPowered, people, idle, floodStop, dark, sobbing, ambient, flameOn };
   }
 
   // 내일 아침 예상 상태 (밤 사건의 무작위 결과는 제외). 화면 미리보기와 실제 정산이 같은 계산을 쓴다.
@@ -285,10 +340,16 @@
     if (short.water) warnings.push({ text: '물이 모자란다 — 모두 스트레스 +10, 오늘 밤 모두 쓰러진다 (부상 1)', kind: 'bad' });
     if (!short.food && !short.water && (res.food === 0 || res.water === 0)) warnings.push({ text: '창고가 바닥난다 — 내일부터 모자랄 수 있다', kind: 'warn' });
     if (completes) warnings.push({ text: `${D.PROJECTS[s.project.id].name} 완성${s.project.id === 'repair' ? ' (침수 −2)' : ''}`, kind: 'good' });
+    const guards = ev.rows.filter((x) => x.task === 'guard').length;
+    const godDelta = godNightDelta(s, { surge: !!surge, flood, exposure, shortFood: short.food > 0, foodAfter: res.food, people: ev.people, guards, lit: !ev.dark });
+    if (godDelta.length) {
+      const cross = godDelta.filter((x) => x.n > 0).map((x) => { const v = (s.gods[x.id] || 0) + x.n; return (s.gods[x.id] || 0) < GOD_OMEN && v >= GOD_OMEN ? `${godLabel(s, x.id)} 징조가 온다` : (s.gods[x.id] || 0) < GOD_ADVENT && v >= GOD_ADVENT && D.GODS[x.id].advent ? `${godLabel(s, x.id)} 강림한다` : ''; }).filter(Boolean);
+      warnings.push({ text: `시선: ${godDelta.map((x) => `${godLabel(s, x.id)} ${x.n > 0 ? '+' : '−'}${Math.abs(x.n)} (${x.why})`).join(' · ')}${cross.length ? ` → ${cross.join(' · ')}` : ''}`, kind: cross.length ? 'bad' : godDelta.some((x) => x.n > 0 && D.GODS[x.id].kind === 'hostile') ? 'warn' : '' });
+    }
     if (ev.dark) warnings.push({ text: '전력 0 — 오늘 밤 역이 어둡다: 모두 스트레스 +4 · 밤 사건 판정 −10%p', kind: 'warn' });
     if (ev.sobbing) warnings.push({ text: `자포자기한 사람이 밤새 흐느낀다 — 모두 스트레스 +${ev.sobbing * D.AFFLICTIONS.despair.ambient}`, kind: 'warn' });
-    if (ev.made > 0 && ev.need === 0 && ev.genRunning) warnings.push({ text: `전력 ${ev.made}이 쓰이지 않는다 — 발전만 돌아 노출 +1`, kind: 'warn' });
-    return { ev, res, short, flood, exposure, surge, warnings, deaths };
+    if (ev.made > 0 && ev.need === 0 && ev.genRunning) warnings.push({ text: `전력 ${ev.made}은 불만 밝힌다 — 어둠을 막지만 노출 +1`, kind: '' });
+    return { ev, res, short, flood, exposure, surge, warnings, deaths, godDelta };
   }
 
   // 열차 정원: 통로가 이어졌고, 한 사람당 식량 2·물 2씩 있을 때만 태울 수 있다
@@ -302,8 +363,9 @@
     const base = Math.min(Math.floor(s.res.food / BOARD_PER), Math.floor(s.res.water / BOARD_PER));
     const hospital = s.flags.seat_bonus ? 2 : 0;                              // 병원 팀이 좌석 두 개분의 보급을 맡아 준다
     const litter = Math.min(BOARD_LITTER_MAX, Math.floor(s.res.parts / BOARD_LITTER));   // 부품으로 들것·침낭을 만든다
-    const supplyCap = base + hospital + litter;
-    return { passage: !!s.flags.passage_secured, pact: !!s.flags.hospital_pact, pool: pool.length, base, hospital, litter, supplyCap, cap: s.flags.passage_secured ? Math.min(pool.length, supplyCap) : 0 };
+    const seat = s.seatMod || 0;                                           // 검표원의 판정 (±)
+    const supplyCap = Math.max(0, base + hospital + litter + seat);
+    return { passage: !!s.flags.passage_secured, pact: !!s.flags.hospital_pact, pool: pool.length, base, hospital, litter, seat, supplyCap, cap: s.flags.passage_secured ? Math.min(pool.length, supplyCap) : 0 };
   }
 
   // ── 달력·예보 ──
@@ -314,11 +376,12 @@
     if (s.day >= cal.surge.day - cal.surge.forecast && s.day <= cal.surge.day) out.push({ text: `D${cal.surge.day} 밤 ${cal.surge.title} 예보: ${cal.surge.short} — 그날 밤 침수가 4 이하면 버티고, ${FLOOD_POWER_STOP} 이상이면 발전기가 잠기고, 8이면 수위 경보${s.day === cal.surge.day ? ' (오늘 밤!)' : ''}`, kind: s.day === cal.surge.day ? 'warn' : '' });
     if (s.visitDay != null && s.day <= s.visitDay && s.visitDay - s.day <= 3) out.push({ text: `D${s.visitDay} 밤 순찰대 방문 예보${s.visitDay === s.day ? ' — 오늘 밤!' : ''} (경계 2명을 세우면 맞설 수 있다)`, kind: s.visitDay === s.day ? 'warn' : '' });
     if (floodAuto(s.day) > 0) out.push({ text: `오늘 밤 침수 +${floodAuto(s.day)} (배수로 역류)`, kind: '' });
+    for (const q of s.godQueue || []) if (D.GODS[q.god] && D.GODS[q.god][q.kind]) out.push({ text: `오늘 밤 ${godLabel(s, q.god)}의 ${q.kind === 'omen' ? '징조가' : '강림이'} 온다`, kind: q.kind === 'advent' ? 'bad' : 'warn' });
     for (const p of s.promises.slice().sort((a, b) => a.due - b.due)) out.push({ text: `D${p.due} 저녁 약속: ${(D.PROMISES[p.id] || {}).title}`, kind: p.due <= s.day ? 'warn' : '' });
     for (const k of ['A', 'B']) if (s.closed[k] > 0) out.push({ text: `${D.REGION_NAMES[k]} 길 막힘 ${s.closed[k]}일`, kind: 'bad' });
     if (s.flood >= 6) out.push({ text: '침수 6 이상: 원정 귀환 시간 +1시간', kind: 'warn' });
     if (s.flood >= FLOOD_POWER_STOP) out.push({ text: `침수 ${FLOOD_POWER_STOP} 이상: 발전기가 잠겨 전력이 끊긴다`, kind: 'bad' });
-    if (s.day >= D.GOAL_DAY - 3) { const tr = trainInfo(s); out.push({ text: `D${D.GOAL_DAY} 열차: ${tr.passage ? `승차 정원 ${tr.cap}명 (식량·물 ${BOARD_PER}개씩 → ${tr.base}명${tr.hospital ? ' + 병원 보급 ' + tr.hospital : ''}${tr.litter ? ' + 들것 ' + tr.litter : ''})` : '통로가 이어지지 않으면 열차가 닿지 못한다'}`, kind: s.day === D.GOAL_DAY ? 'warn' : '' }); }
+    if (s.day >= D.GOAL_DAY - 3) { const tr = trainInfo(s); out.push({ text: `D${D.GOAL_DAY} 열차: ${tr.passage ? `승차 정원 ${tr.cap}명 (식량·물 ${BOARD_PER}개씩 → ${tr.base}명${tr.hospital ? ' + 병원 보급 ' + tr.hospital : ''}${tr.litter ? ' + 들것 ' + tr.litter : ''}${tr.seat ? ` ${tr.seat > 0 ? '+' : '−'} 검표 ${Math.abs(tr.seat)}` : ''})` : '통로가 이어지지 않으면 열차가 닿지 못한다'}`, kind: s.day === D.GOAL_DAY ? 'warn' : '' }); }
     return out;
   }
 
@@ -378,6 +441,13 @@
       if (src.stress > 0) t.push(`${pre}스트레스 +${src.stress}`);
       if (src.close) t.push(`${pre}${D.REGION_NAMES[src.close.region]} 길 막힘`);
       for (const [k, v] of Object.entries(Object.assign({}, src.res, Object.fromEntries(Object.entries(src.lose || {}).map(([a, b]) => [a, -b]))))) if (v < 0) t.push(`${pre}${D.RES[k]} −${-v}`);
+      if (src.vanish) t.push(`${pre}누군가 사라짐`);
+      if (src.scarParty || src.scarGuard) t.push(`${pre}영구 상처`);
+      if (src.foodHalf) t.push(`${pre}식량 절반이 썩음`);
+      if (src.reap) t.push(`${pre}한 사람이 거두어짐`);
+      if (src.possess) t.push(`${pre}한 사람이 허기에 들림`);
+      if (src.hoGone) t.push(`${pre}부르는 소리가 영원히 떠남`);
+      for (const [id, n] of Object.entries(src.god || {})) if (n > 0) t.push(`${pre}시선 「${D.GODS[id].alias}」 +${n}`);
     };
     if (ch.check) { add(ch.fail, '실패 시 '); add(ch.ok, '성공해도 '); } else add(ch.out, '');
     return t;
@@ -447,6 +517,47 @@
     if (o.exposure) s.exposure = clamp(s.exposure + o.exposure, 0, 8);
     if (o.flag) for (const f of [].concat(o.flag)) s.flags[f] = true;
     if (o.unflag) delete s.flags[o.unflag];
+    if (o.buried && s.corpses && s.corpses[0]) s.buried.push(s.corpses[0].id);
+    if (o.hoGone) { s.flags.ho_gone = true; s.gods.ho = 0; s.godQueue = s.godQueue.filter((x) => x.god !== 'ho'); lines.push('부르는 소리가 영원히 떠났다'); }
+    if (o.god) for (const [id, n] of Object.entries(o.god)) { const g = addAttention(s, id, n); if (g) lines.push(g); }
+    if (o.foodHalf) { const lost = Math.ceil(s.res.food / 2); s.res.food -= lost; lines.push(`식량 −${lost} (절반이 썩었다)`); }
+    if (o.vanish) { const v = vanishOne(s, o.vanish); if (v) lines.push(v); }
+    if (o.possess) {
+      const c = homeRes(s).filter((r) => !boundToFlame(s, r));
+      if (c.length) { const r = pick(s, c); s.possessed = r.id; memo(r, s.day, '빈 입이 들어앉았다.', true); lines.push(`${J(r.name, '이/가')} 허기에 들렸다 — 매일 밤 식량 −2를 몰래 먹는다`); }
+    }
+    if (o.scarGuard) { const g = homeRes(s).filter((r) => (s.guardIds || []).includes(r.id)); if (g.length) { const sc = forceScar(s, pick(s, g), o.scarGuard); if (sc) lines.push(sc); } }
+    if (o.scarParty && party.length) { const sc = forceScar(s, pick(s, party), o.scarParty); if (sc) lines.push(sc); }
+    if (o.seatPlus) { s.seatMod = clamp((s.seatMod || 0) + o.seatPlus, -2, 2); }
+    if (o.ticket) {
+      const kept = ['hospital_pact', 'repair_open'].filter((f) => s.flags[f]).length;
+      const broken = ['pact_refused', 'repair_refused', 'skipped_eunchae'].filter((f) => s.flags[f]).length + (s.flags.skipped_dohyeon && !s.flags.met_dohyeon ? 1 : 0);
+      const d = Math.sign(kept - broken);
+      s.seatMod = clamp((s.seatMod || 0) + d, -2, 2);
+      lines.push(d > 0 ? `지킨 약속 ${kept} > 어긴 약속 ${broken} — 승차 정원 +1` : d < 0 ? `어긴 약속 ${broken} > 지킨 약속 ${kept} — 승차 정원 −1` : `지킨 약속 ${kept} = 어긴 약속 ${broken} — 정원 그대로`);
+    }
+    if (o.ashGift) {
+      const dead = s.buried.map((id) => byId(s, id)).filter(Boolean);
+      const living = alive(s);
+      if (dead.length && living.length) {
+        const d = dead[dead.length - 1];
+        const k = Object.keys(d.skills).sort((a, b) => d.skills[b] - d.skills[a])[0];
+        const r = pick(s, living); r.skills[k] += 1;
+        memo(r, s.day, `${d.name}의 재를 받았다.`, true);
+        lines.push(`${d.name}의 재가 ${r.name}에게 남았다 — ${D.SKILLS[k]} +1`);
+      } else { for (const r of homeRes(s)) r.stress = clamp(r.stress + 8, 0, 100); lines.push('장례를 치른 적이 없다 — 모두 스트레스 +8'); }
+    }
+    if (o.reap) {
+      const crit = alive(s).filter((r) => r.injury >= 3);
+      if (crit.length) { const r = crit[0]; kill(s, r, '잿빛 손이 거두어 갔다', true); lines.push(`${J(r.name, '이/가')} 거두어졌다`); }
+      else {
+        const r = alive(s).slice().sort((a, b) => b.stress - a.stress)[0];
+        if (r) { r.affl = null; r.breakdown = 0; r.stress = 40; lines.push(`잿빛 손이 ${r.name}의 무너진 마음을 거두어 갔다 — 스트레스 40, 붕괴 회복`); }
+      }
+    }
+    if (o.flame) { const id = s.nightEv && s.nightEv.who && s.nightEv.who[0]; const r = id && byId(s, id); if (r) { s.flame = { keeper: r.id }; memo(r, s.day, '영원의 불씨를 받았다.', true); lines.push(`${J(r.name, '이/가')} 불씨지기가 되었다 — 매일 전력 +3, 경계·원정 불가`); } }
+    if (o.noDark) s.noDarkUntil = s.day + o.noDark;
+    if (o.hoCall) s.flags.ho_call = true;
     if (o.memAll) { for (const r of alive(s)) memo(r, s.day, o.memAll, true); s.history.push({ day: s.day, text: o.memAll }); }
     if (o.promise) addPromise(s, o.promise.id, s.day + o.promise.days);
     if (o.ally) s.allies[o.ally] = true;
@@ -456,6 +567,19 @@
     if (o.trust) for (const [id, n] of Object.entries(o.trust)) { const r = byId(s, id); if (r) r.trust = clamp(r.trust + n, 0, 4); }
     if (o.mem) { for (const r of (ctx === 'exp' ? party : [])) memo(r, s.day, o.mem, true); s.history.push({ day: s.day, text: o.mem }); }
     return lines;
+  }
+  // 시신 없이 사라짐: 'water' 물가에서 일하던 사람, 'random', 'weakest' 가장 약한 사람, 'who' 사건의 주인공
+  function vanishOne(s, mode) {
+    const home = alive(s).filter((r) => r.status === 'home');
+    let c = [];
+    if (mode === 'who') c = (s.nightEv && s.nightEv.who || []).map((id) => byId(s, id)).filter((r) => r && r.status !== 'dead');
+    else if (mode === 'water') c = home.filter((r) => ['drain', 'pump'].includes((s.nightPlan || {})[r.id]));
+    else if (mode === 'weakest') c = home.slice().sort((a, b) => (b.injury - a.injury) || (b.stress - a.stress)).slice(0, 1);
+    if (!c.length) c = home;
+    if (!c.length) return '';
+    const r = pick(s, c);
+    kill(s, r, mode === 'water' ? '바닥의 어미가 끌어갔다' : mode === 'who' ? '스스로 걸어 들어갔다' : '돌아오지 않았다', true);
+    return `${J(r.name, '이/가')} 사라졌다`;
   }
   function addPromise(s, id, due) {
     if (s.promises.length >= 3 || s.promises.some((p) => p.id === id)) return false;
@@ -483,7 +607,7 @@
   const floodPenalty = (s) => (s.flood >= 6 ? 1 : 0);
   function expHours(s, e, extraEvents) { return 2 * e.depth + 2 * (e.steps + (extraEvents || 0)) + e.extra + floodPenalty(s); }
   function expNeed(e, hours) { return e.party.length * Math.ceil(hours / 4); }
-  const repeatable = (id) => D.GENERIC.includes(id);
+  const repeatable = (id) => D.GENERIC.includes(id) || D.CREATURES.includes(id);
   const eligible = (s, id) => {
     if (!repeatable(id) && s.flags['done_' + id]) return false;
     const w = D.EVENTS[id] && D.EVENTS[id].when;
@@ -494,9 +618,11 @@
     const list = (reg.depth[e.depth] || []).filter((id) => eligible(s, id));
     const chain = list.filter((id) => (D.EVENTS[id].prio || 0) >= 5);
     if (e.depth === 1 && e.steps === 0 && chain.length) return chain[0];
-    const gen = D.GENERIC.filter((id) => eligible(s, id));
-    if (gen.length && (rand(s) < 0.25 || !list.length)) return pick(s, gen);
-    return list.length ? pick(s, list) : pick(s, gen);
+    const gen = D.GENERIC.filter((id) => eligible(s, id)).map((id) => [id, 2]);
+    for (const id of D.CREATURES) { const ev = D.EVENTS[id]; if (!ev.region || ev.region === e.region) gen.push([id, 0.5 + 0.8 * ((s.gods || {})[ev.creature] || 0)]); }
+    const wpick = () => { let r = rand(s) * gen.reduce((a, x) => a + x[1], 0); for (const [id, w] of gen) { r -= w; if (r <= 0) return id; } return gen[gen.length - 1][0]; };
+    if (gen.length && (rand(s) < 0.3 || !list.length)) return wpick();
+    return list.length ? pick(s, list) : wpick();
   }
   function canDepart(s, region, party, pack) {
     if (s.phase !== 'morning') return '지금은 원정을 떠날 수 없다';
@@ -511,6 +637,7 @@
       if (r.stress >= STRESS_LIMIT_EXP) return `${r.name}: 스트레스 ${STRESS_LIMIT_EXP} 이상이라 갈 수 없다`;
       if (r.breakdown > 0) return `${r.name}: 탈진 상태`;
       if (noExp(r)) return `${r.name}: 다리를 절어 원정을 갈 수 없다`;
+      if (boundToFlame(s, r)) return `${r.name}: 불씨 곁을 떠날 수 없다`;
     }
     const p = { food: pack.food | 0, water: pack.water | 0, meds: pack.meds | 0, items: (pack.items || []).filter((i) => s.items[i]) };
     if (p.food < 0 || p.water < 0 || p.meds < 0) return '보급 수량이 잘못됐다';
@@ -573,7 +700,7 @@
     if (mode === 'more' && !v.options.more.ok) return false;
     if (mode === 'deeper' && !v.options.deeper.ok) return false;
     if (mode !== 'more' && mode !== 'deeper') return false;
-    if (mode === 'deeper') e.depth += 1;
+    if (mode === 'deeper') { e.depth += 1; if (e.region === 'B') addAttention(s, 'nereh', 1, '수문 깊이 2'); }
     e.phase = 'event'; e.result = null;
     e.eventId = pickEvent(s, e);
     return true;
@@ -667,6 +794,7 @@
     if (r.talks === 2) { r.skills[D.PEOPLE[rid].perk] += 1; extra = ' 기술 +1'; }
     r.talks += 1;
     memo(r, s.day, `저녁에 이야기를 나눴다.`);
+    addAttention(s, 'ho', 1, '저녁 대화');
     s.evening = { type: 'talkResult', rid, line, extra, delta };
     return true;
   }
@@ -684,7 +812,9 @@
 
   // 스트레스 100: 드물게 각성, 대개는 무너진다 (종류마다 다른 대가)
   function crack(s, r) {
-    if (!r.virtue && rand(s) < D.VIRTUE.chance) {
+    const called = !!s.flags.ho_call;
+    if (called) delete s.flags.ho_call;
+    if (called || (!r.virtue && rand(s) < D.VIRTUE.chance)) {
       r.virtue = true; r.stress = 35;
       for (const o of alive(s)) if (o.id !== r.id) o.stress = clamp(o.stress - 5, 0, 100);
       say(s, `${fillText(D.VIRTUE.text, [r.name])} — 각성: ${D.VIRTUE.name} (${D.VIRTUE.desc}) · 모두 스트레스 −5`, 'good');
@@ -715,6 +845,7 @@
     const ev = evalPlan(s);
     const plan = ev.plan;
     s.dark = ev.dark;
+    s.nightPlan = Object.assign({}, plan);
     s.guardIds = alive(s).filter((r) => plan[r.id] === 'guard').map((r) => r.id);
     // 1) 생산·소모
     s.forage -= ev.poolUse; s.salvageLeft -= ev.salvageUse;
@@ -750,6 +881,12 @@
       else say(s, `미리 물을 빼 둔 덕에 발전기까지 닿지 않았다. 침수 ${s.flood}.`, 'good');
     }
     say(s, `침수 ${s.flood}/8 · 노출 ${s.exposure}/8`);
+    {
+      const o = { surge: !!surge, flood: s.flood, exposure: s.exposure, shortFood: shortFood > 0, foodAfter: s.res.food, people: ev.people, guards: s.guardIds.length, lit: !ev.dark };
+      for (const x of godNightDelta(s, o)) { const g = addAttention(s, x.id, x.n, x.why); if (g) say(s, g, x.n > 0 && D.GODS[x.id].kind === 'hostile' ? 'warn' : ''); }
+      if (!ev.dark) s.litNights = (s.litNights || 0) + 1;
+      s.litStreak = ev.dark ? 0 : ((s.litStreak || 0) + 1 >= 3 ? 0 : (s.litStreak || 0) + 1);
+    }
     if (ev.dark) say(s, '발전기가 돌지 않았다. 역 전체가 어둠에 잠겼다. 모두 스트레스 +4 · 밤 사건 판정 −10%p', 'warn');
     if (ev.sobbing) say(s, `밤새 흐느끼는 소리가 이어졌다. 모두 스트레스 +${ev.sobbing * D.AFFLICTIONS.despair.ambient}`, 'warn');
     if (s.exposure >= 6 && (s.visitDay == null || s.visitDay > s.day + 1)) { s.visitDay = s.day + 1; say(s, '노출이 높다. 내일 밤 순찰대가 올 것 같다.', 'warn'); }
@@ -804,6 +941,18 @@
     if (s.flood >= 8) return { id: 'flood_break', ev: D.FLOOD_BREAK, threat: true };
     if (s.visitDay === s.day) return { id: 'patrol', ev: D.PATROL, threat: true };
     if (s.corpses && s.corpses.length) return { id: 'corpse', ev: fillNames(D.CORPSE, [s.corpses[0].name]), who: [], threat: false };
+    while (s.godQueue && s.godQueue.length) {
+      const q = s.godQueue[0];
+      const G = D.GODS[q.god], src = G && G[q.kind];
+      if (!src || (q.god === 'ho' && s.flags.ho_gone)) { s.godQueue.shift(); continue; }
+      const people = homeRes(s);
+      if (!people.length) { s.godQueue.shift(); continue; }
+      const who = [];
+      if (q.god === 'gurmah') { const h = people.slice().sort((a, b) => (b.hunger - a.hunger) || (b.stress - a.stress))[0]; who.push(h.id); }
+      while (who.length < (src.who || 0) && who.length < people.length) { const p = pick(s, people); if (!who.includes(p.id)) who.push(p.id); }
+      const names = who.map((id) => byId(s, id).name);
+      return { id: 'god', god: q.god, kind: q.kind, ev: names.length ? fillNames(src, names) : JSON.parse(JSON.stringify(src)), who, threat: G.kind === 'hostile' };
+    }
     const cand = Object.entries(D.NIGHT).map(([id, n]) => [id, n, typeof n.weight === 'function' ? n.weight(s) : n.weight]).filter(([id, n, w]) => s.day >= n.minDay && id !== s.lastNight && w > 0);
     if (!cand.length) return null;
     const total = cand.reduce((a2, [, , w]) => a2 + w, 0);
@@ -827,6 +976,11 @@
     s.history.push({ day: s.day, text: `${s.nightEv.ev.title}: ${res.choice}` });
     if (s.nightEv.id === 'patrol') s.visitDay = s.day < D.CALENDAR.patrol.day ? D.CALENDAR.patrol.day : null;
     else if (s.nightEv.id === 'corpse') s.corpses.shift();
+    else if (s.nightEv.id === 'god') {
+      s.godQueue.shift();
+      s.godSeen[s.nightEv.god] = (s.godSeen[s.nightEv.god] || 0) + 1;
+      if (s.nightEv.kind === 'advent') s.gods[s.nightEv.god] = GOD_AFTER;
+    }
     else if (D.NIGHT[s.nightEv.id]) s.lastNight = s.nightEv.id;
     return true;
   }
@@ -1045,7 +1199,11 @@
     for (const k of ['res', 'closed', 'flags', 'items', 'allies', 'plan', 'lastPlan', 'stats']) s[k] = Object.assign({}, base[k], raw[k] || {});
     for (const k of Object.keys(D.CAP)) if (typeof s.res[k] !== 'number' || !isFinite(s.res[k])) s.res[k] = 0;
     if (!Array.isArray(s.residents) || !s.residents.length) s.residents = base.residents;
-    for (const k of ['report', 'log', 'history', 'promises', 'expParty', 'corpses']) if (!Array.isArray(s[k])) s[k] = [];
+    for (const k of ['report', 'log', 'history', 'promises', 'expParty', 'corpses', 'godQueue', 'buried']) if (!Array.isArray(s[k])) s[k] = [];
+    s.gods = Object.assign({}, base.gods, raw.gods || {});
+    for (const k of Object.keys(s.gods)) if (!Number.isFinite(s.gods[k])) s.gods[k] = 0;
+    if (!s.godSeen || typeof s.godSeen !== 'object') s.godSeen = {};
+    for (const k of ['litStreak', 'litNights', 'seatMod', 'noDarkUntil']) if (!Number.isFinite(s[k])) s[k] = 0;
     if (typeof s.rng !== 'number') s.rng = s.seed >>> 0;
     // 상태 구조가 어긋난 저장은 쓰지 않는다 (불러오면 화면이 깨지므로 새 게임으로)
     const need = { expedition: s.exp, evening: s.evening, nightEvent: s.nightEv, boarding: s.boarding, ended: s.ending };
@@ -1058,7 +1216,7 @@
   const API = {
     D, SAVE_V, EDGE, NORMAL_HOURS, MAX_HOURS, BASE_LOAD, STRESS_LIMIT_EXP, FLOOD_POWER_STOP, BOARD_PER, BOARD_LITTER, BOARD_LITTER_MAX, J, josa, trainInfo, choiceTags,
     newGame, dispatch, normalize, rand,
-    alive, homeRes, byId, traitVal, hasTag, noExp, fillText, injure, crack, taskOptions, evalPlan, previewNight, effectivePlan, suggestPlan, suggestWhy, forecast, floodAuto,
+    alive, homeRes, byId, traitVal, hasTag, noExp, fillText, injure, crack, addAttention, godLabel, godNightDelta, boundToFlame, GOD_OMEN, GOD_ADVENT, taskOptions, evalPlan, previewNight, effectivePlan, suggestPlan, suggestWhy, forecast, floodAuto,
     expView, canDepart, describeOutcome, choiceState, availableProjects, boardingPool, lootCap, resText, sf,
     nightView: (s) => (s.nightEv ? { title: s.nightEv.ev.title, text: s.nightEv.ev.text, choices: s.nightEv.ev.choices.map((c) => Object.assign({ choice: c }, choiceState(s, c, 'station'))), result: s.nightEv.result || null } : null),
     eveningView: (s) => {

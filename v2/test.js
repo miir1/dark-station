@@ -691,3 +691,106 @@ test('감염 위험은 미리 보인다: 경상인 채로 일하면 행과 예�
   E.dispatch(s, { type: 'setPlan', plan: { seoha: 'rest' } });
   assert.ok(!E.previewNight(s).warnings.some((w) => /곪아/.test(w.text)), '쉬면 위험 없음');
 });
+
+// ── 바깥 신들·크리처 ──
+const nightThrough = (s) => { E.dispatch(s, { type: 'endDay' }); E.dispatch(s, { type: 'skipTalk' }); };
+
+test('신 데이터: 징조·강림 사건도 막다른 길이 없다', () => {
+  for (const [id, G] of Object.entries(D.GODS)) {
+    assert.ok(G.name && G.alias && ['hostile', 'neutral', 'friendly'].includes(G.kind), id);
+    for (const k of ['omen', 'advent']) {
+      const ev = G[k]; if (!ev) continue;
+      assert.ok(ev.choices.length >= 2, `${id}.${k}`);
+      assert.ok(ev.choices.some((c) => !c.cost && !c.req), `${id}.${k}: 항상 고를 수 있는 선택지`);
+      for (const c of ev.choices) assert.ok(c.check ? c.ok && c.fail : c.out, `${id}.${k}: 결과`);
+    }
+  }
+  for (const id of D.CREATURES) { const ev = D.EVENTS[id]; assert.ok(D.GODS[ev.creature], id); }
+  for (const id of ['hostile', 'neutral', 'friendly']) assert.ok(Object.values(D.GODS).some((g) => g.kind === id));
+});
+
+test('시선: 3에 징조, 6에 강림이 그날 밤 오고, 강림 뒤 2로 떨어진다', () => {
+  const s = started(8);
+  E.addAttention(s, 'seel', 3);
+  assert.deepStrictEqual(s.godQueue, [{ god: 'seel', kind: 'omen' }]);
+  E.addAttention(s, 'seel', 3);
+  assert.strictEqual(s.godQueue.length, 2);
+  E.dispatch(s, { type: 'setPlan', plan: {} }); nightThrough(s);
+  assert.strictEqual(s.nightEv.id, 'god'); assert.strictEqual(s.nightEv.kind, 'omen');
+  E.dispatch(s, { type: 'nightChoose', i: 0 }); E.dispatch(s, { type: 'nightDone' });
+  assert.strictEqual(s.godSeen.seel, 1);
+  E.dispatch(s, { type: 'setPlan', plan: {} }); nightThrough(s);
+  assert.strictEqual(s.nightEv.kind, 'advent');
+  const before = E.alive(s).length;
+  E.dispatch(s, { type: 'nightChoose', i: 1 });                    // 모두 눈을 감는다 → 한 사람이 사라진다
+  assert.strictEqual(E.alive(s).length, before - 1);
+  assert.strictEqual(s.corpses.length, 0, '사라진 사람은 시신이 없다');
+  assert.strictEqual(s.gods.seel, E.GOD_AFTER === undefined ? 2 : 2);
+  assert.ok(E.godLabel(s, 'seel').includes('세엘'), '징조를 두 번 겪으면 진짜 이름');
+});
+
+test('시선 미리보기 = 실제: 불을 이틀 켜면 작은 불 +1', () => {
+  const s = started(9); s.gods.hiska = 2; s.litNights = 1;            // 불을 켠 두 번째 밤
+  E.dispatch(s, { type: 'setPlan', plan: { seoha: 'gen' } });
+  const pv = E.previewNight(s);
+  const d = pv.godDelta.find((x) => x.id === 'hiska');
+  assert.strictEqual(d.n, 1);
+  nightThrough(s);
+  assert.strictEqual(s.gods.hiska, 3);
+  assert.ok(s.godQueue.some((q) => q.god === 'hiska' && q.kind === 'omen'));
+});
+
+test('들숨: 물가에서 일하던 사람이 끌려가고 창고 식량 절반이 썩는다', () => {
+  const s = started(10); s.res.food = 20;
+  s.nightPlan = { dongha: 'drain' };
+  s.nightEv = { id: 'god', god: 'nereh', kind: 'advent', ev: D.GODS.nereh.advent, who: [] };
+  s.phase = 'nightEvent'; s.gods.nereh = 6;
+  E.dispatch(s, { type: 'nightChoose', i: 1 });
+  assert.strictEqual(E.byId(s, 'dongha').status, 'dead');
+  assert.strictEqual(s.gods.nereh, 2);
+  assert.ok(s.flood >= 3);
+});
+
+test('사람을 먹으면 부르는 소리가 영원히 떠난다', () => {
+  const s = started(6); s.res.meds = 0; s.gods.ho = 2;
+  const d = E.byId(s, 'dongha'); d.injury = 3; d.crit = s.day;
+  E.dispatch(s, { type: 'setPlan', plan: {} }); nightThrough(s);
+  E.dispatch(s, { type: 'nightChoose', i: s.nightEv.ev.choices.findIndex((c) => c.taboo) });
+  assert.ok(s.flags.ho_gone); assert.strictEqual(s.gods.ho, 0);
+  assert.ok(s.gods.gurmah >= 3, '빈 입의 시선 +3');
+  E.addAttention(s, 'ho', 3);
+  assert.strictEqual(s.gods.ho, 0, '다시 오르지 않는다');
+});
+
+test('영원의 불씨: 불씨지기는 경계·원정 불가, 매일 전력 +3, 어둠 없음', () => {
+  const s = started(11); s.res.food = 10; s.res.water = 10;
+  s.flame = { keeper: 'mari' };
+  E.dispatch(s, { type: 'setPlan', plan: {} });
+  const pv = E.previewNight(s);
+  assert.ok(pv.ev.made >= 3 && !pv.ev.dark);
+  assert.ok(E.taskOptions(s, 'mari').find((o) => o.id === 'guard').disabled);
+  assert.match(E.canDepart(s, 'A', ['mari', 'seoha'], { food: 2, water: 2, meds: 0, items: [] }), /불씨/);
+});
+
+test('크리처: 그 신의 시선이 높을수록 원정에서 자주 만난다', () => {
+  const count = (att) => {
+    let n = 0;
+    for (let seed = 1; seed <= 300; seed++) {
+      const s = started(seed); s.res.food = 10; s.res.water = 10; s.gods.gurmah = att;
+      s.flags.done_a1_pharmacy = true;
+      E.dispatch(s, { type: 'expStart', region: 'A', party: ['gicheol', 'seoha'], pack: { food: 2, water: 2, meds: 0, items: [] } });
+      if (s.exp.eventId === 'c_twomouth') n++;
+    }
+    return n;
+  };
+  const lo = count(0), hi = count(6);
+  assert.ok(hi > lo * 2, `시선 0: ${lo}, 시선 6: ${hi}`);
+});
+
+test('검표: 지킨 약속이 많으면 승차 정원 +1', () => {
+  const s = started(12); s.flags.hospital_pact = true; s.flags.repair_open = true;
+  s.nightEv = { id: 'god', god: 'termia', kind: 'omen', ev: D.GODS.termia.omen, who: [] }; s.phase = 'nightEvent';
+  E.dispatch(s, { type: 'nightChoose', i: 0 });
+  assert.strictEqual(s.seatMod, 1);
+  assert.strictEqual(E.trainInfo(s).seat, 1);
+});
