@@ -195,3 +195,4 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 #dlg .bm .bb { flex: 1; min-width: 0; } #dlg .bm .bb p { margin: 0 0 3px; font-size: 13px; }
 #dlg .bm .pips { grid-template-columns: 1fr 1fr; }
 #dlg .pp { flex-wrap: nowrap; }
+#goal { transition: opacity .2s; } #goal.dim { opacity: .15; }

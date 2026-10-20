@@ -239,8 +239,9 @@
     const mapRows = Math.min(13, scene.h || 13);
     // 맵 높이가 화면에 꽉 차게 (폰에서는 소수 배율도 허용)
     const scale = Math.max(1, Math.min(4, H / (T * mapRows), W / (T * 7)));
-    view = { cols: Math.ceil(W / (T * scale)), rows: Math.ceil(H / (T * scale)), scale };
-    cv.width = view.cols * T; cv.height = view.rows * T;
+    // 캔버스는 무대를 정확히 채운다 (칸 배수로 키우면 위아래가 잘려 맨 윗줄 사람의 머리가 잘렸다)
+    view = { cols: W / (T * scale), rows: H / (T * scale), scale };
+    cv.width = Math.ceil(W / scale); cv.height = Math.ceil(H / scale);
     cv.style.width = Math.round(cv.width * scale) + 'px'; cv.style.height = Math.round(cv.height * scale) + 'px';
     ctx.imageSmoothingEnabled = false;
   }
@@ -269,10 +270,12 @@
     const mx = scene.moving ? scene.px - scene.moving.dx * (1 - scene.moving.t) : scene.px;
     const my = scene.moving ? scene.py - scene.moving.dy * (1 - scene.moving.t) : scene.py;
     const camX = Math.max(0, Math.min(scene.w * T - cv.width, (mx + 0.5) * T - cv.width / 2));
-    const camY = Math.max(0, Math.min(scene.h * T - cv.height, (my + 0.5) * T - cv.height / 2));
+    // 맨 윗줄에 서도 머리(칸 위로 솟은 부분)가 보이게 카메라가 지도 위로 조금 더 올라갈 수 있다
+    const camY = Math.min(Math.max(0, Math.min(scene.h * T - cv.height, (my + 0.5) * T - cv.height / 2)), my * T - (ART.PH - T) - 4 * K);
     const ox = scene.w * T < cv.width ? Math.round((cv.width - scene.w * T) / 2) : -Math.round(camX);
     const oy = scene.h * T < cv.height ? Math.round((cv.height - scene.h * T) / 2) : -Math.round(camY);
     ctx.fillStyle = '#050404'; ctx.fillRect(0, 0, cv.width, cv.height);
+    scene.head = { x: (mx * T + ox) * view.scale, y: (my * T - (ART.PH - T) + oy) * view.scale, w: T * view.scale };   // 주인공 머리의 화면 위치 (목표 상자가 가리지 않게)
     ctx.save(); ctx.translate(ox, oy);
     // 바닥·벽
     for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) {
@@ -1045,6 +1048,11 @@
   function overlay() {
     const g = UI.isOpen() || busy ? '' : objective();
     if (g !== lastGoal) { lastGoal = g; $('goal').textContent = g ? '◆ ' + g : ''; $('goal').hidden = !g; }
+    if (g && scene.head) {                                  // 목표 상자가 주인공 머리를 가리면 흐리게
+      const el = $('goal'), h = scene.head;
+      const over = h.x < el.offsetLeft + el.offsetWidth && h.x + h.w > el.offsetLeft && h.y < el.offsetTop + el.offsetHeight + 4;
+      el.classList.toggle('dim', over);
+    }
     const tg = !UI.isOpen() && !busy ? target() : null;
     const label = UI.isOpen() ? '선택' : tg ? tg.label : scene.kind === 'dungeon' ? '상태' : '조사';
     if (label !== lastBtn) { lastBtn = label; $('btnA').textContent = label; }
