@@ -1,6 +1,6 @@
 // 서비스 워커: 게임 파일을 보관해 두었다가 인터넷·서버가 없을 때 대신 내준다.
 // 방식: 네트워크 먼저, 안 되면 보관본. 저장 데이터(localStorage)는 다루지 않음.
-const CACHE = 'dark-station-v7';
+const CACHE = 'dark-station-v8';
 const FILES = [
   './', 'index.html', 'style.css', 'manifest.json',
   'data.js', 'engine.js', 'ui.js',
