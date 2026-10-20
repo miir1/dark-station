@@ -153,6 +153,20 @@ if __name__ == '__main__' and '--tiles' not in sys.argv and '--walk' not in sys.
         print('주의: 덩어리 수와 이름 수가 다르다', boxes)
 
 
+def seamless(img):
+    """반쯤 밀어 둔 복사본과 섞는다: 가운데는 원본, 가장자리는 밀린 복사본(가장자리끼리 이어진다)."""
+    from PIL import ImageChops
+    n = img.width
+    off = ImageChops.offset(img, n // 2, n // 2)
+    mask = Image.new('L', (n, n))
+    mp = mask.load()
+    for y in range(n):
+        for x in range(n):
+            d = max(abs(x + 0.5 - n / 2), abs(y + 0.5 - n / 2)) / (n / 2)      # 0 가운데 → 1 가장자리
+            mp[x, y] = int(255 * max(0.0, min(1.0, (1 - d) / 0.22)))
+    return Image.composite(img, off, mask)
+
+
 def run_tiles(src, outdir, names, size=32):
     """질감 시트: 분홍 선으로 나뉜 칸마다 안쪽을 64×64로 줄이고 네 조각(32×32)을 변형 0~3으로 저장."""
     im = Image.open(src).convert('RGBA')
@@ -178,6 +192,9 @@ def run_tiles(src, outdir, names, size=32):
             for pp, mv, (qx, qy) in zip(parts, means, ((0, 0), (size, 0), (0, size), (size, size))):
                 crop.paste(ImageEnhance.Brightness(pp).enhance(avg / max(1, mv)), (qx, qy))
         crop = ImageEnhance.Brightness(crop).enhance(0.8)
+        if not whole:                                       # 네 조각 각각을 이음새 없이
+            for qx, qy in ((0, 0), (size, 0), (0, size), (size, size)):
+                crop.paste(seamless(crop.crop((qx, qy, qx + size, qy + size))), (qx, qy))
         q = crop.quantize(palette=pal, dither=Image.Dither.NONE).convert('RGB')
         if whole:
             q.save(os.path.join(outdir, f'{name}_0.png'))

@@ -106,13 +106,15 @@
   }
   function enterDungeon() {
     const e = state.exp;
-    const key = e.region + Math.min(2, e.depth);
-    const d = M.DUNGEONS[key];
+    // 원정마다 새 지도 (날·지역·깊이로 정해지므로 새로고침해도 같다)
+    const key = e.region + Math.min(2, e.depth) + ':' + state.day;
     if (scene.key !== key) {
+      const seed = (state.seed * 31 + state.day * 977 + (e.region === 'A' ? 13 : 29) * e.depth) >>> 0;
+      const d = M.genDungeon(e.region, e.depth, seed);
       scene.visited = new Set();
-      let sx = 1, sy = 1;
-      d.rows.forEach((row, y) => { const x = row.indexOf('E'); if (x >= 0) { sx = x; sy = y; } });
-      setMap('dungeon', key, d.rows, [sx + 1, sy], { dun: d, region: e.region, map: null });
+      setMap('dungeon', key, d.rows, d.start, { dun: d, region: e.region, map: null });
+      // 시작 칸이 벽이면 근처 바닥으로
+      if (blocked(scene.px, scene.py)) for (const [dx, dy] of [[0, 1], [1, 1], [0, -1], [-1, 0]]) if (!blocked(scene.px + dx - 1, scene.py + dy)) { scene.px += dx - 1; scene.py += dy; break; }
     }
   }
   function syncScene() {
@@ -161,7 +163,7 @@
   // ── 지나갈 수 있는가 ──
   function tileAt(x, y) { return (scene.rows[y] || '')[x] || '#'; }
   const blockedRaw = (x, y) => tileAt(x, y) === '#';
-  function blocked(x, y) {
+  function blocked(x, y, noNpc) {
     const t = tileAt(x, y);
     if (t === '#' || t === 's' || t === 'i') return true;
     if (scene.kind === 'station') {
@@ -173,8 +175,48 @@
       if (t === 'o' && state.pro < 2) return true;
       if (objectsAt(x, y).length) return true;
     }
-    if (residentsOnMap().some((p) => p.x === x && p.y === y)) return true;
+    if (!noNpc && residentsOnMap().some((p) => p.x === x && p.y === y)) return true;
     return false;
+  }
+  // ── 주민이 일터까지 걸어간다: 보이는 위치는 따로, 길은 BFS ──
+  const walkers = {};                 // id → { x, y, path: [[x,y]...], face, steps }
+  const NPC_MS = 320;
+  function pathTo(sx, sy, tx, ty) {
+    const key = (x, y) => x + ',' + y;
+    const prev = new Map([[key(sx, sy), null]]);
+    const q = [[sx, sy]];
+    while (q.length) {
+      const [x, y] = q.shift();
+      if (x === tx && y === ty) break;
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const nx = x + dx, ny = y + dy, k = key(nx, ny);
+        if (prev.has(k) || (blocked(nx, ny, true) && !(nx === tx && ny === ty))) continue;
+        prev.set(k, [x, y]); q.push([nx, ny]);
+      }
+    }
+    if (!prev.has(key(tx, ty))) return null;
+    const out = []; let c = [tx, ty];
+    while (c && !(c[0] === sx && c[1] === sy)) { out.unshift(c); c = prev.get(key(c[0], c[1])); }
+    return out;
+  }
+  function updateWalkers() {
+    if (scene.kind !== 'station') return;
+    for (const p of residentsOnMap()) {
+      let w = walkers[p.r.id];
+      if (!w || p.lying) { walkers[p.r.id] = { x: p.x, y: p.y, path: [], tx: p.x, ty: p.y, face: 'down', steps: 0 }; continue; }
+      if (w.tx !== p.x || w.ty !== p.y) {
+        w.tx = p.x; w.ty = p.y;
+        const path = pathTo(Math.round(w.x), Math.round(w.y), p.x, p.y);
+        if (path) w.path = path; else { w.x = p.x; w.y = p.y; w.path = []; }       // 길이 없으면 벽을 뚫지 않고 그 자리에 나타난다
+      }
+      if (!w.path.length) continue;
+      const [nx, ny] = w.path[0];
+      const dx = nx - w.x, dy = ny - w.y, dist = Math.hypot(dx, dy);
+      const stepLen = frameDt / NPC_MS;
+      w.face = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+      if (dist <= stepLen) { w.x = nx; w.y = ny; w.path.shift(); w.steps++; }
+      else { w.x += dx / dist * stepLen; w.y += dy / dist * stepLen; }
+    }
   }
 
   // ── 그리기 ──
@@ -222,7 +264,13 @@
       const k = tileKind(t);
       if (k) ctx.drawImage(ART.tile(k, x, y), X, Y); else { ctx.fillStyle = '#000'; ctx.fillRect(X, Y, T, T); }
       if (t === 's') ctx.drawImage(ART.prop('seat'), X, Y);
-      if (t === '#' && tileAt(x, y + 1) !== '#' && y + 1 < scene.h) { ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(X, Y + T, T, 3); }
+      if (t === '#' && tileAt(x, y + 1) !== '#' && y + 1 < scene.h) {
+        // 바닥과 맞닿은 벽: 아래쪽 벽면을 밝게, 모서리에 선, 바닥에 그림자
+        ctx.fillStyle = 'rgba(220,200,170,0.10)'; ctx.fillRect(X, Y + T * 0.45, T, T * 0.55);
+        ctx.fillStyle = 'rgba(230,210,180,0.22)'; ctx.fillRect(X, Y + T * 0.45, T, Math.max(1, K));
+        ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(X, Y + T, T, 4 * K);
+      }
+      if (t === '#' && tileAt(x, y + 1) === '#' && [[1, 0], [-1, 0], [0, -1]].some(([dx, dy]) => { const n = tileAt(x + dx, y + dy); return n !== '#' && n !== undefined; })) { ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.fillRect(X, Y, T, T); }
       if (t === 'v') ctx.drawImage(ART.prop('stairsDown'), X, Y);
       if (t === 'E') ctx.drawImage(ART.prop('stairsUp'), X, Y);
       if (t === 'o') ctx.drawImage(ART.prop('door'), X, Y);
@@ -233,16 +281,21 @@
     else if (scene.kind === 'dungeon') drawDungeon(sprites);
     else drawPrologue(s, sprites);
     // 사람 (누워 있는 사람은 눕혀서)
-    for (const p of residentsOnMap()) {
+    for (const p0 of residentsOnMap()) {
+      const w = walkers[p0.r.id];
+      const moving = !!(w && w.path.length);
+      const p = w && !p0.lying ? Object.assign({}, p0, { x: w.x, y: w.y }) : p0;
       const hurt = Math.min(3, p.r.injury || 0);
       // 주민은 주인공 쪽을 본다 (가까우면)
       const dx = scene.px - p.x, dy = scene.py - p.y;
       const look = Math.abs(dx) + Math.abs(dy) <= 3 ? (Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy < 0 ? 'up' : 'down')) : 'down';
-      const img = ART.personSprite(p.r.id, 0, hurt, p.lying ? 'down' : look);
+      const img = ART.personSprite(p.r.id, moving ? (w.steps % 2 ? 1 : 2) : 0, hurt, p.lying ? 'down' : moving ? w.face : look);
       sprites.push([p.y, () => {
+        ctx.save(); ctx.translate(Math.round(p.x * T) - p.x * T, Math.round(p.y * T) - p.y * T);
         if (p.lying) { ctx.save(); ctx.translate(p.x * T + T, p.y * T + T / 4); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0, img.width * 0.67, img.height * 0.67); ctx.restore(); }
         else ctx.drawImage(img, p.x * T, p.y * T - (ART.PH - T) - (Math.sin((tick + p.r.id.length * 37) / 45) > 0.55 ? K : 0));
         if (p.r.breakdown > 0 && (tick >> 4) % 2) { ctx.fillStyle = '#9c1e1e'; ctx.fillRect(p.x * T + 14 * K, p.y * T - 26 * K, 4 * K, 6 * K); }
+        ctx.restore();
       }]);
     }
     // 주인공과 동행
@@ -305,7 +358,8 @@
       dark = 0.9; tintRed = scene.key === 'car';
       if (scene.key === 'car' && (tick >> 5) % 3 !== 0) for (const x of [4, 11, 18]) lights.push([x + 0.5, 1, 3.5]);
     }
-    lights.push([pmx + 0.5, pmy + 0.3, scene.kind === 'station' ? 2.4 : 3.6]);
+    lights.push([pmx + 0.5, pmy + 0.3, scene.kind === 'station' ? 2.4 : scene.kind === 'dungeon' ? 4.6 : 3.6]);
+    if (scene.kind === 'dungeon') { dark = 0.8; for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) lights.push([x + 0.5, y + 0.5, 1.6]); }
     g.fillStyle = `rgba(0,0,0,${dark})`; g.fillRect(0, 0, lightCv.width, lightCv.height);
     g.globalCompositeOperation = 'destination-out';
     for (const [x, y, r] of lights) {
@@ -858,7 +912,7 @@
   // 한 칸 걷는 데 걸리는 시간 (ms). 화면 갱신 속도와 상관없이 같다
   const STEP_MS = 230;
   let frameDt = 16, lastT = 0;
-  function loop(now) { frameDt = lastT ? Math.min(60, now - lastT) : 16; lastT = now; update(); draw(); overlay(); requestAnimationFrame(loop); }
+  function loop(now) { frameDt = lastT ? Math.min(60, now - lastT) : 16; lastT = now; update(); updateWalkers(); draw(); overlay(); requestAnimationFrame(loop); }
   ART.ready.then(() => {
     resize(); if (state.phase === 'prologue') enterPrologue(); else syncScene(); if (!scene.rows.length) enterStation(true); hud();
     requestAnimationFrame(loop);
@@ -872,5 +926,5 @@
     FX.start();
     if (a === 'new') restart();
   }
-  if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); draw(); overlay(); }, interact, menu, target, blocked, residentsOnMap };
+  if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); updateWalkers(); draw(); overlay(); }, interact, menu, target, blocked, residentsOnMap, walkers, pathTo };
 })();

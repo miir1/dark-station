@@ -154,5 +154,52 @@
     npcs: [{ id: 'gicheol', x: 3, y: 1, choice: 0, line: '' }],
   };
 
-  window.MAPS = { STATION, DUNGEONS, CAR, TUNNEL };
+  // ── 원정 던전 생성기: 같은 씨앗이면 같은 지도. 방을 흩고 통로로 잇는다 ──
+  const DECO = {
+    A: ['stall', 'mannequin', 'hooks', 'cart', 'kiosk', 'tires', 'shrine', 'vending', 'backpack', 'bodybag', 'webs', 'bones', 'crate', 'blood'],
+    B: ['valve', 'sludge', 'ladder', 'leakbarrel', 'ratnest', 'chaindoor', 'slab', 'bodybag', 'webs', 'bones', 'blood'],
+  };
+  const NAMES = { A1: '을지로 지하상가', A2: '지하상가 창고층', B1: '배수로', B2: '수문 아래' };
+  function genDungeon(region, depth, seed) {
+    let s = (seed >>> 0) || 1;
+    const R = () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    const ri = (a, b) => a + Math.floor(R() * (b - a + 1));
+    const W = 28, H = 18;
+    const g = Array.from({ length: H }, () => Array(W).fill('#'));
+    const rooms = [];
+    for (let tries = 0; tries < 80 && rooms.length < 7; tries++) {
+      const w = ri(4, 7), h = ri(3, 5), x = ri(1, W - w - 2), y = ri(1, H - h - 2);
+      if (rooms.some((r) => x < r.x + r.w + 1 && r.x < x + w + 1 && y < r.y + r.h + 1 && r.y < y + h + 1)) continue;
+      rooms.push({ x, y, w, h, cx: x + (w >> 1), cy: y + (h >> 1) });
+    }
+    rooms.sort((a, b) => a.cx - b.cx);                       // 왼쪽 방부터 차례로 잇는다
+    for (const r of rooms) for (let y = r.y; y < r.y + r.h; y++) for (let x = r.x; x < r.x + r.w; x++) g[y][x] = '.';
+    const dig = (x, y) => { if (g[y][x] === '#') g[y][x] = '.'; };
+    for (let i = 1; i < rooms.length; i++) {
+      const a = rooms[i - 1], b = rooms[i];
+      if (R() < 0.5) { for (let x = Math.min(a.cx, b.cx); x <= Math.max(a.cx, b.cx); x++) dig(x, a.cy); for (let y = Math.min(a.cy, b.cy); y <= Math.max(a.cy, b.cy); y++) dig(b.cx, y); }
+      else { for (let y = Math.min(a.cy, b.cy); y <= Math.max(a.cy, b.cy); y++) dig(a.cx, y); for (let x = Math.min(a.cx, b.cx); x <= Math.max(a.cx, b.cx); x++) dig(x, b.cy); }
+    }
+    // 고리 하나 더 (막다른 길만 있지 않게)
+    if (rooms.length > 3) { const a = rooms[0], b = rooms[rooms.length - 2]; for (let x = Math.min(a.cx, b.cx); x <= Math.max(a.cx, b.cx); x++) dig(x, b.cy); for (let y = Math.min(a.cy, b.cy); y <= Math.max(a.cy, b.cy); y++) dig(a.cx, y); }
+    const used = new Set();
+    const put = (r, ch) => { for (let k = 0; k < 30; k++) { const x = ri(r.x, r.x + r.w - 1), y = ri(r.y, r.y + r.h - 1); if (!used.has(x + ',' + y)) { used.add(x + ',' + y); g[y][x] = ch; return [x, y]; } } return null; };
+    const entry = rooms[0];
+    const e = [entry.x, entry.y]; g[e[1]][e[0]] = 'E'; used.add(e.join(',')); used.add((e[0] + 1) + ',' + e[1]);
+    const far = rooms[rooms.length - 1];
+    if (depth < 2) put(far, 'v');
+    const others = rooms.slice(1);
+    for (let k = 0; k < 3; k++) put(others[(k * 2 + 1) % others.length], 'm');
+    // 물 (수문 방면): 몇 군데 웅덩이
+    if (region === 'B') for (let k = 0; k < 5; k++) { const r = rooms[ri(1, rooms.length - 1)], cx = ri(r.x, r.x + r.w - 1), cy = ri(r.y, r.y + r.h - 1), rr = ri(1, 2); for (let y = cy - rr; y <= cy + rr; y++) for (let x = cx - rr; x <= cx + rr; x++) if (g[y] && g[y][x] === '.' && Math.hypot(x - cx, y - cy) <= rr + 0.3) g[y][x] = 'w'; }
+    // 꾸밈: 방 가장자리에
+    const deco = [];
+    for (const r of others) for (let k = 0; k < ri(1, 3); k++) {
+      const x = R() < 0.5 ? r.x : r.x + r.w - 1, y = ri(r.y, r.y + r.h - 1);
+      if (g[y][x] === '.' && !used.has(x + ',' + y)) { used.add(x + ',' + y); deco.push([DECO[region][ri(0, DECO[region].length - 1)], x, y]); }
+    }
+    return { name: NAMES[region + Math.min(2, depth)], rows: g.map((row) => row.join('')), deco, start: [e[0] + 1, e[1]] };
+  }
+
+  window.MAPS = { STATION, DUNGEONS, CAR, TUNNEL, genDungeon };
 })();
