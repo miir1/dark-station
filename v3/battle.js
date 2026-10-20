@@ -35,14 +35,16 @@
     const dmg = (m) => Math.max(1, 1 + Math.floor(m.r.skills.str / 2) + (pipe ? 1 : 0) - (m.broken.arm ? 1 : 0));
 
     function view(actor) {
-      const ep = PARTS.map((p) => `<span class="${en.hp[p] <= 0 ? 'broken' : ''}">${PNAME[p]} ${Math.max(0, en.hp[p])}/${en.max[p]}</span>`).join('');
-      const tp = team.map((m) => `<div class="person"><b>${esc(m.r.name)}</b>${m.down ? '<span class="badge bad">쓰러짐</span>' : m.guard ? '<span class="badge">방어</span>' : ''}${m === actor ? '<span class="badge good">차례</span>' : ''}<div class="parts">${PARTS.map((p) => `<span class="${m.hp[p] <= 0 ? 'broken' : ''}">${PNAME[p]} ${Math.max(0, m.hp[p])}/${m.max[p]}</span>`).join('')}</div></div>`).join('');
+      // 부위 칸: 남은 체력만큼 채운 블록 (부러지면 붉은 줄)
+      const pips = (hp, max) => PARTS.map((p) => `<span class="pp ${hp[p] <= 0 ? 'broken' : ''}"><i>${PNAME[p]}</i>${Array.from({ length: max[p] }, (_, k) => `<b class="${k < hp[p] ? 'on' : ''}"></b>`).join('')}</span>`).join('');
+      const ep = pips(en.hp, en.max);
+      const tp = team.map((m) => `<div class="bm ${m === actor ? 'turn' : ''} ${m.down ? 'down' : ''}"><img class="pf" alt="" src="${ART.portrait(m.r.id, m.r.injury).toDataURL()}"><div class="bb"><p><b>${esc(m.r.name)}</b>${m.down ? '<span class="badge bad">쓰러짐</span>' : m.guard ? '<span class="badge">방어</span>' : ''}${m === actor ? '<span class="badge good">차례</span>' : ''}</p><div class="pips">${pips(m.hp, m.max)}</div></div></div>`).join('');
       const bg = opts.region && ART.has('cg/battle_' + (opts.region === 'A' ? 'market' : 'drain')) ? `background:url(img/cg/battle_${opts.region === 'A' ? 'market' : 'drain'}.png) center/cover;image-rendering:pixelated;` : '';
       const fx = struck, fh = foeHit; struck = ''; foeHit = false;
       if (fx === 'team' || fx === 'break') { const a = document.getElementById('app'); a.classList.remove('hurt', 'hurt2'); void a.offsetWidth; a.classList.add(fx === 'break' ? 'hurt2' : 'hurt'); }
       return `<div class="battle ${fx ? 'fx-' + fx : ''}"><p class="tag">전투</p><div class="enemy" style="${bg}padding:8px 0;border:1px solid #3a342b"><span class="foe ${fh ? 'struck' : ''}">${spriteImg(opts.id, 192)}</span><p class="title">${esc(en.name)}</p></div>
-        <div class="parts">${ep}</div>
-        <p class="mini">머리나 몸통이 무너지면 쓰러진다. 다리를 부수면 반드시 도망칠 수 있고, 팔을 부수면 공격이 약해진다. 사람도 같다 — 부러진 부위는 돌아가서 부상과 영구 상처로 남는다.</p>
+        <div class="pips foe-pips">${ep}</div>
+        <p class="mini">머리·몸통이 0이면 쓰러짐 · 다리 0이면 도망 확정 · 팔 0이면 공격 −1. 사람도 같다 — 부러진 부위는 부상·상처로 남는다.</p>
         <div class="blog">${log.slice(-3).join('<br>')}</div>${tp}</div>`;
     }
 

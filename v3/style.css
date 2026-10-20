@@ -179,3 +179,19 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 #dlg .opt:disabled .ic, #dlg .opt:disabled .pf { opacity: .4; filter: grayscale(.8); }
 #dlg .opt .pf { width: 36px; height: 36px; }
 #dlg .opt small .ic { width: 16px; height: 16px; }
+/* 전투: 얼굴 + 부위 블록 */
+#dlg .pips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px 6px; font-size: 11px; }
+#dlg .pp { display: flex; align-items: center; gap: 1px; flex-wrap: wrap; }
+#dlg .pp i { font-style: normal; color: var(--dim); margin-right: 3px; }
+#dlg .pp b { width: 7px; height: 9px; background: #2a251d; border: 1px solid #3a342b; }
+#dlg .pp b.on { background: #c9b48a; border-color: #8a7d66; }
+#dlg .pp.broken i { color: var(--bad); text-decoration: line-through; }
+#dlg .pp.broken b { background: #3a1210; border-color: #6d1f1f; }
+#dlg .foe-pips { margin: 4px 0 6px; } #dlg .foe-pips .pp b.on { background: #b0503e; border-color: #6d1f1f; }
+#dlg .bm { display: flex; gap: 8px; align-items: center; padding: 5px; border: 1px solid #2c271f; margin-top: 4px; }
+#dlg .bm.turn { border-color: var(--accent); background: #211c14; }
+#dlg .bm.down { opacity: .5; filter: grayscale(.8); }
+#dlg .bm .pf { width: 44px; height: 44px; }
+#dlg .bm .bb { flex: 1; min-width: 0; } #dlg .bm .bb p { margin: 0 0 3px; font-size: 13px; }
+#dlg .bm .pips { grid-template-columns: 1fr 1fr; }
+#dlg .pp { flex-wrap: nowrap; }

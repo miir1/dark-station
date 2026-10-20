@@ -247,14 +247,18 @@
   window.addEventListener('resize', resize);
   if (window.ResizeObserver) new ResizeObserver(() => resize()).observe($('stage'));
 
-  function tileKind(t) {
+  function tileKind(t, x, y) {
     if (scene.kind === 'dungeon') {
       const A = scene.region === 'A';
-      if (t === '#') return A ? 'shutter' : 'pipe';
+      // 몇 칸씩 덩어리로 다른 질감을 섞는다 (같은 지도면 늘 같게)
+      const h = ((((x >> 2) * 73856093) ^ ((y >> 2) * 19349663) ^ (scene.key.length * 83492791)) >>> 0) % 10;
+      if (t === '#') return A ? (h < 3 && ART.has('tiles/whiteTile_0') ? 'whiteTile' : 'shutter') : (h < 4 && ART.has('tiles/brick_0') ? 'brick' : 'pipe');
       if (t === 'w') return 'water';
-      return A ? 'marketFloor' : 'drainFloor';
+      if (A) return h === 9 && ART.has('tiles/concrete_0') ? 'concrete' : h === 8 && ART.has('tiles/ash_0') ? 'ash' : 'marketFloor';
+      return h === 9 && ART.has('tiles/grate_0') ? 'grate' : h === 8 && ART.has('tiles/puddle_0') ? 'puddle' : 'drainFloor';
     }
-    if (scene.kind === 'prologue' && scene.key === 'car') return t === '#' ? 'wall' : 'concourse';
+    if (scene.kind === 'prologue' && scene.key === 'car') return t === '#' ? (ART.has('tiles/carWall_0') ? 'carWall' : 'wall') : (ART.has('tiles/carFloor_0') ? 'carFloor' : 'concourse');
+    if (scene.kind === 'prologue' && scene.key === 'tunnel' && t === '#' && ART.has('tiles/tunnelWall_0')) return 'tunnelWall';
     return { '#': 'wall', '.': 'concourse', d: 'concourse', S: 'concourse', ',': 'floor', R: 'floor', '=': 'edge', '~': 'track', i: 'track', x: 'track', T: null, w: 'water', o: 'concourse' }[t] || 'floor';
   }
   let tick = 0;
@@ -273,7 +277,7 @@
     // 바닥·벽
     for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) {
       const t = tileAt(x, y), X = x * T, Y = y * T;
-      const k = tileKind(t);
+      const k = tileKind(t, x, y);
       if (k) ctx.drawImage(ART.tile(k, x, y), X, Y); else { ctx.fillStyle = '#000'; ctx.fillRect(X, Y, T, T); }
       if (t === 's') ctx.drawImage(ART.prop('seat'), X, Y);
       if (t === '#' && tileAt(x, y + 1) !== '#' && y + 1 < scene.h) {
@@ -468,22 +472,27 @@
   const SHOE = ['#c9bfae', '#7a2620', '#6e5a44', '#b8a27a', '#4a5866', '#a33a2a'];
   function drawLeftovers(key) {
     const L = LEFT[key]; if (!L) return;
-    for (const [x, y] of L.feet) for (const k of [0, 1]) {         // 맨발 자국: 오른쪽(앞)으로 걸어간다
-      const fx = x * T + (k ? 26 : 8) * K, fy = y * T + (k ? 10 : 20) * K;
-      ctx.fillStyle = 'rgba(200,190,170,0.45)'; ctx.fillRect(fx, fy, 7 * K, 3 * K); ctx.fillRect(fx + 8 * K, fy, 2 * K, 2 * K); ctx.fillRect(fx + 8 * K, fy + 2 * K, K, K);
-    }
-    L.shoes.forEach(([x, y], i) => {                                 // 벗겨진 신발: 테두리를 둘러 바닥에서 떠 보이게
-      const X = x * T + ((i * 13) % 22) * K, Y = y * T + ((i * 7) % 18 + 10) * K, w = (i % 3 ? 11 : 9) * K;
-      ctx.fillStyle = '#050404'; ctx.fillRect(X - K, Y - 3 * K, w + 2 * K, 9 * K);
-      ctx.fillStyle = SHOE[i % SHOE.length]; ctx.fillRect(X, Y, w, 4 * K); ctx.fillRect(X, Y - 2 * K, 5 * K, 2 * K);
-      ctx.fillStyle = 'rgba(255,245,225,0.5)'; ctx.fillRect(X, Y, w, K);
-      ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(X, Y + 3 * K, w, K);
+    // 맨발 자국: 발바닥·뒤꿈치·발가락. 오른쪽(앞)으로 걸어간다
+    ctx.fillStyle = 'rgba(205,195,175,0.42)';
+    const foot = (fx, fy) => {
+      ctx.beginPath(); ctx.ellipse(fx, fy, 4 * K, 2.2 * K, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(fx - 6 * K, fy, 2.2 * K, 1.8 * K, 0, 0, Math.PI * 2); ctx.fill();
+      for (let t = 0; t < 4; t++) ctx.fillRect(fx + 4.5 * K, fy - 2.5 * K + t * 1.5 * K, 1.4 * K, 1.2 * K);
+    };
+    for (const [x, y] of L.feet) { foot(x * T + 12 * K, y * T + 22 * K); foot(x * T + 28 * K, y * T + 13 * K); }
+    // 벗겨진 신발·가방·휴대폰 (그림이 있으면 그림, 작게)
+    const small = (id, X, Y, sc, alpha) => { const im = ART.prop(id); ctx.globalAlpha = alpha == null ? 1 : alpha; ctx.drawImage(im, X, Y, im.width * sc, im.height * sc); ctx.globalAlpha = 1; };
+    const SH = ['shoes', 'heel', 'sneaker'];
+    L.shoes.forEach(([x, y], i) => {
+      const X = x * T + ((i * 13) % 20) * K, Y = y * T + ((i * 7) % 14 + 4) * K;
+      if (ART.has('props/' + SH[i % 3])) { small(SH[i % 3], X, Y, 0.55); return; }
+      ctx.fillStyle = SHOE[i % SHOE.length]; ctx.fillRect(X, Y + 8 * K, 10 * K, 4 * K);
     });
-    L.bags.forEach(([x, y]) => ctx.drawImage(ART.prop(ART.has('props/backpack') ? 'backpack' : 'sack'), x * T, y * T));
+    L.bags.forEach(([x, y], i) => ctx.drawImage(ART.prop(i % 2 && ART.has('props/briefcase') ? 'briefcase' : ART.has('props/backpack') ? 'backpack' : 'sack'), x * T, y * T));
     L.phones.forEach(([x, y], i) => {
-      const X = x * T + 18 * K, Y = y * T + 16 * K, on = (tick >> 6) % 7 !== i;   // 가끔 꺼졌다 켜진다
-      ctx.fillStyle = '#0b0b0d'; ctx.fillRect(X, Y, 6 * K, 10 * K);
-      if (on) { ctx.fillStyle = '#9fd2e0'; ctx.fillRect(X + K, Y + K, 4 * K, 7 * K); }
+      const on = (tick >> 6) % 7 !== i;                              // 가끔 꺼졌다 켜진다
+      if (ART.has('props/phone')) { small('phone', x * T + 14 * K, y * T + 12 * K, 0.45, on ? 1 : 0.45); return; }
+      ctx.fillStyle = on ? '#9fd2e0' : '#0b0b0d'; ctx.fillRect(x * T + 18 * K, y * T + 16 * K, 6 * K, 10 * K);
     });
     if (L.shaft) {                                                   // 환기 통로: 잿빛이 새어 나온다
       const [x, y] = L.shaft;
