@@ -10,6 +10,7 @@
   function open(body, o) {
     o = o || {};
     if (cur) close(undefined);
+    if (lineCur) { const l = lineCur; lineCur = null; l.next(); }   // 한 줄 대화가 남아 있으면 끝내고 연다 (안 그러면 누름이 그쪽으로 가서 창이 멈춘다)
     const options = (o.options && o.options.length ? o.options : [{ label: o.next || '계속', value: true }]);
     const dlg = $('dlg');
     dlg.className = (o.center ? 'center' : o.full ? 'full' : '') + (o.grid ? ' grid' : '');
