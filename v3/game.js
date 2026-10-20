@@ -245,7 +245,8 @@
       }]);
     }
     // 주인공과 동행
-    const frame = scene.moving ? ((tick >> 3) % 2) + 1 : 0;
+    // 걸음마다 왼발·오른발을 번갈아, 걸음 가운데에서만 발을 뗀다
+    const frame = scene.moving && scene.moving.t > 0.15 && scene.moving.t < 0.85 ? (scene.steps % 2 ? 1 : 2) : 0;
     const flip = scene.face === 'left';
     sprites.push([my, () => drawPerson('player', mx, my, frame, flip, 0, scene.face)]);
     if (scene.kind === 'dungeon' && state.exp) state.exp.party.forEach((id, i) => {
@@ -377,7 +378,7 @@
   let busy = false;           // 대화 흐름 진행 중
   function update() {
     if (scene.moving) {
-      scene.moving.t += 0.16;
+      scene.moving.t += frameDt / STEP_MS;
       if (scene.moving.t >= 1) { scene.moving = null; arrived(); }
       return;
     }
@@ -394,7 +395,7 @@
       if (o) flow(() => prologueObject(o));
       return;
     }
-    scene.px = nx; scene.py = ny; scene.moving = { dx, dy, t: 0 };
+    scene.px = nx; scene.py = ny; scene.moving = { dx, dy, t: 0 }; scene.steps = (scene.steps || 0) + 1;
     if (scene.kind === 'station') scene.stationPos = [nx, ny];
   }
   function front() { const [dx, dy] = DIRS[scene.face]; return [scene.px + dx, scene.py + dy]; }
@@ -847,7 +848,10 @@
     const label = UI.isOpen() ? '선택' : tg ? tg.label : scene.kind === 'dungeon' ? '상태' : '조사';
     if (label !== lastBtn) { lastBtn = label; $('btnA').textContent = label; }
   }
-  function loop() { update(); draw(); overlay(); requestAnimationFrame(loop); }
+  // 한 칸 걷는 데 걸리는 시간 (ms). 화면 갱신 속도와 상관없이 같다
+  const STEP_MS = 230;
+  let frameDt = 16, lastT = 0;
+  function loop(now) { frameDt = lastT ? Math.min(60, now - lastT) : 16; lastT = now; update(); draw(); overlay(); requestAnimationFrame(loop); }
   ART.ready.then(() => {
     resize(); if (state.phase === 'prologue') enterPrologue(); else syncScene(); if (!scene.rows.length) enterStation(true); hud();
     requestAnimationFrame(loop);
