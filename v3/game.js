@@ -851,6 +851,7 @@
   }
   async function dayIntro() {
     hud();
+    await FX.card('자리 잡기', '1막', 1600);
     await FX.card('D1', `을지로입구역 · 열차까지 ${D.GOAL_DAY}일`, 1600);
     UI.toast('게시판(불 왼쪽)에서 오늘 할 일을 확인하자.', 3500);
   }
@@ -859,10 +860,12 @@
   async function eveningStep() {
     const s = state, v = E.eveningView(s);
     if (v.type === 'promise') {
-      const i = await UI.open(`<p class="tag">저녁 · 약속</p>${cgImg(s.evening.id)}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
+      const story = D.PROMISES[s.evening.id] && D.PROMISES[s.evening.id].story;
+      const art = cgImg(s.evening.id) || cgImg({ story_fog: 'open_stairs', story_voice: 'open_speaker', story_ticket: 'termia_omen' }[s.evening.id] || '');
+      const i = await UI.open(`<p class="tag">${story ? '저녁 · 이야기' : '저녁 · 약속'}</p>${art}<p class="title">${esc(v.title)}</p><p>${esc(v.text)}</p>`, { options: choiceOpts(v.choices), full: true });
       act({ type: 'eveningChoose', i });
       const r = state.evening.result;
-      await UI.open(`<p class="tag">저녁 · 약속</p>${resultHtml(r)}`);
+      await UI.open(`<p class="tag">${story ? '저녁 · 이야기' : '저녁 · 약속'}</p>${resultHtml(r)}`);
       act({ type: 'eveningDone' });
     } else if (v.type === 'talk') {
       const home = E.homeRes(s).filter((r) => !s.expParty.includes(r.id));
@@ -896,7 +899,12 @@
     const r = E.nightView(state).result;
     await UI.open(`<p class="tag">밤</p>${resultHtml(r)}`, { next: state.day >= D.GOAL_DAY ? '아침 — 열차 시간' : '다음 날 아침' });
     act({ type: 'nightDone' });
-    if (state.phase === 'morning') { enterStation(true); await FX.card(`D${state.day}`, D.GOAL_DAY - state.day > 0 ? `열차까지 ${D.GOAL_DAY - state.day}일` : '열차가 오는 날', 1300); }
+    if (state.phase === 'morning') {
+      enterStation(true);
+      const actNow = D.STORY.acts.find((a) => a.from === state.day);
+      if (actNow) await FX.card(actNow.title.split(' · ')[1], actNow.title.split(' · ')[0], 1600);
+      await FX.card(`D${state.day}`, D.GOAL_DAY - state.day > 0 ? `열차까지 ${D.GOAL_DAY - state.day}일` : '열차가 오는 날', 1300);
+    }
     else if (state.phase === 'boarding') await FX.card(`D${D.GOAL_DAY}`, '열차가 오는 날', 1300);
   }
   async function boardingStep() {
@@ -905,10 +913,17 @@
       await UI.open(`<p class="tag">D${D.GOAL_DAY} · 열차 시간</p><p class="title">구조열차</p><p>${b.passage ? '통로는 이어졌지만 식량과 물이 모자란다. 한 사람도 태울 수 없다.' : '끊긴 통로 앞에서 열차가 속도를 줄이지 못한다.'}</p>`, { next: '열차를 지켜본다' });
       act({ type: 'confirmBoarding' }); return;
     }
-    const opts = b.pool.map((p) => { const on = b.picks.includes(p.id); const r = p.kind === 'resident' ? E.byId(s, p.id) : null; return { label: `${on ? '✓ ' : ''}${p.name}`, sub: esc(r ? `${D.PEOPLE[p.id].bio} · 스트레스 ${r.stress}${r.injury ? ' · 부상 ' + r.injury : ''}` : '약속을 지켜 준 사람'), value: p.id, disabled: !on && b.picks.length >= b.cap }; });
-    opts.push({ label: `이 사람들을 태운다 (${b.picks.length}/${b.cap})`, value: '__go', disabled: !b.picks.length, confirm: `${b.picks.length}명을 태웁니다. 확정할까요?` });
+    if (!b.asked) {                                       // 검표원이 먼저 묻는다
+      b.asked = true;
+      await UI.line('열차의 문이 열린다. 제복의 차장이 수첩을 펼친다. 당신 것과 똑같은 수첩이다.', { cg: cgSrc('board_self') || cgSrc('termia_omen') || undefined });
+      await UI.line('“명부의 첫 이름은 당신입니다. 타시겠습니까?”', { name: '검표원' });
+    }
+    const used = b.picks.length + (b.self ? 1 : 0);
+    const opts = [{ label: `${b.self ? '✓ ' : ''}당신 — 명부의 첫 줄`, icon: face('player', 0, 36), sub: esc(b.self ? '탄다 — 자리 하나를 쓴다' : used >= b.cap ? '남는다 — 타려면 한 사람을 내려야 한다' : '남는다 — 누르면 탄다'), value: '__self', disabled: !b.self && used >= b.cap }];
+    opts.push(...b.pool.map((p) => { const on = b.picks.includes(p.id); const r = p.kind === 'resident' ? E.byId(s, p.id) : null; return { label: `${on ? '✓ ' : ''}${p.name}`, icon: face(p.id, r ? r.injury : 0, 36), sub: esc(r ? `${D.PEOPLE[p.id].bio} · 스트레스 ${r.stress}${r.injury ? ' · 부상 ' + r.injury : ''}` : '약속을 지켜 준 사람'), value: p.id, disabled: !on && used >= b.cap }; }));
+    opts.push({ label: `이 사람들을 태운다 (${used}/${b.cap})`, value: '__go', disabled: !used, confirm: `${used}명을 태웁니다${b.self ? ' (당신 포함)' : ' — 당신은 남는다'}. 확정할까요?` });
     const a = await UI.open(`<p class="tag">D${D.GOAL_DAY} · 열차 시간</p><p class="title">구조열차가 들어온다</p><p class="mini">정원 ${b.cap}명 = 식량·물 ${E.BOARD_PER}개씩 ${tr.base}명${tr.hospital ? ` + 병원 ${tr.hospital}` : ''}${tr.litter ? ` + 들것 ${tr.litter}` : ''}${tr.seat ? ` ${tr.seat > 0 ? '+' : '−'} 검표 ${Math.abs(tr.seat)}` : ''}</p>`, { options: opts, full: true });
-    if (a === '__go') act({ type: 'confirmBoarding' }); else act({ type: 'board', id: a });
+    if (a === '__go') act({ type: 'confirmBoarding' }); else if (a === '__self') act({ type: 'boardSelf' }); else act({ type: 'board', id: a });
   }
   async function endedStep() {
     const e = state.ending;
@@ -940,11 +955,12 @@
     flow(async () => {
       for (;;) {
         const a = await UI.open('', { grid: true, cancel: true, options: [
-          { label: '사람들', icon: ic('people'), value: 'people' }, { label: '시선', icon: ic('gods'), value: 'gods' }, { label: '일지', icon: ic('log'), value: 'log' },
+          { label: '수첩', icon: ic('log'), value: 'book' }, { label: '사람들', icon: ic('people'), value: 'people' }, { label: '시선', icon: ic('gods'), value: 'gods' }, { label: '일지', icon: ic('day'), value: 'log' },
           { label: FX.soundOn ? '소리 끄기' : '소리 켜기', icon: ic('sound', FX.soundOn ? '' : 'off'), value: 'sound' }, { label: '처음부터', icon: ic('restart'), value: 'restart', confirm: '저장된 진행이 지워집니다. 정말 처음부터?' }, { label: '닫기', icon: '<i class="ic ic-t">✕</i>', value: null }] });
         if (!a) return;
         if (a === 'restart') { restart(); return; }
         if (a === 'sound') { UI.toast(FX.toggle() ? '소리를 켰다' : '소리를 껐다'); continue; }
+        if (a === 'book') await notebook();
         if (a === 'people') await UI.open(`<p class="title">사람들</p>${state.residents.map((r) => personCard(r)).join('')}`, { full: true, cancel: true, next: '닫기' });
         if (a === 'gods') {
           const s = state, kn = { hostile: '적대', neutral: '중립', friendly: '우호' };
@@ -956,6 +972,20 @@
     });
   }
 
+  // 명부 수첩: 첫 장(당신과 이름들) · 들은 것 · 신의 규칙 · 지금의 막
+  async function notebook() {
+    const s = state;
+    const act = D.STORY.acts.slice().reverse().find((a) => s.day >= a.from) || D.STORY.acts[0];
+    const names = [`<p><b>1.</b> 당신 <span class="mini">— 기억에 없는 승차</span></p>`].concat(s.residents.map((r, i) => `<p><b>${i + 2}.</b> ${r.status === 'dead' ? `<s>${esc(r.name)}</s>` : esc(r.name)} <span class="mini">${r.status === 'dead' ? '— 줄이 그어졌다' : esc(D.PEOPLE[r.id].wish)}</span></p>`));
+    for (const [id, a] of Object.entries(D.ALLIES)) if (s.allies[id]) names.push(`<p><b>+</b> ${esc(a.name)} <span class="mini">— ${esc(a.bio)}, 약속한 사람</span></p>`);
+    const heard = [['notebook', '기관사의 수첩. 첫 줄에 당신 이름이 있었다.'], ['fare_known', '운임은 빵과 물, 그리고 지킨 약속.'], ['passage_secured', '고지대 역으로 가는 통로가 이어졌다.'], ['hospital_pact', '병원 팀이 고지대 역에서 기다린다.']].filter(([f]) => s.flags[f]).map(([, t]) => `<p class="mini">· ${esc(t)}</p>`);
+    const rules = Object.keys(D.GODS).filter((id) => (s.godSeen[id] || 0) > 0).map((id) => `<p class="mini"><b>${esc(E.godLabel(s, id))}</b> — ${esc(D.GODS[id].rule)}</p>`);
+    const prom = s.promises.map((p) => `<p class="mini">· ${esc((D.PROMISES[p.id] || {}).title || p.id)} — D${p.due}</p>`);
+    await UI.open(`<p class="tag">명부 수첩 · ${esc(act.title)}</p><p class="title">승객 명부</p>${names.join('')}
+      <p class="tag">기다리는 약속</p>${prom.join('') || '<p class="mini">없다.</p>'}
+      <p class="tag">들은 것</p>${heard.join('') || '<p class="mini">아직 아무것도.</p>'}
+      <p class="tag">뒷장 — 규칙</p>${rules.join('') || '<p class="mini">빈 장. 징조를 겪으면 누군가의 글씨로 한 줄씩 채워진다.</p>'}`, { full: true, cancel: true, next: '덮는다' });
+  }
   // 사람 카드: 얼굴 · 이름 · 상태 · 스트레스 막대 · 기술 · 오늘 할 일
   function personCard(r, extra, noTask) {
     const dead = r.status === 'dead' || r.status === 'gone';

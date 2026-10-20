@@ -335,7 +335,7 @@ test('난이도 구조(자동 플레이 300판): 원정·대응·위협이 모�
   // 위협은 장식이 아니다: 배수를 안 하면 침수로 발전기가 잠겨 크게 불리해진다
   const noDrain = run('balanced', ban(['drain']));
   assert.ok(noDrain.avg < bal.avg - 0.6, `배수 금지 ${noDrain.avg} vs ${bal.avg}`);
-  assert.ok(bal.deaths > 0.03 && bal.deaths < 1.0, `대응형 평균 사망 ${bal.deaths}`);
+  assert.ok(bal.deaths > 0.03 && bal.deaths < 1.5, `대응형 평균 사망 ${bal.deaths}`);   // 설계 v4 목표 0.8~1.5
 });
 
 test('침수 5 이상이면 발전기가 잠기고, 노출도 오르지 않는다', () => {
@@ -377,7 +377,7 @@ test('노출이 높으면 예정일보다 일찍 순찰대가 온다 (첫 순찰
 test('약속 기한은 열차 시간(D10)을 넘지 않고, 같은 날 약속은 이어서 나오며, 막판 미루기는 잠긴다', () => {
   const s = E.newGame(14);
   for (let i = 0; i < 4; i++) { E.dispatch(s, { type: 'proChoose', i: 0 }); E.dispatch(s, { type: 'proNext' }); }
-  s.day = 9; s.promises = [{ id: 'dohyeon_key', due: 9 }, { id: 'eunchae_return', due: 9 }];
+  s.day = 9; s.promises = [{ id: 'dohyeon_key', due: 9 }, { id: 'eunchae_return', due: 9 }]; s.storyDone.story_ticket = true;   // 9일 이야기(검표)는 따로 시험
   E.dispatch(s, { type: 'setPlan', plan: {} }); E.dispatch(s, { type: 'endDay' });
   assert.strictEqual(s.evening.id, 'dohyeon_key');
   const v = E.eveningView(s);
@@ -524,7 +524,7 @@ test('미리보기: 사망 예정·침수 경보·순찰·통로 완성(침수 �
 test('길 막힘: 2일간이면 아침 2번 막힌다', () => {
   const s = E.newGame(16);
   for (let i = 0; i < 4; i++) { E.dispatch(s, { type: 'proChoose', i: 0 }); E.dispatch(s, { type: 'proNext' }); }
-  s.day = 8; s.visitDay = 8; s.exposure = 4; s.res.food = 10;
+  s.day = 8; s.visitDay = 8; s.exposure = 4; s.res.food = 10; s.storyDone.story_ticket = true;
   E.dispatch(s, { type: 'setPlan', plan: {} }); E.dispatch(s, { type: 'endDay' }); E.dispatch(s, { type: 'skipTalk' });
   assert.strictEqual(s.nightEv.id, 'patrol');
   E.dispatch(s, { type: 'nightChoose', i: 2 }); E.dispatch(s, { type: 'nightDone' });
@@ -806,4 +806,37 @@ test('전투 결과: 부러진 부위는 부상(+상처 가능), 이기면 전�
   assert.strictEqual(s.exp.loot.food, 3);
   assert.strictEqual(s.exp.phase, 'result');
   assert.ok(!E.dispatch(s, { type: 'expFight', result: 'win', wounds: [] }).ok, '결과 화면에서는 다시 싸울 수 없다');
+});
+
+test('이야기 뼈대: 수첩, D3·D5 확정 징조, D6·D7·D9 이야기 저녁이 모든 판에서 나온다', () => {
+  let full = 0;
+  for (let seed = 1; seed <= 60; seed++) {
+    const { s } = play(seed, 'balanced');
+    assert.ok(s.flags.notebook, '운전실에서 명부 수첩');
+    if (s.ending.tier === 'wiped' || s.day < 10) continue;
+    full++;
+    for (const id of ['story_fog', 'story_voice', 'story_ticket']) assert.ok(s.storyDone[id], `seed ${seed}: ${id} 없음`);
+    assert.ok(s.godSeen.seel >= 1, `seed ${seed}: 세엘 징조 없음`);
+    assert.ok(s.godSeen.nereh >= 1, `seed ${seed}: 네레흐 징조 없음`);
+    assert.ok(s.godSeen.termia >= 1, `seed ${seed}: 검표원 없음`);
+  }
+  assert.ok(full >= 50, `끝까지 간 판 ${full}`);
+});
+
+test('당신은 타는가: 타면 자리 하나를 쓰고, 결말 명부 첫 줄이 당신이다', () => {
+  const s = E.newGame(21);
+  for (let i = 0; i < 4; i++) { E.dispatch(s, { type: 'proChoose', i: 0 }); E.dispatch(s, { type: 'proNext' }); }
+  s.flags.passage_secured = true; s.res.food = 6; s.res.water = 6; s.res.parts = 0; s.day = 10; s.phase = 'morning';
+  s.storyDone = { story_fog: true, story_voice: true, story_ticket: true };
+  E.dispatch(s, { type: 'setPlan', plan: {} }); E.dispatch(s, { type: 'endDay' }); E.dispatch(s, { type: 'skipTalk' });
+  if (s.phase === 'nightEvent') { const v = E.nightView(s); E.dispatch(s, { type: 'nightChoose', i: v.choices.findIndex((c) => !c.locked) }); E.dispatch(s, { type: 'nightDone' }); }
+  assert.strictEqual(s.phase, 'boarding');
+  const cap = s.boarding.cap;
+  assert.ok(cap >= 1 && s.boarding.picks.length === cap);
+  assert.ok(!E.dispatch(s, { type: 'boardSelf' }).ok, '자리가 꽉 차면 탈 수 없다');
+  E.dispatch(s, { type: 'board', id: s.boarding.picks[0] });
+  assert.ok(E.dispatch(s, { type: 'boardSelf' }).ok);
+  assert.ok(!E.dispatch(s, { type: 'board', id: s.boarding.pool.find((p) => !s.boarding.picks.includes(p.id)).id }).ok, '당신이 탄 만큼 자리가 준다');
+  E.dispatch(s, { type: 'confirmBoarding' });
+  assert.strictEqual(s.ending.rows[0].name, '당신'); assert.strictEqual(s.ending.rows[0].status, 'boarded'); assert.ok(s.ending.self);
 });

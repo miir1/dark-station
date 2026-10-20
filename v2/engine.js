@@ -55,7 +55,7 @@
       exp: null, evening: null, nightEv: null, lastNight: null, report: [], log: [], history: [],
       boarding: null, ending: null, stats: { deaths: 0, expeditions: 0, nights: 0 }, corpses: [], dark: false,
       gods: Object.fromEntries(Object.keys(D.GODS).map((k) => [k, 0])), godSeen: {}, godQueue: [], buried: [], litStreak: 0, litNights: 0, seatMod: 0,
-      possessed: null, flame: null, noDarkUntil: 0, nightPlan: {},
+      possessed: null, flame: null, noDarkUntil: 0, nightPlan: {}, storyDone: {},
     };
     return s;
   }
@@ -788,7 +788,8 @@
     if (s.phase !== 'morning') return false;
     s.lastPlan = {}; for (const r of alive(s)) if (s.plan[r.id]) s.lastPlan[r.id] = s.plan[r.id];
     const due = s.promises.filter((p) => p.due <= s.day).sort((a, b) => a.due - b.due)[0];
-    s.evening = due ? { type: 'promise', id: due.id } : { type: 'talk' };
+    const sid = D.STORY.evenings[s.day];
+    s.evening = sid && !s.storyDone[sid] ? { type: 'promise', id: sid } : due ? { type: 'promise', id: due.id } : { type: 'talk' };
     s.phase = 'evening';
     return true;
   }
@@ -802,6 +803,11 @@
     s.promises = s.promises.filter((p) => p.id !== id);   // 먼저 지워야 '기다려 달라'가 같은 약속을 다시 예약할 수 있다
     const res = runChoice(s, pr, i, 'station', false);
     if (!res) { s.promises = kept; return false; }
+    if (pr.story) {
+      s.storyDone[id] = true;
+      s.history.push({ day: s.day, text: `${pr.title}: ${ch.text}` });
+      if (id === 'story_voice' || id === 'story_ticket') s.godSeen.termia = (s.godSeen.termia || 0) + 1;   // 검표원의 규칙이 수첩에 적힌다
+    }
     s.evening = { type: 'promiseResult', id, result: res };
     return true;
   }
@@ -954,7 +960,13 @@
     }
     for (const r of alive(s)) if (r.injury >= 3 && r.crit != null && s.day >= r.crit) kill(s, r, '치료받지 못했다');
     if (!alive(s).length) return finishGame(s, 'wiped');
-    // 5) 밤 사건
+    // 5) 이야기 뼈대: 그날 확정된 신의 징조 (이미 겪었으면 건너뛴다)
+    const og = D.STORY.omens[s.day];
+    if (og && !s.godSeen[og] && !s.godQueue.some((x) => x.god === og)) {
+      s.gods[og] = Math.max(s.gods[og] || 0, GOD_OMEN);
+      s.godQueue.unshift({ god: og, kind: 'omen' });
+    }
+    // 6) 밤 사건
     s.nightEv = nextNightEvent(s);
     if (s.nightEv) { s.phase = 'nightEvent'; return true; }
     return advanceDay(s);
@@ -1035,7 +1047,7 @@
     const pool = boardingPool(s);
     const trust = (p) => (p.kind === 'ally' ? 5 : byId(s, p.id).trust);
     const order = pool.slice().sort((x, y) => trust(y) - trust(x));
-    s.boarding = { pool, cap: info.cap, supplyCap: info.supplyCap, passage: info.passage, picks: order.slice(0, info.cap).map((p) => p.id) };
+    s.boarding = { pool, cap: info.cap, supplyCap: info.supplyCap, passage: info.passage, picks: order.slice(0, info.cap).map((p) => p.id), self: false };
     s.phase = 'boarding';
     return true;
   }
@@ -1043,12 +1055,21 @@
     const b = s.boarding;
     if (s.phase !== 'boarding' || !b || !b.pool.some((p) => p.id === id)) return false;
     const i = b.picks.indexOf(id);
-    if (i >= 0) b.picks.splice(i, 1); else if (b.picks.length < b.cap) b.picks.push(id); else return false;
+    if (i >= 0) b.picks.splice(i, 1); else if (b.picks.length + (b.self ? 1 : 0) < b.cap) b.picks.push(id); else return false;
+    return true;
+  }
+  // 명부의 첫 이름은 당신이다. 타면 자리 하나를 쓴다
+  function boardSelf(s) {
+    const b = s.boarding;
+    if (s.phase !== 'boarding' || !b || b.cap === 0) return false;
+    if (b.self) { b.self = false; return true; }
+    if (b.picks.length + 1 > b.cap) return false;
+    b.self = true;
     return true;
   }
   function confirmBoarding(s) {
     if (s.phase !== 'boarding') return false;
-    if (s.boarding.cap > 0 && s.boarding.picks.length === 0) return false;      // 아무도 태우지 않는 선택은 없다
+    if (s.boarding.cap > 0 && s.boarding.picks.length === 0 && !s.boarding.self) return false;      // 아무도 태우지 않는 선택은 없다
     return finishGame(s, 'train');
   }
   function closingLine(r) {
@@ -1066,6 +1087,7 @@
         const r = p.kind === 'resident' ? byId(s, p.id) : null;
         rows.push({ name: p.name, status: b.picks.includes(p.id) ? 'boarded' : 'stayed', line: p.kind === 'ally' ? '약속을 지켜 준 사람.' : closingLine(r) });
       }
+      rows.unshift({ name: '당신', status: b.self ? 'boarded' : 'stayed', line: b.self ? '명부의 첫 줄. 펀치 자국이 난 손으로 손잡이를 잡았다.' : '명부의 첫 줄. 승강장에 남아 떠나는 불빛을 셌다.' });
       if (b.cap === 0 && b.passage) { tier = 'missed'; title = '비어 있는 열차'; text = '통로는 이어졌지만 식량과 물이 모자랐다. 한 사람도 열차에 태울 수 없었다. 이번 시연은 여기까지예요.'; }
       else if (b.cap === 0) { tier = 'missed'; title = '지나간 열차'; text = '열차는 고지대 역까지 닿지 못했다. 끊긴 통로 앞에서 불빛은 멀어졌다. 이번 시연은 여기까지예요.'; }
       else if (s.flags.hospital_pact && boarded >= Math.ceil(total * 0.75)) { tier = 'safe'; title = '열린 길'; text = '열차는 병원 팀이 맞이하는 고지대 역에 닿았다. 따뜻한 수프와 침상이 기다리고 있었다.'; }
@@ -1086,7 +1108,10 @@
     for (const p of s.promises) ledger.push({ kind: 'late', text: `${(D.PROMISES[p.id] || {}).title || p.id} — 열차 시간 안에 지키지 못했다` });
     if (s.flags.repair_open && !s.flags.passage_secured) ledger.push({ kind: 'late', text: '통로 수리를 끝내지 못했다' });
     if (s.flags.ate_dead && kind === 'train') text += ' 열차 안에서 아무도 서로의 얼굴을 보지 않았다.';
-    s.ending = { tier, title, text, rows, ledger, day: s.day, flags: Object.assign({}, s.flags) };
+    if (kind === 'train' && s.boarding.cap > 0) text += s.boarding.self
+      ? ' 문이 닫히기 직전, 승강장 쪽 안개 속에서 누군가 당신의 이름을 불렀다. 당신은 대답하지 않았다.'
+      : ' 당신은 타지 않았다. 열차가 떠난 뒤, 수첩의 첫 줄 아래에 새 빈칸이 하나 생겨 있었다.';
+    s.ending = { tier, title, text, rows, ledger, day: s.day, flags: Object.assign({}, s.flags), self: !!(s.boarding && s.boarding.self) };
     s.phase = 'ended';
     return true;
   }
@@ -1156,6 +1181,7 @@
     const o = ch.out;
     if (o.res) for (const [k, v] of Object.entries(o.res)) addRes(s, k, v);
     if (o.item) s.items[o.item] = true;
+    if (o.flag) s.flags[o.flag] = true;
     if (o.stressAll) for (const r of s.residents) r.stress = clamp(r.stress + o.stressAll, 0, 100);
     if (o.trust) for (const [id, n] of Object.entries(o.trust)) { const r = byId(s, id); if (r) r.trust = clamp(r.trust + n, 0, 4); }
     s.history.push({ day: 0, text: `${sc.title}: ${ch.text}` });
@@ -1211,6 +1237,7 @@
       case 'nightDone': ok = nightDone(s); break;
       case 'board': if (typeof a.id !== 'string') break; ok = toggleBoard(s, a.id); break;
       case 'confirmBoarding': ok = confirmBoarding(s); break;
+      case 'boardSelf': ok = boardSelf(s); break;
       default: return { ok: false, error: '알 수 없는 동작' };
     }
     return { ok, error: ok ? '' : '지금은 할 수 없는 동작' };
@@ -1228,6 +1255,7 @@
     s.gods = Object.assign({}, base.gods, raw.gods || {});
     for (const k of Object.keys(s.gods)) if (!Number.isFinite(s.gods[k])) s.gods[k] = 0;
     if (!s.godSeen || typeof s.godSeen !== 'object') s.godSeen = {};
+    if (!s.storyDone || typeof s.storyDone !== 'object') s.storyDone = {};
     for (const k of ['litStreak', 'litNights', 'seatMod', 'noDarkUntil']) if (!Number.isFinite(s[k])) s[k] = 0;
     if (typeof s.rng !== 'number') s.rng = s.seed >>> 0;
     // 상태 구조가 어긋난 저장은 쓰지 않는다 (불러오면 화면이 깨지므로 새 게임으로)
