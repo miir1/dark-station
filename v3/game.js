@@ -292,6 +292,7 @@
       const img = ART.personSprite(p.r.id, moving ? (w.steps % 2 ? 1 : 2) : 0, hurt, p.lying ? 'down' : moving ? w.face : look);
       sprites.push([p.y, () => {
         ctx.save(); ctx.translate(Math.round(p.x * T) - p.x * T, Math.round(p.y * T) - p.y * T);
+        if (!p.lying) shadow(p.x, p.y);
         if (p.lying) { ctx.save(); ctx.translate(p.x * T + T, p.y * T + T / 4); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0, img.width * 0.67, img.height * 0.67); ctx.restore(); }
         else ctx.drawImage(img, p.x * T, p.y * T - (ART.PH - T) - (Math.sin((tick + p.r.id.length * 37) / 45) > 0.55 ? K : 0));
         if (p.r.breakdown > 0 && (tick >> 4) % 2) { ctx.fillStyle = '#9c1e1e'; ctx.fillRect(p.x * T + 14 * K, p.y * T - 26 * K, 4 * K, 6 * K); }
@@ -317,7 +318,9 @@
     ctx.restore();
     grain();
   }
+  function shadow(x, y) { ctx.fillStyle = 'rgba(0,0,0,0.42)'; ctx.beginPath(); ctx.ellipse(x * T + T / 2, y * T + T - 4 * K, 11 * K, 4 * K, 0, 0, Math.PI * 2); ctx.fill(); }
   function drawPerson(id, x, y, frame, flip, hurt, dir) {
+    shadow(x, y);
     if (ART.has('walk/' + id)) flip = false;          // 방향별 그림이 있으면 뒤집지 않는다
     const img = ART.personSprite(id, frame, Math.min(3, hurt || 0), dir || scene.face);
     const up = ART.PH - T;
@@ -346,7 +349,7 @@
     const g = lightCv.getContext('2d');
     g.globalCompositeOperation = 'source-over'; g.clearRect(0, 0, lightCv.width, lightCv.height);
     let dark = 0.88; const lights = [];
-    let tintRed = false;
+    let tintRed = false; const cones = [];
     if (scene.kind === 'station') {
       const pv = s.phase === 'morning' ? E.previewNight(s) : null;
       const lit = pv ? !pv.ev.dark : !s.dark;
@@ -357,8 +360,15 @@
     } else if (scene.kind === 'prologue') {
       dark = 0.9; tintRed = scene.key === 'car';
       if (scene.key === 'car' && (tick >> 5) % 3 !== 0) for (const x of [4, 11, 18]) lights.push([x + 0.5, 1, 3.5]);
+      const L = LEFT[scene.key];
+      if (L) for (const [x, y] of L.phones) lights.push([x + 0.55, y + 0.5, 0.9]);
+      if (L && L.shaft) lights.push([L.shaft[0] + 0.5, L.shaft[1] + 0.8, 1.8]);
     }
-    lights.push([pmx + 0.5, pmy + 0.3, scene.kind === 'station' ? 2.4 : scene.kind === 'dungeon' ? 4.6 : 3.6]);
+    if (scene.kind === 'prologue' && scene.key === 'tunnel') {
+      // 휴대폰 손전등: 보는 쪽으로 원뿔, 발밑은 조금만
+      const [dx, dy] = DIRS[scene.face]; cones.push([pmx + 0.5, pmy + 0.4, Math.atan2(dy, dx), 5.5]);
+      lights.push([pmx + 0.5, pmy + 0.4, 1.6]);
+    } else lights.push([pmx + 0.5, pmy + 0.3, scene.kind === 'station' ? 2.4 : scene.kind === 'dungeon' ? 4.6 : 3.6]);
     if (scene.kind === 'dungeon') { dark = 0.8; for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) lights.push([x + 0.5, y + 0.5, 1.6]); }
     g.fillStyle = `rgba(0,0,0,${dark})`; g.fillRect(0, 0, lightCv.width, lightCv.height);
     g.globalCompositeOperation = 'destination-out';
@@ -367,7 +377,23 @@
       gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(0.55, 'rgba(0,0,0,0.65)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
       g.fillStyle = gr; g.beginPath(); g.arc(x * T, y * T, r * T, 0, Math.PI * 2); g.fill();
     }
+    for (const [x, y, ang, r] of cones) {
+      const gr = g.createRadialGradient(x * T, y * T, 0, x * T, y * T, r * T);
+      gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(0.6, 'rgba(0,0,0,0.7)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = gr; g.beginPath(); g.moveTo(x * T, y * T); g.arc(x * T, y * T, r * T, ang - 0.45, ang + 0.45); g.closePath(); g.fill();
+    }
     ctx.drawImage(lightCv, 0, 0);
+    // 빛의 색: 비상등은 빨강, 휴대폰은 푸른 기, 환기 통로는 잿빛
+    ctx.save(); ctx.globalCompositeOperation = 'lighter';
+    const glow = (x, y, r, c) => { const gr = ctx.createRadialGradient(x * T, y * T, 0, x * T, y * T, r * T); gr.addColorStop(0, c); gr.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = gr; ctx.fillRect((x - r) * T, (y - r) * T, 2 * r * T, 2 * r * T); };
+    if (scene.kind === 'prologue') {
+      const L = LEFT[scene.key];
+      if (scene.key === 'car' && (tick >> 5) % 3 !== 0) for (const x of [4, 11, 18]) glow(x + 0.5, 1, 3.2, 'rgba(120,10,10,0.35)');
+      if (L) for (const [x, y] of L.phones) glow(x + 0.55, y + 0.5, 1, 'rgba(60,110,130,0.25)');
+      if (L && L.shaft) glow(L.shaft[0] + 0.5, L.shaft[1] + 0.8, 2.2, `rgba(90,90,85,${0.25 + 0.08 * Math.sin(tick / 40)})`);
+    }
+    if (scene.kind === 'station') glow(11.5, 7.5, 4.4, 'rgba(110,50,10,0.22)');
+    ctx.restore();
     if (scene.kind === 'station') { ctx.fillStyle = 'rgba(208,120,50,0.08)'; ctx.beginPath(); ctx.arc(11.5 * T, 7.5 * T, 3.8 * T, 0, Math.PI * 2); ctx.fill(); }
     if (tintRed && (tick >> 5) % 3 !== 0) { ctx.fillStyle = 'rgba(140,20,20,0.16)'; ctx.fillRect(0, 0, scene.w * T, scene.h * T); }
   }
@@ -422,7 +448,39 @@
     }
     for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) { const bob = (tick >> 5) % 2; ctx.drawImage(ART.prop('mark'), x * T, y * T - 4 - bob); }
   }
+  // 프롤로그 바닥: 사람들이 사라진 흔적 (위치는 고정)
+  const LEFT = {
+    car: { shoes: [[2, 2], [5, 4], [6, 2], [9, 3], [11, 2], [12, 4], [7, 3], [3, 3], [14, 4], [16, 2], [19, 4]], phones: [[4, 2], [8, 4], [13, 2]], bags: [[3, 4], [11, 3]], feet: [[8, 3], [10, 3], [12, 3], [14, 3], [16, 3], [18, 3], [20, 3]] },
+    tunnel: { shoes: [[4, 3], [7, 2], [11, 2], [20, 3], [24, 2]], phones: [[6, 3]], bags: [[22, 3]], feet: [[2, 2], [4, 2], [6, 2], [8, 2], [10, 2], [11, 1]], shaft: [12, 0] },
+  };
+  const SHOE = ['#c9bfae', '#7a2620', '#6e5a44', '#b8a27a', '#4a5866', '#a33a2a'];
+  function drawLeftovers(key) {
+    const L = LEFT[key]; if (!L) return;
+    for (const [x, y] of L.feet) for (const k of [0, 1]) {         // 맨발 자국: 오른쪽(앞)으로 걸어간다
+      const fx = x * T + (k ? 26 : 8) * K, fy = y * T + (k ? 10 : 20) * K;
+      ctx.fillStyle = 'rgba(200,190,170,0.45)'; ctx.fillRect(fx, fy, 7 * K, 3 * K); ctx.fillRect(fx + 8 * K, fy, 2 * K, 2 * K); ctx.fillRect(fx + 8 * K, fy + 2 * K, K, K);
+    }
+    L.shoes.forEach(([x, y], i) => {                                 // 벗겨진 신발: 테두리를 둘러 바닥에서 떠 보이게
+      const X = x * T + ((i * 13) % 22) * K, Y = y * T + ((i * 7) % 18 + 10) * K, w = (i % 3 ? 11 : 9) * K;
+      ctx.fillStyle = '#050404'; ctx.fillRect(X - K, Y - 3 * K, w + 2 * K, 9 * K);
+      ctx.fillStyle = SHOE[i % SHOE.length]; ctx.fillRect(X, Y, w, 4 * K); ctx.fillRect(X, Y - 2 * K, 5 * K, 2 * K);
+      ctx.fillStyle = 'rgba(255,245,225,0.5)'; ctx.fillRect(X, Y, w, K);
+      ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(X, Y + 3 * K, w, K);
+    });
+    L.bags.forEach(([x, y]) => ctx.drawImage(ART.prop(ART.has('props/backpack') ? 'backpack' : 'sack'), x * T, y * T));
+    L.phones.forEach(([x, y], i) => {
+      const X = x * T + 18 * K, Y = y * T + 16 * K, on = (tick >> 6) % 7 !== i;   // 가끔 꺼졌다 켜진다
+      ctx.fillStyle = '#0b0b0d'; ctx.fillRect(X, Y, 6 * K, 10 * K);
+      if (on) { ctx.fillStyle = '#9fd2e0'; ctx.fillRect(X + K, Y + K, 4 * K, 7 * K); }
+    });
+    if (L.shaft) {                                                   // 환기 통로: 잿빛이 새어 나온다
+      const [x, y] = L.shaft;
+      ctx.fillStyle = '#020202'; ctx.fillRect(x * T + 6 * K, y * T + 8 * K, 20 * K, T - 8 * K);
+      ctx.fillStyle = `rgba(170,170,165,${0.18 + 0.06 * Math.sin(tick / 40)})`; ctx.fillRect(x * T + 8 * K, y * T + 12 * K, 16 * K, T - 12 * K);
+    }
+  }
   function drawPrologue(s, sprites) {
+    drawLeftovers(scene.key);
     for (const o of mapObjects()) {
       if (o.id === 'collapse') { for (let k = 0; k < 3; k++) sprites.push([o.y + k, () => ctx.drawImage(ART.prop('rubble'), o.x * T, (o.y + k) * T)]); continue; }
       sprites.push([o.y - 0.5, () => ctx.drawImage(ART.prop(o.prop), o.x * T, o.y * T)]);
@@ -704,10 +762,20 @@
     const s = state;
     if (s.phase !== 'prologue' || introShown[s.pro]) return;
     introShown[s.pro] = true;
-    if (s.pro === 0) await UI.line(D.WARNING, { name: '안내' });
-    const cg = cgSrc(['prologue_car', 'prologue_car', 'prologue_tunnel', 'prologue_station'][s.pro]);
-    const parts = UI.splitSentences(D.PROLOGUE[s.pro].text);
+    const P = D.PROLOGUE[s.pro];
+    if (s.pro === 0) {
+      await UI.line(D.WARNING, { name: '안내', black: true });
+      // 검은 화면: 급제동, 끊긴 방송, 이름을 부르는 소리
+      for (let i = 0; i < P.cold.length; i++) { if (i === 0) FX.blip('brake'); await UI.line(P.cold[i], { black: true }); }
+    }
+    const cg = cgSrc(['open_empty', 'open_empty', 'open_tunnel', 'prologue_station'][s.pro]) || cgSrc(['prologue_car', 'prologue_car', 'prologue_tunnel', 'prologue_station'][s.pro]);
+    const parts = UI.splitSentences(P.text);
     for (let i = 0; i < parts.length; i++) await UI.line(parts[i], i === 0 && cg ? { cg } : {});
+    for (const b of P.beats || []) {
+      const who = b.who ? { name: D.PEOPLE[b.who].name, face: ART.portrait(b.who).toDataURL() } : {};
+      const ps = UI.splitSentences(b.text);
+      for (let i = 0; i < ps.length; i++) await UI.line(ps[i], Object.assign({}, who, i === 0 && b.cg && cgSrc(b.cg) ? { cg: cgSrc(b.cg) } : {}));
+    }
   }
   async function prologueChoose(i, who) {
     const sc = D.PROLOGUE[state.pro];
@@ -752,17 +820,18 @@
   async function prologueArrive() {
     const s = state;
     if (s.pro < 3) { UI.toast('앞이 무너져 막혀 있다.', 1500); return; }
+    await FX.card('을지로입구역', '2호선', 1200);
+    enterStation(true);
     await sceneIntro();
     await prologueChoose(0);
   }
   async function dayIntro() {
     hud();
-    await FX.card('D1', '을지로입구역', 1400);
-    await UI.lines('을지로입구역. 승강장 한가운데 드럼통에 불을 피웠다. 일곱 사람이 지낼 만은 하다.');
-    await UI.lines('구조열차는 열흘 뒤 고지대 역에 온다. 그때까지 통로를 잇고, 사람들을 지켜야 한다.');
+    await FX.card('D1', `을지로입구역 · 열차까지 ${D.GOAL_DAY}일`, 1600);
     UI.toast('게시판(불 왼쪽)에서 오늘 할 일을 확인하자.', 3500);
   }
-  async function prologueStep() { await sceneIntro(); }
+  // 그 장소에 있을 때만 그 장의 설명을 띄운다 (전동차에서 터널 설명이 먼저 나오지 않게)
+  async function prologueStep() { const p = state.pro; if ((p <= 1 && scene.key === 'car') || (p === 2 && scene.key === 'tunnel')) await sceneIntro(); }
   async function eveningStep() {
     const s = state, v = E.eveningView(s);
     if (v.type === 'promise') {
@@ -888,7 +957,7 @@
   // 지금 할 일 (화면 왼쪽 위)
   function objective() {
     const s = state;
-    if (s.phase === 'prologue') return ['비상 레버나 좌석 밑 가방을 살펴보자', '승객들에게 말을 걸자', '터널을 지나 역으로 (앞이 무너졌다)', '터널 끝으로'][s.pro] || '';
+    if (s.phase === 'prologue') return s.pro === 2 && scene.key === 'car' ? '오른쪽 끝 열린 문으로 나가자' : ['비상 레버나 좌석 밑 가방을 살펴보자', '승객들에게 말을 걸자', '터널을 지나 역으로 (앞이 무너졌다)', '터널 끝으로'][s.pro] || '';
     if (s.phase === 'expedition') return '빛나는 표시(!)를 살피고, 계단(출구)으로 돌아가자';
     if (s.phase !== 'morning') return '';
     if (s.day === 1 && !tut.board) return '게시판(불 왼쪽)에서 오늘 할 일을 확인하자';

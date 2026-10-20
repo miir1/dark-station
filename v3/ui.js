@@ -70,7 +70,7 @@
     o = o || {};
     if (cur) close(undefined);
     const dlg = $('dlg');
-    dlg.className = 'line';
+    dlg.className = 'line' + (o.black ? ' black' : '');
     const face = o.face ? `<img class="face" alt="" src="${o.face}">` : '';
     dlg.innerHTML = `<div class="box">${o.cg ? `<img class="cg" alt="" src="${o.cg}">` : ''}${face}<div class="lt">${o.name ? `<p class="who">${esc(o.name)}</p>` : ''}<p class="tw"></p><p class="more">▼</p></div></div>`;
     dlg.hidden = false;
@@ -84,8 +84,18 @@
       openedAt = Date.now();
     });
   }
-  // 문장마다 끊어서 차례로
-  const splitSentences = (text) => String(text).split(/(?<=[.!?…”"])\s+(?=\S)/).filter(Boolean);
+  // 문장마다 끊되, 따옴표(“ ”) 안의 말은 한 번에 보여 준다
+  function splitSentences(text) {
+    const out = []; let cur = '', q = 0;
+    const t = String(text);
+    for (let i = 0; i < t.length; i++) {
+      const c = t[i]; cur += c;
+      if (c === '“') q++; else if (c === '”') q = Math.max(0, q - 1);
+      if (!q && /[.!?…”"]/.test(c) && /\s/.test(t[i + 1] || '') && /\S/.test(t.slice(i + 1))) { out.push(cur.trim()); cur = ''; }
+    }
+    if (cur.trim()) out.push(cur.trim());
+    return out;
+  }
   async function lines(text, o) { for (const s of splitSentences(text)) await line(s, o); }
   const say = (body, o) => open(body, o);
   const isOpen = () => !!cur || !!lineCur;

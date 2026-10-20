@@ -79,7 +79,18 @@
   function blip(kind) {
     if (!ac) return;
     const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+    if (kind === 'brake') {           // 급제동: 긁히는 쇳소리 + 쿵
+      const n = ac.createBuffer(1, ac.sampleRate * 1.6, ac.sampleRate), d = n.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.min(1, i / 2000) * Math.pow(1 - i / d.length, 1.5);
+      const src = ac.createBufferSource(); src.buffer = n;
+      const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 18; bp.frequency.setValueAtTime(3200, t); bp.frequency.exponentialRampToValueAtTime(900, t + 1.5);
+      const bg = ac.createGain(); bg.gain.value = 0.5; src.connect(bp); bp.connect(bg); bg.connect(master); src.start(t);
+      o.type = 'sine'; o.frequency.setValueAtTime(70, t + 1.4); o.frequency.exponentialRampToValueAtTime(30, t + 1.9);
+      g.gain.setValueAtTime(0.0001, t); g.gain.setValueAtTime(0.5, t + 1.4); g.gain.exponentialRampToValueAtTime(0.0001, t + 2);
+      o.connect(g); g.connect(master); o.start(t); o.stop(t + 2.1); return;
+    }
     if (kind === 'step') { o.type = 'triangle'; o.frequency.setValueAtTime(90 + Math.random() * 20, t); g.gain.setValueAtTime(0.05, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.08); }
+    else if (kind === 'strike') { o.type = 'square'; o.frequency.setValueAtTime(260, t); o.frequency.exponentialRampToValueAtTime(70, t + 0.12); g.gain.setValueAtTime(0.12, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.15); }
     else if (kind === 'hit') { o.type = 'sawtooth'; o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(40, t + 0.25); g.gain.setValueAtTime(0.25, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3); }
     else { o.type = 'sine'; o.frequency.setValueAtTime(220, t); o.frequency.exponentialRampToValueAtTime(110, t + 0.4); g.gain.setValueAtTime(0.08, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.5); }
     o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.6);

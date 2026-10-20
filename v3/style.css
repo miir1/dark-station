@@ -74,6 +74,10 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 
 /* 한 줄 대화 */
 #dlg.line { background: transparent; }
+#dlg.line.black { background: #000; justify-content: center; }
+#dlg.line.black .box { background: transparent; border: 0; box-shadow: none; text-align: center; justify-content: center; }
+#dlg.line.black .who { color: #8a7d66; font-weight: 400; font-size: 12px; letter-spacing: .2em; }
+#dlg.line.black .tw { color: #d8cdb8; letter-spacing: .04em; }
 #dlg.line .box { display: flex; gap: 10px; align-items: flex-start; min-height: 96px; cursor: pointer; }
 #dlg.line .face { width: 112px; height: 112px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
 #dlg.line .lt { flex: 1; }
@@ -101,3 +105,18 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 #fade span { display: block; margin-top: 8px; font-size: 14px; color: #9b9385; letter-spacing: .1em; }
 @keyframes ds-fade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes ds-fade-out { from { opacity: 1; } to { opacity: 0; } }
+
+/* 전투 손맛: 적이 맞으면 하얗게 번쩍·밀림, 우리가 맞으면 화면 흔들림·붉은 번쩍 */
+#dlg .battle .foe { display: inline-block; }
+#dlg .battle .foe.struck img { animation: ds-struck .35s steps(4); }
+@keyframes ds-struck { 0% { filter: brightness(3) saturate(0); transform: translateX(6px); } 50% { filter: brightness(1.6) sepia(1) hue-rotate(-30deg); transform: translateX(-4px); } 100% { filter: none; transform: none; } }
+#app.hurt { animation: ds-shake .3s steps(6); }
+#app.hurt2 { animation: ds-shake2 .5s steps(8); }
+#app::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: #8a0f0f; opacity: 0; z-index: 50; }
+#app.hurt::after { animation: ds-flash .3s; }
+#app.hurt2::after { animation: ds-flash2 .5s; }
+@keyframes ds-shake { 20% { transform: translate(-5px, 2px); } 40% { transform: translate(4px, -3px); } 60% { transform: translate(-3px, 1px); } 80% { transform: translate(2px, 0); } }
+@keyframes ds-shake2 { 15% { transform: translate(-9px, 4px); } 30% { transform: translate(8px, -5px); } 45% { transform: translate(-6px, 3px); } 60% { transform: translate(5px, -2px); } 80% { transform: translate(-2px, 1px); } }
+@keyframes ds-flash { 0% { opacity: .35; } 100% { opacity: 0; } }
+@keyframes ds-flash2 { 0% { opacity: .6; } 30% { opacity: .2; } 50% { opacity: .45; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { #app.hurt, #app.hurt2 { animation: none; } }

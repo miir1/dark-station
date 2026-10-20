@@ -26,6 +26,7 @@
       return { r, hp: Object.assign({}, max), max, broken: {}, down: false, guard: false };
     });
     const wounds = [];
+    let foeHit = false, struck = '';  // 다음 화면에서 한 번: 적이 맞음 / 우리가 맞음('team'|'break')
     const log = [`<b>${esc(J(en.name, '이/가'))}</b> 덮쳐 온다.`];
     const enemyDown = () => en.hp.head <= 0 || en.hp.body <= 0;
     const allDown = () => team.every((m) => m.down);
@@ -37,7 +38,9 @@
       const ep = PARTS.map((p) => `<span class="${en.hp[p] <= 0 ? 'broken' : ''}">${PNAME[p]} ${Math.max(0, en.hp[p])}/${en.max[p]}</span>`).join('');
       const tp = team.map((m) => `<div class="person"><b>${esc(m.r.name)}</b>${m.down ? '<span class="badge bad">쓰러짐</span>' : m.guard ? '<span class="badge">방어</span>' : ''}${m === actor ? '<span class="badge good">차례</span>' : ''}<div class="parts">${PARTS.map((p) => `<span class="${m.hp[p] <= 0 ? 'broken' : ''}">${PNAME[p]} ${Math.max(0, m.hp[p])}/${m.max[p]}</span>`).join('')}</div></div>`).join('');
       const bg = opts.region && ART.has('cg/battle_' + (opts.region === 'A' ? 'market' : 'drain')) ? `background:url(img/cg/battle_${opts.region === 'A' ? 'market' : 'drain'}.png) center/cover;image-rendering:pixelated;` : '';
-      return `<div class="battle"><p class="tag">전투</p><div class="enemy" style="${bg}padding:8px 0;border:1px solid #3a342b">${spriteImg(opts.id, 192)}<p class="title">${esc(en.name)}</p></div>
+      const fx = struck, fh = foeHit; struck = ''; foeHit = false;
+      if (fx === 'team' || fx === 'break') { const a = document.getElementById('app'); a.classList.remove('hurt', 'hurt2'); void a.offsetWidth; a.classList.add(fx === 'break' ? 'hurt2' : 'hurt'); }
+      return `<div class="battle ${fx ? 'fx-' + fx : ''}"><p class="tag">전투</p><div class="enemy" style="${bg}padding:8px 0;border:1px solid #3a342b"><span class="foe ${fh ? 'struck' : ''}">${spriteImg(opts.id, 192)}</span><p class="title">${esc(en.name)}</p></div>
         <div class="parts">${ep}</div>
         <p class="mini">머리나 몸통이 무너지면 쓰러진다. 다리를 부수면 반드시 도망칠 수 있고, 팔을 부수면 공격이 약해진다. 사람도 같다 — 부러진 부위는 돌아가서 부상과 영구 상처로 남는다.</p>
         <div class="blog">${log.slice(-3).join('<br>')}</div>${tp}</div>`;
@@ -46,9 +49,10 @@
     function hitMember(m, part, n) {
       m.hp[part] -= n;
       if (window.FX) FX.blip('hit');
+      if (struck !== 'break') struck = 'team';
       let t = `${esc(m.r.name)}의 ${PNAME[part]} −${n}`;
       if (m.hp[part] <= 0 && !m.broken[part]) {
-        m.broken[part] = true; wounds.push({ rid: m.r.id, part });
+        m.broken[part] = true; wounds.push({ rid: m.r.id, part }); struck = 'break';
         t += ` — <b>${J(PNAME[part], '이/가')} 부러졌다</b>`;
         if (part === 'head' || part === 'body') { m.down = true; t += ` ${esc(m.r.name)} 쓰러짐`; }
       }
@@ -86,7 +90,7 @@
         } else if (typeof a === 'string' && a.startsWith('atk:')) {
           const p = a.slice(4);
           if (Math.random() < hitChance(m, p)) {
-            const n = dmg(m); en.hp[p] -= n;
+            const n = dmg(m); en.hp[p] -= n; foeHit = true; if (window.FX) FX.blip('strike');
             let t = `${esc(m.r.name)}의 일격 → ${esc(en.name)}의 ${PNAME[p]} −${n}`;
             if (en.hp[p] <= 0) t += ` — <b>${J(PNAME[p], '이/가')} 부서졌다</b>`;
             log.push(t);
