@@ -2,6 +2,7 @@
 (function () {
   'use strict';
   const E = window.DS2, D = E.D, T = ART.T, M = window.MAPS;
+  const K = T / 32;                               // 32px 기준으로 적은 값을 타일 크기에 맞춘다
   const esc = UI.esc, J = E.J;
   const SAVE_KEY = 'darkstation.v3.save';
   const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
@@ -225,7 +226,7 @@
       if (t === 'v') ctx.drawImage(ART.prop('stairsDown'), X, Y);
       if (t === 'E') ctx.drawImage(ART.prop('stairsUp'), X, Y);
       if (t === 'o') ctx.drawImage(ART.prop('door'), X, Y);
-      if (t === 'w' && (tick >> 4) % 2) { ctx.fillStyle = 'rgba(134,163,168,0.10)'; ctx.fillRect(X + ((x * 5 + y) % 9) * 2, Y + 14, 10, 2); }
+      if (t === 'w' && (tick >> 4) % 2) { ctx.fillStyle = 'rgba(134,163,168,0.10)'; ctx.fillRect(X + ((x * 5 + y) % 9) * K * 2, Y + 14 * K, 10 * K, 2 * K); }
     }
     const sprites = [];   // [y, draw]
     if (scene.kind === 'station') drawStation(s, sprites);
@@ -240,8 +241,8 @@
       const img = ART.personSprite(p.r.id, 0, hurt, p.lying ? 'down' : look);
       sprites.push([p.y, () => {
         if (p.lying) { ctx.save(); ctx.translate(p.x * T + T, p.y * T + T / 4); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0, img.width * 0.67, img.height * 0.67); ctx.restore(); }
-        else ctx.drawImage(img, p.x * T, p.y * T - (ART.PH - T));
-        if (p.r.breakdown > 0 && (tick >> 4) % 2) { ctx.fillStyle = '#9c1e1e'; ctx.fillRect(p.x * T + 14, p.y * T - 26, 4, 6); }
+        else ctx.drawImage(img, p.x * T, p.y * T - (ART.PH - T) - (Math.sin((tick + p.r.id.length * 37) / 45) > 0.55 ? K : 0));
+        if (p.r.breakdown > 0 && (tick >> 4) % 2) { ctx.fillStyle = '#9c1e1e'; ctx.fillRect(p.x * T + 14 * K, p.y * T - 26 * K, 4 * K, 6 * K); }
       }]);
     }
     // 주인공과 동행
@@ -256,7 +257,9 @@
     sprites.sort((a, b) => a[0] - b[0]).forEach((d) => d[1]());
     // 앞에 조사할 것이 있으면 ▾
     const tg = target();
-    if (tg && !UI.isOpen() && !busy) { ctx.fillStyle = '#d0a24a'; const bx = tg.x * T + 12, by = tg.y * T - 28 - ((tick >> 4) % 2) * 2; ctx.fillRect(bx, by, 8, 4); ctx.fillRect(bx + 2, by + 4, 4, 2); }
+    if (tg && !UI.isOpen() && !busy) { ctx.fillStyle = '#d0a24a'; const bx = tg.x * T + 12 * K, by = tg.y * T - 28 * K - ((tick >> 4) % 2) * 2 * K; ctx.fillRect(bx, by, 8 * K, 4 * K); ctx.fillRect(bx + 2 * K, by + 4 * K, 4 * K, 2 * K); }
+    FX.particles(ctx, T, scene.w, scene.h, scene.kind === 'dungeon' && scene.region === 'B' ? 'drain' : 'dust', tick);
+    if (scene.kind === 'station') FX.setFire(1 - Math.min(1, Math.hypot(mx - 11, my - 7) / 8));
     lighting(mx, my);
     ctx.restore();
     grain();
@@ -349,9 +352,9 @@
       sprites.push([o.y - 0.5, () => ctx.drawImage(ART.prop(pr), o.x * T, o.y * T)]);
     }
     for (const d of M.STATION.decor || []) if (d.solid) sprites.push([d.y - 0.5, () => ctx.drawImage(ART.prop(d.prop), d.x * T, d.y * T)]);
-    for (const o of M.STATION.objects) if (o.lamp) ctx.drawImage(ART.prop('lamp'), o.x * T, (o.y - 1) * T + 12);
+    for (const o of M.STATION.objects) if (o.lamp) ctx.drawImage(ART.prop('lamp'), o.x * T, (o.y - 1) * T + 12 * K);
     if (s.project && s.project.id === 'repair') ctx.drawImage(ART.prop('crate'), 22 * T, 8 * T);
-    if (!ART.has('props/drum')) sprites.push([7.4, () => ctx.drawImage(ART.flame((tick >> 3) % 2), 11 * T, 6 * T + 4)]);
+    if (!ART.has('props/drum')) sprites.push([7.4, () => ctx.drawImage(ART.flame((tick >> 3) % 2), 11 * T, 6 * T + 4 * K)]);
     if (s.exposure > 0) { ctx.fillStyle = `rgba(150,150,150,${0.05 * s.exposure})`; ctx.fillRect(T, T, 3 * T, 2 * T); }
   }
   function drawDungeon(sprites) {
@@ -396,6 +399,7 @@
       return;
     }
     scene.px = nx; scene.py = ny; scene.moving = { dx, dy, t: 0 }; scene.steps = (scene.steps || 0) + 1;
+    FX.blip('step');
     if (scene.kind === 'station') scene.stationPos = [nx, ny];
   }
   function front() { const [dx, dy] = DIRS[scene.face]; return [scene.px + dx, scene.py + dy]; }
@@ -456,7 +460,7 @@
       const row = pv.ev.rows.find((x) => x.rid === r.id);
       const task = pv.ev.plan[r.id] || 'rest';
       const P = D.PEOPLE[r.id];
-      const body = `<img alt="" src="${ART.portrait(r.id, r.injury).toDataURL()}" style="float:left;width:84px;height:84px;image-rendering:pixelated;margin:0 10px 6px 0;border:1px solid #3a342b"><p class="who">${esc(r.name)} <span class="mini">${P.age}세 · ${esc(P.bio)}</span>${badges(r)}</p>
+      const body = `<img alt="" src="${ART.portrait(r.id, r.injury).toDataURL()}" style="float:left;width:96px;height:96px;image-rendering:pixelated;margin:0 10px 6px 0;border:1px solid #3a342b"><p class="who">${esc(r.name)} <span class="mini">${P.age}세 · ${esc(P.bio)}</span>${badges(r)}</p>
         <p class="mini">스트레스 ${r.stress}${bar(r.stress, 100, r.stress >= 70)} · 신뢰 ${'●'.repeat(r.trust)}${'○'.repeat(4 - r.trust)}</p>
         <p class="mini">관찰 ${r.skills.obs} · 완력 ${r.skills.str} · 기술 ${r.skills.tech} · 말솜씨 ${r.skills.talk} · ${esc(D.TRAITS[r.good].name)}/${esc(D.TRAITS[r.bad].name)}</p>
         <p>오늘: <b>${esc(D.TASKS[task].name)}</b>${row ? ` — ${esc(row.out)}${row.stress != null ? ` · 스트레스 ${row.stress > 0 ? '+' : ''}${row.stress}` : ''}${row.infect ? ` · 곪을 위험 ${Math.round(row.infect * 100)}%` : ''}` : ''}</p>
@@ -529,7 +533,7 @@
       <p class="mini">식량 ${s.res.food}→${pv.res.food} · 물 ${s.res.water}→${pv.res.water} · 침수 ${s.flood}→${pv.flood} · 노출 ${s.exposure}→${pv.exposure}</p>`;
     const deathWarn = pv.deaths.length ? `${pv.deaths.map((n) => J(n, '이/가')).join(', ')} 오늘 밤 사망합니다. 그래도?` : '';
     const a = await UI.open(body, { options: [{ label: '하루를 보낸다 (저녁으로)', value: 'end', confirm: deathWarn }, { label: '아직', value: null }], cancel: true });
-    if (a === 'end') { tutDone('ended'); act({ type: 'endDay' }); }
+    if (a === 'end') { tutDone('ended'); if (act({ type: 'endDay' })) await FX.card(`D${state.day} · 저녁`, '화로 앞에 모인다', 1000); }
   }
 
   // ── 출구: 원정 준비 ──
@@ -699,6 +703,7 @@
   }
   async function dayIntro() {
     hud();
+    await FX.card('D1', '을지로입구역', 1400);
     await UI.lines('을지로입구역. 승강장 한가운데 드럼통에 불을 피웠다. 일곱 사람이 지낼 만은 하다.');
     await UI.lines('구조열차는 열흘 뒤 고지대 역에 온다. 그때까지 통로를 잇고, 사람들을 지켜야 한다.');
     UI.toast('게시판(불 왼쪽)에서 오늘 할 일을 확인하자.', 3500);
@@ -744,7 +749,8 @@
     const r = E.nightView(state).result;
     await UI.open(`<p class="tag">밤</p>${resultHtml(r)}`, { next: state.day >= D.GOAL_DAY ? '아침 — 열차 시간' : '다음 날 아침' });
     act({ type: 'nightDone' });
-    if (state.phase === 'morning') { enterStation(true); UI.toast(`D${state.day}의 아침.`, 1500); }
+    if (state.phase === 'morning') { enterStation(true); await FX.card(`D${state.day}`, D.GOAL_DAY - state.day > 0 ? `열차까지 ${D.GOAL_DAY - state.day}일` : '열차가 오는 날', 1300); }
+    else if (state.phase === 'boarding') await FX.card(`D${D.GOAL_DAY}`, '열차가 오는 날', 1300);
   }
   async function boardingStep() {
     const s = state, b = s.boarding, tr = E.trainInfo(s);
@@ -786,9 +792,10 @@
     if (busy || UI.isOpen()) return;
     flow(async () => {
       for (;;) {
-        const a = await UI.open('<p class="title">메뉴</p>', { options: [{ label: '사람들', value: 'people' }, { label: '시선', value: 'gods' }, { label: '일지', value: 'log' }, { label: '처음부터 다시', value: 'restart', confirm: '저장된 진행이 지워집니다. 정말 처음부터?' }, { label: '닫기', value: null }], cancel: true });
+        const a = await UI.open('<p class="title">메뉴</p>', { options: [{ label: '사람들', value: 'people' }, { label: '시선', value: 'gods' }, { label: '일지', value: 'log' }, { label: FX.soundOn ? '소리 끄기' : '소리 켜기', value: 'sound' }, { label: '처음부터 다시', value: 'restart', confirm: '저장된 진행이 지워집니다. 정말 처음부터?' }, { label: '닫기', value: null }], cancel: true });
         if (!a) return;
         if (a === 'restart') { restart(); return; }
+        if (a === 'sound') { UI.toast(FX.toggle() ? '소리를 켰다' : '소리를 껐다'); continue; }
         if (a === 'people') await UI.open(state.residents.map((r) => `<div class="person"><b>${esc(r.name)}</b>${badges(r)}<br><span class="mini">스트레스 ${r.stress}${bar(r.stress, 100, r.stress >= 70)} · 관찰 ${r.skills.obs} 완력 ${r.skills.str} 기술 ${r.skills.tech} 말솜씨 ${r.skills.talk}${(r.scars || []).length ? ' · ' + r.scars.map((k) => `${D.SCARS[k].name}(${D.SCARS[k].desc})`).join(', ') : ''}</span></div>`).join(''), { full: true, cancel: true });
         if (a === 'gods') {
           const s = state, kn = { hostile: '적대', neutral: '중립', friendly: '우호' };
@@ -862,7 +869,8 @@
     const fresh = state.phase === 'prologue' && state.pro === 0 && !state.proResult;
     const opts = fresh ? [{ label: '시작한다', value: 'go' }] : [{ label: `이어서 (${state.phase === 'prologue' ? '프롤로그' : 'D' + Math.min(state.day, D.GOAL_DAY)})`, value: 'go' }, { label: '처음부터', value: 'new', confirm: '저장된 진행이 지워집니다. 처음부터 시작할까요?' }];
     const a = await UI.open(`${cgImg('title')}<p class="title" style="text-align:center;font-size:24px;letter-spacing:.3em;margin-top:6px">어두운 역</p><p class="mini" style="text-align:center">을지로입구역 · 구조열차까지 열흘</p>`, { options: opts, center: true });
+    FX.start();
     if (a === 'new') restart();
   }
-  if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); draw(); overlay(); }, interact, menu, target };
+  if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); draw(); overlay(); }, interact, menu, target, blocked, residentsOnMap };
 })();

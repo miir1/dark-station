@@ -188,7 +188,8 @@ def run_tiles(src, outdir, names, size=32):
 
 
 if __name__ == '__main__' and '--tiles' in sys.argv:
-    bx = run_tiles(sys.argv[1], sys.argv[2], sys.argv[3].split(','))
+    sz = int(sys.argv[sys.argv.index('--size') + 1]) if '--size' in sys.argv else 32
+    bx = run_tiles(sys.argv[1], sys.argv[2], sys.argv[3].split(','), sz)
     print(f'칸 {len(bx)}개')
 
 
@@ -223,5 +224,6 @@ def run_walk(src, dst, W=32, H=48):
 
 
 if __name__ == '__main__' and '--walk' in sys.argv:
-    n = run_walk(sys.argv[1], sys.argv[2])
+    args = [x for x in sys.argv[3:] if x != '--walk']
+    n = run_walk(sys.argv[1], sys.argv[2], *(int(x) for x in args[:2]))
     print('덩어리', n)

@@ -75,7 +75,7 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 /* 한 줄 대화 */
 #dlg.line { background: transparent; }
 #dlg.line .box { display: flex; gap: 10px; align-items: flex-start; min-height: 96px; cursor: pointer; }
-#dlg.line .face { width: 96px; height: 96px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
+#dlg.line .face { width: 112px; height: 112px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
 #dlg.line .lt { flex: 1; }
 #dlg.line .tw { font-size: 16px; line-height: 1.6; margin: 0 0 4px; min-height: 3.2em; }
 #dlg.line .more { animation: ds-more 1s steps(2) infinite; }
@@ -90,3 +90,14 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 
 #dlg.center { justify-content: center; background: #000; }
 #dlg.center .box { margin: 0 8px; }
+
+/* 장 전환 */
+#fade { position: absolute; inset: 0; z-index: 40; background: #000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; }
+#fade[hidden] { display: none; }
+#fade.in { animation: ds-fade-in .6s forwards; }
+#fade.out { animation: ds-fade-out .7s forwards; }
+#fade div { text-align: center; color: #e0c9a0; }
+#fade b { display: block; font-size: 30px; letter-spacing: .25em; font-weight: 700; }
+#fade span { display: block; margin-top: 8px; font-size: 14px; color: #9b9385; letter-spacing: .1em; }
+@keyframes ds-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ds-fade-out { from { opacity: 1; } to { opacity: 0; } }

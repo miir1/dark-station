@@ -292,7 +292,7 @@
   }
 
   // ── 32px 시대: Codex가 그린 그림(img/…)이 있으면 그것을, 없으면 위의 코드 그림을 2배로 ──
-  const S = 2, TT = T * S;
+  const S = 3, TT = T * S, PH = 72;          // 타일 48px, 사람 48×72
   const up = (c) => { const o = document.createElement('canvas'); o.width = c.width * S; o.height = c.height * S; const g = o.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, o.width, o.height); return o; };
   const IMG = {};                           // 'sprites/gicheol' → Image
   const ready = fetch('img/manifest.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : [])).catch(() => []).then((list) => Promise.all(list.map((name) => new Promise((res) => {
@@ -316,15 +316,15 @@
     return once('h:' + id + ':' + (frame || 0) + ':' + (hurt || 0) + ':' + (walk ? dir || 'down' : ''), () => {
       const im = IMG['sprites/' + id];
       if (!im && !walk) return up(personSprite(id, frame, hurt));
-      const c = document.createElement('canvas'); c.width = 32; c.height = 48;
+      const c = document.createElement('canvas'); c.width = TT; c.height = PH;
       const g = c.getContext('2d');
-      if (walk) { const col = frame === 1 ? 0 : frame === 2 ? 2 : 1; g.drawImage(walk, col * 32, (DIR_ROW[dir] || 0) * 48, 32, 48, 0, 0, 32, 48); }
+      if (walk) { const cw = walk.width / 3, ch = walk.height / 4, col = frame === 1 ? 0 : frame === 2 ? 2 : 1; g.drawImage(walk, col * cw, (DIR_ROW[dir] || 0) * ch, cw, ch, 0, 0, TT, PH); }
       else g.drawImage(im, 0, frame ? (frame === 1 ? -1 : 0) : 0);
       if (hurt) {
         g.globalCompositeOperation = 'source-atop';
         const R = rng(7 + hurt * 31 + id.length);
         g.fillStyle = hurt >= 3 ? 'rgba(110,16,20,0.85)' : 'rgba(110,16,20,0.7)';
-        for (let i = 0; i < hurt * 5; i++) g.fillRect(6 + R() * 20, 8 + R() * 32, 2 + R() * 3, 2 + R() * 4);
+        for (let i = 0; i < hurt * 6; i++) g.fillRect(TT * 0.2 + R() * TT * 0.6, PH * 0.18 + R() * PH * 0.66, 2 + R() * 4, 2 + R() * 6);
         g.globalCompositeOperation = 'source-over';
       }
       return c;
@@ -338,6 +338,6 @@
   }
   const has = (name) => !!IMG[name];
 
-  window.ART = { T: TT, PH: 48, RAMP, tile: tile2, prop: prop2, flame: flame2, personSprite: person2, creatureSprite: creature2, portrait: portrait2, PEOPLE, ready, has,
+  window.ART = { T: TT, PH, RAMP, tile: tile2, prop: prop2, flame: flame2, personSprite: person2, creatureSprite: creature2, portrait: portrait2, PEOPLE, ready, has,
     raw: { tile, prop, flame, personSprite, creatureSprite, portrait } };
 })();

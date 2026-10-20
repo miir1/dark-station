@@ -25,7 +25,7 @@
     objects: [
       { id: 'fire', x: 11, y: 7, spr: 'fire', solid: true, light: 4.5, name: '화로' },
       { id: 'board', x: 9, y: 6, spr: 'board', tint: '#c9a57a', solid: true, name: '게시판' },
-      { id: 'gen', x: 4, y: 6, spr: 'machine', tint: '#9aa3a8', solid: true, name: '발전기' },
+      { id: 'gen', x: 5, y: 6, spr: 'machine', tint: '#9aa3a8', solid: true, name: '발전기' },
       { id: 'pump', x: 18, y: 8, spr: 'pump', tint: '#7f9fbd', solid: true, name: '물탱크' },
       { id: 'drainpump', x: 13, y: 9, spr: 'machine2', tint: '#6d8fb3', solid: true, name: '배수 펌프' },
       { id: 'stash', x: 21, y: 1, spr: 'crate', tint: '#b08a5a', solid: true, name: '창고' },
@@ -106,6 +106,9 @@
     { prop: 'turnstile', x: 4, y: 3, solid: true }, { prop: 'turnstile', x: 5, y: 3, solid: true }, { prop: 'turnstile', x: 7, y: 3, solid: true },
     { prop: 'blood', x: 14, y: 8 }, { prop: 'blood', x: 3, y: 2 }, { prop: 'bones', x: 21, y: 4 }, { prop: 'corpse', x: 20, y: 11 },
     { prop: 'sack', x: 22, y: 2, solid: true }, { prop: 'crate', x: 20, y: 1, solid: true },
+    { prop: 'seat', x: 14, y: 6, solid: true }, { prop: 'seat', x: 18, y: 6, solid: true }, { prop: 'seat', x: 19, y: 6, solid: true },
+    { prop: 'wheel', x: 9, y: 11 }, { prop: 'bones', x: 22, y: 11 }, { prop: 'blood', x: 20, y: 7 }, { prop: 'backpack', x: 6, y: 8 },
+    { prop: 'shrine', x: 2, y: 6, solid: true }, { prop: 'tires', x: 21, y: 3, solid: true }, { prop: 'webs', x: 1, y: 4 },
   ];
 
   // ── 프롤로그: 멈춘 전동차 → 어두운 터널 ──
