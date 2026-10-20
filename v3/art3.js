@@ -294,7 +294,7 @@
   }
 
   // ── 32px 시대: Codex가 그린 그림(img/…)이 있으면 그것을, 없으면 위의 코드 그림을 2배로 ──
-  const S = 3, TT = T * S, PH = 72;          // 타일 48px, 사람 48×72
+  const S = 2, TT = T * S, PH = 48;          // 설계 v5: 타일 32px, 사람 32×48 (머리 16px가 윗칸에 걸친다)
   const up = (c) => { const o = document.createElement('canvas'); o.width = c.width * S; o.height = c.height * S; const g = o.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, o.width, o.height); return o; };
   const IMG = {};                           // 'sprites/gicheol' → Image
   const ready = fetch('img/manifest.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : [])).catch(() => []).then((list) => Promise.all(list.map((name) => new Promise((res) => {

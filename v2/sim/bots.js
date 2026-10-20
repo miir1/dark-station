@@ -5,15 +5,15 @@ const D = E.D;
 function mulberry32(a) { return function () { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 
 const POLICIES = {
-  balanced: { expedition: 'smart', facility: 'farm', talk: true, plan: 'suggest' },
+  balanced: { expedition: 'smart', facility: 'clinic', talk: true, plan: 'suggest' },
   clinic: { expedition: 'smart', facility: 'clinic', talk: true, plan: 'suggest' },
   nofacility: { expedition: 'smart', facility: null, talk: true, plan: 'suggest' },
-  stay: { expedition: 'never', facility: 'farm', talk: true, plan: 'suggest' },
-  rush: { expedition: 'always', facility: 'farm', talk: false, plan: 'suggest' },
+  stay: { expedition: 'never', facility: 'clinic', talk: true, plan: 'suggest' },
+  rush: { expedition: 'always', facility: 'clinic', talk: false, plan: 'suggest' },
   neglect: { expedition: 'never', facility: null, talk: false, plan: 'rest' },
-  skipchains: { expedition: 'smart', facility: 'farm', talk: true, plan: 'suggest', skipChains: true },
-  sloppy: { expedition: 'smart', facility: 'farm', talk: true, plan: 'suggest', sloppy: 0.2 },
-  march: { expedition: 'smart', facility: 'farm', talk: true, plan: 'suggest', march: true },
+  skipchains: { expedition: 'smart', facility: 'clinic', talk: true, plan: 'suggest', skipChains: true },
+  sloppy: { expedition: 'smart', facility: 'clinic', talk: true, plan: 'suggest', sloppy: 0.2 },
+  march: { expedition: 'smart', facility: 'clinic', talk: true, plan: 'suggest', march: true },
 };
 
 // 사람은 글을 읽고 '도움 되는 쪽'을 고른다. 봇은 소극적인 선택지(지나친다·거절 등)를 기본적으로 피한다.

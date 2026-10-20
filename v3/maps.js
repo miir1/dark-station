@@ -3,52 +3,66 @@
 // 원정 맵: E 나가는 곳  v 내려가는 계단  m 사건 자리
 (function () {
   'use strict';
+  // 설계 v5 역: 손으로 만든 한 장. 위 = 대합실(역무실·출구 계단·개찰구), 아래 = 승강장·선로.
+  // t 개찰구(막힘)  k 역무실 문(D2 순례의 열쇠)  S 출구 계단(안개, D6부터 원정 C)  A 지하상가 통로(원정 A)  B 배수 터널(원정 B)  R 무너진 통로(공사)
   const STATION = {
     id: 'station',
     rows: [
-      '########################',
-      '#SS.....#.....#........#',
-      '#.......#.....#........#',
-      '#.......d.....d........#',
-      '#.......#.....#........#',
-      '####d########d######d###',
-      '#,,,,,,,,,,,,,,,,,,,,,,R',
-      '#,,,,,,,,,,,,,,,,,,,,,,R',
-      '#,,,,,,,,,,,,,,,,,,,,,,#',
-      '#======================#',
-      '#~~~~~~~~~~~~~~~~~~~~~~T',
-      '#~~~~~~~~~~~~~~~~~~~~~~T',
-      '########################',
+      '############################',
+      '#SS.#..........#...........#',
+      '#S..#..........k...........#',
+      '#...#..........#...........#',
+      '#...############...........#',
+      '#..........................#',
+      'A....tt.tt.tt..............#',
+      '#..........................#',
+      '########dd#########dd#######',
+      '#,,,,,,,,,,,,,,,,,,,,,,,,,,R',
+      '#,,,,,,,,,,,,,,,,,,,,,,,,,,R',
+      '#,,,,,,,,,,,,,,,,,,,,,,,,,,#',
+      '#==========================#',
+      '#~~~~~~~~~~~~~~~~~~~~~~~~~~B',
+      '#~~~~~~~~~~~~~~~~~~~~~~~~~~B',
+      '############################',
     ],
-    start: [11, 8],
+    start: [13, 11],
+    fire: [13, 10],                       // 화로 (불빛·소리의 중심)
+    train: [1, 13, 7],                    // 멈춘 전동차 x, y, 칸 수
+    beds: [[16, 9], [18, 9], [20, 9], [16, 11], [18, 11], [20, 11]],
+    graves: [24, 11],                     // 승강장 끝 — 죽은 사람 수만큼 돌이 는다 (3개씩 한 줄, 위로)
+    facilityAt: [20, 4],                  // 시설 자리 (진료소)
+    projectCrate: [26, 9],                // 통로 공사 중 자재
+    passageLight: [27.5, 9.5],
+    smoke: [1, 5],                        // 발전기 연기가 새어 나가는 곳 (노출)
+    exitBack: { A: [1, 6], B: [26, 13] }, // 원정에서 돌아서면 서는 자리
+    // 침수 수치에 따라 물이 차는 줄: [행, 침수 몇부터, 진하기]
+    floodRows: [[14, 1, 1], [13, 3, 1], [11, 5, 0.6], [10, 7, 0.6]],
     // 조사할 수 있는 것 (solid: 지나갈 수 없음)
     objects: [
-      { id: 'fire', x: 11, y: 7, spr: 'fire', solid: true, light: 4.5, name: '화로' },
-      { id: 'board', x: 9, y: 6, spr: 'board', tint: '#c9a57a', solid: true, name: '게시판' },
-      { id: 'gen', x: 5, y: 6, spr: 'machine', tint: '#9aa3a8', solid: true, name: '발전기' },
-      { id: 'pump', x: 18, y: 8, spr: 'pump', tint: '#7f9fbd', solid: true, name: '물탱크' },
-      { id: 'drainpump', x: 13, y: 9, spr: 'machine2', tint: '#6d8fb3', solid: true, name: '배수 펌프' },
-      { id: 'stash', x: 21, y: 1, spr: 'crate', tint: '#b08a5a', solid: true, name: '창고' },
-      { id: 'stash2', x: 22, y: 1, spr: 'chest', tint: '#b08a5a', solid: true, name: '창고' },
-      { id: 'facility', x: 11, y: 2, spr: null, solid: false, name: '시설 자리' },
-      { id: 'bed1', x: 16, y: 1, spr: 'bed', tint: '#8c7b65', solid: true, name: '잠자리' },
-      { id: 'bed2', x: 18, y: 1, spr: 'bed', tint: '#8c7b65', solid: true, name: '잠자리' },
-      { id: 'bed3', x: 16, y: 3, spr: 'bed2', tint: '#8c7b65', solid: true, name: '잠자리' },
-      { id: 'repair', x: 23, y: 6, spr: 'rubble', tint: '#8b8172', solid: true, name: '무너진 통로' },
-      { id: 'repair2', x: 23, y: 7, spr: 'rubble2', tint: '#8b8172', solid: true, name: '무너진 통로' },
-      { id: 'exitA', x: 1, y: 1, spr: 'stairs', tint: '#8f8678', solid: false, trigger: true, name: '출구 계단 (시장 방면)' },
-      { id: 'exitA2', x: 2, y: 1, spr: 'stairs', tint: '#8f8678', solid: false, trigger: true, name: '출구 계단 (시장 방면)' },
-      { id: 'exitB', x: 23, y: 10, spr: null, solid: false, trigger: true, name: '배수 터널 (수문 방면)' },
-      { id: 'exitB2', x: 23, y: 11, spr: null, solid: false, trigger: true, name: '배수 터널 (수문 방면)' },
-      { id: 'train', x: 2, y: 10, w: 7, h: 2, spr: null, solid: true, name: '멈춘 전동차' },
-      { id: 'lamp1', x: 6, y: 6, spr: null, lamp: true }, { id: 'lamp2', x: 16, y: 6, spr: null, lamp: true }, { id: 'lamp3', x: 11, y: 3, spr: null, lamp: true }, { id: 'lamp4', x: 19, y: 2, spr: null, lamp: true },
+      { id: 'fire', x: 13, y: 10, solid: true, name: '화로' },
+      { id: 'board', x: 12, y: 9, solid: true, name: '게시판' },
+      { id: 'gen', x: 3, y: 9, solid: true, name: '발전기' },
+      { id: 'pump', x: 21, y: 10, solid: true, name: '물탱크' },
+      { id: 'drainpump', x: 22, y: 11, solid: true, name: '배수 펌프' },
+      { id: 'stash', x: 8, y: 2, solid: true, name: '창고' },
+      { id: 'facility', x: 20, y: 4, solid: false, name: '시설 자리' },
+      { id: 'bed1', x: 16, y: 9, solid: true, name: '잠자리' }, { id: 'bed2', x: 18, y: 9, solid: true, name: '잠자리' }, { id: 'bed3', x: 20, y: 9, solid: true, name: '잠자리' },
+      { id: 'bed4', x: 16, y: 11, solid: true, name: '잠자리' }, { id: 'bed5', x: 18, y: 11, solid: true, name: '잠자리' }, { id: 'bed6', x: 20, y: 11, solid: true, name: '잠자리' },
+      { id: 'repair', x: 27, y: 9, solid: true, name: '무너진 통로' }, { id: 'repair2', x: 27, y: 10, solid: true, name: '무너진 통로' },
+      { id: 'exitA', x: 0, y: 6, solid: false, trigger: true, name: '지하상가 통로 (시장 방면)' },
+      { id: 'exitB', x: 27, y: 13, solid: false, trigger: true, name: '배수 터널 (수문 방면)' }, { id: 'exitB2', x: 27, y: 14, solid: false, trigger: true, name: '배수 터널 (수문 방면)' },
+      { id: 'exitC', x: 1, y: 1, solid: true, name: '출구 계단 (안개)' }, { id: 'exitC2', x: 2, y: 1, solid: true, name: '출구 계단 (안개)' }, { id: 'exitC3', x: 1, y: 2, solid: true, name: '출구 계단 (안개)' },
+      { id: 'office', x: 15, y: 2, solid: false, name: '역무실 문' },
+      { id: 'chalk', x: 21, y: 0, solid: true, name: '분필 벽' },
+      { id: 'train', x: 1, y: 13, w: 7, h: 2, solid: true, name: '멈춘 전동차' },
+      { id: 'lamp1', x: 6, y: 10, lamp: true }, { id: 'lamp2', x: 19, y: 10, lamp: true }, { id: 'lamp3', x: 11, y: 6, lamp: true }, { id: 'lamp4', x: 22, y: 2, lamp: true },
     ],
     // 오늘 할 일마다 사람이 서는 자리 (차례대로 채움)
     spots: {
-      rest: [[10, 6], [12, 6], [10, 8], [12, 8], [11, 6], [13, 7], [9, 7], [13, 8]],
-      forage: [[3, 2], [5, 2]], pump: [[17, 7], [19, 7]], gen: [[5, 7]], drain: [[12, 9], [14, 9]],
-      guard: [[2, 3], [4, 3]], salvage: [[6, 9], [8, 9]], build: [[10, 2], [12, 2], [10, 3], [12, 3]], buildRepair: [[22, 6], [22, 7], [21, 6], [21, 7]],
-      farm: [[10, 2], [12, 2]], tend: [[17, 2], [19, 3]],
+      rest: [[12, 11], [14, 11], [12, 10], [14, 10], [11, 10], [15, 10], [11, 11], [15, 11]],
+      forage: [[2, 5], [3, 5]], pump: [[20, 10], [21, 11]], gen: [[4, 9]], drain: [[23, 11], [23, 10]],
+      guard: [[7, 6], [10, 6]], salvage: [[8, 12], [9, 12]], build: [[19, 5], [21, 5]], buildRepair: [[26, 9], [26, 10], [25, 9], [25, 10]],
+      farm: [[19, 5], [21, 5]], tend: [[17, 10], [19, 11]],
     },
   };
 
@@ -102,13 +116,14 @@
 
   // 역 꾸밈 (지나갈 수 없는 것은 solid)
   STATION.decor = [
-    { prop: 'pillar', x: 7, y: 6, solid: true }, { prop: 'pillar', x: 16, y: 6, solid: true },
-    { prop: 'turnstile', x: 4, y: 3, solid: true }, { prop: 'turnstile', x: 5, y: 3, solid: true }, { prop: 'turnstile', x: 7, y: 3, solid: true },
-    { prop: 'blood', x: 14, y: 8 }, { prop: 'blood', x: 3, y: 2 }, { prop: 'bones', x: 21, y: 4 }, { prop: 'corpse', x: 20, y: 11 },
-    { prop: 'sack', x: 22, y: 2, solid: true }, { prop: 'crate', x: 20, y: 1, solid: true },
-    { prop: 'seat', x: 14, y: 6, solid: true }, { prop: 'seat', x: 18, y: 6, solid: true }, { prop: 'seat', x: 19, y: 6, solid: true },
-    { prop: 'wheel', x: 9, y: 11 }, { prop: 'bones', x: 22, y: 11 }, { prop: 'blood', x: 20, y: 7 }, { prop: 'backpack', x: 6, y: 8 },
-    { prop: 'shrine', x: 2, y: 6, solid: true }, { prop: 'tires', x: 21, y: 3, solid: true }, { prop: 'webs', x: 1, y: 4 },
+    { prop: 'pillar', x: 10, y: 5, solid: true }, { prop: 'pillar', x: 17, y: 5, solid: true }, { prop: 'pillar', x: 5, y: 11, solid: true }, { prop: 'pillar', x: 24, y: 9, solid: true },
+    { prop: 'turnstile', x: 5, y: 6, solid: true }, { prop: 'turnstile', x: 6, y: 6, solid: true }, { prop: 'turnstile', x: 8, y: 6, solid: true }, { prop: 'turnstile', x: 9, y: 6, solid: true }, { prop: 'turnstile', x: 11, y: 6, solid: true }, { prop: 'turnstile', x: 12, y: 6, solid: true },
+    { prop: 'seat', x: 17, y: 3, solid: true }, { prop: 'seat', x: 18, y: 3, solid: true }, { prop: 'seat', x: 24, y: 3, solid: true }, { prop: 'seat', x: 25, y: 3, solid: true },
+    { prop: 'vending', x: 16, y: 1, solid: true }, { prop: 'kiosk', x: 26, y: 1, solid: true }, { prop: 'tires', x: 26, y: 5, solid: true }, { prop: 'shrine', x: 3, y: 7, solid: true },
+    { prop: 'crate', x: 9, y: 1, solid: true }, { prop: 'sack', x: 13, y: 1, solid: true }, { prop: 'crate', x: 13, y: 3, solid: true },
+    { prop: 'blood', x: 14, y: 11 }, { prop: 'blood', x: 2, y: 3 }, { prop: 'blood', x: 20, y: 7 }, { prop: 'bones', x: 23, y: 5 }, { prop: 'corpse', x: 23, y: 14 },
+    { prop: 'wheel', x: 10, y: 14 }, { prop: 'bones', x: 25, y: 14 }, { prop: 'backpack', x: 7, y: 11 }, { prop: 'webs', x: 1, y: 4 }, { prop: 'webs', x: 26, y: 7 },
+    { prop: 'heel', x: 4, y: 7 }, { prop: 'phone', x: 14, y: 7 }, { prop: 'briefcase', x: 3, y: 2 }, { prop: 'shoes', x: 2, y: 1 },
   ];
 
   // ── 프롤로그: 멈춘 전동차 → 어두운 터널 ──

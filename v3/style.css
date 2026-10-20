@@ -79,7 +79,7 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 18px; line-heig
 #dlg.line.black .who { color: #8a7d66; font-weight: 400; font-size: 14px; letter-spacing: .2em; }
 #dlg.line.black .tw { color: #d8cdb8; letter-spacing: .04em; }
 #dlg.line .box { display: flex; gap: 10px; align-items: flex-start; min-height: 96px; cursor: pointer; }
-#dlg.line .face { width: 112px; height: 112px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
+#dlg.line .face { width: 96px; height: 96px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
 #dlg.line .lt { flex: 1; }
 #dlg.line .tw { font-size: 19px; line-height: 1.6; margin: 0 0 4px; min-height: 3.2em; }
 #dlg.line .more { animation: ds-more 1s steps(2) infinite; }
@@ -88,7 +88,7 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 18px; line-heig
 #goal[hidden] { display: none; }
 
 /* 장면 그림 */
-#dlg .cg { display: block; width: 100%; image-rendering: pixelated; border: 1px solid #3a342b; margin: 0 0 8px; }
+#dlg .cg { display: block; width: 100%; max-width: 384px; margin-left: auto; margin-right: auto; image-rendering: pixelated; border: 1px solid #3a342b; margin: 0 0 8px; }
 #dlg.line .box:has(.cg) { flex-wrap: wrap; }
 #dlg.line .box .cg { flex: 0 0 100%; }
 

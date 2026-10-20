@@ -42,7 +42,7 @@
       const bg = opts.region && ART.has('cg/battle_' + (opts.region === 'A' ? 'market' : 'drain')) ? `background:url(img/cg/battle_${opts.region === 'A' ? 'market' : 'drain'}.png) center/cover;image-rendering:pixelated;` : '';
       const fx = struck, fh = foeHit; struck = ''; foeHit = false;
       if (fx === 'team' || fx === 'break') { const a = document.getElementById('app'); a.classList.remove('hurt', 'hurt2'); void a.offsetWidth; a.classList.add(fx === 'break' ? 'hurt2' : 'hurt'); }
-      return `<div class="battle ${fx ? 'fx-' + fx : ''}"><p class="tag">전투</p><div class="enemy" style="${bg}padding:8px 0;border:1px solid #3a342b"><span class="foe ${fh ? 'struck' : ''}">${spriteImg(opts.id, 192)}</span><p class="title">${esc(en.name)}</p></div>
+      return `<div class="battle ${fx ? 'fx-' + fx : ''}"><p class="tag">전투</p><div class="enemy" style="${bg}padding:8px 0;border:1px solid #3a342b"><span class="foe ${fh ? 'struck' : ''}">${spriteImg(opts.id, 128)}</span><p class="title">${esc(en.name)}</p></div>
         <div class="pips foe-pips">${ep}</div>
         <p class="mini">머리·몸통이 0이면 쓰러짐 · 다리 0이면 도망 확정 · 팔 0이면 공격 −1. 사람도 같다 — 부러진 부위는 부상·상처로 남는다.</p>
         <div class="blog">${log.slice(-3).join('<br>')}</div>${tp}</div>`;

@@ -1144,12 +1144,12 @@
     if (wantPower > 0) take('gen', 1);
     const powered = Object.values(plan).includes('gen');
     if (powered && waterShort) take('pump', 2); else if (powered && s.res.water < need * 3) take('pump', 1);
-    if (s.facility === 'farm' && powered) take('farm', 2);
+    if (D.TASKS.farm && s.facility === 'farm' && powered) take('farm', 2);
     if (s.forage > 0 && (foodShort || s.res.food < need * 4)) take('forage', 2);
     if (s.exposure >= 4 || (s.visitDay != null && s.visitDay - s.day <= 1)) take('guard', s.visitDay != null && s.visitDay === s.day ? 2 : 1);
     // 스트레스 높은 사람은 쉬게 한다
     for (const r of free) if (!plan[r.id] && r.stress >= 55) plan[r.id] = 'rest';
-    if (s.salvageLeft > 0 && s.res.parts < 6) take('salvage', 1);
+    if (D.TASKS.salvage && s.salvageLeft > 0 && s.res.parts < 6) take('salvage', 1);
     for (const r of free) if (!plan[r.id]) plan[r.id] = 'rest';
     return plan;
   }
@@ -1238,6 +1238,7 @@
       case 'board': if (typeof a.id !== 'string') break; ok = toggleBoard(s, a.id); break;
       case 'confirmBoarding': ok = confirmBoarding(s); break;
       case 'boardSelf': ok = boardSelf(s); break;
+      case 'setFlag': if (typeof a.flag !== 'string' || !/^[a-z_]{1,24}$/.test(a.flag)) break; s.flags[a.flag] = true; ok = true; break;
       default: return { ok: false, error: '알 수 없는 동작' };
     }
     return { ok, error: ok ? '' : '지금은 할 수 없는 동작' };

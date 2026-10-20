@@ -10,9 +10,9 @@ import os
 import sys
 from PIL import Image, ImageEnhance, ImageFilter
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sheet import mask_of, components, PAL  # noqa: E402
+from sheet import mask_of, components, PAL, darkest  # noqa: E402
 
-PX = 2                       # 한 도트의 화면 크기
+PX = 1                       # 한 도트의 화면 크기 (설계 v5: 지도·초상·장면 모두 1px)
 OUT = (8, 6, 6)              # 외곽선 색 (가장 어두운 잉크)
 
 
@@ -44,7 +44,9 @@ def reduce_colors(rgb, n, pal=True):
     return few.quantize(palette=PAL_IMG, dither=Image.Dither.NONE).convert('RGB') if pal else few
 
 
-def outline(im):
+def outline(im, color=None):
+    if color is None:
+        color = darkest(im)
     w, h = im.size
     px = im.load()
     out = im.copy()
@@ -56,7 +58,7 @@ def outline(im):
             for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 nx, ny = x + dx, y + dy
                 if 0 <= nx < w and 0 <= ny < h and px[nx, ny][3]:
-                    op[x, y] = OUT + (255,)
+                    op[x, y] = tuple(color) + (255,)
                     break
     return out
 
@@ -84,18 +86,18 @@ def fit_box(crop, W, H, bottom=True, pad=1):
 
 
 # ── 초상: 정사각형으로 잘라 64도트, 28색 ──
-def portrait(src, dst, size=128):
+def portrait(src, dst, size=96):
     im = Image.open(src).convert('RGB')
     w, h = im.size
     s = min(w, h)
     im = im.crop(((w - s) // 2, (h - s) // 2, (w - s) // 2 + s, (h - s) // 2 + s))
     d = size // PX
     small = tone(im.resize((d, d), Image.LANCZOS), contrast=1.15, color=0.9)
-    up(reduce_colors(small, 32, pal=False)).save(dst)
+    up(reduce_colors(small, 28, pal=False)).save(dst)
 
 
 # ── 장면 그림: 240×135 도트, 40색 ──
-def cg(src, dst, W=480, H=270):
+def cg(src, dst, W=384, H=216):
     im = Image.open(src).convert('RGB')
     w, h = im.size
     if w / h > W / H:
@@ -166,7 +168,7 @@ def walk(src, dst, W=48, H=72, n=22, px=1):
 if __name__ == '__main__':
     mode, a = sys.argv[1], sys.argv[2:]
     if mode == 'portrait':
-        portrait(a[0], a[1], int(a[2]) if len(a) > 2 else 128)
+        portrait(a[0], a[1], int(a[2]) if len(a) > 2 else 96)
     elif mode == 'cg':
         cg(a[0], a[1], int(a[2]), int(a[3]))
     elif mode == 'walk':

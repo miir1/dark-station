@@ -5,7 +5,7 @@
   const GOAL_DAY = 10;                       // 시연 길이 (전체 30일 중 1막)
   const SKILLS = { obs: '관찰', str: '완력', tech: '기술', talk: '말솜씨' };
   const RES = { food: '식량', water: '물', parts: '부품', meds: '약품' };
-  const CAP = { food: 24, water: 24, parts: 18, meds: 6 };
+  const CAP = { food: 16, water: 16, parts: 18, meds: 6 };   // 설계 v5: 식량·물 상한 16 (마지막 날이 창고 숫자가 되지 않게)
   const ITEMS = { rope: '밧줄', pipe: '쇠파이프' };
   const REGION_NAMES = { A: '시장 방면', B: '수문 방면' };
 
@@ -60,19 +60,16 @@
     rest: { name: '휴식', desc: '스트레스 −16, 경상 회복', slots: 9, stress: -16 },
     forage: { name: '식량 수색', desc: '식량 3 (근처 남은 양에서)', slots: 2, stress: 4, skill: 'obs' },
     pump: { name: '물 긷기', desc: '물 4, 전력 1', slots: 2, stress: 4, skill: 'tech', power: 1 },
-    salvage: { name: '비상 해체', desc: '빈 상점·객차를 뜯어 부품 1 (완력 3이면 2) — 뜯어낼 부품은 모두 6개', slots: 1, stress: 5, skill: 'str' },
     gen: { name: '발전', desc: '전력 3, 노출 +1 (침수 5 이상이면 정지)', slots: 1, stress: 4, skill: 'tech' },
     drain: { name: '배수', desc: '침수 −2', slots: 2, stress: 5, skill: 'str' },
     guard: { name: '경계', desc: '노출 −2, 밤 도둑·순찰 대비', slots: 2, stress: 4, skill: 'str' },
     tend: { name: '치료', desc: '부상 −1, 약품 1', slots: 1, stress: 3, skill: 'tech' },
     build: { name: '공사 작업', desc: '공사 진행 +1 (작업 1회분)', slots: 4, stress: 5, skill: 'tech' },
-    farm: { name: '버섯 재배', desc: '식량 4, 전력 1(시설)', slots: 2, stress: 4, skill: 'tech', facility: 'farm' },
   };
-  const TASK_ORDER = ['forage', 'pump', 'gen', 'drain', 'guard', 'salvage', 'build', 'farm', 'tend', 'rest'];
+  const TASK_ORDER = ['forage', 'pump', 'gen', 'drain', 'guard', 'build', 'tend', 'rest'];   // 설계 v5: 7종 + 공사
 
   // 공사: 부품을 먼저 내고, 건설 담당이 work 작업분만큼 일하면 완성
   const PROJECTS = {
-    farm: { name: '버섯 재배실', cost: { parts: 6 }, work: 2, group: 'living', desc: '재배 일 개방: 식량 4×2명 (전력 1)', done: '환기구 밑 창고에 버섯 배양판을 깔았다.' },
     clinic: { name: '진료소', cost: { parts: 4 }, work: 2, group: 'living', desc: '치료가 강해짐: 환자 2명, 부상 −2 (전력 1)', done: '역무실 한쪽을 진료소로 꾸몄다.' },
     repair: { name: '지하 통로 공동 수리', cost: {}, work: 2, group: 'route', hidden: true, desc: '고지대 역으로 가는 통로 확보 (열차 승차에 필요)', done: '도현과 함께 끊긴 배수 통로를 이었다. 열차가 지날 길이 열렸다.' },
   };

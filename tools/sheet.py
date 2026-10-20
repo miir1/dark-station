@@ -101,7 +101,27 @@ def quantize_rgba(im):
     return rgb
 
 
-def outline(im):
+def darkest(im):
+    """그림 안에서 가장 어두운 불투명 색 (외곽선은 검정이 아니라 이 색으로 — '픽셀 던전' 검은 테두리를 피한다)."""
+    px = im.load()
+    best = None
+    for y in range(im.height):
+        for x in range(im.width):
+            p = px[x, y]
+            if p[3] < 128:
+                continue
+            lum = p[0] * 0.3 + p[1] * 0.59 + p[2] * 0.11
+            if best is None or lum < best[0]:
+                best = (lum, p[:3])
+    if best is None:
+        return OUT
+    r, g, b = best[1]
+    return (max(0, r - 12), max(0, g - 12), max(0, b - 12))     # 한 단계 더 어둡게
+
+
+def outline(im, color=None):
+    if color is None:
+        color = darkest(im)
     w, h = im.size
     px = im.load()
     out = im.copy()
@@ -113,7 +133,7 @@ def outline(im):
             for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 nx, ny = x + dx, y + dy
                 if 0 <= nx < w and 0 <= ny < h and px[nx, ny][3]:
-                    op[x, y] = OUT + (255,)
+                    op[x, y] = tuple(color) + (255,)
                     break
     return out
 
@@ -128,16 +148,30 @@ def fit(crop, W, H, pad=1):
     return canvas
 
 
-def run(src, outdir, names, W, H, min_area=2000):
+def parse_name(name, W, H):
+    """'heel:20x20' → ('heel', 20, 20). 크기를 안 적으면 기본 W×H. 캔버스는 max(기본, 지정) — 작은 소품은 칸 안에 작게, 큰 소품은 2칸 높이."""
+    m = re.match(r'^([A-Za-z_]+):(\d+)x(\d+)$', name)
+    if not m:
+        return name, W, H, W, H
+    cw, ch = int(m.group(2)), int(m.group(3))
+    return m.group(1), cw, ch, max(W, cw), max(H, ch)
+
+
+def run(src, outdir, names, W, H, min_area=2000, line=True):
     im = Image.open(src).convert('RGBA')
     m = mask_of(im)
     im.putalpha(m)
     boxes = components(m, min_area)
     os.makedirs(outdir, exist_ok=True)
     made = []
-    for name, b in zip(names, boxes):
+    for spec, b in zip(names, boxes):
+        name, cw, ch, CW, CH = parse_name(spec, W, H)
         crop = im.crop(b)
-        sprite = outline(quantize_rgba(fit(crop, W, H)))
+        inner = quantize_rgba(fit(crop, cw, ch, pad=1 if line else 0))
+        if line:
+            inner = outline(inner)
+        sprite = Image.new('RGBA', (CW, CH), (0, 0, 0, 0))
+        sprite.paste(inner, ((CW - cw) // 2, CH - ch), inner)          # 바닥 정렬
         path = os.path.join(outdir, name + '.png')
         sprite.save(path)
         made.append(path)
@@ -147,7 +181,7 @@ def run(src, outdir, names, W, H, min_area=2000):
 if __name__ == '__main__' and '--tiles' not in sys.argv and '--walk' not in sys.argv:
     src, outdir, names, W, H = sys.argv[1], sys.argv[2], sys.argv[3].split(','), int(sys.argv[4]), int(sys.argv[5])
     mn = int(sys.argv[sys.argv.index('--min') + 1]) if '--min' in sys.argv else 2000
-    boxes, made = run(src, outdir, names, W, H, mn)
+    boxes, made = run(src, outdir, names, W, H, mn, line='--no-outline' not in sys.argv)
     print(f'덩어리 {len(boxes)}개, 이름 {len(names)}개 → {len(made)}장 저장')
     if len(boxes) != len(names):
         print('주의: 덩어리 수와 이름 수가 다르다', boxes)

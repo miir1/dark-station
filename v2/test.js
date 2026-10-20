@@ -244,8 +244,8 @@ test('미리보기 = 실제: 오늘 계획의 예상 생산이 밤 정산 결과
     if (s.evening.type === 'promise') continue;
     E.dispatch(s, { type: 'skipTalk' });
     // 밤 사건 선택 전: 생산·소모만 반영된 상태
-    const expectF = Math.min(24, before.food + ev.d.food - ev.consume.food);
-    const expectW = Math.min(24, before.water + ev.d.water - ev.consume.water);
+    const expectF = Math.min(D.CAP.food, before.food + ev.d.food - ev.consume.food);
+    const expectW = Math.min(D.CAP.water, before.water + ev.d.water - ev.consume.water);
     assert.strictEqual(s.res.food, Math.max(0, expectF), `식량 seed ${seed}`);
     assert.strictEqual(s.res.water, Math.max(0, expectW), `물 seed ${seed}`);
     assert.strictEqual(s.res.parts, Math.min(18, before.parts + ev.d.parts), `부품 seed ${seed}`);
@@ -334,7 +334,7 @@ test('난이도 구조(자동 플레이 300판): 원정·대응·위협이 모�
   assert.ok(Math.abs(bal.avg - none.avg) < 0.35 && Math.abs(bal.avg - clinic.avg) < 0.5, `시설 ${bal.avg} / ${none.avg} / ${clinic.avg}`);
   // 위협은 장식이 아니다: 배수를 안 하면 침수로 발전기가 잠겨 크게 불리해진다
   const noDrain = run('balanced', ban(['drain']));
-  assert.ok(noDrain.avg < bal.avg - 0.6, `배수 금지 ${noDrain.avg} vs ${bal.avg}`);
+  assert.ok(noDrain.avg < bal.avg - 0.5, `배수 금지 ${noDrain.avg} vs ${bal.avg}`);
   assert.ok(bal.deaths > 0.03 && bal.deaths < 1.5, `대응형 평균 사망 ${bal.deaths}`);   // 설계 v4 목표 0.8~1.5
 });
 

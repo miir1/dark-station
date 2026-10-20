@@ -44,7 +44,7 @@
   const cgImg = (key) => (cgSrc(key) ? `<img class="cg" alt="" src="${cgSrc(key)}">` : '');
   // ── 아이콘: img/icons/<이름> 이 있으면 그림, 없으면 글자 ──
   const IC_ALT = { food: '식', water: '물', parts: '부', meds: '약', power: '전', flood: '침', exposure: '노', stress: '스', injury: '상', trust: '신', obs: '관', str: '완', tech: '기', talk: '말', day: '日', train: '열', people: '사', gods: '시', log: '일', sound: '소', restart: '↺', board: '판', rest: '휴', forage: '수', pump: '물', salvage: '해', gen: '발', drain: '배', guard: '경', build: '공', tend: '치', farm: '재' };
-  const IC_SRC = { tend: 'meds', farm: 'food' };   // 따로 그리지 않은 일은 비슷한 아이콘으로
+  const IC_SRC = { tend: 'meds' };   // 따로 그리지 않은 일은 비슷한 아이콘으로
   const ic = (name, cls) => { const n = ART.has('icons/' + name) ? name : IC_SRC[name] || name; return ART.has('icons/' + n) ? `<img class="ic ${cls || ''}" alt="" src="img/icons/${n}.png">` : `<i class="ic ic-t ${cls || ''}">${IC_ALT[name] || '·'}</i>`; };
   const IC_NAME = { food: '식량', water: '물', parts: '부품', meds: '약품', power: '전력', flood: '침수 (5 이상이면 발전 정지, 8이면 역이 잠긴다)', exposure: '노출 (높으면 밤에 무언가 찾아온다)', stress: '스트레스 (80부터 무너질 수 있다)', injury: '부상', trust: '신뢰', obs: '관찰', str: '완력', tech: '기술', talk: '말솜씨', train: '구조열차까지 남은 날' };
   const face = (id, hurt, px) => `<img class="pf" alt="" src="${ART.portrait(id, hurt).toDataURL()}" style="width:${px || 48}px;height:${px || 48}px">`;
@@ -146,7 +146,7 @@
     if (scene.kind !== 'station') return [];
     const plan = E.effectivePlan(s);
     const used = {}, out = [];
-    const beds = [[16, 2], [18, 2], [16, 4], [19, 3], [15, 2], [15, 4]];
+    const beds = M.STATION.beds;
     let bi = 0;
     for (const r of E.alive(s)) {
       if (r.status !== 'home') continue;
@@ -180,6 +180,8 @@
     if (t === '#' || t === 's' || t === 'i') return true;
     if (scene.kind === 'station') {
       if (t === 'R' && !state.flags.passage_secured) return true;
+      if (t === 't') return true;                                   // 개찰구
+      if (t === 'k' && !state.flags.office_open) return true;        // 잠긴 역무실 문
       if (objectsAt(x, y).some((o) => o.solid && !(o.id.startsWith('repair') && state.flags.passage_secured))) return true;
       if ((M.STATION.decor || []).some((d) => d.solid && d.x === x && d.y === y)) return true;
     }
@@ -236,9 +238,8 @@
   function resize() {
     const st = $('stage');
     const W = st.clientWidth || 375, H = st.clientHeight || 420;
-    const mapRows = Math.min(13, scene.h || 13);
-    // 맵 높이가 화면에 꽉 차게 (폰에서는 소수 배율도 허용)
-    const scale = Math.max(1, Math.min(4, H / (T * mapRows), W / (T * 7)));
+    // 설계 v5: 한 도트 = 화면 1px. 폰은 배율 1(가로 12칸), 태블릿·PC는 2
+    const scale = W >= 768 ? 2 : 1;
     // 캔버스는 무대를 정확히 채운다 (칸 배수로 키우면 위아래가 잘려 맨 윗줄 사람의 머리가 잘렸다)
     view = { cols: W / (T * scale), rows: H / (T * scale), scale };
     cv.width = Math.ceil(W / scale); cv.height = Math.ceil(H / scale);
@@ -260,7 +261,7 @@
     }
     if (scene.kind === 'prologue' && scene.key === 'car') return t === '#' ? (ART.has('tiles/carWall_0') ? 'carWall' : 'wall') : (ART.has('tiles/carFloor_0') ? 'carFloor' : 'concourse');
     if (scene.kind === 'prologue' && scene.key === 'tunnel' && t === '#' && ART.has('tiles/tunnelWall_0')) return 'tunnelWall';
-    return { '#': 'wall', '.': 'concourse', d: 'concourse', S: 'concourse', ',': 'floor', R: 'floor', '=': 'edge', '~': 'track', i: 'track', x: 'track', T: null, w: 'water', o: 'concourse' }[t] || 'floor';
+    return { '#': 'wall', '.': 'concourse', d: 'concourse', S: 'concourse', ',': 'floor', R: 'floor', '=': 'edge', '~': 'track', i: 'track', x: 'track', T: null, B: null, w: 'water', o: 'concourse', A: 'concourse', t: 'concourse', k: 'concourse' }[t] || 'floor';
   }
   let tick = 0;
   function draw() {
@@ -282,7 +283,7 @@
       const t = tileAt(x, y), X = x * T, Y = y * T;
       const k = tileKind(t, x, y);
       if (k) ctx.drawImage(ART.tile(k, x, y), X, Y); else { ctx.fillStyle = '#000'; ctx.fillRect(X, Y, T, T); }
-      if (t === 's') ctx.drawImage(ART.prop('seat'), X, Y);
+      if (t === 's') drawProp('seat', X, Y);
       if (t === '#' && tileAt(x, y + 1) !== '#' && y + 1 < scene.h) {
         // 바닥과 맞닿은 벽: 아래쪽 벽면을 밝게, 모서리에 선, 바닥에 그림자
         ctx.fillStyle = 'rgba(220,200,170,0.10)'; ctx.fillRect(X, Y + T * 0.45, T, T * 0.55);
@@ -290,9 +291,9 @@
         ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(X, Y + T, T, 4 * K);
       }
       if (t === '#' && tileAt(x, y + 1) === '#' && [[1, 0], [-1, 0], [0, -1]].some(([dx, dy]) => { const n = tileAt(x + dx, y + dy); return n !== '#' && n !== undefined; })) { ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.fillRect(X, Y, T, T); }
-      if (t === 'v') ctx.drawImage(ART.prop('stairsDown'), X, Y);
-      if (t === 'E') ctx.drawImage(ART.prop('stairsUp'), X, Y);
-      if (t === 'o') ctx.drawImage(ART.prop('door'), X, Y);
+      if (t === 'v') drawProp('stairsDown', X, Y);
+      if (t === 'E') drawProp('stairsUp', X, Y);
+      if (t === 'o') drawProp('door', X, Y);
       if (t === 'w' && (tick >> 4) % 2) { ctx.fillStyle = 'rgba(134,163,168,0.10)'; ctx.fillRect(X + ((x * 5 + y) % 9) * K * 2, Y + 14 * K, 10 * K, 2 * K); }
     }
     const sprites = [];   // [y, draw]
@@ -332,11 +333,13 @@
     const tg = target();
     if (tg && !UI.isOpen() && !busy) { ctx.fillStyle = '#d0a24a'; const bx = tg.x * T + 12 * K, by = tg.y * T - 28 * K - ((tick >> 4) % 2) * 2 * K; ctx.fillRect(bx, by, 8 * K, 4 * K); ctx.fillRect(bx + 2 * K, by + 4 * K, 4 * K, 2 * K); }
     FX.particles(ctx, T, scene.w, scene.h, scene.kind === 'dungeon' && scene.region === 'B' ? 'drain' : 'dust', tick);
-    if (scene.kind === 'station') FX.setFire(1 - Math.min(1, Math.hypot(mx - 11, my - 7) / 8));
+    if (scene.kind === 'station') FX.setFire(1 - Math.min(1, Math.hypot(mx - M.STATION.fire[0], my - M.STATION.fire[1]) / 8));
     lighting(mx, my);
     ctx.restore();
     grain();
   }
+  // 소품 그리기: 칸보다 높은 그림(기둥·문·자판기)은 그 칸 위로 솟게
+  function drawProp(id, X, Y) { const im = ART.prop(id); ctx.drawImage(im, X, Y - (im.height - T)); }
   function shadow(x, y) { ctx.fillStyle = 'rgba(0,0,0,0.42)'; ctx.beginPath(); ctx.ellipse(x * T + T / 2, y * T + T - 4 * K, 11 * K, 4 * K, 0, 0, Math.PI * 2); ctx.fill(); }
   function drawPerson(id, x, y, frame, flip, hurt, dir) {
     shadow(x, y);
@@ -352,13 +355,31 @@
     if (!vign || vign.width !== cv.width || vign.height !== cv.height) {
       vign = document.createElement('canvas'); vign.width = cv.width; vign.height = cv.height;
       const g = vign.getContext('2d');
-      const gr = g.createRadialGradient(cv.width / 2, cv.height / 2, Math.min(cv.width, cv.height) * 0.3, cv.width / 2, cv.height / 2, Math.max(cv.width, cv.height) * 0.75);
-      gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.75)');
+      const gr = g.createRadialGradient(cv.width / 2, cv.height / 2, Math.min(cv.width, cv.height) * 0.45, cv.width / 2, cv.height / 2, Math.max(cv.width, cv.height) * 0.75);
+      gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.35)');
       g.fillStyle = gr; g.fillRect(0, 0, cv.width, cv.height);
     }
     ctx.drawImage(vign, 0, 0);
+    fogLayer();
     ctx.fillStyle = 'rgba(0,0,0,0.35)';
-    for (let i = 0; i < 40; i++) ctx.fillRect((Math.random() * cv.width) | 0, (Math.random() * cv.height) | 0, 1, 1);
+    for (let i = 0; i < 12; i++) ctx.fillRect((Math.random() * cv.width) | 0, (Math.random() * cv.height) | 0, 1, 1);
+  }
+  // 잿빛 안개 겹: 64×64 무늬를 느리게 흘려 보낸다 (세계관의 안개 — 화면 전체에 얇게)
+  let fogCv = null;
+  function fogLayer() {
+    if (!fogCv) {
+      fogCv = document.createElement('canvas'); fogCv.width = 64; fogCv.height = 64;
+      const g = fogCv.getContext('2d'), R = ((s) => () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296)(7);
+      const n = []; for (let i = 0; i < 16; i++) n.push(R());
+      for (let y = 0; y < 64; y++) for (let x = 0; x < 64; x++) {
+        const fx = x / 16, fy = y / 16, x0 = fx | 0, y0 = fy | 0, tx = fx - x0, ty = fy - y0;
+        const v = (ix, iy) => n[((iy & 3) * 4 + (ix & 3))];
+        const a = v(x0, y0) * (1 - tx) + v(x0 + 1, y0) * tx, b = v(x0, y0 + 1) * (1 - tx) + v(x0 + 1, y0 + 1) * tx;
+        g.fillStyle = `rgba(170,170,165,${(a * (1 - ty) + b * ty) * 0.16})`; g.fillRect(x, y, 1, 1);
+      }
+    }
+    const off = (tick * 0.25) % 64;
+    for (let y = -64; y < cv.height; y += 64) for (let x = -64; x < cv.width; x += 64) ctx.drawImage(fogCv, x + off, y + (off / 2) % 64);
   }
   let lightCv = null;
   function lighting(pmx, pmy) {
@@ -372,12 +393,12 @@
     if (scene.kind === 'station') {
       const pv = s.phase === 'morning' ? E.previewNight(s) : null;
       const lit = pv ? !pv.ev.dark : !s.dark;
-      dark = lit ? 0.55 : 0.86;
-      lights.push([11.5, 7.5, 4.8 + ((tick >> 3) % 3) * 0.2]);
-      if (lit) for (const o of M.STATION.objects) if (o.lamp) lights.push([o.x + 0.5, o.y + 0.5, 5.5]);
-      if (s.flags.passage_secured) lights.push([23.5, 6.5, 3]);
+      dark = lit ? 0.40 : 0.70;
+      lights.push([M.STATION.fire[0] + 0.5, M.STATION.fire[1] + 0.5, 6 + ((tick >> 3) % 3) * 0.2]);
+      if (lit) for (const o of M.STATION.objects) if (o.lamp) lights.push([o.x + 0.5, o.y + 0.5, 5]);
+      if (s.flags.passage_secured) lights.push([M.STATION.passageLight[0], M.STATION.passageLight[1], 3]);
     } else if (scene.kind === 'prologue') {
-      dark = 0.9; tintRed = scene.key === 'car';
+      dark = scene.key === 'car' ? 0.75 : 0.85; tintRed = scene.key === 'car';
       if (scene.key === 'car' && (tick >> 5) % 3 !== 0) for (const x of [4, 11, 18]) lights.push([x + 0.5, 1, 3.5]);
       const L = LEFT[scene.key];
       if (L) for (const [x, y] of L.phones) lights.push([x + 0.55, y + 0.5, 0.9]);
@@ -385,10 +406,10 @@
     }
     if (scene.kind === 'prologue' && scene.key === 'tunnel') {
       // 휴대폰 손전등: 보는 쪽으로 원뿔, 발밑은 조금만
-      const [dx, dy] = DIRS[scene.face]; cones.push([pmx + 0.5, pmy + 0.4, Math.atan2(dy, dx), 5.5]);
-      lights.push([pmx + 0.5, pmy + 0.4, 1.6]);
-    } else lights.push([pmx + 0.5, pmy + 0.3, scene.kind === 'station' ? 2.4 : scene.kind === 'dungeon' ? 4.6 : 3.6]);
-    if (scene.kind === 'dungeon') { dark = 0.8; for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) lights.push([x + 0.5, y + 0.5, 1.6]); }
+      const [dx, dy] = DIRS[scene.face]; cones.push([pmx + 0.5, pmy + 0.4, Math.atan2(dy, dx), 6.5]);
+      lights.push([pmx + 0.5, pmy + 0.4, 2]);
+    } else lights.push([pmx + 0.5, pmy + 0.3, scene.kind === 'station' ? 3.5 : scene.kind === 'dungeon' ? 5 : 4]);
+    if (scene.kind === 'dungeon') { dark = 0.70; for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) lights.push([x + 0.5, y + 0.5, 1.6]); }
     g.fillStyle = `rgba(0,0,0,${dark})`; g.fillRect(0, 0, lightCv.width, lightCv.height);
     g.globalCompositeOperation = 'destination-out';
     for (const [x, y, r] of lights) {
@@ -411,7 +432,7 @@
       if (L) for (const [x, y] of L.phones) glow(x + 0.55, y + 0.5, 1, 'rgba(60,110,130,0.25)');
       if (L && L.shaft) glow(L.shaft[0] + 0.5, L.shaft[1] + 0.8, 2.2, `rgba(90,90,85,${0.25 + 0.08 * Math.sin(tick / 40)})`);
     }
-    if (scene.kind === 'station') glow(11.5, 7.5, 4.4, 'rgba(110,50,10,0.22)');
+    if (scene.kind === 'station') glow(M.STATION.fire[0] + 0.5, M.STATION.fire[1] + 0.5, 4.4, 'rgba(110,50,10,0.22)');
     ctx.restore();
     if (scene.kind === 'station') { ctx.fillStyle = 'rgba(208,120,50,0.08)'; ctx.beginPath(); ctx.arc(11.5 * T, 7.5 * T, 3.8 * T, 0, Math.PI * 2); ctx.fill(); }
     if (tintRed && (tick >> 5) % 3 !== 0) { ctx.fillStyle = 'rgba(140,20,20,0.16)'; ctx.fillRect(0, 0, scene.w * T, scene.h * T); }
@@ -419,42 +440,46 @@
   function drawStation(s, sprites) {
     // 침수: 선로부터 물이 찬다
     const fl = s.flood;
-    const rowsW = [];
-    if (fl >= 1) rowsW.push([10, fl >= 3 ? 1 : 0.5], [11, fl >= 2 ? 1 : 0.6]);
-    if (fl >= 5) rowsW.push([9, fl >= 6 ? 0.9 : 0.5]);
-    if (fl >= 7) rowsW.push([8, 0.6]);
-    for (const [y, a] of rowsW) { ctx.globalAlpha = 0.75 * a; for (let x = 1; x < 23; x++) ctx.drawImage(ART.tile('water', x, y), x * T, y * T); ctx.globalAlpha = 1; }
+    const rowsW = M.STATION.floodRows.filter(([, from]) => fl >= from).map(([y, from, a]) => [y, fl >= from + 1 ? a : a * 0.5]);
+    for (const [y, a] of rowsW) { ctx.globalAlpha = 0.75 * a; for (let x = 1; x < scene.w - 1; x++) ctx.drawImage(ART.tile('water', x, y), x * T, y * T); ctx.globalAlpha = 1; }
     // 멈춘 2호선 전동차
-    const tx = 2 * T, ty = 10 * T;
+    const tx = M.STATION.train[0] * T, ty = M.STATION.train[1] * T, tn = M.STATION.train[2];
     if (ART.has('props/door')) {             // 2호선 전동차: 출입문 그림을 이어 붙인다
       const door = ART.prop('door');
-      for (let k = 0; k < 7; k++) ctx.drawImage(door, tx + k * T, ty, T, 2 * T);
-      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(tx, ty, 7 * T, 2 * T);
+      for (let k = 0; k < tn; k++) ctx.drawImage(door, tx + k * T, ty, T, 2 * T);
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(tx, ty, tn * T, 2 * T);
     } else {
     ctx.fillStyle = '#5b5049'; ctx.fillRect(tx, ty + 2, 7 * T, 2 * T - 6);
     ctx.fillStyle = '#7d7067'; ctx.fillRect(tx, ty + 2, 7 * T, 4);
     ctx.fillStyle = '#2a6b3c'; ctx.fillRect(tx, ty + 38, 7 * T, 8);
     for (let k = 0; k < 6; k++) { ctx.fillStyle = '#0d171c'; ctx.fillRect(tx + 12 + k * 36, ty + 12, 22, 18); ctx.fillStyle = 'rgba(134,163,168,0.25)'; ctx.fillRect(tx + 14 + k * 36, ty + 14, 6, 6); }
     }
-    ctx.fillStyle = '#050404'; ctx.fillRect(23 * T, 10 * T, T, 2 * T);
+    for (const o of M.STATION.objects) if (o.id.startsWith('exitB')) { ctx.fillStyle = '#050404'; ctx.fillRect(o.x * T, o.y * T, T, T); }
     // 바닥 얼룩·꾸밈
-    for (const d of M.STATION.decor || []) if (!d.solid) ctx.drawImage(ART.prop(d.prop), d.x * T, d.y * T);
+    for (const d of M.STATION.decor || []) if (!d.solid) drawProp(d.prop, d.x * T, d.y * T);
     // 시설 자리
-    if (s.facility === 'farm') for (const x of [10, 12]) ctx.drawImage(ART.prop('mush'), x * T, 1 * T);
-    if (s.facility === 'clinic') { ctx.drawImage(ART.prop('cross'), 11 * T, 1 * T); ctx.drawImage(ART.prop('bed'), 12 * T, 1 * T); }
-    if (s.project && s.project.id !== 'repair') { ctx.drawImage(ART.prop('crate'), 11 * T, 1 * T); ctx.drawImage(ART.prop('rubble'), 12 * T, 1 * T); }
-    (s.buried || []).forEach((id, i) => ctx.drawImage(ART.prop('grave'), (19 + i % 3) * T, (3 + Math.floor(i / 3)) * T));
+    const [fx, fy] = M.STATION.facilityAt;
+    if (s.facility === 'farm') for (const x of [fx, fx + 1]) drawProp('mush', x * T, fy * T);
+    if (s.facility === 'clinic') { drawProp('cross', fx * T, fy * T); drawProp('bed', (fx + 1) * T, fy * T); }
+    if (s.project && s.project.id !== 'repair') { drawProp('crate', fx * T, fy * T); drawProp('rubble', (fx + 1) * T, fy * T); }
+    (s.buried || []).forEach((id, i) => drawProp('grave', (M.STATION.graves[0] + i % 3) * T, (M.STATION.graves[1] - Math.floor(i / 3)) * T));
+    // 잠긴 역무실 문, 안개에 잠긴 출구 계단
+    for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) {
+      const t = tileAt(x, y);
+      if (t === 'k' && !s.flags.office_open) sprites.push([y - 0.5, () => drawProp('chaindoor', x * T, y * T)]);
+      if (t === 'S') { drawProp('stairsUp', x * T, y * T); ctx.fillStyle = `rgba(170,170,165,${0.35 + 0.08 * Math.sin(tick / 30)})`; ctx.fillRect(x * T, y * T, T, T); }
+    }
     const P = { fire: 'drum', board: 'board', gen: 'generator', pump: 'tank', drainpump: 'pump', stash: 'crate', stash2: 'sack', bed1: 'bed', bed2: 'bed', bed3: 'bed', repair: 'rubble', repair2: 'rubble', exitA: 'stairsUp', exitA2: 'stairsUp' };
     for (const o of M.STATION.objects) {
       const pr = P[o.id]; if (!pr) continue;
       if (o.id.startsWith('repair') && s.flags.passage_secured) continue;
-      sprites.push([o.y - 0.5, () => ctx.drawImage(ART.prop(pr), o.x * T, o.y * T)]);
+      sprites.push([o.y - 0.5, () => drawProp(pr, o.x * T, o.y * T)]);
     }
-    for (const d of M.STATION.decor || []) if (d.solid) sprites.push([d.y - 0.5, () => ctx.drawImage(ART.prop(d.prop), d.x * T, d.y * T)]);
-    for (const o of M.STATION.objects) if (o.lamp) ctx.drawImage(ART.prop('lamp'), o.x * T, (o.y - 1) * T + 12 * K);
-    if (s.project && s.project.id === 'repair') ctx.drawImage(ART.prop('crate'), 22 * T, 8 * T);
+    for (const d of M.STATION.decor || []) if (d.solid) sprites.push([d.y - 0.5, () => drawProp(d.prop, d.x * T, d.y * T)]);
+    for (const o of M.STATION.objects) if (o.lamp) drawProp('lamp', o.x * T + 6 * K, (o.y - 1) * T + 8 * K);
+    if (s.project && s.project.id === 'repair') drawProp('crate', M.STATION.projectCrate[0] * T, M.STATION.projectCrate[1] * T);
     if (!ART.has('props/drum')) sprites.push([7.4, () => ctx.drawImage(ART.flame((tick >> 3) % 2), 11 * T, 6 * T + 4 * K)]);
-    if (s.exposure > 0) { ctx.fillStyle = `rgba(150,150,150,${0.05 * s.exposure})`; ctx.fillRect(T, T, 3 * T, 2 * T); }
+    if (s.exposure > 0) { ctx.fillStyle = `rgba(150,150,150,${0.05 * s.exposure})`; ctx.fillRect(M.STATION.smoke[0] * T, M.STATION.smoke[1] * T, 3 * T, 2 * T); }
   }
   function drawDungeon(sprites) {
     const d = scene.dun;
@@ -463,9 +488,9 @@
     for (const [spr, x, y] of d.deco || []) {
       if (blockedRaw(x, y)) continue;
       const name = ART.has('props/' + spr) ? spr : FALL[spr] || spr;
-      if (spr === 'sludge') ctx.drawImage(ART.prop(name), x * T, y * T); else sprites.push([y - 0.5, () => ctx.drawImage(ART.prop(name), x * T, y * T)]);
+      if (spr === 'sludge') drawProp(name, x * T, y * T); else sprites.push([y - 0.5, () => drawProp(name, x * T, y * T)]);
     }
-    for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) { const bob = (tick >> 5) % 2; ctx.drawImage(ART.prop('mark'), x * T, y * T - 4 - bob); }
+    for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) if (tileAt(x, y) === 'm' && !scene.visited.has(x + ',' + y)) { const bob = (tick >> 5) % 2; drawProp('mark', x * T, y * T - 4 - bob); }
   }
   // 프롤로그 바닥: 사람들이 사라진 흔적 (위치는 고정)
   const LEFT = {
@@ -488,13 +513,13 @@
     const SH = ['shoes', 'heel', 'sneaker'];
     L.shoes.forEach(([x, y], i) => {
       const X = x * T + ((i * 13) % 20) * K, Y = y * T + ((i * 7) % 14 + 4) * K;
-      if (ART.has('props/' + SH[i % 3])) { small(SH[i % 3], X, Y, 0.55); return; }
+      if (ART.has('props/' + SH[i % 3])) { small(SH[i % 3], X, Y, 1); return; }
       ctx.fillStyle = SHOE[i % SHOE.length]; ctx.fillRect(X, Y + 8 * K, 10 * K, 4 * K);
     });
-    L.bags.forEach(([x, y], i) => ctx.drawImage(ART.prop(i % 2 && ART.has('props/briefcase') ? 'briefcase' : ART.has('props/backpack') ? 'backpack' : 'sack'), x * T, y * T));
+    L.bags.forEach(([x, y], i) => drawProp(i % 2 && ART.has('props/briefcase') ? 'briefcase' : ART.has('props/backpack') ? 'backpack' : 'sack', x * T, y * T));
     L.phones.forEach(([x, y], i) => {
       const on = (tick >> 6) % 7 !== i;                              // 가끔 꺼졌다 켜진다
-      if (ART.has('props/phone')) { small('phone', x * T + 14 * K, y * T + 12 * K, 0.45, on ? 1 : 0.45); return; }
+      if (ART.has('props/phone')) { small('phone', x * T + 10 * K, y * T + 6 * K, 1, on ? 1 : 0.45); return; }
       ctx.fillStyle = on ? '#9fd2e0' : '#0b0b0d'; ctx.fillRect(x * T + 18 * K, y * T + 16 * K, 6 * K, 10 * K);
     });
     if (L.shaft) {                                                   // 환기 통로: 잿빛이 새어 나온다
@@ -506,8 +531,8 @@
   function drawPrologue(s, sprites) {
     drawLeftovers(scene.key);
     for (const o of mapObjects()) {
-      if (o.id === 'collapse') { for (let k = 0; k < 3; k++) sprites.push([o.y + k, () => ctx.drawImage(ART.prop('rubble'), o.x * T, (o.y + k) * T)]); continue; }
-      sprites.push([o.y - 0.5, () => ctx.drawImage(ART.prop(o.prop), o.x * T, o.y * T)]);
+      if (o.id === 'collapse') { for (let k = 0; k < 3; k++) sprites.push([o.y + k, () => drawProp('rubble', o.x * T, (o.y + k) * T)]); continue; }
+      sprites.push([o.y - 0.5, () => drawProp(o.prop, o.x * T, o.y * T)]);
     }
   }
 
@@ -616,8 +641,15 @@
     if (id === 'board') { tutDone('board'); return boardFlow(); }
     if (id === 'stash') {
       const items = Object.keys(D.ITEMS).filter((k) => s.items[k]).map((k) => D.ITEMS[k]);
-      return UI.open(`<p class="title">창고</p><div class="grid2">${Object.keys(D.RES).map((k) => `<span>${D.RES[k]}</span><b>${s.res[k]} / ${D.CAP[k]}</b>`).join('')}</div><p class="mini">도구: ${esc(items.join(', ') || '없음')} · 근처 식량 ${s.forage} · 비상 해체 부품 ${s.salvageLeft}</p>`);
+      return UI.open(`<p class="title">창고</p><div class="grid2">${Object.keys(D.RES).map((k) => `<span>${D.RES[k]}</span><b>${s.res[k]} / ${D.CAP[k]}</b>`).join('')}</div><p class="mini">도구: ${esc(items.join(', ') || '없음')} · 근처 식량 ${s.forage}</p>`);
     }
+    if (id === 'office') {
+      if (s.flags.office_open) return UI.open('<p class="title">역무실</p><p>창고와 서류가 있다. 순례의 열쇠로 열었다.</p>');
+      if (s.day >= 2) { act({ type: 'setFlag', flag: 'office_open' }); return UI.lines('순례가 조끼 주머니에서 열쇠를 꺼낸다. “삼십 년 닦은 역이야. 열쇠 하나쯤은 있지.” 역무실 문이 열렸다.', { name: '김순례', face: ART.portrait('soonrye').toDataURL() }); }
+      return UI.open('<p class="title">역무실 문</p><p>잠겨 있다. 안에 창고가 보인다. 순례가 열쇠를 찾아보겠다고 한다. (내일)</p>');
+    }
+    if (id === 'exitC') return UI.open('<p class="title">출구 계단</p><p>잿빛 안개가 계단 한가운데에서 벽처럼 멈춰 있다. 가장자리에 재가 쌓였다. 올라갈 수 없다.</p>');
+    if (id === 'chalk') return UI.open(`<p class="title">분필 벽</p><p>누군가 벽에 세로줄을 그어 두었다.</p><p style="letter-spacing:.3em;font-size:22px">${'|'.repeat(Math.max(1, s.gods.seel || 0))}</p><p class="mini">시선 「${esc(D.GODS.seel.alias)}」 ${s.gods.seel || 0}</p>`);
     if (id === 'repair') {
       const tr = E.trainInfo(s);
       return UI.open(`<p class="title">무너진 통로</p><p>${s.flags.passage_secured ? '고지대 역으로 길이 이어졌다.' : s.flags.repair_open ? '도현의 열쇠로 열 수 있다. 게시판에서 착공하고 공사 작업에 사람을 넣어야 한다.' : '잔해가 길을 막고 있다. 이 너머로 고지대 역이 있다고 한다. 수문 방면에서 배수 정비공을 찾아야 할 것 같다.'}</p><p class="mini">열차 정원: ${tr.passage ? `${tr.cap}명` : '통로가 이어져야 열차가 닿는다'}</p>`);
@@ -673,7 +705,7 @@
   // ── 출구: 원정 준비 ──
   async function exitTo(region) {
     const s = state;
-    const back = () => { scene.px = region === 'A' ? 2 : 22; scene.py = region === 'A' ? 2 : 9; scene.stationPos = [scene.px, scene.py]; };
+    const back = () => { [scene.px, scene.py] = M.STATION.exitBack[region]; scene.stationPos = [scene.px, scene.py]; };
     if (s.expDone) { await UI.open('<p>오늘은 이미 지상에 다녀왔다.</p>'); back(); return; }
     if (s.closed[region] > 0) { await UI.open(`<p>${esc(D.REGION_NAMES[region])} 길이 막혀 있다. (${s.closed[region]}일)</p>`); back(); return; }
     const R = D.REGIONS[region];
@@ -756,7 +788,7 @@
   function afterReturn() {
     const last = state.log[0];
     scene.key = ''; enterStation(false);
-    scene.px = scene.stationPos ? scene.stationPos[0] : 11; scene.py = scene.stationPos ? scene.stationPos[1] : 8;
+    scene.px = scene.stationPos ? scene.stationPos[0] : M.STATION.start[0]; scene.py = scene.stationPos ? scene.stationPos[1] : M.STATION.start[1];
     if (last) UI.toast(last.text, 3200);
   }
   async function expStatus() {
@@ -1038,7 +1070,7 @@
     if (s.day === 1 && !tut.ended) return '사람에게 말을 걸어 일을 바꾸거나, 화로 앞에서 하루를 마치자';
     if (s.flags.repair_open && !s.flags.passage_secured && !s.project) return '게시판에서 통로 수리를 착공하자';
     if (!s.flags.met_dohyeon && !s.flags.skipped_dohyeon && !s.expDone) return '수문 방면(오른쪽 아래 터널)에서 도울 사람을 찾자';
-    if (!s.flags.met_eunchae && !s.flags.skipped_eunchae && !s.expDone) return '시장 방면(왼쪽 위 계단)에서 약국을 찾자';
+    if (!s.flags.met_eunchae && !s.flags.skipped_eunchae && !s.expDone) return '시장 방면(왼쪽 개찰구 밖 통로)에서 약국을 찾자';
     return `D${D.GOAL_DAY} 열차까지 ${D.GOAL_DAY - s.day}일 — 통로를 잇고 사람을 지키자`;
   }
   let tut = {};
