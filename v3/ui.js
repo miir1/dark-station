@@ -12,9 +12,10 @@
     if (cur) close(undefined);
     const options = (o.options && o.options.length ? o.options : [{ label: o.next || '계속', value: true }]);
     const dlg = $('dlg');
-    dlg.className = o.center ? 'center' : o.full ? 'full' : '';
+    dlg.className = (o.center ? 'center' : o.full ? 'full' : '') + (o.grid ? ' grid' : '');
+    // op.icon: 아이콘 HTML (글 앞에), o.grid: 큰 타일로 (메뉴)
     dlg.innerHTML = `<div class="box" role="dialog" aria-modal="true">${body}<div class="opts">${options.map((op, i) =>
-      `<button type="button" class="opt" data-i="${i}" ${op.disabled ? 'disabled' : ''}>${esc(op.label)}${op.sub ? `<small>${op.sub}</small>` : ''}</button>`).join('')}</div></div>`;
+      `<button type="button" class="opt${op.icon ? ' has-ic' : ''}" data-i="${i}" ${op.disabled ? 'disabled' : ''}>${op.icon || ''}<span class="ol">${esc(op.label)}${op.sub ? `<small>${op.sub}</small>` : ''}</span></button>`).join('')}</div></div>`;
     dlg.hidden = false;
     openedAt = Date.now();
     return new Promise((resolve) => {

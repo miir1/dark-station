@@ -120,3 +120,62 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 15px; line-heig
 @keyframes ds-flash { 0% { opacity: .35; } 100% { opacity: 0; } }
 @keyframes ds-flash2 { 0% { opacity: .6; } 30% { opacity: .2; } 50% { opacity: .45; } 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { #app.hurt, #app.hurt2 { animation: none; } }
+
+/* ── 아이콘 UI ── */
+.ic { width: 18px; height: 18px; image-rendering: pixelated; vertical-align: -4px; margin-right: 2px; flex: none; }
+.ic-t { display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 10px; border: 1px solid #5d5548; border-radius: 3px; color: #c9b48a; background: #1d1a15; }
+.ic.off { opacity: .35; filter: grayscale(1); }
+.pf { image-rendering: pixelated; border: 1px solid #3a342b; background: #120f0d; flex: none; vertical-align: middle; }
+#hud { cursor: pointer; }
+#hud .it { display: inline-flex; align-items: center; gap: 1px; }
+#hud .it .ic { width: 20px; height: 20px; }
+#hud .it.train b { color: var(--accent); }
+#hud .help { width: 18px; height: 18px; border: 1px solid var(--line); border-radius: 50%; justify-content: center; font-size: 11px; margin-left: auto; }
+/* 선택지 앞 아이콘 */
+#dlg .opt.has-ic { display: flex; gap: 8px; align-items: center; }
+#dlg .opt.has-ic .ic { width: 28px; height: 28px; }
+#dlg .opt.sel.has-ic::before { content: none; }
+#dlg .opt .ol { flex: 1; }
+/* 메뉴 타일 */
+#dlg.grid .opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+#dlg.grid .opt.has-ic { flex-direction: column; justify-content: center; min-height: 88px; text-align: center; gap: 4px; font-size: 14px; }
+#dlg.grid .opt.has-ic .ic { width: 40px; height: 40px; margin: 0; }
+#dlg.grid .opt .ic-t { width: 40px; height: 40px; font-size: 18px; }
+/* 사람 카드 */
+#dlg .card { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid #2c271f; align-items: flex-start; }
+#dlg .card:first-of-type { border-top: 0; }
+#dlg .card.dead { opacity: .45; filter: grayscale(1); }
+#dlg .card .cb { flex: 1; min-width: 0; }
+#dlg .card p { margin: 0 0 3px; }
+#dlg .cs { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; font-size: 13px; }
+#dlg .cs .bar { width: 64px; margin: 0 2px 0 0; }
+#dlg .cs b.hot { color: var(--bad); }
+#dlg .cs .tr { color: var(--accent); letter-spacing: 1px; font-size: 11px; }
+#dlg .sk { display: inline-flex; gap: 6px; }
+#dlg .sk > span { display: inline-flex; align-items: center; }
+#dlg .task { display: inline-flex; align-items: center; color: var(--accent); margin-left: auto; }
+#dlg .today { background: #1d1a15; border-left: 2px solid var(--accent); padding: 4px 8px; font-size: 14px; }
+#dlg .today .ic { width: 24px; height: 24px; }
+#dlg .good { color: var(--good); } #dlg .bad { color: var(--bad); }
+#dlg .who .pf { margin-right: 4px; }
+/* 게시판 칩 */
+#dlg .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 6px; }
+#dlg .chip { display: flex; align-items: center; gap: 4px; background: #1d1a15; border: 1px solid #2c271f; padding: 3px; font-size: 12px; min-width: 0; }
+#dlg .chip .cn2 { font-weight: 700; flex: none; }
+#dlg .chip .ic { width: 22px; height: 22px; }
+#dlg .chip .co { min-width: 0; line-height: 1.25; }
+#dlg .chip .co small { display: block; color: var(--dim); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 숫자 변화 */
+#dlg .deltas { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 14px; margin: 2px 0 6px; }
+#dlg .dl { display: inline-flex; align-items: center; }
+#dlg .dl .ic { width: 22px; height: 22px; }
+#dlg .dl.down b { color: var(--bad); } #dlg .dl.up b { color: var(--good); }
+/* 아이콘 뜻 */
+#dlg .legend p { display: flex; gap: 8px; align-items: center; margin: 0 0 4px; font-size: 13px; }
+#dlg .legend .ic { width: 26px; height: 26px; }
+#dlg .goals { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 13px; }
+#dlg .goals .ic { width: 24px; height: 24px; }
+#dlg .goals .badge { margin-left: 0; }
+#dlg .opt:disabled .ic, #dlg .opt:disabled .pf { opacity: .4; filter: grayscale(.8); }
+#dlg .opt .pf { width: 36px; height: 36px; }
+#dlg .opt small .ic { width: 16px; height: 16px; }

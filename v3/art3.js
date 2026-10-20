@@ -255,6 +255,8 @@
     lever(B) { B.rect(4, 2, 8, 12, 'blood', 0); B.rect(5, 3, 6, 10, 'ash', 0); B.rect(7, 4, 2, 7, 'gold', 2); B.ell(8, 4, 2, 1.5, 'blood', 2); },
     seat(B) { B.rect(0, 3, 16, 10, 'green', 0); B.rect(0, 3, 16, 3, 'green', 1); B.rect(0, 13, 16, 3, 'ash', 0); },
     door(B) { B.rect(1, 0, 14, 16, 'ash', 1); B.rect(3, 2, 4, 7, 'sea', 2); B.rect(9, 2, 4, 7, 'sea', 2); B.rect(7, 0, 2, 16, 'ink', 1); },
+    radio(B) { B.rect(5, 3, 6, 10, 'ink', 1); B.rect(6, 5, 4, 3, 'green', 2); B.rect(6, 9, 4, 3, 'ash', 0); B.rect(9, 0, 1, 3, 'ash'); B.line(8, 13, 10, 16, 'ink', 1); },
+    medkit(B) { B.rect(2, 4, 12, 9, 'blood', 1); B.rect(2, 4, 12, 2, 'blood', 2); B.rect(7, 6, 2, 6, 'white'); B.rect(5, 8, 6, 2, 'white'); B.rect(6, 2, 4, 2, 'ash', 0); },
     cross(B) { B.rect(6, 3, 4, 11, 'white'); B.rect(3, 6, 10, 4, 'white'); B.rect(7, 4, 2, 9, 'blood', 2); B.rect(4, 7, 8, 2, 'blood', 2); },
   };
   const propCache = new Map();

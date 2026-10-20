@@ -127,16 +127,11 @@
     objects: [
       { id: 'lever', x: 20, y: 2, prop: 'lever', name: '비상 레버', pro: 0, choice: 0 },
       { id: 'bag', x: 10, y: 4, prop: 'sack', name: '좌석 밑 가방', pro: 0, choice: 1 },
+      // 맨 앞 운전실 (2장)
+      { id: 'radio', x: 20, y: 4, prop: 'radio', name: '운전실 무전기', pro: 1, choice: 0 },
+      { id: 'medkit', x: 19, y: 4, prop: 'medkit', name: '운전실 구급함', pro: 1, choice: 1 },
     ],
-    // 승객들: 프롤로그 2장에서 말을 걸면 선택이 된다
-    npcs: [
-      { id: 'gicheol', x: 16, y: 2, choice: 0, line: '박기철: “정전이 아니오. 변전소가 통째로 나갔소. 앞쪽이 을지로입구역이오. 걸어서 십 분.”' },
-      { id: 'soonrye', x: 17, y: 4, choice: 1, line: '김순례: “다들 나갔어. 안개가 들어오고, 누가 이름을 부른다고… 하나씩 신발을 벗고 걸어 나갔어.”' },
-      { id: 'mari', x: 18, y: 3, choice: 2, line: '정마리: “당신, 계속 쓰러져 있었어요. 그래서 못 들은 거예요. …운이 좋았던 거죠.”' },
-      { id: 'seoha', x: 15, y: 4, line: '윤서하: “엄마한테 문자를 보냈는데… 계속 ‘전송 중’이에요.”' },
-      { id: 'eunji', x: 14, y: 2, line: '최은지: “시장 사람들은 이런 거 익숙해요. …아니, 거짓말이에요.”' },
-      { id: 'dongha', x: 13, y: 3, line: '한동하: “짐은 제가 다 들게요. 누나 옆에만 있게 해 주세요.”' },
-    ],
+    npcs: [],              // 혼자 깨어난다
   };
   const TUNNEL = {
     id: 'tunnel', rows: [
@@ -148,10 +143,12 @@
     ],
     start: [1, 2],
     objects: [
-      { id: 'shelter', x: 9, y: 1, prop: 'crate', name: '대피 공간의 비상 상자', pro: 2, choice: 1 },
-      { id: 'collapse', x: 17, y: 1, h: 3, prop: 'rubble', name: '무너진 구간', pro: 2, choice: 2, walk: true },
+      { id: 'shelter', x: 9, y: 1, prop: 'crate', name: '대피 공간의 비상 상자' },
+      { id: 'collapse', x: 17, y: 1, h: 3, prop: 'rubble', name: '무너진 구간', pro: 2, walk: true },
     ],
-    npcs: [{ id: 'gicheol', x: 3, y: 1, choice: 0, line: '' }],
+    // 무너진 잔해 앞에서 정비사 기철을 만난다 (가까이 가면 저절로)
+    npcs: [{ id: 'gicheol', x: 16, y: 1 }],
+    meetX: 12,
   };
 
   // ── 원정 던전 생성기: 같은 씨앗이면 같은 지도. 방을 흩고 통로로 잇는다 ──

@@ -42,10 +42,22 @@
   // 장면 그림 (img/cg/…) — 있으면 대화창 위에
   const cgSrc = (key) => (ART.has('cg/' + key) ? 'img/cg/' + key + '.png' : '');
   const cgImg = (key) => (cgSrc(key) ? `<img class="cg" alt="" src="${cgSrc(key)}">` : '');
+  // ── 아이콘: img/icons/<이름> 이 있으면 그림, 없으면 글자 ──
+  const IC_ALT = { food: '식', water: '물', parts: '부', meds: '약', power: '전', flood: '침', exposure: '노', stress: '스', injury: '상', trust: '신', obs: '관', str: '완', tech: '기', talk: '말', day: '日', train: '열', people: '사', gods: '시', log: '일', sound: '소', restart: '↺', board: '판', rest: '휴', forage: '수', pump: '물', salvage: '해', gen: '발', drain: '배', guard: '경', build: '공', tend: '치', farm: '재' };
+  const IC_SRC = { tend: 'meds', farm: 'food' };   // 따로 그리지 않은 일은 비슷한 아이콘으로
+  const ic = (name, cls) => { const n = ART.has('icons/' + name) ? name : IC_SRC[name] || name; return ART.has('icons/' + n) ? `<img class="ic ${cls || ''}" alt="" src="img/icons/${n}.png">` : `<i class="ic ic-t ${cls || ''}">${IC_ALT[name] || '·'}</i>`; };
+  const IC_NAME = { food: '식량', water: '물', parts: '부품', meds: '약품', power: '전력', flood: '침수 (5 이상이면 발전 정지, 8이면 역이 잠긴다)', exposure: '노출 (높으면 밤에 무언가 찾아온다)', stress: '스트레스 (80부터 무너질 수 있다)', injury: '부상', trust: '신뢰', obs: '관찰', str: '완력', tech: '기술', talk: '말솜씨', train: '구조열차까지 남은 날' };
+  const face = (id, hurt, px) => `<img class="pf" alt="" src="${ART.portrait(id, hurt).toDataURL()}" style="width:${px || 48}px;height:${px || 48}px">`;
+  // 숫자 변화: 아이콘 6→4 (줄면 붉게)
+  const delta = (k, a, b) => `<span class="dl ${b < a ? 'down' : b > a ? 'up' : ''}">${ic(k)}${a}${a !== b ? `→<b>${b}</b>` : ''}</span>`;
+  const skillsRow = (r) => `<span class="sk">${['obs', 'str', 'tech', 'talk'].map((k) => `<span title="${D.SKILLS[k]}">${ic(k)}${r.skills[k]}</span>`).join('')}</span>`;
   // ── 공통 문장 ──
   const resText = (o) => Object.entries(o).filter(([, v]) => v).map(([k, v]) => `${D.RES[k]} ${v > 0 ? '+' : '−'}${Math.abs(v)}`).join(' · ');
   const reps = (arr) => arr.map((l) => `<p class="rep ${l.kind || ''}">${esc(l.text)}</p>`).join('');
-  const fx = (arr) => (arr && arr.length ? `<ul class="fx">${arr.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>` : '');
+  // 결과 줄의 '식량 +3' 같은 변화는 아이콘 + 숫자로
+  const WORD_IC = { 식량: 'food', 물: 'water', 부품: 'parts', 약품: 'meds', 스트레스: 'stress', 침수: 'flood', 노출: 'exposure', 전력: 'power' };
+  const iconize = (t) => esc(t).replace(/(식량|물|부품|약품|스트레스|침수|노출|전력) ([+−-]\d+)/g, (m, w, n) => `<span class="dl ${/^[−-]/.test(n) === (w === '스트레스' || w === '침수' || w === '노출') ? 'up' : 'down'}">${ic(WORD_IC[w])}<b>${n}</b></span>`);
+  const fx = (arr) => (arr && arr.length ? `<ul class="fx">${arr.map((l) => `<li>${iconize(l)}</li>`).join('')}</ul>` : '');
   const bar = (v, max, hot) => `<span class="bar ${hot ? 'hot' : ''}"><i style="width:${Math.max(0, Math.min(100, Math.round(v / max * 100)))}%"></i></span>`;
   function choiceSub(c) {
     const bits = [];
@@ -83,8 +95,9 @@
     const s = state;
     if (s.phase === 'prologue') { $('hud').innerHTML = '<span class="day">프롤로그</span>'; return; }
     const need = Math.ceil((1 + E.alive(s).length) * 0.5);
-    const it = (k) => { const low = (k === 'food' || k === 'water') ? s.res[k] < need * 2 : s.res[k] === 0; return `<span class="it ${low ? 'low' : ''}">${D.RES[k]} <b>${s.res[k]}</b></span>`; };
-    let h = `<span class="day">D${Math.min(s.day, D.GOAL_DAY)}/${D.GOAL_DAY}</span>${['food', 'water', 'parts', 'meds'].map(it).join('')}<span class="it ${s.flood >= E.FLOOD_POWER_STOP ? 'warn' : ''}">침수 <b>${s.flood}</b>/8</span><span class="it ${s.exposure >= 6 ? 'warn' : ''}">노출 <b>${s.exposure}</b>/8</span>`;
+    const it = (k) => { const low = (k === 'food' || k === 'water') ? s.res[k] < need * 2 : s.res[k] === 0; return `<span class="it ${low ? 'low' : ''}">${ic(k)}<b>${s.res[k]}</b></span>`; };
+    const left = Math.max(0, D.GOAL_DAY - s.day);
+    let h = `<span class="day">D${Math.min(s.day, D.GOAL_DAY)}</span><span class="it train">${ic('train')}<b>${left ? left + '일' : '오늘'}</b></span>${['food', 'water', 'parts', 'meds'].map(it).join('')}<span class="it ${s.flood >= E.FLOOD_POWER_STOP ? 'warn' : ''}">${ic('flood')}<b>${s.flood}</b>/8</span><span class="it ${s.exposure >= 6 ? 'warn' : ''}">${ic('exposure')}<b>${s.exposure}</b>/8</span><span class="it help">?</span>`;
     if (s.phase === 'expedition' && s.exp) { const v = E.expView(s); h += `<span class="hours">${v.hours}/${v.normal}시간 · 보급 ${v.have.food}/${v.need.food}</span>`; }
     $('hud').innerHTML = h;
   }
@@ -127,8 +140,7 @@
   function residentsOnMap() {
     const s = state;
     if (scene.kind === 'prologue') {
-      if (scene.key === 'car') return M.CAR.npcs.map((n) => ({ r: E.byId(s, n.id) || { id: n.id, name: D.PEOPLE[n.id].name, injury: 0 }, x: n.x, y: n.y, npc: n }));
-      if (scene.key === 'tunnel' && s.pro === 2 && !s.proResult) return M.TUNNEL.npcs.map((n) => ({ r: E.byId(s, n.id), x: n.x, y: n.y, npc: n }));
+      if (scene.key === 'tunnel' && s.pro === 2) return M.TUNNEL.npcs.map((n) => ({ r: E.byId(s, n.id), x: n.x, y: n.y, npc: n }));
       return [];
     }
     if (scene.kind !== 'station') return [];
@@ -521,6 +533,7 @@
     const t = tileAt(scene.px, scene.py);
     if (scene.kind === 'prologue') {
       if (t === 'o' && state.pro >= 2) { enterPrologue(M.TUNNEL); flow(() => sceneIntro()); }
+      if (scene.key === 'tunnel' && state.pro === 2 && !introShown.meet && scene.px >= M.TUNNEL.meetX) flow(() => meetGicheol());
       if (t === 'x') flow(() => prologueArrive());
       return;
     }
@@ -572,15 +585,13 @@
       const row = pv.ev.rows.find((x) => x.rid === r.id);
       const task = pv.ev.plan[r.id] || 'rest';
       const P = D.PEOPLE[r.id];
-      const body = `<img alt="" src="${ART.portrait(r.id, r.injury).toDataURL()}" style="float:left;width:96px;height:96px;image-rendering:pixelated;margin:0 10px 6px 0;border:1px solid #3a342b"><p class="who">${esc(r.name)} <span class="mini">${P.age}세 · ${esc(P.bio)}</span>${badges(r)}</p>
-        <p class="mini">스트레스 ${r.stress}${bar(r.stress, 100, r.stress >= 70)} · 신뢰 ${'●'.repeat(r.trust)}${'○'.repeat(4 - r.trust)}</p>
-        <p class="mini">관찰 ${r.skills.obs} · 완력 ${r.skills.str} · 기술 ${r.skills.tech} · 말솜씨 ${r.skills.talk} · ${esc(D.TRAITS[r.good].name)}/${esc(D.TRAITS[r.bad].name)}</p>
-        <p>오늘: <b>${esc(D.TASKS[task].name)}</b>${row ? ` — ${esc(row.out)}${row.stress != null ? ` · 스트레스 ${row.stress > 0 ? '+' : ''}${row.stress}` : ''}${row.infect ? ` · 곪을 위험 ${Math.round(row.infect * 100)}%` : ''}` : ''}</p>
+      const body = personCard(r, `<p class="mini">${P.age}세 · <span class="good">${esc(D.TRAITS[r.good].name)}</span>(${esc(D.TRAITS[r.good].desc)}) · <span class="bad">${esc(D.TRAITS[r.bad].name)}</span>(${esc(D.TRAITS[r.bad].desc)})</p>`, true)
+        + `<p class="today">${ic(task)}<b>${esc(D.TASKS[task].name)}</b>${row ? ` — ${esc(row.out)}${row.stress != null ? ` · ${ic('stress')}${row.stress > 0 ? '+' : ''}${row.stress}` : ''}${row.infect ? ` · <span class="bad">곪을 위험 ${Math.round(row.infect * 100)}%</span>` : ''}` : ''}</p>
         ${r.mem.length ? `<p class="mini">${r.mem.slice(-2).reverse().map((m) => `D${m.day} ${esc(m.text)}`).join('<br>')}</p>` : ''}`;
-      const a = await UI.open(body, { options: [{ label: '할 일을 정한다', value: 'task', disabled: s.expParty.includes(r.id) }, { label: '그만', value: null }], cancel: true });
+      const a = await UI.open(body, { options: [{ label: '할 일을 바꾼다', icon: ic(task), value: 'task', disabled: s.expParty.includes(r.id) }, { label: '그만', value: null }], cancel: true });
       if (a !== 'task') return;
-      const opts = E.taskOptions(s, r.id).map((o) => ({ label: o.name + (o.id === task ? ' (지금)' : ''), sub: esc(o.disabled ? o.reason : o.desc), disabled: o.disabled, value: o.id }));
-      const t = await UI.open(`<p class="who">${esc(r.name)}의 오늘 할 일</p>`, { options: opts, cancel: true, full: true });
+      const opts = E.taskOptions(s, r.id).map((o) => ({ label: o.name + (o.id === task ? ' (지금)' : ''), icon: ic(o.id), sub: esc(o.disabled ? o.reason : o.desc), disabled: o.disabled, value: o.id }));
+      const t = await UI.open(`<p class="who">${face(r.id, r.injury, 32)} ${esc(r.name)}의 오늘 할 일</p>`, { options: opts, cancel: true, full: true });
       if (t) act({ type: 'assign', rid: r.id, task: t });
     }
   }
@@ -615,19 +626,18 @@
     const s = state;
     for (;;) {
       const pv = E.previewNight(s), ev = pv.ev, fc = E.forecast(s), tr = E.trainInfo(s);
-      const plan = E.alive(s).filter((r) => r.status === 'home').map((r) => { const row = ev.rows.find((x) => x.rid === r.id); const tn = D.TASKS[ev.plan[r.id] || 'rest'].name; return `<span>${esc(r.name)}</span><span>${esc(tn)}${row && row.out !== tn ? ' · ' + esc(row.out) : ''}</span>`; }).join('');
+      const plan = E.alive(s).filter((r) => r.status === 'home').map((r) => { const row = ev.rows.find((x) => x.rid === r.id); const tk = ev.plan[r.id] || 'rest', tn = D.TASKS[tk].name; return `<div class="chip">${face(r.id, r.injury, 32)}<span class="cn2">${esc(r.name.slice(1))}</span>${ic(tk)}<span class="co">${esc(tn)}${row && row.out !== tn ? `<small>${esc(row.out)}</small>` : ''}</span></div>`; }).join('');
       const body = `<p class="title">게시판 — D${s.day}</p>
-        <p class="mini">목표: D${D.GOAL_DAY} 구조열차 · 통로 ${s.flags.passage_secured ? '개통 ✓' : s.project && s.project.id === 'repair' ? `작업 ${s.project.progress}/2` : s.flags.repair_open ? '착공 가능' : '미확보'} · 병원 협정 ${s.flags.hospital_pact ? '✓' : '—'} · 지금 열차 정원 ${tr.passage ? tr.cap : 0}명</p>
+        <p class="goals">${ic('train')}<b>D${D.GOAL_DAY}</b><span class="badge ${s.flags.passage_secured ? 'good' : s.flags.repair_open ? 'warn' : 'bad'}">통로 ${s.flags.passage_secured ? '개통' : s.project && s.project.id === 'repair' ? `작업 ${s.project.progress}/2` : s.flags.repair_open ? '착공 가능' : '없음'}</span><span class="badge ${s.flags.hospital_pact ? 'good' : ''}">병원 협정 ${s.flags.hospital_pact ? '있음' : '없음'}</span><span class="badge ${tr.passage && tr.cap ? 'good' : 'bad'}">열차 정원 ${tr.passage ? tr.cap : 0}명</span></p>
         ${fc.length ? `<p class="tag">예보와 약속</p>${reps(fc)}` : ''}
-        <p class="tag">오늘의 배치</p><div class="grid2">${plan}</div>
-        <p class="tag">내일 아침 예상</p>${reps(pv.warnings)}
-        <p class="mini">식량 ${s.res.food}→${pv.res.food} · 물 ${s.res.water}→${pv.res.water} · 부품 ${s.res.parts}→${pv.res.parts} · 약품 ${s.res.meds}→${pv.res.meds} · 전력 ${ev.made}${ev.need ? `(필요 ${ev.need})` : ''} · 침수 ${s.flood}→${pv.flood} · 노출 ${s.exposure}→${pv.exposure}</p>`;
+        <p class="tag">오늘의 배치 <span class="mini">— 사람에게 말을 걸어 바꾼다</span></p><div class="chips">${plan}</div>
+        <p class="tag">내일 아침 예상</p><p class="deltas">${['food', 'water', 'parts', 'meds'].map((k) => delta(k, s.res[k], pv.res[k])).join('')}${delta('flood', s.flood, pv.flood)}${delta('exposure', s.exposure, pv.exposure)}<span class="dl">${ic('power')}${ev.made}${ev.need ? `/${ev.need}` : ''}</span></p>${reps(pv.warnings)}`;
       const av = E.availableProjects(s);
       const opts = [
-        { label: '추천 배치로 짠다', sub: esc('추천 기준: ' + (E.suggestWhy(s) || '모두 휴식')), value: 'suggest' },
-        { label: '어제와 같이', value: 'repeat', disabled: !Object.keys(s.lastPlan).length },
+        { label: '추천 배치로 짠다', icon: ic('board'), sub: esc('추천 기준: ' + (E.suggestWhy(s) || '모두 휴식')), value: 'suggest' },
+        { label: '어제와 같이', icon: ic('restart'), value: 'repeat', disabled: !Object.keys(s.lastPlan).length },
       ];
-      if (!s.project) for (const p of av) opts.push({ label: `공사 시작: ${p.name}`, sub: esc(`부품 ${p.cost.parts || 0}개 · 작업 ${p.work}회분 · ${p.desc}`), value: 'proj:' + p.id, disabled: !p.afford, confirm: `${p.name}: 부품 ${p.cost.parts || 0}개를 내고 착공합니다. 되돌릴 수 없어요.` });
+      if (!s.project) for (const p of av) opts.push({ label: `공사 시작: ${p.name}`, icon: ic('build'), sub: esc(`부품 ${p.cost.parts || 0}개 · 작업 ${p.work}회분 · ${p.desc}`), value: 'proj:' + p.id, disabled: !p.afford, confirm: `${p.name}: 부품 ${p.cost.parts || 0}개를 내고 착공합니다. 되돌릴 수 없어요.` });
       opts.push({ label: '닫기', value: null });
       const a = await UI.open(body, { options: opts, cancel: true, full: true });
       if (!a) return;
@@ -642,7 +652,7 @@
     const s = state;
     const pv = E.previewNight(s);
     const body = `<p class="title">화로</p><p>불 앞에 앉으면 하루가 저문다.</p>${reps(pv.warnings)}
-      <p class="mini">식량 ${s.res.food}→${pv.res.food} · 물 ${s.res.water}→${pv.res.water} · 침수 ${s.flood}→${pv.flood} · 노출 ${s.exposure}→${pv.exposure}</p>`;
+      <p class="deltas">${delta('food', s.res.food, pv.res.food)}${delta('water', s.res.water, pv.res.water)}${delta('flood', s.flood, pv.flood)}${delta('exposure', s.exposure, pv.exposure)}</p>`;
     const deathWarn = pv.deaths.length ? `${pv.deaths.map((n) => J(n, '이/가')).join(', ')} 오늘 밤 사망합니다. 그래도?` : '';
     const a = await UI.open(body, { options: [{ label: '하루를 보낸다 (저녁으로)', value: 'end', confirm: deathWarn }, { label: '아직', value: null }], cancel: true });
     if (a === 'end') { tutDone('ended'); if (act({ type: 'endDay' })) await FX.card(`D${state.day} · 저녁`, '화로 앞에 모인다', 1000); }
@@ -664,13 +674,13 @@
       const opts = E.homeRes(s).map((r) => {
         const no = r.injury >= 2 ? '중상' : r.stress >= E.STRESS_LIMIT_EXP ? `스트레스 ${r.stress}` : r.breakdown > 0 ? '무너짐' : E.noExp(r) ? '다리를 전다' : E.boundToFlame(s, r) ? '불씨지기' : '';
         const on = prep.party.includes(r.id);
-        return { label: `${on ? '✓ ' : ''}${r.name}`, sub: esc(no ? '갈 수 없음: ' + no : `관찰 ${r.skills.obs} 완력 ${r.skills.str} 기술 ${r.skills.tech} 말솜씨 ${r.skills.talk} · 스트레스 ${r.stress}`), disabled: !!no && !on, value: 'p:' + r.id };
+        return { label: `${on ? '✓ ' : ''}${r.name}`, icon: face(r.id, r.injury, 36), sub: no ? esc('갈 수 없음: ' + no) : `${skillsRow(r)} · ${ic('stress')}${r.stress}`, disabled: !!no && !on, value: 'p:' + r.id };
       });
-      const step2 = (k, label) => [{ label: `${label} +1 (지금 ${prep.pack[k]})`, value: `+:${k}`, disabled: prep.pack[k] >= Math.min(k === 'meds' ? 2 : 6, s.res[k]) }, { label: `${label} −1`, value: `-:${k}`, disabled: prep.pack[k] <= 0 }];
+      const step2 = (k, label) => [{ label: `${label} +1 (지금 ${prep.pack[k]})`, icon: ic(k), value: `+:${k}`, disabled: prep.pack[k] >= Math.min(k === 'meds' ? 2 : 6, s.res[k]) }, { label: `${label} −1`, icon: ic(k), value: `-:${k}`, disabled: prep.pack[k] <= 0 }];
       opts.push(...step2('food', '식량'), ...step2('water', '물'), ...step2('meds', '약품'));
       for (const it of Object.keys(D.ITEMS).filter((k) => s.items[k])) opts.push({ label: `${prep.pack.items.includes(it) ? '✓ ' : ''}${D.ITEMS[it]} 챙기기`, value: 'i:' + it });
       opts.push({ label: '출발', value: 'go', disabled: !!why, sub: esc(why || `전리품 자리 ${cap}칸`) }, { label: '그만둔다', value: 'stop' });
-      const a = await UI.open(`<p class="title">${esc(R.name)} 준비</p><p class="mini">동행 ${prep.party.length}/2 · 식량 ${prep.pack.food} · 물 ${prep.pack.water} · 약품 ${prep.pack.meds}${prep.pack.items.length ? ' · ' + prep.pack.items.map((k) => D.ITEMS[k]).join('·') : ''}<br>두 사람이 4시간마다 식량·물을 1개씩 쓴다. 첫 사건까지 4시간.</p>`, { options: opts, full: true, cancel: true, cancelValue: 'stop' });
+      const a = await UI.open(`<p class="title">${esc(R.name)} 준비</p><p class="deltas">${ic('people')}${prep.party.length}/2 ${ic('food')}${prep.pack.food} ${ic('water')}${prep.pack.water} ${ic('meds')}${prep.pack.meds}</p><p class="mini">${prep.pack.items.length ? '도구: ' + prep.pack.items.map((k) => D.ITEMS[k]).join('·') + '<br>' : ''}두 사람이 4시간마다 식량·물을 1개씩 쓴다. 첫 사건까지 4시간.</p>`, { options: opts, full: true, cancel: true, cancelValue: 'stop' });
       if (a === 'stop' || a == null) { back(); return; }
       if (a === 'go') { if (act({ type: 'expStart', region, party: prep.party, pack: prep.pack })) { scene.stationPos = region === 'A' ? [2, 2] : [22, 9]; scene.key = ''; syncScene(); UI.toast(`${D.REGIONS[region].name}. 빛나는 표시(!)를 찾아라.`, 2200); } return; }
       const [k, v] = a.split(':');
@@ -768,14 +778,24 @@
       // 검은 화면: 급제동, 끊긴 방송, 이름을 부르는 소리
       for (let i = 0; i < P.cold.length; i++) { if (i === 0) FX.blip('brake'); await UI.line(P.cold[i], { black: true }); }
     }
-    const cg = cgSrc(['open_empty', 'open_empty', 'open_tunnel', 'prologue_station'][s.pro]) || cgSrc(['prologue_car', 'prologue_car', 'prologue_tunnel', 'prologue_station'][s.pro]);
+    const cg = cgSrc(['open_empty', 'open_cab', 'open_tunnel', 'prologue_station'][s.pro]) || cgSrc(['prologue_car', 'prologue_car', 'prologue_tunnel', 'prologue_station'][s.pro]);
     const parts = UI.splitSentences(P.text);
     for (let i = 0; i < parts.length; i++) await UI.line(parts[i], i === 0 && cg ? { cg } : {});
-    for (const b of P.beats || []) {
+  }
+  // 장면 속 대사 (말하는 사람 얼굴, 첫 문장에 그림)
+  async function playBeats(beats) {
+    for (const b of beats || []) {
       const who = b.who ? { name: D.PEOPLE[b.who].name, face: ART.portrait(b.who).toDataURL() } : {};
       const ps = UI.splitSentences(b.text);
       for (let i = 0; i < ps.length; i++) await UI.line(ps[i], Object.assign({}, who, i === 0 && b.cg && cgSrc(b.cg) ? { cg: cgSrc(b.cg) } : {}));
     }
+  }
+  // 그 장의 선택지를 한 번에 (취소 없음)
+  async function prologueMenu(who, title) {
+    const sc = D.PROLOGUE[state.pro];
+    const head = who ? `<p class="who">${esc(D.PEOPLE[who].name)}</p>` : `<p class="title">${esc(title || sc.title)}</p>`;
+    const i = await UI.open(head, { options: sc.choices.map((c, k) => ({ label: c.text, sub: esc(E.describeOutcome(c.out).concat(c.out.item ? [D.ITEMS[c.out.item] + ' 획득'] : [], Object.keys(c.out.trust || {}).map((id) => D.PEOPLE[id].name.slice(1) + ' 신뢰 +1')).join(' · ')), value: k })) });
+    await prologueChoose(i, who);
   }
   async function prologueChoose(i, who) {
     const sc = D.PROLOGUE[state.pro];
@@ -786,7 +806,7 @@
     if (r.lines.length) UI.toast(r.lines.join(' · '), 2400);
     act({ type: 'proNext' });
     if (state.phase === 'morning') { enterStation(true); await dayIntro(); return; }
-    if (state.pro === 1) await sceneIntro();          // 승객들은 같은 칸에 있다. 터널·역 도착 설명은 그 자리에 갔을 때
+    if (state.pro === 1) await sceneIntro();          // 같은 칸의 맨 앞 운전실. 터널·역 설명은 그 자리에 갔을 때
   }
   async function prologueObject(o) {
     const s = state;
@@ -796,26 +816,20 @@
       if (ok) await prologueChoose(o.choice);
       return;
     }
-    UI.toast(s.pro === 0 ? '먼저 이 칸을 나갈 방법을 찾아야 한다.' : '지금은 할 게 없다.', 1500);
+    if (o.id === 'shelter') { UI.toast('작업자용 비상 상자. 혼자서는 열 수 없게 녹슬었다.', 1800); return; }
+    if (o.id === 'collapse') { UI.toast(s.pro === 2 ? '잔해 앞에 누군가 있다.' : '무너진 잔해.', 1500); return; }
+    UI.toast(s.pro === 0 ? '먼저 이 칸을 나갈 방법을 찾아야 한다.' : s.pro === 1 && (o.id === 'lever' || o.id === 'bag') ? '맨 앞 운전실도 살펴보자.' : '지금은 할 게 없다.', 1500);
+  }
+  // 터널: 잔해 앞의 기철 (가까이 가거나 말을 걸면)
+  async function meetGicheol() {
+    const s = state;
+    if (s.pro !== 2 || s.proResult || introShown.meet) return;
+    introShown.meet = true;
+    await playBeats(D.PROLOGUE[2].beats);
+    await prologueMenu('gicheol');
   }
   async function prologueNpc(n) {
-    const s = state;
-    const face = ART.portrait(n.id).toDataURL(), name = D.PEOPLE[n.id].name;
-    if (s.pro === 1 && n.choice != null) {
-      const ch = D.PROLOGUE[1].choices[n.choice];
-      if (n.line) await UI.lines(n.line.replace(/^[^:]+:\s*/, ''), { name, face });
-      const ok = await UI.open(`<p class="who">${esc(name)}</p>`, { options: [{ label: ch.text, value: true }, { label: '다른 사람에게도 말을 건다', value: false }], cancel: true, cancelValue: false });
-      if (ok) await prologueChoose(n.choice, n.id);
-      return;
-    }
-    if (s.pro === 2 && n.choice != null) {
-      const ch = D.PROLOGUE[2].choices[n.choice];
-      const ok = await UI.open(`<p class="who">${esc(name)}</p><p>“앞이 무너졌소. 어떻게 하겠소?”</p>`, { options: [{ label: ch.text, value: true }, { label: '아니, 내가 알아서 하겠다', value: false }], cancel: true, cancelValue: false });
-      if (ok) await prologueChoose(n.choice, n.id);
-      return;
-    }
-    await UI.lines(s.pro === 0 ? '…' : (n.line || '…').replace(/^[^:]+:\s*/, ''), { name, face });
-    if (s.pro === 0) UI.toast('승객들이 웅크려 있다. 먼저 이 칸을 나갈 방법을 찾자.', 1800);
+    if (state.pro === 2 && n.id === 'gicheol') { if (introShown.meet) await prologueMenu('gicheol'); else await meetGicheol(); }
   }
   async function prologueArrive() {
     const s = state;
@@ -823,7 +837,8 @@
     await FX.card('을지로입구역', '2호선', 1200);
     enterStation(true);
     await sceneIntro();
-    await prologueChoose(0);
+    await playBeats(D.PROLOGUE[3].beats);
+    await prologueMenu(null, '불가에서');
   }
   async function dayIntro() {
     hud();
@@ -915,11 +930,13 @@
     if (busy || UI.isOpen()) return;
     flow(async () => {
       for (;;) {
-        const a = await UI.open('<p class="title">메뉴</p>', { options: [{ label: '사람들', value: 'people' }, { label: '시선', value: 'gods' }, { label: '일지', value: 'log' }, { label: FX.soundOn ? '소리 끄기' : '소리 켜기', value: 'sound' }, { label: '처음부터 다시', value: 'restart', confirm: '저장된 진행이 지워집니다. 정말 처음부터?' }, { label: '닫기', value: null }], cancel: true });
+        const a = await UI.open('', { grid: true, cancel: true, options: [
+          { label: '사람들', icon: ic('people'), value: 'people' }, { label: '시선', icon: ic('gods'), value: 'gods' }, { label: '일지', icon: ic('log'), value: 'log' },
+          { label: FX.soundOn ? '소리 끄기' : '소리 켜기', icon: ic('sound', FX.soundOn ? '' : 'off'), value: 'sound' }, { label: '처음부터', icon: ic('restart'), value: 'restart', confirm: '저장된 진행이 지워집니다. 정말 처음부터?' }, { label: '닫기', icon: '<i class="ic ic-t">✕</i>', value: null }] });
         if (!a) return;
         if (a === 'restart') { restart(); return; }
         if (a === 'sound') { UI.toast(FX.toggle() ? '소리를 켰다' : '소리를 껐다'); continue; }
-        if (a === 'people') await UI.open(state.residents.map((r) => `<div class="person"><b>${esc(r.name)}</b>${badges(r)}<br><span class="mini">스트레스 ${r.stress}${bar(r.stress, 100, r.stress >= 70)} · 관찰 ${r.skills.obs} 완력 ${r.skills.str} 기술 ${r.skills.tech} 말솜씨 ${r.skills.talk}${(r.scars || []).length ? ' · ' + r.scars.map((k) => `${D.SCARS[k].name}(${D.SCARS[k].desc})`).join(', ') : ''}</span></div>`).join(''), { full: true, cancel: true });
+        if (a === 'people') await UI.open(`<p class="title">사람들</p>${state.residents.map((r) => personCard(r)).join('')}`, { full: true, cancel: true, next: '닫기' });
         if (a === 'gods') {
           const s = state, kn = { hostile: '적대', neutral: '중립', friendly: '우호' };
           const felt = Object.keys(D.GODS).filter((id) => (s.gods[id] || 0) > 0 || (s.godSeen[id] || 0) > 0);
@@ -930,6 +947,21 @@
     });
   }
 
+  // 사람 카드: 얼굴 · 이름 · 상태 · 스트레스 막대 · 기술 · 오늘 할 일
+  function personCard(r, extra, noTask) {
+    const dead = r.status === 'dead' || r.status === 'gone';
+    const task = state.phase === 'morning' && !dead && !noTask ? (E.effectivePlan(state)[r.id] || 'rest') : '';
+    return `<div class="card ${dead ? 'dead' : ''}">${face(r.id, r.injury, 56)}<div class="cb">
+      <p class="cn"><b>${esc(r.name)}</b> <span class="mini">${esc(D.PEOPLE[r.id] ? D.PEOPLE[r.id].bio : '')}</span>${badges(r)}</p>
+      ${dead ? '' : `<p class="cs">${ic('stress')}${bar(r.stress, 100, r.stress >= 70)}<b class="${r.stress >= 70 ? 'hot' : ''}">${r.stress}</b>${ic('trust')}<span class="tr">${'●'.repeat(r.trust)}${'○'.repeat(4 - r.trust)}</span></p>
+      <p class="cs">${skillsRow(r)}${task ? `<span class="task">${ic(task)}${esc(D.TASKS[task].name)}</span>` : ''}</p>`}
+      ${(r.scars || []).length ? `<p class="mini">${r.scars.map((k) => `${esc(D.SCARS[k].name)}: ${esc(D.SCARS[k].desc)}`).join(' · ')}</p>` : ''}${extra || ''}</div></div>`;
+  }
+  // 머리말을 누르면 아이콘 뜻
+  $('hud').addEventListener('click', () => {
+    if (busy || UI.isOpen() || state.phase === 'prologue') return;
+    flow(() => UI.open(`<p class="title">아이콘</p><div class="legend">${Object.keys(IC_NAME).map((k) => `<p>${ic(k)}<span>${esc(IC_NAME[k])}</span></p>`).join('')}</div>`, { cancel: true, next: '닫기' }));
+  });
   // ── 입력 ──
   const KEYS = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right', W: 'up', S: 'down', A: 'left', D: 'right' };
   document.addEventListener('keydown', (e) => {
@@ -957,7 +989,7 @@
   // 지금 할 일 (화면 왼쪽 위)
   function objective() {
     const s = state;
-    if (s.phase === 'prologue') return s.pro === 2 && scene.key === 'car' ? '오른쪽 끝 열린 문으로 나가자' : ['비상 레버나 좌석 밑 가방을 살펴보자', '승객들에게 말을 걸자', '터널을 지나 역으로 (앞이 무너졌다)', '터널 끝으로'][s.pro] || '';
+    if (s.phase === 'prologue') return s.pro === 2 && scene.key === 'car' ? '오른쪽 끝 열린 문으로 터널에 나가자' : ['비상 레버나 좌석 밑 가방을 살펴보자', '맨 앞(오른쪽 끝) 운전실을 살펴보자', '터널 앞쪽 불빛으로', '터널 끝 승강장으로'][s.pro] || '';
     if (s.phase === 'expedition') return '빛나는 표시(!)를 살피고, 계단(출구)으로 돌아가자';
     if (s.phase !== 'morning') return '';
     if (s.day === 1 && !tut.board) return '게시판(불 왼쪽)에서 오늘 할 일을 확인하자';
