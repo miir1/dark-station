@@ -1,0 +1,12 @@
+{
+  "axes": ["share", "hand", "name"],
+  "candidates": [
+    { "id": "driver", "name": "기관사", "rule": "share>=3 & hand>=2 & name>=2", "priority": 5, "fallback": 0, "reveal": ["reveal_driver"], "dreams": [], "callName": "기사 양반", "ledgerReader": "conductor" },
+    { "id": "conductor", "name": "차장", "rule": "share>=3 & hand>=2 & name<2", "priority": 5, "fallback": 0, "reveal": ["reveal_conductor"], "callName": "차장님", "ledgerReader": "you" },
+    { "id": "inspector", "name": "검표원", "rule": "share>=3 & hand<2 & name>=2", "priority": 5, "fallback": 0, "reveal": ["reveal_inspector"], "callName": "적는 사람", "ledgerReader": "you" },
+    { "id": "passenger", "name": "승객", "rule": "share>=3 & hand<2 & name<2", "priority": 1, "fallback": 1, "reveal": ["reveal_passenger"], "callName": "손님", "ledgerReader": "conductor" },
+    { "id": "counted", "name": "센 자", "rule": "share<3 & hand>=2 & name>=2", "priority": 9, "fallback": 0, "reveal": ["reveal_counted"], "callName": "", "ledgerReader": "resident" },
+    { "id": "platform_one", "name": "승강장의 사람", "rule": "share<3 & hand>=2 & name<2", "priority": 5, "fallback": 0, "reveal": ["reveal_platform"], "callName": "거기", "ledgerReader": "resident" },
+    { "id": "counting_child", "name": "세는 아이", "rule": "share<3 & hand<2 & name>=2", "priority": 5, "fallback": 0, "reveal": ["reveal_child"], "callName": "", "ledgerReader": "resident" }
+  ]
+}

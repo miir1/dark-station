@@ -1,0 +1,12 @@
+[
+  { "id": "r1_steal_food", "role": "steal", "actor": "hunger>=7", "target": "-", "cond": "food>=1", "weight": 6, "kind": "malice",
+    "trace": { "crate_food": "open" }, "rumor": { "witness": "nearestSleeper", "line": "saw_shadow" }, "effects": { "food": -1 }, "oncePerRun": 0 },
+  { "id": "r2_drink", "role": "steal", "actor": "thirst>=7", "target": "any", "cond": "water>=1", "weight": 4, "kind": "malice",
+    "trace": { "bowl_{target}": "empty" }, "effects": { "water": -1 } },
+  { "id": "p1_soonrye_water", "role": "pair", "actor": "soonrye", "target": "seoha", "cond": "water<=4", "weight": 10, "kind": "hymn",
+    "trace": { "bowl_soonrye": "empty", "bowl_seoha": "full" }, "rumor": { "witness": "nearestSleeper", "line": "bowl_rumor" }, "oncePerRun": 1 },
+  { "id": "r12_swing", "role": "hurt", "actor": "fear>=9", "target": "any", "cond": "fuel<=2", "weight": 3, "kind": "malice",
+    "rumor": { "witness": "nearestSleeper", "line": "swung_pipe" }, "effects": { "injure": { "who": "target", "n": 1 } } },
+  { "id": "p4_pillow", "role": "pair", "actor": "mari", "target": "injury>=3", "cond": "meds==0", "weight": 10, "kind": "malice",
+    "trace": { "pillow_gicheol": "blood" }, "effects": { "kill": { "who": "target" } }, "oncePerRun": 1 }
+]

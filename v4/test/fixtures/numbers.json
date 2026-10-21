@@ -1,0 +1,14 @@
+[
+  { "id": "food", "name": "식량", "owner": "world", "min": 0, "max": 20, "start": 6, "perDay": -1, "visible": "always" },
+  { "id": "water", "name": "물", "owner": "world", "min": 0, "max": 20, "start": 6, "perDay": -1, "visible": "always" },
+  { "id": "fuel", "name": "땔감", "owner": "world", "min": 0, "max": 12, "start": 8, "perDay": -1, "visible": "always" },
+  { "id": "fog", "name": "재 칸", "owner": "world", "min": 0, "max": 8, "start": 0, "visible": "inspect" },
+  { "id": "flood", "name": "수위", "owner": "world", "min": 0, "max": 8, "start": 0, "visible": "inspect" },
+  { "id": "meds", "name": "약품", "owner": "world", "min": 0, "max": 6, "start": 1, "visible": "always" },
+  { "id": "day", "name": "날", "owner": "world", "min": 0, "max": 3, "start": 0, "visible": "always" },
+  { "id": "hunger", "name": "굶주림", "owner": "person", "min": 0, "max": 10, "start": 0, "perDay": 1, "visible": "never" },
+  { "id": "thirst", "name": "목마름", "owner": "person", "min": 0, "max": 10, "start": 0, "perDay": 1, "visible": "never" },
+  { "id": "fear", "name": "두려움", "owner": "person", "min": 0, "max": 10, "start": 2, "visible": "never" },
+  { "id": "injury", "name": "부상", "owner": "person", "min": 0, "max": 3, "start": 0, "visible": "inspect" },
+  { "id": "counted", "name": "세어짐", "owner": "person", "min": 0, "max": 1, "start": 0, "visible": "inspect" }
+]
