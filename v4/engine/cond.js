@@ -2,7 +2,7 @@
 // 문법:  식 := 항 ( ('&' | '|') 항 )*      & 가 | 보다 먼저 묶인다. 괄호 허용.
 //        항 := '!'? ( 이름 | 이름 연산자 값 )
 //        이름 := 글자 [글자·숫자·_·.]*  또는  접두:이름   (접두 = flag inspect trace talk alive … 아무 소문자 낱말)
-//        연산자 := == != >= <= > <          값 := 정수 | 이름(문자 비교)
+//        연산자 := == != >= <= > <          값 := 정수 | 이름(문자 비교) | '' (빈 글, == != 만)
 //        빈칸 · '-' · 'always' 는 참.
 // 예) "day==5 & phase==night"  "hunger>=7"  "share<=-2 & hand>=2"  "flag:parts_hidden"  "trace:lever==up"  "inspect:bag"  "alive:soonrye"  "needs.hunger>=7"
 // 값 찾기(ctx): 이름 그대로(ctx['trace:lever']) → 접두 묶음(ctx.trace.lever, flag 는 ctx.flags) → 점 뒤 마지막 낱말(ctx.hunger). 없으면 0/거짓.
@@ -10,7 +10,7 @@
   'use strict';
 
   const NAME = '[A-Za-z_][A-Za-z0-9_.]*(?::[A-Za-z0-9_.]+)?';
-  const TOKEN = new RegExp('\\s*(&|\\||==|!=|>=|<=|>|<|!|\\(|\\)|-?\\d+|' + NAME + ')\\s*', 'y');   // != 를 ! 보다 먼저
+  const TOKEN = new RegExp('\\s*(&|\\||==|!=|>=|<=|>|<|!|\\(|\\)|-?\\d+|\'\'|""|' + NAME + ')\\s*', 'y');   // != 를 ! 보다 먼저. ''·"" = 빈 글
   const IS_NAME = new RegExp('^' + NAME + '$');
 
   function tokenize(src) {
@@ -45,8 +45,9 @@
       if (['==', '!=', '>=', '<=', '>', '<'].includes(op)) {
         next();
         const v = next();
-        if (v === undefined || !(/^-?\d+$/.test(v) || IS_NAME.test(v))) throw new Error(`비교 값 없음: "${src}"`);
-        return { op: 'cmp', name: tok, cmp: op, value: /^-?\d+$/.test(v) ? Number(v) : v };
+        if (v === undefined || !(/^-?\d+$/.test(v) || IS_NAME.test(v) || v === "''" || v === '""')) throw new Error(`비교 값 없음: "${src}"`);
+        if ((v === "''" || v === '""') && op !== '==' && op !== '!=') throw new Error(`빈 글은 == / != 로만 비교: "${src}"`);
+        return { op: 'cmp', name: tok, cmp: op, value: /^-?\d+$/.test(v) ? Number(v) : (v === "''" || v === '""') ? '' : v };
       }
       return { op: 'truthy', name: tok };
     }
@@ -98,7 +99,7 @@
           const n = typeof a === 'number' ? a : (a === true ? 1 : a === false ? 0 : Number(a) || 0);
           switch (tree.cmp) { case '==': return n === b; case '!=': return n !== b; case '>=': return n >= b; case '<=': return n <= b; case '>': return n > b; case '<': return n < b; }
         }
-        const sa = v === undefined || v === null ? 'none' : String(a);
+        const sa = v === undefined || v === null ? (b === '' ? '' : 'none') : String(a);   // 빈 글 비교(=='' / !='')에서는 없는 값도 빈 글
         if (tree.cmp === '==') return sa === b;
         if (tree.cmp === '!=') return sa !== b;
         return false;

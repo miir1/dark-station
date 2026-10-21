@@ -150,5 +150,6 @@
 | 밤 사건 대상 키워드 | `bond` · `any`/`randomSleeper`/`nearestSleeper`/`farthestSleeper`(자리 정보가 없어 전부 무작위) · `mostInjured` · 사람 id · 조건식 |
 | 밤 사건 금지 어휘 | `you_*`·`pos*`·`map`·`inspect:`·`talk:` — 당신의 위치·조작은 조건이 될 수 없다(표 검사 오류) |
 | 정체 규칙 | `rule` 에는 **축 이름만**(몫·손·이름). 세계 수치·깃발 금지(표 검사 오류). 후보 키는 `id`(`candidate` 도 받음), 표 머리의 `thresholds`·`note` 는 메모로 무시 |
+| 추가 약속 (10-21 늦게) | `injure.n` 은 ±1~3(음수 = 부상 회복) · `people.addressYou.default` = 정체가 안 기운 때의 기본 호칭 · 조건식에 빈 글 비교 `x==''` / `x!=''`(없는 값도 빈 글, `==`/`!=` 만) · `rumor.line: ""` = 소문 없음 |
 | 비어 있는 칸 | 선택지의 `check:null` `cost:{}` `req:{}` `taboo:''` `warn:''` `ledger:''`, 밤 사건의 `target:''` 은 "없음"으로 읽는다 |
 | 파일 이름 | `night_events.json` 정식, `nightEvents.json` 도 읽음 |

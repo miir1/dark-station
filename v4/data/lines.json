@@ -1762,5 +1762,95 @@
     "text": "도현이 값을 다시 불렀소. 어제와 다르오.",
     "rumor": 1,
     "truth": 1
+  },
+  {
+    "id": "insp_bandage_clean",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "흰 붕대다. 오늘 감았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_wet",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "붕대가 피에 젖어 있다. 아직 마르지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_rot",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "붕대가 누렇다. 썩는 냄새가 난다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_seat_shoe",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "운전석에 구두 한 짝이 놓여 있다. 당신 발에 맞는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_two_books",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "수첩 두 권이 나란히 놓여 있다. 글씨가 같다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_punch_hand",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "당신 손에 펀치가 들려 있다. 읽을 사람은 당신뿐이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_empty_cab",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "운전석에 누가 앉아 있다. 당신 자리는 좌석이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_shoes_stairs",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "계단 아래 신발 한 켤레가 가지런하다. 발끝이 위를 본다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_train_passes",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "열차가 서지 않고 지나간다. 창 안의 얼굴들이 당신을 보지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_voice_above",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "계단 위에서 세는 소리가 난다. 당신 목소리다.",
+    "rumor": 0,
+    "truth": 1
   }
 ]

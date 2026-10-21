@@ -115,3 +115,30 @@ test('로더는 nightEvents.json 과 night_events.json 둘 다 읽는다', () =>
   assert.strictEqual(db.nightEvents.length, loadFixtures().nightEvents.length);
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+test('추가 약속: injure 음수(회복) · addressYou.default · 빈 글 비교 · rumor.line 빈칸', () => {
+  assert.strictEqual(C.test("needs.bond!=''", { needs: { bond: 'seoha' } }), true);
+  assert.strictEqual(C.test("needs.bond!=''", { needs: { bond: '' } }), false);
+  assert.strictEqual(C.test("secretFlag!='' & needs.fear>=6", { secretFlag: 'x', needs: { fear: 7 } }), true);
+  assert.strictEqual(C.test("secretFlag==''", {}), true, '없는 값도 빈 글');
+  assert.strictEqual(C.test('bond!=""', { bond: 'a' }), true);
+  assert.throws(() => C.parse("fear>=''"), /빈 글은/);
+  const t = rawTables();
+  t.people[1].addressYou.default = '자네';
+  t.nightEvents[0].rumor = { witness: 'nearestSleeper', line: '' };
+  t.nightEvents[2].actor = "needs.bond!='' & self==soonrye";
+  t.events[3].choices[0].out.effects = { injure: { who: 'you', n: -1 } };
+  assert.deepStrictEqual(T.validate(t), []);
+  const db = T.load(t);
+  assert.strictEqual(db.nightEvents[0].rumor, undefined, '빈 줄 = 소문 없음');
+  const t2 = rawTables(); t2.events[3].choices[0].out.effects = { injure: { who: 'you', n: 0 } };
+  assert.ok(T.validate(t2).some((e) => e.text.includes('effects.injure: {who, n:±1~3}')));
+  const t3 = rawTables(); t3.people[1].addressYou.ghost = 'x';
+  assert.ok(T.validate(t3).some((e) => e.text.includes('addressYou.ghost: identity에 없는 후보 (기본 호칭은 default)')));
+  // 음수 injure 는 부상을 줄인다
+  const s = E.newGame(db, 2); s.people.you.n.injury = 2;
+  E.dispatch(s, { type: 'choose', i: 1 }, db);
+  s.pending = { id: 'trip_a1_stall', kind: 'trip' };
+  assert.ok(E.dispatch(s, { type: 'choose', i: 0 }, db).ok);
+  assert.strictEqual(s.people.you.n.injury, 1);
+});

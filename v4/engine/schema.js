@@ -86,7 +86,7 @@
       if (k === 'flag') { if (!isObj(v)) err('effects.flag: {이름:true/false}'); else for (const f of Object.keys(v)) if (!ID.test(f)) err(`effects.flag.${f}: id 꼴이 아님`); }
       else if (k === 'trace') { if (!isObj(v)) err('effects.trace: {물건:상태}'); else for (const [o, st] of Object.entries(v)) checkTrace(o, st, ctx, (m) => err('effects.trace.' + m)); }
       else if (k === 'axis') { if (!isObj(v)) err('effects.axis: {축:±정수}'); else for (const [a, n] of Object.entries(v)) { if (!ctx.axes.includes(a)) err(`effects.axis.${a}: identity.axes에 없는 축`); if (!isInt(n) || Math.abs(n) > 3) err(`effects.axis.${a}: −3~+3 정수`); } }
-      else if (k === 'injure') { if (!isObj(v) || !isInt(v.n) || v.n < 1 || v.n > 3) err('effects.injure: {who, n:1~3}'); }
+      else if (k === 'injure') { if (!isObj(v) || !isInt(v.n) || v.n === 0 || v.n < -3 || v.n > 3) err('effects.injure: {who, n:±1~3} (음수 = 부상 회복)'); }
       else if (k === 'kill') { if (!isObj(v) || typeof v.who !== 'string') err('effects.kill: {who}'); }
       else if (k === 'permanent') { if (!isObj(v) || !PERMANENT.includes(v.kind)) err(`effects.permanent.kind: ${PERMANENT.join('/')} 중 하나`); }
       else { const n = ctx.numbers[k]; if (!n) err(`effects.${k}: numbers 표에 없는 수치 (동사는 ${EFFECT_VERBS.join('/')}뿐)`); else if (!(isInt(v) || (isObj(v) && isInt(v.n)))) err(`effects.${k}: ±정수 또는 {who, n}`); }
@@ -176,7 +176,7 @@
       const err = (m) => push('people', i, p.id, m);
       for (const k of ['obs', 'str', 'tech', 'talk']) { const v = p.skills[k]; if (!isInt(v) || v < 0 || v > 3) err(`skills.${k}: 0~3 정수`); }
       if (p.needs) { for (const k of ['hunger', 'thirst', 'fear']) { const v = p.needs[k]; if (v !== undefined && (!isInt(v) || v < 0 || v > 10)) err(`needs.${k}: 0~10`); } if (p.needs.bond && p.needs.bond !== '-' && !ctx.people[p.needs.bond]) err(`needs.bond: 없는 사람 "${p.needs.bond}"`); }
-      if (p.addressYou) for (const cid of Object.keys(p.addressYou)) if (!idn.candidates.some((c) => c.id === cid)) err(`addressYou.${cid}: identity에 없는 후보`);
+      if (p.addressYou) for (const cid of Object.keys(p.addressYou)) if (cid !== 'default' && !idn.candidates.some((c) => c.id === cid)) err(`addressYou.${cid}: identity에 없는 후보 (기본 호칭은 default)`);
     });
     tables.nightEvents.forEach((n, i) => {
       const err = (m) => push('nightEvents', i, n.id, m);
