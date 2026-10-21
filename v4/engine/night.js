@@ -15,13 +15,17 @@
   function worldCtx(s) {
     const ctx = Object.assign({}, s.world, { day: s.day });
     ctx.flags = s.flags;
-    ctx.alive = Object.values(s.people).filter((p) => p.status === 'home').length;
+    ctx.alive = {}; ctx.trace = {}; ctx.status = {};
+    for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' ? 1 : 0; ctx.status[p.id] = p.status; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }
+    for (const [id, tr] of Object.entries(s.traces)) ctx.trace[id] = tr.st;
     return ctx;
   }
   function personCtx(s, base, p) {
     const ctx = Object.assign({}, base, p.n, { injury: p.n.injury || 0 });
-    ctx.secret = p.secretFlag ? 1 : 0;
+    ctx.needs = p.n;                                   // needs.hunger 꼴도 받는다
+    ctx.secret = p.secretFlag ? 1 : 0; ctx.secretFlag = p.secretFlag || '';
     ctx.bond = p.needs.bond || '';
+    ctx.self = p.id;
     for (const k of Object.keys(p.permanent)) ctx[k] = 1;
     return ctx;
   }
@@ -38,7 +42,8 @@
     if (!t || t === '-') return null;
     const others = sleepers(s).filter((p) => p.id !== actor.id);
     if (t === 'bond') { const b = s.people[actor.needs.bond]; return b && b.status === 'home' ? b : null; }
-    if (t === 'any') return R.pick(s, others) || null;
+    if (t === 'any' || t === 'randomSleeper' || t === 'nearestSleeper' || t === 'farthestSleeper') return R.pick(s, others) || null;   // 자리 정보가 없으므로 전부 무작위
+    if (t === 'mostInjured') { const hurt = others.filter((p) => (p.n.injury || 0) > 0).sort((a, b) => (b.n.injury || 0) - (a.n.injury || 0)); return hurt[0] || null; }
     if (db.people[t]) { const p = s.people[t]; return p && p.status === 'home' && p.id !== actor.id ? p : null; }
     const fit = others.filter((p) => C.test(t, personCtx(s, base, p)));
     return R.pick(s, fit) || null;

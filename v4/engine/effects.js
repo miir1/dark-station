@@ -21,7 +21,8 @@
     if (who === 'target') return roles.target;
     return who;
   }
-  const fillRole = (str, roles) => String(str).replace(/\{(actor|target)\}/g, (m, k) => roles[k] || '');
+  // 'bowl_{actor}' 와 'bowl_actor' 둘 다 자리표시
+  const fillRole = (str, roles) => String(str).replace(/\{(actor|target)\}|_(actor|target)$/g, (m, k, k2) => (k ? roles[k] || '' : '_' + (roles[k2] || '')));
 
   function setNumber(s, db, id, who, delta, lines) {
     const def = db.numbers[id];
@@ -62,7 +63,7 @@
           if (p && !p.permanent[v.kind]) { p.permanent[v.kind] = s.day; const sk = PERM_SKILL[v.kind]; if (sk) p.skills[sk] = Math.max(0, p.skills[sk] - 1); s.flags[`${who}_${v.kind}`] = true; if (lines) lines.push({ kind: 'permanent', who, what: v.kind }); }
           break;
         }
-        default: setNumber(s, db, k, who0, v, lines);
+        default: if (v && typeof v === 'object') setNumber(s, db, k, resolveWho(v.who, roles) || who0, v.n, lines); else setNumber(s, db, k, who0, v, lines);   // 수치: ±정수 또는 {who, n}
       }
     }
     // 부상 3 = 위독 → 다음 날 치료 없으면 죽는다 (여기서는 표시만, 판정은 엔진의 새 날 처리)

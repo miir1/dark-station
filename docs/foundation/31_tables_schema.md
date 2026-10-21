@@ -139,3 +139,16 @@
 합계 어림 **8~9주**(병렬 시 7주). 작업 7이 가장 크므로 D0~D3 화면을 먼저 올려 점검점을 통과한 뒤 D4~D10을 잇는다 — 범위 축소가 아니라 순서다.
 - **D3 점검점**: 배식 그릇·아침 흔적·밤 사건이 실제로 돌고(발견율 측정 가능), 셈 "+1"에서 당신이 세어질 수 있는지, 저장/복구가 한 번 끊겨도 이어지는지, 정체 축이 세 축 모두 움직였는지.
 - **D5 점검점**: 식인 장면(explicit, fixed 등급, 그림 1장)이 글·그림·선택·명부 줄까지 한 줄로 통하는지, 범람 수위가 밤 사건 조건을 실제로 바꾸는지, 전투 1회 + 영구 손상이 선택지 잠금으로 나타나는지, 사망률이 D5 시점에 이미 ≥25%인지(최종 ≥50%의 중간 지표).
+
+## 6. 약속 추가 (2026-10-21 코디네이터 결정 ①②③, v4/engine 반영)
+| 항목 | 약속 |
+|---|---|
+| 조건식 토큰 | 기본: `이름 연산자 값`, `&`·`\|`·`!`·괄호, 빈칸·`-`·`always`=참. 값은 정수 또는 이름(문자 비교). **접두 토큰**: `flag:x`(깃발) · `inspect:x`(그 물건을 방금 조사함, 사건 when 전용) · `talk:x`(그 사람에게 방금 말 걸음, when 전용) · `trace:x==상태`(흔적 상태, 없으면 `none`) · `alive:x`(그 사람이 역에 살아 있음). 그 밖의 이름: `day` `phase==night` `map==car` `region==A` `floor==1` 세계 수치(`food`…) 사람 수치(`hunger`, `needs.hunger`, `injury_gicheol`) |
+| 단계 표 `hook` 열 | 선택. `rollNight` = 그 단계를 떠날 때 밤 사건을 굴린다. 단계 이름은 조건식에서 `phase==이름` 으로 쓴다 |
+| effects 두 꼴 | 정식 = 객체 `{food:-1, hunger:{who:'actor', n:-3}, flag:{x:true}, trace:{crate_food:'open'}, axis:{share:1}, injure:{who,n}, kill:{who}, permanent:{who, kind}}`. 배열 `[{verb:'number', id, n, who}, {verb:'flag', id, set}, {verb:'trace', id, state}, {verb:'axis', id, n}, {verb:'injure', who, n}, {verb:'kill', who}, {verb:'permanent', who, loss}]` 도 받으며 **로더가 객체 꼴로 바꾼다** |
+| 자리표시 | 흔적 물건 id 의 `{actor}`/`{target}` 또는 `_actor`/`_target` 접미 → 사람 id 로 치환 (`bowl_actor` → `bowl_gicheol`). 그런 물건이 objects 에 하나는 있어야 한다 |
+| 밤 사건 대상 키워드 | `bond` · `any`/`randomSleeper`/`nearestSleeper`/`farthestSleeper`(자리 정보가 없어 전부 무작위) · `mostInjured` · 사람 id · 조건식 |
+| 밤 사건 금지 어휘 | `you_*`·`pos*`·`map`·`inspect:`·`talk:` — 당신의 위치·조작은 조건이 될 수 없다(표 검사 오류) |
+| 정체 규칙 | `rule` 에는 **축 이름만**(몫·손·이름). 세계 수치·깃발 금지(표 검사 오류). 후보 키는 `id`(`candidate` 도 받음), 표 머리의 `thresholds`·`note` 는 메모로 무시 |
+| 비어 있는 칸 | 선택지의 `check:null` `cost:{}` `req:{}` `taboo:''` `warn:''` `ledger:''`, 밤 사건의 `target:''` 은 "없음"으로 읽는다 |
+| 파일 이름 | `night_events.json` 정식, `nightEvents.json` 도 읽음 |

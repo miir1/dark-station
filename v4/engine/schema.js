@@ -7,7 +7,7 @@
   const ID = /^[a-z0-9_]{1,24}$/;
   const EFFECT_VERBS = ['flag', 'trace', 'axis', 'injure', 'kill', 'permanent'];   // 그 밖의 키는 numbers id 여야 한다
   const PERMANENT = ['finger', 'leg', 'ear'];
-  const FORBIDDEN_NIGHT_NAMES = /^(you|pos|player|map|x|y|where|at)(_|$)/;        // 밤 사건 조건에 당신 위치·선택 금지
+  const FORBIDDEN_NIGHT_NAMES = /^(you|pos|player|map|x|y|where|at)(_|$)|^(inspect|talk|choice|chose):/;   // 밤 사건 조건에 당신 위치·선택(조사·말 걸기) 금지
 
   // 열 정의: type(id|str|int|num|bool|enum|list|obj|cond|any), req(필수), enum, min, max, of(목록 원소 검사 함수 이름)
   const T = {
@@ -28,7 +28,7 @@
     } },
     people: { key: 'id', cols: {
       id: { type: 'id', req: true }, name: { type: 'str', req: true }, age: { type: 'any' }, bio: { type: 'str' },
-      skills: { type: 'obj', req: true }, needs: { type: 'obj' }, secretFlag: { type: 'str' }, malice: { type: 'str' }, hymn: { type: 'str' },
+      skills: { type: 'obj', req: true }, needs: { type: 'obj' }, secretFlag: { type: 'str' }, malice: { type: 'any' }, hymn: { type: 'any' },
       callsGod: { type: 'str', maxLen: 6 }, addressYou: { type: 'obj' }, outside: { type: 'bool01' },
     } },
     maps: { key: 'id', cols: {
@@ -89,14 +89,15 @@
       else if (k === 'injure') { if (!isObj(v) || !isInt(v.n) || v.n < 1 || v.n > 3) err('effects.injure: {who, n:1~3}'); }
       else if (k === 'kill') { if (!isObj(v) || typeof v.who !== 'string') err('effects.kill: {who}'); }
       else if (k === 'permanent') { if (!isObj(v) || !PERMANENT.includes(v.kind)) err(`effects.permanent.kind: ${PERMANENT.join('/')} 중 하나`); }
-      else { const n = ctx.numbers[k]; if (!n) err(`effects.${k}: numbers 표에 없는 수치 (동사는 ${EFFECT_VERBS.join('/')}뿐)`); else if (!isInt(v)) err(`effects.${k}: ±정수여야 함`); }
+      else { const n = ctx.numbers[k]; if (!n) err(`effects.${k}: numbers 표에 없는 수치 (동사는 ${EFFECT_VERBS.join('/')}뿐)`); else if (!(isInt(v) || (isObj(v) && isInt(v.n)))) err(`effects.${k}: ±정수 또는 {who, n}`); }
     }
   }
   // 'bowl_{actor}' 같은 자리표시: 사람 id 를 넣어 만들어지는 물건이 하나라도 있어야 하고, 전부 그 상태를 가져야 한다
+  const ROLE_PH = /\{(actor|target)\}|_(actor|target)$/;   // bowl_{actor} 또는 bowl_actor
   function traceTargets(o, ctx) {
-    if (!/\{(actor|target)\}/.test(o)) return ctx.objects[o] ? [ctx.objects[o]] : [];
+    if (!ROLE_PH.test(o)) return ctx.objects[o] ? [ctx.objects[o]] : [];
     const out = [];
-    for (const pid of Object.keys(ctx.people)) { const id = o.replace(/\{(actor|target)\}/g, pid); if (ctx.objects[id]) out.push(ctx.objects[id]); }
+    for (const pid of Object.keys(ctx.people)) { const id = o.replace(new RegExp(ROLE_PH.source, 'g'), (m, a) => (a ? pid : '_' + pid)); if (ctx.objects[id]) out.push(ctx.objects[id]); }
     return out;
   }
   function checkTrace(o, st, ctx, err) {
@@ -139,7 +140,7 @@
         for (const col of Object.keys(c)) if (!IDENTITY_COLS[col]) err(`${col}: 스키마에 없는 열`);
         if (c.fallback === 1 || c.fallback === true) fb++;
         if (seen.has(c.id)) err('id 중복'); seen.add(c.id);
-        if (typeof c.rule === 'string') { try { for (const n of C.names(C.parse(c.rule))) if (!n.startsWith('flag:') && !idn.axes.includes(n)) err(`rule: "${n}"는 axes에 없는 축`); } catch (e) { /* 위에서 보고됨 */ } }
+        if (typeof c.rule === 'string') { try { for (const n of C.names(C.parse(c.rule))) if (!idn.axes.includes(n)) err(`rule: "${n}" — 정체 규칙은 축(${idn.axes.join('·')})만 쓸 수 있다`); } catch (e) { /* 위에서 보고됨 */ } }
       });
       if (fb !== 1) push('identity', -1, '', `fallback=1 인 후보가 정확히 1개여야 함 (지금 ${fb})`);
     }

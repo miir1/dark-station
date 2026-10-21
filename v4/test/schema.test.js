@@ -67,7 +67,7 @@ test('조건식 오류는 어느 행인지 말한다', () => {
   t.identity.candidates[0].rule = 'share>=3 & luck>=1';
   const e = errs(t);
   assert.ok(e.some((x) => x.startsWith('events[1] d1_bowls: when:')), e.join('\n'));
-  assert.ok(e.some((x) => x.includes('identity[0] driver: rule: "luck"는 axes에 없는 축')), e.join('\n'));
+  assert.ok(e.some((x) => x.includes('identity[0] driver: rule: "luck" — 정체 규칙은 축')), e.join('\n'));
 });
 
 test('밤 사건 조건에 당신 위치·선택이 들어가면 오류', () => {

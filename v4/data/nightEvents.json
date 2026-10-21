@@ -578,7 +578,7 @@
     "role": "pair",
     "actor": "gicheol",
     "target": "seoha",
-    "cond": "day==10 & food+water<4",
+    "cond": "day==10 & food<2 & water<2",
     "weight": 10,
     "kind": "hymn",
     "trace": {

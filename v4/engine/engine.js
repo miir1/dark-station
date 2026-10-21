@@ -41,7 +41,7 @@
     const s = {
       v: SAVE_V, seed, rng: seed, day: world.day != null ? world.day : 0, phase: null, ended: null,
       world, people: {}, pos: { map: null, x: 0, y: 0 },
-      flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {},
+      flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {}, trip: null,
       pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0 },
     };
     if (!db.people.you) throw new Error('people 표에 you 가 없음');
@@ -53,7 +53,16 @@
 
   // ── 단계 ──
   // 조건식에서 단계는 phase==night 처럼 쓴다 (phase id 'day' 와 수치 'day' 가 겹치므로 단계 이름을 키로 두지 않는다)
-  function phaseCtx(s) { const ctx = Object.assign({}, s.world, { day: s.day }); ctx.flags = s.flags; ctx.phase = s.phase || ''; return ctx; }   // s.day 가 진실, world.day 는 따라간다
+  function phaseCtx(s, extra) {
+    const ctx = Object.assign({}, s.world, { day: s.day });
+    ctx.flags = s.flags; ctx.phase = s.phase || '';
+    ctx.map = s.pos.map || ''; ctx.region = s.trip ? s.trip.region : ''; ctx.floor = s.trip ? s.trip.floor : 0;
+    ctx.trace = {}; for (const [id, t] of Object.entries(s.traces)) ctx.trace[id] = t.st;
+    ctx.alive = {}; for (const p of Object.values(s.people)) ctx.alive[p.id] = p.status === 'home' ? 1 : 0;
+    ctx.inspect = {}; ctx.talk = {};
+    if (extra) Object.assign(ctx, extra);
+    return ctx;
+  }   // s.day 가 진실, world.day 는 따라간다. inspect:x / talk:x 는 그 조작 직후에만 참
   function phaseOf(db, id) { return db.phases.find((p) => p.id === id) || null; }
   function skipped(s, db, p) { return p.skipIf ? C.test(p.skipIf, phaseCtx(s)) : false; }
   function firstPhase(s, db) { for (const p of db.phases) if (!skipped(s, db, p)) return p.id; return db.phases[0].id; }
@@ -65,8 +74,8 @@
   function say(s, text, kind) { if (!text) return; s.log.unshift({ day: s.day, phase: s.phase, text, kind: kind || '' }); if (s.log.length > MAX_LOG) s.log.length = MAX_LOG; }
 
   // 단계에 들어설 때: 그 단계에 걸린 사건(시험·고정 장면·결말)이 있으면 pending 에 건다
-  function enterPhase(s, db) {
-    const ctx = phaseCtx(s);
+  function enterPhase(s, db, extra) {
+    const ctx = phaseCtx(s, extra);
     s.pending = null;
     for (const ev of db.eventsList) {
       if (ev.kind === 'trip') continue;                     // 원정 사건은 원정 흐름이 따로 건다
@@ -76,6 +85,8 @@
       break;
     }
   }
+  // 조사·말 걸기 직후: 그 조작에 걸린 사건이 있으면 건다 (when 에 inspect:x / talk:x)
+  const checkEvents = (s, db, extra) => { if (!s.pending) enterPhase(s, db, extra); return !!s.pending; };
 
   // 하루 끝 → 새 날
   function newDay(s, db) {
@@ -150,6 +161,7 @@
     const t = s.traces[objId];
     if (t) t.seen = true;
     s.stats.decisions++;
+    checkEvents(s, db, { inspect: { [objId]: 1 } });
     return true;
   }
   function hear(s, i) { const r = s.rumors[i]; if (!r) return false; r.heard = true; return true; }
@@ -191,6 +203,7 @@
       case 'hear': if (!isIdx(a.i)) break; ok = hear(s, a.i); break;
       case 'writeCause': if (typeof a.who !== 'string') break; ok = writeCause(s, db, a.who, a.line === undefined ? null : a.line); break;
       case 'writeFact': if (typeof a.object !== 'string') break; ok = writeFact(s, db, a.object); break;
+      case 'talk': { const p = s.people[a.who]; if (!p || p.status !== 'home' || a.who === 'you') break; s.stats.decisions++; checkEvents(s, db, { talk: { [a.who]: 1 } }); ok = true; break; }
       case 'treat': { const p = s.people[a.who]; if (!p || p.status !== 'home') break; s.flags[`treated_${a.who}`] = true; ok = true; break; }
       case 'board': { const p = s.people[a.who]; if (!p || p.status !== 'home') break; if (s.flags[`board_${a.who}`]) delete s.flags[`board_${a.who}`]; else s.flags[`board_${a.who}`] = true; ok = true; break; }
       case 'move': if (!a.map || !db.maps[a.map] || !Number.isInteger(a.x) || !Number.isInteger(a.y)) break; s.pos = { map: a.map, x: a.x, y: a.y }; ok = true; break;
@@ -221,6 +234,8 @@
     }
     if (typeof s.rng !== 'number') s.rng = s.seed >>> 0;
     if (!Number.isInteger(s.day)) s.day = 0;
+    if (s.trip !== null && typeof s.trip !== 'object') s.trip = null;
+    if (!s.pos || typeof s.pos !== 'object') s.pos = { map: null, x: 0, y: 0 };
     if (!s.ended && !phaseOf(db, s.phase)) return null;          // 모르는 단계 = 구조가 어긋난 저장
     if (s.pending && !db.events[s.pending.id]) s.pending = null;
     return s;
