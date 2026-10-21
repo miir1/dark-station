@@ -368,7 +368,7 @@
     },
     "ledgerFact": {
       "whole": "D{day}. 선로에 사람이 떠내려왔다.",
-      "cut": "D{day} 밤. 선로의 사람 허벅지가 베였다.",
+      "cut": "D{day} 밤. 선로의 사람에게 누가 손댔다.",
       "buried": "D{day}. 선로의 사람을 묻었다."
     },
     "solid": 1,
@@ -699,7 +699,7 @@
     },
     "ledgerFact": {
       "empty": "D{day}. 순례 그릇 빔.",
-      "meat": "D{day}. 순례 그릇에 고기."
+      "meat": "D{day}. 순례 그릇에 통조림 아닌 것."
     },
     "solid": 0,
     "light": 0,
@@ -724,7 +724,7 @@
     },
     "ledgerFact": {
       "empty": "D{day}. 서하 그릇 빔.",
-      "meat": "D{day}. 서하 그릇에 고기."
+      "meat": "D{day}. 서하 그릇에 통조림 아닌 것."
     },
     "solid": 0,
     "light": 0,
@@ -749,7 +749,7 @@
     },
     "ledgerFact": {
       "empty": "D{day}. 기철 그릇 빔.",
-      "meat": "D{day}. 기철 그릇에 고기."
+      "meat": "D{day}. 기철 그릇에 통조림 아닌 것."
     },
     "solid": 0,
     "light": 0,
@@ -774,7 +774,7 @@
     },
     "ledgerFact": {
       "empty": "D{day}. 은지 그릇 빔.",
-      "meat": "D{day}. 은지 그릇에 고기."
+      "meat": "D{day}. 은지 그릇에 통조림 아닌 것."
     },
     "solid": 0,
     "light": 0,
@@ -799,7 +799,7 @@
     },
     "ledgerFact": {
       "empty": "D{day}. 동하 그릇 빔.",
-      "meat": "D{day}. 동하 그릇에 고기."
+      "meat": "D{day}. 동하 그릇에 통조림 아닌 것."
     },
     "solid": 0,
     "light": 0,
@@ -824,7 +824,7 @@
     },
     "ledgerFact": {
       "empty": "D{day}. 마리 그릇 빔.",
-      "meat": "D{day}. 마리 그릇에 고기."
+      "meat": "D{day}. 마리 그릇에 통조림 아닌 것."
     },
     "solid": 0,
     "light": 0,
@@ -849,7 +849,7 @@
     },
     "ledgerFact": {
       "empty": "D{day}. 내 그릇 빔.",
-      "meat": "D{day}. 내 그릇에 고기."
+      "meat": "D{day}. 내 그릇에 통조림 아닌 것."
     },
     "solid": 0,
     "light": 0,

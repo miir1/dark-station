@@ -391,7 +391,7 @@
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
-    "text": "허벅지 안쪽이 베여 있다. 깨끗한 칼자국이다.",
+    "text": "선로의 사람이 어제와 다르다. 담요로 덮여 있다. 누가 손댔다.",
     "rumor": 0,
     "truth": 1
   },
@@ -580,7 +580,7 @@
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
-    "text": "그릇에 익힌 고기가 있다. 통조림이 아니다.",
+    "text": "그릇에 통조림이 아닌 것이 있다. 아무도 뭐라 하지 않는다.",
     "rumor": 0,
     "truth": 1
   },
