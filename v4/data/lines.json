@@ -1663,5 +1663,104 @@
     "text": "\"명부의 첫 이름은 당신입니다. 다시 모시겠습니까.\"",
     "rumor": 0,
     "truth": 1
+  },
+  {
+    "id": "rum_grandma_called",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니가 밤에 계단에서 누구 이름을 불렀어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_grandma_called",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니는 밤새 잤어. 소리는 위에서만 났어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_seoha_shouted",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "서하가 제 이름을 소리쳤어. 그래서 내가 안 올라갔어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_mari_names",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "마리가 밤새 {who:의} 이름을 불렀어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_sister_shutter",
+    "speaker": "dongha",
+    "context": "",
+    "grade": "normal",
+    "text": "누나가 셔터 밑에서 뭘 받았어요.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_sister_went",
+    "speaker": "dongha",
+    "context": "",
+    "grade": "normal",
+    "text": "누나가 셔터 너머로 갔어요. 저 대신이래요.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_dongha_pipe",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "동하가 파이프로 누굴 때렸어. 그 사람은 안 일어났어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_dongha_pipe",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "쥐 잡는 소리였어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_dongha_carried",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "동하가 밤새 다친 사람 옆에 앉아 있었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_pharmacist_behind",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "횃불 뒤에 약사가 서 있었어. 눈을 안 마주쳤어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_dohyeon_price",
+    "speaker": "gicheol",
+    "context": "",
+    "grade": "normal",
+    "text": "도현이 값을 다시 불렀소. 어제와 다르오.",
+    "rumor": 1,
+    "truth": 1
   }
 ]
