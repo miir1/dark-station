@@ -90,15 +90,19 @@
     return b.join('');
   }
 
+  // 아이콘 그림 (지도 위에 그릴 때)
+  const ICON_IMG = {};
+  function iconImg(name) { const n = IC_SRC[name] || name; if (!ICON_IMG[n]) { const im = new Image(); im.src = 'img/icons/' + n + '.png'; ICON_IMG[n] = im; } return ICON_IMG[n]; }
   // ── 머리말 ──
   function hud() {
     const s = state;
-    if (s.phase === 'prologue') { $('hud').innerHTML = '<span class="day">프롤로그</span>'; return; }
+    if (s.phase === 'prologue') { $('hud').innerHTML = '<div class="day">프롤로그</div><div class="pro">을지로입구역으로</div>'; return; }
     const need = Math.ceil((1 + E.alive(s).length) * 0.5);
-    const it = (k) => { const low = (k === 'food' || k === 'water') ? s.res[k] < need * 2 : s.res[k] === 0; return `<span class="it ${low ? 'low' : ''}">${ic(k)}<b>${s.res[k]}</b></span>`; };
+    const it = (k) => { const low = (k === 'food' || k === 'water') ? s.res[k] < need * 2 : s.res[k] === 0; return `<div class="it ${low ? 'low' : ''}" title="${D.RES[k]}">${ic(k)}<b>${s.res[k]}</b><span>${D.RES[k]}</span></div>`; };
     const left = Math.max(0, D.GOAL_DAY - s.day);
-    let h = `<span class="day">D${Math.min(s.day, D.GOAL_DAY)}</span><span class="it train">${ic('train')}<b>${left ? left + '일' : '오늘'}</b></span>${['food', 'water', 'parts', 'meds'].map(it).join('')}<span class="it ${s.flood >= E.FLOOD_POWER_STOP ? 'warn' : ''}">${ic('flood')}<b>${s.flood}</b>/8</span><span class="it ${s.exposure >= 6 ? 'warn' : ''}">${ic('exposure')}<b>${s.exposure}</b>/8</span><span class="it help">?</span>`;
-    if (s.phase === 'expedition' && s.exp) { const v = E.expView(s); h += `<span class="hours">${v.hours}/${v.normal}시간 · 보급 ${v.have.food}/${v.need.food}</span>`; }
+    const g = (k, v, max, hot) => `<div class="it ${hot ? 'warn' : ''}">${ic(k)}<span class="gauge ${hot ? 'hot' : ''}"><i style="width:${Math.round(v / max * 100)}%"></i></span></div>`;
+    let h = `<div class="day">D${Math.min(s.day, D.GOAL_DAY)}<small>${left ? '열차까지 ' + left + '일' : '열차가 오는 날'}</small></div>${['food', 'water', 'parts', 'meds'].map(it).join('')}${g('flood', s.flood, 8, s.flood >= E.FLOOD_POWER_STOP)}${g('exposure', s.exposure, 8, s.exposure >= 6)}`;
+    if (s.phase === 'expedition' && s.exp) { const v = E.expView(s); h += `<div class="hours">${v.hours}/${v.normal}시간 · 보급 ${v.have.food}/${v.need.food}</div>`; }
     $('hud').innerHTML = h;
   }
 
@@ -195,7 +199,7 @@
   // ── 주민이 일터까지 걸어간다: 보이는 위치는 따로, 길은 BFS ──
   const walkers = {};                 // id → { x, y, path: [[x,y]...], face, steps }
   const NPC_MS = 320;
-  function pathTo(sx, sy, tx, ty) {
+  function pathTo(sx, sy, tx, ty, avoidNpc) {
     const key = (x, y) => x + ',' + y;
     const prev = new Map([[key(sx, sy), null]]);
     const q = [[sx, sy]];
@@ -204,7 +208,7 @@
       if (x === tx && y === ty) break;
       for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
         const nx = x + dx, ny = y + dy, k = key(nx, ny);
-        if (prev.has(k) || (blocked(nx, ny, true) && !(nx === tx && ny === ty))) continue;
+        if (prev.has(k) || (blocked(nx, ny, !avoidNpc) && !(nx === tx && ny === ty))) continue;
         prev.set(k, [x, y]); q.push([nx, ny]);
       }
     }
@@ -235,19 +239,20 @@
 
   // ── 그리기 ──
   let view = { cols: 13, rows: 9, scale: 3 };
+  // 설계 v7: 지도 상자는 논리 480×320 = 15×10칸. 전체 화면(#app 640×360)을 정수 배율로 키운다 (720p 2배, 1080p 3배)
   function resize() {
-    const st = $('stage');
-    const W = st.clientWidth || 375, H = st.clientHeight || 420;
-    // 설계 v5: 한 도트 = 화면 1px. 폰은 배율 1(가로 12칸), 태블릿·PC는 2
-    const scale = W >= 768 ? 2 : 1;
-    // 캔버스는 무대를 정확히 채운다 (칸 배수로 키우면 위아래가 잘려 맨 윗줄 사람의 머리가 잘렸다)
-    view = { cols: W / (T * scale), rows: H / (T * scale), scale };
-    cv.width = Math.ceil(W / scale); cv.height = Math.ceil(H / scale);
-    cv.style.width = Math.round(cv.width * scale) + 'px'; cv.style.height = Math.round(cv.height * scale) + 'px';
+    view = { cols: 15, rows: 10, scale: 1 };
+    cv.width = 480; cv.height = 320;
     ctx.imageSmoothingEnabled = false;
+    fitApp();
   }
-  window.addEventListener('resize', resize);
-  if (window.ResizeObserver) new ResizeObserver(() => resize()).observe($('stage'));
+  let appScale = 1;
+  function fitApp() {
+    const W = window.innerWidth || 1280, H = window.innerHeight || 720;
+    appScale = Math.max(1, Math.floor(Math.min(W / 640, H / 360)));
+    $('app').style.transform = `scale(${appScale})`;
+  }
+  window.addEventListener('resize', fitApp);
 
   function tileKind(t, x, y) {
     if (scene.kind === 'dungeon') {
@@ -276,7 +281,7 @@
     const ox = scene.w * T < cv.width ? Math.round((cv.width - scene.w * T) / 2) : -Math.round(camX);
     const oy = scene.h * T < cv.height ? Math.round((cv.height - scene.h * T) / 2) : -Math.round(camY);
     ctx.fillStyle = '#050404'; ctx.fillRect(0, 0, cv.width, cv.height);
-    scene.head = { x: (mx * T + ox) * view.scale, y: (my * T - (ART.PH - T) + oy) * view.scale, w: T * view.scale };   // 주인공 머리의 화면 위치 (목표 상자가 가리지 않게)
+    scene.cam = { ox, oy };                                 // 클릭한 화면 자리 → 지도 칸
     ctx.save(); ctx.translate(ox, oy);
     // 바닥·벽
     for (let y = 0; y < scene.h; y++) for (let x = 0; x < scene.w; x++) {
@@ -316,6 +321,10 @@
         if (p.lying) { ctx.save(); ctx.translate(p.x * T + T, p.y * T + T / 4); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0, img.width * 0.67, img.height * 0.67); ctx.restore(); }
         else ctx.drawImage(img, p.x * T, p.y * T - (ART.PH - T) - (Math.sin((tick + p.r.id.length * 37) / 45) > 0.55 ? K : 0));
         if (p.r.breakdown > 0 && (tick >> 4) % 2) { ctx.fillStyle = '#9c1e1e'; ctx.fillRect(p.x * T + 14 * K, p.y * T - 26 * K, 4 * K, 6 * K); }
+        if (scene.kind === 'station' && state.phase === 'morning' && !p.lying) {       // 오늘 하는 일 (가시성)
+          const tk = E.effectivePlan(state)[p.r.id] || 'rest', im = iconImg(tk);
+          if (im && im.complete && im.naturalWidth) ctx.drawImage(im, p.x * T + 8 * K, p.y * T - (ART.PH - T) - 18 * K, 16 * K, 16 * K);
+        }
         ctx.restore();
       }]);
     }
@@ -542,13 +551,65 @@
   let busy = false;           // 대화 흐름 진행 중
   function update() {
     if (scene.moving) {
-      scene.moving.t += frameDt / STEP_MS;
+      scene.moving.t += frameDt / (running ? STEP_MS * 0.55 : STEP_MS);
       if (scene.moving.t >= 1) { scene.moving = null; arrived(); }
       return;
     }
-    if (busy || UI.isOpen()) return;
+    if (busy || UI.isOpen()) { scene.auto = null; return; }
     const dir = ['up', 'down', 'left', 'right'].find((d) => held.has(d));
-    if (dir) step(dir);
+    if (dir) { scene.auto = null; step(dir); return; }
+    // 클릭한 곳까지 저절로 걷는다. 다 가면 그 물건·사람을 조사한다
+    const a = scene.auto;
+    if (a) {
+      if (a.path.length) {
+        const [nx, ny] = a.path[0];
+        if (blocked(nx, ny)) {                                   // 누가 서 있다 — 피해서 다시 찾고, 길이 없으면 그만
+          const goal = a.path[a.path.length - 1], p = pathTo(scene.px, scene.py, goal[0], goal[1], true);
+          if (!p) { scene.auto = null; UI.toast('길이 막혀 있다.', 900); return; }
+          a.path = p; return;
+        }
+        a.path.shift(); step(nx > scene.px ? 'right' : nx < scene.px ? 'left' : ny > scene.py ? 'down' : 'up');
+      }
+      else { scene.auto = null; if (a.face) { scene.face = a.face; interact(); } }
+    }
+  }
+  // 화면 자리(논리 px) → 칸. 사람·물건을 누르면 옆 칸까지 가서 조사, 바닥을 누르면 거기까지
+  function clickCell(px, py) {
+    if (!scene.cam) return null;
+    return [Math.floor((px - scene.cam.ox) / T), Math.floor((py - scene.cam.oy) / T)];
+  }
+  function walkTo(tx, ty) {
+    if (busy || UI.isOpen() || scene.moving) return;
+    if (tx < 0 || ty < 0 || tx >= scene.w || ty >= scene.h) return;
+    const here = tx === scene.px && ty === scene.py;
+    const thing = residentsOnMap().some((p) => p.x === tx && p.y === ty) || objectsAt(tx, ty).some((o) => o.name) || (scene.kind === 'prologue' && objectsAt(tx, ty).length);
+    if (here) { interact(); return; }
+    if (thing || blocked(tx, ty)) {
+      // 옆 칸 중 갈 수 있는 가장 가까운 곳으로, 그리고 그쪽을 본다
+      let best = null;
+      for (const [dx, dy, face] of [[0, 1, 'up'], [0, -1, 'down'], [1, 0, 'left'], [-1, 0, 'right']]) {
+        const ax = tx + dx, ay = ty + dy;
+        if (ax === scene.px && ay === scene.py) { best = { path: [], face }; break; }
+        if (blocked(ax, ay)) continue;
+        const p = pathTo(scene.px, scene.py, ax, ay, true) || pathTo(scene.px, scene.py, ax, ay);
+        if (p && (!best || p.length < best.path.length)) best = { path: p, face };
+      }
+      if (!best) { UI.toast('갈 수 없는 곳이다.', 900); return; }
+      scene.auto = best; return;
+    }
+    const p = pathTo(scene.px, scene.py, tx, ty, true) || pathTo(scene.px, scene.py, tx, ty);
+    if (!p) { UI.toast('갈 수 없는 곳이다.', 900); return; }
+    scene.auto = { path: p, face: null };
+  }
+  // 마우스를 올린 것의 이름 (패널 아래 띠)
+  function hoverName(tx, ty) {
+    if (tx == null || scene.kind === 'dungeon') return '';
+    const p = residentsOnMap().find((q) => q.x === tx && q.y === ty);
+    if (p) { const tk = state.phase === 'morning' && scene.kind === 'station' ? ' — ' + D.TASKS[E.effectivePlan(state)[p.r.id] || 'rest'].name : ''; return p.r.name + tk; }
+    const o = objectsAt(tx, ty).find((q) => q.name);
+    if (o) return o.name;
+    const t = tileAt(tx, ty);
+    return { S: '출구 계단 (안개)', k: '역무실 문', A: '지하상가 통로', B: '배수 터널', R: '무너진 통로', o: '열린 문' }[t] || '';
   }
   function step(dir) {
     scene.face = dir;
@@ -954,7 +1015,7 @@
       await UI.line('“명부의 첫 이름은 당신입니다. 타시겠습니까?”', { name: '검표원' });
     }
     const used = b.picks.length + (b.self ? 1 : 0);
-    const opts = [{ label: `${b.self ? '✓ ' : ''}당신 — 명부의 첫 줄`, icon: face('player', 0, 36), sub: esc(b.self ? '탄다 — 자리 하나를 쓴다' : used >= b.cap ? '남는다 — 타려면 한 사람을 내려야 한다' : '남는다 — 누르면 탄다'), value: '__self', disabled: !b.self && used >= b.cap }];
+    const opts = [{ label: `${b.self ? '✓ ' : ''}${pname()} — 명부의 첫 줄`, icon: face('player', 0, 36), sub: esc(b.self ? '탄다 — 자리 하나를 쓴다' : used >= b.cap ? '남는다 — 타려면 한 사람을 내려야 한다' : '남는다 — 누르면 탄다'), value: '__self', disabled: !b.self && used >= b.cap }];
     opts.push(...b.pool.map((p) => { const on = b.picks.includes(p.id); const r = p.kind === 'resident' ? E.byId(s, p.id) : null; return { label: `${on ? '✓ ' : ''}${p.name}`, icon: face(p.id, r ? r.injury : 0, 36), sub: esc(r ? `${D.PEOPLE[p.id].bio} · 스트레스 ${r.stress}${r.injury ? ' · 부상 ' + r.injury : ''}` : '약속을 지켜 준 사람'), value: p.id, disabled: !on && used >= b.cap }; }));
     opts.push({ label: `이 사람들을 태운다 (${used}/${b.cap})`, value: '__go', disabled: !used, confirm: `${used}명을 태웁니다${b.self ? ' (당신 포함)' : ' — 당신은 남는다'}. 확정할까요?` });
     const a = await UI.open(`<p class="tag">D${D.GOAL_DAY} · 열차 시간</p><p class="title">구조열차가 들어온다</p><p class="mini">정원 ${b.cap}명 = 식량·물 ${E.BOARD_PER}개씩 ${tr.base}명${tr.hospital ? ` + 병원 ${tr.hospital}` : ''}${tr.litter ? ` + 들것 ${tr.litter}` : ''}${tr.seat ? ` ${tr.seat > 0 ? '+' : '−'} 검표 ${Math.abs(tr.seat)}` : ''}</p>`, { options: opts, full: true });
@@ -965,7 +1026,7 @@
     const mark = { boarded: '승차', stayed: '남음', dead: '사망' };
     const kind = { kept: '지킨 약속', broken: '버린 약속', late: '못 지킨 약속' };
     const a = await UI.open(`${cgImg({ safe: 'ending_safe', half: 'ending_thin', thin: 'ending_thin', missed: 'ending_missed', wiped: 'ending_wiped' }[e.tier])}<p class="tag">${e.tier === 'wiped' ? '끝' : 'D' + D.GOAL_DAY + ' · 첫 번째 열차'}</p><p class="title">${esc(e.title)}</p><p>${esc(e.text)}</p>
-      <p class="tag">명부</p>${e.rows.map((r) => `<p>${esc(r.name)} <span class="badge ${r.status === 'boarded' ? 'good' : r.status === 'dead' ? 'bad' : ''}">${mark[r.status]}</span> <span class="mini">${esc(r.line)}</span></p>`).join('')}
+      <p class="tag">명부</p>${e.rows.map((r) => `<p>${esc(r.name === '당신' ? pname() : r.name)} <span class="badge ${r.status === 'boarded' ? 'good' : r.status === 'dead' ? 'bad' : ''}">${mark[r.status]}</span> <span class="mini">${esc(r.line)}</span></p>`).join('')}
       ${e.ledger && e.ledger.length ? `<p class="tag">약속</p>${e.ledger.map((l) => `<p class="rep ${l.kind === 'kept' ? 'good' : l.kind === 'broken' ? 'bad' : 'warn'}">${kind[l.kind]} — ${esc(l.text)}</p>`).join('')}` : ''}`,
     { full: true, options: [{ label: '플레이 기록 복사', value: 'copy' }, { label: '처음부터 다시', value: 'restart', confirm: '처음부터 다시 시작할까요?' }] });
     if (a === 'copy') { copyLog(); return endedStep(); }
@@ -984,42 +1045,72 @@
     flow(async () => {});
   }
 
-  // ── 메뉴 (B) ──
+  // ── 일시정지 (Esc): 게임 밖의 일 — 계속·소리·전체화면·저장 코드·타이틀 ──
+  const NAME_KEY = 'darkstation.name';
+  const pname = () => { try { return localStorage.getItem(NAME_KEY) || '당신'; } catch (e) { return '당신'; } };
+  function exportCode() { try { const code = btoa(unescape(encodeURIComponent(JSON.stringify(state)))); if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(() => UI.toast('저장 코드를 복사했다. 메모장 등에 붙여 두면 된다.', 3000), () => window.prompt('저장 코드 (복사해 두세요)', code)); else window.prompt('저장 코드 (복사해 두세요)', code); } catch (e) { UI.toast('저장 코드를 만들지 못했다.'); } }
+  function importCode(code) { try { const s = E.normalize(JSON.parse(decodeURIComponent(escape(atob((code || '').trim()))))); if (!s) { UI.toast('알 수 없는 저장 코드다.'); return false; } state = s; save(); scene.key = ''; scene.kind = ''; scene.stationPos = null; for (const k in introShown) delete introShown[k]; syncScene(); hud(); UI.toast('저장 코드를 불러왔다.'); return true; } catch (e) { UI.toast('알 수 없는 저장 코드다.'); return false; } }
   async function menu() {
     if (busy || UI.isOpen()) return;
     flow(async () => {
       for (;;) {
-        const a = await UI.open('', { grid: true, cancel: true, options: [
-          { label: '수첩', icon: ic('log'), value: 'book' }, { label: '사람들', icon: ic('people'), value: 'people' }, { label: '시선', icon: ic('gods'), value: 'gods' }, { label: '일지', icon: ic('day'), value: 'log' },
-          { label: FX.soundOn ? '소리 끄기' : '소리 켜기', icon: ic('sound', FX.soundOn ? '' : 'off'), value: 'sound' }, { label: '처음부터', icon: ic('restart'), value: 'restart', confirm: '저장된 진행이 지워집니다. 정말 처음부터?' }, { label: '닫기', icon: '<i class="ic ic-t">✕</i>', value: null }] });
+        const a = await UI.open('<p class="title">일시정지</p>', { cancel: true, options: [
+          { label: '계속', value: null }, { label: FX.soundOn ? '소리 끄기' : '소리 켜기', value: 'sound' }, { label: document.fullscreenElement ? '전체화면 끄기' : '전체화면 (F)', value: 'full' },
+          { label: '저장 코드 내보내기', sub: '지금 판을 글자 코드로 복사한다', value: 'export' }, { label: '저장 코드 불러오기', value: 'import' },
+          { label: '타이틀로', value: 'title' }] });
         if (!a) return;
-        if (a === 'restart') { restart(); return; }
         if (a === 'sound') { UI.toast(FX.toggle() ? '소리를 켰다' : '소리를 껐다'); continue; }
-        if (a === 'book') await notebook();
-        if (a === 'people') await UI.open(`<p class="title">사람들</p>${state.residents.map((r) => personCard(r)).join('')}`, { full: true, cancel: true, next: '닫기' });
-        if (a === 'gods') {
-          const s = state, kn = { hostile: '적대', neutral: '중립', friendly: '우호' };
-          const felt = Object.keys(D.GODS).filter((id) => (s.gods[id] || 0) > 0 || (s.godSeen[id] || 0) > 0);
-          await UI.open(`<p class="title">시선</p>${felt.length ? felt.map((id) => { const G = D.GODS[id], v = s.gods[id] || 0; return `<div class="person">${ART.has('gods/' + id) && s.godSeen[id] ? `<img alt="" src="img/gods/${id}.png" style="float:left;width:48px;height:48px;image-rendering:pixelated;margin:0 8px 4px 0">` : ''}<b>${esc(E.godLabel(s, id))}</b> <span class="mini">${s.godSeen[id] ? kn[G.kind] : '정체 모름'} · ${esc(G.hint)}</span><br><span class="mini">시선 ${v}/${E.GOD_ADVENT}${bar(v, E.GOD_ADVENT, v >= E.GOD_ADVENT - 1 && G.kind === 'hostile')}</span><br><span class="mini">${esc(G.raise)}</span></div>`; }).join('') : '<p class="mini">아직 아무것도 느끼지 못했다.</p>'}<p class="mini">시선 ${E.GOD_OMEN}에 징조, ${E.GOD_ADVENT}에 강림.</p>`, { full: true, cancel: true });
-        }
-        if (a === 'log') await UI.open(`<p class="title">일지</p>${state.history.slice(-16).reverse().map((h) => `<p class="mini">${h.day ? 'D' + h.day : '프롤로그'} · ${esc(h.text)}</p>`).join('')}`, { full: true, cancel: true });
+        if (a === 'full') { toggleFull(); continue; }
+        if (a === 'export') { exportCode(); continue; }
+        if (a === 'import') { const r = await UI.open('<p class="title">저장 코드 불러오기</p><p><input type="text" id="codeIn" placeholder="코드를 붙여 넣으세요"></p>', { cancel: true, options: [{ label: '불러온다', value: true }, { label: '그만', value: null }] }); if (r) importCode(UI.lastInputs.codeIn); return; }
+        if (a === 'title') { await titleScreen(); return; }
       }
     });
   }
-
+  // ── 수첩 (Tab): 게임 안의 물건 — 명부·규칙·약속·일지 ──
+  async function notebookMenu() {
+    flow(async () => {
+      let tab = 'book';
+      for (;;) {
+        const tabs = [['book', '명부'], ['gods', '규칙·시선'], ['promise', '약속'], ['log', '일지']];
+        const opts = tabs.filter(([k]) => k !== tab).map(([k, n]) => ({ label: n, value: k })).concat([{ label: '덮는다', value: null }]);
+        let body = '';
+        if (tab === 'book') body = notebookBody();
+        else if (tab === 'gods') body = godsBody();
+        else if (tab === 'promise') body = promiseBody();
+        else body = `<p class="title">일지</p>${state.history.slice(-20).reverse().map((h) => `<p class="mini">${h.day ? 'D' + h.day : '프롤로그'} · ${esc(h.text)}</p>`).join('') || '<p class="mini">아직 아무것도.</p>'}`;
+        const a = await UI.open(body, { full: true, cancel: true, options: opts });
+        if (!a) return;
+        tab = a;
+      }
+    });
+  }
+  function promiseBody() {
+    const s = state;
+    const kept = [['hospital_pact', '병원과 협정을 맺었다 (문은채)'], ['passage_secured', '지하 통로를 이었다 (권도현)'], ['repair_open', '통로 공동 수리를 약속했다 (권도현)']].filter(([f]) => s.flags[f]);
+    const broken = [['pact_refused', '병원과의 협정을 거절했다'], ['repair_refused', '통로 수리 제안을 거절했다'], ['ate_dead', '죽은 동료의 살을 먹었다'], ['skipped_eunchae', '약국의 도움 요청을 지나쳤다']].filter(([f]) => s.flags[f]);
+    const wait = s.promises.map((p) => `<p class="rep warn">${esc((D.PROMISES[p.id] || {}).title || p.id)} — D${p.due}</p>`);
+    return `<p class="title">약속</p><p class="tag">지킨 것</p>${kept.map(([, t]) => `<p class="rep good">${esc(t)}</p>`).join('') || '<p class="mini">아직 없다.</p>'}<p class="tag">어긴 것</p>${broken.map(([, t]) => `<p class="rep bad">${esc(t)}</p>`).join('') || '<p class="mini">없다.</p>'}<p class="tag">기다리는 것</p>${wait.join('') || '<p class="mini">없다.</p>'}<p class="mini">열차는 명부의 이름만 태운다. 운임은 빵과 물, 그리고 지킨 약속.</p>`;
+  }
+  function godsBody() {
+    const s = state, kn = { hostile: '적대', neutral: '중립', friendly: '우호' };
+    const felt = Object.keys(D.GODS).filter((id) => (s.gods[id] || 0) > 0 || (s.godSeen[id] || 0) > 0);
+    return `<p class="title">뒷장 — 규칙과 시선</p>${felt.length ? felt.map((id) => { const G = D.GODS[id], v = s.gods[id] || 0; return `<div class="person">${ART.has('gods/' + id) && s.godSeen[id] ? `<img alt="" src="img/gods/${id}.png" style="float:left;width:24px;height:24px;image-rendering:pixelated;margin:0 4px 2px 0">` : ''}<b>${esc(E.godLabel(s, id))}</b> <span class="mini">${s.godSeen[id] ? kn[G.kind] : '정체 모름'} · ${esc(G.hint)}</span><br>${s.godSeen[id] ? `<span class="mini">${esc(G.rule)}</span><br>` : ''}<span class="mini">시선 ${v}/${E.GOD_ADVENT}${bar(v, E.GOD_ADVENT, v >= E.GOD_ADVENT - 1 && G.kind === 'hostile')}</span></div>`; }).join('') : '<p class="mini">빈 장. 징조를 겪으면 누군가의 글씨로 한 줄씩 채워진다.</p>'}<p class="mini">시선 ${E.GOD_OMEN}에 징조, ${E.GOD_ADVENT}에 강림.</p>`;
+  }
   // 명부 수첩: 첫 장(당신과 이름들) · 들은 것 · 신의 규칙 · 지금의 막
-  async function notebook() {
+  async function notebook() { return notebookMenu(); }
+  function notebookBody() {
     const s = state;
     const act = D.STORY.acts.slice().reverse().find((a) => s.day >= a.from) || D.STORY.acts[0];
-    const names = [`<p><b>1.</b> 당신 <span class="mini">— 기억에 없는 승차</span></p>`].concat(s.residents.map((r, i) => `<p><b>${i + 2}.</b> ${r.status === 'dead' ? `<s>${esc(r.name)}</s>` : esc(r.name)} <span class="mini">${r.status === 'dead' ? '— 줄이 그어졌다' : esc(D.PEOPLE[r.id].wish)}</span></p>`));
+    const names = [`<p><b>1.</b> ${esc(pname())} <span class="mini">— 기억에 없는 승차</span></p>`].concat(s.residents.map((r, i) => `<p><b>${i + 2}.</b> ${r.status === 'dead' ? `<s>${esc(r.name)}</s>` : esc(r.name)} <span class="mini">${r.status === 'dead' ? '— 줄이 그어졌다' : esc(D.PEOPLE[r.id].wish)}</span></p>`));
     for (const [id, a] of Object.entries(D.ALLIES)) if (s.allies[id]) names.push(`<p><b>+</b> ${esc(a.name)} <span class="mini">— ${esc(a.bio)}, 약속한 사람</span></p>`);
     const heard = [['notebook', '기관사의 수첩. 첫 줄에 당신 이름이 있었다.'], ['fare_known', '운임은 빵과 물, 그리고 지킨 약속.'], ['passage_secured', '고지대 역으로 가는 통로가 이어졌다.'], ['hospital_pact', '병원 팀이 고지대 역에서 기다린다.']].filter(([f]) => s.flags[f]).map(([, t]) => `<p class="mini">· ${esc(t)}</p>`);
     const rules = Object.keys(D.GODS).filter((id) => (s.godSeen[id] || 0) > 0).map((id) => `<p class="mini"><b>${esc(E.godLabel(s, id))}</b> — ${esc(D.GODS[id].rule)}</p>`);
     const prom = s.promises.map((p) => `<p class="mini">· ${esc((D.PROMISES[p.id] || {}).title || p.id)} — D${p.due}</p>`);
-    await UI.open(`<p class="tag">명부 수첩 · ${esc(act.title)}</p><p class="title">승객 명부</p>${names.join('')}
-      <p class="tag">기다리는 약속</p>${prom.join('') || '<p class="mini">없다.</p>'}
+    void prom; void rules;
+    return `<p class="tag">명부 수첩 · ${esc(act.title)}</p><p class="title">승객 명부</p>${names.join('')}
       <p class="tag">들은 것</p>${heard.join('') || '<p class="mini">아직 아무것도.</p>'}
-      <p class="tag">뒷장 — 규칙</p>${rules.join('') || '<p class="mini">빈 장. 징조를 겪으면 누군가의 글씨로 한 줄씩 채워진다.</p>'}`, { full: true, cancel: true, next: '덮는다' });
+      <p class="tag">사람들</p>${s.residents.map((r) => personCard(r)).join('')}`;
   }
   // 사람 카드: 얼굴 · 이름 · 상태 · 스트레스 막대 · 기술 · 오늘 할 일
   function personCard(r, extra, noTask) {
@@ -1038,26 +1129,36 @@
   });
   // ── 입력 ──
   const KEYS = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right', W: 'up', S: 'down', A: 'left', D: 'right' };
+  let running = false;
+  function toggleFull() { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }
   document.addEventListener('keydown', (e) => {
+    if (e.target && e.target.tagName === 'INPUT') { if (e.key === 'Enter') { UI.key('ok'); e.preventDefault(); } return; }   // 이름 입력 중
     const dir = KEYS[e.key];
     const ok = ['z', 'Z', 'Enter', ' '].includes(e.key), back = ['x', 'X', 'Escape'].includes(e.key);
+    if (e.key === 'Shift') { running = true; return; }
+    if (e.key === 'f' || e.key === 'F') { toggleFull(); e.preventDefault(); return; }
+    if (e.key === 'Tab') { e.preventDefault(); if (!UI.isOpen() && !busy) notebookMenu(); return; }
     if (UI.isOpen()) {
       if (dir === 'up' || dir === 'down') { UI.key(dir); e.preventDefault(); }
       else if (ok) { UI.key('ok'); e.preventDefault(); } else if (back) { UI.key('back'); e.preventDefault(); }
+      else if (/^[1-9]$/.test(e.key)) { UI.pick(Number(e.key) - 1); e.preventDefault(); }
       return;
     }
     if (dir) { held.add(dir); e.preventDefault(); } else if (ok) { interact(); e.preventDefault(); } else if (back) { menu(); e.preventDefault(); }
   });
-  document.addEventListener('keyup', (e) => { const dir = KEYS[e.key]; if (dir) held.delete(dir); });
-  window.addEventListener('blur', () => held.clear());
-  for (const b of document.querySelectorAll('[data-dir]')) {
-    const d = b.dataset.dir;
-    const on = (e) => { e.preventDefault(); if (UI.isOpen()) { if (d === 'up' || d === 'down') UI.key(d); return; } held.add(d); b.classList.add('on'); };
-    const off = () => { held.delete(d); b.classList.remove('on'); };
-    b.addEventListener('pointerdown', on); b.addEventListener('pointerup', off); b.addEventListener('pointerleave', off); b.addEventListener('pointercancel', off);
-  }
-  $('btnA').addEventListener('click', () => { if (UI.isOpen()) UI.key('ok'); else interact(); });
-  $('btnB').addEventListener('click', () => { if (UI.isOpen()) UI.key('back'); else menu(); });
+  document.addEventListener('keyup', (e) => { const dir = KEYS[e.key]; if (dir) held.delete(dir); if (e.key === 'Shift') running = false; });
+  window.addEventListener('blur', () => { held.clear(); running = false; });
+  // 마우스: 왼쪽 클릭 = 그 칸까지 걷기(사람·물건이면 조사), 오른쪽 클릭 = 취소, 올리면 이름
+  const stageXY = (e) => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * cv.width, (e.clientY - r.top) / r.height * cv.height]; };
+  cv.addEventListener('click', (e) => { if (UI.isOpen() || busy) return; const [px, py] = stageXY(e); const c = clickCell(px, py); if (c) walkTo(c[0], c[1]); });
+  cv.addEventListener('contextmenu', (e) => { e.preventDefault(); if (UI.isOpen()) UI.key('back'); else { scene.auto = null; held.clear(); } });
+  document.addEventListener('contextmenu', (e) => { if (e.target.closest('#dlg')) { e.preventDefault(); UI.key('back'); } });
+  let hover = '';
+  cv.addEventListener('mousemove', (e) => { const [px, py] = stageXY(e); const c = clickCell(px, py); hover = c ? hoverName(c[0], c[1]) : ''; });
+  cv.addEventListener('mouseleave', () => { hover = ''; });
+  $('tabBook').addEventListener('click', () => { if (!UI.isOpen() && !busy) notebookMenu(); });
+  $('tabPause').addEventListener('click', () => { if (UI.isOpen()) UI.key('back'); else menu(); });
+  $('tabFull').addEventListener('click', toggleFull);
 
   // ── 시작 ──
   // 지금 할 일 (화면 왼쪽 위)
@@ -1079,15 +1180,10 @@
   let lastGoal = null, lastBtn = null;
   function overlay() {
     const g = UI.isOpen() || busy ? '' : objective();
-    if (g !== lastGoal) { lastGoal = g; $('goal').textContent = g ? '◆ ' + g : ''; $('goal').hidden = !g; }
-    if (g && scene.head) {                                  // 목표 상자가 주인공 머리를 가리면 흐리게
-      const el = $('goal'), h = scene.head;
-      const over = h.x < el.offsetLeft + el.offsetWidth && h.x + h.w > el.offsetLeft && h.y < el.offsetTop + el.offsetHeight + 4;
-      el.classList.toggle('dim', over);
-    }
+    if (g !== lastGoal) { lastGoal = g; $('goal').textContent = g; }
     const tg = !UI.isOpen() && !busy ? target() : null;
-    const label = UI.isOpen() ? '선택' : tg ? tg.label : scene.kind === 'dungeon' ? '상태' : '조사';
-    if (label !== lastBtn) { lastBtn = label; $('btnA').textContent = label; }
+    const label = UI.isOpen() ? '' : hover ? hover + ' (클릭하면 간다)' : tg ? tg.label + ' — Space' : '';
+    if (label !== lastBtn) { lastBtn = label; $('hint').textContent = label; }
   }
   // 한 칸 걷는 데 걸리는 시간 (ms). 화면 갱신 속도와 상관없이 같다
   const STEP_MS = 230;
@@ -1100,11 +1196,23 @@
   });
   // 타이틀: 진행 중인 판이 있으면 이어하기
   async function titleScreen() {
-    const fresh = state.phase === 'prologue' && state.pro === 0 && !state.proResult;
-    const opts = fresh ? [{ label: '시작한다', value: 'go' }] : [{ label: `이어서 (${state.phase === 'prologue' ? '프롤로그' : 'D' + Math.min(state.day, D.GOAL_DAY)})`, value: 'go' }, { label: '처음부터', value: 'new', confirm: '저장된 진행이 지워집니다. 처음부터 시작할까요?' }];
-    const a = await UI.open(`${cgImg('title')}<p class="title" style="text-align:center;font-size:24px;letter-spacing:.3em;margin-top:6px">어두운 역</p><p class="mini" style="text-align:center">을지로입구역 · 구조열차까지 열흘</p>`, { options: opts, center: true });
-    FX.start();
-    if (a === 'new') restart();
+    for (;;) {
+      const fresh = state.phase === 'prologue' && state.pro === 0 && !state.proResult;
+      const opts = [];
+      if (!fresh) opts.push({ label: `계속 (${state.phase === 'prologue' ? '프롤로그' : 'D' + Math.min(state.day, D.GOAL_DAY)})`, value: 'go' });
+      opts.push({ label: '새로 시작', value: 'new', confirm: fresh ? '' : '저장된 진행이 지워집니다. 처음부터 시작할까요?' }, { label: '저장 코드 불러오기', value: 'import' }, { label: FX.soundOn ? '소리: 켜짐' : '소리: 꺼짐', value: 'sound' });
+      const a = await UI.open(`${cgImg('title')}<p class="title" style="text-align:center;font-size:14px;letter-spacing:.3em;margin-top:3px">어두운 역</p><p class="mini" style="text-align:center">을지로입구역 · 구조열차까지 열흘</p>`, { options: opts, center: true });
+      FX.start();
+      if (a === 'sound') { FX.toggle(); continue; }
+      if (a === 'import') { const r = await UI.open('<p class="title">저장 코드 불러오기</p><p><input type="text" id="codeIn" placeholder="코드를 붙여 넣으세요"></p>', { cancel: true, options: [{ label: '불러온다', value: true }, { label: '그만', value: null }] }); if (r && importCode(UI.lastInputs.codeIn)) return; continue; }
+      if (a === 'new') {
+        const r = await UI.open(`<p class="title">이름</p><p class="mini">명부 첫 줄에 적힐 이름. 비워 두면 '당신'.</p><p><input type="text" id="nameIn" maxlength="8" value="${esc(pname() === '당신' ? '' : pname())}"></p>`, { center: true, options: [{ label: '시작한다', value: true }] });
+        void r; const nm = (UI.lastInputs.nameIn || '').trim().slice(0, 8);
+        try { if (nm) localStorage.setItem(NAME_KEY, nm); else localStorage.removeItem(NAME_KEY); } catch (e) { /* 무시 */ }
+        restart(); return;
+      }
+      return;
+    }
   }
-  if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); updateWalkers(); draw(); overlay(); }, interact, menu, target, blocked, residentsOnMap, walkers, pathTo };
+  if (isLocal) window.__ds3 = { get state() { return state; }, act, scene, flow, step, frame: () => { update(); updateWalkers(); draw(); overlay(); }, interact, menu, target, blocked, residentsOnMap, walkers, pathTo, walkTo, notebookMenu };
 })();

@@ -16,7 +16,7 @@
     dlg.className = (o.center ? 'center' : o.full ? 'full' : '') + (o.grid ? ' grid' : '');
     // op.icon: 아이콘 HTML (글 앞에), o.grid: 큰 타일로 (메뉴)
     dlg.innerHTML = `<div class="box" role="dialog" aria-modal="true">${body}<div class="opts">${options.map((op, i) =>
-      `<button type="button" class="opt${op.icon ? ' has-ic' : ''}" data-i="${i}" ${op.disabled ? 'disabled' : ''}>${op.icon || ''}<span class="ol">${esc(op.label)}${op.sub ? `<small>${op.sub}</small>` : ''}</span></button>`).join('')}</div></div>`;
+      `<button type="button" class="opt${op.icon ? ' has-ic' : ''}" data-i="${i}" ${op.disabled ? 'disabled' : ''}>${op.icon || ''}<span class="ol">${!o.grid && options.length > 1 && i < 9 ? `<span class="num">${i + 1}</span>` : ''}${esc(op.label)}${op.sub ? `<small>${op.sub}</small>` : ''}</span></button>`).join('')}</div></div>`;
     dlg.hidden = false;
     openedAt = Date.now();
     return new Promise((resolve) => {
@@ -41,6 +41,8 @@
     if (!op || op.disabled) return;
     if (Date.now() - openedAt < 180) return;            // 이전 창을 닫은 손가락이 바로 다음 창을 누르지 않게
     if (op.confirm && !window.confirm(op.confirm)) return;
+    // 창 안의 입력 칸 값을 챙겨 둔다 (이름 입력 등)
+    lastInputs = {}; $('dlg').querySelectorAll('input').forEach((el) => { lastInputs[el.id || el.name] = el.value; });
     close(op.value === undefined ? i : op.value);
   }
   function key(k) {
@@ -61,6 +63,8 @@
     if (b) { choose(Number(b.dataset.i)); return; }
     if (cur && cur.cancel && e.target.id === 'dlg') close(cur.cancelValue);
   });
+  let lastInputs = {};
+  const pick = (i) => { if (cur && cur.options[i]) choose(i); };
   let toastT = 0;
   function toast(text, ms) {
     const t = $('toast'); t.textContent = text; t.hidden = false;
@@ -101,5 +105,5 @@
   async function lines(text, o) { for (const s of splitSentences(text)) await line(s, o); }
   const say = (body, o) => open(body, o);
   const isOpen = () => !!cur || !!lineCur;
-  window.UI = { open, say, key, isOpen, toast, esc, line, lines, splitSentences };
+  window.UI = { open, say, key, isOpen, toast, esc, line, lines, splitSentences, pick, get lastInputs() { return lastInputs; } };
 })();
