@@ -1,0 +1,69 @@
+[
+  { "id": "steal_food", "role": "steal", "actor": "needs.hunger>=7", "target": "", "cond": "food>=1 & food<=4", "weight": 6, "kind": "malice",
+    "trace": { "crate_food": "open", "bowl_actor": "full" }, "rumor": { "witness": "nearestSleeper", "line": "rum_saw_shadow" },
+    "effects": [ { "verb": "number", "id": "food", "n": -1 }, { "verb": "number", "id": "hunger", "who": "actor", "n": -3 } ], "oncePerRun": 0 },
+
+  { "id": "steal_water", "role": "steal", "actor": "needs.thirst>=7", "target": "farthestSleeper", "cond": "water<=4", "weight": 6, "kind": "malice",
+    "trace": { "bottle_target": "empty" }, "rumor": { "witness": "nearestSleeper", "line": "rum_bottle_empty" },
+    "effects": [ { "verb": "number", "id": "thirst", "who": "actor", "n": -3 }, { "verb": "number", "id": "thirst", "who": "target", "n": 2 } ], "oncePerRun": 0 },
+
+  { "id": "poke_fire", "role": "fear", "actor": "needs.fear>=8", "target": "", "cond": "fuel==0", "weight": 5, "kind": "neutral",
+    "trace": { "blanket_actor": "rolled", "fire": "low" }, "rumor": { "witness": "nearestSleeper", "line": "rum_fire_poked" },
+    "effects": [ { "verb": "number", "id": "fuel", "n": -1 } ], "oncePerRun": 0 },
+
+  { "id": "stand_stairs", "role": "fear", "actor": "needs.fear>=8", "target": "", "cond": "fog<=2", "weight": 5, "kind": "neutral",
+    "trace": { "shoes_stairs": "one" }, "rumor": { "witness": "nearestSleeper", "line": "rum_at_stairs" },
+    "effects": [ { "verb": "flag", "id": "stood_stairs_actor", "set": 1 } ], "oncePerRun": 0 },
+
+  { "id": "ascend", "role": "ascend", "actor": "flag:stood_stairs_actor", "target": "", "cond": "fog<=1", "weight": 8, "kind": "neutral",
+    "trace": { "shoes_stairs": "pair", "blanket_actor": "empty" }, "rumor": { "witness": "", "line": "" },
+    "effects": [ { "verb": "kill", "who": "actor", "how": "ascended" }, { "verb": "permanent", "who": "bondOfActor", "loss": "finger" } ], "oncePerRun": 0 },
+
+  { "id": "wound_rots", "role": "hurt", "actor": "needs.injury>=2", "target": "", "cond": "meds==0", "weight": 7, "kind": "neutral",
+    "trace": { "bandage_actor": "rot" }, "rumor": { "witness": "mari", "line": "rum_mari_awake" },
+    "effects": [ { "verb": "injure", "who": "actor", "n": 1 } ], "oncePerRun": 0 },
+
+  { "id": "share_bowl", "role": "share", "actor": "needs.bond!=''", "target": "bond", "cond": "bowl_target==empty", "weight": 7, "kind": "hymn",
+    "trace": { "bowl_target": "full", "bowl_actor": "empty" }, "rumor": { "witness": "nearestSleeper", "line": "rum_gave_bowl" },
+    "effects": [ { "verb": "number", "id": "hunger", "who": "actor", "n": 3 }, { "verb": "number", "id": "hunger", "who": "target", "n": -3 } ], "oncePerRun": 0 },
+
+  { "id": "protect_hurt", "role": "protect", "actor": "needs.bond!=''", "target": "bond", "cond": "injury_target>=2", "weight": 6, "kind": "hymn",
+    "trace": { "blanket_actor": "paired", "blanket_target": "paired" }, "rumor": { "witness": "", "line": "" },
+    "effects": [ { "verb": "number", "id": "fear", "who": "target", "n": -2 } ], "oncePerRun": 0 },
+
+  { "id": "read_notebook", "role": "secret", "actor": "secretFlag!='' & needs.fear>=6", "target": "you", "cond": "day>=2", "weight": 4, "kind": "neutral",
+    "trace": { "notebook_you": "moved" }, "rumor": { "witness": "nearestSleeper", "line": "rum_saw_notebook" },
+    "effects": [ { "verb": "flag", "id": "read_notebook_actor", "set": 1 } ], "oncePerRun": 0 },
+
+  { "id": "outside_contact", "role": "contact", "actor": "flag:talked_to_outside", "target": "", "cond": "day>=5", "weight": 5, "kind": "malice",
+    "trace": { "shutter_gap": "can" }, "rumor": { "witness": "nearestSleeper", "line": "rum_shutter_can" },
+    "effects": [ { "verb": "flag", "id": "patrol_knows", "set": 1 }, { "verb": "number", "id": "food", "n": 1 } ], "oncePerRun": 1 },
+
+  { "id": "eat_body", "role": "steal", "actor": "needs.hunger>=8", "target": "", "cond": "body_rail==whole", "weight": 7, "kind": "malice",
+    "trace": { "body_rail": "cut", "bowl_actor": "meat" }, "rumor": { "witness": "nearestSleeper", "line": "rum_rats_did_it" },
+    "effects": [ { "verb": "number", "id": "hunger", "who": "actor", "n": -4 }, { "verb": "flag", "id": "ate_flesh_actor", "set": 1 } ], "oncePerRun": 0 },
+
+  { "id": "swing_pipe", "role": "kill", "actor": "needs.fear>=9", "target": "randomSleeper", "cond": "pipe==clean", "weight": 4, "kind": "malice",
+    "trace": { "pipe": "blood" }, "rumor": { "witness": "target", "line": "rum_swung_asleep" },
+    "effects": [ { "verb": "injure", "who": "target", "n": 1 } ], "oncePerRun": 0 },
+
+  { "id": "soonrye_water", "role": "pair", "actor": "soonrye", "target": "seoha", "cond": "thirst_seoha>=6 & water<=2", "weight": 10, "kind": "hymn",
+    "trace": { "bottle_soonrye": "empty", "bottle_seoha": "full" }, "rumor": { "witness": "nearestSleeper", "line": "rum_grandma_poured" },
+    "effects": [ { "verb": "number", "id": "thirst", "who": "soonrye", "n": 4 }, { "verb": "number", "id": "thirst", "who": "seoha", "n": -4 } ], "oncePerRun": 1 },
+
+  { "id": "gicheol_parts", "role": "pair", "actor": "gicheol", "target": "dohyeon", "cond": "parts<3 & day>=4 & flag:met_dohyeon", "weight": 10, "kind": "malice",
+    "trace": { "parts_crate": "hidden" }, "rumor": { "witness": "dongha", "line": "rum_gicheol_hit" },
+    "effects": [ { "verb": "flag", "id": "parts_hidden", "set": 1 } ], "oncePerRun": 1 },
+
+  { "id": "eunji_meat_lie", "role": "pair", "actor": "eunji", "target": "dongha", "cond": "body_rail==cut & hunger_dongha>=6", "weight": 10, "kind": "malice",
+    "trace": { "bowl_dongha": "meat", "bowl_eunji": "empty" }, "rumor": { "witness": "dongha", "line": "rum_sister_said_rat" },
+    "effects": [ { "verb": "flag", "id": "dongha_ate_unknowing", "set": 1 }, { "verb": "number", "id": "hunger", "who": "dongha", "n": -4 } ], "oncePerRun": 1 },
+
+  { "id": "mari_pillow", "role": "pair", "actor": "mari", "target": "mostInjured", "cond": "injury_target>=3 & meds==0", "weight": 10, "kind": "malice",
+    "trace": { "pillow_gicheol": "moved" }, "rumor": { "witness": "mari", "line": "rum_went_in_night" },
+    "effects": [ { "verb": "kill", "who": "target", "how": "dead" }, { "verb": "flag", "id": "mari_killed", "set": 1 } ], "oncePerRun": 1 },
+
+  { "id": "seoha_blames_dongha", "role": "pair", "actor": "seoha", "target": "dongha", "cond": "flag:steal_food_seoha & day>=3", "weight": 9, "kind": "malice",
+    "trace": { "crate_food": "open" }, "rumor": { "witness": "seoha", "line": "rum_dongha_did" },
+    "effects": [ { "verb": "flag", "id": "dongha_blamed", "set": 1 } ], "oncePerRun": 1 }
+]

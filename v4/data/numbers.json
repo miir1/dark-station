@@ -1,0 +1,21 @@
+[
+  { "id": "food",    "owner": "world",  "min": 0, "max": 16, "start": 6,  "perDay": 0,  "visible": "always" },
+  { "id": "water",   "owner": "world",  "min": 0, "max": 16, "start": 6,  "perDay": 0,  "visible": "always" },
+  { "id": "fuel",    "owner": "world",  "min": 0, "max": 12, "start": 8,  "perDay": -1, "visible": "always" },
+  { "id": "fog",     "owner": "world",  "min": 0, "max": 8,  "start": 0,  "perDay": 0,  "visible": "inspect" },
+  { "id": "flood",   "owner": "world",  "min": 0, "max": 8,  "start": 1,  "perDay": 0,  "visible": "inspect" },
+  { "id": "day",     "owner": "world",  "min": 0, "max": 10, "start": 0,  "perDay": 1,  "visible": "always" },
+  { "id": "parts",   "owner": "world",  "min": 0, "max": 18, "start": 4,  "perDay": 0,  "visible": "inspect" },
+  { "id": "meds",    "owner": "world",  "min": 0, "max": 6,  "start": 1,  "perDay": 0,  "visible": "inspect" },
+  { "id": "hunger",  "owner": "person", "min": 0, "max": 10, "start": 3,  "perDay": 2,  "visible": "inspect" },
+  { "id": "thirst",  "owner": "person", "min": 0, "max": 10, "start": 3,  "perDay": 2,  "visible": "inspect" },
+  { "id": "fear",    "owner": "person", "min": 0, "max": 10, "start": 4,  "perDay": 0,  "visible": "inspect" },
+  { "id": "injury",  "owner": "person", "min": 0, "max": 3,  "start": 0,  "perDay": 0,  "visible": "inspect" },
+  { "id": "counted", "owner": "person", "min": 0, "max": 1,  "start": 0,  "perDay": 0,  "visible": "inspect" },
+  { "id": "finger",  "owner": "person", "min": 0, "max": 1,  "start": 0,  "perDay": 0,  "visible": "inspect" },
+  { "id": "leg",     "owner": "person", "min": 0, "max": 1,  "start": 0,  "perDay": 0,  "visible": "inspect" },
+  { "id": "ear",     "owner": "person", "min": 0, "max": 1,  "start": 0,  "perDay": 0,  "visible": "inspect" },
+  { "id": "share",   "owner": "world",  "min": -9, "max": 9, "start": 0,  "perDay": 0,  "visible": "never" },
+  { "id": "hand",    "owner": "world",  "min": -9, "max": 9, "start": 0,  "perDay": 0,  "visible": "never" },
+  { "id": "name",    "owner": "world",  "min": -9, "max": 9, "start": 0,  "perDay": 0,  "visible": "never" }
+]
