@@ -45,6 +45,7 @@
       pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0 },
     };
     if (!db.people.you) throw new Error('people 표에 you 가 없음');
+    for (const o of Object.values(db.objects)) s.traces[o.id] = { st: o.states[0], day: 0, by: null, seen: false };   // 물건의 첫 상태 = states[0]
     for (const id of db.peopleOrder) s.people[id] = makePerson(db, id);
     s.phase = firstPhase(s, db);
     enterPhase(s, db);
@@ -58,7 +59,8 @@
     ctx.flags = s.flags; ctx.phase = s.phase || '';
     ctx.map = s.pos.map || ''; ctx.region = s.trip ? s.trip.region : ''; ctx.floor = s.trip ? s.trip.floor : 0;
     ctx.trace = {}; for (const [id, t] of Object.entries(s.traces)) ctx.trace[id] = t.st;
-    ctx.alive = {}; for (const p of Object.values(s.people)) ctx.alive[p.id] = p.status === 'home' ? 1 : 0;
+    ctx.alive = {}; for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' ? 1 : 0; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }   // hunger_you, injury_gicheol (밤 사건 조건과 같은 어휘)
+    Object.assign(ctx, s.people.you.n);                                                                     // 사건 when 에서 hunger·injury 는 당신 것
     ctx.inspect = {}; ctx.talk = {};
     if (extra) Object.assign(ctx, extra);
     return ctx;
@@ -100,7 +102,8 @@
       delete s.flags[`treated_${p.id}`];
     }
     // 아침에 지워지는 흔적
-    for (const [id, t] of Object.entries(s.traces)) { const o = db.objects[id]; if (!o) continue; if (o.resetOn === 'morning' || (o.resetOn === 'inspect' && t.seen && t.day < s.day)) delete s.traces[id]; }
+    for (const [id, t] of Object.entries(s.traces)) { const o = db.objects[id]; if (!o) continue; if (o.resetOn === 'morning' || (o.resetOn === 'inspect' && t.seen && t.day < s.day)) s.traces[id] = { st: o.states[0], day: s.day, by: null, seen: false }; }   // 지워짐 = 첫 상태로
+    if (!Object.values(s.people).some((p) => p.status === 'home' && p.id !== 'you')) { endGame(s, db, 'all_dead'); return; }
     const dayDef = db.numbers.day;
     if (dayDef && s.day > dayDef.max) { endGame(s, db, 'train'); return; }
     if (s.people.you.status !== 'home') { endGame(s, db, 'you_gone'); return; }
@@ -110,7 +113,7 @@
   function endGame(s, db, why) {
     for (const p of Object.values(s.people)) if (p.status === 'home' && s.flags[`board_${p.id}`]) p.status = 'boarded';
     const c = ID.identity(s.axes, db.identity);
-    s.ended = { why, identity: c ? c.id : null, reader: LEDGER.reader(s, db), ledger: LEDGER.rows(s, db) };
+    s.ended = { why, identity: c ? c.id : null, reader: LEDGER.reader(s, db), ledger: LEDGER.rows(s, db), cause: why === 'you_gone' && s.lastResult ? { event: s.lastResult.event, choice: s.lastResult.choice, warned: s.lastResult.warned } : null };
     s.phase = 'ended'; s.pending = null;
   }
 
@@ -125,7 +128,7 @@
     }
     if (c.cost) for (const [k, v] of Object.entries(c.cost)) { const have = db.numbers[k].owner === 'world' ? s.world[k] : you.n[k]; if ((have || 0) < v) locked.push(`${db.numbers[k].name || k}이(가) 모자라다`); }
     const chance = c.check ? Math.max(0, Math.min(100, c.check.base + SKILL_PCT * (you.skills[c.check.skill] || 0))) : null;
-    return { label: c.label, locked: locked.length > 0, reason: locked.join(', '), chance, hint: c.hint || '', taboo: !!c.taboo };
+    return { label: c.label, locked: locked.length > 0, reason: locked.join(', '), chance, hint: c.hint || '', warn: c.warn || '', cost: c.cost || null, taboo: !!c.taboo };
   }
   function eventView(s, db) {
     if (!s.pending) return null;
@@ -145,7 +148,7 @@
     if (c.check) { const ok = R.rand(s) * 100 < st.chance; roll = { chance: st.chance, success: ok }; out = ok ? c.ok : c.fail; }
     if (out && out.effects) FX.apply(s, db, out.effects, { actor: 'you', target: out.target || null }, lines);
     if (out && out.ledger) s.ledger.written.push({ day: s.day, who: out.ledger.who || 'you', text: out.ledger.text });
-    s.lastResult = { event: ev.id, choice: c.label, roll, text: (out && out.text) || '', lines };
+    s.lastResult = { event: ev.id, choice: c.label, i, warned: !!(c.warn || c.hint || c.taboo), roll, text: (out && out.text) || '', lines };
     if (ev.once || ev.kind === 'fixed' || ev.kind === 'trial' || ev.kind === 'ending') s.done[ev.id] = s.day;
     s.stats.decisions++;
     say(s, c.label, 'choice');
@@ -159,12 +162,36 @@
   function inspect(s, db, objId) {
     if (!db.objects[objId]) return false;
     const t = s.traces[objId];
-    if (t) t.seen = true;
+    if (t) { t.seen = true; NIGHT.markInspected(s, objId); }
     s.stats.decisions++;
     checkEvents(s, db, { inspect: { [objId]: 1 } });
     return true;
   }
-  function hear(s, i) { const r = s.rumors[i]; if (!r) return false; r.heard = true; return true; }
+  function hear(s, i) { const r = s.rumors[i]; if (!r) return false; r.heard = true; NIGHT.markHeard(s, r); return true; }
+  // 원정: 지금 지역·층에 맞는 원정 사건 하나를 건다 (같은 원정에서 같은 사건은 한 번)
+  function startTripEvent(s, db) {
+    const ctx = phaseCtx(s);
+    const fit = db.eventsList.filter((ev) => ev.kind === 'trip' && !(s.trip.done || []).includes(ev.id) && !(ev.once && Object.prototype.hasOwnProperty.call(s.done, ev.id)) && C.test(ev.when, ctx));
+    if (!fit.length) return false;
+    const ev = R.pick(s, fit);
+    s.pending = { id: ev.id, kind: 'trip' };
+    (s.trip.done = s.trip.done || []).push(ev.id);
+    return true;
+  }
+  // 배식 [엔진 임시 규칙 — 수치표에 없어서 상수로 둔다. 기반설계가 정하면 표로 옮긴다]
+  const RATION = { food: 1, water: 1, hunger: -4, thirst: -4 };
+  function ration(s, db, bowls) {
+    if (!bowls || typeof bowls !== 'object') return false;
+    for (const [who, on] of Object.entries(bowls)) {
+      const p = s.people[who]; if (!p || p.status !== 'home' || !on) continue;
+      if ((s.world.food || 0) < RATION.food || (s.world.water || 0) < RATION.water) continue;
+      FX.setNumber(s, db, 'food', who, -RATION.food); FX.setNumber(s, db, 'water', who, -RATION.water);
+      FX.setNumber(s, db, 'hunger', who, RATION.hunger); FX.setNumber(s, db, 'thirst', who, RATION.thirst);
+      if (db.objects['bowl_' + who]) FX.setTrace(s, db, 'bowl_' + who, db.objects['bowl_' + who].states.includes('full') ? 'full' : db.objects['bowl_' + who].states[0], s.day, 'you');
+    }
+    s.stats.decisions++;
+    return true;
+  }
   function writeCause(s, db, who, line) {
     const p = s.people[who];
     if (!p || (p.status !== 'dead' && p.status !== 'ascended')) return false;
@@ -187,13 +214,15 @@
     if (!a || typeof a !== 'object' || typeof a.type !== 'string') return { ok: false, error: '잘못된 동작' };
     if (s.ended) return { ok: false, error: '끝난 판' };
     const phase = phaseOf(db, s.phase);
-    const allowed = (t) => t === 'next' || t === 'choose' || t === 'move' || t === 'setFlag' || (phase && phase.actions.includes(t));
+    const ALIAS = { writeCause: 'writeLedger', writeFact: 'writeLedger', hear: 'talk', ration: 'setBowl' };   // 표의 동작 이름 ↔ 엔진 동작
+    const allowed = (t) => t === 'next' || t === 'choose' || t === 'move' || t === 'setFlag' || (phase && (phase.actions.includes(t) || phase.actions.includes(ALIAS[t])));
     if (!allowed(a.type)) return { ok: false, error: `지금(${s.phase})은 할 수 없는 동작: ${a.type}` };
     let ok = false;
     switch (a.type) {
       case 'next': {
         if (s.pending) return { ok: false, error: '먼저 골라야 한다' };
-        if (phase && phase.hook === 'rollNight') { const got = NIGHT.rollNight(s, db); s.stats.nights++; for (const g of got) say(s, `[밤] ${g.id}`, 'night'); }
+        if (phase && (phase.hook === 'rollNight' || phase.actions.includes('rollNight'))) { const got = NIGHT.rollNight(s, db); s.stats.nights++; for (const g of got) say(s, `[밤] ${g.id}`, 'night'); }
+        s.trip = null;
         const nx = nextPhase(s, db);
         if (nx === null) newDay(s, db); else { s.phase = nx; enterPhase(s, db); }
         ok = true; break;
@@ -203,6 +232,8 @@
       case 'hear': if (!isIdx(a.i)) break; ok = hear(s, a.i); break;
       case 'writeCause': if (typeof a.who !== 'string') break; ok = writeCause(s, db, a.who, a.line === undefined ? null : a.line); break;
       case 'writeFact': if (typeof a.object !== 'string') break; ok = writeFact(s, db, a.object); break;
+      case 'trip': { if (!s.trip && typeof a.region === 'string') { s.trip = { region: a.region, floor: Number.isInteger(a.floor) ? a.floor : 1 }; } else if (s.trip && Number.isInteger(a.floor)) s.trip.floor = a.floor; else break; if (s.pending) break; ok = startTripEvent(s, db); break; }
+      case 'ration': ok = ration(s, db, a.bowls); break;
       case 'talk': { const p = s.people[a.who]; if (!p || p.status !== 'home' || a.who === 'you') break; s.stats.decisions++; checkEvents(s, db, { talk: { [a.who]: 1 } }); ok = true; break; }
       case 'treat': { const p = s.people[a.who]; if (!p || p.status !== 'home') break; s.flags[`treated_${a.who}`] = true; ok = true; break; }
       case 'board': { const p = s.people[a.who]; if (!p || p.status !== 'home') break; if (s.flags[`board_${a.who}`]) delete s.flags[`board_${a.who}`]; else s.flags[`board_${a.who}`] = true; ok = true; break; }
@@ -254,7 +285,15 @@
     };
   }
 
-  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, rand: R.rand,
+  // 봇 전용 메타: 선택지마다 축 효과·당신 사망 여부·비용. 화면은 이걸 보면 안 된다 (E6).
+  function choiceMeta(s, db) {
+    if (!s.pending) return null;
+    const ev = db.events[s.pending.id];
+    return ev.choices.map((c, i) => { const outs = [c.out, c.ok, c.fail].filter(Boolean); const axis = {}; let kill = false, killOther = false;
+      for (const o of outs) { const e = o.effects || {}; for (const [k, v] of Object.entries(e.axis || {})) axis[k] = (axis[k] || 0) + v; if (e.kill) { if (e.kill.who === 'you') kill = true; else killOther = true; } }
+      return Object.assign(choiceState(s, db, ev, c), { i, axis, killYou: kill, killOther, check: !!c.check }); });
+  }
+  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, RATION, rand: R.rand,
     identity: (s, db) => ID.identity(s.axes, db.identity), ledger: LEDGER, night: NIGHT, cond: C };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).engine = API;

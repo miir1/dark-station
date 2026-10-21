@@ -53,7 +53,7 @@
     const who0 = roles.actor || 'you';
     for (const [k, v] of Object.entries(effects || {})) {
       switch (k) {
-        case 'flag': for (const [f, on] of Object.entries(v)) { if (on) s.flags[f] = true; else delete s.flags[f]; } break;
+        case 'flag': for (const [f, on] of Object.entries(v)) { const id = fillRole(f, roles); if (on) s.flags[id] = true; else delete s.flags[id]; } break;   // x_actor → x_gicheol
         case 'trace': for (const [o, st] of Object.entries(v)) setTrace(s, db, fillRole(o, roles), st, s.day, roles.actor || 'you'); break;
         case 'axis': ID.nudge(s.axes, v); break;
         case 'injure': setNumber(s, db, 'injury', resolveWho(v.who, roles), v.n, lines); break;

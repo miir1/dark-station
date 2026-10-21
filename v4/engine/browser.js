@@ -1,0 +1,62 @@
+// 어두운 역 v4 — 브라우저 접착층. 엔진 파일은 그대로 두고, 표를 fetch 해서 db 를 만들고 ?fast=1 같은 주소 훅만 읽는다.
+// 엔진 파일(rng → cond → schema → tables → identity → effects → night → ledger → engine → save)을 먼저 <script> 로 읽은 뒤 이 파일을 읽는다.
+(function (root) {
+  'use strict';
+  const D4 = root.DS4;
+  if (!D4 || !D4.tables || !D4.engine) throw new Error('DS4 엔진이 먼저 읽혀야 한다');
+
+  const params = new URLSearchParams(root.location ? root.location.search : '');
+  const fast = params.get('fast') === '1';
+  if (fast) D4.engine.setFast(true);
+
+  // data/*.json 아홉 장을 읽어 db 로. nightEvents 는 night_events.json 과 nightEvents.json 둘 다 시도한다.
+  async function loadTables(base) {
+    base = base || 'data/';
+    const files = Object.assign({}, D4.tables.FILES);
+    const out = {};
+    for (const [k, f] of Object.entries(files)) {
+      let r = await fetch(base + f, { cache: 'no-cache' });
+      if (!r.ok && D4.tables.ALT_FILES[k]) r = await fetch(base + D4.tables.ALT_FILES[k], { cache: 'no-cache' });
+      if (!r.ok) throw new Error(`표 파일을 읽지 못했다: ${k} (${f})`);
+      out[k] = await r.json();
+    }
+    return D4.tables.load(out);
+  }
+
+  // 대사표: 같은 id 의 여러 행 중 context 가 맞는 것. 여러 개면 마지막(더 구체적인 행이 뒤에 온다는 약속). pickRow 로 고르는 규칙을 바꿀 수 있다.
+  function pickLine(db, id, ctx, pickRow) {
+    const rows = db.lines[id];
+    if (!rows || !rows.length) return null;
+    const fit = rows.filter((l) => { try { return D4.cond.test(l.context, ctx); } catch (e) { return false; } });
+    if (!fit.length) return null;
+    return pickRow ? pickRow(fit) : fit[fit.length - 1];
+  }
+  // 조건식이 보는 값 (엔진 phaseCtx 와 같은 모양 + 정체 축)
+  function lineCtx(s) {
+    const ctx = Object.assign({}, s.world, s.axes, { day: s.day });
+    ctx.flags = s.flags; ctx.phase = s.phase || '';
+    ctx.map = s.pos.map || ''; ctx.region = s.trip ? s.trip.region : ''; ctx.floor = s.trip ? s.trip.floor : 0;
+    ctx.trace = {}; for (const [id, t] of Object.entries(s.traces)) ctx.trace[id] = t.st;
+    ctx.alive = {}; for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' ? 1 : 0; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }
+    const c = D4.engine.identity(s, db_);
+    ctx.identity = c ? c.id : '';
+    return ctx;
+  }
+  let db_ = null;
+  const setDb = (db) => { db_ = db; };
+  // {who:이/가} 같은 조사 치환. who 는 사람 이름.
+  function fill(text, who) {
+    return String(text || '').replace(/\{who(?::([^}]+))?\}/g, (m, josa) => {
+      if (!josa) return who || '';
+      const name = who || '';
+      const PAIRS = { '이가': '이/가', '은는': '은/는', '을를': '을/를', '과와': '과/와' };
+      const parts = (PAIRS[josa] || josa).split('/');
+      const last = name.charCodeAt(name.length - 1);
+      const hasFinal = last >= 0xac00 && last <= 0xd7a3 ? (last - 0xac00) % 28 !== 0 : false;
+      if (parts.length === 1) return name + parts[0];
+      return name + (hasFinal ? parts[0] : parts[1]);
+    });
+  }
+
+  D4.browser = { params, fast, loadTables, pickLine, lineCtx, setDb, fill };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
