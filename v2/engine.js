@@ -908,7 +908,7 @@
       say(s, D.CALENDAR.surge.text, 'warn');
       if (s.flood >= 8) say(s, '대비가 모자랐다. 물이 바닥까지 찼다.', 'bad');
       else if (s.flood >= FLOOD_POWER_STOP) say(s, `물이 발전기 자리까지 올라왔다. 침수 ${s.flood} — 발전기가 잠겨 내일 전력이 끊긴다. 배수로 물을 빼야 다시 돌린다.`, 'bad');
-      else say(s, `미리 물을 빼 둔 덕에 발전기까지 닿지 않았다. 침수 ${s.flood}.`, 'good');
+      else say(s, (ev.d.flood < 0 ? '미리 물을 빼 둔 덕에' : '물이 생각보다 덜 올라와') + ` 발전기까지 닿지 않았다. 침수 ${s.flood}.`, 'good');
     }
     say(s, `침수 ${s.flood}/8 · 노출 ${s.exposure}/8`);
     {
@@ -944,16 +944,18 @@
       else if (r.stress >= 100 || (r.stress >= EDGE && rand(s) < (r.stress - EDGE + 5) / 25)) crack(s, r);
     }
     // 감염: 경상인 채로 일을 하면 상처가 곪는다
+    const infectedTonight = new Set();
     for (const r of alive(s)) {
       const t = ev.idle.includes(r.id) ? 'rest' : plan[r.id];
       if (r.injury === 1 && t && t !== 'rest' && t !== 'exp' && rand(s) < INFECT) {
+        infectedTonight.add(r.id);
         const sc = injure(s, r, 1);
         say(s, `${r.name}의 상처가 곪았다. 붕대 밑에서 누런 진물이 배어 나온다. 중상`, 'bad'); say(s, sc, 'bad');
       }
     }
     const healed = new Set(ev.heals.map((h) => h.pid));
     for (const r of alive(s)) {
-      if (r.injury >= 2 && r.injury < 3 && !healed.has(r.id)) {
+      if (r.injury >= 2 && r.injury < 3 && !healed.has(r.id) && !infectedTonight.has(r.id)) {   // 오늘 곪은 사람은 내일 밤부터 센다
         r.untreated = (r.untreated || 0) + 1;
         if (r.untreated >= 1) { const sc = injure(s, r, 1); r.untreated = 0; say(s, `${r.name}의 상처가 썩어 들어간다. 붕대를 풀자 구더기가 꿈틀거렸다. 위독 — 내일 밤까지 치료하지 못하면 죽는다.`, 'bad'); say(s, sc, 'bad'); }
       } else r.untreated = 0;
@@ -1031,9 +1033,9 @@
     s.dark = false;
     for (const r of alive(s)) if (r.injury >= 3 && r.crit != null && s.day >= r.crit && r.status !== 'dead') kill(s, r, '치료받지 못했다');
     if (!alive(s).length) return finishGame(s, 'wiped');
-    if (s.day >= D.GOAL_DAY) return enterBoarding(s);
-    s.day += 1;
     for (const k of ['A', 'B']) if (s.closed[k] > 0) s.closed[k] -= 1;
+    if (s.day + 1 >= D.GOAL_DAY) { s.day = D.GOAL_DAY; s.phase = 'morning'; return enterBoarding(s); }   // 열차가 오는 날은 정오에 바로 열차
+    s.day += 1;
     s.expParty = []; s.expDone = false; s.guardIds = [];
     s.plan = {};
     for (const r of alive(s)) if (s.lastPlan[r.id] && !taskBlock(s, r, s.lastPlan[r.id])) s.plan[r.id] = s.lastPlan[r.id];
@@ -1045,7 +1047,7 @@
   function enterBoarding(s) {
     const info = trainInfo(s);
     const pool = boardingPool(s);
-    const trust = (p) => (p.kind === 'ally' ? 5 : byId(s, p.id).trust);
+    const trust = (p) => (p.kind === 'ally' ? -1 : byId(s, p.id).trust);   // 주민 먼저, 약속한 사람은 자리가 남으면
     const order = pool.slice().sort((x, y) => trust(y) - trust(x));
     s.boarding = { pool, cap: info.cap, supplyCap: info.supplyCap, passage: info.passage, picks: order.slice(0, info.cap).map((p) => p.id), self: false };
     s.phase = 'boarding';
@@ -1088,8 +1090,8 @@
         rows.push({ name: p.name, status: b.picks.includes(p.id) ? 'boarded' : 'stayed', line: p.kind === 'ally' ? '약속을 지켜 준 사람.' : closingLine(r) });
       }
       rows.unshift({ name: '당신', status: b.self ? 'boarded' : 'stayed', line: b.self ? '명부의 첫 줄. 펀치 자국이 난 손으로 손잡이를 잡았다.' : '명부의 첫 줄. 승강장에 남아 떠나는 불빛을 셌다.' });
-      if (b.cap === 0 && b.passage) { tier = 'missed'; title = '비어 있는 열차'; text = '통로는 이어졌지만 식량과 물이 모자랐다. 한 사람도 열차에 태울 수 없었다. 이번 시연은 여기까지예요.'; }
-      else if (b.cap === 0) { tier = 'missed'; title = '지나간 열차'; text = '열차는 고지대 역까지 닿지 못했다. 끊긴 통로 앞에서 불빛은 멀어졌다. 이번 시연은 여기까지예요.'; }
+      if (b.cap === 0 && b.passage) { tier = 'missed'; title = '비어 있는 열차'; text = '통로는 이어졌지만 식량과 물이 모자랐다. 한 사람도 열차에 태울 수 없었다.'; }
+      else if (b.cap === 0) { tier = 'missed'; title = '지나간 열차'; text = '열차는 고지대 역까지 닿지 못했다. 끊긴 통로 앞에서 불빛은 멀어졌다.'; }
       else if (s.flags.hospital_pact && boarded >= Math.ceil(total * 0.75)) { tier = 'safe'; title = '열린 길'; text = '열차는 병원 팀이 맞이하는 고지대 역에 닿았다. 따뜻한 수프와 침상이 기다리고 있었다.'; }
       else if (boarded >= Math.ceil(total * 0.5)) { tier = 'half'; title = '절반의 승차'; text = '열차는 고지대 역에 닿았지만 모두를 태우지는 못했다. 남은 사람들은 다음 열차를 기다린다.'; }
       else { tier = 'thin'; title = '먼 길'; text = '몇 사람만 열차에 올랐다. 역에 남은 불빛이 오래도록 흔들렸다.'; }
@@ -1119,7 +1121,7 @@
   // ── 추천 배치 (화면의 [추천 배치] 버튼과 봇이 함께 사용; 화면에 보이는 정보만 씀) ──
   function suggestPlan(s) {
     const plan = {};
-    const free = alive(s).filter((r) => !s.expParty.includes(r.id) && r.injury < 2 && r.breakdown <= 0);
+    const free = alive(s).filter((r) => !s.expParty.includes(r.id) && r.injury < 1 && r.breakdown <= 0);   // 경상자도 쉰다 (일하면 30% 곪음)
     const take = (task, n, key) => {
       for (let i = 0; i < n; i++) {
         const cand = free.filter((r) => !plan[r.id] && !taskBlock(s, r, task)).sort((a, b) => b.skills[key || D.TASKS[task].skill] - a.skills[key || D.TASKS[task].skill] || a.stress - b.stress);
@@ -1140,7 +1142,7 @@
     if (floodStop) take('drain', 2); else if (s.flood >= 3) take('drain', 1);
     // 3) 물·식량·전력
     const tense = alive(s).some((r) => r.stress >= 45);
-    const wantPower = !floodStop && ((waterShort ? 1 : 0) + (s.facility === 'farm' ? 1 : 0) + (s.facility === 'clinic' && patients.length ? 1 : 0) + (tense ? 1 : 0));
+    const wantPower = !floodStop ? 1 : 0;   // 발전기는 켜 두는 게 기본: 끄면 어두운 밤(스트레스·사건)
     if (wantPower > 0) take('gen', 1);
     const powered = Object.values(plan).includes('gen');
     if (powered && waterShort) take('pump', 2); else if (powered && s.res.water < need * 3) take('pump', 1);

@@ -711,7 +711,7 @@
     const R = D.REGIONS[region];
     const go = await UI.open(`<p class="title">${esc(R.name)} — ${esc(R.sub)}</p><p>${esc(R.intro)}</p><p class="mini">두 사람과 함께 나간다. 보급은 가방 칸을 차지하고, 8시간을 넘기면 강행(시간당 둘 다 스트레스 +10).</p>`, { options: [{ label: '나갈 준비를 한다', value: true }, { label: '돌아선다', value: false }], cancel: true, cancelValue: false });
     if (!go) { back(); return; }
-    const prep = { party: [], pack: { food: Math.min(2, s.res.food), water: Math.min(2, s.res.water), meds: Math.min(1, s.res.meds), items: [] } };
+    const prep = { party: [], pack: { food: Math.min(4, s.res.food), water: Math.min(4, s.res.water), meds: Math.min(1, s.res.meds), items: [] } };   // 사건 두 장(6시간)이면 둘이 4·4를 쓴다
     for (;;) {
       const why = E.canDepart(s, region, prep.party, prep.pack);
       const cap = E.BASE_LOAD + prep.party.map((id) => E.byId(s, id)).reduce((a2, r) => a2 + E.traitVal(r, 'expLoad'), 0) - (prep.pack.food + prep.pack.water + prep.pack.meds + prep.pack.items.length);
@@ -724,7 +724,7 @@
       opts.push(...step2('food', '식량'), ...step2('water', '물'), ...step2('meds', '약품'));
       for (const it of Object.keys(D.ITEMS).filter((k) => s.items[k])) opts.push({ label: `${prep.pack.items.includes(it) ? '✓ ' : ''}${D.ITEMS[it]} 챙기기`, value: 'i:' + it });
       opts.push({ label: '출발', value: 'go', disabled: !!why, sub: esc(why || `전리품 자리 ${cap}칸`) }, { label: '그만둔다', value: 'stop' });
-      const a = await UI.open(`<p class="title">${esc(R.name)} 준비</p><p class="deltas">${ic('people')}${prep.party.length}/2 ${ic('food')}${prep.pack.food} ${ic('water')}${prep.pack.water} ${ic('meds')}${prep.pack.meds}</p><p class="mini">${prep.pack.items.length ? '도구: ' + prep.pack.items.map((k) => D.ITEMS[k]).join('·') + '<br>' : ''}두 사람이 4시간마다 식량·물을 1개씩 쓴다. 첫 사건까지 4시간.</p>`, { options: opts, full: true, cancel: true, cancelValue: 'stop' });
+      const a = await UI.open(`<p class="title">${esc(R.name)} 준비</p><p class="deltas">${ic('people')}${prep.party.length}/2 ${ic('food')}${prep.pack.food} ${ic('water')}${prep.pack.water} ${ic('meds')}${prep.pack.meds}</p><p class="mini">${prep.pack.items.length ? '도구: ' + prep.pack.items.map((k) => D.ITEMS[k]).join('·') + '<br>' : ''}한 사람이 4시간마다 식량·물 1개씩 — 둘이면 4시간에 2개. 사건 두 장이면 6시간(각 4개).</p>`, { options: opts, full: true, cancel: true, cancelValue: 'stop' });
       if (a === 'stop' || a == null) { back(); return; }
       if (a === 'go') { if (act({ type: 'expStart', region, party: prep.party, pack: prep.pack })) { scene.stationPos = region === 'A' ? [2, 2] : [22, 9]; scene.key = ''; syncScene(); UI.toast(`${D.REGIONS[region].name}. 빛나는 표시(!)를 찾아라.`, 2200); } return; }
       const [k, v] = a.split(':');
@@ -887,7 +887,7 @@
   async function dayIntro() {
     hud();
     await FX.card('자리 잡기', '1막', 1600);
-    await FX.card('D1', `을지로입구역 · 열차까지 ${D.GOAL_DAY}일`, 1600);
+    await FX.card('D1', `을지로입구역 · 열차까지 ${D.GOAL_DAY - 1}일`, 1600);
     UI.toast('게시판(불 왼쪽)에서 오늘 할 일을 확인하자.', 3500);
   }
   // 그 장소에 있을 때만 그 장의 설명을 띄운다 (전동차에서 터널 설명이 먼저 나오지 않게)
@@ -1069,7 +1069,7 @@
     if (s.day === 1 && !tut.board) return '게시판(불 왼쪽)에서 오늘 할 일을 확인하자';
     if (s.day === 1 && !tut.ended) return '사람에게 말을 걸어 일을 바꾸거나, 화로 앞에서 하루를 마치자';
     if (s.flags.repair_open && !s.flags.passage_secured && !s.project) return '게시판에서 통로 수리를 착공하자';
-    if (!s.flags.met_dohyeon && !s.flags.skipped_dohyeon && !s.expDone) return '수문 방면(오른쪽 아래 터널)에서 도울 사람을 찾자';
+    if (!s.flags.met_dohyeon && !s.flags.skipped_dohyeon && !s.expDone) return '열차는 통로가 있어야 선다 — 수문 방면(오른쪽 아래 터널)에서 도울 사람을 찾자';
     if (!s.flags.met_eunchae && !s.flags.skipped_eunchae && !s.expDone) return '시장 방면(왼쪽 개찰구 밖 통로)에서 약국을 찾자';
     return `D${D.GOAL_DAY} 열차까지 ${D.GOAL_DAY - s.day}일 — 통로를 잇고 사람을 지키자`;
   }

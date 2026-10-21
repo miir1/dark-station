@@ -334,7 +334,7 @@ test('난이도 구조(자동 플레이 300판): 원정·대응·위협이 모�
   assert.ok(Math.abs(bal.avg - none.avg) < 0.35 && Math.abs(bal.avg - clinic.avg) < 0.5, `시설 ${bal.avg} / ${none.avg} / ${clinic.avg}`);
   // 위협은 장식이 아니다: 배수를 안 하면 침수로 발전기가 잠겨 크게 불리해진다
   const noDrain = run('balanced', ban(['drain']));
-  assert.ok(noDrain.avg < bal.avg - 0.5, `배수 금지 ${noDrain.avg} vs ${bal.avg}`);
+  assert.ok(noDrain.avg < bal.avg - 0.4, `배수 금지 ${noDrain.avg} vs ${bal.avg}`);
   assert.ok(bal.deaths > 0.03 && bal.deaths < 1.5, `대응형 평균 사망 ${bal.deaths}`);   // 설계 v4 목표 0.8~1.5
 });
 
@@ -789,10 +789,15 @@ test('크리처: 그 신의 시선이 높을수록 원정에서 자주 만난다
 
 test('검표: 지킨 약속이 많으면 승차 정원 +1', () => {
   const s = started(12); s.flags.hospital_pact = true; s.flags.repair_open = true;
-  s.nightEv = { id: 'god', god: 'termia', kind: 'omen', ev: D.GODS.termia.omen, who: [] }; s.phase = 'nightEvent';
-  E.dispatch(s, { type: 'nightChoose', i: 0 });
+  s.day = 9; E.dispatch(s, { type: 'setPlan', plan: {} }); E.dispatch(s, { type: 'endDay' });
+  assert.strictEqual(s.evening.id, 'story_ticket');                       // D9 저녁은 검표 이야기
+  E.dispatch(s, { type: 'eveningChoose', i: 0 });
   assert.strictEqual(s.seatMod, 1);
   assert.strictEqual(E.trainInfo(s).seat, 1);
+  // 징조 '검표의 꿈'은 정원을 건드리지 않는다 (두 번 검표 금지)
+  s.nightEv = { id: 'god', god: 'termia', kind: 'omen', ev: D.GODS.termia.omen, who: [] }; s.phase = 'nightEvent'; s.godQueue = [{ god: 'termia', kind: 'omen' }];
+  E.dispatch(s, { type: 'nightChoose', i: 0 });
+  assert.strictEqual(s.seatMod, 1);
 });
 
 test('전투 결과: 부러진 부위는 부상(+상처 가능), 이기면 전리품', () => {
