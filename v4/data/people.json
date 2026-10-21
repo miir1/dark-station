@@ -35,7 +35,8 @@
       "platform_one": "거기",
       "counting_child": "",
       "default": "자네"
-    }
+    },
+    "outside": 0
   },
   {
     "id": "seoha",
@@ -73,7 +74,8 @@
       "platform_one": "거기요",
       "counting_child": "",
       "default": "저기요"
-    }
+    },
+    "outside": 0
   },
   {
     "id": "gicheol",
@@ -111,7 +113,8 @@
       "platform_one": "당신",
       "counting_child": "",
       "default": "당신"
-    }
+    },
+    "outside": 0
   },
   {
     "id": "eunji",
@@ -149,7 +152,8 @@
       "platform_one": "너",
       "counting_child": "",
       "default": "너"
-    }
+    },
+    "outside": 0
   },
   {
     "id": "dongha",
@@ -187,7 +191,8 @@
       "platform_one": "저기",
       "counting_child": "",
       "default": "형"
-    }
+    },
+    "outside": 0
   },
   {
     "id": "mari",
@@ -225,7 +230,8 @@
       "platform_one": "씨",
       "counting_child": "",
       "default": "씨"
-    }
+    },
+    "outside": 0
   },
   {
     "id": "eunchae",
@@ -263,7 +269,8 @@
       "platform_one": "역 분",
       "counting_child": "",
       "default": "역 분"
-    }
+    },
+    "outside": 1
   },
   {
     "id": "dohyeon",
@@ -301,7 +308,8 @@
       "platform_one": "너",
       "counting_child": "",
       "default": "너"
-    }
+    },
+    "outside": 1
   },
   {
     "id": "you",
@@ -324,6 +332,7 @@
     "malice": null,
     "hymn": null,
     "callsGod": "",
-    "addressYou": {}
+    "addressYou": {},
+    "outside": 0
   }
 ]

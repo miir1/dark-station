@@ -1852,5 +1852,23 @@
     "text": "계단 위에서 세는 소리가 난다. 당신 목소리다.",
     "rumor": 0,
     "truth": 1
+  },
+  {
+    "id": "insp_fire_wet",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "화로 가장자리가 젖어 있다. 누가 물을 흘렸다. 재에 손자국이 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "rum_water_rose",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 선로 물이 턱까지 올라왔어. 뭐가 떠내려왔어.",
+    "rumor": 1,
+    "truth": 1
   }
 ]

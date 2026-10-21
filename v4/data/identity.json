@@ -5,15 +5,15 @@
     "name"
   ],
   "thresholds": {
-    "share": 3,
-    "hand": 2,
-    "name": 2
+    "share": 2,
+    "hand": 1,
+    "name": 1
   },
   "note": "|값| < 문턱이면 그 축은 음극으로 본다. rule은 share/hand/name 세 축만 쓴다(세계 수치 금지).",
   "candidates": [
     {
       "id": "driver",
-      "rule": "share>=3 & hand>=2 & name>=2",
+      "rule": "share>=2 & hand>=1 & name>=1",
       "priority": 5,
       "fallback": 0,
       "reveal": [
@@ -30,7 +30,7 @@
     },
     {
       "id": "conductor",
-      "rule": "share>=3 & hand>=2 & name<2",
+      "rule": "share>=2 & hand>=1 & name<1",
       "priority": 5,
       "fallback": 0,
       "reveal": [
@@ -47,7 +47,7 @@
     },
     {
       "id": "inspector",
-      "rule": "share>=3 & hand<2 & name>=2",
+      "rule": "share>=2 & hand<1 & name>=1",
       "priority": 5,
       "fallback": 0,
       "reveal": [
@@ -64,7 +64,7 @@
     },
     {
       "id": "passenger",
-      "rule": "share>=3 & hand<2 & name<2 | share<3 & hand<2 & name<2",
+      "rule": "share>=2 & hand<1 & name<1 | share<2 & hand<1 & name<1",
       "priority": 1,
       "fallback": 1,
       "reveal": [
@@ -81,7 +81,7 @@
     },
     {
       "id": "counted",
-      "rule": "share<3 & hand>=2 & name>=2",
+      "rule": "share<2 & hand>=1 & name>=1",
       "priority": 9,
       "fallback": 0,
       "reveal": [
@@ -98,7 +98,7 @@
     },
     {
       "id": "platform_one",
-      "rule": "share<3 & hand>=2 & name<2",
+      "rule": "share<2 & hand>=1 & name<1",
       "priority": 6,
       "fallback": 0,
       "reveal": [
@@ -115,7 +115,7 @@
     },
     {
       "id": "counting_child",
-      "rule": "share<3 & hand<2 & name>=2",
+      "rule": "share<2 & hand<1 & name>=1",
       "priority": 7,
       "fallback": 0,
       "reveal": [

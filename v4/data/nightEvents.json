@@ -8,8 +8,7 @@
     "weight": 6,
     "kind": "malice",
     "trace": {
-      "crate_food": "open",
-      "bowl_actor": "full"
+      "crate_food": "open"
     },
     "rumor": {
       "witness": "nearestSleeper",
@@ -33,17 +32,17 @@
   {
     "id": "steal_water",
     "role": "steal",
-    "actor": "needs.thirst>=7",
+    "actor": "needs.thirst>=8",
     "target": "farthestSleeper",
-    "cond": "water<=4",
+    "cond": "water<=2",
     "weight": 6,
     "kind": "malice",
     "trace": {
       "bottle_target": "empty"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_bottle_empty"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -74,8 +73,8 @@
       "fire": "low"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_fire_poked"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -98,8 +97,8 @@
       "shoes_stairs": "one"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_at_stairs"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -169,7 +168,7 @@
     "role": "share",
     "actor": "needs.bond!=''",
     "target": "bond",
-    "cond": "bowl_target==empty",
+    "cond": "hunger_target>=7",
     "weight": 7,
     "kind": "hymn",
     "trace": {
@@ -177,8 +176,8 @@
       "bowl_actor": "empty"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_gave_bowl"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -201,7 +200,7 @@
     "role": "protect",
     "actor": "needs.bond!=''",
     "target": "bond",
-    "cond": "injury_target>=2",
+    "cond": "injury_target>=1",
     "weight": 6,
     "kind": "hymn",
     "trace": {
@@ -234,8 +233,8 @@
       "notebook_you": "moved"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_saw_notebook"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -258,8 +257,8 @@
       "shutter_gap": "can"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_shutter_can"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -318,8 +317,8 @@
       "pipe": "blood"
     },
     "rumor": {
-      "witness": "target",
-      "line": "rum_swung_asleep"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -335,12 +334,13 @@
     "role": "pair",
     "actor": "soonrye",
     "target": "seoha",
-    "cond": "thirst_seoha>=6 & water<=2",
+    "cond": "thirst_seoha>=6",
     "weight": 10,
     "kind": "hymn",
     "trace": {
       "bottle_soonrye": "empty",
-      "bottle_seoha": "full"
+      "bottle_seoha": "full",
+      "fire": "wet"
     },
     "rumor": {
       "witness": "nearestSleeper",
@@ -374,8 +374,8 @@
       "parts_crate": "hidden"
     },
     "rumor": {
-      "witness": "dongha",
-      "line": "rum_gicheol_hit"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -550,8 +550,8 @@
       "bowl_seoha": "full"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_saw_shadow"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -603,15 +603,15 @@
     "role": "pair",
     "actor": "mari",
     "target": "mostInjured",
-    "cond": "day>=5 & injury_target>=2",
+    "cond": "day>=3 & injury_target>=1",
     "weight": 6,
     "kind": "hymn",
     "trace": {
       "blanket_mari": "paired"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_mari_names"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -640,8 +640,8 @@
       "shutter_gap": "can"
     },
     "rumor": {
-      "witness": "dongha",
-      "line": "rum_sister_shutter"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -735,7 +735,7 @@
     "role": "pair",
     "actor": "dongha",
     "target": "mostInjured",
-    "cond": "day>=2 & injury_target>=2",
+    "cond": "day>=2 & fear_target>=7",
     "weight": 6,
     "kind": "hymn",
     "trace": {
@@ -743,8 +743,8 @@
       "bowl_dongha": "empty"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_dongha_carried"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -775,8 +775,8 @@
       "pharmacy_shutter": "dark"
     },
     "rumor": {
-      "witness": "nearestSleeper",
-      "line": "rum_pharmacist_behind"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -828,8 +828,8 @@
       "repair_rubble": "blocked"
     },
     "rumor": {
-      "witness": "gicheol",
-      "line": "rum_dohyeon_price"
+      "witness": "",
+      "line": ""
     },
     "effects": [
       {
@@ -869,5 +869,123 @@
       }
     ],
     "oncePerRun": 1
+  },
+  {
+    "id": "fog_rise",
+    "role": "clock",
+    "actor": "",
+    "target": "",
+    "cond": "fuel>=1 & fog<8 & day>=1",
+    "weight": 10,
+    "kind": "neutral",
+    "trace": {
+      "stairs_ash": "ash"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "fog",
+        "n": 1
+      }
+    ],
+    "oncePerRun": 0
+  },
+  {
+    "id": "fog_rise_dark",
+    "role": "clock",
+    "actor": "",
+    "target": "",
+    "cond": "fuel==0 & fog<8 & day>=2",
+    "weight": 10,
+    "kind": "neutral",
+    "trace": {
+      "stairs_ash": "ash"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "fog",
+        "n": 1
+      }
+    ],
+    "oncePerRun": 1
+  },
+  {
+    "id": "flood_rise",
+    "role": "clock",
+    "actor": "",
+    "target": "",
+    "cond": "day>=3 & flood<8 & valve==closed",
+    "weight": 10,
+    "kind": "neutral",
+    "trace": {},
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "flood",
+        "n": 1
+      }
+    ],
+    "oncePerRun": 0
+  },
+  {
+    "id": "flood_surge",
+    "role": "clock",
+    "actor": "",
+    "target": "",
+    "cond": "day==4",
+    "weight": 10,
+    "kind": "neutral",
+    "trace": {
+      "body_rail": "whole"
+    },
+    "rumor": {
+      "witness": "nearestSleeper",
+      "line": "rum_water_rose"
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "flood",
+        "n": 3
+      }
+    ],
+    "oncePerRun": 1
+  },
+  {
+    "id": "starve_resident",
+    "role": "starve",
+    "actor": "needs.hunger>=10",
+    "target": "",
+    "cond": "day>=2",
+    "weight": 10,
+    "kind": "neutral",
+    "trace": {
+      "blanket_actor": "empty"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "kill",
+        "who": "actor",
+        "how": "dead"
+      }
+    ],
+    "oncePerRun": 0
   }
 ]

@@ -5,16 +5,19 @@
     "states": [
       "lit",
       "low",
-      "out"
+      "out",
+      "wet"
     ],
     "overlay": {
       "low": "fire_low_ov",
-      "out": "fire_out_ov"
+      "out": "fire_out_ov",
+      "wet": "fire_wet_ov"
     },
     "inspectLine": {
       "lit": "insp_fire_lit",
       "low": "insp_fire_low",
-      "out": "insp_fire_out"
+      "out": "insp_fire_out",
+      "wet": "insp_fire_wet"
     },
     "ledgerFact": {
       "out": "D{day} 밤. 불이 꺼졌다."

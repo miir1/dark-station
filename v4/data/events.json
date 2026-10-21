@@ -644,11 +644,11 @@
   {
     "id": "trial_d1_bowls",
     "kind": "trial",
-    "when": "day==1 & phase==ration",
+    "when": "day>=1 & phase==ration",
     "grade": "normal",
     "explicit": 0,
     "image": "",
-    "text": "그릇이 일곱이다. 식량은 그보다 적다. 순례: \"사람은 자네가 세.\" 당신 그릇도 그 안에 있다.",
+    "text": "그릇이 일곱이다. 식량은 그보다 적다. 당신 그릇도 그 안에 있다.",
     "choices": [
       {
         "label": "내 그릇을 비운다",
@@ -705,6 +705,12 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "fear",
+              "who": "target",
+              "n": 2
             }
           ],
           "ledger": ""
@@ -898,6 +904,11 @@
               "verb": "flag",
               "id": "ledger_d1",
               "set": 1
+            },
+            {
+              "verb": "axis",
+              "id": "name",
+              "n": 1
             }
           ],
           "ledger": ""
@@ -1159,8 +1170,15 @@
         "taboo": "",
         "warn": "",
         "out": {
-          "text": "두드림이 새벽에 그쳤다.",
-          "effects": [],
+          "text": "두드림이 새벽에 그쳤다. 아무도 못 잤다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "fear",
+              "who": "all",
+              "n": 1
+            }
+          ],
           "ledger": ""
         }
       }
@@ -1650,7 +1668,7 @@
         "cost": {},
         "req": {},
         "taboo": "eat_human",
-        "warn": "",
+        "warn": "먹은 사람에게 값이 남는다",
         "out": {
           "text": "마리가 허벅지 안쪽을 갈랐다. 노란 기름이 먼저 나왔다. 순례는 벽을 보고 앉아 있었다.",
           "effects": [
@@ -1679,6 +1697,11 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 4
             }
           ],
           "ledger": ""
@@ -2548,7 +2571,7 @@
   {
     "id": "d8_pillow",
     "kind": "fixed",
-    "when": "day==8 & phase==night & injury_gicheol>=3 & meds==0",
+    "when": "day==8 & phase==night & injury_gicheol>=2 & meds==0",
     "grade": "fixed",
     "explicit": 1,
     "image": "scene_pillow",
@@ -2966,7 +2989,7 @@
   {
     "id": "starve_you",
     "kind": "trial",
-    "when": "day>=3 & phase==night & hunger_you>=9",
+    "when": "day>=2 & phase==night & hunger_you>=8",
     "grade": "normal",
     "explicit": 0,
     "image": "",
@@ -2994,6 +3017,102 @@
             "day": "{day}",
             "cause": ""
           }
+        }
+      },
+      {
+        "label": "창고를 턴다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "들키면 아침에 안다",
+        "out": {
+          "text": "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": -2
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "you",
+              "n": -6
+            },
+            {
+              "verb": "trace",
+              "id": "crate_food",
+              "state": "open"
+            },
+            {
+              "verb": "flag",
+              "id": "you_stole",
+              "set": 1
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "남의 그릇을 뺏는다",
+        "check": {
+          "skill": "str",
+          "base": 50
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "그 사람이 안다",
+        "ok": {
+          "text": "동하의 그릇을 가져왔다. 동하는 반 박자 늦게 눈을 떴다. 아무 말도 안 했다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "you",
+              "n": -4
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "dongha",
+              "n": 3
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "손이 떨려 그릇을 엎었다. 바닥을 핥았다. 동하가 보고 있었다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "you",
+              "n": -1
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            }
+          ],
+          "ledger": ""
         }
       }
     ]
@@ -4076,6 +4195,1000 @@
           "text": "수첩은 주머니에 그대로 있었다.",
           "effects": [],
           "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "passage_day1",
+    "kind": "trial",
+    "when": "day>=5 & phase==day & flag:passage_work & !flag:passage_half",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "무너진 통로. 도현이 연장을 풀어 놓았다. \"일손 둘이면 오늘 반, 내일 반.\" 당신 손도 세고 있다.",
+    "choices": [
+      {
+        "label": "오늘 반을 잇는다",
+        "check": null,
+        "cost": {
+          "parts": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "오늘 원정은 없다",
+        "out": {
+          "text": "돌을 날랐다. 손바닥이 벗겨졌다. 절반이 이어졌다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "passage_half",
+              "set": 1
+            },
+            {
+              "verb": "trace",
+              "id": "repair_rubble",
+              "state": "working"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "내일로 미룬다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "열차는 열흘 뒤 정오다",
+        "out": {
+          "text": "도현이 연장을 도로 쌌다. 흥얼거렸다.",
+          "effects": [],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "passage_day2",
+    "kind": "trial",
+    "when": "day>=5 & phase==day & flag:passage_half & !flag:passage_open",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "통로 절반이 이어졌다. 너머에서 바람이 온다. 도현: \"오늘 끝낼 수 있어.\"",
+    "choices": [
+      {
+        "label": "끝까지 잇는다",
+        "check": null,
+        "cost": {
+          "parts": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "오늘 원정은 없다",
+        "out": {
+          "text": "마지막 돌이 빠졌다. 바람이 지나갔다. 통로가 이어졌다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "passage_open",
+              "set": 1
+            },
+            {
+              "verb": "trace",
+              "id": "repair_rubble",
+              "state": "open"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "내일로 미룬다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "열차는 열흘 뒤 정오다",
+        "out": {
+          "text": "바람이 틈으로만 왔다.",
+          "effects": [],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "passage_alone",
+    "kind": "trial",
+    "when": "day>=6 & phase==day & !flag:met_dohyeon & !flag:passage_half",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "무너진 통로. 도현은 없다. 기철: \"부품 다섯이면 우리끼리도 되오. 사람이 다치오.\"",
+    "choices": [
+      {
+        "label": "우리끼리 잇는다",
+        "check": {
+          "skill": "str",
+          "base": 45
+        },
+        "cost": {
+          "parts": 5
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "실패하면 다친다",
+        "ok": {
+          "text": "이틀치 돌을 하루에 날랐다. 절반이 이어졌다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "passage_half",
+              "set": 1
+            },
+            {
+              "verb": "flag",
+              "id": "passage_work",
+              "set": 1
+            },
+            {
+              "verb": "trace",
+              "id": "repair_rubble",
+              "state": "working"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "you",
+              "n": 2
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "돌이 무너졌다. 동하의 다리가 밑에 깔렸다. 통로는 그대로였다.",
+          "effects": [
+            {
+              "verb": "injure",
+              "who": "dongha",
+              "n": 2
+            },
+            {
+              "verb": "permanent",
+              "who": "dongha",
+              "loss": "leg"
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "두고 걷기로 한다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "열차는 서지 않는다",
+        "out": {
+          "text": "기철이 헤드램프를 껐다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "walk_decided",
+              "set": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "d2_rat_blanket",
+    "kind": "fixed",
+    "when": "day==2 & phase==trace",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "서하 담요 속에서 쥐가 새끼를 낳았다. 순례가 걸레로 눌렀다. 소리가 여섯 번 났다. 서하는 담요를 다시 덮었다.",
+    "choices": [
+      {
+        "label": "본다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "순례가 걸레를 선로에 버렸다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "fear",
+              "who": "seoha",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "d4_shoes_home",
+    "kind": "fixed",
+    "when": "day==4 & phase==evening",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "기철이 안전화 셋을 화로 옆에 말린다. 한 짝 안에 발이 남아 있다. 기철이 그걸 꺼내 불에 넣었다. 냄새가 났다.",
+    "choices": [
+      {
+        "label": "본다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "기철: \"신발은 쓸모가 있소.\"",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "parts",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "꺼내 묻는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "불에서 꺼냈다. 승강장 끝에 묻었다. 기철이 보지 않았다.",
+          "effects": [
+            {
+              "verb": "trace",
+              "id": "grave",
+              "state": "one"
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "trip_a2_stockroom",
+    "kind": "trip",
+    "when": "day>=2 & region==A & floor==2",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "창고층. 선반 위에 상자가 쌓여 있다. 선반이 기울어 있다. 밑에 먼저 온 사람이 깔려 있다.",
+    "choices": [
+      {
+        "label": "상자를 끌어내린다",
+        "check": {
+          "skill": "str",
+          "base": 50
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "실패하면 선반이 넘어온다",
+        "ok": {
+          "text": "통조림 다섯과 물 셋. 깔린 사람의 손이 상자를 쥐고 있었다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 5
+            },
+            {
+              "verb": "number",
+              "id": "water",
+              "n": 3
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "선반이 넘어왔다. 무릎이 반대로 꺾였다. 동행이 당신을 끌고 나왔다.",
+          "effects": [
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 2
+            },
+            {
+              "verb": "permanent",
+              "who": "you",
+              "loss": "leg"
+            },
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "바닥 것만 줍는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "통조림 하나. 선반은 건드리지 않았다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "trip_a2_bodybag",
+    "kind": "trip",
+    "when": "day>=3 & region==A & floor==2 & trace:bodybag_a2==normal",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "시체 자루다. 지퍼가 안에서 열려 있고 안의 사람은 사흘쯤 됐다. 은지: \"식량이야. 역에선 말 안 해.\"",
+    "choices": [
+      {
+        "label": "가져간다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "eat_human",
+        "warn": "먹은 사람에게 값이 남는다",
+        "out": {
+          "text": "허벅지 둘을 잘라 자루에 넣었다. 자루가 무거웠다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 6
+            },
+            {
+              "verb": "flag",
+              "id": "ate_flesh_you",
+              "set": 1
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "지퍼를 닫는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "은지가 자루를 오래 봤다.",
+          "effects": [
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "trip_b2_pumproom",
+    "kind": "trip",
+    "when": "day>=2 & region==B & floor==2",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "수문 아래 펌프실. 물탱크가 반쯤 차 있다. 들어가는 길이 허리까지 물이다. 물 밑에서 무엇이 움직인다.",
+    "choices": [
+      {
+        "label": "탱크까지 간다",
+        "check": {
+          "skill": "str",
+          "base": 45
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "실패하면 물속으로 끌려간다",
+        "ok": {
+          "text": "물 여섯을 길었다. 발목에 손자국 멍이 남았다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "water",
+              "n": 6
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "발목을 당겼다. 물이 입으로 들어왔다. 동행이 머리카락을 잡고 끌어냈다.",
+          "effects": [
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 2
+            },
+            {
+              "verb": "flag",
+              "id": "drank_flood",
+              "set": 1
+            },
+            {
+              "verb": "number",
+              "id": "water",
+              "n": 2
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "입구 웅덩이만",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "물 하나. 흙냄새가 났다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "water",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "trip_a1_vending",
+    "kind": "trip",
+    "when": "day>=1 & region==A & floor==1",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "쓰러진 자판기다. 유리가 깨져 있다. 음료 캔 몇 개가 남았다.",
+    "choices": [
+      {
+        "label": "줍는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "캔 둘. 하나는 터져 있었다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "water",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "trade_shutter",
+    "kind": "trial",
+    "when": "day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "은지가 셔터 틈에 입을 대고 말한다. 너머에서 답이 온다. 은지: \"저쪽이 통조림을 내. 뭘 줄래.\"",
+    "choices": [
+      {
+        "label": "부품 둘을 준다",
+        "check": null,
+        "cost": {
+          "parts": 2
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "저쪽이 역을 안다",
+        "out": {
+          "text": "셔터 밑으로 통조림 넷이 들어왔다. 너머에서 웃었다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 4
+            },
+            {
+              "verb": "flag",
+              "id": "patrol_knows",
+              "set": 1
+            },
+            {
+              "verb": "trace",
+              "id": "shutter_gap",
+              "state": "can"
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "약 하나를 준다",
+        "check": null,
+        "cost": {
+          "meds": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "저쪽이 역을 안다",
+        "out": {
+          "text": "통조림 넷과 물 둘. 은지: \"약은 비싸.\"",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 4
+            },
+            {
+              "verb": "number",
+              "id": "water",
+              "n": 2
+            },
+            {
+              "verb": "flag",
+              "id": "patrol_knows",
+              "set": 1
+            },
+            {
+              "verb": "trace",
+              "id": "shutter_gap",
+              "state": "can"
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "동하를 하루 보낸다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "돌아올지는 저쪽이 정한다",
+        "out": {
+          "text": "동하가 셔터 밑으로 기어갔다. 저녁에 통조림 여섯과 함께 돌아왔다. 손톱이 둘 없었다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 6
+            },
+            {
+              "verb": "injure",
+              "who": "dongha",
+              "n": 1
+            },
+            {
+              "verb": "flag",
+              "id": "patrol_knows",
+              "set": 1
+            },
+            {
+              "verb": "number",
+              "id": "fear",
+              "who": "dongha",
+              "n": 3
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "거래하지 않는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "은지가 입을 뗐다. 너머가 조용해졌다.",
+          "effects": [],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "patrol_pact",
+    "kind": "trial",
+    "when": "day>=6 & phase==day & flag:patrol_knows & !flag:pact_done",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "셔터가 한 뼘 올라가 있다. 너머의 남자: \"짐꾼 하나를 보내. 열흘치 통조림을 주지.\" 은지가 동하를 보지 않는다.",
+    "choices": [
+      {
+        "label": "동하를 보낸다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "돌아오지 않는다",
+        "out": {
+          "text": "통조림 열이 들어왔다. 동하는 뒤돌아보지 않았다. 은지가 벽을 봤다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 10
+            },
+            {
+              "verb": "kill",
+              "who": "dongha",
+              "how": "stayed"
+            },
+            {
+              "verb": "flag",
+              "id": "pact_done",
+              "set": 1
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": {
+            "who": "dongha",
+            "status": "stayed",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      },
+      {
+        "label": "내가 간다",
+        "check": {
+          "skill": "str",
+          "base": 40
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "돌아올지는 저쪽이 정한다",
+        "ok": {
+          "text": "하루 종일 상자를 날랐다. 통조림 여덟을 안고 돌아왔다. 등이 찢겨 있었다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 8
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "flag",
+              "id": "pact_done",
+              "set": 1
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": 1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "상자를 떨어뜨렸다. 남자가 파이프를 들었다. 셔터 밑으로 밀려 나온 것은 통조림 둘과 당신이 아니었다.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "dead"
+            },
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 2
+            },
+            {
+              "verb": "trace",
+              "id": "shutter_gap",
+              "state": "blood"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      },
+      {
+        "label": "거절한다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "저쪽이 밤에 온다",
+        "out": {
+          "text": "셔터가 내려갔다. 너머에서 쇠 긁는 소리가 밤까지 났다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "patrol_promised",
+              "set": 1
+            },
+            {
+              "verb": "flag",
+              "id": "pact_done",
+              "set": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "drink_flood",
+    "kind": "trial",
+    "when": "day>=3 & phase==day & flood>=3 & water<=2 & inspect:body_rail",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "선로의 물이 승강장 턱까지 왔다. 흙냄새가 난다. 마리: \"끓일 땔감이 없으면 마시지 마요.\"",
+    "choices": [
+      {
+        "label": "끓여서 긷는다",
+        "check": null,
+        "cost": {
+          "fuel": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "땔감이 준다",
+        "out": {
+          "text": "드럼통에 물을 끓였다. 물 넷. 불이 한 단 낮아졌다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "water",
+              "n": 4
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "그냥 마신다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "병이 난다",
+        "out": {
+          "text": "물 셋을 길었다. 흙이 씹혔다. 밤에 배가 뒤틀렸다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "water",
+              "n": 3
+            },
+            {
+              "verb": "flag",
+              "id": "drank_flood",
+              "set": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "마시지 않는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "입술이 갈라졌다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "thirst",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "flood_sick",
+    "kind": "trial",
+    "when": "phase==night & flag:drank_flood & !flag:flood_treated",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "배가 뒤틀린다. 선로 쪽에 쪼그려 앉았더니 피가 섞여 나왔다. 마리: \"약 하나면 잡아요. 없으면 사흘이에요.\"",
+    "choices": [
+      {
+        "label": "약을 쓴다",
+        "check": null,
+        "cost": {
+          "meds": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "약이 준다",
+        "out": {
+          "text": "마리가 알약을 둘로 쪼갰다. 아침엔 걸을 수 있었다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "flood_treated",
+              "set": 1
+            },
+            {
+              "verb": "flag",
+              "id": "drank_flood",
+              "set": 0
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "버틴다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "사흘 뒤 끝이다",
+        "out": {
+          "text": "밤새 물만 나왔다. 아침에 물통이 비어 있었다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "thirst",
+              "who": "you",
+              "n": 4
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "flag",
+              "id": "flood_sick_days",
+              "set": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "flood_sick_end",
+    "kind": "trial",
+    "when": "phase==night & flag:flood_sick_days & injury_you>=3",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "일어설 수 없다. 마리가 손목을 잡는다. 손을 놓지 않는다.",
+    "choices": [
+      {
+        "label": "눈을 감는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "끝이다",
+        "out": {
+          "text": "마리가 당신 이름을 불렀다. 아침까지.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "dead"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
         }
       }
     ]
