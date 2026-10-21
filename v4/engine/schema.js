@@ -42,7 +42,7 @@
       rumor: { type: 'bool01' }, truth: { type: 'bool01' },
     } },
     nightEvents: { key: 'id', cols: {
-      id: { type: 'id', req: true }, role: { type: 'str', req: true }, actor: { type: 'str', req: true }, target: { type: 'str' },
+      id: { type: 'id', req: true }, role: { type: 'str', req: true }, actor: { type: 'str' }, target: { type: 'str' },   // actor 는 role:clock 이 아니면 필수(아래 검사)
       cond: { type: 'cond' }, weight: { type: 'int', req: true, min: 1, max: 10 }, kind: { type: 'enum', req: true, enum: ['malice', 'hymn', 'neutral'] },
       trace: { type: 'obj' }, rumor: { type: 'obj' }, effects: { type: 'obj' }, oncePerRun: { type: 'bool01' }, text: { type: 'str' },
     } },
@@ -184,8 +184,12 @@
         const v = n[col]; if (typeof v !== 'string' || v === '-' || ctx.people[v] || v === 'bond' || v === 'any') continue;
         try { for (const nm of C.names(C.parse(v))) if (FORBIDDEN_NIGHT_NAMES.test(nm)) err(`${col}: "${nm}" — 밤 사건 조건에 당신 위치·선택은 쓸 수 없음`); } catch (e) { err(`${col}: ${e.message}`); }
       }
-      if (ctx.people[n.actor] === undefined && n.actor !== 'any') { try { C.parse(n.actor); } catch (e) { err(`actor: 사람 id 또는 조건식이어야 함 ("${n.actor}")`); } }
+      const clock = n.role === 'clock';
+      if (!clock && (!n.actor || n.actor === '-')) err('actor: 필수 열이 비었음 (세계 시계 사건은 role: clock)');
+      if (clock && n.actor && n.actor !== '-') err('actor: role:clock 사건은 행위자가 없다');
+      if (!clock && n.actor && ctx.people[n.actor] === undefined && n.actor !== 'any') { try { C.parse(n.actor); } catch (e) { err(`actor: 사람 id 또는 조건식이어야 함 ("${n.actor}")`); } }
       if (n.actor === 'you') err('actor: 당신은 밤 사건의 행위자가 될 수 없음');
+      if (clock && n.kind !== 'neutral') err('kind: 세계 시계 사건은 neutral');
       if (n.trace) for (const [o, st] of Object.entries(n.trace)) checkTrace(o, st, ctx, (m) => err('trace.' + m));
       if (n.rumor) { if (!isObj(n.rumor) || typeof n.rumor.line !== 'string') err('rumor: {witness, line}'); else if (!ctx.lines[n.rumor.line]) err(`rumor.line: lines에 없음 "${n.rumor.line}"`); }
       if (n.effects) checkEffects(n.effects, ctx, err);

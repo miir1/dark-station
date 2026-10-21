@@ -10,7 +10,8 @@
   const R = isNode ? require('./rng.js') : root.DS4.rng;
   const FX = isNode ? require('./effects.js') : root.DS4.effects;
 
-  const MAX_PER_NIGHT = 2;          // 한 밤에 일어나는 사건 상한 [제안]
+  const MAX_PER_NIGHT_DEFAULT = 2;  // numbers 표에 max_per_night 가 없을 때만
+  const maxPerNight = (s) => (Number.isFinite(s.world.max_per_night) ? s.world.max_per_night : MAX_PER_NIGHT_DEFAULT);
   const RUMOR_TRUTH = 0.7;          // 소문이 참일 확률 (12_design_v3 §7: 거짓 30%)
   const RANDOM_TARGETS = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper'];   // 자리 정보가 없으므로 전부 무작위
 
@@ -66,8 +67,10 @@
   function rollNight(s, db) {
     const base = worldCtx(s);
     const cands = [];
+    const clock = [];
     for (const n of db.nightEvents) {
       if (n.oncePerRun && Object.prototype.hasOwnProperty.call(s.onceNight, n.id)) continue;
+      if (n.role === 'clock') { if (C.test(n.cond, base)) clock.push(n); continue; }   // 세계 시계: 조건이 맞으면 전부, 상한 밖
       for (const actor of resolveActors(s, db, n, base)) {
         const target = resolveTarget(s, db, n, actor, base);
         if (n.target && n.target !== '-' && !target) continue;      // 대상이 필요한데 없으면 못 일어난다
@@ -78,7 +81,8 @@
     const happened = [];
     const usedActors = new Set();
     let guard = 0;
-    while (happened.length < MAX_PER_NIGHT && cands.length && guard++ < 80) {
+    const cap = maxPerNight(s);
+    while (happened.length < cap && cands.length && guard++ < 80) {
       const c = R.pickWeighted(s, cands);
       if (!c) break;
       cands.splice(cands.indexOf(c), 1);
@@ -87,16 +91,17 @@
       happened.push(c);
       enact(s, db, c);
     }
-    return happened.map((c) => ({ id: c.n.id, actor: c.actor.id, target: c.target ? c.target.id : null }));
+    for (const n of clock) { const c = { n, actor: null, target: null }; enact(s, db, c); happened.push(c); }
+    return happened.map((c) => ({ id: c.n.id, actor: c.actor ? c.actor.id : null, target: c.target ? c.target.id : null }));
   }
 
   function enact(s, db, c) {
-    const roles = { actor: c.actor.id, target: c.target ? c.target.id : null };
+    const roles = { actor: c.actor ? c.actor.id : null, target: c.target ? c.target.id : null };
     const n = c.n;
     const traceIds = [];
     for (const [o, st] of Object.entries(n.trace || {})) { const id = FX.fillRole(o, roles); if (FX.setTrace(s, db, id, st, s.day, roles.actor)) traceIds.push(id); }
     const lines = [];
-    if (n.effects) FX.apply(s, db, n.effects, roles, lines);
+    if (n.effects) FX.apply(s, db, n.effects, roles.actor ? roles : { actor: 'world', target: null }, lines);   // 시계 사건의 수치는 세계 것
     let rumor = null;
     if (n.rumor && n.rumor.line) {
       let witness = null;
@@ -106,7 +111,7 @@
       if (witness) { rumor = { day: s.day, event: n.id, witness, line: n.rumor.line, truth: R.chance(s, RUMOR_TRUTH) ? 1 : 0, heard: false, roles }; s.rumors.push(rumor); }
     }
     if (n.oncePerRun) s.onceNight[n.id] = s.day;
-    s.nightLog.push({ day: s.day, id: n.id, kind: n.kind, actor: roles.actor, target: roles.target, traces: traceIds, rumor: !!rumor, lines, discovered: false });
+    s.nightLog.push({ day: s.day, id: n.id, kind: n.kind, role: n.role, actor: roles.actor, target: roles.target, traces: traceIds, rumor: !!rumor, lines, discovered: false });
   }
 
   // 조사·들음이 발견으로 이어진다 (엔진의 inspect/hear 가 부른다)
@@ -119,12 +124,13 @@
 
   // 발견 집계(봇·검증용)
   function discovery(s) {
-    const total = s.nightLog.length;
-    const found = s.nightLog.filter((e) => e.discovered).length;
+    const rows = s.nightLog.filter((e) => e.role !== 'clock');   // 세계 시계는 '주민 간 사건'이 아니다
+    const total = rows.length;
+    const found = rows.filter((e) => e.discovered).length;
     return { total, found, rate: total ? found / total : 0, unknown: total - found };
   }
 
-  const API = { rollNight, discovery, markInspected, markHeard, MAX_PER_NIGHT, RUMOR_TRUTH, worldCtx, roleCtx };
+  const API = { rollNight, discovery, markInspected, markHeard, maxPerNight, RUMOR_TRUTH, worldCtx, roleCtx };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).night = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -98,11 +98,11 @@
     for (const p of Object.values(s.people)) {
       if (p.status !== 'home') continue;
       for (const def of db.numbersList) if (def.owner === 'person' && def.perDay) p.n[def.id] = Math.max(def.min, Math.min(def.max, (p.n[def.id] || 0) + def.perDay));
-      if ((p.n.injury || 0) >= 3 && s.flags[`treated_${p.id}`] !== true) { FX.kill(s, p.id, s.day); s.stats.deaths++; say(s, `${p.name} — 밤에 갔다.`, 'dead'); }
+      if ((p.n.injury || 0) >= 3 && s.flags[`treated_${p.id}`] !== true) { FX.kill(s, p.id, s.day, null, 'dead'); s.stats.deaths++; say(s, `${p.name} — 밤에 갔다.`, 'dead'); if (p.id === 'you') s.lastResult = { event: 'injury_untreated', choice: '위독을 치료하지 않음', warned: false, roll: null, text: '', lines: [] }; }
       delete s.flags[`treated_${p.id}`];
     }
-    // 아침에 지워지는 흔적
-    for (const [id, t] of Object.entries(s.traces)) { const o = db.objects[id]; if (!o) continue; if (o.resetOn === 'morning' || (o.resetOn === 'inspect' && t.seen && t.day < s.day)) s.traces[id] = { st: o.states[0], day: s.day, by: null, seen: false }; }   // 지워짐 = 첫 상태로
+    // 아침에 지워지는 흔적: 그날 첫 단계(아침 흔적 조사)를 떠날 때 지운다 — 밤에 남은 것을 볼 기회를 준 뒤
+    s.morningReset = true;
     if (!Object.values(s.people).some((p) => p.status === 'home' && p.id !== 'you')) { endGame(s, db, 'all_dead'); return; }
     const dayDef = db.numbers.day;
     if (dayDef && s.day > dayDef.max) { endGame(s, db, 'train'); return; }
@@ -149,7 +149,7 @@
     if (out && out.effects) FX.apply(s, db, out.effects, { actor: 'you', target: out.target || null }, lines);
     if (out && out.ledger) s.ledger.written.push({ day: s.day, who: out.ledger.who || 'you', text: out.ledger.text });
     s.lastResult = { event: ev.id, choice: c.label, i, warned: !!(c.warn || c.hint || c.taboo), roll, text: (out && out.text) || '', lines };
-    if (ev.once || ev.kind === 'fixed' || ev.kind === 'trial' || ev.kind === 'ending') s.done[ev.id] = s.day;
+    if (ev.once === 0 ? false : (ev.once || ev.kind === 'fixed' || ev.kind === 'trial' || ev.kind === 'ending')) s.done[ev.id] = s.day;   // once:0 이면 되풀이(미룬다 류)
     s.stats.decisions++;
     say(s, c.label, 'choice');
     s.pending = null;
@@ -178,10 +178,11 @@
     (s.trip.done = s.trip.done || []).push(ev.id);
     return true;
   }
-  // 배식 [엔진 임시 규칙 — 수치표에 없어서 상수로 둔다. 기반설계가 정하면 표로 옮긴다]
-  const RATION = { food: 1, water: 1, hunger: -4, thirst: -4 };
+  // 배식: numbers 표의 ration_food · ration_water · ration_hunger · ration_thirst (없으면 1·1·−4·−4)
+  function rationOf(s) { const w = s.world; return { food: Number.isFinite(w.ration_food) ? w.ration_food : 1, water: Number.isFinite(w.ration_water) ? w.ration_water : 1, hunger: Number.isFinite(w.ration_hunger) ? w.ration_hunger : -4, thirst: Number.isFinite(w.ration_thirst) ? w.ration_thirst : -4 }; }
   function ration(s, db, bowls) {
     if (!bowls || typeof bowls !== 'object') return false;
+    const RATION = rationOf(s);
     for (const [who, on] of Object.entries(bowls)) {
       const p = s.people[who]; if (!p || p.status !== 'home' || !on) continue;
       if ((s.world.food || 0) < RATION.food || (s.world.water || 0) < RATION.water) continue;
@@ -223,6 +224,7 @@
         if (s.pending) return { ok: false, error: '먼저 골라야 한다' };
         if (phase && (phase.hook === 'rollNight' || phase.actions.includes('rollNight'))) { const got = NIGHT.rollNight(s, db); s.stats.nights++; for (const g of got) say(s, `[밤] ${g.id}`, 'night'); }
         s.trip = null;
+        if (s.morningReset) { s.morningReset = false; for (const [id, t] of Object.entries(s.traces)) { const o = db.objects[id]; if (!o) continue; if (o.resetOn === 'morning' || (o.resetOn === 'inspect' && t.seen && t.day < s.day)) s.traces[id] = { st: o.states[0], day: s.day, by: null, seen: false }; } }   // 지워짐 = 첫 상태로
         const nx = nextPhase(s, db);
         if (nx === null) newDay(s, db); else { s.phase = nx; enterPhase(s, db); }
         ok = true; break;
@@ -260,13 +262,14 @@
       if (!p || typeof p !== 'object') { s.people[id] = bp; continue; }
       p.n = Object.assign({}, bp.n, p.n || {}); p.needs = Object.assign({}, bp.needs, p.needs || {}); p.skills = Object.assign({}, bp.skills, p.skills || {});
       if (!p.permanent || typeof p.permanent !== 'object') p.permanent = {};
-      if (!['home', 'dead', 'ascended', 'boarded', 'outside'].includes(p.status)) p.status = 'home';
+      if (!['home', 'dead', 'ascended', 'boarded', 'outside', 'stayed'].includes(p.status)) p.status = 'home';
       for (const def of db.numbersList) if (def.owner === 'person' && !Number.isFinite(p.n[def.id])) p.n[def.id] = def.start;
     }
     if (typeof s.rng !== 'number') s.rng = s.seed >>> 0;
     if (!Number.isInteger(s.day)) s.day = 0;
     if (s.trip !== null && typeof s.trip !== 'object') s.trip = null;
     if (!s.pos || typeof s.pos !== 'object') s.pos = { map: null, x: 0, y: 0 };
+    s.morningReset = !!s.morningReset;
     if (!s.ended && !phaseOf(db, s.phase)) return null;          // 모르는 단계 = 구조가 어긋난 저장
     if (s.pending && !db.events[s.pending.id]) s.pending = null;
     return s;
@@ -290,10 +293,12 @@
     if (!s.pending) return null;
     const ev = db.events[s.pending.id];
     return ev.choices.map((c, i) => { const outs = [c.out, c.ok, c.fail].filter(Boolean); const axis = {}; let kill = false, killOther = false;
-      for (const o of outs) { const e = o.effects || {}; for (const [k, v] of Object.entries(e.axis || {})) axis[k] = (axis[k] || 0) + v; if (e.kill) { if (e.kill.who === 'you') kill = true; else killOther = true; } }
-      return Object.assign(choiceState(s, db, ev, c), { i, axis, killYou: kill, killOther, check: !!c.check }); });
+      let gain = 0;
+      for (const o of outs) { const e = o.effects || {}; for (const [k, v] of Object.entries(e.axis || {})) axis[k] = (axis[k] || 0) + v; if (e.kill) { if (e.kill.who === 'you') kill = true; else killOther = true; }
+        for (const [k, v] of Object.entries(e)) { const d = db.numbers[k]; if (d && d.owner === 'world' && d.visible === 'always') gain += typeof v === 'number' ? v : (v && v.n) || 0; } }
+      return Object.assign(choiceState(s, db, ev, c), { i, axis, killYou: kill, killOther, check: !!c.check, gain }); });   // gain = 화면에 보이는 자원 변화 합(봇의 '자원 + 가장 큰 label')
   }
-  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, RATION, rand: R.rand,
+  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, rationOf, rand: R.rand,
     identity: (s, db) => ID.identity(s.axes, db.identity), ledger: LEDGER, night: NIGHT, cond: C };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).engine = API;

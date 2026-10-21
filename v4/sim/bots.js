@@ -12,13 +12,20 @@ const POLICIES = {
   caller: { share: 0, hand: 0, name: 1, inspect: 'normal', avoidWarn: 0.3 },
   lazy: { share: 0, hand: 0, name: 0, inspect: 'lazy', avoidWarn: 1 },
   diligent: { share: 0, hand: 0, name: 0, inspect: 'diligent', avoidWarn: 1 },   // 발견율 상한 보고용
+  risky: { share: 0, hand: 0, name: 0, inspect: 'normal', avoidWarn: 0, risky: true },   // 모험: 판정 있고 경고 붙은 선택을 우선(≥35%), 원정 매일·2층 우선, 거래·협정·범람수는 자원 + 최대
 };
+const RESOURCE_EVENTS = ['trade_shutter', 'patrol_pact', 'drink_flood'];
 const INSPECT = { diligent: { objects: 99, talk: 2, rumors: 99 }, normal: { objects: 2, talk: 1, rumors: 1 }, lazy: { objects: 1, talk: 0, rumors: 0 } };
 
 // ── 선택 ──
-function scoreChoice(c, pol) {
+function scoreChoice(c, pol, eventId) {
   if (c.locked) return -Infinity;
   let sc = 0;
+  if (pol.risky) {
+    if (RESOURCE_EVENTS.includes(eventId)) return (c.gain || 0) * 10 + (c.cost ? -0.5 : 0);
+    if (c.check && (c.warn || c.hint)) sc += c.chance >= 35 ? 4 : -2;
+    else if (c.warn || c.hint) sc += 1;
+  }
   for (const [k, v] of Object.entries(c.axis || {})) sc += (pol[k] || 0) * v * 2;
   // 봇은 "죽는다"를 모른다 — 화면처럼 warn·hint·cost·% 만 본다. (killYou 는 통계용으로만 메타에 남긴다)
   if (c.warn || c.hint) sc -= 2 * pol.avoidWarn;
@@ -31,7 +38,7 @@ function pickChoice(s, db, pol) {
   const metas = E.choiceMeta(s, db);
   if (!metas) return -1;
   let best = -Infinity; let cands = [];
-  for (const c of metas) { const sc = scoreChoice(c, pol); if (sc > best + 1e-9) { best = sc; cands = [c]; } else if (Math.abs(sc - best) < 1e-9) cands.push(c); }
+  for (const c of metas) { const sc = scoreChoice(c, pol, s.pending.id); if (sc > best + 1e-9) { best = sc; cands = [c]; } else if (Math.abs(sc - best) < 1e-9) cands.push(c); }
   if (!cands.length) return metas.findIndex((c) => !c.locked);
   return (cands.length === 1 ? cands[0] : R.pick(s, cands)).i;
 }
@@ -68,10 +75,11 @@ function shuffle(s, arr) { const a = arr.slice(); for (let i = a.length - 1; i >
 
 function rationStep(s, db, pol) {
   const home = db.peopleOrder.filter((id) => s.people[id].status === 'home');
+  if ((s.people.you.n.injury || 0) >= 2) act(s, db, { type: 'treat', who: 'you' });   // 위독 방치는 결정이 아니다 — 치료 동작이 있으면 쓴다
   const canFeed = Math.min(s.world.food || 0, s.world.water || 0);
   let order = home.slice();
   if (pol.share < 0) order = ['you'].concat(home.filter((i) => i !== 'you'));                       // 이기적: 내 그릇 먼저
-  else if (pol.share > 0) order = home.filter((i) => i !== 'you').concat(['you']);                    // 헌신: 내 그릇 마지막
+  else if (pol.share > 0) order = (s.people.you.n.hunger || 0) >= 7 ? ['you'].concat(home.filter((i) => i !== 'you')) : home.filter((i) => i !== 'you').concat(['you']);   // 헌신: 내 그릇 마지막 (굶어 죽기 직전엔 먹는다)
   else order = shuffle(s, home);
   const bowls = {};
   order.forEach((id, k) => { bowls[id] = k < canFeed ? 1 : 0; });
@@ -79,9 +87,20 @@ function rationStep(s, db, pol) {
 }
 function dayStep(s, db, pol, trace) {
   settle(s, db, pol, trace);
+  if ((s.people.you.n.injury || 0) >= 2) act(s, db, { type: 'treat', who: 'you' });
   if (s.ended || s.day < 1) return;
   const low = (s.world.food || 0) <= 5 || (s.world.water || 0) <= 5;
   const hurt = (s.people.you.n.injury || 0) >= 2;
+  if (pol.risky) {
+    // 모험: 거래·범람수 사건이 걸리는 물건을 낮에 조사하고, 매일 원정 2층 → 1층
+    for (const id of ['shutter_gap', 'body_rail']) if (act(s, db, { type: 'inspect', object: id })) settle(s, db, pol, trace);
+    if (s.ended) return;
+    const region = s.day % 2 === 0 ? 'A' : 'B';
+    if (act(s, db, { type: 'trip', region, floor: 2 })) { trace.trips++; settle(s, db, pol, trace); }
+    if (s.ended) return;
+    if (act(s, db, { type: 'trip', region, floor: 1 })) settle(s, db, pol, trace);
+    return;
+  }
   if (!low || hurt) return;
   const region = s.day % 2 === 0 ? 'A' : 'B';
   if (act(s, db, { type: 'trip', region, floor: 1 })) { trace.trips++; settle(s, db, pol, trace); }
@@ -90,6 +109,7 @@ function dayStep(s, db, pol, trace) {
 }
 function eveningStep(s, db, pol, trace) {
   settle(s, db, pol, trace);
+  if ((s.people.you.n.injury || 0) >= 2) act(s, db, { type: 'treat', who: 'you' });   // 원정에서 다친 뒤 저녁에 치료
   const rule = INSPECT[pol.inspect];
   const home = shuffle(s, db.peopleOrder.filter((p) => p !== 'you' && s.people[p].status === 'home'));
   if (home.length && rule.talk > 0 && act(s, db, { type: 'talk', who: home[0] })) settle(s, db, pol, trace);

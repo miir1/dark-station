@@ -43,7 +43,7 @@
       for (const key of ['check', 'cost', 'req', 'taboo', 'warn', 'hint']) if (blank(c[key])) delete c[key];
       for (const key of ['out', 'ok', 'fail']) { const o = c[key]; if (!o || typeof o !== 'object') continue; if (blank(o.ledger)) delete o.ledger; if (o.effects !== undefined) { if (blank(o.effects)) delete o.effects; else o.effects = effectsToObject(o.effects, `events[${i}] ${ev.id} choices[${k}].${key}`); } }
     }));
-    if (Array.isArray(t.nightEvents)) t.nightEvents.forEach((n, i) => { if (!n || typeof n !== 'object') return; if (blank(n.target)) n.target = '-'; if (n.effects !== undefined) { if (blank(n.effects)) delete n.effects; else n.effects = effectsToObject(n.effects, `nightEvents[${i}] ${n.id}`); } if (blank(n.rumor) || blank(n.rumor.line)) delete n.rumor; if (blank(n.trace)) delete n.trace; });
+    if (Array.isArray(t.nightEvents)) t.nightEvents.forEach((n, i) => { if (!n || typeof n !== 'object') return; if (blank(n.target)) n.target = '-'; if (blank(n.actor)) n.actor = '-'; if (n.effects !== undefined) { if (blank(n.effects)) delete n.effects; else n.effects = effectsToObject(n.effects, `nightEvents[${i}] ${n.id}`); } if (blank(n.rumor) || blank(n.rumor.line)) delete n.rumor; if (blank(n.trace)) delete n.trace; });
     if (t.identity && typeof t.identity === 'object' && !Array.isArray(t.identity)) { const { axes, candidates } = t.identity; t.identity = { axes, candidates: Array.isArray(candidates) ? candidates.map((c) => { if (c && typeof c === 'object' && c.id === undefined && c.candidate !== undefined) { c = Object.assign({ id: c.candidate }, c); delete c.candidate; } return c; }) : candidates }; }
     return t;
   }

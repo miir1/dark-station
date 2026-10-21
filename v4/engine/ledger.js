@@ -25,7 +25,7 @@
   function format(s, db) {
     return rows(s, db).map((r) => {
       const bits = [String(r.line), r.name, '—', STATUS_KO[r.status] || r.status];
-      if (r.status === 'dead' || r.status === 'ascended') { bits.push(r.day == null ? '' : 'D' + r.day); bits.push(r.cause == null ? BLANK : r.cause); }
+      if (r.status === 'dead' || r.status === 'ascended' || (r.status === 'stayed' && r.day != null)) { bits.push(r.day == null ? '' : 'D' + r.day); if (r.status !== 'stayed') bits.push(r.cause == null ? BLANK : r.cause); }
       return bits.filter((b) => b !== '').join(' ');
     });
   }

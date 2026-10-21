@@ -1,0 +1,5 @@
+2026/10/21-18:06:20.293 1c70 Reusing MANIFEST C:\dev\dark_station\v4\shots\.profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/10/21-18:06:20.294 1c70 Recovering log #7
+2026/10/21-18:06:20.294 1c70 Level-0 table #9: started
+2026/10/21-18:06:20.302 1c70 Level-0 table #9: 20039 bytes OK
+2026/10/21-18:06:20.316 1c70 Delete type=0 #7

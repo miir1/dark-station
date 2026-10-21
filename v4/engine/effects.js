@@ -27,7 +27,7 @@
   function setNumber(s, db, id, who, delta, lines) {
     const def = db.numbers[id];
     if (!def) return;
-    if (def.owner === 'world') { const before = s.world[id]; s.world[id] = clamp(before + delta, def.min, def.max); if (lines && s.world[id] !== before) lines.push({ kind: 'number', id, who: null, from: before, to: s.world[id] }); return; }
+    if (def.owner === 'world' || who === 'world') { if (def.owner !== 'world') return; const before = s.world[id]; s.world[id] = clamp(before + delta, def.min, def.max); if (lines && s.world[id] !== before) lines.push({ kind: 'number', id, who: null, from: before, to: s.world[id] }); return; }
     const p = s.people[who];
     if (!p || p.status === 'dead') return;
     const before = p.n[id];
@@ -41,11 +41,12 @@
     return true;
   }
 
-  function kill(s, who, day, lines) {
+  // how: dead(기본) | ascended(올라감) | stayed(역에 남아 떠남 — 명부엔 '남았다') | ashed(재가 됨 = dead)
+  function kill(s, who, day, lines, how) {
     const p = s.people[who];
-    if (!p || p.status === 'dead' || p.status === 'ascended') return;
-    p.status = 'dead'; p.day = day;
-    if (lines) lines.push({ kind: 'dead', who, day });
+    if (!p || p.status !== 'home') return;
+    p.status = how === 'ascended' ? 'ascended' : how === 'stayed' ? 'stayed' : 'dead'; p.day = day;
+    if (lines) lines.push({ kind: p.status, who, day });
   }
 
   function apply(s, db, effects, roles, lines) {
@@ -57,7 +58,7 @@
         case 'trace': for (const [o, st] of Object.entries(v)) setTrace(s, db, fillRole(o, roles), st, s.day, roles.actor || 'you'); break;
         case 'axis': ID.nudge(s.axes, v); break;
         case 'injure': setNumber(s, db, 'injury', resolveWho(v.who, roles), v.n, lines); break;
-        case 'kill': kill(s, resolveWho(v.who, roles), s.day, lines); break;
+        case 'kill': kill(s, resolveWho(v.who, roles), s.day, lines, v.how); break;
         case 'permanent': {
           const who = resolveWho(v.who, roles); const p = s.people[who];
           if (p && !p.permanent[v.kind]) { p.permanent[v.kind] = s.day; const sk = PERM_SKILL[v.kind]; if (sk) p.skills[sk] = Math.max(0, p.skills[sk] - 1); s.flags[`${who}_${v.kind}`] = true; if (lines) lines.push({ kind: 'permanent', who, what: v.kind }); }

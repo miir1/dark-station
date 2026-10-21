@@ -1,0 +1,17 @@
+[
+ {
+  "shot": "01_car",
+  "ok": true,
+  "console_errors": []
+ },
+ {
+  "shot": "02_morning3",
+  "ok": true,
+  "console_errors": []
+ },
+ {
+  "shot": "03_night3",
+  "ok": true,
+  "console_errors": []
+ }
+]

@@ -15,12 +15,23 @@
     const files = Object.assign({}, D4.tables.FILES);
     const out = {};
     for (const [k, f] of Object.entries(files)) {
-      let r = await fetch(base + f, { cache: 'no-cache' });
-      if (!r.ok && D4.tables.ALT_FILES[k]) r = await fetch(base + D4.tables.ALT_FILES[k], { cache: 'no-cache' });
+      // 같은 표의 다른 파일 이름(nightEvents.json)이 있으면 그것부터 — 지금 data/ 에 있는 쪽이라 404 가 콘솔에 남지 않는다
+      const names = D4.tables.ALT_FILES[k] ? [D4.tables.ALT_FILES[k], f] : [f];
+      let r = null;
+      for (const n of names) { r = await fetch(base + n, { cache: 'no-cache' }); if (r.ok) break; }
       if (!r.ok) throw new Error(`표 파일을 읽지 못했다: ${k} (${f})`);
       out[k] = await r.json();
     }
-    return D4.tables.load(out);
+    try { return D4.tables.load(out); }
+    catch (e) {
+      // 표가 고쳐지는 중이면(검증 실패) 틀린 행만 빼고 다시 읽는다 — 화면은 돌아가고, 콘솔에 경고로 남긴다. 엔진·표 담당에게 그대로 넘길 것.
+      if (!e.errors) throw e;
+      const bad = {};
+      for (const err of e.errors) { const m = /^(\w+)\[(\d+)\]/.exec(err.text || ''); if (!m) throw e; (bad[m[1]] = bad[m[1]] || new Set()).add(Number(m[2])); }
+      for (const [table, idx] of Object.entries(bad)) { if (!Array.isArray(out[table])) throw e; out[table] = out[table].filter((row, i) => !idx.has(i)); }
+      console.warn('[ds4] 표 검증 실패 행을 빼고 읽었다:\n' + e.errors.map((x) => '  ' + x.text).join('\n'));
+      return D4.tables.load(out);
+    }
   }
 
   // 대사표: 같은 id 의 여러 행 중 context 가 맞는 것. 여러 개면 마지막(더 구체적인 행이 뒤에 온다는 약속). pickRow 로 고르는 규칙을 바꿀 수 있다.

@@ -52,7 +52,7 @@
     const g = lightCv.getContext('2d');
     g.globalCompositeOperation = 'source-over'; g.clearRect(0, 0, lightCv.width, lightCv.height);
     const night = state.phase === 'night' || state.phase === 'aftermath';
-    const dark = Math.min(0.92, (sc.map.dark || 0.4) + 0.25 + (night ? 0.15 : 0));
+    const dark = Math.min(0.9, (sc.map.dark || 0.4) + (night ? 0.2 : 0));
     g.fillStyle = `rgba(0,0,0,${dark})`; g.fillRect(0, 0, lightCv.width, lightCv.height);
     g.globalCompositeOperation = 'destination-out';
     for (const [x, y, r] of lights) {

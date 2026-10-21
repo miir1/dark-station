@@ -12,14 +12,16 @@ function measure(db, s, trace) {
   const allDead = residents.every((id) => s.people[id].status !== 'home' && s.people[id].status !== 'boarded');
   const explicit = Object.keys(s.done).filter((id) => db.events[id] && db.events[id].explicit).length;
   const disc = N.discovery(s);
-  const malice = s.nightLog.filter((e) => e.kind === 'malice').length, hymn = s.nightLog.filter((e) => e.kind === 'hymn').length;
+  const resident = s.nightLog.filter((e) => e.role !== 'clock');
+  const malice = resident.filter((e) => e.kind === 'malice').length, hymn = resident.filter((e) => e.kind === 'hymn').length;
   const hymnFound = s.nightLog.filter((e) => e.kind === 'hymn' && e.discovered).length;
   const deadRows = s.ended ? s.ended.ledger.filter((r) => r.id !== 'you' && (r.status === 'dead' || r.status === 'ascended')) : [];
   const blank = deadRows.filter((r) => r.cause == null).length;
   const days = Math.max(1, Math.min(s.day, 10));
   return {
     seed: s.seed, days: s.day, dead, why: s.ended ? s.ended.why : 'none', cause: s.ended && s.ended.cause ? s.ended.cause : null,
-    allDead, identity: s.ended ? s.ended.identity : null, nights: s.nightLog.length, malice, hymn, found: disc.found, unknown: disc.unknown, hymnFound,
+    allDead, identity: s.ended ? s.ended.identity : null, nights: resident.length, clock: s.nightLog.length - resident.length, malice, hymn, found: disc.found, unknown: disc.unknown, hymnFound,
+    train: !!(s.ended && s.ended.why === 'd10_train'), survived: !!(s.ended && s.ended.why !== 'you_gone' && !dead),
     explicit, decisionsPerDay: s.stats.decisions / days, deadRows: deadRows.length, blank, trips: trace.trips, nightsRolled: s.stats.nights,
   };
 }
@@ -44,7 +46,8 @@ function aggregate(db, runs) {
     explicit: avg(runs.map((r) => r.explicit)), decisions: avg(runs.map((r) => r.decisionsPerDay)),
     blank: pct(runs.reduce((a, r) => a + r.blank, 0), runs.reduce((a, r) => a + r.deadRows, 0)),
     identity: Object.fromEntries(Object.entries(ids).map(([k, v]) => [k, pct(v, n)])),
-    days: avg(runs.map((r) => r.days)), trips: avg(runs.map((r) => r.trips)),
+    days: avg(runs.map((r) => r.days)), trips: avg(runs.map((r) => r.trips)), train: pct(runs.filter((r) => r.train).length, n), survived: pct(runs.filter((r) => r.survived).length, n), clock: avg(runs.map((r) => r.clock)),
+    starveShare: pct(deaths.filter((r) => r.cause && r.cause.event === 'starve_you').length, deaths.length),
   };
 }
 
@@ -72,6 +75,10 @@ function gate(aggs, candidates) {
     ['explicit 사건 / 판', '≥ 7', `${b.explicit}`, b.explicit >= 7],
     ['하루 결정 수', '≥ 5', `${b.decisions}`, b.decisions >= 5],
     ['명부 사인 빈칸 비율', '측정만', `${b.blank}%`, true],
+    ['모험 봇 열흘 생존', '≥ 40%', aggs.risky ? `${aggs.risky.survived}%` : '-', !!aggs.risky && aggs.risky.survived >= 40],
+    ['모험 봇 사망 중 굶주림', '< 50%', aggs.risky ? `${aggs.risky.starveShare}%` : '-', !!aggs.risky && aggs.risky.starveShare < 50],
+    ['열차 결말 도달 (모험 / 균형)', '> 0%', aggs.risky ? `${aggs.risky.train}% / ${b.train}%` : `${b.train}%`, (aggs.risky ? aggs.risky.train : b.train) > 0],
+    ['정체: 7후보 중 ≥5가 각 ≥7%', '≥ 5 후보', `${Object.values(idAll).filter((v) => v >= 7).length} 후보`, Object.values(idAll).filter((v) => v >= 7).length >= 5],
   ];
   return { rows, idAll, thr };
 }
