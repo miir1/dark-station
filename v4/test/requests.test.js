@@ -53,7 +53,7 @@ test('요청2·5·18 결과 그림은 lastResult.image · ended.cause.image 로,
   assert.ok(E.dispatch(s, { type: 'choose', i: 0 }, db).ok);
   assert.strictEqual(s.lastResult.image, 'death_counted');
   assert.strictEqual(s.ended.why, 'end_x');
-  assert.deepStrictEqual(s.ended.cause, { event: 'end_x', choice: '운임 없이 탄다', warned: true, image: 'death_counted', night: false });
+  assert.deepStrictEqual(s.ended.cause, { event: 'end_x', choice: '운임 없이 탄다', warned: true, forced: false, free: { event: 'end_x', choice: '운임 없이 탄다', day: 0 }, image: 'death_counted', night: false });
   assert.strictEqual(s.people.you.status, 'ascended');
 });
 
@@ -317,7 +317,9 @@ test('요청9 밤 사건으로 당신이 죽으면 사인은 그 밤 사건 (전
   const { db, s } = setup((t) => t.nightEvents.push({ id: 'n_take_you', role: 'kill', actor: 'gicheol', target: 'you', cond: 'day==0', weight: 10, kind: 'malice', effects: { kill: { who: 'target' } } }));
   while (s.day === 0 && !s.ended) { if (s.pending) E.dispatch(s, { type: 'choose', i: 0 }, db); else E.dispatch(s, { type: 'next' }, db); }
   assert.strictEqual(s.ended.why, 'you_gone');
-  assert.deepStrictEqual(s.ended.cause, { event: 'n_take_you', choice: null, warned: false, image: '', night: true });
+  const { free, ...rest } = s.ended.cause;
+  assert.deepStrictEqual(rest, { event: 'n_take_you', choice: null, warned: false, forced: false, image: '', night: true });
+  assert.ok(free === null || typeof free.event === 'string', '앞선 자유 경고 선택(있으면)도 함께 남는다');
 });
 
 // ── 10. 바깥 사람 ──

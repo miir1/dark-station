@@ -18,6 +18,9 @@
   const EVENT_RANDOM = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper'];   // 사건 대상 낱말(자리 정보 없음 = 무작위)
   const isMinor = NIGHT.isMinor;
   const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+  // 선택지가 당신을 죽일 수 있는가(결과 out·ok·fail 중 하나라도 kill 이 당신에게 닿는다) — 강제 사망 판정과 봇 메타가 같이 쓴다
+  const meWho = (w) => !w || w === 'you' || w === 'self' || w === 'actor' || w === 'party' || w === 'all';
+  const killsYou = (c) => [c.out, c.ok, c.fail].some((o) => o && o.effects && o.effects.kill && FX.list(o.effects.kill).some((kv) => meWho(kv.who)));
   const injuryMax = (db) => (db.numbers.injury ? db.numbers.injury.max : Infinity);   // 위독 = injury 의 최대값 (numbers 표)
 
   // ── 연출 지연 (화면이 읽는다). ?fast=1 이면 전부 0 ──
@@ -46,9 +49,9 @@
     const s = {
       v: SAVE_V, seed, rng: seed, day: world.day != null ? world.day : 0, phase: null, ended: null,
       world, people: {}, pos: { map: null, x: 0, y: 0 },
-      flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {}, fired: {}, phaseSeen: [], critical: null, trip: null,
+      flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {}, fired: {}, phaseSeen: [], critical: null, trip: null, lastFree: null,
       pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0 },
-    };   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 그날 마지막 치료 기회 때의 위독자(아침 판정용)
+    };   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 그날 마지막 치료 기회 때의 위독자(아침 판정용) · lastFree = 마지막 자유 경고 선택 {event, choice, day}(사인 기록용)
     if (!db.people.you) throw new Error('people 표에 you 가 없음');
     for (const o of Object.values(db.objects)) s.traces[o.id] = { st: o.states[0], day: 0, by: null, seen: false };   // 물건의 첫 상태 = states[0]
     for (const id of db.peopleOrder) s.people[id] = makePerson(db, id);
@@ -125,7 +128,7 @@
       if (p.status !== 'home') continue;
       for (const def of db.numbersList) if (def.owner === 'person' && def.perDay) p.n[def.id] = Math.max(def.min, Math.min(def.max, (p.n[def.id] || 0) + def.perDay));
       const wasCrit = crit ? crit.includes(p.id) : true;
-      if ((p.n.injury || 0) >= injMax && wasCrit && s.flags[`treated_${p.id}`] !== true) { FX.kill(s, p.id, s.day, null, 'dead'); s.stats.deaths++; say(s, `${p.name} — 밤에 갔다.`, 'dead'); if (p.id === 'you') s.lastResult = { event: 'injury_untreated', choice: '위독을 치료하지 않음', warned: false, roll: null, text: '', lines: [], image: '' }; }
+      if ((p.n.injury || 0) >= injMax && wasCrit && s.flags[`treated_${p.id}`] !== true) { FX.kill(s, p.id, s.day, null, 'dead'); s.stats.deaths++; say(s, `${p.name} — 밤에 갔다.`, 'dead'); if (p.id === 'you') s.lastResult = { event: 'injury_untreated', choice: '위독을 치료하지 않음', warned: false, forced: false, free: s.lastFree || null, roll: null, text: '', lines: [], image: '' }; }
       delete s.flags[`treated_${p.id}`];
     }
     s.critical = null;
@@ -141,7 +144,9 @@
   // 끝: ev = 결말 사건 행(kind ending)이면 그 열을 읽는다.
   //   board:1 → board_<id> 깃발이 선 주민은 'boarded' · endStatus → 역에 남은 산 사람(당신 포함)의 status (walked 등, 기본 그대로 = 명부 '남았다')
   //   열차가 그냥 온 끝(why train)도 board 깃발을 태운다.
-  // cause: 당신이 죽었거나 올라갔거나 떠났으면 마지막 결과(사건 id·선택·경고 여부·결과 그림·밤 사건 여부). 결말 사건 안의 죽음도 여기 남는다.
+  // cause: 당신이 죽었거나 올라갔거나 떠났으면 마지막 결과(사건 id·선택·경고 여부·강제 여부·앞선 자유 경고 선택·결과 그림·밤 사건 여부). 결말 사건 안의 죽음도 여기 남는다.
+  //   warned = 실질 경고: 고른 선택지에 경고 글(warn·hint·taboo)이 있고 강제가 아니다 (10-22 리드 결정 — 선택지 하나뿐·나머지가 잠긴 주사위는 '경고 있음'이 아니다)
+  //   forced = 그 순간 당신이 죽지 않는 열린 선택지가 0개 · free = 갈림길: 강제면 그 전 마지막 자유 경고 선택, 아니면 이 선택까지의 마지막 자유 경고 선택 (없으면 null)
   function endGame(s, db, why, ev) {
     const endEv = ev && ev.kind === 'ending' ? ev : null;
     const boarding = (endEv && endEv.board) || why === 'train';
@@ -155,7 +160,7 @@
     const youGone = why === 'you_gone' || you.status === 'dead' || you.status === 'ascended';
     const r = s.lastResult;
     s.ended = { why, identity: c ? c.id : null, reader: LEDGER.reader(s, db), readerId: LEDGER.readerId(s, db), ledger: LEDGER.rows(s, db),
-      cause: youGone && r ? { event: r.event, choice: r.choice, warned: !!r.warned, image: r.image || '', night: !!r.night } : null };
+      cause: youGone && r ? { event: r.event, choice: r.choice, warned: !!r.warned, forced: !!r.forced, free: r.free || null, image: r.image || '', night: !!r.night } : null };
     s.phase = 'ended'; s.pending = null;
   }
 
@@ -186,6 +191,13 @@
     if (!c) return false;
     const st = choiceState(s, db, ev, c);
     if (st.locked) return false;
+    // 강제 = 지금 열린 선택지(이것 포함) 가운데 당신이 죽지 않는 것이 0개. 자유 경고 선택 = 경고 글이 있고 다른 열린 선택지가 있던 선택.
+    // 비용을 치르기 전에 잰다(비용이 잠금 상태를 바꾸므로).
+    const open = ev.choices.filter((x) => !choiceState(s, db, ev, x).locked);
+    const forced = !open.some((x) => !killsYou(x));
+    const warnText = !!(c.warn || c.hint || c.taboo);
+    const freeBefore = s.lastFree || null;
+    if (warnText && open.length > 1) s.lastFree = { event: ev.id, choice: c.label, day: s.day };
     const lines = [];
     if (c.cost) for (const [k, v] of Object.entries(c.cost)) FX.setNumber(s, db, k, 'you', -v, lines);
     let roll = null, out = c.out;
@@ -193,7 +205,7 @@
     const roles = rolesFor(s, db, out);
     if (out && out.effects) FX.apply(s, db, out.effects, roles, lines);
     if (out && out.ledger) applyLedger(s, db, out.ledger, roles);
-    s.lastResult = { event: ev.id, choice: c.label, i, warned: !!(c.warn || c.hint || c.taboo), roll, text: (out && out.text) || '', lines, image: (out && out.image) || '', target: roles.target, companion: roles.companion };
+    s.lastResult = { event: ev.id, choice: c.label, i, warned: warnText && !forced, forced, free: forced ? freeBefore : s.lastFree || null, roll, text: (out && out.text) || '', lines, image: (out && out.image) || '', target: roles.target, companion: roles.companion };
     if (ev.once === 0 ? false : (ev.once || ev.kind === 'fixed' || ev.kind === 'trial' || ev.kind === 'ending')) s.done[ev.id] = s.day;   // once:0 이면 되풀이(미룬다 류)
     s.fired[ev.id] = (s.fired[ev.id] || 0) + 1;
     if (!s.phaseSeen.includes(ev.id)) s.phaseSeen.push(ev.id);
@@ -366,7 +378,7 @@
           if (youWere === 'home' && s.people.you.status !== 'home') {        // 밤 사건이 당신을 데려갔다 → 사인은 그 밤 사건 (그 전 선택이 아니다)
             const e = s.nightLog.slice(n0).find((x) => (x.lines || []).some((l) => l.who === 'you' && l.kind !== 'number' && l.kind !== 'permanent'));
             const row = e ? db.nightEvents.find((n) => n.id === e.id) : null;
-            s.lastResult = { event: e ? e.id : 'night', choice: null, i: null, warned: false, night: true, roll: null, text: (row && row.text) || '', lines: e ? e.lines : [], image: '' };
+            s.lastResult = { event: e ? e.id : 'night', choice: null, i: null, warned: false, forced: false, free: s.lastFree || null, night: true, roll: null, text: (row && row.text) || '', lines: e ? e.lines : [], image: '' };
           }
         }
         s.trip = null;
@@ -401,6 +413,7 @@
     for (const k of ['world', 'flags', 'traces', 'axes', 'onceNight', 'done', 'fired', 'stats']) s[k] = Object.assign({}, base[k], raw[k] || {});
     if (!Array.isArray(s.phaseSeen)) s.phaseSeen = [];
     if (!s.critical || typeof s.critical !== 'object' || !Array.isArray(s.critical.ids)) s.critical = null;
+    if (!s.lastFree || typeof s.lastFree !== 'object' || typeof s.lastFree.event !== 'string') s.lastFree = null;
     for (const def of db.numbersList) if (def.owner === 'world' && !Number.isFinite(s.world[def.id])) s.world[def.id] = def.start;
     for (const k of ['nightLog', 'rumors', 'log']) if (!Array.isArray(s[k])) s[k] = [];
     if (!s.ledger || typeof s.ledger !== 'object') s.ledger = { causes: {}, written: [] };
@@ -447,7 +460,6 @@
     const ev = db.events[s.pending.id];
     return ev.choices.map((c, i) => { const outs = [c.out, c.ok, c.fail].filter(Boolean); const axis = {}; let kill = false, killOther = false;
       let gain = 0;
-      const meWho = (w) => !w || w === 'you' || w === 'self' || w === 'actor' || w === 'party' || w === 'all';
       for (const o of outs) { const e = o.effects || {}; for (const [k, v] of Object.entries(e.axis || {})) axis[k] = (axis[k] || 0) + v;
         if (e.kill) for (const kv of FX.list(e.kill)) { if (meWho(kv.who)) kill = true; else killOther = true; }
         for (const [k, v] of Object.entries(e)) { const d = db.numbers[k]; if (d && d.owner === 'world' && d.visible === 'always') for (const x of FX.list(v)) gain += typeof x === 'number' ? x : (x && x.n) || 0; } }

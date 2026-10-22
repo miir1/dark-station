@@ -48,6 +48,20 @@
   const ADULT_AGE = 19;
   const isMinor = (db, id) => { const a = db.people[id] ? Number(db.people[id].age) : 0; return a > 0 && a < ADULT_AGE; };
   const adultOnly = (db, n, list) => (n.kind === 'malice' ? list.filter((p) => !isMinor(db, p.id)) : list);
+  // 리드 결정(10-22): 미성년은 밤 폭력·부상의 피해자가 아니다 — 어느 행이든(kind 무관, 이름 지목·bondOfActor 포함) 밤 사건의 부상(+)·영구 손상은 미성년에게 닿지 않는다.
+  // (예: ascend 의 permanent bondOfActor — 순례·기철의 bond 는 서하.) 회복(injure 음수)·다른 수치는 그대로. kill 은 malice 의 역할 거름이 맡고,
+  // neutral 행의 죽음(굶어 죽음 starve_resident·올라감 ascend)은 디렉터 확인 전이라 그대로 둔다.
+  function shieldMinors(s, db, effects, roles) {
+    if (!effects || (!effects.injure && !effects.permanent)) return effects;
+    const out = Object.assign({}, effects);
+    for (const k of ['injure', 'permanent']) {
+      if (!out[k]) continue;
+      const kept = [];
+      for (const v of FX.list(out[k])) for (const w of FX.resolveWhos(v.who, roles, s)) if (!(isMinor(db, w) && (k === 'permanent' || v.n > 0))) kept.push(Object.assign({}, v, { who: w }));
+      if (kept.length) out[k] = kept; else delete out[k];
+    }
+    return out;
+  }
 
   // 이름으로 지목된 행위자·대상은 바깥 사람(outside)이어도 된다 — 역 밖에서 하는 일(은채가 순찰대를 데려온다, 도현이 밸브를 잠근다).
   // any·조건식 행위자와 무작위 대상은 역에서 자는 사람(home)만.
@@ -110,7 +124,7 @@
     const traceIds = [];
     for (const [o, st] of Object.entries(n.trace || {})) { const id = FX.fillRole(o, roles); if (FX.setTrace(s, db, id, st, s.day, roles.actor)) traceIds.push(id); }
     const lines = [];
-    if (n.effects) FX.apply(s, db, n.effects, roles.actor ? roles : { actor: 'world', target: null }, lines);   // 시계 사건의 수치는 세계 것
+    if (n.effects) { const r = roles.actor ? roles : { actor: 'world', target: null }; FX.apply(s, db, shieldMinors(s, db, n.effects, r), r, lines); }   // 시계 사건의 수치는 세계 것
     let rumor = null;
     if (n.rumor && n.rumor.line) {
       let witness = null;
@@ -162,7 +176,7 @@
     return { total, found, rate: total ? found / total : 0, unknown: total - found };
   }
 
-  const API = { rollNight, discovery, markInspected, markHeard, signs, SIGN_ROLES, maxPerNight, RUMOR_TRUTH, worldCtx, roleCtx, ADULT_AGE, isMinor };
+  const API = { rollNight, discovery, markInspected, markHeard, signs, SIGN_ROLES, maxPerNight, RUMOR_TRUTH, worldCtx, roleCtx, ADULT_AGE, isMinor, shieldMinors };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).night = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

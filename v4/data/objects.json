@@ -24,7 +24,7 @@
     },
     "solid": 1,
     "light": 4,
-    "resetOn": "never"
+    "resetOn": "morning"
   },
   {
     "id": "board",

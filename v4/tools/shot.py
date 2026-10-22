@@ -17,6 +17,10 @@ SHOTS = [('car', '01_car'), ('morning3', '02_morning3'), ('night3', '03_night3')
 BUDGET = {'car': 15000, 'morning3': 120000, 'night3': 150000, 'night5': 300000, 'night8': 450000, 'ending': 700000, 'death': 300000,
           'evening5': 300000, 'reveal': 700000, 'called3': 150000, 'train': 700000}
 STALE = ['04_day5']                              # 이름이 바뀐 옛 캡처 — 전부 찍을 때 지운다
+# 처음부터 봇으로 가면 닿지 않는 지점은 시뮬 봇이 만든 저장에서 시작한다 (v4/tools/fixture.js → 메모리 → /__fixture/<사건 id>.json → ?state=)
+#   train: 열차 결말(d10_train)은 통로가 열리고 주민이 살아 있어야 걸린다 — 캡처 봇(시드 7)은 D10 전에 주민이 다 죽어 all_dead 로 끝난다
+FIXTURE = {'train': 'd10_train'}
+FIXTURES = {}
 
 
 def find_browser():
@@ -44,6 +48,21 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         super().end_headers()
 
+    def do_GET(self):                            # /__fixture/<사건 id>.json = fixture.js 가 만든 저장 (파일로 남기지 않는다)
+        if self.path.startswith('/__fixture/'):
+            fid = self.path.split('/')[-1].split('?')[0].replace('.json', '')
+            body = json.dumps(FIXTURES.get(fid), ensure_ascii=False).encode('utf-8') if fid in FIXTURES else None
+            if body is None:
+                self.send_error(404)
+                return
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json; charset=utf-8')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        super().do_GET()
+
 
 def serve():
     handler = functools.partial(Quiet, directory=ROOT)
@@ -67,6 +86,8 @@ def shot(browser, key, name, log, seed=None):
     os.makedirs(OUT, exist_ok=True)
     out = os.path.join(OUT, name + '.png')
     url = f'http://127.0.0.1:{PORT}/v4/index.html?fast=1&auto={key}&shot={int(time.time())}' + (f'&seed={seed}' if seed else '')
+    if key in FIXTURE:
+        url += f'&state=/__fixture/{FIXTURE[key]}.json' if FIXTURE[key] in FIXTURES else ''
     prof = os.path.join(OUT, '.profile')
     args = [browser, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
             f'--user-data-dir={prof}', '--window-size=1280,720', f'--virtual-time-budget={BUDGET.get(key, 60000)}',
@@ -89,6 +110,14 @@ def main():
     import manifest
     print('manifest', len(manifest.build()))
     browser = find_browser()
+    need = sorted({FIXTURE[k] for k, _ in SHOTS if k in FIXTURE and (not only or k in only)})
+    if need:
+        r = subprocess.run(['node', os.path.join(ROOT, 'v4', 'tools', 'fixture.js'), ','.join(need)], capture_output=True, timeout=600, cwd=ROOT)
+        try:
+            FIXTURES.update(json.loads(decode(r.stdout) or '{}'))
+        except ValueError:
+            pass
+        print('fixture', ', '.join(f'{k}={"OK" if k in FIXTURES else "missing (bot from start)"}' for k in need))
     httpd = serve()
     log = []
     try:

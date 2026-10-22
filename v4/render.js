@@ -83,7 +83,9 @@
   function drawPerson(ctx, id, x, y, frame, hurt, dir, pose) {
     hurt = Math.min(3, hurt || 0);
     const X = Math.round(x * T), Y = Math.round(y * T);
-    if (pose === 'lying') {
+    if (pose === 'lying') {                                                      // 밤: 잠자리(같은 칸의 bed 소품) 위에 머리 + 담요를 겹친다 — 바닥에 쓰러진 몸으로 안 보이게
+      const sl = ART.sleeper && ART.sleeper(id, hurt);
+      if (sl) { ctx.drawImage(sl, X, Y); return Y + 1; }
       const im = ART.pose('lie', id, hurt);
       if (im) { ctx.drawImage(im, X + Math.round((T - im.width) / 2), Y + T - im.height - 3); return Y + T - im.height - 3; }
       const img = ART.person(ART.spriteId(id), 0, hurt, 'down');

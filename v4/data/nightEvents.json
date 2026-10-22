@@ -38,7 +38,8 @@
     "weight": 6,
     "kind": "malice",
     "trace": {
-      "bottle_target": "empty"
+      "bottle_target": "empty",
+      "fire": "wet"
     },
     "rumor": {
       "witness": "",
@@ -90,7 +91,7 @@
     "role": "fear",
     "actor": "needs.fear>=8",
     "target": "",
-    "cond": "fog<=2",
+    "cond": "day>=1",
     "weight": 5,
     "kind": "neutral",
     "trace": {
@@ -112,9 +113,9 @@
   {
     "id": "ascend",
     "role": "ascend",
-    "actor": "flag:stood_stairs_actor",
+    "actor": "flag:stood_stairs_actor & self!=seoha",
     "target": "",
-    "cond": "fog<=1",
+    "cond": "fog>=4",
     "weight": 8,
     "kind": "neutral",
     "trace": {
@@ -132,9 +133,10 @@
         "how": "ascended"
       },
       {
-        "verb": "permanent",
-        "who": "bondOfActor",
-        "loss": "finger"
+        "verb": "number",
+        "id": "fear",
+        "n": 3,
+        "who": "bondOfActor"
       }
     ],
     "oncePerRun": 0
@@ -512,8 +514,8 @@
     "id": "shout_own_name",
     "role": "pair",
     "actor": "seoha",
-    "target": "bond",
-    "cond": "fog>=5 & flag:stood_stairs_target",
+    "target": "flag:stood_stairs_target",
+    "cond": "fog>=4",
     "weight": 9,
     "kind": "hymn",
     "trace": {
@@ -580,7 +582,7 @@
     "role": "pair",
     "actor": "gicheol",
     "target": "seoha",
-    "cond": "day==10 & food<2 & water<2",
+    "cond": "day>=8 & (food<=3 | water<=3)",
     "weight": 10,
     "kind": "hymn",
     "trace": {
@@ -826,7 +828,7 @@
     "role": "pair",
     "actor": "dohyeon",
     "target": "",
-    "cond": "parts<3 & flag:dohyeon_wait",
+    "cond": "day>=6 & flag:dohyeon_wait",
     "weight": 8,
     "kind": "malice",
     "trace": {
@@ -871,6 +873,11 @@
         "verb": "kill",
         "who": "dohyeon",
         "how": "dead"
+      },
+      {
+        "verb": "flag",
+        "id": "dohyeon_gone",
+        "set": 1
       }
     ],
     "oncePerRun": 1
@@ -1141,7 +1148,7 @@
     "role": "kill",
     "actor": "dongha",
     "target": "you",
-    "cond": "grudge>=5 & flag:eyed_you_actor & injury_target>=2 & !flag:dawn_dongha & !flag:dawn_dongha2",
+    "cond": "grudge>=5 & flag:eyed_you_actor & injury_target>=1 & !flag:dawn_dongha & !flag:dawn_dongha2",
     "weight": 8,
     "kind": "malice",
     "trace": {

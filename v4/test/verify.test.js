@@ -80,6 +80,29 @@ test('밤 악의: any 행위자·randomSleeper·mostInjured·조건식 대상에
   assert.strictEqual(E.ADULT_AGE, 19);
 });
 
+test('밤 사건의 부상(+)·영구 손상은 어느 행이든 미성년에게 닿지 않는다(bondOfActor·이름 지목 포함), 회복은 닿는다', () => {
+  const rows = (t) => {
+    t.nightEvents = [
+      { id: 'n_bond', role: 'ascend', actor: 'soonrye', target: '-', cond: 'day==0', weight: 10, kind: 'neutral', effects: { permanent: { who: 'bondOfActor', kind: 'finger' }, fear: { who: 'actor', n: 1 } }, oncePerRun: 1 },
+      { id: 'n_named', role: 'pair', actor: 'mari', target: 'seoha', cond: 'day==0', weight: 10, kind: 'hymn', effects: { injure: [{ who: 'target', n: 1 }, { who: 'actor', n: 1 }] }, oncePerRun: 1 },
+      { id: 'n_heal', role: 'pair', actor: 'gicheol', target: '-', cond: 'day==1', weight: 10, kind: 'hymn', effects: { injure: { who: 'seoha', n: -1 } }, oncePerRun: 1 }];
+    t.numbers = t.numbers.filter((r) => r.id !== 'max_per_night').concat([{ id: 'max_per_night', owner: 'world', min: 0, max: 9, start: 5, perDay: 0, visible: 'never' }]);
+  };
+  const { db, s } = setup(rows, 2);
+  toPhase(s, db, 1, 'trace');
+  const ids = s.nightLog.map((e) => e.id);
+  assert.ok(ids.includes('n_bond') && ids.includes('n_named'), ids.join(','));
+  assert.deepStrictEqual(Object.keys(s.people.seoha.permanent), [], '순례의 bond 서하는 손가락을 잃지 않는다');
+  assert.strictEqual(s.people.seoha.n.injury || 0, 0, '이름으로 지목돼도 밤 부상은 서하에게 닿지 않는다');
+  assert.strictEqual(s.people.mari.n.injury, 1, '같은 행의 어른 부상은 그대로');
+  assert.strictEqual(s.people.soonrye.n.fear, 5, '다른 수치는 그대로');
+  s.people.seoha.n.injury = 2;
+  toPhase(s, db, 2, 'trace');
+  assert.strictEqual(s.people.seoha.n.injury, 1, '회복(음수)은 닿는다');
+  const N = require('../engine/night.js');
+  assert.deepStrictEqual(N.shieldMinors(s, db, { food: -1 }, { actor: 'mari' }), { food: -1 }, '부상·손상이 없으면 그대로');
+});
+
 // ── 3. 봇 점수: 판정 없는 경고에 모험 +1 없음 · 아플 때 약은 비용 감점 없음 · 죽음을 말하는 경고는 피한다 ──
 const meta = (o) => Object.assign({ label: 'x', locked: false, chance: null, warn: '', hint: '', cost: null, taboo: false, axis: {}, killYou: false, check: false, gain: 0 }, o);
 test('봇 점수: 죽음을 바로 말하는 경고(판정 없음)는 조심형·모험 모두 대안이 있으면 고르지 않는다', () => {
@@ -107,31 +130,55 @@ test('봇 점수: 모험은 판정 없는 경고에 가점이 없고, 아플 때
   assert.ok(B.scoreChoice(med, risky, 'flood_sick', { kind: 'trial', unwell: true }) > B.scoreChoice(hold, risky, 'flood_sick', { kind: 'trial', unwell: true }), '모험: 약이 있으면 버티지 않는다');
 });
 
-// ── 4. 강제 사망: 그 순간 당신이 죽지 않는 열린 선택지가 0개 ──
-test('집계: 강제 사망과 그 전 마지막 자유 경고 선택을 남긴다', () => {
+// ── 4. 강제 사망: 그 순간 당신이 죽지 않는 열린 선택지가 0개 — 엔진이 사인 기록(ended.cause)에 남기고, 실질 경고로 세지 않는다 ──
+test('사인 기록: 선택지 하나뿐인 죽음은 강제 — warned 거짓, 갈림길은 그 전 자유 경고 선택', () => {
   const t = rawTables();
   t.events.push(ev('x_fork', 'trial', 'day==0 & phase==evening', [pass('간다', { effects: { flag: { went: true } } }, { warn: '돌아오기 어렵다' }), pass('안 간다', {})]));
   t.events.push(ev('x_end', 'trial', 'day==0 & phase==night & flag:went', [pass('눈을 감는다', { effects: { kill: { who: 'you' } } }, { warn: '끝이다' })]));
   const db = T.load(t);
   const s = E.newGame(db, 3);
-  const trace = { choices: 0, trips: 0, known: {}, lastFree: null, death: null };
   E.dispatch(s, { type: 'choose', i: 1 }, db);
   toPhase(s, db, 0, 'evening');
   assert.strictEqual(s.pending && s.pending.id, 'x_fork');
-  B.noteChoice(s, trace, 'x_fork', E.choiceMeta(s, db), 0, true);
   E.dispatch(s, { type: 'choose', i: 0 }, db);
+  assert.deepStrictEqual(s.lastFree, { event: 'x_fork', choice: '간다', day: 0 });
   toPhase(s, db, 0, 'night');
   assert.strictEqual(s.pending && s.pending.id, 'x_end');
-  const m = E.choiceMeta(s, db);
   E.dispatch(s, { type: 'choose', i: 0 }, db);
-  B.noteChoice(s, trace, 'x_end', m, 0, true);
-  assert.deepStrictEqual({ ev: trace.death.event, forced: trace.death.forced, free: trace.death.lastFree.event }, { ev: 'x_end', forced: true, free: 'x_fork' });
-  const r = S.measure(db, s, trace);
-  assert.strictEqual(r.forced, true);
-  assert.strictEqual(r.freeBefore, 'x_fork/간다');
+  const c = s.ended.cause;
+  assert.deepStrictEqual({ ev: c.event, warned: c.warned, forced: c.forced, free: c.free && c.free.event }, { ev: 'x_end', warned: false, forced: true, free: 'x_fork' }, '경고 글("끝이다")이 있어도 고를 것이 없었으니 경고 있음이 아니다');
+  assert.deepStrictEqual(s.lastFree, { event: 'x_fork', choice: '간다', day: 0 }, '하나뿐인 선택은 자유 선택이 아니다');
+  const r = S.measure(db, s, { trips: 0 });
+  assert.deepStrictEqual([r.forced, r.warned, r.warnText, r.freeBefore], [true, false, true, 'x_fork/간다']);
   const a = S.aggregate(db, [r]);
-  assert.strictEqual(a.forced, 1); assert.strictEqual(a.forcedRate, 100); assert.strictEqual(a.forcedTraced, 1);
+  assert.deepStrictEqual([a.forced, a.forcedRate, a.forcedTraced, a.warnedRate, a.warnTextRate, a.unwarned], [1, 100, 1, 0, 100, 1]);
   assert.deepStrictEqual(Object.keys(a.byForced), ['x_end ← x_fork/간다']);
+});
+test('사인 기록: 다른 길이 모두 잠긴 주사위(약 0)는 강제, 약이 있으면 자유 선택 — 저장 왕복에도 lastFree 가 남는다', () => {
+  const mk = (meds) => {
+    const t = rawTables();
+    t.events.push(ev('x_fever', 'trial', 'day==0 & phase==night', [
+      { label: '약을 쓴다', cost: { meds: 1 }, out: { text: '' } },
+      { label: '버틴다', warn: '아침이 안 올 수 있다', check: { skill: 'str', base: 0 }, ok: { text: '' }, fail: { text: '', effects: { kill: { who: 'you' } } } }]));
+    const db = T.load(t);
+    const s = E.newGame(db, 5);
+    E.dispatch(s, { type: 'choose', i: 1 }, db);
+    toPhase(s, db, 0, 'night');
+    s.world.meds = meds;
+    assert.strictEqual(s.pending && s.pending.id, 'x_fever');
+    E.dispatch(s, { type: 'choose', i: 1 }, db);
+    return s;
+  };
+  const a = mk(0);
+  assert.strictEqual(a.people.you.status, 'dead');
+  assert.deepStrictEqual([a.ended.cause.forced, a.ended.cause.warned], [true, false]);
+  const b = mk(1);
+  assert.deepStrictEqual([b.ended.cause.forced, b.ended.cause.warned, b.ended.cause.free.event], [false, true, 'x_fever'], '약이 있었는데 버텼다 = 경고가 보인 결정');
+  const t2 = rawTables(); const db2 = T.load(t2); const s2 = E.newGame(db2, 1);
+  s2.lastFree = { event: 'x', choice: 'y', day: 1 };
+  assert.deepStrictEqual(E.normalize(JSON.parse(JSON.stringify(s2)), db2).lastFree, { event: 'x', choice: 'y', day: 1 });
+  const old = JSON.parse(JSON.stringify(s2)); delete old.lastFree;
+  assert.strictEqual(E.normalize(old, db2).lastFree, null, '옛 저장은 빈 값');
 });
 
 // ── 5. 시드 블록 판정: 모든 블록 통과·±5%p 밖 = ✓, 블록마다 다르거나 ±5%p 안 = △, 모두 미달 = ✗ ──

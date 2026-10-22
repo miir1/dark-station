@@ -4,6 +4,12 @@ const N = require('../engine/night.js');
 const pct = (n, d) => (d ? Math.round((1000 * n) / d) / 10 : 0);
 const avg = (a) => (a.length ? Math.round((100 * a.reduce((x, y) => x + y, 0)) / a.length) / 100 : 0);
 
+// 사인 선택지에 경고 글(warn·hint·taboo)이 있었나 — 옛 '형식' 기준(비교 열)
+function lastHadWarnText(db, cause) {
+  const ev = cause.choice != null && !cause.night ? db.events[cause.event] : null; if (!ev) return false;   // 밤 사건·새벽 위독은 선택이 아니다
+  const c = ev.choices.find((x) => x.label === cause.choice);
+  return !!(c && (c.warn || c.hint || c.taboo));
+}
 // 한 판에서 뽑는 값
 function measure(db, s, trace) {
   const you = s.people.you;
@@ -24,10 +30,13 @@ function measure(db, s, trace) {
     allDead, identity: s.ended ? s.ended.identity : null, nights: resident.length, clock: s.nightLog.length - resident.length, malice, hymn, found: disc.found, unknown: disc.unknown, hymnFound,
     train: !!(s.ended && s.ended.why === 'd10_train'), survived: !!(s.ended && s.ended.why !== 'you_gone' && !dead),
     explicit, decisionsPerDay: s.stats.decisions / days, deadRows: deadRows.length, blank, trips: trace.trips, nightsRolled: s.stats.nights,
-    // 강제 사망 = 선택으로 끝났는데 그 순간 당신 kill 이 없는 열린 선택지가 0개(선택지 하나뿐인 죽음, 다른 길이 모두 잠긴 주사위).
-    // freeBefore = 그 죽음 전 마지막 자유 경고 선택(대안이 있었는데 고른 경고 선택) "사건/선택" — 강제 사망의 실제 갈림길
-    forced: dead && !!(trace.death && trace.death.forced),
-    freeBefore: dead && trace.death && trace.death.lastFree ? `${trace.death.lastFree.event}/${trace.death.lastFree.choice}` : null,
+    // 엔진의 사인 기록(s.ended.cause)에서: 강제 사망 = 그 순간 당신이 죽지 않는 열린 선택지가 0개(선택지 하나뿐인 죽음, 다른 길이 모두 잠긴 주사위).
+    // freeBefore = 갈림길 — 강제면 그 전 마지막 자유 경고 선택(대안이 있었는데 고른 경고 선택), 아니면 마지막 자유 경고 선택 "사건/선택"
+    // warned = 실질 경고(경고 글 있고 강제 아님, 10-22 리드 결정) · warnText = 마지막 선택지에 경고 글이 있었는지(옛 형식 기준, 비교용)
+    forced: dead && !!(s.ended && s.ended.cause && s.ended.cause.forced),
+    freeBefore: dead && s.ended && s.ended.cause && s.ended.cause.free ? `${s.ended.cause.free.event}/${s.ended.cause.free.choice}` : null,
+    warned: dead && !!(s.ended && s.ended.cause && s.ended.cause.warned),
+    warnText: dead && !!(s.ended && s.ended.cause && lastHadWarnText(db, s.ended.cause)),
   };
 }
 
@@ -37,16 +46,17 @@ function aggregate(db, runs) {
   const deaths = runs.filter((r) => r.dead);
   const byCause = {};
   for (const r of deaths) { const k = r.cause ? r.cause.event : (r.why === 'all_dead' ? '전멸' : r.why); byCause[k] = (byCause[k] || 0) + 1; }
-  const warned = deaths.filter((r) => r.cause && r.cause.warned).length;
+  const warned = deaths.filter((r) => r.warned).length;                        // 실질 경고(강제 사망은 들지 않는다)
+  const warnText = deaths.filter((r) => r.warnText).length;                    // 형식 기준(옛 줄, 비교용)
   const forced = deaths.filter((r) => r.forced);
   const byForced = {};   // 강제 사망: "죽은 사건 ← 앞선 자유 경고 선택"
   for (const r of forced) { const k = `${r.cause ? r.cause.event : r.why} ← ${r.freeBefore || '(앞선 자유 선택 없음)'}`; byForced[k] = (byForced[k] || 0) + 1; }
-  const unwarned = deaths.filter((r) => !(r.cause && r.cause.warned)).length;   // 경고 없는 죽음(사인 없음 포함)
+  const unwarned = deaths.length - warned;   // 실질 경고 없는 죽음 = 강제 사망 + 경고 글 없는 선택 + 밤 사건 + 새벽 위독 + 사인 없음
   const ids = {};
   for (const r of runs) if (r.identity) ids[r.identity] = (ids[r.identity] || 0) + 1;
   const totalNights = runs.reduce((a, r) => a + r.nights, 0);
   return {
-    n, deathRate: pct(deaths.length, n), warnedRate: pct(warned, deaths.length), unwarned, deaths: deaths.length, starveDeaths: deaths.filter((r) => r.cause && r.cause.event === 'starve_you').length, byCause,
+    n, deathRate: pct(deaths.length, n), warnedRate: pct(warned, deaths.length), warnTextRate: pct(warnText, deaths.length), unwarned, deaths: deaths.length, starveDeaths: deaths.filter((r) => r.cause && r.cause.event === 'starve_you').length, byCause,
     allDead: pct(runs.filter((r) => r.allDead).length, n),
     nights: avg(runs.map((r) => r.nights)), malice: avg(runs.map((r) => r.malice)), hymn: avg(runs.map((r) => r.hymn)),
     discovery: pct(runs.reduce((a, r) => a + r.found, 0), totalNights),
@@ -83,7 +93,7 @@ function gate(aggs, candidates, careful) {
   const idOk = Object.values(idAll).filter((v) => v >= 7).length;
   const rows = [
     ['당신 사망(올라감 포함)', '≥ 50%', `${b.deathRate}%`, b.deathRate >= 50, nearAny([[b.deathRate, 50]])],
-    ['사망 중 경고 있던 선택', '100%', `${b.warnedRate}%`, b.warnedRate === 100 || b.deathRate === 0, false],
+    ['사망 중 경고 있던 선택 (실질: 강제 사망은 경고 없음)', '100%', `${b.warnedRate}% (형식 기준 ${b.warnTextRate}%)`, b.warnedRate === 100 || b.deathRate === 0, nearAny([[b.warnedRate, 100]])],
     ['강제 사망 비율 (전 정책 합산)', '≤ 20% [제안]', `${forcedAll}% (${sum('forced')}/${sum('deaths')}, 그중 앞선 자유 경고 선택 있음 ${sum('forcedTraced')})`, forcedAll <= 20, nearAny([[forcedAll, 20]])],
     ['  강제 사망 중 앞선 자유 경고 선택 없음 (전 정책)', '0 판', `${sum('forced') - sum('forcedTraced')} 판`, sum('forced') - sum('forcedTraced') === 0, false],
     ['조심형 봇 사망 (' +(care.join('·') || '없음') + ' 합산)', '측정', care.length ? `${careRate}% (${careD}/${careN}), 그중 강제 ${careForced}%` : '-', true, false],
@@ -105,7 +115,7 @@ function gate(aggs, candidates, careful) {
     ['이기적 봇 사망 (이기심의 값)', '> 0%', aggs.selfish ? `${aggs.selfish.deathRate}%` : '-', !!aggs.selfish && aggs.selfish.deathRate > 0, false],
     ['헌신 봇 생존', '측정 (> 0%)', aggs.devoted ? `${aggs.devoted.survived}%` : '-', !!aggs.devoted && aggs.devoted.survived > 0, false],
     ['사망 원인 중 굶주림 (전 정책 합산)', '< 50%', `${starveAll}% (${sum('starveDeaths')}/${sum('deaths')})`, starveAll < 50, nearAny([[starveAll, 50]])],
-    ['경고 없는 사망 (전 정책 합산)', '0 판', `${sum('unwarned')} 판`, sum('unwarned') === 0, false],
+    ['경고 없는 사망 (전 정책 합산, 강제 사망 포함)', '0 판', `${sum('unwarned')} 판 (그중 강제 ${sum('forced')})`, sum('unwarned') === 0, false],
   ];
   return { rows, idAll, thr };
 }

@@ -119,7 +119,7 @@
 ## 4. 봇 합격선 표 (조사 정책 부지런·보통·게으름 × 정체 정책 4~6 × 200판)
 | 항목 | 합격선 | 재는 정책 | 근거 |
 |---|---|---|---|
-| 당신 사망(올라감 포함) | **≥ 50%**, 상한 없음 | 보통 | R2 보정. 같이 검사: 사망 원인 사건의 선택지에 hint/warn 100% — "운이 아니라 결정" |
+| 당신 사망(올라감 포함) | **≥ 50%**, 상한 없음 | 보통 | R2 보정. 같이 검사: 사망 중 **실질 경고** 있던 선택 100% — "운이 아니라 결정". 실질 경고 = 고른 선택지에 hint/warn/taboo 가 있고 **강제가 아니다**(10-22 리드 결정: 선택지 하나뿐인 죽음·다른 길이 모두 잠긴 주사위는 경고 글이 있어도 '경고 있음'으로 세지 않는다). 밤 사건·새벽 위독 사망도 경고 없음 |
 | 전멸 · 사망 중 전투 원인 | **≤ 25%** [제안] · ≤ 50% | 보통 | 사망 ≥50%와 양립하려면 "당신은 죽어도 명부는 남는다"가 대부분이어야 |
 | 밤 사건 수 | ≥ 6 / 판 (malice ≥ 2, hymn ≥ 1) | 전 정책 | 쟁점 5 |
 | 발견율(흔적·소문 중 하나라도) | 보통 50~70%, 게으름 ≥ 40%, 부지런은 상한 보고 | 보통 기준 | 쟁점 5 |
@@ -128,7 +128,11 @@
 | 하루 결정 수 · 같은 카드 반복 | ≥ 5 · ≤ 20% / 판 | 보통 | 쟁점 6 · 11_design_v2 |
 | 적나라 장면 노출 | explicit=1 사건 ≥ 7 / 판 | 보통 | R3 매일 하나꼴 |
 | 결정성·저장 왕복 | 100% | 전 정책 | 기존 테스트 유지 |
+| 강제 사망 비율 (10-22 추가) | ≤ 20% [제안] · 앞선 자유 경고 선택 없는 강제 사망 0판 | 전 정책 합산 | 옛 "경고 있던 선택 100%"는 마지막 선택에 경고 글이 있는지만 봐서 선택지 하나뿐인 죽음·나머지가 잠긴 주사위도 통과했다. 강제 = 그 순간 당신이 죽지 않는 열린 선택지 0개. 엔진이 사인 기록(`ended.cause.forced`·`free`)에 그 전 마지막 자유 경고 선택(대안이 있었는데 고른 경고 선택)을 함께 남긴다 — 강제 사망의 실제 갈림길(진단용 줄) |
+| 조심형 봇 사망 (10-22 추가) | 측정 | balanced·selfish·silent·lazy·diligent 합산 | 경고 글이 죽음을 바로 말하는 선택을 피하는 사람의 사망률 — "봇의 버릇"이 아니라 게임이 죽이는 정도 |
 기준값은 `sim/baseline.json`에 저장, ±10% 밖이면 경고. 보고서 1장(이 표에 실측 열 추가)이 작업 6의 결과물.
+**판정 규칙 (10-22 추가)**: 합격선은 서로 다른 시드 블록 둘 이상(기본 시드 1~N 과 1001~1000+N, `run.js --blocks=` · `--seed0=`)에서 따로 잰다. 모든 블록 통과이고 %로 재는 줄의 실측이 합격선에서 5%p 밖이면 ✓, 모든 블록 미달이면 ✗, 그 밖(블록마다 다름 · ±5%p 안)은 △ — ✓로 확정하지 않는다. 정책별 표는 블록을 합친 값, 블록별 생존·사망·열차·강제 %는 따로 싣는다.
+**봇 선택 규칙 (10-22 추가, 화면 정보만 — E6)**: 판정 없는 선택의 경고 글이 죽음을 바로 말하면(끝이다·죽는다·올라간다·못 일어난다·센다) 대안이 있는 한 고르지 않는다(헌신·부르는 사람은 축이 세게 끌면 고를 수 있다). 몸이 성치 않을 때(부상 ≥1, 제 손으로 고른 병) 약만 드는 회복 선택은 비용 감점이 없다. 모험 봇은 판정(%) 있는 위험만 가점, 판정 없는 경고에는 가점 없음.
 
 ## 5. 일정 재어림 (R1: 수직 슬라이스 = 열흘 전체, D3·D5는 점검점)
 | 작업 | 범위 | 어림 | 주 |
@@ -147,7 +151,7 @@
 | 단계 표 `hook` 열 | 선택. `rollNight` = 그 단계를 떠날 때 밤 사건을 굴린다. 단계 이름은 조건식에서 `phase==이름` 으로 쓴다 |
 | effects 두 꼴 | 정식 = 객체 `{food:-1, hunger:{who:'actor', n:-3}, flag:{x:true}, trace:{crate_food:'open'}, axis:{share:1}, injure:{who,n}, kill:{who}, permanent:{who, kind}}`. 배열 `[{verb:'number', id, n, who}, {verb:'flag', id, set}, {verb:'trace', id, state}, {verb:'axis', id, n}, {verb:'injure', who, n}, {verb:'kill', who}, {verb:'permanent', who, loss}]` 도 받으며 **로더가 객체 꼴로 바꾼다** |
 | 자리표시 | 흔적 물건 id 의 `{actor}`/`{target}` 또는 `_actor`/`_target` 접미 → 사람 id 로 치환 (`bowl_actor` → `bowl_gicheol`). 그런 물건이 objects 에 하나는 있어야 한다 |
-| 밤 사건 대상 키워드 | `bond` · `any`/`randomSleeper`/`nearestSleeper`/`farthestSleeper`(자리 정보가 없어 전부 무작위) · `mostInjured` · 사람 id · 조건식 |
+| 밤 사건 대상 키워드 | `bond` · `any`/`randomSleeper`/`nearestSleeper`/`farthestSleeper`(자리 정보가 없어 전부 무작위) · `mostInjured` · 사람 id · 조건식. **kind malice 행에서는 무작위·mostInjured·조건식 대상과 any·조건식 행위자에 미성년(people.age < 19)이 들지 않는다**(10-22, 디렉터 결정 "미성년은 잔혹 장면 프레임 밖"). 이름 지목·`bond`·`you` 와 neutral·hymn 행은 거르지 않는다. **그리고 어느 행이든(kind 무관, 이름 지목·`bondOfActor` 포함) 밤 사건의 부상(`injure` n>0)·영구 손상(`permanent`)은 미성년에게 닿지 않는다**(10-22 리드 결정 "미성년은 밤 폭력·부상의 피해자가 아니다"; 예: `ascend` 의 permanent bondOfActor — 순례·기철의 bond 가 서하). 회복(injure 음수)·다른 수치는 그대로. neutral 행의 죽음(`starve_resident` 굶어 죽음·`ascend` 올라감)은 디렉터 확인 전이라 거르지 않는다 |
 | 밤 사건 금지 어휘 | `you_*`·`pos*`·`map`·`inspect:`·`talk:` — 당신의 위치·조작은 조건이 될 수 없다(표 검사 오류) |
 | 정체 규칙 | `rule` 에는 **축 이름만**(몫·손·이름). 세계 수치·깃발 금지(표 검사 오류). 후보 키는 `id`(`candidate` 도 받음), 표 머리의 `thresholds`·`note` 는 메모로 무시 |
 | 추가 약속 (10-21 늦게) | `injure.n` 은 ±1~3(음수 = 부상 회복) · `people.addressYou.default` = 정체가 안 기운 때의 기본 호칭 · 조건식에 빈 글 비교 `x==''` / `x!=''`(없는 값도 빈 글, `==`/`!=` 만) · `rumor.line: ""` = 소문 없음 |
@@ -165,7 +169,7 @@
 | 결말 열 (새, kind ending 전용) | `board: 1` = 이 결말이 걸려 있는 동안 `board` 동작이 열린다(단계 actions 에 없어도), 결말에서 `board_<id>` 깃발 주민은 `boarded`. `endStatus: walked` = 결말 뒤 역에 남은 산 사람(당신 포함)의 status. 없으면 그대로(명부 '남았다'). 다른 kind 에 쓰면 표 검사 오류 |
 | 명부 status `walked` | '걸어 나갔다'. ledger rows·format·저장 정규화가 안다 |
 | 결과의 명부 줄 `ledger` | `{who, status, day, cause, text}` 또는 그 **목록**, 또는 글 한 줄(당신의 사실 줄). `status` boarded/stayed/walked → 아직 역에 있는 그 사람의 status 를 바꾼다(dead/ascended 는 kill 효과가 정하고 여기선 기록만). `day` "{day}"·정수. `cause` 글 → 사인 칸, `"물건:상태"` → 그 물건의 ledgerFact 줄. `text` 가 있을 때만 사실 줄(written)에 쌓는다 — text 없는 행은 더 이상 쌓이지 않는다. 표 검사: status 값·`물건:상태` 참조·who |
-| 결말 사인 `ended.cause` | 당신이 죽었거나 올라갔거나(결말 사건 안 포함) 떠났으면 `{event, choice, warned, image, night}`. 밤 사건이 당신을 데려가면 `event` = 그 밤 사건 id, `choice: null`, `warned: false`, `night: true` |
+| 결말 사인 `ended.cause` | 당신이 죽었거나 올라갔거나(결말 사건 안 포함) 떠났으면 `{event, choice, warned, forced, free, image, night}`. **warned = 실질 경고**(고른 선택지에 warn·hint·taboo 가 있고 강제가 아님, 10-22) · **forced** = 그 순간 당신이 죽지 않는 열린 선택지가 0개(이 선택 포함; 결과 out·ok·fail 중 하나라도 kill 이 당신에게 닿으면 '죽을 수 있는' 선택) · **free** = 갈림길 `{event, choice, day}` 또는 null — 강제면 그 전 마지막 자유 경고 선택, 아니면 이 선택까지의 마지막 자유 경고 선택(자유 경고 선택 = 경고 글이 있고 다른 열린 선택지가 있던 선택; 상태 칸 `s.lastFree`). 밤 사건이 당신을 데려가면 `event` = 그 밤 사건 id, `choice: null`, `warned: false`, `forced: false`, `night: true`. 새벽 위독 사망은 `event: injury_untreated`, `warned: false` |
 | 읽는 사람 `ended.readerId` | `'you'`·`'conductor'`·주민 id·`null`. 주민 = 살아 있는 주민 중 people.age 가 가장 많은 사람(역에 남은 사람 먼저, 없으면 탄 사람). `E.readerId(s, db)` 로도 |
 | 사건 연쇄 | `choose` 뒤 끝나지 않았으면 같은 단계의 사건을 다시 찾는다. 이미 끝난 once 사건과 **이번 단계에 이미 고른 사건**(`s.phaseSeen`)은 빠진다 — `once:0`(되풀이) 사건도 한 단계에 한 번. `move` 도 사건을 깨운다(지도 조건 `map==x`) |
 | 집계 `s.fired` | 고른 사건 id → 횟수. once:0 사건도 센다(explicit/판은 이것으로) |
@@ -174,6 +178,6 @@
 | 몸 신호 `view.people[].signs` | `{sleepless, starving, ateFlesh}`(역에 없는 사람 null). 문턱은 밤 사건표 actor 조건식: role `fear`·`ascend` 행 → sleepless(당신 제외), role `steal`·`starve` 행 → starving(`any`·이름 지목 행 제외). ateFlesh = 깃발 `ate_flesh_<id>` 또는 `<id>_ate…`. `E.signs(s, db)` 로도 |
 | 원정 `trip` | 낮 단계에 한 번(지역 하나). 첫 동작은 1층, 그다음은 **바로 아래층만**, 층마다 한 번. 편성: numbers `trip_party`(동행 수, 행이 없으면 0 = 혼자). `with:[id]` 로 고르거나 안 주면 시드 난수. 동행 = 역에 있는 주민 중 위독 아님·미성년 아님. `view.trip = {region, floor, floors, party}` |
 | 바깥 사람 | 밤 사건 actor/target 에 **이름으로 지목된** 바깥 사람(outside)은 역 밖에서 행동·대상이 될 수 있다(any·조건식·무작위는 역의 주민만). kill 은 바깥 사람에게도 듣는다(status dead → 명부에 나온다) |
-| 위독 판정 | 아침 사망 = injury 가 numbers 표 최대값이고 치료 깃발이 없고 **밤 굴림 직전에 이미 위독이던** 사람(`s.critical`). 밤 사건으로 막 위독이 된 사람은 하루를 받는다(그날 경고 사건·치료 기회) |
+| 위독 판정 | 아침 사망 = injury 가 numbers 표 최대값이고 치료 깃발이 없고 **그날 마지막 치료 기회(actions 에 `treat` 가 있는 단계)를 떠날 때 이미 위독이던** 사람(`s.critical`). 그 뒤 — 밤 단계의 고정·시험 사건(예: d6_shutter)이나 밤 굴림 — 에 막 위독이 된 사람은 하루를 받는다(다음 날 경고 사건·치료 기회). 표에 치료 단계가 없으면 밤 굴림 직전에 찍는다 (10-22 수정: 전에는 늘 밤 굴림 직전이라 밤 단계 사건의 부상은 유예가 없었다) |
 | 밤 소문 목격자 | `rumor.witness: target` 허용(대상이 역의 주민일 때) |
-| 저장 | 새 칸 `fired`·`phaseSeen`·`critical`·`trip.floors`·`trip.party` 는 정규화가 빈 값으로 채운다(SAVE_V 그대로 1) |
+| 저장 | 새 칸 `fired`·`phaseSeen`·`critical`·`trip.floors`·`trip.party`·`lastFree` 는 정규화가 빈 값으로 채운다(SAVE_V 그대로 1) |

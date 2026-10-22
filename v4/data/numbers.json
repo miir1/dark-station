@@ -6,7 +6,8 @@
     "max": 16,
     "start": 6,
     "perDay": 0,
-    "visible": "always"
+    "visible": "always",
+    "name": "식량"
   },
   {
     "id": "water",
@@ -15,7 +16,8 @@
     "max": 16,
     "start": 6,
     "perDay": 0,
-    "visible": "always"
+    "visible": "always",
+    "name": "물"
   },
   {
     "id": "fuel",
@@ -24,7 +26,8 @@
     "max": 12,
     "start": 8,
     "perDay": -1,
-    "visible": "always"
+    "visible": "always",
+    "name": "땔감"
   },
   {
     "id": "fog",
@@ -60,7 +63,8 @@
     "max": 18,
     "start": 4,
     "perDay": 0,
-    "visible": "inspect"
+    "visible": "inspect",
+    "name": "부품"
   },
   {
     "id": "meds",
@@ -69,7 +73,8 @@
     "max": 6,
     "start": 1,
     "perDay": 0,
-    "visible": "inspect"
+    "visible": "inspect",
+    "name": "약"
   },
   {
     "id": "hunger",
@@ -240,6 +245,24 @@
     "max": 10,
     "start": 0,
     "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "trip_party",
+    "owner": "world",
+    "min": 0,
+    "max": 3,
+    "start": 2,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "flood_days",
+    "owner": "person",
+    "min": 0,
+    "max": 9,
+    "start": 0,
+    "perDay": 1,
     "visible": "never"
   }
 ]

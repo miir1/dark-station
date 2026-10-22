@@ -159,6 +159,31 @@
       return c;
     });
   }
+  // 잠든 사람 32×32: 잠자리 그림(props/bed, 위에서 본 깔개 — 위쪽이 베개) 위에 겹쳐 그린다.
+  // 머리 = 그 사람 걷기 그림(아래 보기)의 머리를 그대로 잘라 베개 자리에, 몸 = 옷 색 담요가 턱 밑부터 덮는다.
+  // 옆으로 누운 실루엣(poses/lie)을 잠자리 옆에 두면 바닥에 쓰러진 시체처럼 보여서 바꿨다.
+  function sleeper(id, hurt) {
+    const k = spriteId(id);
+    return once('sleep:' + k + ':' + (hurt || 0), () => {
+      const c = blank(T, T); const g = c.getContext('2d');
+      g.imageSmoothingEnabled = false;
+      g.drawImage(person(k, 0, 0, 'down'), 8, 0, 16, 13, 8, -1, 16, 13);              // 머리 (걷기 그림 머리 줄 0~12)
+      const [r0, g0, b0] = tintOf(k);
+      const col = (m, a) => `rgba(${Math.round(Math.min(255, r0 * m))},${Math.round(Math.min(255, g0 * m))},${Math.round(Math.min(255, b0 * m))},${a == null ? 1 : a})`;
+      const blanket = (x, y, w, h) => { g.beginPath(); g.moveTo(x + 3, y); g.lineTo(x + w - 3, y); g.quadraticCurveTo(x + w, y, x + w, y + 3); g.lineTo(x + w, y + h - 3); g.quadraticCurveTo(x + w, y + h, x + w - 3, y + h); g.lineTo(x + 3, y + h); g.quadraticCurveTo(x, y + h, x, y + h - 3); g.lineTo(x, y + 3); g.quadraticCurveTo(x, y, x + 3, y); g.closePath(); };
+      blanket(4, 10, 24, 19); g.fillStyle = col(0.42); g.fill();                         // 담요 테두리(그늘)
+      blanket(5, 10, 22, 18); g.fillStyle = col(0.78); g.fill();                         // 담요
+      g.fillStyle = col(0.95); g.fillRect(10, 13, 12, 14);                                // 몸이 솟은 자리 (어깨~발)
+      g.fillStyle = col(1.08); g.fillRect(12, 14, 7, 12);
+      g.fillStyle = col(1.25); g.fillRect(5, 10, 22, 2);                                 // 접힌 윗단
+      g.fillStyle = col(0.55); g.fillRect(5, 12, 22, 1);
+      let s = 11 + k.length * 7; const R = () => { s = (s * 1103515245 + 12345) >>> 0; return (s >>> 8) / 16777216; };
+      g.fillStyle = col(0.6);
+      for (let i = 0; i < 3; i++) { const y = 16 + Math.floor(R() * 10), x = 6 + Math.floor(R() * 6); g.fillRect(x, y, 4 + Math.floor(R() * 5), 1); g.fillRect(x + 12 + Math.floor(R() * 3), y + 1, 3 + Math.floor(R() * 4), 1); }
+      bloodOver(g, k, hurt, T, T);
+      return c;
+    });
+  }
   // 머리 위 반응 아이콘 16×16: 'eyes'(안 잠) · 'mouth'(입이 움직인다). 없으면 null
   const react = (kind) => (IMG['v4/poses/' + kind] ? once('re:' + kind, () => toCanvas(IMG['v4/poses/' + kind])) : null);
 
@@ -201,5 +226,5 @@
   const identSrc = (cand) => { const f = IDENT_CG[cand]; if (!f) return ''; return src(IMG['v4/cg/' + f] ? 'v4/cg/' + f : IMG['cg/' + f] ? 'cg/' + f : ''); };
   const iconSrc = (name) => src('icons/' + name);
 
-  window.ART = { T, PH, ready, has, src, tile, prop, hasProp, trace, hasTrace, person, pose, react, spriteId, portraitSrc, cgSrc, cgKey, deathSrc, identSrc, iconSrc, placeholder, hashColor, IMG };
+  window.ART = { T, PH, ready, has, src, tile, prop, hasProp, trace, hasTrace, person, pose, sleeper, react, spriteId, portraitSrc, cgSrc, cgKey, deathSrc, identSrc, iconSrc, placeholder, hashColor, IMG };
 })();

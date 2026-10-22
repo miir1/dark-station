@@ -100,7 +100,7 @@
       "event": "gicheol_parts"
     },
     "hymn": {
-      "cond": "day==10",
+      "cond": "day>=8 & (food<=3 | water<=3)",
       "event": "give_seat"
     },
     "callsGod": "세는 것",

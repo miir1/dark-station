@@ -341,11 +341,18 @@
     await UI.lines(v.text, { black, tag: v.id });
     const sentences = UI.splitSentences(v.text);
     let i;
+    // 결말에 board:1 이 있으면(열차) 태울 사람을 고르는 줄이 선택지 맨 아래에 붙는다 — 엔진 board 동작(board_<id> 깃발, 다시 누르면 내린다)
+    const boardIds = () => (v.board ? db.peopleOrder.filter((id) => id !== 'you' && home(id)) : []);
+    const boarded = () => boardIds().filter((id) => flagOn('board_' + id));
     for (;;) {                                                       // 되돌릴 수 없는 선택(금기·결말)은 상자 안에서 한 번 더 묻는다 — OS 확인창 없음
-      i = await UI.open(`<p>${esc(v.text)}</p>`, { kind: 'event', fit: sentences, options: v.choices.map((c, k) => ({ label: c.label, sub: choiceSub(c), disabled: c.locked, value: k })), cls: v.choices.length > 3 ? 'wide' : '' });
+      const opts = v.choices.map((c, k) => ({ label: c.label, sub: choiceSub(c), disabled: c.locked, value: k }));
+      if (boardIds().length) opts.push({ label: `태울 사람 (${boarded().length}/${boardIds().length})`, sub: `<small>${esc(boarded().map((id) => person(id).name).join(' · ') || '아직 아무도')}</small>`, value: 'board' });
+      i = await UI.open(`<p>${esc(v.text)}</p>`, { kind: 'event', fit: sentences, options: opts, cls: opts.length > 3 ? 'wide' : '' });
+      if (i === 'board') { await boardMenu(boardIds()); continue; }
       const c = v.choices[i];
       if (!c || !(c.taboo || v.kind === 'ending')) break;
-      const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(c.label)}${c.warn ? ` — <span class="warnt">${esc(c.warn)}</span>` : ''}</p>`, { kind: 'confirm2', options: [{ label: '그렇게 한다', value: true }, { label: '다시 고른다', value: false }] });
+      const who = boardIds().length ? `<p class="mini">태울 사람: ${esc(boarded().map((id) => person(id).name).join(' · ') || '없음')}</p>` : '';
+      const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(c.label)}${c.warn ? ` — <span class="warnt">${esc(c.warn)}</span>` : ''}</p>${who}`, { kind: 'confirm2', options: [{ label: '그렇게 한다', value: true }, { label: '다시 고른다', value: false }] });
       if (sure) break;
     }
     if (!act({ type: 'choose', i })) return;
@@ -358,6 +365,17 @@
     if (r.text) await UI.lines(r.text, { black, tag: v.id + ':out' });
     if (v.id === 'pro_notebook' || v.id === 'd1_gicheol_arrive') UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
     if (!state.pending && !state.ended) UI.cgClear();
+  }
+  // 태울 사람: 배식 그릇처럼 이름을 켜고 끈다 (탄 사람 = 명부 '탔다')
+  async function boardMenu(ids) {
+    for (;;) {
+      const html = `<p class="who">태울 사람</p><div class="bowls">${ids.map((id) => `<span class="${flagOn('board_' + id) ? 'on' : ''}">${esc(person(id).name)}</span>`).join('')}</div>`;
+      const opts = ids.map((id) => ({ label: `${person(id).name} ${flagOn('board_' + id) ? '내린다' : '태운다'}`, value: id }));
+      opts.push({ label: '됐다', value: null });
+      const a = await UI.open(html, { kind: 'board', cancel: true, cancelValue: null, options: opts, cls: 'wide' });
+      if (!a) return;
+      act({ type: 'board', who: a });
+    }
   }
   const faceOf = (id) => { const p = person(id); return ART.portraitSrc(id, p ? p.n.injury : 0, !!(p && p.permanent && p.permanent.ear)); };
   // ── 치료 (엔진 treat: 낮·저녁, 다친 사람 하나에 약 treat_meds, 하루 한 번). 길: 수첩 옆 '치료' 단추(H) · 다친 사람에게 말 걸기 · 젖은 붕대 조사 ──
@@ -552,18 +570,8 @@
 
   // ── 명부·결말 ──
   const STATUS_KO = { boarded: '탔다', dead: '갔다', ascended: '올라갔다', stayed: '남았다', walked: '걸어 나갔다' };
-  // 명부 행은 엔진 값(ended.ledger: 결과의 ledger 칸 · 결말의 endStatus·board 가 정한 status)을 그대로 쓴다.
-  // 임시 보정은 엔진이 'stayed' 를 줬는데 그 사람이 끝까지 역에 있던(home) 경우만 — 데이터가 그 칸을 채우면 엔진 값이 'stayed' 가 아니게 되어 보정은 저절로 꺼진다.
-  //   · '챙긴 운임으로 탄다'처럼 결과에 ledger(boarded) 칸이 없고 you_boarded 깃발만 선 선택 → 당신 줄 '탔다'
-  //   · 도보 결말(d10_walk)에 endStatus:walked 가 없을 때 walked_out 깃발 → 역에 있던 사람 '걸어 나갔다'
-  //     (밤에 셔터 너머로 간 사람 — kill how:stayed — 은 home 이 아니므로 보정하지 않는다)
-  function ledgerRows() {
-    const rows = (state.ended && state.ended.ledger) || E.ledger.rows(state, db);
-    const wasHome = (id) => person(id) && person(id).status === 'home';
-    return rows.map((r) => (r.status !== 'stayed' || !wasHome(r.id) ? r
-      : r.id === 'you' && flagOn('you_boarded') ? Object.assign({}, r, { status: 'boarded' })
-        : flagOn('walked_out') ? Object.assign({}, r, { status: 'walked' }) : r));
-  }
+  // 명부 행 = 엔진 값 그대로(ended.ledger: 결과의 ledger 칸 · 결말의 endStatus·board 가 정한 status). 데이터가 d10_walk endStatus:walked · d10_train '챙긴 운임으로 탄다' ledger boarded 를 채워서 화면의 임시 변환(walked_out·you_boarded 깃발)은 지웠다
+  const ledgerRows = () => (state.ended && state.ended.ledger) || E.ledger.rows(state, db);
   const rowDay = (r) => (r.day != null && r.day !== '' && (r.status === 'dead' || r.status === 'ascended') ? `D${r.day}` : '');
   const rowCause = (r) => (r.status === 'dead' || r.status === 'ascended' ? (r.cause ? esc(r.cause) : '<span class="blank">___</span>') : '');
   // 명부 한 장 (무대 층): 탄 사람 옆에 구멍, 죽은 줄에 날짜와 줄긋기, 올라간 줄은 옅게, 사인 빈칸은 ___ , 당신 줄은 맨 위
@@ -804,6 +812,7 @@
   // 지점: car · morning3 · night3 · night5 · night8 · ending · death · evening5 · reveal · called3 · train
   //   night5 = D5 밤 고정 사건(d5_rail_body) · evening5 = D5 저녁 화로 둘레에 앉은 사람과 말하는 창 · night8 = D8 밤 고정 사건(d8_patrol_return/d8_pillow)
   //   called3 = D3 밤 '이름이 불렸다'(d3_called_you) 선택 창 · train = 열차 결말(d10_train) 뒤 명부 한 장
+//   ?state=<주소> 가 있으면 그 저장에서 시작한다 (shot.py 가 train 에 시뮬 봇 저장을 붙인다 — 캡처 봇은 D10 전에 주민이 다 죽는다)
   //   봇은 화면처럼 경고·%·비용을 보고, 캡처가 끝까지 가도록 '당신 사망'만 표의 효과로 피한다(death 지점은 반대로 고른다).
   //   지점마다 바라는 깃발(WANT)이 있으면 그 깃발을 세우는 선택을 먼저 고른다 — 그 고정 사건이 걸리게.
   //   다치면(부상 2+) 낮·저녁에 치료 창(H)으로 자기 상처를 감는다 — 봇(sim)과 같은 규칙.
@@ -832,7 +841,7 @@
   const autoLog = [];
   async function autoRun(target) {
     const wantDeath = target === 'death';
-    let holding = false;
+    let holding = false, boardTried = false;
     const report = (why) => { console.log(`[ds4 auto] ${target} ${why} D${state.day} ${state.phase}${state.ended ? ' ended=' + state.ended.why : ''} you=${person('you').status} food=${state.world.food} | ${autoLog.slice(-16).join(' / ')}`); if (missing.size) console.log('[ds4 missing] ' + Array.from(missing).join(' ')); };
     const pend = (...ids) => !!(state.pending && ids.includes(state.pending.id));
     const HOLD = {
@@ -883,7 +892,12 @@
     bot = (kind, info) => {
       if (HOLD && HOLD(kind, info)) { holding = true; UI.setBot(null); report('hold'); return 'hold'; }
       if (kind === 'line') return undefined;
-      if (kind === 'event') return pickEvent();
+      if (kind === 'event') {                                         // 열차 결말 캡처: 먼저 태울 사람 창을 한 번 연다 (명부에 '탔다'가 보이게)
+        const bi = info.options.findIndex((o) => o.value === 'board');
+        if (target === 'train' && bi >= 0 && !boardTried) { boardTried = true; return bi; }
+        return pickEvent();
+      }
+      if (kind === 'board') { const bi = info.options.findIndex((o) => / 태운다$/.test(o.label)); return target === 'train' && bi >= 0 ? bi : info.options.length - 1; }
       if (kind === 'trip') return wantDeath ? 1 : 0;
       if (kind === 'deeper') return !wantDeath && state.day >= 4 && (person('you').n.injury || 0) === 0 && (state.world.food || 0) <= 3 ? 0 : 1;
       if (kind === 'ration') { const you = person('you'); return wantDeath && info.options[0] && /뺀다/.test(info.options[0].label) && (you.n.hunger || 0) < 8 ? 0 : info.options.length - 1; }
@@ -899,6 +913,23 @@
       autoLog.push(`D${state.day} ${state.phase} 치료 → ${flagOn('treated_you') ? '감았다' : '못 감았다'}`);
     }
     UI.setBot(bot);
+    // ?state=<주소>: 시뮬 봇이 만든 저장(v4/tools/fixture.js)에서 시작 — 처음부터 가면 닿지 않는 지점(열차 결말)용. 못 읽으면 처음부터 간다
+    const fx = B.params.get('state');
+    if (fx) {
+      const raw = await fetch(fx, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+      let s = null;
+      try { s = raw ? E.normalize(S4.migrate(raw), db) : null; } catch (err) { s = null; }
+      if (s) {
+        autoLog.push(`[저장에서 시작 D${s.day} ${s.phase}${s.pending ? ' ' + s.pending.id : ''} seed${s.seed}]`);
+        startGame(s); store.save(state);
+        // 열차 결말: 시뮬 판은 물이 0 이라 '탄다'(식량·물 1)가 잠긴다 → 캡처용 지름길로 운임 깃발을 세워 '챙긴 운임으로 탄다'를 연다 (기록에 남긴다)
+        if (target === 'train' && !flagOn('fare_hoard') && ((state.world.food || 0) < 1 || (state.world.water || 0) < 1)) { act({ type: 'setFlag', flag: 'fare_hoard', quiet: true }); autoLog.push('[지름길 fare_hoard]'); }
+        await pendingFlow();
+        if (!holding) { UI.setBot(null); report('end (저장에서 시작)'); }
+        return;
+      }
+      autoLog.push('[저장을 못 읽었다 — 처음부터]');
+    }
     const seed = Number(B.params.get('seed')) || 7;
     await newGame(seed);
     await idle();

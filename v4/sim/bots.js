@@ -58,30 +58,15 @@ function pickChoice(s, db, pol, metas) {
   if (!cands.length) return metas.findIndex((c) => !c.locked);
   return (cands.length === 1 ? cands[0] : R.pick(s, cands)).i;
 }
-// 고른 순간을 적어 둔다(집계용): 자유 경고 선택 = 다른 열린 선택지가 있는데 고른 경고(warn·hint·taboo) 선택.
-// 당신이 이 선택으로 끝났으면 trace.death = { event, choice, forced(그 순간 당신 kill 이 없는 열린 선택지 0개), lastFree(그때까지 마지막 자유 경고 선택) }
-function noteChoice(s, trace, eventId, metas, i, wasHome) {
-  const c = metas && metas[i];
-  if (!c) return;
-  const open = metas.filter((m) => !m.locked);
-  const before = trace.lastFree || null;
-  if ((c.warn || c.hint || c.taboo) && open.length > 1) trace.lastFree = { event: eventId, choice: c.label, day: s.day };
-  const gone = s.people.you.status === 'dead' || s.people.you.status === 'ascended';
-  if (wasHome && gone && !trace.death) {
-    const forced = open.filter((m) => !m.killYou).length === 0;
-    // 강제 사망이면 갈림길은 이 선택 '전'의 마지막 자유 경고 선택, 아니면 이 선택 자신(대안이 있었는데 골랐다)
-    trace.death = { event: eventId, choice: c.label, forced, lastFree: forced ? before : trace.lastFree || null };
-  }
-}
+// 강제 사망·앞선 자유 경고 선택은 엔진이 사인 기록(s.ended.cause.forced·free)에 남긴다 — 봇은 따로 적지 않는다(10-22).
 function settle(s, db, pol, trace) {
   let g = 0;
   while (s.pending && !s.ended && g++ < 20) {
     const metas = E.choiceMeta(s, db);
-    const eventId = s.pending.id, wasHome = s.people.you.status === 'home';
-    let i = pickChoice(s, db, pol, metas);
+    const i = pickChoice(s, db, pol, metas);
     const r = E.dispatch(s, { type: 'choose', i }, db);
-    if (!r.ok) { const v = E.eventView(s, db); const j = v.choices.findIndex((c) => !c.locked); if (j < 0 || !E.dispatch(s, { type: 'choose', i: j }, db).ok) break; i = j; }
-    if (trace) { trace.choices++; noteChoice(s, trace, eventId, metas, i, wasHome); }
+    if (!r.ok) { const v = E.eventView(s, db); const j = v.choices.findIndex((c) => !c.locked); if (j < 0 || !E.dispatch(s, { type: 'choose', i: j }, db).ok) break; }
+    if (trace) trace.choices++;
   }
 }
 const act = (s, db, a) => E.dispatch(s, a, db).ok;
@@ -176,7 +161,7 @@ function prologue(s, db, pol, trace) {
 function play(db, seed, policyName) {
   const pol = POLICIES[policyName];
   const s = E.newGame(db, seed);
-  const trace = { choices: 0, trips: 0, known: {}, lastFree: null, death: null };
+  const trace = { choices: 0, trips: 0, known: {} };
   let guard = 0;
   while (!s.ended && guard++ < 400) {
     const ph = s.phase;
@@ -194,4 +179,4 @@ function play(db, seed, policyName) {
   return { s, trace };
 }
 
-module.exports = { POLICIES, CAREFUL, INSPECT, OPT, DEADLY, play, pickChoice, scoreChoice, deadlyText, isRecovery, noteChoice };
+module.exports = { POLICIES, CAREFUL, INSPECT, OPT, DEADLY, play, pickChoice, scoreChoice, deadlyText, isRecovery };

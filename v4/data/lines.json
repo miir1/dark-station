@@ -1093,7 +1093,43 @@
     "speaker": "narrator",
     "context": "",
     "grade": "fixed",
+    "text": "운전석에 구두 한 짝이 있다. 당신 발에 맞는다. 승강장에서 이름을 불러 모은 사람이 앉던 자리다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 끝에서 철로를 내려다봤다. 운전석이 빈 열차가 서지 않고 지나갔다. 그 자리는 당신 것이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "열차는 맨 앞 칸을 비운 채 떠났다. 운전석에 구두 한 짝이 남아 있었다. 당신 발에 맞는 것이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
     "text": "차장이 손을 내렸다. \"다시 모시겠습니까.\" 운전석에 구두 한 짝이 있었다. 당신 발에 맞았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "정오에 열차가 왔다. 운전석이 비어 있었다. 구두 한 짝이 주인을 기다렸다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1102,7 +1138,43 @@
     "speaker": "narrator",
     "context": "",
     "grade": "fixed",
+    "text": "수첩 두 권이 나란히 놓여 있다. 글씨가 같다. 문을 닫는 손은 당신 손이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 위에서 지나가는 열차를 봤다. 문 옆 자리가 비어 있었다. 문을 닫던 사람은 여기서 걷고 있었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "차장이 문 안에서 당신을 봤다. 고개를 한 번 숙였다. 승강장에 남아 문을 닫는 사람, 그게 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
     "text": "차장이 수첩을 내밀었다. 당신 것과 같은 수첩이었다. 바꿔 들었다. 문을 닫는 건 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "차장이 명부를 덮었다. 문 옆 자리가 비어 있었다. 문을 닫던 사람은 오지 않았다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1111,7 +1183,43 @@
     "speaker": "narrator",
     "context": "",
     "grade": "fixed",
+    "text": "손에 펀치가 들려 있다. 명부를 끝까지 읽을 사람은 당신뿐이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "주머니에 펀치가 있었다. 언제 들어왔는지 모른다. 걷는 사람들의 이름을 당신이 읽고 있었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "차장이 펀치를 당신 손에 놓고 문을 닫았다. 다음 열차까지 명부를 읽는 사람은 당신이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
     "text": "차장이 펀치를 당신 손에 쥐여 줬다. 수첩을 돌려받았다. 명부를 읽는 사람은 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "차장이 당신 수첩을 집어 들었다. 줄마다 펀치 구멍이 나 있었다. 뚫은 사람은 당신이었다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1120,7 +1228,43 @@
     "speaker": "narrator",
     "context": "",
     "grade": "fixed",
+    "text": "명부의 당신 이름 뒤에 님이 붙어 있다. 당신은 손님이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "걷는 동안 아무도 당신을 부르지 않았다. 명부의 당신 줄에는 님이 붙어 있었다. 손님이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "차장이 당신 이름을 한 번 더 읽었다. 님이 붙어 있었다. 손님 하나를 두고 문이 닫혔다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
     "text": "차장이 당신 이름을 읽었다. 님이 붙어 있었다. 운전석에는 다른 사람이 앉아 있었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "차장이 명부에서 당신 줄을 짚었다. 님이 붙어 있었다. 손님 자리 하나가 비었다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1129,7 +1273,43 @@
     "speaker": "narrator",
     "context": "",
     "grade": "fixed",
-    "text": "차장은 당신 이름을 읽지 않았다. 셋째 날 밤 하나 더 많았던 수가 당신이었다. 신발을 벗었다. 가지런히 놓았다.",
+    "text": "계단 아래 당신 신발이 가지런하다. 셋째 날 밤 하나 더 많았던 수가 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 끝에서 수를 셌다. 하나가 많았다. 셋째 날 밤에도 그랬다. 그 하나가 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "차장은 당신 이름을 읽지 않았다. 셋째 날 밤 하나 더 많았던 수가 당신이었다. 문이 닫히자 신발을 벗었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "차장은 당신 이름을 읽지 않았다. 셋째 날 밤 하나 더 많았던 수가 당신이었다. 자리에 앉자 신발이 저절로 벗겨졌다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "계단 아래 당신 신발이 가지런하다. 셋째 날 밤 하나 더 많았던 수가 당신이었다. 이제 수가 맞는다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1143,11 +1323,65 @@
     "truth": 1
   },
   {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 아래로 열차가 지나갔다. 창 안의 사람들이 당신을 보지 못했다. 당신은 승강장에 서 있던 사람이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "문이 닫혔다. 창 안의 사람들이 승강장을 보지 않았다. 당신은 처음부터 승강장에 서 있던 사람이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "열차에 올랐다. 창 밖 승강장에 누가 서 있었다. 당신 얼굴이었다. 아무도 그쪽을 보지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "열차가 승강장에 섰다. 아무도 당신 자리를 보지 않았다. 당신은 승강장에 서 있던 사람이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
     "id": "reveal_child",
     "speaker": "narrator",
     "context": "",
     "grade": "fixed",
     "text": "계단 위에서 세는 소리가 났다. 당신 목소리였다. 하나. 둘. 명부의 글씨는 당신 것이 아니었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_child",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 위에서 누가 걷는 사람을 셌다. 당신 목소리였다. 하나. 둘. 명부의 글씨는 당신 것이 아니었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_child",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "열차 안에서 누가 머릿수를 셌다. 당신 목소리였다. 하나. 둘. 명부의 글씨는 당신 것이 아니었다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1800,11 +2034,29 @@
     "truth": 1
   },
   {
+    "id": "end_seat_shoe",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "normal",
+    "text": "고가 아래 지나간 열차의 운전석이 비어 있다. 당신 발에 맞는 구두 한 짝이 거기 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
     "id": "end_two_books",
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
     "text": "수첩 두 권이 나란히 놓여 있다. 글씨가 같다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_two_books",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "normal",
+    "text": "주머니에 수첩이 두 권 있다. 글씨가 같다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1827,6 +2079,24 @@
     "truth": 1
   },
   {
+    "id": "end_empty_cab",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "normal",
+    "text": "좌석 하나가 비어 있다. 손님이 걸어서 가는 동안.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_empty_cab",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "normal",
+    "text": "좌석 하나가 비어 있다. 손님은 오지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
     "id": "end_shoes_stairs",
     "speaker": "narrator",
     "context": "",
@@ -1841,6 +2111,24 @@
     "context": "",
     "grade": "normal",
     "text": "열차가 서지 않고 지나간다. 창 안의 얼굴들이 당신을 보지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_train_passes",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "normal",
+    "text": "열차가 떠난 자리에 당신만 서 있다. 아무도 돌아보지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_train_passes",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "normal",
+    "text": "창밖으로 승강장이 지나간다. 거기 서 있는 사람이 당신을 보지 않는다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1978,5 +2266,23 @@
     "text": "동하는 밤새 잤어. 코를 골았어.",
     "rumor": 1,
     "truth": 0
+  },
+  {
+    "id": "eunji_d7",
+    "speaker": "eunji",
+    "context": "day==7 & phase==evening",
+    "grade": "normal",
+    "text": "운임이 빵이랬지. 그럼 빵 가진 사람이 타는 거야. 간단해.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_d9",
+    "speaker": "gicheol",
+    "context": "day==9 & phase==evening",
+    "grade": "normal",
+    "text": "자리가 모자라면 누가 남소? 나는 딸이 둘이오. 미안하단 말은 안 하겠소.",
+    "rumor": 0,
+    "truth": 1
   }
 ]
