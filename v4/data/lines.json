@@ -1206,7 +1206,7 @@
     "truth": 1
   },
   {
-    "id": "dream_gate",
+    "id": "dream_punch",
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
@@ -1696,7 +1696,7 @@
     "speaker": "{who}",
     "context": "",
     "grade": "normal",
-    "text": "마리가 밤새 {who:의} 이름을 불렀어.",
+    "text": "{who:이가} 밤새 다친 사람 이름을 불러 줬어.",
     "rumor": 1,
     "truth": 1
   },
@@ -1870,5 +1870,113 @@
     "text": "밤에 선로 물이 턱까지 올라왔어. 뭐가 떠내려왔어.",
     "rumor": 1,
     "truth": 1
+  },
+  {
+    "id": "insp_fire_kept",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "화로 곁 재에 둘이 앉았던 자국이 있다. 불이 밤새 꺼지지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "rum_slept_beside",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 다친 사람 곁에 붙어 잤어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_slept_beside",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 누가 담요를 끌고 다녔어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_gave_seat",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "아저씨가 제 자리를 서하한테 준대요.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_meds_left",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "셔터 밑에 약이 놓여 있었어. 누가 두고 갔어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_valve_shut",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 물소리가 멎었어. 도현 씨가 내려간 뒤였어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_eyes_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 안 자고 네 쪽을 봤어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_eyes_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤새 누가 뒤척였어. 누군지는 몰라.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_named_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니가 밤에 계단에서 네 이름을 불렀어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_named_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니는 밤새 잤어. 소리는 위에서만 났어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_dongha_over_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 파이프를 들고 네 머리맡에 서 있었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_dongha_over_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "동하는 밤새 잤어. 코를 골았어.",
+    "rumor": 1,
+    "truth": 0
   }
 ]

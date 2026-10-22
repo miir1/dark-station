@@ -153,3 +153,27 @@
 | 추가 약속 (10-21 늦게) | `injure.n` 은 ±1~3(음수 = 부상 회복) · `people.addressYou.default` = 정체가 안 기운 때의 기본 호칭 · 조건식에 빈 글 비교 `x==''` / `x!=''`(없는 값도 빈 글, `==`/`!=` 만) · `rumor.line: ""` = 소문 없음 |
 | 비어 있는 칸 | 선택지의 `check:null` `cost:{}` `req:{}` `taboo:''` `warn:''` `ledger:''`, 밤 사건의 `target:''` 은 "없음"으로 읽는다 |
 | 파일 이름 | `night_events.json` 정식, `nightEvents.json` 도 읽음 |
+
+### §6-2. 약속 추가 (2026-10-22, 데이터·화면 담당 요청 20건을 엔진이 받음 — v4/engine, 테스트 v4/test/requests.test.js)
+| 항목 | 약속 |
+|---|---|
+| 치료 `treat` | `{type:'treat', who}`. numbers 표 `treat_meds`(약 몇 개)·`treat_injury`(부상 변화, 음수)를 읽는다. 약이 모자라거나 · 다친 데가 없거나 · 오늘 이미 치료했거나(`treated_<who>` 깃발) · 표에 두 행이 없으면 거절. 성공하면 `treated_<who>` 깃발(그날 밤 위독 판정 면제, 아침에 지워짐). 단계 actions 에 `treat` 가 있어야 한다 |
+| 결과 그림 | 선택 결과(out/ok/fail)의 `image` 열 → `lastResult.image`, 당신이 끝났으면 `ended.cause.image` |
+| 효과 목록 | 한 결과 안에서 같은 수치 id·`injure`·`kill`·`permanent` 를 여러 번 쓰면 **값이 목록**이 되고 차례로 전부 적용된다(객체 꼴로 직접 쓸 때도 `injure:[{who,n},{who,n}]` 허용). 같은 `axis` 두 번은 합. 빈 목록은 표 검사 오류. 한 번만 쓴 키는 지금처럼 값 하나 |
+| who 낱말 | `you` · `self`/`actor` · `target` · `companion`(원정 동행 중 살아 있는 첫 사람) · `party`(원정 편성 전원, 당신 포함) · `all`(역에 있는 사람 전부, 당신 포함) · `bondOfActor`(행위자의 bond) · `world` · 사람 id. 그 밖은 표 검사 오류. 풀 수 없으면(동행 없음 등) 아무 일도 없다 |
+| 사건 `target` 열 (새, 선택) | 사람 id 또는 `any`·`randomSleeper`·`nearestSleeper`·`farthestSleeper`(무작위)·`mostInjured`·`bond`. 사건이 걸릴 때 정하고(못 정하면 그 사건은 안 걸린다) 결과의 `who:'target'`·명부 줄이 같은 사람을 가리킨다. **무작위 대상은 역에 있는 성인 주민만**(미성년 = people.age < 19, 디렉터 결정). 결과의 `target` 열이 있으면 그것이 먼저. `eventView` 에 `target`·`targetName` |
+| 결말 열 (새, kind ending 전용) | `board: 1` = 이 결말이 걸려 있는 동안 `board` 동작이 열린다(단계 actions 에 없어도), 결말에서 `board_<id>` 깃발 주민은 `boarded`. `endStatus: walked` = 결말 뒤 역에 남은 산 사람(당신 포함)의 status. 없으면 그대로(명부 '남았다'). 다른 kind 에 쓰면 표 검사 오류 |
+| 명부 status `walked` | '걸어 나갔다'. ledger rows·format·저장 정규화가 안다 |
+| 결과의 명부 줄 `ledger` | `{who, status, day, cause, text}` 또는 그 **목록**, 또는 글 한 줄(당신의 사실 줄). `status` boarded/stayed/walked → 아직 역에 있는 그 사람의 status 를 바꾼다(dead/ascended 는 kill 효과가 정하고 여기선 기록만). `day` "{day}"·정수. `cause` 글 → 사인 칸, `"물건:상태"` → 그 물건의 ledgerFact 줄. `text` 가 있을 때만 사실 줄(written)에 쌓는다 — text 없는 행은 더 이상 쌓이지 않는다. 표 검사: status 값·`물건:상태` 참조·who |
+| 결말 사인 `ended.cause` | 당신이 죽었거나 올라갔거나(결말 사건 안 포함) 떠났으면 `{event, choice, warned, image, night}`. 밤 사건이 당신을 데려가면 `event` = 그 밤 사건 id, `choice: null`, `warned: false`, `night: true` |
+| 읽는 사람 `ended.readerId` | `'you'`·`'conductor'`·주민 id·`null`. 주민 = 살아 있는 주민 중 people.age 가 가장 많은 사람(역에 남은 사람 먼저, 없으면 탄 사람). `E.readerId(s, db)` 로도 |
+| 사건 연쇄 | `choose` 뒤 끝나지 않았으면 같은 단계의 사건을 다시 찾는다. 이미 끝난 once 사건과 **이번 단계에 이미 고른 사건**(`s.phaseSeen`)은 빠진다 — `once:0`(되풀이) 사건도 한 단계에 한 번. `move` 도 사건을 깨운다(지도 조건 `map==x`) |
+| 집계 `s.fired` | 고른 사건 id → 횟수. once:0 사건도 센다(explicit/판은 이것으로) |
+| 소문 발견 | 들은 소문은 **참(truth 1)일 때만** 발견이다 |
+| 배식 흔적 | 받은 그릇 `full`, 못 받은 그릇(0 이거나 식량·물 부족) `empty`. 둘 다 당신이 한 일이라 본 것(seen)·`by:'you'`. 밤에 빈 그릇이 차면 아침에 구별된다 |
+| 몸 신호 `view.people[].signs` | `{sleepless, starving, ateFlesh}`(역에 없는 사람 null). 문턱은 밤 사건표 actor 조건식: role `fear`·`ascend` 행 → sleepless(당신 제외), role `steal`·`starve` 행 → starving(`any`·이름 지목 행 제외). ateFlesh = 깃발 `ate_flesh_<id>` 또는 `<id>_ate…`. `E.signs(s, db)` 로도 |
+| 원정 `trip` | 낮 단계에 한 번(지역 하나). 첫 동작은 1층, 그다음은 **바로 아래층만**, 층마다 한 번. 편성: numbers `trip_party`(동행 수, 행이 없으면 0 = 혼자). `with:[id]` 로 고르거나 안 주면 시드 난수. 동행 = 역에 있는 주민 중 위독 아님·미성년 아님. `view.trip = {region, floor, floors, party}` |
+| 바깥 사람 | 밤 사건 actor/target 에 **이름으로 지목된** 바깥 사람(outside)은 역 밖에서 행동·대상이 될 수 있다(any·조건식·무작위는 역의 주민만). kill 은 바깥 사람에게도 듣는다(status dead → 명부에 나온다) |
+| 위독 판정 | 아침 사망 = injury 가 numbers 표 최대값이고 치료 깃발이 없고 **밤 굴림 직전에 이미 위독이던** 사람(`s.critical`). 밤 사건으로 막 위독이 된 사람은 하루를 받는다(그날 경고 사건·치료 기회) |
+| 밤 소문 목격자 | `rumor.witness: target` 허용(대상이 역의 주민일 때) |
+| 저장 | 새 칸 `fired`·`phaseSeen`·`critical`·`trip.floors`·`trip.party` 는 정규화가 빈 값으로 채운다(SAVE_V 그대로 1) |

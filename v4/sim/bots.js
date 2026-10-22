@@ -15,6 +15,7 @@ const POLICIES = {
   risky: { share: 0, hand: 0, name: 0, inspect: 'normal', avoidWarn: 0, risky: true },   // 모험: 판정 있고 경고 붙은 선택을 우선(≥35%), 원정 매일·2층 우선, 거래·협정·범람수는 자원 + 최대
 };
 const RESOURCE_EVENTS = ['trade_shutter', 'patrol_pact', 'drink_flood'];
+const OPT = { peek: false };   // run.js --peek: 옛 '바뀐 흔적' 판단으로 비교
 const INSPECT = { diligent: { objects: 99, talk: 2, rumors: 99 }, normal: { objects: 2, talk: 1, rumors: 1 }, lazy: { objects: 1, talk: 0, rumors: 0 } };
 
 // ── 선택 ──
@@ -57,11 +58,15 @@ const act = (s, db, a) => E.dispatch(s, a, db).ok;
 function morningInspect(s, db, pol, trace) {
   const rule = INSPECT[pol.inspect];
   const map = db.maps.station;
-  // 바뀐 흔적(첫 상태가 아니고 아직 안 본 것)부터, 그다음 아무 물건
+  // 바뀐 흔적부터, 그다음 아무 물건. '바뀐' = 아직 안 본 흔적 중 봇이 아는 모습과 다른 것.
+  // 아는 모습(trace.known) = 마지막으로 본 상태(조사했거나 배식처럼 제 손으로 한 것). 모르면 첫 상태(states[0]).
+  // → 배식에서 비워 둔 그릇이 밤에 차 있으면 '바뀐 흔적'이다(10-22 배식 규칙). 누가 했는지는 모른다.
   // 보통·게으름은 화로 반경 8칸 안의 물건만 본다(12_design_v3 §7 봇 조사 규칙). 부지런은 전부.
   const near = (o) => !map.fire || Math.max(Math.abs(o.x - map.fire[0]), Math.abs(o.y - map.fire[1])) <= 8;
   const objs = (map.objects || []).filter((o) => pol.inspect === 'diligent' || near(o)).map((o) => o.id).filter((id) => s.traces[id]);
-  const changed = objs.filter((id) => s.traces[id].st !== db.objects[id].states[0] && !s.traces[id].seen);
+  const known = trace.known;
+  const changed = OPT.peek ? objs.filter((id) => s.traces[id].st !== db.objects[id].states[0] && !s.traces[id].seen)   // 옛 판단(10-21b): 숨은 seen 깃발로 '밤에 손댄 것'을 안다
+    : objs.filter((id) => !s.traces[id].seen && s.traces[id].st !== (known[id] !== undefined ? known[id] : db.objects[id].states[0]));
   const rest = objs.filter((id) => !changed.includes(id));
   const order = changed.concat(R.pick(s, [rest]) ? shuffle(s, rest) : rest);
   let n = 0;
@@ -75,7 +80,6 @@ function shuffle(s, arr) { const a = arr.slice(); for (let i = a.length - 1; i >
 
 function rationStep(s, db, pol) {
   const home = db.peopleOrder.filter((id) => s.people[id].status === 'home');
-  if ((s.people.you.n.injury || 0) >= 2) act(s, db, { type: 'treat', who: 'you' });   // 위독 방치는 결정이 아니다 — 치료 동작이 있으면 쓴다
   const canFeed = Math.min(s.world.food || 0, s.world.water || 0);
   let order = home.slice();
   if (pol.share < 0) order = ['you'].concat(home.filter((i) => i !== 'you'));                       // 이기적: 내 그릇 먼저
@@ -96,9 +100,9 @@ function dayStep(s, db, pol, trace) {
     for (const id of ['shutter_gap', 'body_rail']) if (act(s, db, { type: 'inspect', object: id })) settle(s, db, pol, trace);
     if (s.ended) return;
     const region = s.day % 2 === 0 ? 'A' : 'B';
-    if (act(s, db, { type: 'trip', region, floor: 2 })) { trace.trips++; settle(s, db, pol, trace); }
+    if (act(s, db, { type: 'trip', region, floor: 1 })) { trace.trips++; settle(s, db, pol, trace); }   // 원정은 1층부터, 그다음 바로 아래층 (엔진 규칙 10-22)
     if (s.ended) return;
-    if (act(s, db, { type: 'trip', region, floor: 1 })) settle(s, db, pol, trace);
+    if (s.trip && act(s, db, { type: 'trip', region, floor: 2 })) settle(s, db, pol, trace);
     return;
   }
   if (!low || hurt) return;
@@ -140,7 +144,7 @@ function prologue(s, db, pol, trace) {
 function play(db, seed, policyName) {
   const pol = POLICIES[policyName];
   const s = E.newGame(db, seed);
-  const trace = { choices: 0, trips: 0 };
+  const trace = { choices: 0, trips: 0, known: {} };
   let guard = 0;
   while (!s.ended && guard++ < 400) {
     const ph = s.phase;
@@ -151,10 +155,11 @@ function play(db, seed, policyName) {
     else if (ph === 'evening') eveningStep(s, db, pol, trace);
     settle(s, db, pol, trace);
     if (s.ended) break;
+    for (const [id, t] of Object.entries(s.traces)) if (t.seen) trace.known[id] = t.st;   // 본 것은 기억한다
     if (!E.dispatch(s, { type: 'next' }, db).ok) { settle(s, db, pol, trace); if (!s.ended && !E.dispatch(s, { type: 'next' }, db).ok) break; }
   }
   if (!s.ended) writeCauses(s, db, pol);
   return { s, trace };
 }
 
-module.exports = { POLICIES, INSPECT, play, pickChoice, scoreChoice };
+module.exports = { POLICIES, INSPECT, OPT, play, pickChoice, scoreChoice };

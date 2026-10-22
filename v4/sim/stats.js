@@ -9,8 +9,9 @@ function measure(db, s, trace) {
   const you = s.people.you;
   const dead = you.status === 'dead' || you.status === 'ascended';
   const residents = db.peopleOrder.filter((id) => id !== 'you' && db.people[id] && !db.people[id].outside);
-  const allDead = residents.every((id) => s.people[id].status !== 'home' && s.people[id].status !== 'boarded');
-  const explicit = Object.keys(s.done).filter((id) => db.events[id] && db.events[id].explicit).length;
+  const allDead = residents.every((id) => !['home', 'boarded', 'walked'].includes(s.people[id].status));
+  // explicit = 고른 적 있는 적나라 사건 수(서로 다른 id). s.fired 는 once:0(되풀이) 사건도 센다 — s.done 만 보면 빠졌다
+  const explicit = Object.keys(s.fired || s.done).filter((id) => db.events[id] && db.events[id].explicit).length;
   const disc = N.discovery(s);
   const resident = s.nightLog.filter((e) => e.role !== 'clock');
   const malice = resident.filter((e) => e.kind === 'malice').length, hymn = resident.filter((e) => e.kind === 'hymn').length;
@@ -33,11 +34,12 @@ function aggregate(db, runs) {
   const byCause = {};
   for (const r of deaths) { const k = r.cause ? r.cause.event : (r.why === 'all_dead' ? '전멸' : r.why); byCause[k] = (byCause[k] || 0) + 1; }
   const warned = deaths.filter((r) => r.cause && r.cause.warned).length;
+  const unwarned = deaths.filter((r) => !(r.cause && r.cause.warned)).length;   // 경고 없는 죽음(사인 없음 포함)
   const ids = {};
   for (const r of runs) if (r.identity) ids[r.identity] = (ids[r.identity] || 0) + 1;
   const totalNights = runs.reduce((a, r) => a + r.nights, 0);
   return {
-    n, deathRate: pct(deaths.length, n), warnedRate: pct(warned, deaths.length), byCause,
+    n, deathRate: pct(deaths.length, n), warnedRate: pct(warned, deaths.length), unwarned, deaths: deaths.length, starveDeaths: deaths.filter((r) => r.cause && r.cause.event === 'starve_you').length, byCause,
     allDead: pct(runs.filter((r) => r.allDead).length, n),
     nights: avg(runs.map((r) => r.nights)), malice: avg(runs.map((r) => r.malice)), hymn: avg(runs.map((r) => r.hymn)),
     discovery: pct(runs.reduce((a, r) => a + r.found, 0), totalNights),
@@ -60,6 +62,7 @@ function gate(aggs, candidates) {
   const npol = Object.keys(aggs).length;
   for (const k of Object.keys(idAll)) idAll[k] = Math.round((10 * idAll[k]) / npol) / 10;
   const thr = Math.round((1000 / candidates / 2)) / 10;
+  const sum = (k) => Object.values(aggs).reduce((t, a) => t + (a[k] || 0), 0);
   const minId = Math.min(...Array.from({ length: candidates }, (_, i) => 0).map((_, i) => 0).concat([])); void minId;
   const rows = [
     ['당신 사망(올라감 포함)', '≥ 50%', `${b.deathRate}%`, b.deathRate >= 50],
@@ -79,6 +82,10 @@ function gate(aggs, candidates) {
     ['모험 봇 사망 중 굶주림', '< 50%', aggs.risky ? `${aggs.risky.starveShare}%` : '-', !!aggs.risky && aggs.risky.starveShare < 50],
     ['열차 결말 도달 (모험 / 균형)', '> 0%', aggs.risky ? `${aggs.risky.train}% / ${b.train}%` : `${b.train}%`, (aggs.risky ? aggs.risky.train : b.train) > 0],
     ['정체: 7후보 중 ≥5가 각 ≥7%', '≥ 5 후보', `${Object.values(idAll).filter((v) => v >= 7).length} 후보`, Object.values(idAll).filter((v) => v >= 7).length >= 5],
+    ['이기적 봇 사망 (이기심의 값)', '> 0%', aggs.selfish ? `${aggs.selfish.deathRate}%` : '-', !!aggs.selfish && aggs.selfish.deathRate > 0],
+    ['헌신 봇 생존', '측정 (> 0%)', aggs.devoted ? `${aggs.devoted.survived}%` : '-', !!aggs.devoted && aggs.devoted.survived > 0],
+    ['사망 원인 중 굶주림 (전 정책 합산)', '< 50%', `${pct(sum('starveDeaths'), sum('deaths'))}% (${sum('starveDeaths')}/${sum('deaths')})`, pct(sum('starveDeaths'), sum('deaths')) < 50],
+    ['경고 없는 사망 (전 정책 합산)', '0 판', `${sum('unwarned')} 판`, sum('unwarned') === 0],
   ];
   return { rows, idAll, thr };
 }

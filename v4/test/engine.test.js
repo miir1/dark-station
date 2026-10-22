@@ -39,6 +39,8 @@ test('단계가 허용하지 않는 동작은 거절한다 (표의 actions 열)'
   const r = E.dispatch(s, { type: 'hear', i: 0 }, db);
   assert.strictEqual(r.ok, false);
   assert.match(r.error, /지금\(day\)은 할 수 없는 동작: hear/);
+  assert.strictEqual(E.dispatch(s, { type: 'treat', who: 'soonrye' }, db).ok, false, '다친 데가 없으면 치료하지 않는다');
+  s.people.soonrye.n.injury = 1;
   assert.ok(E.dispatch(s, { type: 'treat', who: 'soonrye' }, db).ok, 'day 단계의 treat 는 허용');
   assert.strictEqual(E.dispatch(s, { type: 'nonsense' }, db).ok, false);
   assert.strictEqual(E.dispatch(s, 'next', db).ok, false);

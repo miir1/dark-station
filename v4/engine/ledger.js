@@ -5,7 +5,8 @@
   const ID = isNode ? require('./identity.js') : root.DS4.identity;
 
   const BLANK = '___';
-  const STATUS_KO = { boarded: '탔다', dead: '죽었다', ascended: '올라갔다', stayed: '남았다' };
+  const STATUS_KO = { boarded: '탔다', dead: '죽었다', ascended: '올라갔다', stayed: '남았다', walked: '걸어 나갔다' };
+  const ALIVE = ['home', 'stayed', 'walked'];          // 수첩을 주울 수 있는 산 사람 (탄 사람은 그다음)
 
   // 행: { line, id, name, status, day, cause(줄 글 또는 null), written[] }
   function rows(s, db) {
@@ -36,8 +37,20 @@
     const c = ID.identity(s.axes, db.identity);
     return c ? c.ledgerReader : 'you';
   }
+  // 읽는 사람 id: 'you' · 'conductor' · 주민 id · null(읽을 주민이 없다).
+  // 주민 = 살아 있는 주민 중 나이(people.age)가 가장 많은 사람 — 역에 남은 사람 먼저, 없으면 탄 사람. 같은 나이면 인물표 순서.
+  function readerId(s, db) {
+    const r = reader(s, db);
+    if (r !== 'resident') return r;
+    const res = db.peopleOrder.filter((id) => id !== 'you' && db.people[id] && !db.people[id].outside && s.people[id]);
+    const byAge = (ids) => ids.slice().sort((a, b) => (Number(db.people[b].age) || 0) - (Number(db.people[a].age) || 0));
+    const here = byAge(res.filter((id) => ALIVE.includes(s.people[id].status)));
+    if (here.length) return here[0];
+    const gone = byAge(res.filter((id) => s.people[id].status === 'boarded'));
+    return gone[0] || null;
+  }
 
-  const API = { rows, format, reader, BLANK };
+  const API = { rows, format, reader, readerId, BLANK, STATUS_KO };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).ledger = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

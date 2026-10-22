@@ -7,6 +7,7 @@
   const ID = /^[a-z0-9_]{1,24}$/;
   const EFFECT_VERBS = ['flag', 'trace', 'axis', 'injure', 'kill', 'permanent'];   // 그 밖의 키는 numbers id 여야 한다
   const PERMANENT = ['finger', 'leg', 'ear'];
+  const EVENT_TARGETS = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper', 'mostInjured', 'bond'];   // 사건 대상 낱말 (자리 정보가 없어 앞의 넷은 무작위·미성년 제외, bond = 당신의 bond)
   const FORBIDDEN_NIGHT_NAMES = /^(you|pos|player|map|x|y|where|at)(_|$)|^(inspect|talk|choice|chose):/;   // 밤 사건 조건에 당신 위치·선택(조사·말 걸기) 금지
 
   // 열 정의: type(id|str|int|num|bool|enum|list|obj|cond|any), req(필수), enum, min, max, of(목록 원소 검사 함수 이름)
@@ -25,6 +26,9 @@
       id: { type: 'id', req: true }, kind: { type: 'enum', req: true, enum: ['trip', 'trial', 'fixed', 'ending'] }, when: { type: 'cond' },
       grade: { type: 'enum', req: true, enum: ['normal', 'fixed'] }, explicit: { type: 'bool01' }, text: { type: 'str', req: true },
       image: { type: 'str' }, choices: { type: 'list', req: true, minLen: 1 }, once: { type: 'bool01' },
+      target: { type: 'str' },                                // 사건의 대상(사람 id 또는 any·randomSleeper·mostInjured 등). 걸릴 때 정해지고, 결과의 who:'target' 이 된다
+      board: { type: 'bool01' },                              // kind ending 전용: 1 = 이 결말이 걸려 있는 동안 board 동작으로 태울 사람을 고른다
+      endStatus: { type: 'enum', enum: ['stayed', 'walked'] }, // kind ending 전용: 결말 뒤 역에 남은 산 사람의 명부 status (기본 stayed)
     } },
     people: { key: 'id', cols: {
       id: { type: 'id', req: true }, name: { type: 'str', req: true }, age: { type: 'any' }, bio: { type: 'str' },
@@ -86,10 +90,29 @@
       if (k === 'flag') { if (!isObj(v)) err('effects.flag: {이름:true/false}'); else for (const f of Object.keys(v)) if (!ID.test(f)) err(`effects.flag.${f}: id 꼴이 아님`); }
       else if (k === 'trace') { if (!isObj(v)) err('effects.trace: {물건:상태}'); else for (const [o, st] of Object.entries(v)) checkTrace(o, st, ctx, (m) => err('effects.trace.' + m)); }
       else if (k === 'axis') { if (!isObj(v)) err('effects.axis: {축:±정수}'); else for (const [a, n] of Object.entries(v)) { if (!ctx.axes.includes(a)) err(`effects.axis.${a}: identity.axes에 없는 축`); if (!isInt(n) || Math.abs(n) > 3) err(`effects.axis.${a}: −3~+3 정수`); } }
-      else if (k === 'injure') { if (!isObj(v) || !isInt(v.n) || v.n === 0 || v.n < -3 || v.n > 3) err('effects.injure: {who, n:±1~3} (음수 = 부상 회복)'); }
-      else if (k === 'kill') { if (!isObj(v) || typeof v.who !== 'string') err('effects.kill: {who}'); }
-      else if (k === 'permanent') { if (!isObj(v) || !PERMANENT.includes(v.kind)) err(`effects.permanent.kind: ${PERMANENT.join('/')} 중 하나`); }
-      else { const n = ctx.numbers[k]; if (!n) err(`effects.${k}: numbers 표에 없는 수치 (동사는 ${EFFECT_VERBS.join('/')}뿐)`); else if (!(isInt(v) || (isObj(v) && isInt(v.n)))) err(`effects.${k}: ±정수 또는 {who, n}`); }
+      else if (k === 'injure') { for (const x of many(v, err, k)) { if (!isObj(x) || !isInt(x.n) || x.n === 0 || x.n < -3 || x.n > 3) err('effects.injure: {who, n:±1~3} (음수 = 부상 회복)'); else checkWho(x.who, ctx, (m) => err('effects.injure.' + m)); } }
+      else if (k === 'kill') { for (const x of many(v, err, k)) { if (!isObj(x) || typeof x.who !== 'string') err('effects.kill: {who}'); else checkWho(x.who, ctx, (m) => err('effects.kill.' + m)); } }
+      else if (k === 'permanent') { for (const x of many(v, err, k)) { if (!isObj(x) || !PERMANENT.includes(x.kind)) err(`effects.permanent.kind: ${PERMANENT.join('/')} 중 하나`); else checkWho(x.who, ctx, (m) => err('effects.permanent.' + m)); } }
+      else { const n = ctx.numbers[k]; if (!n) err(`effects.${k}: numbers 표에 없는 수치 (동사는 ${EFFECT_VERBS.join('/')}뿐)`); else for (const x of many(v, err, k)) { if (!(isInt(x) || (isObj(x) && isInt(x.n)))) err(`effects.${k}: ±정수 또는 {who, n}`); else if (isObj(x)) checkWho(x.who, ctx, (m) => err(`effects.${k}.` + m)); } }
+    }
+  }
+  // 한 결과에서 같은 동사·수치를 여러 번 쓰면 목록(전부 적용). 빈 목록은 오류
+  function many(v, err, k) { if (!Array.isArray(v)) return [v]; if (!v.length) err(`effects.${k}: 빈 목록`); return v; }
+  // who: 낱말(you·self·actor·target·companion·party·all·bondOfActor·world) 또는 사람 id. 빈칸 = 행위자
+  const WHO_WORDS = ['you', 'self', 'actor', 'target', 'companion', 'party', 'all', 'bondOfActor', 'world'];
+  function checkWho(who, ctx, err) { if (who == null || who === '') return; if (typeof who !== 'string' || !(WHO_WORDS.includes(who) || ctx.people[who])) err(`who: "${who}" — ${WHO_WORDS.join('·')} 또는 사람 id`); }
+  // 결과의 명부 줄: { who, status, day, cause, text } 또는 그 목록. status 는 명부 status, day 는 "{day}"·정수, cause 는 글 또는 "물건:상태"(그 물건의 ledgerFact 줄)
+  const LEDGER_STATUS = ['dead', 'ascended', 'boarded', 'stayed', 'walked'];
+  function checkLedger(L, ctx, err) {
+    for (const x of Array.isArray(L) ? L : [L]) {
+      if (typeof x === 'string') continue;                                 // 글 한 줄 = 당신의 사실 줄
+      if (!isObj(x)) { err('ledger: {who, status, day, cause, text} 또는 그 목록'); continue; }
+      checkWho(x.who, ctx, (m) => err('ledger.' + m));
+      if (x.status != null && x.status !== '' && !LEDGER_STATUS.includes(x.status)) err(`ledger.status: ${LEDGER_STATUS.join('/')} 중 하나 ("${x.status}")`);
+      if (x.day != null && x.day !== '' && !(isInt(x.day) || /^(\{day\}|\d+)$/.test(String(x.day)))) err(`ledger.day: "{day}" 또는 정수 ("${x.day}")`);
+      if (x.text != null && typeof x.text !== 'string') err('ledger.text: 글');
+      if (typeof x.cause === 'string' && /^[a-z0-9_]+:[a-z0-9_]+$/.test(x.cause)) { const [o, st] = x.cause.split(':'); const ob = ctx.objects[o]; if (!ob || !ob.ledgerFact || !ob.ledgerFact[st]) err(`ledger.cause: "${x.cause}" — objects 의 ledgerFact 에 그 상태 줄이 없음`); }
+      else if (x.cause != null && typeof x.cause !== 'string') err('ledger.cause: 글 또는 "물건:상태"');
     }
   }
   // 'bowl_{actor}' 같은 자리표시: 사람 id 를 넣어 만들어지는 물건이 하나라도 있어야 하고, 전부 그 상태를 가져야 한다
@@ -165,11 +188,18 @@
           if (!isObj(c.check) || !['obs', 'str', 'tech', 'talk'].includes(c.check.skill) || !isInt(c.check.base) || c.check.base < 0 || c.check.base > 100) e2('check: {skill: obs/str/tech/talk, base: 0~100}');
           if (!isObj(c.ok) || !isObj(c.fail)) e2('check가 있으면 ok·fail 둘 다 필요');
         } else if (!isObj(c.out)) e2('out 필요');
-        for (const o of [c.out, c.ok, c.fail].filter(Boolean)) { if (o.effects) checkEffects(o.effects, ctx, (m) => e2(m)); if (o.text != null && typeof o.text !== 'string') e2('결과 text는 글'); }
+        for (const o of [c.out, c.ok, c.fail].filter(Boolean)) {
+          if (o.effects) checkEffects(o.effects, ctx, (m) => e2(m)); if (o.text != null && typeof o.text !== 'string') e2('결과 text는 글');
+          if (o.image != null && typeof o.image !== 'string') e2('결과 image는 그림 id 글');
+          if (o.ledger != null) checkLedger(o.ledger, ctx, (m) => e2(m));
+          if (o.target != null && !(typeof o.target === 'string' && (ctx.people[o.target] || EVENT_TARGETS.includes(o.target)))) e2(`target: 사람 id 또는 ${EVENT_TARGETS.join('·')} ("${o.target}")`);
+        }
         if (c.req && isObj(c.req)) { if (c.req.flag && !ID.test(c.req.flag)) e2('req.flag id 꼴 아님'); if (c.req.permanent && !PERMANENT.includes(c.req.permanent)) e2('req.permanent 종류'); }
         if (c.cost && isObj(c.cost)) for (const k of Object.keys(c.cost)) if (!ctx.numbers[k]) e2(`cost.${k}: numbers에 없음`);
       });
       if (!free) err('항상 고를 수 있는 선택지(cost·req 없음)가 하나도 없음 — 막다른 길');
+      if (ev.target != null && !(typeof ev.target === 'string' && (ctx.people[ev.target] || EVENT_TARGETS.includes(ev.target)))) err(`target: 사람 id 또는 ${EVENT_TARGETS.join('·')} ("${ev.target}")`);
+      if ((ev.board || ev.endStatus) && ev.kind !== 'ending') err('board·endStatus 는 kind ending 사건에만');
       if (ev.image && ev.image !== '-' && typeof ev.image !== 'string') err('image는 그림 id 글');
     });
     tables.people.forEach((p, i) => {
@@ -212,7 +242,7 @@
     return errors;
   }
 
-  const API = { TABLES: T, IDENTITY_COLS, TABLE_NAMES, EFFECT_VERBS, PERMANENT, validate };
+  const API = { TABLES: T, IDENTITY_COLS, TABLE_NAMES, EFFECT_VERBS, PERMANENT, EVENT_TARGETS, WHO_WORDS, LEDGER_STATUS, validate };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else (root.DS4 = root.DS4 || {}).schema = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

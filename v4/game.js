@@ -1,9 +1,8 @@
 // 어두운 역 v4 — PC 화면. 규칙은 전부 엔진(engine/*.js)과 표(data/*.json)에 있고, 여기서는 지도를 걷고 상자에서 고른다.
-// 화면은 DS4.engine.view / eventView 만 읽고, 조작은 dispatch 로만. 수치(신뢰·스트레스·정체 축)는 화면 글에 쓰지 않는다.
+// 화면은 DS4.engine.view / eventView 를 읽고, 조작은 dispatch 로만. 수치(신뢰·스트레스·공포·정체 축)는 화면 글에 쓰지 않는다 — 몸(자세·반응·피)과 흔적으로만.
 (function () {
   'use strict';
   const E = DS4.engine, B = DS4.browser, S4 = DS4.save;
-  const T = ART.T;
   const $ = (id) => document.getElementById(id);
   const esc = UI.esc;
   const cv = $('cv'), ctx = cv.getContext('2d');
@@ -13,6 +12,9 @@
   let db = null, state = null, store = null;
   let busy = false;                       // 대화 흐름 진행 중
   let bot = null;                         // 플레이스루 봇 정책 (?auto= / __ds4.bot)
+  let viewPeople = {};                    // 마지막 view 의 사람 행 (엔진이 signs 를 주면 그것을 쓴다)
+  let endShown = false;                   // 결말 화면은 판마다 한 번
+  const missing = new Set();              // 그림이 없어 글만 나간 장면 (캡처 보고용, 화면에는 안 나온다)
 
   // ── 조작: dispatch 한 줄 + 저장 ──
   function act(a) {
@@ -27,7 +29,9 @@
   const traceSt = (id) => (state.traces[id] ? state.traces[id].st : (db.objects[id] ? db.objects[id].states[0] : 'none'));
   const person = (id) => state.people[id];
   const home = (id) => person(id) && person(id).status === 'home';
+  const youGone = () => { const s = person('you').status; return s === 'dead' || s === 'ascended'; };
   const lineOf = (id, extra) => { const l = B.pickLine(db, id, Object.assign(B.lineCtx(state), extra || {})); return l ? l.text : ''; };
+  const josa = (name, pair) => B.fill('{who:' + pair + '}', name);       // 순례가 / 기철이
 
   // ── 장면: 지금 지도 ──
   const scene = { map: null, rows: [], w: 0, h: 0, px: 0, py: 0, face: 'down', moving: null, steps: 0, auto: null, cam: null };
@@ -46,11 +50,30 @@
     ration: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [18, 10], dongha: [22, 11], mari: [22, 10] },
     seat: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [18, 10], dongha: [22, 11], mari: [22, 10] },
     day: { soonrye: [9, 9], seoha: [14, 3], gicheol: [25, 10], eunji: [2, 5], dongha: [3, 5], mari: [22, 11] },
-    evening: { soonrye: [11, 10], seoha: [15, 10], gicheol: [16, 10], eunji: [14, 11], dongha: [11, 11], mari: [15, 11] },
+    evening: { soonrye: [12, 10], seoha: [11, 10], gicheol: [14, 10], mari: [15, 10], eunji: [14, 11], dongha: [15, 11] },   // 화로(13,10) 둘레에 앉는다
   };
+  const sat = { day: -1, ids: new Set() };   // 오늘 저녁 이야기한 사람 (화면 기억, 저장 안 함) — 아직이면 머리 위 '…'
   const MET = { soonrye: 'arrived', mari: 'met_mari', gicheol: 'met_gicheol', eunji: 'met_eunji', dongha: 'met_eunji', seoha: 'met_seoha' };
   const bedOf = (id) => scene.map.beds[BED_ORDER.indexOf(id)] || null;
-  // 지도 위 사람: [{id, name, x, y, face, pose, injury, mark, bubble, light, talkable}]
+
+  // ── 몸에 보이는 신호 (판단 정보는 친절하게, 수치는 안 보인다) ──
+  // eyes  = 오늘 밤 잠들지 않을 사람 (밤 사건표에서 밤에 일어나 움직이는 문턱: needs.fear>=8, 또는 계단에 섰던 사람)
+  // mouth = 굶주린 사람(needs.hunger>=7, 남의 것을 훔치는 문턱) · 사람을 먹은 흔적이 있는 사람(ate_flesh_x, dongha_ate_unknowing)
+  // [엔진 메모] view.people[].signs 가 생기면 그 값을 먼저 쓴다 — 문턱을 표가 갖게 하려는 것.
+  const SIGN = { sleeplessFear: 8, hungry: 7 };
+  function signOf(id) {
+    const p = person(id);
+    if (!p || p.status !== 'home') return '';
+    const night = state.phase === 'night' || state.phase === 'aftermath';
+    const vs = viewPeople[id] && viewPeople[id].signs;
+    if (vs) return night ? (vs.sleepless ? 'eyes' : vs.ateFlesh ? 'mouth' : '') : (vs.ateFlesh || vs.starving ? 'mouth' : '');
+    const n = p.n || {};
+    const flesh = flagOn('ate_flesh_' + id) || (id === 'dongha' && flagOn('dongha_ate_unknowing'));
+    if (night) { if (id !== 'you' && ((n.fear || 0) >= SIGN.sleeplessFear || flagOn('stood_stairs_' + id))) return 'eyes'; return flesh ? 'mouth' : ''; }
+    return flesh || (n.hunger || 0) >= SIGN.hungry ? 'mouth' : '';
+  }
+
+  // 지도 위 사람: [{id, name, x, y, face, pose, injury, mark, react, bubble, light, talkable}]
   function peopleOnMap() {
     const out = [];
     if (!scene.map) return out;
@@ -73,11 +96,12 @@
       }
       let pos, pose = null, mark = '';
       if (ph === 'night' || ph === 'aftermath') { pos = bedOf(id); pose = 'lying'; }
-      else { pos = (SPOTS[ph] || SPOTS.day)[id]; if (ph === 'evening' && !state.flags['sat_' + id]) mark = '…'; }
+      else if (ph === 'evening') { pos = SPOTS.evening[id]; pose = 'sitting'; if (!(sat.day === state.day && sat.ids.has(id))) mark = '…'; }
+      else pos = (SPOTS[ph] || SPOTS.day)[id];
       if (!pos) continue;
       const dx = scene.px - pos[0], dy = scene.py - pos[1];
       const face = Math.abs(dx) + Math.abs(dy) <= 3 ? (Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy < 0 ? 'up' : 'down')) : 'down';
-      out.push({ id, name: p.name, x: pos[0], y: pos[1], face, pose, injury: p.n.injury || 0, mark, talkable: ph !== 'night' && ph !== 'aftermath' });
+      out.push({ id, name: p.name, x: pos[0], y: pos[1], face, pose, injury: p.n.injury || 0, mark, react: signOf(id), talkable: ph !== 'night' && ph !== 'aftermath' });
     }
     return out;
   }
@@ -94,12 +118,12 @@
       if (mo.id === 'body_rail' && st === 'none') hidden = true;
       if (mo.id === 'grave' && st === 'none') hidden = true;
       if (mo.id === 'shoes_stairs' && st === 'none') hidden = true;
-      if (mo.id === 'rubble' && st === 'crossed') hidden = false;
+      if (mo.id === 'notebook_dash' && st === 'taken') hidden = true;          // 수첩은 이제 당신 주머니에
       out.push({ id: mo.id, x: mo.x, y: mo.y, name: o.name, solid: !!o.solid && !(mo.id === 'rubble' && st === 'crossed'), state: st, stateName: st, overlay: ov, light: mo.id === 'notebook_dash' && st !== 'there' ? 0 : (o.light || 0), hidden });
     }
     return out;
   }
-  const objectsAt = (x, y) => objectsOnMap().filter((o) => !o.hidden && o.x === x && o.y === y && !(o.id === 'rubble' ? false : false));
+  const objectsAt = (x, y) => objectsOnMap().filter((o) => !o.hidden && o.x === x && o.y === y);
   const rubbleBlocks = (x, y) => scene.map.id === 'tunnel' && x === 17 && traceSt('rubble') !== 'crossed';
 
   // ── 지나갈 수 있는가 ──
@@ -170,7 +194,7 @@
     scene.px = nx; scene.py = ny; scene.moving = { dx, dy, t: 0 }; scene.steps++;
     if (E.DELAYS.step <= 0) { scene.moving = null; arrived(); }
   }
-  function clickCell(px, py) { if (!scene.cam) return null; return [Math.floor((px - scene.cam.ox) / T), Math.floor((py - scene.cam.oy) / T)]; }
+  function clickCell(px, py) { if (!scene.cam) return null; return [Math.floor((px - scene.cam.ox) / ART.T), Math.floor((py - scene.cam.oy) / ART.T)]; }
   function walkTo(tx, ty, then) {
     if (busy || UI.isOpen() || scene.moving || !scene.map) return false;
     if (tx < 0 || ty < 0 || tx >= scene.w || ty >= scene.h) return false;
@@ -196,6 +220,7 @@
   }
   const front = () => { const [dx, dy] = DIRS[scene.face]; return [scene.px + dx, scene.py + dy]; };
   const EXIT_NAMES = { A: '지하상가 통로', B: '배수로 통로', S: '출구 계단', k: '역무실 문', R: '무너진 통로', E: '나가는 길' };
+  const EXIT_AT = { A: [0, 6], B: [27, 13] };
   function exitHere() {
     const t = tileAt(scene.px, scene.py);
     if (scene.map.id === 'station' && (t === 'A' || t === 'B')) return t;
@@ -262,25 +287,40 @@
   // 걸린 사건이 있으면 전부 보여 준다 (하나가 끝나고 또 걸릴 수 있다)
   async function pendingFlow() {
     let guard = 0;
-    while (state.pending && guard++ < 10) await showEvent();
+    while (state.pending && !state.ended && guard++ < 10) await showEvent();
     if (state.ended) await endingScreen();
   }
   const choiceSub = (c) => [c.chance != null ? `<small class="chance">${c.chance}%</small>` : '', c.warn ? `<small class="warn">${esc(c.warn)}</small>` : c.hint ? `<small>${esc(c.hint)}</small>` : '', c.locked ? `<small>${esc(c.reason)}</small>` : ''].join('');
+  // 장면 그림: v4 cg/<image> → v4 cg/<사건 id> → v3 대체 (art.js). 없으면 그림 층을 열지 않는다
+  function eventCg(v) {
+    const src = ART.cgSrc(v.image, v.id);
+    if (src) UI.cg(src);
+    else if (v.image) missing.add(v.image + '@' + v.id);
+    return !!src;
+  }
   async function showEvent() {
     const v = E.eventView(state, db);
     if (!v) return;
     const black = v.id === 'pro_cold';
-    if (v.image && !black) UI.cg(ART.cgSrc(v.image), v.image);
-    await UI.lines(v.text, { black });
-    const i = await UI.open(`<p>${esc(v.text)}</p>`, { kind: 'event', options: v.choices.map((c, k) => ({ label: c.label, sub: choiceSub(c), disabled: c.locked, value: k })), cls: v.choices.length > 3 ? 'wide' : '' });
+    if (!black) eventCg(v);
+    await UI.lines(v.text, { black, tag: v.id });
+    const sentences = UI.splitSentences(v.text);
+    let i;
+    for (;;) {                                                       // 되돌릴 수 없는 선택(금기·결말)은 상자 안에서 한 번 더 묻는다 — OS 확인창 없음
+      i = await UI.open(`<p>${esc(v.text)}</p>`, { kind: 'event', fit: sentences, options: v.choices.map((c, k) => ({ label: c.label, sub: choiceSub(c), disabled: c.locked, value: k })), cls: v.choices.length > 3 ? 'wide' : '' });
+      const c = v.choices[i];
+      if (!c || !(c.taboo || v.kind === 'ending')) break;
+      const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(c.label)}${c.warn ? ` — <span class="warnt">${esc(c.warn)}</span>` : ''}</p>`, { kind: 'confirm2', options: [{ label: '그렇게 한다', value: true }, { label: '다시 고른다', value: false }] });
+      if (sure) break;
+    }
     if (!act({ type: 'choose', i })) return;
     const r = state.lastResult || {};
     if (r.roll) await UI.line(`판정 ${r.roll.chance}% — ${r.roll.success ? '됐다.' : '안 됐다.'}`, { black });
-    if (r.text) await UI.lines(r.text, { black });
+    if (r.text) await UI.lines(r.text, { black, tag: v.id + ':out' });
     if (v.id === 'pro_notebook' || v.id === 'd1_gicheol_arrive') UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
-    if (!state.pending) UI.cgClear();
+    if (!state.pending && !state.ended) UI.cgClear();
   }
-  const faceOf = (id) => ART.portraitSrc(id, person(id) ? person(id).n.injury : 0);
+  const faceOf = (id) => { const p = person(id); return ART.portraitSrc(id, p ? p.n.injury : 0, !!(p && p.permanent && p.permanent.ear)); };
   async function talkTo(id) {
     const p = person(id);
     if (!p) return;
@@ -299,7 +339,7 @@
     const ids = Object.keys(db.lines).filter((k) => k.startsWith(id + '_'));
     let text = '';
     for (const k of ids) { const l = B.pickLine(db, k, ctx); if (l) text = l.text; }     // 뒤에 오는 행이 더 구체적
-    if (state.phase === 'evening') { act({ type: 'setFlag', flag: 'sat_' + id, quiet: true }); }
+    if (state.phase === 'evening') { if (sat.day !== state.day) { sat.day = state.day; sat.ids = new Set(); } sat.ids.add(id); }
     await UI.lines(text || '…', { name: p.name, face: faceOf(id) });
   }
   async function useObject(id) {
@@ -331,14 +371,35 @@
     if (!go) return;
     await nextPhase();
   }
+
+  // ── 원정: 통로 → 1층 사건 → (더 내려가거나 돌아온다) → 역. 지도는 그 층으로 바뀌고, 그림은 그 위에 ──
+  const TRIP_MAPS = { A: ['mall_a1', 'mall_a2'], B: ['drain_b1', 'drain_b2'] };
+  function tripScene(mapId) { const m = db.maps[mapId]; if (m) setScene(mapId, m.start[0], m.start[1]); }
   async function useExit(region) {
     if (state.phase !== 'day') { await UI.line(`${EXIT_NAMES[region]}. 낮에 조사하면 나갈 수 있다.`); return; }
+    if (state.trip) { await UI.line('오늘은 이미 다녀왔다. 다리가 말을 듣지 않는다.'); return; }
     const go = await UI.open(`<p class="who">${esc(EXIT_NAMES[region])}</p><p>${region === 'A' ? '셔터 너머가 어둡다. 발소리가 여럿이다.' : '물소리가 난다. 아래가 젖어 있다.'}</p>`, { kind: 'trip', options: [{ label: '나간다', value: true }, { label: '돌아선다', value: false }], cancel: true, cancelValue: false });
     if (!go) return;
-    await UI.card(db.maps[region === 'A' ? 'mall_a1' : 'drain_b1'].displayName, '원정');
-    if (!act({ type: 'trip', region, floor: 1, quiet: true })) { await UI.line('아무것도 없었다. 역으로 돌아왔다.'); return; }
+    const back = [scene.px, scene.py];
+    const [m1, m2] = TRIP_MAPS[region];
+    await UI.card(db.maps[m1].displayName, '원정');
+    tripScene(m1);
+    if (!act({ type: 'trip', region, floor: 1, quiet: true })) await UI.line('아무것도 없었다. 누가 먼저 다녀갔다.');
     await pendingFlow();
-    if (!state.ended) await UI.line('역으로 돌아왔다.');
+    if (!state.ended && db.maps[m2]) {
+      const deeper = await UI.open(`<p class="who">${esc(db.maps[m1].displayName)}</p><p>계단이 아래로 이어진다. 아래는 덜 뒤져졌다. 돌아오는 길은 멀다.</p>`,
+        { kind: 'deeper', options: [{ label: '아래층으로 내려간다', sub: '<small class="warn">더 많고, 더 다친다</small>', value: true }, { label: '역으로 돌아간다', value: false }] });
+      if (deeper) {
+        await UI.card(db.maps[m2].displayName, '원정 · 아래층');
+        tripScene(m2);
+        if (!act({ type: 'trip', floor: 2, quiet: true })) await UI.line('아무것도 없었다. 물이 발목까지 찼다.');
+        await pendingFlow();
+      }
+    }
+    if (state.ended) return;
+    await UI.card(PLACE.station, '');
+    setScene('station', back[0], back[1]);
+    await UI.line('역으로 돌아왔다.');
   }
 
   // ── 하루 7단계 ──
@@ -351,15 +412,31 @@
     const ph = state.phase;
     if (state.ended) { await endingScreen(); return; }
     if (before && state.day !== before.day) {
-      await UI.card(`D${state.day}`, `열차까지 ${GOAL_DAY - state.day}일`);
+      const left = GOAL_DAY - state.day;
+      await UI.card(`D${state.day}`, left > 0 ? `열차까지 ${left}일` : '열차가 오는 날');
       store.markMorning(state);
       await nightReport(before);
     }
     if (ph === 'trace') { if (scene.map && scene.map.id !== 'station') { act({ type: 'move', map: 'station', x: 13, y: 11, quiet: true }); setScene('station', 13, 11); } }
     if (ph === 'ration') { await pendingFlow(); if (!state.ended) await rationFlow(); return; }
     if (ph === 'seat') { await pendingFlow(); if (!state.ended) { await UI.line('사람들이 제 자리로 흩어진다.'); await nextPhase(); } return; }
-    if (ph === 'aftermath') { await pendingFlow(); if (!state.ended) { await UI.line('밤이 지난다.', { black: true }); await nextPhase(); } return; }
+    if (ph === 'aftermath') { await pendingFlow(); if (!state.ended) { await dream(); await UI.line('밤이 지난다.', { black: true }); await nextPhase(); } return; }
     await pendingFlow();
+  }
+  // 꿈 한 컷 (D4·D6·D8 밤): 지금 기운 정체의 꿈 줄 + 그림. 정체 단어는 안 나온다
+  const DREAM_DAYS = { 4: 0, 6: 1, 8: 2 };
+  async function dream() {
+    const k = DREAM_DAYS[state.day];
+    if (k == null) return;
+    const c = E.identity(state, db);
+    if (!c || !c.dreams || !c.dreams[k]) return;
+    const text = lineOf(c.dreams[k]);
+    if (!text) return;
+    const src = ART.identSrc(c.id);
+    if (src) UI.cg(src);
+    if (UI.bot) autoLog.push(`[꿈 D${state.day}]`);
+    await UI.lines(text, { tag: 'dream' });
+    UI.cgClear();
   }
   // 배식: 사람마다 그릇을 켜고 끈다 → ration 동작
   async function rationFlow() {
@@ -382,41 +459,95 @@
     const parts = [];
     const NAME = { food: '식량', water: '물', fuel: '땔감' };
     for (const k of ['food', 'water', 'fuel']) { const d = (state.world[k] || 0) - (before.world[k] || 0); if (d) parts.push(`${NAME[k]} ${d > 0 ? '+' : '−'}${Math.abs(d)}`); }
-    const gone = Object.values(state.people).filter((p) => before.status[p.id] === 'home' && p.status !== 'home').map((p) => p.name + (p.status === 'ascended' ? '이(가) 올라갔다' : '이(가) 밤에 갔다'));
-    const noise = state.nightLog.some((e) => e.day === before.day);
-    const text = [gone.join('. '), parts.join(' · '), noise ? '밤에 무슨 소리가 났다. 흔적이 남았을 것이다.' : ''].filter(Boolean).join(' ');
+    const gone = Object.values(state.people).filter((p) => before.status[p.id] === 'home' && p.status !== 'home' && p.id !== 'you')
+      .map((p) => josa(p.name, '이가') + (p.status === 'ascended' ? ' 올라갔다' : p.status === 'stayed' ? ' 셔터 너머로 갔다' : ' 밤에 갔다'));
+    const noise = state.nightLog.some((e) => e.day === before.day && e.role !== 'clock');
+    const text = [gone.length ? gone.join('. ') + '.' : '', parts.join(' · '), noise ? '밤에 무슨 소리가 났다. 흔적이 남았을 것이다.' : ''].filter(Boolean).join(' ');
     if (text) await UI.lines(text, { black: true });
   }
+
+  // ── 명부·결말 ──
+  const STATUS_KO = { boarded: '탔다', dead: '갔다', ascended: '올라갔다', stayed: '남았다', walked: '걸어 나갔다' };
+  function ledgerRows() {
+    const rows = (state.ended && state.ended.ledger) || E.ledger.rows(state, db);
+    // [엔진 메모] '탄다'를 고르면 you_boarded 깃발만 서고 status 는 home 이라 명부가 '남았다'가 된다 → 화면에서만 '탔다'로 읽는다
+    // [엔진 메모] 도보 결말(walked_out)도 살아 있는 사람은 'stayed' 로 온다 → 화면에서만 '걸어 나갔다'
+    return rows.map((r) => (r.id === 'you' && r.status === 'stayed' && flagOn('you_boarded') ? Object.assign({}, r, { status: 'boarded' })
+      : r.status === 'stayed' && flagOn('walked_out') ? Object.assign({}, r, { status: 'walked' }) : r));
+  }
+  const rowDay = (r) => (r.day != null && r.day !== '' && (r.status === 'dead' || r.status === 'ascended') ? `D${r.day}` : '');
+  const rowCause = (r) => (r.status === 'dead' || r.status === 'ascended' ? (r.cause ? esc(r.cause) : '<span class="blank">___</span>') : '');
+  // 명부 한 장 (무대 층): 탄 사람 옆에 구멍, 죽은 줄에 날짜와 줄긋기, 올라간 줄은 옅게, 사인 빈칸은 ___ , 당신 줄은 맨 위
+  function ledgerPage(rows, foot) {
+    const body = rows.map((r) => `<div class="lrow ${r.status}${r.id === 'you' ? ' you' : ''}"><span class="hole"></span><span class="nm">${esc(r.name)}</span><span class="st">${STATUS_KO[r.status] || ''}</span><span class="dd">${rowDay(r)}</span><span class="cs">${rowCause(r)}</span></div>`).join('');
+    return `<p class="lhead">승객 명부</p>${body}${foot ? `<p class="ft">${esc(foot)}</p>` : ''}`;
+  }
+  const ledgerMini = (rows) => `<div class="ledger">${rows.map((r) => `<div class="row ${r.status}"><span>${esc(r.name)}</span><span>${STATUS_KO[r.status] || ''}${rowDay(r) ? ' · ' + rowDay(r) : ''} ${rowCause(r)}</span></div>`).join('')}</div>`;
+  // 수첩을 줍는 사람: 역에 남은 주민 (엔진은 'resident' 까지만 알려 준다)
+  const READER_ORDER = ['soonrye', 'mari', 'gicheol', 'eunji', 'dongha', 'seoha'];
+  const pickResident = () => { for (const id of READER_ORDER) if (home(id)) return person(id); return null; };
+  function deathKind() {
+    const e = state.ended || {};
+    const ev = (e.cause && e.cause.event) || (state.lastResult && state.lastResult.event) || '';
+    if (person('you').status === 'ascended') return 'death_counted';
+    if (/starve/.test(ev)) return 'death_starve';
+    if (/flood_sick|flux/.test(ev)) return 'death_flux';
+    if (/drown|flood|surge/.test(ev)) return 'death_drown';
+    return 'death_beaten';
+  }
+  function queueTitle() { const t = setInterval(() => { if (!busy && !UI.isOpen()) { clearInterval(t); titleScreen(true); } }, 40); }
   async function endingScreen() {
-    const e = state.ended; if (!e) return;
-    const why = { you_gone: '당신은 돌아오지 않았다.', all_dead: '아무도 남지 않았다.', train: '열흘이 지났다.' }[e.why] || '';
-    const reveal = e.identity ? lineOf('reveal_' + e.identity) : '';
-    UI.cg(ART.cgSrc('cg_ledger'), '명부');
-    const rows = (e.ledger || []).map((r) => `<div class="row"><span>${esc(r.name)}</span><span>${esc(r.status === 'dead' ? '갔다' : r.status === 'ascended' ? '올라갔다' : r.status === 'boarded' ? '탔다' : '남았다')}${r.day != null && r.day !== '' ? ` · D${esc(r.day)}` : ''} ${r.cause ? esc(r.cause) : '<span class="blank">___</span>'}</span></div>`).join('');
-    await UI.open(`<p class="who">명부</p><div class="ledger">${rows}</div><p class="mini">${esc(why)}</p>`, { kind: 'ending', options: [{ label: '덮는다', value: true }] });
-    if (reveal) await UI.lines(reveal, { black: true });
+    const e = state.ended;
+    if (!e || endShown) return;
+    endShown = true;
+    const rows = ledgerRows();
+    const cand = e.identity ? db.identity.candidates.find((c) => c.id === e.identity) : null;
+    if (youGone()) {
+      // 당신 사망: 사망 그림 + 한 줄 → 수첩을 주운 사람이 명부를 읽는다
+      UI.cg(ART.deathSrc(deathKind()));
+      await UI.line(person('you').status === 'ascended' ? '당신 신발이 계단 아래 가지런히 남았다.' : '당신은 일어나지 않았다.', { tag: 'death' });
+      const rd = pickResident();
+      const head = rd ? `${josa(rd.name, '이가')} 당신 주머니에서 수첩을 꺼내 읽는다.` : '수첩은 승강장 바닥에 남았다. 아무도 줍지 않았다.';
+      await UI.open(`<p class="who">${esc(head)}</p>${ledgerMini(rows)}`, { kind: 'death_ledger', options: [{ label: '덮는다', value: true }] });
+    } else {
+      // 결말: 명부 한 장
+      const why = { all_dead: '아무도 남지 않았다.', train: '열흘이 지났다.' }[e.why] || '';
+      const reader = e.reader === 'conductor' ? '차장이 명부를 읽는다.' : e.reader === 'resident' ? (pickResident() ? `${josa(pickResident().name, '이가')} 수첩을 주워 읽는다.` : '아무도 읽지 않는다.') : '당신이 명부를 읽는다.';
+      UI.page(ledgerPage(rows, why), 'ledger-page');
+      const cap = db.events.ending_ledger ? db.events.ending_ledger.text : '';
+      await UI.open(`<p class="who">${esc(reader)}</p>${cap ? `<p class="mini">${esc(cap)}</p>` : ''}`, { kind: 'ending', cls: 'short', options: [{ label: '덮는다', value: true }] });
+    }
+    // 정체: 그림 한 장 + 한 줄 (정체 단어는 화면에 안 나온다)
+    if (cand) {
+      const src = ART.identSrc(cand.id);
+      if (src) UI.cg(src); else UI.cgClear();
+      for (const lid of cand.reveal || []) { const t = lineOf(lid); if (t) await UI.lines(t, { tag: 'reveal' }); }
+    }
     UI.cgClear();
-    await titleScreen(true);
+    queueTitle();
   }
 
   // ── 머리말(패널) ──
   function hud() {
     if (!state) return;
     const v = E.view(state, db);
+    viewPeople = Object.fromEntries(v.people.map((p) => [p.id, p]));
     const ICON = { food: 'food', water: 'water', fuel: 'gen' };
     const ic = (k) => (ART.iconSrc(ICON[k] || k) ? `<img class="ic" alt="" src="${ART.iconSrc(ICON[k] || k)}">` : '');
     const it = (k, name) => `<div class="it ${(v.world[k] || 0) <= 1 ? 'low' : ''}">${ic(k)}<b>${v.world[k] || 0}</b><span>${name}</span></div>`;
     const PH = { trace: '아침 — 흔적', ration: '아침 — 배식', seat: '아침 — 자리', day: '낮', evening: '저녁', night: '밤', aftermath: '새벽', ended: '끝' };
     const faces = db.peopleOrder.filter((id) => id !== 'you' && flagOn(MET[id] || '__')).map((id) => `<img alt="${esc(person(id).name)}" title="${esc(person(id).name)}" class="${home(id) ? '' : 'gone'}" src="${faceOf(id)}">`).join('');
-    $('hud').innerHTML = `<div class="day">D${state.day}<small>열차까지 ${Math.max(0, GOAL_DAY - state.day)}일</small></div>${it('food', '식량')}${it('water', '물')}${it('fuel', '땔감')}<div class="phase">${PH[state.phase] || ''}</div><div class="people">${faces}</div>`;
+    const left = Math.max(0, GOAL_DAY - state.day);
+    $('hud').innerHTML = `<div class="day">D${state.day}<small>${left > 0 ? `열차까지 ${left}일` : '열차가 오는 날'}</small></div>${it('food', '식량')}${it('water', '물')}${it('fuel', '땔감')}<div class="phase">${PH[state.phase] || ''}</div><div class="people">${faces}</div>`;
   }
   function objective() {
     if (!state || !scene.map) return '';
     const m = scene.map.id;
     if (m === 'car') return traceSt('lever') === 'pulled' ? '오른쪽 끝 열린 문으로 나간다' : '전동차 안을 살핀다';
     if (m === 'tunnel') return traceSt('rubble') === 'crossed' ? '터널 끝 승강장으로' : '앞쪽 불빛으로';
+    if (m !== 'station') return '';
     if (state.day === 0) return '승강장을 둘러본다 · 화로를 조사하면 저녁';
-    return { trace: '아침 — 흔적을 살피고 말을 건다 · 화로를 조사하면 배식', day: '낮 — 통로를 조사하면 원정 · 화로를 조사하면 저녁', evening: lineOf('toast_fire_night') ? '저녁 — 한 사람과 이야기할 수 있다 · ' + lineOf('toast_fire_night') : '저녁', night: '밤 — 화로를 조사하면 잠든다' }[state.phase] || '';
+    return { trace: '아침 — 흔적을 살피고 말을 건다 · 화로를 조사하면 배식', day: state.trip ? '낮 — 다녀왔다 · 화로를 조사하면 저녁' : '낮 — 통로를 조사하면 원정 · 화로를 조사하면 저녁', evening: lineOf('toast_fire_night') ? '저녁 — 한 사람과 이야기할 수 있다 · ' + lineOf('toast_fire_night') : '저녁', night: '밤 — 화로를 조사하면 잠든다' }[state.phase] || '';
   }
 
   // ── 일시정지(Esc)·수첩(Tab)·타이틀 ──
@@ -426,13 +557,36 @@
     else if (a === 'export') { try { const code = store.exportCode(state); if (navigator.clipboard) await navigator.clipboard.writeText(code); UI.toast('저장 코드를 복사했다.'); } catch (e) { UI.toast('복사하지 못했다.'); } }
     else if (a === 'title') await titleScreen(false);
   }
+  // 사인 칸: 적거나, 비워 두거나. 한 번 적으면 고칠 수 없다 (상자 안 2단 선택)
+  async function writeCauseFlow(id) {
+    const p = person(id);
+    const base = p.status === 'ascended' ? '올라갔다' : '밤에 갔다';
+    const facts = state.ledger.written.filter((w) => w && w.text && w.text.includes(p.name)).slice(-2).map((w) => w.text);
+    const short = (t) => (t.length > 22 ? t.slice(0, 22) + '…' : t);
+    const opts = [{ label: base, value: base }].concat(facts.map((t) => ({ label: short(t), value: t }))).concat([{ label: '비워 둔다', value: '__blank' }, { label: '아직', value: null }]);
+    const c = await UI.open(`<p class="who">${esc(p.name)} — 사인 칸</p><p class="mini">적지 않는 것도 적는 것이다. 한 번 적으면 고칠 수 없다.</p>`, { kind: 'cause', cancel: true, cancelValue: null, options: opts, cls: 'wide' });
+    if (c == null) return;
+    const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(p.name)} — ${c === '__blank' ? '___' : esc(c)}</p>`, { kind: 'confirm2', options: [{ label: '그렇게 적는다', value: true }, { label: '다시 고른다', value: false }] });
+    if (!sure) return;
+    if (!act({ type: 'writeCause', who: id, line: c === '__blank' ? null : c, quiet: true })) UI.toast('지금은 적을 수 없다 — 아침·저녁·새벽에');
+  }
   async function notebook() {
     for (;;) {
       const a = await UI.open('<p class="title">수첩</p><p class="mini">명부 · 사실 줄 · 일지</p>', { kind: 'book', cancel: true, cancelValue: null, cls: 'wide', options: [{ label: '명부', value: 'ledger' }, { label: '사실 줄', value: 'facts' }, { label: '일지', value: 'log' }, { label: '덮는다', value: null }] });
       if (!a) return;
+      if (a === 'ledger') {
+        const ids = ['you'].concat(db.peopleOrder.filter((id) => id !== 'you' && flagOn(MET[id] || '__')));   // 당신 줄은 맨 위
+        const rows = ids.map((id) => { const p = person(id); const st = p.status === 'home' ? '' : p.status; return { id, name: p.name, status: st, day: p.day, cause: Object.prototype.hasOwnProperty.call(state.ledger.causes, id) ? state.ledger.causes[id] : null }; });
+        const html = `<p class="who">승객 명부</p><div class="ledger">${rows.map((r) => `<div class="row ${r.status}"><span>${esc(r.name)}</span><span>${r.id === 'you' && !r.status ? '당신 글씨' : r.status ? `${STATUS_KO[r.status] || ''}${rowDay(r) ? ' · ' + rowDay(r) : ''} ${rowCause(r)}` : ''}</span></div>`).join('')}</div>`;
+        const open = rows.filter((r) => r.id !== 'you' && (r.status === 'dead' || r.status === 'ascended') && !Object.prototype.hasOwnProperty.call(state.ledger.causes, r.id));
+        const ph = db.phases.find((x) => x.id === state.phase);
+        const canWrite = !!(ph && ph.actions.includes('writeLedger'));
+        const b = await UI.open(html, { kind: 'bookpage', cancel: true, cancelValue: null, cls: open.length ? 'wide' : '', options: open.slice(0, 3).map((r) => ({ label: `${r.name} 사인 칸`, sub: canWrite ? '' : '<small>아침·저녁·새벽에 적는다</small>', disabled: !canWrite, value: 'cause:' + r.id })).concat([{ label: '돌아간다', value: null }]) });
+        if (b && String(b).startsWith('cause:')) await writeCauseFlow(String(b).slice(6));
+        continue;
+      }
       let body = '';
-      if (a === 'ledger') body = `<p class="who">승객 명부</p><div class="ledger">${db.peopleOrder.filter((id) => id === 'you' || flagOn(MET[id] || '__')).map((id) => `<div class="row"><span>${esc(person(id).name)}</span><span>${id === 'you' ? '당신 글씨' : home(id) ? '' : person(id).status === 'ascended' ? '올라갔다' : '갔다'}</span></div>`).join('')}</div>`;
-      else if (a === 'facts') body = `<p class="who">사실 줄</p><div class="list">${state.ledger.written.length ? state.ledger.written.slice(-7).map((w) => `<p><span class="d">D${w.day}</span>${esc(w.text)}</p>`).join('') : '<p class="mini">아직 아무것도 적지 않았다.</p>'}</div>`;
+      if (a === 'facts') body = `<p class="who">사실 줄</p><div class="list">${state.ledger.written.filter((w) => w && w.text).length ? state.ledger.written.filter((w) => w && w.text).slice(-7).map((w) => `<p><span class="d">D${w.day}</span>${esc(w.text)}</p>`).join('') : '<p class="mini">아직 아무것도 적지 않았다.</p>'}</div>`;
       else body = `<p class="who">일지</p><div class="list">${state.log.filter((l) => l.kind === 'choice').slice(0, 7).map((l) => `<p><span class="d">D${l.day}</span>${esc(l.text)}</p>`).join('') || '<p class="mini">비어 있다.</p>'}</div>`;
       await UI.open(body, { kind: 'bookpage', cancel: true, cancelValue: null, options: [{ label: '돌아간다', value: null }] });
     }
@@ -440,7 +594,7 @@
   function toggleFull() { if (document.fullscreenElement) document.exitFullscreen(); else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
 
   function startGame(s) {
-    state = s;
+    state = s; endShown = false;
     if (!state.pos.map) { setScene('car', db.maps.car.start[0], db.maps.car.start[1]); }
     else setScene(state.pos.map, state.pos.x, state.pos.y);
     hud();
@@ -458,7 +612,7 @@
       const opts = [];
       if (loaded.state && !loaded.state.ended) opts.push({ label: `계속 (D${loaded.state.day})`, value: 'go' });
       opts.push({ label: '새로 시작', value: 'new' }, { label: '저장 코드 불러오기', value: 'import' }, { label: '전체화면', value: 'full' });
-      UI.cg(ART.cgSrc('title'), '어두운 역');
+      UI.cg(ART.cgSrc('title'));
       const a = await UI.open('<p class="title" style="text-align:center;letter-spacing:.3em">어두운 역</p><p class="mini" style="text-align:center">묵현역 · 열차까지 열흘 · 18+</p>', { kind: 'title', options: opts, cls: 'wide' });
       if (a === 'full') { toggleFull(); continue; }
       if (a === 'import') {
@@ -483,7 +637,7 @@
     const ok = ['z', 'Z', 'Enter', ' '].includes(e.key), back = ['x', 'X', 'Escape'].includes(e.key);
     if (e.key === 'Shift') { running = true; return; }
     if (e.key === 'f' || e.key === 'F') { toggleFull(); e.preventDefault(); return; }
-    if (e.key === 'Tab') { e.preventDefault(); if (state && !UI.isOpen() && !busy) flow(notebook); return; }
+    if (e.key === 'Tab') { e.preventDefault(); if (state && !state.ended && !UI.isOpen() && !busy) flow(notebook); return; }
     if (UI.isOpen()) {
       if (dir === 'up' || dir === 'down') { UI.key(dir); e.preventDefault(); }
       else if (ok) { UI.key('ok'); e.preventDefault(); } else if (back) { UI.key('back'); e.preventDefault(); }
@@ -502,7 +656,7 @@
   let hover = '';
   cv.addEventListener('mousemove', (e) => { if (!state) return; const [px, py] = stageXY(e); const c = clickCell(px, py); hover = c ? hoverName(c[0], c[1]) : ''; });
   cv.addEventListener('mouseleave', () => { hover = ''; });
-  $('tabBook').addEventListener('click', () => { if (state && !UI.isOpen() && !busy) flow(notebook); });
+  $('tabBook').addEventListener('click', () => { if (state && !state.ended && !UI.isOpen() && !busy) flow(notebook); });
   $('tabPause').addEventListener('click', () => { if (UI.isOpen()) UI.key('back'); else if (state && !busy) flow(pauseMenu); });
   $('tabFull').addEventListener('click', toggleFull);
 
@@ -522,21 +676,24 @@
     if (!state || !scene.map) return;
     update();
     const tg = !UI.isOpen() && !busy ? target() : null;
-    RENDER.draw(ctx, cv, scene, state, peopleOnMap(), objectsOnMap(), tick, { target: tg && tg.kind !== 'exit' ? tg : null, doorOpen: traceSt('lever') === 'pulled' });
+    const you = person('you');
+    RENDER.draw(ctx, cv, scene, state, peopleOnMap(), objectsOnMap(), tick, { target: tg && tg.kind !== 'exit' ? tg : null, doorOpen: traceSt('lever') === 'pulled', officeOpen: traceSt('office_door') === 'open', youHurt: you ? you.n.injury || 0 : 0, youReact: scene.map.id === 'station' ? signOf('you') : '' });
     overlay();
   }
 
-  // ── 봇·플레이스루 (?auto=car|morning3|night3, ?fast=1) ──
+  // ── 봇·플레이스루 (?auto=<지점>, ?fast=1, ?seed=n) — 캡처(v4/tools/shot.py)용. 화면 규칙과 무관 ──
+  // 지점: car · morning3 · night3 · evening5 · day5 · night8 · ending · reveal · death
+  //   봇은 화면처럼 경고·%·비용을 보고, 캡처가 끝까지 가도록 '당신 사망'만 봇 전용 메타(choiceMeta)로 피한다(death 지점은 반대로 고른다).
+  //   캡처 지점에 닿으면 봇이 'hold' 를 돌려 그 창을 그대로 둔다 → 헤드리스가 그 화면을 찍는다.
   const safePick = (kind, info) => {
     const opts = info.options;
     if (kind === 'event') { const i = opts.findIndex((o) => !o.disabled && !/warn|chance/.test(String(o.subRaw || ''))); return i >= 0 ? i : opts.findIndex((o) => !o.disabled); }
     if (kind === 'fire') return 0;
     if (kind === 'ration') return opts.length - 1;
-    if (kind === 'trip' || kind === 'write') return 1;
+    if (kind === 'trip' || kind === 'write' || kind === 'deeper') return 1;
     return 0;
   };
   const idle = () => new Promise((res) => { const t = setInterval(() => { if (!busy && !UI.isOpen() && !scene.auto && !scene.moving) { clearInterval(t); res(); } }, 15); });
-  const wait = (ms) => new Promise((res) => setTimeout(res, ms));
   const until = (fn, limit) => new Promise((res) => { let n = 0; const t = setInterval(() => { if (fn() || n++ > (limit || 2000)) { clearInterval(t); res(fn()); } }, 15); });
   async function use(id) {                 // 물건·사람 옆까지 걸어가 조사한다
     await idle();
@@ -549,30 +706,92 @@
     return true;
   }
   async function goto(x, y) { await idle(); walkTo(x, y); await idle(); }
+  const autoLog = [];
   async function autoRun(target) {
-    bot = (kind, info) => { if (kind === 'event') { const ev = E.eventView(state, db); if (ev) { const i = ev.choices.findIndex((c) => !c.locked && !c.warn && !c.taboo); return i >= 0 ? i : ev.choices.findIndex((c) => !c.locked); } } return safePick(kind, info); };
+    const wantDeath = target === 'death';
+    let holding = false;
+    const report = (why) => { console.log(`[ds4 auto] ${target} ${why} D${state.day} ${state.phase}${state.ended ? ' ended=' + state.ended.why : ''} you=${person('you').status} food=${state.world.food} | ${autoLog.slice(-16).join(' / ')}`); if (missing.size) console.log('[ds4 missing] ' + Array.from(missing).join(' ')); };
+    const HOLD = {
+      night3: (k) => k === 'line' && state.day === 3 && state.phase === 'night' && state.pending && state.pending.id === 'trial_d3_count',
+      day5: (k) => k === 'line' && state.day === 5 && state.phase === 'night' && state.pending && state.pending.id === 'd5_rail_body',
+      ending: (k) => k === 'ending',
+      reveal: (k, info) => k === 'line' && info.opts && info.opts.tag === 'reveal',
+      death: (k) => k === 'death_ledger',
+    }[target];
+    // 결과 하나의 값 (캡처 봇 전용 — 표의 효과를 직접 읽는다): 당신이 죽음 −100 · 다침 −6/칸 · 손상 −4 · 식량·물·약 +1.5 · 배고픔 −0.5
+    const meHit = (v) => v && (v.who == null || v.who === 'you' || v.who === 'self');
+    function outValue(o) {
+      if (!o || !o.effects) return 0;
+      const e = o.effects; let sc = 0;
+      if (e.kill && meHit(e.kill)) sc += wantDeath ? 100 : -100;
+      if (e.injure && meHit(e.injure)) sc -= 6 * (e.injure.n || 1);
+      if (e.permanent && meHit(e.permanent)) sc -= 4;
+      for (const k of ['food', 'water', 'meds']) if (typeof e[k] === 'number') sc += 1.5 * e[k];
+      if (typeof e.hunger === 'number') sc -= 0.5 * e.hunger; else if (e.hunger && meHit(e.hunger)) sc -= 0.5 * (e.hunger.n || 0);
+      return sc;
+    }
+    function pickEvent() {
+      const ev = E.eventView(state, db); if (!ev) return 0;
+      const rows = db.events[ev.id] ? db.events[ev.id].choices : [];
+      let best = -1, bs = -Infinity;
+      ev.choices.forEach((c, i) => {
+        if (c.locked) return;
+        const row = rows[i] || {};
+        const p = c.chance != null ? c.chance / 100 : 1;
+        let sc = row.check ? p * outValue(row.ok) + (1 - p) * outValue(row.fail) : outValue(row.out);
+        if (c.taboo) sc += wantDeath ? 3 : -3;
+        if (!wantDeath && (c.warn || c.hint)) sc -= 0.5;
+        if (c.cost) sc -= 0.3;
+        if (sc > bs) { bs = sc; best = i; }
+      });
+      autoLog.push(`D${state.day} ${state.phase} ${ev.id} → ${ev.choices[best] ? ev.choices[best].label : '?'}`);
+      return best;
+    }
+    bot = (kind, info) => {
+      if (HOLD && HOLD(kind, info)) { holding = true; UI.setBot(null); report('hold'); return 'hold'; }
+      if (kind === 'line') return undefined;
+      if (kind === 'event') return pickEvent();
+      if (kind === 'trip') return wantDeath ? 1 : 0;
+      if (kind === 'deeper') return !wantDeath && state.day >= 4 && (person('you').n.injury || 0) === 0 && (state.world.food || 0) <= 3 ? 0 : 1;
+      if (kind === 'ration') { const you = person('you'); return wantDeath && info.options[0] && /뺀다/.test(info.options[0].label) && (you.n.hunger || 0) < 8 ? 0 : info.options.length - 1; }
+      if (kind === 'confirm2') return 0;
+      return safePick(kind, info);
+    };
     UI.setBot(bot);
-    await newGame(7);
+    const seed = Number(B.params.get('seed')) || 7;
+    await newGame(seed);
     await idle();
     if (target === 'car') { UI.setBot(null); return; }
     await use('lever'); await use('notebook_dash'); await goto(21, 3); await idle();
     await use('gicheol'); await goto(29, 2); await idle();
     await use('speaker'); await use('blanket_mari');
-    const passDay = async () => { const d = state.day; let guard = 0; while (!state.ended && state.day === d && guard++ < 12) { await use('fire'); await idle(); } };
-    await passDay();                                  // D0 → D1 아침
-    while (!state.ended && state.day < 3) { await use('notebook_you'); await passDay(); }
-    if (target === 'morning3') { await use('notebook_you'); await goto(13, 11); UI.setBot(null); return; }
-    while (!state.ended && state.phase !== 'evening') { await use('fire'); await idle(); }
-    UI.setBot(null);
-    await idle();
-    const fire = objectsOnMap().find((q) => q.id === 'fire');      // 저녁 화로: '잠자리로' 를 봇 없이 고른다 → 밤에 걸린 고정 장면(셈)이 첫 문장까지 나온다
-    walkTo(fire.x, fire.y);
-    await until(() => UI.isOpen()); UI.pick(0);
-    await until(() => state.phase === 'night' && UI.isOpen());
+    const did = {};
+    const once = (k) => (did[k] ? false : (did[k] = true));
+    let guard = 0;
+    while (!state.ended && !holding && guard++ < 600) {
+      await idle();
+      if (holding || state.ended) break;
+      const ph = state.phase, d = state.day;
+      if (once('day' + d)) autoLog.push('[D' + d + ' food' + state.world.food + ' water' + state.world.water + ' hunger' + person('you').n.hunger + ']');
+      if (target === 'morning3' && d === 3 && ph === 'trace') { await use('notebook_you'); await goto(13, 11); UI.setBot(null); report('stop'); return; }
+      if (target === 'evening5' && d === 5 && ph === 'evening') { await use(peopleOnMap().find((q) => q.talkable) ? peopleOnMap().find((q) => q.talkable).id : 'fire'); await goto(13, 12); UI.setBot(null); report('stop'); return; }
+      if (target === 'night8' && d === 8 && ph === 'night') { await goto(17, 12); scene.face = 'up'; UI.setBot(null); report('stop'); return; }
+      if (ph === 'trace' && d > 0 && once('trace' + d)) { await use('notebook_you'); continue; }
+      if (ph === 'day' && d >= 1 && !wantDeath && !state.trip && once('trip' + d) && (person('you').n.injury || 0) === 0 && ((state.world.food || 0) <= 5 || (state.world.water || 0) <= 5)) {
+        const region = d % 2 === 0 ? 'A' : 'B';
+        await goto(EXIT_AT[region][0], EXIT_AT[region][1]);
+        if (exitHere()) { interact(); await idle(); }
+        continue;
+      }
+      if (ph === 'evening' && d > 0 && once('talk' + d)) { const p = peopleOnMap().find((q) => q.talkable); if (p) { await use(p.id); continue; } }
+      await use('fire');
+    }
+    if (!holding) { UI.setBot(null); report('end'); }
   }
 
   // ── 시작 ──
-  window.__ds4 = { get state() { return state; }, get db() { return db; }, get scene() { return scene; }, dispatch: act, walkTo, pick: UI.pick, interact, frame, flow, use, goto, idle, autoRun, setBot: (fn) => { bot = fn; UI.setBot(fn); }, store: () => store, E, UI };
+  window.__ds4 = { get state() { return state; }, get db() { return db; }, get scene() { return scene; }, dispatch: act, walkTo, pick: UI.pick, interact, frame, flow, use, goto, idle, autoRun, autoLog,
+    missing: () => Array.from(missing), setBot: (fn) => { bot = fn; UI.setBot(fn); }, store: () => store, E, UI };
   (async () => {
     try {
       db = await B.loadTables('data/');

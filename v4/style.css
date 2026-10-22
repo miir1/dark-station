@@ -101,3 +101,27 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 @keyframes ds-fade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes ds-fade-out { from { opacity: 1; } to { opacity: 0; } }
 #app.fast #fade.in, #app.fast #fade.out { animation-duration: 0s; }
+
+/* 무대 위 글 한 장 — 명부 (결말). 그림 층과 같은 자리, 줄지 않는다 */
+#cg.haspage { top: 4px; }
+#cg .page { width: 384px; height: 216px; position: relative; padding: 10px 18px 8px 26px; color: #2b2119; font-size: 9px; line-height: 1.5;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 17px, rgba(70,90,120,.18) 17px 18px), radial-gradient(ellipse at 30% 20%, #ddd0b2, #c4b391 70%, #a8946f);
+  border: 1px solid #3a342b; box-shadow: 0 0 0 1px #000, 0 0 24px rgba(0,0,0,.8), inset 0 0 30px rgba(60,40,20,.35); }
+#cg .page::before { content: ''; position: absolute; left: 14px; top: 0; bottom: 0; width: 1px; background: rgba(150,40,30,.35); }
+#cg .page .lhead { margin: 0 0 4px; text-align: center; letter-spacing: .4em; font-size: 8px; color: #5a4a36; }
+#cg .page .lrow { display: grid; grid-template-columns: 12px 64px 46px 30px 1fr; align-items: center; height: 18px; white-space: nowrap; }
+#cg .page .lrow .hole { width: 7px; height: 7px; border-radius: 50%; }
+#cg .page .lrow.boarded .hole { background: #0b0a09; box-shadow: 0 0 0 1px rgba(90,70,50,.6), inset 1px 1px 1px rgba(255,255,255,.08); }
+#cg .page .lrow.dead .nm, #cg .page .lrow.dead .st { text-decoration: line-through; text-decoration-color: #6a1d14; text-decoration-thickness: 1px; }
+#cg .page .lrow.dead .dd { color: #6a1d14; }
+#cg .page .lrow.ascended { opacity: .36; }
+#cg .page .lrow.you { font-weight: 700; }
+#cg .page .lrow .cs { color: #3d3024; font-style: italic; overflow: hidden; text-overflow: ellipsis; }
+#cg .page .lrow .blank { color: #7a6a52; letter-spacing: .12em; font-style: normal; }
+#cg .page .ft { position: absolute; left: 26px; right: 18px; bottom: 6px; margin: 0; font-size: 7px; color: #5a4a36; text-align: right; }
+#box .ledger .row.dead > span:first-child { text-decoration: line-through; text-decoration-color: #a0453a; }
+#box .ledger .row.ascended { opacity: .5; }
+#box .warnt { color: var(--warn); }
+#box.opts.short { height: 72px; }
+#box.opts.tight .body { font-size: 8px; line-height: 1.4; }
+#box.opts.tight .opt { font-size: 8px; min-height: 15px; padding: 1px 5px; }

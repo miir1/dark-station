@@ -2,8 +2,8 @@
   { "id": "trace",     "order": 1, "actions": ["move", "inspect", "talk", "writeLedger"], "skipIf": "day==0", "timeBudgetSec": 90 },
   { "id": "ration",    "order": 2, "actions": ["setBowl", "confirmRation"],                "skipIf": "day==0", "timeBudgetSec": 60 },
   { "id": "seat",      "order": 3, "actions": ["assign", "confirmSeats"],                  "skipIf": "day==0", "timeBudgetSec": 60 },
-  { "id": "day",       "order": 4, "actions": ["move", "inspect", "talk", "trip", "tear", "build", "fight", "choose"], "skipIf": "", "timeBudgetSec": 240 },
-  { "id": "evening",   "order": 5, "actions": ["move", "talk", "sitWith", "choose", "writeLedger"], "skipIf": "", "timeBudgetSec": 60 },
+  { "id": "day",       "order": 4, "actions": ["move", "inspect", "talk", "trip", "tear", "build", "fight", "choose", "treat"], "skipIf": "", "timeBudgetSec": 240 },
+  { "id": "evening",   "order": 5, "actions": ["move", "talk", "sitWith", "choose", "writeLedger", "treat"], "skipIf": "", "timeBudgetSec": 60 },
   { "id": "night",     "order": 6, "actions": ["choose", "sleep"],                          "skipIf": "", "timeBudgetSec": 120 },
   { "id": "aftermath", "order": 7, "actions": ["rollNight", "writeLedger", "advance"],      "skipIf": "", "timeBudgetSec": 30 }
 ]

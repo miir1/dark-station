@@ -43,9 +43,12 @@
   }
   const sleepers = (s) => Object.values(s.people).filter((p) => p.status === 'home' && p.id !== 'you');
 
+  // 이름으로 지목된 행위자·대상은 바깥 사람(outside)이어도 된다 — 역 밖에서 하는 일(은채가 순찰대를 데려온다, 도현이 밸브를 잠근다).
+  // any·조건식 행위자와 무작위 대상은 역에서 자는 사람(home)만.
+  const reachable = (p) => p && (p.status === 'home' || p.status === 'outside');
   function resolveActors(s, db, n, base) {
     const home = sleepers(s);
-    if (db.people[n.actor]) { const p = s.people[n.actor]; return p && p.status === 'home' ? [p] : []; }
+    if (db.people[n.actor]) { const p = s.people[n.actor]; return reachable(p) && p.id !== 'you' ? [p] : []; }
     if (n.actor === 'any') return home;
     return home.filter((p) => C.test(n.actor, roleCtx(s, base, p, null)));
   }
@@ -57,7 +60,7 @@
     if (t === 'bond') { const b = s.people[actor.needs.bond]; return b && b.status === 'home' ? b : null; }
     if (RANDOM_TARGETS.includes(t)) return R.pick(s, others) || null;
     if (t === 'mostInjured') { const hurt = others.filter((p) => (p.n.injury || 0) > 0).sort((a, b) => (b.n.injury || 0) - (a.n.injury || 0)); return hurt[0] || null; }
-    if (db.people[t]) { const p = s.people[t]; return p && p.status === 'home' && p.id !== actor.id ? p : null; }
+    if (db.people[t]) { const p = s.people[t]; return reachable(p) && p.id !== actor.id ? p : null; }
     let fit = [];
     try { fit = others.filter((p) => C.test(t, roleCtx(s, base, actor, p))); } catch (e) { fit = []; }   // 모르는 낱말(intruder 등) = 대상 없음
     return R.pick(s, fit) || null;
@@ -107,6 +110,7 @@
       let witness = null;
       if (n.rumor.witness && db.people[n.rumor.witness]) witness = n.rumor.witness;
       else if (n.rumor.witness === 'actor') witness = roles.actor;
+      else if (n.rumor.witness === 'target' && roles.target && roles.target !== 'you' && s.people[roles.target] && s.people[roles.target].status === 'home') witness = roles.target;
       else { const w = R.pick(s, sleepers(s).filter((p) => p.id !== roles.actor && p.id !== roles.target)); witness = w ? w.id : null; }
       if (witness) { rumor = { day: s.day, event: n.id, witness, line: n.rumor.line, truth: R.chance(s, RUMOR_TRUTH) ? 1 : 0, heard: false, roles }; s.rumors.push(rumor); }
     }
@@ -120,7 +124,29 @@
     if (!t) return;
     for (const e of s.nightLog) if (e.day === t.day && e.traces.includes(objId)) e.discovered = true;
   }
-  function markHeard(s, rumor) { for (const e of s.nightLog) if (e.day === rumor.day && e.id === rumor.event) e.discovered = true; }
+  // 들은 소문은 참(truth 1)일 때만 발견이다 — 거짓 소문은 다른 일을 믿게 할 뿐 (10-22 결정)
+  function markHeard(s, rumor) { if (!rumor || rumor.truth !== 1) return; for (const e of s.nightLog) if (e.day === rumor.day && e.id === rumor.event) e.discovered = true; }
+
+  // 몸에 보이는 신호 (화면용, 수치 없이 참/거짓만). 문턱은 밤 사건표의 행위자 조건(actor 열의 조건식)을 그대로 쓴다.
+  //   sleepless = 오늘 밤 안 잘 사람: role fear·ascend 사건의 행위자 조건이 맞는 사람 (당신 제외)
+  //   starving  = 굶주린 사람: role steal·starve 사건의 행위자 조건이 맞는 사람 (any·이름 지목 행은 문턱이 아니라 뺀다)
+  //   ateFlesh  = 사람을 먹은 사람: 깃발 ate_flesh_<id> 또는 <id>_ate… (예: dongha_ate_unknowing)
+  const SIGN_ROLES = { sleepless: ['fear', 'ascend'], starving: ['steal', 'starve'] };
+  function signs(s, db) {
+    const base = worldCtx(s);
+    const condActor = (n) => typeof n.actor === 'string' && n.actor !== '-' && n.actor !== 'any' && !db.people[n.actor];
+    const rows = (roles) => db.nightEvents.filter((n) => roles.includes(n.role) && condActor(n));
+    const sleepRows = rows(SIGN_ROLES.sleepless), starveRows = rows(SIGN_ROLES.starving);
+    const fits = (list, ctx) => list.some((n) => { try { return C.test(n.actor, ctx); } catch (e) { return false; } });
+    const out = {};
+    for (const p of Object.values(s.people)) {
+      if (p.status !== 'home') continue;
+      const ctx = roleCtx(s, base, p, null);
+      out[p.id] = { sleepless: p.id !== 'you' && fits(sleepRows, ctx), starving: fits(starveRows, ctx),
+        ateFlesh: !!s.flags['ate_flesh_' + p.id] || Object.keys(s.flags).some((f) => s.flags[f] && f.startsWith(p.id + '_ate')) };
+    }
+    return out;
+  }
 
   // 발견 집계(봇·검증용)
   function discovery(s) {
@@ -130,7 +156,7 @@
     return { total, found, rate: total ? found / total : 0, unknown: total - found };
   }
 
-  const API = { rollNight, discovery, markInspected, markHeard, maxPerNight, RUMOR_TRUTH, worldCtx, roleCtx };
+  const API = { rollNight, discovery, markInspected, markHeard, signs, SIGN_ROLES, maxPerNight, RUMOR_TRUTH, worldCtx, roleCtx };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).night = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -5,22 +5,22 @@
     "states": [
       "lit",
       "low",
-      "out",
-      "wet"
+      "wet",
+      "kept"
     ],
     "overlay": {
       "low": "fire_low_ov",
-      "out": "fire_out_ov",
-      "wet": "fire_wet_ov"
+      "wet": "fire_wet_ov",
+      "kept": "footprints"
     },
     "inspectLine": {
       "lit": "insp_fire_lit",
       "low": "insp_fire_low",
-      "out": "insp_fire_out",
-      "wet": "insp_fire_wet"
+      "wet": "insp_fire_wet",
+      "kept": "insp_fire_kept"
     },
     "ledgerFact": {
-      "out": "D{day} 밤. 불이 꺼졌다."
+      "kept": "D{day} 밤. 누가 불가에서 밤을 지켰다."
     },
     "solid": 1,
     "light": 4,

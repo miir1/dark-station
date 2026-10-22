@@ -173,11 +173,12 @@
     "kind": "hymn",
     "trace": {
       "bowl_target": "full",
-      "bowl_actor": "empty"
+      "bowl_actor": "empty",
+      "fire": "kept"
     },
     "rumor": {
       "witness": "",
-      "line": ""
+      "line": "rum_gave_bowl"
     },
     "effects": [
       {
@@ -205,11 +206,12 @@
     "kind": "hymn",
     "trace": {
       "blanket_actor": "paired",
-      "blanket_target": "paired"
+      "blanket_target": "paired",
+      "fire": "kept"
     },
     "rumor": {
       "witness": "",
-      "line": ""
+      "line": "rum_slept_beside"
     },
     "effects": [
       {
@@ -583,11 +585,12 @@
     "kind": "hymn",
     "trace": {
       "bottle_gicheol": "empty",
-      "bowl_gicheol": "empty"
+      "bowl_gicheol": "empty",
+      "fire": "kept"
     },
     "rumor": {
       "witness": "",
-      "line": ""
+      "line": "rum_gave_seat"
     },
     "effects": [
       {
@@ -607,11 +610,12 @@
     "weight": 6,
     "kind": "hymn",
     "trace": {
-      "blanket_mari": "paired"
+      "blanket_mari": "paired",
+      "fire": "kept"
     },
     "rumor": {
       "witness": "",
-      "line": ""
+      "line": "rum_mari_names"
     },
     "effects": [
       {
@@ -702,7 +706,7 @@
     "id": "dongha_kills",
     "role": "pair",
     "actor": "dongha",
-    "target": "intruder",
+    "target": "",
     "cond": "fear_dongha>=9 & flag:patrol_knows",
     "weight": 8,
     "kind": "malice",
@@ -740,11 +744,12 @@
     "kind": "hymn",
     "trace": {
       "blanket_dongha": "paired",
-      "bowl_dongha": "empty"
+      "bowl_dongha": "empty",
+      "fire": "kept"
     },
     "rumor": {
       "witness": "",
-      "line": ""
+      "line": "rum_dongha_carried"
     },
     "effects": [
       {
@@ -805,7 +810,7 @@
     },
     "rumor": {
       "witness": "",
-      "line": ""
+      "line": "rum_meds_left"
     },
     "effects": [
       {
@@ -854,7 +859,7 @@
     },
     "rumor": {
       "witness": "",
-      "line": ""
+      "line": "rum_valve_shut"
     },
     "effects": [
       {
@@ -984,6 +989,174 @@
         "verb": "kill",
         "who": "actor",
         "how": "dead"
+      }
+    ],
+    "oncePerRun": 0
+  },
+  {
+    "id": "passage_rest",
+    "role": "clock",
+    "actor": "",
+    "target": "",
+    "cond": "flag:passage_wait",
+    "weight": 10,
+    "kind": "neutral",
+    "trace": {},
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "passage_wait",
+        "set": 0
+      }
+    ],
+    "oncePerRun": 0
+  },
+  {
+    "id": "eye_you",
+    "role": "grudge",
+    "actor": "any",
+    "target": "you",
+    "cond": "!flag:eyed_you_actor & (grudge>=3 | hunger>=8 & hunger_target<=2)",
+    "weight": 7,
+    "kind": "malice",
+    "trace": {
+      "blanket_actor": "rolled"
+    },
+    "rumor": {
+      "witness": "",
+      "line": "rum_eyes_you"
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "eyed_you_actor",
+        "set": 1
+      },
+      {
+        "verb": "number",
+        "id": "grudge",
+        "who": "actor",
+        "n": 1
+      }
+    ],
+    "oncePerRun": 0
+  },
+  {
+    "id": "steal_you",
+    "role": "steal",
+    "actor": "any",
+    "target": "you",
+    "cond": "day>=2 & flag:eyed_you_actor & (grudge>=3 | hunger>=7 & hunger_target<=3)",
+    "weight": 6,
+    "kind": "malice",
+    "trace": {
+      "bowl_you": "empty"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "hunger",
+        "who": "target",
+        "n": 3
+      },
+      {
+        "verb": "number",
+        "id": "grudge",
+        "who": "actor",
+        "n": -1
+      }
+    ],
+    "oncePerRun": 0
+  },
+  {
+    "id": "soonrye_names_you",
+    "role": "inform",
+    "actor": "soonrye",
+    "target": "you",
+    "cond": "grudge>=3 & fog>=2 & !flag:named_you",
+    "weight": 8,
+    "kind": "malice",
+    "trace": {
+      "shoes_stairs": "one"
+    },
+    "rumor": {
+      "witness": "",
+      "line": "rum_named_you"
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "named_you",
+        "set": 1
+      },
+      {
+        "verb": "number",
+        "id": "counted",
+        "who": "target",
+        "n": 1
+      }
+    ],
+    "oncePerRun": 0
+  },
+  {
+    "id": "dongha_pipe_you",
+    "role": "kill",
+    "actor": "dongha",
+    "target": "you",
+    "cond": "grudge>=5 & flag:eyed_you_actor & injury_target<=1 & !flag:dawn_dongha",
+    "weight": 8,
+    "kind": "malice",
+    "trace": {
+      "pipe": "blood",
+      "bandage_you": "wet"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "injure",
+        "who": "target",
+        "n": 1
+      },
+      {
+        "verb": "flag",
+        "id": "dawn_dongha",
+        "set": 1
+      }
+    ],
+    "oncePerRun": 0
+  },
+  {
+    "id": "dongha_end_you",
+    "role": "kill",
+    "actor": "dongha",
+    "target": "you",
+    "cond": "grudge>=5 & flag:eyed_you_actor & injury_target>=2 & !flag:dawn_dongha & !flag:dawn_dongha2",
+    "weight": 8,
+    "kind": "malice",
+    "trace": {
+      "pipe": "blood",
+      "notebook_you": "moved"
+    },
+    "rumor": {
+      "witness": "",
+      "line": "rum_dongha_over_you"
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "dawn_dongha2",
+        "set": 1
       }
     ],
     "oncePerRun": 0

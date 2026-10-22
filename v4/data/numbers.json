@@ -214,5 +214,32 @@
     "start": 2,
     "perDay": 0,
     "visible": "never"
+  },
+  {
+    "id": "treat_meds",
+    "owner": "world",
+    "min": 0,
+    "max": 3,
+    "start": 1,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "treat_injury",
+    "owner": "world",
+    "min": -3,
+    "max": 0,
+    "start": -1,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "grudge",
+    "owner": "person",
+    "min": 0,
+    "max": 10,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
   }
 ]

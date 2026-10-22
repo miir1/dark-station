@@ -16,20 +16,22 @@
   //  · identity 후보의 candidate 열 → id,  표 머리의 thresholds·note 는 메모로 두고 무시
   //  · nightEvents 의 target '' → '-',  rumor.line '' → 소문 없음
   //  · injure 의 n 은 ±1~3 (음수 = 부상 회복)
+  //  · 같은 수치 id · injure · kill · permanent 가 두 번 이상 나오면 값이 목록이 된다(순서 유지, 전부 적용) — 마지막 것만 남던 문제(10-22)
   function effectsToObject(arr, where) {
     if (!Array.isArray(arr)) return arr;
     const o = {};
     const setWho = (who, n) => (who && who !== 'you' && who !== 'self' ? { who, n } : n);
+    const add = (key, val) => { if (!Object.prototype.hasOwnProperty.call(o, key)) o[key] = val; else if (Array.isArray(o[key])) o[key].push(val); else o[key] = [o[key], val]; };
     for (const e of arr) {
       if (!e || typeof e !== 'object') throw new TableError([{ text: `${where}: effects 배열 원소가 객체가 아님` }]);
       switch (e.verb) {
-        case 'number': o[e.id] = setWho(e.who, e.n); break;
+        case 'number': add(e.id, setWho(e.who, e.n)); break;
         case 'flag': (o.flag = o.flag || {})[e.id] = e.set === undefined ? true : !!e.set; break;
         case 'trace': (o.trace = o.trace || {})[e.id] = e.state; break;
-        case 'axis': (o.axis = o.axis || {})[e.id] = e.n; break;
-        case 'injure': o.injure = { who: e.who, n: e.n }; break;
-        case 'kill': o.kill = { who: e.who, how: e.how }; break;
-        case 'permanent': o.permanent = { who: e.who, kind: e.kind || e.loss }; break;
+        case 'axis': (o.axis = o.axis || {})[e.id] = (o.axis[e.id] || 0) + e.n; break;   // 같은 축 두 번 = 합
+        case 'injure': add('injure', { who: e.who, n: e.n }); break;
+        case 'kill': add('kill', { who: e.who, how: e.how }); break;
+        case 'permanent': add('permanent', { who: e.who, kind: e.kind || e.loss }); break;
         default: throw new TableError([{ text: `${where}: 모르는 효과 동사 "${e.verb}"` }]);
       }
     }
@@ -38,10 +40,11 @@
   const blank = (v) => v == null || v === '' || v === '-' || (typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length === 0);
   function normalizeTables(raw) {
     const t = JSON.parse(JSON.stringify(raw));
+    if (Array.isArray(t.events)) t.events.forEach((ev) => { if (ev && typeof ev === 'object') for (const key of ['target', 'endStatus', 'board']) if (blank(ev[key])) delete ev[key]; });
     if (Array.isArray(t.events)) t.events.forEach((ev, i) => (ev && Array.isArray(ev.choices) ? ev.choices : []).forEach((c, k) => {
       if (!c || typeof c !== 'object') return;
       for (const key of ['check', 'cost', 'req', 'taboo', 'warn', 'hint']) if (blank(c[key])) delete c[key];
-      for (const key of ['out', 'ok', 'fail']) { const o = c[key]; if (!o || typeof o !== 'object') continue; if (blank(o.ledger)) delete o.ledger; if (o.effects !== undefined) { if (blank(o.effects)) delete o.effects; else o.effects = effectsToObject(o.effects, `events[${i}] ${ev.id} choices[${k}].${key}`); } }
+      for (const key of ['out', 'ok', 'fail']) { const o = c[key]; if (!o || typeof o !== 'object') continue; if (blank(o.ledger)) delete o.ledger; if (blank(o.image)) delete o.image; if (blank(o.target)) delete o.target; if (o.effects !== undefined) { if (blank(o.effects)) delete o.effects; else o.effects = effectsToObject(o.effects, `events[${i}] ${ev.id} choices[${k}].${key}`); } }
     }));
     if (Array.isArray(t.nightEvents)) t.nightEvents.forEach((n, i) => { if (!n || typeof n !== 'object') return; if (blank(n.target)) n.target = '-'; if (blank(n.actor)) n.actor = '-'; if (n.effects !== undefined) { if (blank(n.effects)) delete n.effects; else n.effects = effectsToObject(n.effects, `nightEvents[${i}] ${n.id}`); } if (blank(n.rumor) || blank(n.rumor.line)) delete n.rumor; if (blank(n.trace)) delete n.trace; });
     if (t.identity && typeof t.identity === 'object' && !Array.isArray(t.identity)) { const { axes, candidates } = t.identity; t.identity = { axes, candidates: Array.isArray(candidates) ? candidates.map((c) => { if (c && typeof c === 'object' && c.id === undefined && c.candidate !== undefined) { c = Object.assign({ id: c.candidate }, c); delete c.candidate; } return c; }) : candidates }; }
