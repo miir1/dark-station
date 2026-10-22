@@ -34,6 +34,8 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 #tabs button { background: var(--panel2); color: var(--fg); border: 1px solid var(--line); font: inherit; font-size: 8px; padding: 3px 6px; cursor: pointer; text-align: left; }
 #tabs button:hover { border-color: var(--accent); }
 #tabs button::after { content: attr(title); float: right; color: var(--dim); }
+#tabs button.urgent { border-color: var(--bad); color: #f0c2b8; }
+#tabs button.urgent::before { content: '● '; color: var(--bad); }
 #keys { font-size: 6px; color: #5d5548; line-height: 1.4; }
 
 /* 그림 층 (A안): 지도 위에 384×216. 선택 창이 열리면 256×144 로 작아진다 */
@@ -76,6 +78,8 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 #box .opt small { color: var(--dim); font-size: 7px; margin-left: 4px; }
 #box .opt small.warn { color: var(--warn); } #box .opt small.warn::before { content: '⚠ '; }
 #box .opt small.chance { color: var(--accent); }
+#box .opt small.cost { color: #c9b48a; }
+#box .opt small.lock { color: var(--bad); }
 #box .ledger { font-size: 8px; line-height: 1.6; }
 #box .ledger .row { display: grid; grid-template-columns: 56px 1fr; gap: 4px; }
 #box .ledger .row .blank { color: var(--dim); }

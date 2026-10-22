@@ -51,14 +51,17 @@
       if (bot) setTimeout(() => { if (lineCur && bot('line', { text, opts: o }) !== 'hold') { done(); lineCur.next(); } }, 0);
     });
   }
-  // 문장마다 끊되, 따옴표 안의 말은 한 번에
+  // 문장마다 끊되, 따옴표 안의 말은 한 번에.
+  // 닫는 따옴표 뒤는 따옴표 안 말이 문장 끝 부호(. ! ? … —)로 끝났을 때만 끊는다 — '동하가 "네" 하고 신발을 벗었다.'는 한 장
   function splitSentences(text) {
     const out = []; let s = '', q = 0;
     const t = String(text);
     for (let i = 0; i < t.length; i++) {
       const c = t[i]; s += c;
-      if (c === '“' || (c === '"' && q === 0)) q++; else if (c === '”' || (c === '"' && q > 0)) q = Math.max(0, q - 1);
-      if (!q && /[.!?…”"]/.test(c) && /\s/.test(t[i + 1] || '') && /\S/.test(t.slice(i + 1))) { out.push(s.trim()); s = ''; }
+      let closing = false;
+      if (c === '“' || (c === '"' && q === 0)) q++; else if (c === '”' || (c === '"' && q > 0)) { q = Math.max(0, q - 1); closing = q === 0; }
+      const end = closing ? /[.!?…—]/.test(t[i - 1] || '') : /[.!?…]/.test(c);
+      if (!q && end && /\s/.test(t[i + 1] || '') && /\S/.test(t.slice(i + 1))) { out.push(s.trim()); s = ''; }
     }
     if (s.trim()) out.push(s.trim());
     return out;

@@ -1,5 +1,5 @@
 # 어두운 역 v4 — 헤드리스 캡처. 로컬 http 서버를 띄우고 Chrome/Edge headless 로 ?fast=1&auto=<지점> 을 열어 PNG 로 남긴다.
-# 쓰기:  python v4/tools/shot.py            (C:\dev\dark_station 에서)   → v4/shots/01_car.png … 09_reveal.png + shots.json
+# 쓰기:  python v4/tools/shot.py            (C:\dev\dark_station 에서)   → v4/shots/01_car.png … 11_train.png + shots.json
 #        python v4/tools/shot.py car         (하나만)      python v4/tools/shot.py ending --seed=3   (시드 바꿔서)
 # 캡처 전에 v4/tools/manifest.py 로 그림 목록(v4/img/manifest.json)을 새로 만든다 — 새 그림이 자동으로 잡힌다.
 # shots.json: console_errors(오류·uncaught) + auto(봇이 남긴 [ds4 …] 줄: 도달한 날·고른 선택·그림 없는 장면)
@@ -9,10 +9,14 @@ import os, sys, subprocess, threading, time, http.server, socketserver, functool
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 OUT = os.path.join(ROOT, 'v4', 'shots')
 PORT = 8765
-SHOTS = [('car', '01_car'), ('morning3', '02_morning3'), ('night3', '03_night3'), ('day5', '04_day5'), ('night8', '05_night8'),
-         ('ending', '06_ending'), ('death', '07_death'), ('evening5', '08_evening5'), ('reveal', '09_reveal')]
-BUDGET = {'car': 15000, 'morning3': 120000, 'night3': 150000, 'day5': 300000, 'night8': 450000, 'ending': 700000, 'death': 300000,
-          'evening5': 300000, 'reveal': 700000}
+# 지점 → 파일. night5 = D5 밤 고정 사건(옛 이름 day5) · evening5 = D5 저녁 화로 둘레 대화 · night8 = D8 밤 고정 사건
+# called3 = D3 밤 '이름이 불렸다' 선택 창 · train = 열차 결말 뒤 명부
+SHOTS = [('car', '01_car'), ('morning3', '02_morning3'), ('night3', '03_night3'), ('night5', '04_night5'), ('night8', '05_night8'),
+         ('ending', '06_ending'), ('death', '07_death'), ('evening5', '08_evening5'), ('reveal', '09_reveal'),
+         ('called3', '10_called3'), ('train', '11_train')]
+BUDGET = {'car': 15000, 'morning3': 120000, 'night3': 150000, 'night5': 300000, 'night8': 450000, 'ending': 700000, 'death': 300000,
+          'evening5': 300000, 'reveal': 700000, 'called3': 150000, 'train': 700000}
+STALE = ['04_day5']                              # 이름이 바뀐 옛 캡처 — 전부 찍을 때 지운다
 
 
 def find_browser():
@@ -49,6 +53,16 @@ def serve():
     return httpd
 
 
+def decode(b):
+    # Chrome 의 stderr 로그 줄은 UTF-8 이 아닐 때가 있다(Windows 코드 페이지 cp949) → 줄마다 UTF-8 먼저, 안 되면 cp949
+    for enc in ('utf-8', 'cp949'):
+        try:
+            return b.decode(enc)
+        except UnicodeDecodeError:
+            pass
+    return b.decode('utf-8', errors='replace')
+
+
 def shot(browser, key, name, log, seed=None):
     os.makedirs(OUT, exist_ok=True)
     out = os.path.join(OUT, name + '.png')
@@ -57,8 +71,8 @@ def shot(browser, key, name, log, seed=None):
     args = [browser, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
             f'--user-data-dir={prof}', '--window-size=1280,720', f'--virtual-time-budget={BUDGET.get(key, 60000)}',
             '--enable-logging=stderr', '--v=0', f'--screenshot={out}', url]
-    r = subprocess.run(args, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=600)
-    lines = (r.stderr or '').splitlines()
+    r = subprocess.run(args, capture_output=True, timeout=600)
+    lines = [decode(b) for b in (r.stderr or b'').splitlines()]
     errs = [ln for ln in lines if 'CONSOLE' in ln and ('error' in ln.lower() or 'uncaught' in ln.lower())]
     auto = [ln[ln.index('[ds4'):].split('", source')[0] for ln in lines if 'CONSOLE' in ln and '[ds4' in ln]
     log.append({'shot': name, 'ok': os.path.exists(out), 'console_errors': errs, 'auto': auto})
@@ -84,6 +98,11 @@ def main():
             shot(browser, key, name, log, seed)
     finally:
         httpd.shutdown()
+    if not only:
+        for n in STALE:
+            f = os.path.join(OUT, n + '.png')
+            if os.path.exists(f):
+                os.remove(f)
     path = os.path.join(OUT, 'shots.json')
     if only and os.path.exists(path):            # 일부만 찍었으면 나머지 기록은 둔다
         try:

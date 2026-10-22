@@ -42,12 +42,18 @@
     return ctx;
   }
   const sleepers = (s) => Object.values(s.people).filter((p) => p.status === 'home' && p.id !== 'you');
+  // 디렉터 결정: 미성년(people.age < 19)은 잔혹 장면 프레임 밖. 낮 사건의 무작위 대상·원정 동행과 같은 규칙을 밤 악의에도 —
+  // kind malice 행의 '표가 사람을 지목하지 않은' 역할(any·조건식 행위자, 무작위·mostInjured·조건식 대상)에 미성년은 들지 않는다.
+  // 이름 지목·bond·you 는 표가 일부러 정한 것이라 그대로 둔다(steal_food_seoha·soonrye_water 등). neutral·hymn 행(굶어 죽음·상처 곪음·올라감·돌봄)도 그대로.
+  const ADULT_AGE = 19;
+  const isMinor = (db, id) => { const a = db.people[id] ? Number(db.people[id].age) : 0; return a > 0 && a < ADULT_AGE; };
+  const adultOnly = (db, n, list) => (n.kind === 'malice' ? list.filter((p) => !isMinor(db, p.id)) : list);
 
   // 이름으로 지목된 행위자·대상은 바깥 사람(outside)이어도 된다 — 역 밖에서 하는 일(은채가 순찰대를 데려온다, 도현이 밸브를 잠근다).
   // any·조건식 행위자와 무작위 대상은 역에서 자는 사람(home)만.
   const reachable = (p) => p && (p.status === 'home' || p.status === 'outside');
   function resolveActors(s, db, n, base) {
-    const home = sleepers(s);
+    const home = adultOnly(db, n, sleepers(s));
     if (db.people[n.actor]) { const p = s.people[n.actor]; return reachable(p) && p.id !== 'you' ? [p] : []; }
     if (n.actor === 'any') return home;
     return home.filter((p) => C.test(n.actor, roleCtx(s, base, p, null)));
@@ -55,7 +61,7 @@
   function resolveTarget(s, db, n, actor, base) {
     const t = n.target;
     if (!t || t === '-') return null;
-    const others = sleepers(s).filter((p) => p.id !== actor.id);
+    const others = adultOnly(db, n, sleepers(s).filter((p) => p.id !== actor.id));
     if (t === 'you') return s.people.you.status === 'home' ? s.people.you : null;
     if (t === 'bond') { const b = s.people[actor.needs.bond]; return b && b.status === 'home' ? b : null; }
     if (RANDOM_TARGETS.includes(t)) return R.pick(s, others) || null;
@@ -156,7 +162,7 @@
     return { total, found, rate: total ? found / total : 0, unknown: total - found };
   }
 
-  const API = { rollNight, discovery, markInspected, markHeard, signs, SIGN_ROLES, maxPerNight, RUMOR_TRUTH, worldCtx, roleCtx };
+  const API = { rollNight, discovery, markInspected, markHeard, signs, SIGN_ROLES, maxPerNight, RUMOR_TRUTH, worldCtx, roleCtx, ADULT_AGE, isMinor };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).night = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

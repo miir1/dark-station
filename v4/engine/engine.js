@@ -14,9 +14,9 @@
   const SAVE_V = 1;
   const MAX_LOG = 80;
   const SKILL_PCT = 5;                      // 판정: base% + 기술 × 5%p (화면의 % = 실제 %)
-  const ADULT_AGE = 19;                     // 디렉터 결정: 미성년(people.age < 19)은 잔혹 장면 프레임 밖 — 사건의 무작위 대상·원정 동행이 되지 않는다
+  const ADULT_AGE = NIGHT.ADULT_AGE;        // 디렉터 결정: 미성년(people.age < 19)은 잔혹 장면 프레임 밖 — 사건의 무작위 대상·원정 동행·밤 악의의 무작위/조건 역할이 되지 않는다 (night.js 가 한 곳에서 정한다)
   const EVENT_RANDOM = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper'];   // 사건 대상 낱말(자리 정보 없음 = 무작위)
-  const isMinor = (db, id) => { const a = db.people[id] ? Number(db.people[id].age) : 0; return a > 0 && a < ADULT_AGE; };
+  const isMinor = NIGHT.isMinor;
   const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
   const injuryMax = (db) => (db.numbers.injury ? db.numbers.injury.max : Infinity);   // 위독 = injury 의 최대값 (numbers 표)
 
@@ -48,7 +48,7 @@
       world, people: {}, pos: { map: null, x: 0, y: 0 },
       flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {}, fired: {}, phaseSeen: [], critical: null, trip: null,
       pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0 },
-    };   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 밤 굴림 직전 위독자
+    };   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 그날 마지막 치료 기회 때의 위독자(아침 판정용)
     if (!db.people.you) throw new Error('people 표에 you 가 없음');
     for (const o of Object.values(db.objects)) s.traces[o.id] = { st: o.states[0], day: 0, by: null, seen: false };   // 물건의 첫 상태 = states[0]
     for (const id of db.peopleOrder) s.people[id] = makePerson(db, id);
@@ -113,8 +113,8 @@
   const checkEvents = (s, db, extra) => { if (!s.pending) enterPhase(s, db, extra); return !!s.pending; };
 
   // 하루 끝 → 새 날
-  // 위독(injury 최대값) + 치료 깃발 없음 → 아침에 죽는다. 단 밤 굴림 직전에 이미 위독이던 사람만(s.critical) —
-  // 밤 사건으로 막 위독이 된 사람은 하루를 받는다(그날 경고·치료 기회). 밤 굴림 기록이 없는 날은 지금 위독이면 판정.
+  // 위독(injury 최대값) + 치료 깃발 없음 → 아침에 죽는다. 단 그날 마지막 치료 기회(treat 가 있는 단계)를 떠날 때 이미 위독이던 사람만(s.critical) —
+  // 그 뒤(밤 단계 사건·밤 굴림)에 막 위독이 된 사람은 하루를 받는다(다음 날 경고·치료 기회). 명단이 없는 날은 지금 위독이면 판정.
   function newDay(s, db) {
     const crit = s.critical && s.critical.day === s.day ? s.critical.ids : null;
     s.day += 1;
@@ -340,6 +340,7 @@
 
   // ── dispatch ──
   const isIdx = (v) => Number.isInteger(v) && v >= 0;
+  const criticalNow = (s, db) => { const injMax = injuryMax(db); return { day: s.day, ids: Object.values(s.people).filter((p) => p.status === 'home' && (p.n.injury || 0) >= injMax).map((p) => p.id) }; };
   function dispatch(s, a, db) {
     if (!db) return { ok: false, error: '표(db)가 없다' };
     if (!a || typeof a !== 'object' || typeof a.type !== 'string') return { ok: false, error: '잘못된 동작' };
@@ -354,9 +355,11 @@
     switch (a.type) {
       case 'next': {
         if (s.pending) return { ok: false, error: '먼저 골라야 한다' };
+        // 위독 명단: 치료할 수 있는 단계(actions 에 treat)를 떠날 때 찍는다 — 마지막 치료 기회 뒤에 위독이 된 사람
+        // (밤 단계의 고정·시험 사건, 밤 굴림)은 하루를 받는다. 치료 단계가 없는 표면 밤 굴림 직전에 찍는다.
+        if (phase && phase.actions.includes('treat')) s.critical = criticalNow(s, db);
         if (phase && (phase.hook === 'rollNight' || phase.actions.includes('rollNight'))) {
-          const injMax = injuryMax(db);
-          s.critical = { day: s.day, ids: Object.values(s.people).filter((p) => p.status === 'home' && (p.n.injury || 0) >= injMax).map((p) => p.id) };
+          if (!(s.critical && s.critical.day === s.day)) s.critical = criticalNow(s, db);
           const youWere = s.people.you.status;
           const n0 = s.nightLog.length;
           const got = NIGHT.rollNight(s, db); s.stats.nights++; for (const g of got) say(s, `[밤] ${g.id}`, 'night');

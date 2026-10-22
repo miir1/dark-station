@@ -32,6 +32,12 @@
   const youGone = () => { const s = person('you').status; return s === 'dead' || s === 'ascended'; };
   const lineOf = (id, extra) => { const l = B.pickLine(db, id, Object.assign(B.lineCtx(state), extra || {})); return l ? l.text : ''; };
   const josa = (name, pair) => B.fill('{who:' + pair + '}', name);       // 순례가 / 기철이
+  // 자원 이름 (numbers 표에 이름 칸이 없다 → 화면이 붙인다). 패널·선택지 비용·잠김 이유·밤 보고서가 같이 쓴다
+  const RES = { food: '식량', water: '물', fuel: '땔감', meds: '약', parts: '부품' };
+  const RES_ORDER = ['food', 'water', 'fuel', 'meds', 'parts'];
+  const RES_ICON = { food: 'food', water: 'water', fuel: 'gen', meds: 'meds', parts: 'parts' };
+  const RES_LOW = { food: 1, water: 1, fuel: 1, meds: 0, parts: 0 };     // 이 값 이하면 패널 숫자가 붉다
+  const phaseAllows = (a) => { const ph = db.phases.find((p) => p.id === state.phase); return !!(ph && ph.actions.includes(a)); };
 
   // ── 장면: 지금 지도 ──
   const scene = { map: null, rows: [], w: 0, h: 0, px: 0, py: 0, face: 'down', moving: null, steps: 0, auto: null, cam: null };
@@ -200,7 +206,11 @@
     if (tx < 0 || ty < 0 || tx >= scene.w || ty >= scene.h) return false;
     const here = tx === scene.px && ty === scene.py;
     const thing = peopleOnMap().some((p) => p.x === tx && p.y === ty) || objectsAt(tx, ty).length > 0;
-    if (here) { interact(); return true; }
+    if (here) {                                                     // 제자리: 같은 칸에 사람이 겹쳐 있으면 그 사람과 말한다 (앞 칸 물건이 아니라)
+      const p = peopleOnMap().find((q) => q.x === tx && q.y === ty && q.talkable);
+      if (p) flow(() => talkTo(p.id)); else interact();
+      return true;
+    }
     if (thing || blocked(tx, ty)) {
       let best = null;
       for (const [dx, dy, face] of [[0, 1, 'up'], [0, -1, 'down'], [1, 0, 'left'], [-1, 0, 'right']]) {
@@ -217,6 +227,27 @@
     if (!p) { UI.toast('갈 수 없는 곳이다.', 900); return false; }
     scene.auto = { path: p, face: null, then: then || null };
     return true;
+  }
+  // 단계가 바뀌어 사람이 제자리로 오면 당신 칸과 겹칠 수 있다(저녁 화로 둘레 = 낮에 화로를 조사하던 칸).
+  // 겹치면 당신을 화로 곁 빈칸(아래·위·왼·오른) → 그다음 가까운 빈칸으로 옮긴다. 화로 쪽을 본다.
+  function unstack() {
+    if (!scene.map || scene.moving) return;
+    const ppl = peopleOnMap();
+    if (!ppl.some((p) => p.x === scene.px && p.y === scene.py)) return;
+    const f = scene.map.fire;
+    const near = f ? [[f[0], f[1] + 1, 'up'], [f[0], f[1] - 1, 'down'], [f[0] - 1, f[1], 'right'], [f[0] + 1, f[1], 'left']] : [];
+    for (const [x, y, face] of near) if (!blocked(x, y)) { scene.px = x; scene.py = y; scene.face = face; scene.auto = null; return; }
+    const seen = new Set([scene.px + ',' + scene.py]); const q = [[scene.px, scene.py]];
+    while (q.length) {
+      const [x, y] = q.shift();
+      for (const [dx, dy] of [[0, 1], [0, -1], [-1, 0], [1, 0]]) {
+        const nx = x + dx, ny = y + dy, k = nx + ',' + ny;
+        if (seen.has(k) || nx < 0 || ny < 0 || nx >= scene.w || ny >= scene.h) continue;
+        seen.add(k);
+        if (!blocked(nx, ny)) { scene.px = nx; scene.py = ny; scene.auto = null; return; }
+        if (!blocked(nx, ny, true)) q.push([nx, ny]);
+      }
+    }
   }
   const front = () => { const [dx, dy] = DIRS[scene.face]; return [scene.px + dx, scene.py + dy]; };
   const EXIT_NAMES = { A: '지하상가 통로', B: '배수로 통로', S: '출구 계단', k: '역무실 문', R: '무너진 통로', E: '나가는 길' };
@@ -290,7 +321,11 @@
     while (state.pending && !state.ended && guard++ < 10) await showEvent();
     if (state.ended) await endingScreen();
   }
-  const choiceSub = (c) => [c.chance != null ? `<small class="chance">${c.chance}%</small>` : '', c.warn ? `<small class="warn">${esc(c.warn)}</small>` : c.hint ? `<small>${esc(c.hint)}</small>` : '', c.locked ? `<small>${esc(c.reason)}</small>` : ''].join('');
+  // 선택지 부제: 확률 · 비용(늘 보인다, '약 −1') · 경고 · 잠김 이유. 엔진의 잠김 이유에 남은 영문 id(meds이(가) 모자라다)는 한국어로 바꾼다
+  const costText = (cost) => Object.entries(cost || {}).map(([k, v]) => `${RES[k] || k} −${v}`).join(' · ');
+  const reasonKo = (r) => String(r || '').replace(/(\S+)이\(가\) 모자라다/g, (m, k) => `${josa(RES[k] || k, '이가')} 모자라다`);
+  const choiceSub = (c) => [c.chance != null ? `<small class="chance">${c.chance}%</small>` : '', c.cost && Object.keys(c.cost).length ? `<small class="cost">${esc(costText(c.cost))}</small>` : '',
+    c.warn ? `<small class="warn">${esc(c.warn)}</small>` : c.hint ? `<small>${esc(c.hint)}</small>` : '', c.locked ? `<small class="lock">${esc(reasonKo(c.reason))}</small>` : ''].join('');
   // 장면 그림: v4 cg/<image> → v4 cg/<사건 id> → v3 대체 (art.js). 없으면 그림 층을 열지 않는다
   function eventCg(v) {
     const src = ART.cgSrc(v.image, v.id);
@@ -315,15 +350,57 @@
     }
     if (!act({ type: 'choose', i })) return;
     const r = state.lastResult || {};
+    if (r.image && !black) {                                           // 결과 그림(lastResult.image): 있으면 결과 글 동안 그것으로 바꾼다
+      const src = ART.cgSrc(r.image) || (/^death_/.test(r.image) ? ART.deathSrc(r.image) : '');
+      if (src) UI.cg(src); else missing.add(r.image + '@' + v.id + ':out');
+    }
     if (r.roll) await UI.line(`판정 ${r.roll.chance}% — ${r.roll.success ? '됐다.' : '안 됐다.'}`, { black });
     if (r.text) await UI.lines(r.text, { black, tag: v.id + ':out' });
     if (v.id === 'pro_notebook' || v.id === 'd1_gicheol_arrive') UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
     if (!state.pending && !state.ended) UI.cgClear();
   }
   const faceOf = (id) => { const p = person(id); return ART.portraitSrc(id, p ? p.n.injury : 0, !!(p && p.permanent && p.permanent.ear)); };
+  // ── 치료 (엔진 treat: 낮·저녁, 다친 사람 하나에 약 treat_meds, 하루 한 번). 길: 수첩 옆 '치료' 단추(H) · 다친 사람에게 말 걸기 · 젖은 붕대 조사 ──
+  // 고를 수 없으면 이유를 보여 준다 (엔진 규칙을 화면에서 미리 본다: 단계 · 다친 데 · 오늘 이미 · 약)
+  const treatNeed = () => (Number.isFinite(state.world.treat_meds) ? state.world.treat_meds : 1);
+  const HURT_WORD = ['', '다쳤다', '깊이 다쳤다', '위독하다'];
+  const hurtWord = (n) => HURT_WORD[Math.max(0, Math.min(HURT_WORD.length - 1, n || 0))];
+  const HURT_LOOK = ['', '상처에 피가 배어 있다.', '상처가 깊다. 얼굴이 하얗다.', '열이 오른다. 붕대 밑이 검게 부었다.'];
+  function treatWhy(id) {
+    const p = person(id);
+    if (!p || p.status !== 'home') return '여기 없다';
+    if (!((p.n.injury || 0) > 0)) return '다친 데가 없다';
+    if (!phaseAllows('treat')) return '낮·저녁에 감는다';
+    if (flagOn('treated_' + id)) return '오늘은 이미 감았다';
+    if ((state.world.meds || 0) < treatNeed()) return '약이 없다';
+    return '';
+  }
+  const treatOpt = (label, id) => { const why = treatWhy(id); return { label, sub: why ? `<small class="lock">${esc(why)}</small>` : `<small class="cost">${esc(costText({ meds: treatNeed() }))}</small>`, disabled: !!why, value: 'treat' }; };
+  const treatable = () => ['you'].concat(db.peopleOrder.filter((id) => id !== 'you' && flagOn(MET[id] || '__'))).filter((id) => !treatWhy(id));
+  async function doTreat(id) {
+    const p = person(id);
+    if (!act({ type: 'treat', who: id })) return false;
+    await UI.lines(id === 'you' ? '상처를 씻고 붕대를 새로 감았다.' : `${p.name}의 상처를 씻고 붕대를 새로 감았다.`, id === 'you' ? {} : { name: p.name, face: faceOf(id) });
+    return true;
+  }
+  async function treatMenu() {
+    const ids = ['you'].concat(db.peopleOrder.filter((id) => id !== 'you' && home(id) && flagOn(MET[id] || '__')));
+    const hurt = ids.filter((id) => (person(id).n.injury || 0) > 0);
+    const head = `<p class="who">치료</p><p class="mini">약 ${state.world.meds || 0} · 한 사람에 ${costText({ meds: treatNeed() })} · 낮·저녁에, 하루 한 번</p>`;
+    const opts = hurt.map((id) => Object.assign(treatOpt(`${person(id).name} — ${hurtWord(person(id).n.injury)}`, id), { value: id }));
+    opts.push({ label: '돌아간다', value: null });
+    const a = await UI.open(head + (hurt.length ? '' : '<p>다친 사람이 없다.</p>'), { kind: 'treat', cancel: true, cancelValue: null, options: opts, cls: opts.length > 4 ? 'wide' : '' });
+    if (a) await doTreat(a);
+  }
   async function talkTo(id) {
     const p = person(id);
     if (!p) return;
+    if ((p.n.injury || 0) > 0 && phaseAllows('treat')) {          // 다친 사람: 말을 걸지, 상처를 감아 줄지
+      const a = await UI.open(`<p class="who">${esc(p.name)}</p><p>${esc(HURT_LOOK[Math.min(3, p.n.injury)])}</p>`, { kind: 'tend', cancel: true, cancelValue: null,
+        options: [{ label: '말을 건다', value: 'talk' }, treatOpt('상처를 감아 준다', id), { label: '돌아선다', value: null }] });
+      if (!a) return;
+      if (a === 'treat') { await doTreat(id); return; }
+    }
     if (!act({ type: 'talk', who: id })) return;
     if (state.pending) return;
     // 그 사람이 본 소문(안 들은 것)이 있으면 먼저 한 줄
@@ -351,6 +428,13 @@
     const lid = o.inspectLine && o.inspectLine[st];
     const text = lid ? lineOf(lid) : '';
     await UI.lines(text || `${o.name}이다.`);
+    // 젖은·썩은 붕대: 그 사람이 다쳤으면 그 자리에서 새로 감을 수 있다
+    const bm = /^bandage_(\w+)$/.exec(id);
+    if (bm && person(bm[1]) && (person(bm[1]).n.injury || 0) > 0 && phaseAllows('treat')) {
+      const who = bm[1];
+      const a = await UI.open(`<p class="who">${esc(o.name)}</p><p>${esc(person(who).name)} — ${esc(hurtWord(person(who).n.injury))}</p>`, { kind: 'tend', cancel: true, cancelValue: null, options: [treatOpt('붕대를 새로 감는다', who), { label: '둔다', value: null }] });
+      if (a === 'treat') await doTreat(who);
+    }
     // 수첩에 적을 수 있는 사실 줄이 있으면 묻는다
     const fact = o.ledgerFact && o.ledgerFact[st];
     const phase = db.phases.find((p) => p.id === state.phase);
@@ -411,6 +495,7 @@
   async function phaseEnter(before) {
     const ph = state.phase;
     if (state.ended) { await endingScreen(); return; }
+    unstack();
     if (before && state.day !== before.day) {
       const left = GOAL_DAY - state.day;
       await UI.card(`D${state.day}`, left > 0 ? `열차까지 ${left}일` : '열차가 오는 날');
@@ -454,11 +539,10 @@
     act({ type: 'ration', bowls, quiet: true });
     await nextPhase();
   }
-  // 밤 보고서: 달라진 것만 + 잃은 것 한 줄 (수치 이름은 식량·물·땔감만)
+  // 밤 보고서: 달라진 것만 + 잃은 것 한 줄 (수치 이름은 패널에 있는 자원 — 식량·물·땔감·약·부품 — 만)
   async function nightReport(before) {
     const parts = [];
-    const NAME = { food: '식량', water: '물', fuel: '땔감' };
-    for (const k of ['food', 'water', 'fuel']) { const d = (state.world[k] || 0) - (before.world[k] || 0); if (d) parts.push(`${NAME[k]} ${d > 0 ? '+' : '−'}${Math.abs(d)}`); }
+    for (const k of RES_ORDER) { const d = (state.world[k] || 0) - (before.world[k] || 0); if (d) parts.push(`${RES[k]} ${d > 0 ? '+' : '−'}${Math.abs(d)}`); }
     const gone = Object.values(state.people).filter((p) => before.status[p.id] === 'home' && p.status !== 'home' && p.id !== 'you')
       .map((p) => josa(p.name, '이가') + (p.status === 'ascended' ? ' 올라갔다' : p.status === 'stayed' ? ' 셔터 너머로 갔다' : ' 밤에 갔다'));
     const noise = state.nightLog.some((e) => e.day === before.day && e.role !== 'clock');
@@ -468,12 +552,17 @@
 
   // ── 명부·결말 ──
   const STATUS_KO = { boarded: '탔다', dead: '갔다', ascended: '올라갔다', stayed: '남았다', walked: '걸어 나갔다' };
+  // 명부 행은 엔진 값(ended.ledger: 결과의 ledger 칸 · 결말의 endStatus·board 가 정한 status)을 그대로 쓴다.
+  // 임시 보정은 엔진이 'stayed' 를 줬는데 그 사람이 끝까지 역에 있던(home) 경우만 — 데이터가 그 칸을 채우면 엔진 값이 'stayed' 가 아니게 되어 보정은 저절로 꺼진다.
+  //   · '챙긴 운임으로 탄다'처럼 결과에 ledger(boarded) 칸이 없고 you_boarded 깃발만 선 선택 → 당신 줄 '탔다'
+  //   · 도보 결말(d10_walk)에 endStatus:walked 가 없을 때 walked_out 깃발 → 역에 있던 사람 '걸어 나갔다'
+  //     (밤에 셔터 너머로 간 사람 — kill how:stayed — 은 home 이 아니므로 보정하지 않는다)
   function ledgerRows() {
     const rows = (state.ended && state.ended.ledger) || E.ledger.rows(state, db);
-    // [엔진 메모] '탄다'를 고르면 you_boarded 깃발만 서고 status 는 home 이라 명부가 '남았다'가 된다 → 화면에서만 '탔다'로 읽는다
-    // [엔진 메모] 도보 결말(walked_out)도 살아 있는 사람은 'stayed' 로 온다 → 화면에서만 '걸어 나갔다'
-    return rows.map((r) => (r.id === 'you' && r.status === 'stayed' && flagOn('you_boarded') ? Object.assign({}, r, { status: 'boarded' })
-      : r.status === 'stayed' && flagOn('walked_out') ? Object.assign({}, r, { status: 'walked' }) : r));
+    const wasHome = (id) => person(id) && person(id).status === 'home';
+    return rows.map((r) => (r.status !== 'stayed' || !wasHome(r.id) ? r
+      : r.id === 'you' && flagOn('you_boarded') ? Object.assign({}, r, { status: 'boarded' })
+        : flagOn('walked_out') ? Object.assign({}, r, { status: 'walked' }) : r));
   }
   const rowDay = (r) => (r.day != null && r.day !== '' && (r.status === 'dead' || r.status === 'ascended') ? `D${r.day}` : '');
   const rowCause = (r) => (r.status === 'dead' || r.status === 'ascended' ? (r.cause ? esc(r.cause) : '<span class="blank">___</span>') : '');
@@ -483,17 +572,40 @@
     return `<p class="lhead">승객 명부</p>${body}${foot ? `<p class="ft">${esc(foot)}</p>` : ''}`;
   }
   const ledgerMini = (rows) => `<div class="ledger">${rows.map((r) => `<div class="row ${r.status}"><span>${esc(r.name)}</span><span>${STATUS_KO[r.status] || ''}${rowDay(r) ? ' · ' + rowDay(r) : ''} ${rowCause(r)}</span></div>`).join('')}</div>`;
-  // 수첩을 줍는 사람: 역에 남은 주민 (엔진은 'resident' 까지만 알려 준다)
+  // 수첩을 줍는 사람: 엔진의 ended.readerId(나이 많은 산 주민 · 'you' · 'conductor' · null). 옛 저장(readerId 없음)만 화면 순서로 고른다
   const READER_ORDER = ['soonrye', 'mari', 'gicheol', 'eunji', 'dongha', 'seoha'];
-  const pickResident = () => { for (const id of READER_ORDER) if (home(id)) return person(id); return null; };
+  const pickResident = () => {
+    const e = state.ended;
+    if (e && Object.prototype.hasOwnProperty.call(e, 'readerId')) return e.readerId && e.readerId !== 'you' && e.readerId !== 'conductor' && person(e.readerId) ? person(e.readerId) : null;
+    for (const id of READER_ORDER) if (home(id)) return person(id);
+    return null;
+  };
+  // 당신 사망 그림: 데이터가 단 그림(ended.cause.image — 결과의 image)이 먼저. 비어 있을 때만 사인 사건 id 로 고른다.
+  //   담요 아래에서 죽은 그림(death_starve: 누운 손, 수첩을 가져가는 손)은 굶주림·열·곪은 상처·밤에 당한 죽음이 같이 쓴다
+  const DEATH_BED = 'death_starve';
   function deathKind() {
     const e = state.ended || {};
-    const ev = (e.cause && e.cause.event) || (state.lastResult && state.lastResult.event) || '';
+    const c = e.cause || {};
+    if (/^death_/.test(c.image || '')) return c.image;
+    const ev = c.event || (state.lastResult && state.lastResult.event) || '';
     if (person('you').status === 'ascended') return 'death_counted';
     if (/starve/.test(ev)) return 'death_starve';
     if (/flood_sick|flux/.test(ev)) return 'death_flux';
     if (/drown|flood|surge/.test(ev)) return 'death_drown';
+    if (/rot|fever|injury_untreated|wound|pillow/.test(ev) || c.night) return DEATH_BED;
     return 'death_beaten';
+  }
+  function deathSrc() {
+    const c = (state.ended && state.ended.cause) || {};
+    if (c.image && !/^death_/.test(c.image)) { const s = ART.cgSrc(c.image, c.event); if (s) return s; }   // 데이터가 사망 그림 대신 장면 그림을 달았으면 그것
+    return ART.deathSrc(deathKind());
+  }
+  // 사망 한 줄: 올라감 · 재가 됨(계단 그림인데 status dead) · 물 · 그 밖
+  function deathLine(kind) {
+    if (person('you').status === 'ascended') return '당신 신발이 계단 아래 가지런히 남았다.';
+    if (kind === 'death_counted') return '계단 위에 당신 구두만 남았다.';
+    if (kind === 'death_drown') return '당신은 떠오르지 않았다.';
+    return '당신은 일어나지 않았다.';
   }
   function queueTitle() { const t = setInterval(() => { if (!busy && !UI.isOpen()) { clearInterval(t); titleScreen(true); } }, 40); }
   async function endingScreen() {
@@ -504,15 +616,16 @@
     const cand = e.identity ? db.identity.candidates.find((c) => c.id === e.identity) : null;
     if (youGone()) {
       // 당신 사망: 사망 그림 + 한 줄 → 수첩을 주운 사람이 명부를 읽는다
-      UI.cg(ART.deathSrc(deathKind()));
-      await UI.line(person('you').status === 'ascended' ? '당신 신발이 계단 아래 가지런히 남았다.' : '당신은 일어나지 않았다.', { tag: 'death' });
+      UI.cg(deathSrc());
+      await UI.line(deathLine(deathKind()), { tag: 'death' });
       const rd = pickResident();
       const head = rd ? `${josa(rd.name, '이가')} 당신 주머니에서 수첩을 꺼내 읽는다.` : '수첩은 승강장 바닥에 남았다. 아무도 줍지 않았다.';
       await UI.open(`<p class="who">${esc(head)}</p>${ledgerMini(rows)}`, { kind: 'death_ledger', options: [{ label: '덮는다', value: true }] });
     } else {
       // 결말: 명부 한 장
       const why = { all_dead: '아무도 남지 않았다.', train: '열흘이 지났다.' }[e.why] || '';
-      const reader = e.reader === 'conductor' ? '차장이 명부를 읽는다.' : e.reader === 'resident' ? (pickResident() ? `${josa(pickResident().name, '이가')} 수첩을 주워 읽는다.` : '아무도 읽지 않는다.') : '당신이 명부를 읽는다.';
+      const rid = Object.prototype.hasOwnProperty.call(e, 'readerId') ? e.readerId : (e.reader === 'resident' ? (pickResident() || {}).id || null : e.reader);
+      const reader = rid === 'conductor' ? '차장이 명부를 읽는다.' : rid === 'you' ? '당신이 명부를 읽는다.' : rid && person(rid) ? `${josa(person(rid).name, '이가')} 수첩을 주워 읽는다.` : '아무도 읽지 않는다.';
       UI.page(ledgerPage(rows, why), 'ledger-page');
       const cap = db.events.ending_ledger ? db.events.ending_ledger.text : '';
       await UI.open(`<p class="who">${esc(reader)}</p>${cap ? `<p class="mini">${esc(cap)}</p>` : ''}`, { kind: 'ending', cls: 'short', options: [{ label: '덮는다', value: true }] });
@@ -532,13 +645,16 @@
     if (!state) return;
     const v = E.view(state, db);
     viewPeople = Object.fromEntries(v.people.map((p) => [p.id, p]));
-    const ICON = { food: 'food', water: 'water', fuel: 'gen' };
-    const ic = (k) => (ART.iconSrc(ICON[k] || k) ? `<img class="ic" alt="" src="${ART.iconSrc(ICON[k] || k)}">` : '');
-    const it = (k, name) => `<div class="it ${(v.world[k] || 0) <= 1 ? 'low' : ''}">${ic(k)}<b>${v.world[k] || 0}</b><span>${name}</span></div>`;
+    const ic = (k) => (ART.iconSrc(RES_ICON[k] || k) ? `<img class="ic" alt="" src="${ART.iconSrc(RES_ICON[k] || k)}">` : '');
+    // 자원 다섯: 식량·물·땔감(always) + 약·부품(선택지 비용·치료에 드는 것 — 판단 정보). view.world 에 없는 것(표가 never 로 숨긴 것)은 그리지 않는다
+    const it = (k) => (v.world[k] == null ? '' : `<div class="it ${(v.world[k] || 0) <= RES_LOW[k] ? 'low' : ''}">${ic(k)}<b>${v.world[k] || 0}</b><span>${RES[k]}</span></div>`);
     const PH = { trace: '아침 — 흔적', ration: '아침 — 배식', seat: '아침 — 자리', day: '낮', evening: '저녁', night: '밤', aftermath: '새벽', ended: '끝' };
     const faces = db.peopleOrder.filter((id) => id !== 'you' && flagOn(MET[id] || '__')).map((id) => `<img alt="${esc(person(id).name)}" title="${esc(person(id).name)}" class="${home(id) ? '' : 'gone'}" src="${faceOf(id)}">`).join('');
     const left = Math.max(0, GOAL_DAY - state.day);
-    $('hud').innerHTML = `<div class="day">D${state.day}<small>${left > 0 ? `열차까지 ${left}일` : '열차가 오는 날'}</small></div>${it('food', '식량')}${it('water', '물')}${it('fuel', '땔감')}<div class="phase">${PH[state.phase] || ''}</div><div class="people">${faces}</div>`;
+    $('hud').innerHTML = `<div class="day">D${state.day}<small>${left > 0 ? `열차까지 ${left}일` : '열차가 오는 날'}</small></div>${RES_ORDER.map(it).join('')}<div class="phase">${PH[state.phase] || ''}</div><div class="people">${faces}</div>`;
+    // 치료 단추: 지금 감을 수 있는 사람이 있으면 밝힌다
+    const tb = $('tabTreat');
+    if (tb) tb.classList.toggle('urgent', !state.ended && treatable().length > 0);
   }
   function objective() {
     if (!state || !scene.map) return '';
@@ -598,6 +714,7 @@
     if (!state.pos.map) { setScene('car', db.maps.car.start[0], db.maps.car.start[1]); }
     else setScene(state.pos.map, state.pos.x, state.pos.y);
     hud();
+    unstack();
   }
   async function newGame(seed) {
     const s = E.newGame(db, seed == null ? ((Date.now() & 0x7fffffff) >>> 0) : seed);
@@ -638,6 +755,7 @@
     if (e.key === 'Shift') { running = true; return; }
     if (e.key === 'f' || e.key === 'F') { toggleFull(); e.preventDefault(); return; }
     if (e.key === 'Tab') { e.preventDefault(); if (state && !state.ended && !UI.isOpen() && !busy) flow(notebook); return; }
+    if ((e.key === 'h' || e.key === 'H') && !UI.isOpen()) { e.preventDefault(); if (state && !state.ended && !busy) flow(treatMenu); return; }
     if (UI.isOpen()) {
       if (dir === 'up' || dir === 'down') { UI.key(dir); e.preventDefault(); }
       else if (ok) { UI.key('ok'); e.preventDefault(); } else if (back) { UI.key('back'); e.preventDefault(); }
@@ -657,6 +775,7 @@
   cv.addEventListener('mousemove', (e) => { if (!state) return; const [px, py] = stageXY(e); const c = clickCell(px, py); hover = c ? hoverName(c[0], c[1]) : ''; });
   cv.addEventListener('mouseleave', () => { hover = ''; });
   $('tabBook').addEventListener('click', () => { if (state && !state.ended && !UI.isOpen() && !busy) flow(notebook); });
+  $('tabTreat').addEventListener('click', () => { if (state && !state.ended && !UI.isOpen() && !busy) flow(treatMenu); });
   $('tabPause').addEventListener('click', () => { if (UI.isOpen()) UI.key('back'); else if (state && !busy) flow(pauseMenu); });
   $('tabFull').addEventListener('click', toggleFull);
 
@@ -682,8 +801,12 @@
   }
 
   // ── 봇·플레이스루 (?auto=<지점>, ?fast=1, ?seed=n) — 캡처(v4/tools/shot.py)용. 화면 규칙과 무관 ──
-  // 지점: car · morning3 · night3 · evening5 · day5 · night8 · ending · reveal · death
-  //   봇은 화면처럼 경고·%·비용을 보고, 캡처가 끝까지 가도록 '당신 사망'만 봇 전용 메타(choiceMeta)로 피한다(death 지점은 반대로 고른다).
+  // 지점: car · morning3 · night3 · night5 · night8 · ending · death · evening5 · reveal · called3 · train
+  //   night5 = D5 밤 고정 사건(d5_rail_body) · evening5 = D5 저녁 화로 둘레에 앉은 사람과 말하는 창 · night8 = D8 밤 고정 사건(d8_patrol_return/d8_pillow)
+  //   called3 = D3 밤 '이름이 불렸다'(d3_called_you) 선택 창 · train = 열차 결말(d10_train) 뒤 명부 한 장
+  //   봇은 화면처럼 경고·%·비용을 보고, 캡처가 끝까지 가도록 '당신 사망'만 표의 효과로 피한다(death 지점은 반대로 고른다).
+  //   지점마다 바라는 깃발(WANT)이 있으면 그 깃발을 세우는 선택을 먼저 고른다 — 그 고정 사건이 걸리게.
+  //   다치면(부상 2+) 낮·저녁에 치료 창(H)으로 자기 상처를 감는다 — 봇(sim)과 같은 규칙.
   //   캡처 지점에 닿으면 봇이 'hold' 를 돌려 그 창을 그대로 둔다 → 헤드리스가 그 화면을 찍는다.
   const safePick = (kind, info) => {
     const opts = info.options;
@@ -711,13 +834,21 @@
     const wantDeath = target === 'death';
     let holding = false;
     const report = (why) => { console.log(`[ds4 auto] ${target} ${why} D${state.day} ${state.phase}${state.ended ? ' ended=' + state.ended.why : ''} you=${person('you').status} food=${state.world.food} | ${autoLog.slice(-16).join(' / ')}`); if (missing.size) console.log('[ds4 missing] ' + Array.from(missing).join(' ')); };
+    const pend = (...ids) => !!(state.pending && ids.includes(state.pending.id));
     const HOLD = {
-      night3: (k) => k === 'line' && state.day === 3 && state.phase === 'night' && state.pending && state.pending.id === 'trial_d3_count',
-      day5: (k) => k === 'line' && state.day === 5 && state.phase === 'night' && state.pending && state.pending.id === 'd5_rail_body',
+      night3: (k) => k === 'line' && state.day === 3 && state.phase === 'night' && pend('trial_d3_count'),
+      night5: (k) => k === 'line' && state.day === 5 && state.phase === 'night' && pend('d5_rail_body'),
+      evening5: (k, info) => k === 'line' && state.day === 5 && state.phase === 'evening' && !state.pending && info.opts && !!info.opts.name,
+      night8: (k) => k === 'event' && state.day === 8 && state.phase === 'night' && pend('d8_patrol_return', 'd8_pillow'),
+      called3: (k) => k === 'event' && pend('d3_called_you'),
+      train: (k) => k === 'ending' && state.ended && state.ended.why === 'd10_train',
       ending: (k) => k === 'ending',
       reveal: (k, info) => k === 'line' && info.opts && info.opts.tag === 'reveal',
       death: (k) => k === 'death_ledger',
     }[target];
+    // 지점이 바라는 깃발: 그 깃발을 세우는 선택에 +50 (고정 사건이 걸리는 길)
+    const WANT = { called3: ['counted_together'], night8: ['patrol_promised', 'key_you'], train: ['met_dohyeon', 'passage_work', 'passage_half', 'passage_open', 'fare_hoard'] }[target] || [];
+    const setsWanted = (o) => !!(o && o.effects && o.effects.flag && WANT.some((f) => o.effects.flag[f]));
     // 결과 하나의 값 (캡처 봇 전용 — 표의 효과를 직접 읽는다): 당신이 죽음 −100 · 다침 −6/칸 · 손상 −4 · 식량·물·약 +1.5 · 배고픔 −0.5
     const meHit = (v) => v && (v.who == null || v.who === 'you' || v.who === 'self');
     function outValue(o) {
@@ -742,6 +873,8 @@
         if (c.taboo) sc += wantDeath ? 3 : -3;
         if (!wantDeath && (c.warn || c.hint)) sc -= 0.5;
         if (c.cost) sc -= 0.3;
+        if (setsWanted(row.out) || setsWanted(row.ok)) sc += 50;
+        if (target === 'train' && ev.id === 'd10_train' && /탄다/.test(c.label) && !(row.out && row.out.effects && row.out.effects.kill)) sc += 60;   // 열차 결말: 타는 쪽
         if (sc > bs) { bs = sc; best = i; }
       });
       autoLog.push(`D${state.day} ${state.phase} ${ev.id} → ${ev.choices[best] ? ev.choices[best].label : '?'}`);
@@ -755,8 +888,16 @@
       if (kind === 'deeper') return !wantDeath && state.day >= 4 && (person('you').n.injury || 0) === 0 && (state.world.food || 0) <= 3 ? 0 : 1;
       if (kind === 'ration') { const you = person('you'); return wantDeath && info.options[0] && /뺀다/.test(info.options[0].label) && (you.n.hunger || 0) < 8 ? 0 : info.options.length - 1; }
       if (kind === 'confirm2') return 0;
+      if (kind === 'treat') { const i = info.options.findIndex((o) => o.value === 'you' && !o.disabled); return i >= 0 && (person('you').n.injury || 0) >= 2 ? i : info.options.length - 1; }
+      if (kind === 'tend') return 0;
       return safePick(kind, info);
     };
+    // 다쳤으면(부상 2+) 치료 창으로 자기 상처를 감는다 — 화면 길(H)을 그대로 탄다
+    async function selfTreat() {
+      if ((person('you').n.injury || 0) < 2 || treatWhy('you')) return;
+      await idle(); await new Promise((res) => { flow(treatMenu).then(res); }); await idle();
+      autoLog.push(`D${state.day} ${state.phase} 치료 → ${flagOn('treated_you') ? '감았다' : '못 감았다'}`);
+    }
     UI.setBot(bot);
     const seed = Number(B.params.get('seed')) || 7;
     await newGame(seed);
@@ -774,8 +915,12 @@
       const ph = state.phase, d = state.day;
       if (once('day' + d)) autoLog.push('[D' + d + ' food' + state.world.food + ' water' + state.world.water + ' hunger' + person('you').n.hunger + ']');
       if (target === 'morning3' && d === 3 && ph === 'trace') { await use('notebook_you'); await goto(13, 11); UI.setBot(null); report('stop'); return; }
-      if (target === 'evening5' && d === 5 && ph === 'evening') { await use(peopleOnMap().find((q) => q.talkable) ? peopleOnMap().find((q) => q.talkable).id : 'fire'); await goto(13, 12); UI.setBot(null); report('stop'); return; }
-      if (target === 'night8' && d === 8 && ph === 'night') { await goto(17, 12); scene.face = 'up'; UI.setBot(null); report('stop'); return; }
+      if (target === 'night8' && d === 8 && ph === 'night') { await goto(17, 12); scene.face = 'up'; UI.setBot(null); report('stop (D8 밤 고정 사건이 걸리지 않았다)'); return; }
+      // 열차 결말: D9 저녁까지 통로가 안 열렸으면 캡처용 지름길(setFlag)로 연다 — 기록에 남긴다
+      if (target === 'train' && d === 9 && ph === 'evening' && once('shortcut')) {
+        for (const f of ['passage_open', 'fare_hoard']) if (!flagOn(f)) { act({ type: 'setFlag', flag: f, quiet: true }); autoLog.push(`[지름길 ${f}]`); }
+      }
+      if ((ph === 'day' || ph === 'evening') && once('treat' + ph + d)) await selfTreat();
       if (ph === 'trace' && d > 0 && once('trace' + d)) { await use('notebook_you'); continue; }
       if (ph === 'day' && d >= 1 && !wantDeath && !state.trip && once('trip' + d) && (person('you').n.injury || 0) === 0 && ((state.world.food || 0) <= 5 || (state.world.water || 0) <= 5)) {
         const region = d % 2 === 0 ? 'A' : 'B';
