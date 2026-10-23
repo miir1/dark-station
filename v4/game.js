@@ -758,7 +758,7 @@
       if (loaded.state && !loaded.state.ended) opts.push({ label: `계속 (D${loaded.state.day})`, value: 'go' });
       opts.push({ label: '새로 시작', value: 'new' }, { label: '저장 코드 불러오기', value: 'import' }, { label: '전체화면', value: 'full' });
       UI.cg(ART.cgSrc('title'));
-      const a = await UI.open('<p class="title" style="text-align:center;letter-spacing:.3em">어두운 역</p><p class="mini" style="text-align:center">묵현역 · 열차까지 열흘 · 18+</p>', { kind: 'title', options: opts, cls: 'wide' });
+      const a = await UI.open('<p class="title" style="text-align:center;letter-spacing:.3em">어두운 역</p><p class="mini" style="text-align:center">묵현역 · 열차까지 열흘 · 18+<br>유혈·시체·살해 묘사가 직접 나옵니다</p>', { kind: 'title', options: opts, cls: 'wide' });
       if (a === 'full') { toggleFull(); continue; }
       if (a === 'import') {
         await UI.open('<p class="title">저장 코드</p><p><input type="text" id="codeIn" placeholder="코드를 붙여 넣는다"></p>', { kind: 'import', cancel: true, options: [{ label: '불러온다', value: true }] });
