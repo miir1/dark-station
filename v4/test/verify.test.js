@@ -114,16 +114,19 @@ test('봇 점수: 죽음을 바로 말하는 경고(판정 없음)는 조심형�
   }
   const bal = rot.map((c) => B.scoreChoice(c, B.POLICIES.balanced, 'd7_rot', ctx));
   assert.ok(bal[0] > bal[1], '균형: 약이 있으면 마리에게 보인다 ' + bal.join(','));
-  assert.strictEqual(B.deadlyText(meta({ warn: '아침이 안 올 수 있다', check: true, chance: 40 })), false, '판정 있는 선택은 % 가 따로 보인다');
+  assert.strictEqual(B.deadlyText(meta({ warn: '아침이 안 올 수 있다', check: true, chance: 40 })), true, '판정 있어도 죽음을 말하는 글은 죽음 글');
+  assert.strictEqual(Math.round(B.deadlyRisk(meta({ warn: '아침이 안 올 수 있다', check: true, chance: 40 })) * 100), 60, '판정 있는 선택은 화면의 실패 % 만큼');
+  assert.strictEqual(B.deadlyRisk(meta({ warn: '차장이 당신을 센다' })), 1, '판정 없는 죽음 글은 그대로');
+  assert.strictEqual(B.deadlyRisk(meta({ warn: '잘못 짜면 번진다', check: true, chance: 40 })), 0);
   assert.strictEqual(B.deadlyText(meta({ warn: '차장이 당신을 센다' })), true);
   assert.ok(B.CAREFUL.includes('balanced') && !B.CAREFUL.includes('risky') && !B.CAREFUL.includes('devoted'));
 });
 test('봇 점수: 모험은 판정 없는 경고에 가점이 없고, 아플 때 약(비용이 약뿐·원정·거래 아님)은 비용 감점 없이 먼저 고른다', () => {
   const risky = B.POLICIES.risky;
-  assert.strictEqual(B.scoreChoice(meta({ warn: '열차는 기관사 없이 간다' }), risky, 'd10_train'), 0);
+  assert.strictEqual(B.scoreChoice(meta({ warn: '열차는 기관사 없이 간다' }), risky, 'd10_train'), -B.RISKY_FLAT_WARN, '판정 없는 경고 = 굴릴 것 없는 손해, 모험도 작게 감점');
   const med = meta({ warn: '약이 준다', cost: { meds: 1 } });
-  assert.strictEqual(B.scoreChoice(med, risky, 'flood_sick', { kind: 'trial', unwell: true }), B.RECOVERY_BONUS);
-  assert.strictEqual(B.scoreChoice(med, risky, 'flood_sick', { kind: 'trial', unwell: false }), -0.5, '멀쩡하면 비용 감점');
+  assert.strictEqual(B.scoreChoice(med, risky, 'flood_sick', { kind: 'trial', unwell: true }), B.RECOVERY_BONUS - B.RISKY_FLAT_WARN, '회복 가점(비용 감점 없음) − 판정 없는 경고 글의 작은 감점');
+  assert.strictEqual(B.scoreChoice(med, risky, 'flood_sick', { kind: 'trial', unwell: false }), -0.5 - B.RISKY_FLAT_WARN, '멀쩡하면 비용 감점');
   assert.strictEqual(B.isRecovery(med, 'trip_a1_pharmacy', { kind: 'trip', unwell: true }), false, '원정에서 약을 내주는 건 회복이 아니다');
   assert.strictEqual(B.isRecovery(med, 'trade_shutter', { kind: 'trial', unwell: true }), false, '거래는 회복이 아니다');
   assert.strictEqual(B.isRecovery(med, 'trade_shutter_b', { kind: 'trial', unwell: true }), false, '거래 변형 행도 회복이 아니다');
@@ -132,6 +135,53 @@ test('봇 점수: 모험은 판정 없는 경고에 가점이 없고, 아플 때
   for (const pol of ['risky', 'balanced', 'devoted']) assert.ok(B.scoreChoice(med, B.POLICIES[pol], 'fever_night', { kind: 'trial', unwell: true }) > B.scoreChoice(gamble, B.POLICIES[pol], 'fever_night', { kind: 'trial', unwell: true }), pol + ': 약이 있으면 열 주사위를 굴리지 않는다');
   const hold = meta({ warn: '사흘 뒤 끝이다' });
   assert.ok(B.scoreChoice(med, risky, 'flood_sick', { kind: 'trial', unwell: true }) > B.scoreChoice(hold, risky, 'flood_sick', { kind: 'trial', unwell: true }), '모험: 약이 있으면 버티지 않는다');
+});
+
+test('봇 점수(10-23): 모든 선택지에 경고가 붙어도 조심형은 45% 죽는 주사위보다 무릎 꿇기·손가락을 고른다 · 모험은 동점이면 확정 사망을 고르지 않는다', () => {
+  // dawn_dongha2 꼴(그릇 둘이 없을 때): 막는다 45% / 부른다 40% / 도망친다 55% (실패 = 죽음) · 손으로 받는다(손가락) · 무릎을 꿇는다(그릇)
+  const dawn = [
+    meta({ label: '막는다', warn: '못 막으면 죽는다', check: true, chance: 45 }),
+    meta({ label: '부른다', warn: '못 들으면 끝이다', check: true, chance: 40 }),
+    meta({ label: '도망친다', warn: '넘어지면 끝이다', check: true, chance: 55 }),
+    meta({ label: '손으로 받는다', warn: '손가락을 잃는다' }),
+    meta({ label: '무릎을 꿇는다', warn: '그릇을 내놓는다' })];
+  for (const pol of B.CAREFUL) {
+    const sc = dawn.map((c) => B.scoreChoice(c, B.POLICIES[pol], 'dawn_dongha2', { kind: 'trial', unwell: false }));
+    assert.ok(Math.max(sc[3], sc[4]) > Math.max(sc[0], sc[1], sc[2]), pol + ' ' + sc.map((x) => x.toFixed(2)).join(','));
+  }
+  // 거의 확실히 사는 주사위(95%)는 손가락보다 낫다(죽음 글이어도 실패 % 만큼만)
+  const safeRoll = meta({ label: '도망친다', warn: '넘어지면 끝이다', check: true, chance: 95 });
+  assert.ok(B.scoreChoice(safeRoll, B.POLICIES.balanced, 'x') > B.scoreChoice(dawn[3], B.POLICIES.balanced, 'x'));
+  // d8_patrol_return 꼴: 경고 없는 손해 vs 판정 없는 경고(확정 사망) — 모험이 반반으로 고르지 않는다
+  const give = meta({ label: '열쇠를 내준다' }), refuse = meta({ label: '내주지 않는다', warn: '넷이다. 파이프가 턱에 있다', killYou: true });
+  assert.ok(B.scoreChoice(give, B.POLICIES.risky, 'd8_patrol_return') > B.scoreChoice(refuse, B.POLICIES.risky, 'd8_patrol_return'));
+  // 모험은 여전히 판정 있는 위험을 좋아한다: 60% 판정(실패 = 죽음)은 판정 없는 경고보다 높다, 45% 는 아니다
+  const roll = (ch) => B.scoreChoice(meta({ warn: '못 달래면 죽는다', check: true, chance: ch }), B.POLICIES.risky, 'd2_night_shutter');
+  const flat = B.scoreChoice(meta({ warn: '아무도 못 잔다' }), B.POLICIES.risky, 'd2_night_shutter');
+  assert.ok(roll(60) > flat && roll(45) < flat, [roll(60), roll(45), flat].join(','));
+});
+test('봇 정책(10-23): 9번째 steward(몫+·손−·이름+)는 조심형이고, 정체 후보 inspector 에 닿는다', () => {
+  const p = B.POLICIES.steward;
+  assert.deepStrictEqual([p.share, p.hand, p.name], [1, -1, 1]);
+  assert.ok(B.CAREFUL.includes('steward'));
+  const db = T.loadDir(require('path').join(__dirname, '..', 'data'));
+  const ids = {};
+  for (let seed = 1; seed <= 12; seed++) { const { s } = B.play(db, seed, 'steward'); const id = s.ended && s.ended.identity; ids[id] = (ids[id] || 0) + 1; }
+  assert.ok((ids.inspector || 0) >= 4, JSON.stringify(ids));
+});
+test('봇 치료(10-23): 저녁에 위독한 주민을 치료한다 — 중립은 약 1을 남기고, 헌신은 다 쓰고, 이기적은 안 한다', () => {
+  const run = (pol, meds) => {
+    const { db, s } = setup((t) => { const ev = t.phases.find((p) => p.id === 'evening'); if (!ev.actions.includes('treat')) ev.actions.push('treat'); });   // 실제 표처럼 저녁에 치료
+    toPhase(s, db, 0, 'evening');
+    s.pending = null;
+    s.people.gicheol.n.injury = 3; s.world.meds = meds;
+    B.treatResidents(s, db, B.POLICIES[pol]);
+    return [!!s.flags.treated_gicheol, s.world.meds];
+  };
+  assert.deepStrictEqual(run('balanced', 2), [true, 1]);
+  assert.deepStrictEqual(run('balanced', 1), [false, 1], '중립은 자기 몫 하나를 남긴다');
+  assert.deepStrictEqual(run('devoted', 1), [true, 0]);
+  assert.deepStrictEqual(run('selfish', 3), [false, 3]);
 });
 
 // ── 4. 강제 사망: 그 순간 당신이 죽지 않는 열린 선택지가 0개 — 엔진이 사인 기록(ended.cause)에 남기고, 실질 경고로 세지 않는다 ──
@@ -171,13 +221,29 @@ test('사인 기록: 다른 길이 모두 잠긴 주사위(약 0)는 강제, 약
     s.world.meds = meds;
     assert.strictEqual(s.pending && s.pending.id, 'x_fever');
     E.dispatch(s, { type: 'choose', i: 1 }, db);
+    s._db = db;
     return s;
   };
   const a = mk(0);
+  assert.strictEqual(S.measure(a._db, a, { trips: 0 }).deadlyPick, false, '강제 죽음은 봇 버릇이 아니다');
   assert.strictEqual(a.people.you.status, 'dead');
   assert.deepStrictEqual([a.ended.cause.forced, a.ended.cause.warned], [true, false]);
   const b = mk(1);
   assert.deepStrictEqual([b.ended.cause.forced, b.ended.cause.warned, b.ended.cause.free.event], [false, true, 'x_fever'], '약이 있었는데 버텼다 = 경고가 보인 결정');
+  const rb = S.measure(b._db, b, { trips: 0 });
+  assert.strictEqual(rb.deadlyPick, true, '대안(약)이 있는데 죽음 글("아침이 안 올") 선택으로 죽음 = 봇 버릇 점검 줄에 잡힌다');
+  assert.strictEqual(S.aggregate(b._db, [rb]).deadlyPick, 1);
+  assert.deepStrictEqual(b.lastResult.open, [0, 1], '엔진이 고를 때 열려 있던 선택지 번호를 남긴다');
+  // 다른 길이 금기뿐이면(남의 담요) 죽음 주사위를 고른 건 버릇이 아니다
+  const t3 = rawTables();
+  t3.events.push(ev('x_cold', 'trial', 'day==0 & phase==night', [
+    { label: '담요를 뺏는다', warn: '그 사람이 떤다', taboo: true, out: { text: '' } },
+    { label: '버틴다', warn: '아침이 안 올 수 있다', check: { skill: 'str', base: 0 }, ok: { text: '' }, fail: { text: '', effects: { kill: { who: 'you' } } } }]));
+  const db3 = T.load(t3); const s3 = E.newGame(db3, 5);
+  E.dispatch(s3, { type: 'choose', i: 1 }, db3); toPhase(s3, db3, 0, 'night');
+  assert.strictEqual(s3.pending && s3.pending.id, 'x_cold');
+  E.dispatch(s3, { type: 'choose', i: 1 }, db3);
+  assert.deepStrictEqual([s3.people.you.status, s3.ended.cause.forced, S.measure(db3, s3, { trips: 0 }).deadlyPick], ['dead', false, false]);
   const t2 = rawTables(); const db2 = T.load(t2); const s2 = E.newGame(db2, 1);
   s2.lastFree = { event: 'x', choice: 'y', day: 1 };
   assert.deepStrictEqual(E.normalize(JSON.parse(JSON.stringify(s2)), db2).lastFree, { event: 'x', choice: 'y', day: 1 });

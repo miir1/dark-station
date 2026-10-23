@@ -5,6 +5,7 @@ const E = require('../engine/engine.js');
 const R = require('../engine/rng.js');
 
 // avoidDeadly = 경고 글이 죽음을 바로 말하는 선택(DEADLY)을 피하는 정도. 1 = 대안이 있으면 고르지 않는다, 1 미만 = 축이 세게 끌면 고를 수도 있다(헌신의 자기희생, 부르는 사람의 대답).
+//   판정 있는 선택은 화면의 실패 % 만큼만 깎는다(deadlyRisk) — 95% 사는 주사위는 손가락보다 낫고, 45% 죽는 주사위는 무릎 꿇기보다 못하다.
 // 조심형(CAREFUL) = 경고를 꽉 피하는 정책(avoidWarn ≥ 1, 모험 아님) — 합격선에 따로 집계한다(10-22 검증 3).
 const POLICIES = {
   balanced: { share: 0, hand: 0, name: 0, inspect: 'normal', avoidWarn: 1, avoidDeadly: 1 },
@@ -15,15 +16,21 @@ const POLICIES = {
   lazy: { share: 0, hand: 0, name: 0, inspect: 'lazy', avoidWarn: 1, avoidDeadly: 1 },
   diligent: { share: 0, hand: 0, name: 0, inspect: 'diligent', avoidWarn: 1, avoidDeadly: 1 },   // 발견율 상한 보고용
   risky: { share: 0, hand: 0, name: 0, inspect: 'normal', avoidWarn: 0, avoidDeadly: 1, risky: true },   // 모험: 판정 있고 경고 붙은 선택을 우선(≥35%), 원정 매일·2층 우선, 거래·협정·범람수는 자원 + 최대. 확정 죽음은 위험이 아니라 피한다
+  steward: { share: 1, hand: -1, name: 1, inspect: 'normal', avoidWarn: 1, avoidDeadly: 1 },   // 몫+·손−·이름+ (10-23 리드 지적 A2: 이 조합이 없어 정체 후보 inspector 가 거의 안 나왔다). 나누고, 손대지 않고, 이름을 부른다
 };
 const CAREFUL = Object.keys(POLICIES).filter((k) => POLICIES[k].avoidWarn >= 1 && !POLICIES[k].risky);
 const RESOURCE_EVENTS = ['trade_shutter', 'patrol_pact', 'drink_flood'];
 const isResource = (id) => RESOURCE_EVENTS.some((r) => id === r || String(id || '').startsWith(r + '_'));   // 변형 행(trade_shutter_b·patrol_pact_b)도 같은 거래·협정
-// 경고 글이 죽음을 바로 말한다 — 판정 없는 선택만(판정이 있으면 %가 따로 보인다). 화면에 보이는 글이라 E6 안이다.
-// '센다' = 차장·위의 것이 세는 것(이 게임에서 세어진 사람은 올라간다 — d3·d9·명부에서 여러 번 보인다)
-const DEADLY = /끝이다|죽는다|올라간다|못 일어난다|센다/;
+// 경고 글이 죽음을 바로 말한다. 화면에 보이는 글이라 E6 안이다.
+// '센다' = 차장·위의 것이 세는 것(이 게임에서 세어진 사람은 올라간다 — d3·d9·명부에서 여러 번 보인다) · '아침이 안 올' = 밤을 못 넘긴다
+const DEADLY = /끝이다|죽는다|올라간다|못 일어난다|센다|아침이 안 올/;
 const DEADLY_PENALTY = 10;
-const deadlyText = (c) => !c.check && DEADLY.test(`${c.warn || ''} ${c.hint || ''}`);
+const deadlyText = (c) => DEADLY.test(`${c.warn || ''} ${c.hint || ''}`);
+// 죽음 위험의 크기: 판정 없는 선택 = 1(그대로 일어난다), 판정 있는 선택 = 화면의 실패 %(10-23: 판정이면 빼 주던 것을 실패 % 만큼 감점으로 —
+// 모든 선택지에 경고가 붙으면 낮은 % 감점(±1)만으로 갈려서, 조심형도 45% 죽는 주사위를 무릎 꿇기·손가락보다 먼저 골랐다)
+const deadlyRisk = (c) => (!deadlyText(c) ? 0 : c.check && c.chance != null ? Math.max(0, 100 - c.chance) / 100 : 1);
+// 모험이 판정 없는 경고에 주는 감점: 굴릴 것 없이 손해만 확정이라 동점이면 경고 없는 쪽(10-23: d8_patrol_return '내주지 않는다' 확정 사망이 0점 동점으로 반반이었다)
+const RISKY_FLAT_WARN = 0.5;
 // 약으로 몸을 고치는 선택: 비용이 약뿐이고, 원정·거래 사건이 아니고, 봇이 몸이 성치 않음을 알 때(부상 ≥1, 또는 제 손으로 고른 일로 생긴 병 — 범람수를 마심·손을 베임)
 const SICK_FLAGS = ['drank_flood', 'flood_sick_days', 'cut_hand'];
 const unwell = (s) => (s.people.you.n.injury || 0) >= 1 || SICK_FLAGS.some((f) => s.flags[f]);
@@ -42,6 +49,7 @@ function scoreChoice(c, pol, eventId, ctx) {
   if (pol.risky) {
     if (isResource(eventId)) return (c.gain || 0) * 10 + (c.cost ? -0.5 : 0);
     if (c.check && (c.warn || c.hint)) sc += c.chance >= 35 ? 4 : -2;   // 모험이 즐기는 위험 = 판정(%)이 있는 것. 판정 없는 경고에 주던 +1 은 뺐다(10-22 검증 3)
+    else if (c.warn || c.hint) sc -= RISKY_FLAT_WARN;
   }
   for (const [k, v] of Object.entries(c.axis || {})) sc += (pol[k] || 0) * v * 2;
   // 봇은 메타의 killYou 를 안 본다 — 화면처럼 warn·hint·cost·% 와 경고 글만 본다. (killYou 는 통계용으로만 메타에 남긴다)
@@ -50,7 +58,7 @@ function scoreChoice(c, pol, eventId, ctx) {
   else if (c.cost) sc -= 0.5;
   if (c.chance != null) sc += (c.chance - 50) / 50;            // 판정 % 가 낮으면 감점
   if (c.taboo) sc -= 3;
-  if (deadlyText(c)) sc -= DEADLY_PENALTY * (pol.avoidDeadly != null ? pol.avoidDeadly : 1);
+  sc -= DEADLY_PENALTY * (pol.avoidDeadly != null ? pol.avoidDeadly : 1) * deadlyRisk(c);
   return sc;
 }
 function pickChoice(s, db, pol, metas) {
@@ -136,11 +144,23 @@ function dayStep(s, db, pol, trace) {
 function eveningStep(s, db, pol, trace) {
   settle(s, db, pol, trace);
   if ((s.people.you.n.injury || 0) >= 2) act(s, db, { type: 'treat', who: 'you' });   // 원정에서 다친 뒤 저녁에 치료
+  treatResidents(s, db, pol);
   const rule = INSPECT[pol.inspect];
   const home = shuffle(s, db.peopleOrder.filter((p) => p !== 'you' && s.people[p].status === 'home'));
   if (home.length && rule.talk > 0 && act(s, db, { type: 'talk', who: home[0] })) settle(s, db, pol, trace);
   for (let i = 0; i < s.rumors.length; i++) if (!s.rumors[i].heard && rule.rumors > 0) { act(s, db, { type: 'hear', i }); break; }
   writeCauses(s, db, pol);
+}
+// 위독한 주민 치료(10-23): 저녁 = 그날 마지막 치료 기회. 화면에도 '상처를 감아 준다'(game.js treat)가 있고, 주민의 다친 정도는 화면에 보인다.
+// 몫이 0 이상인 정책만 — 헌신형(몫+)은 약을 다 쓰고, 중립은 자기 몫 1을 남긴다. 이기적(몫−)은 남을 치료하지 않는다.
+// (전에는 봇이 자기만 치료해서, 밤 사건으로 위독해진 기철이 하루 유예 뒤에도 거의 늘 죽었다 — 10-22 검증 지적 25의 나머지)
+function treatResidents(s, db, pol) {
+  if (pol.share < 0) return;
+  const max = db.numbers.injury ? db.numbers.injury.max : 3;
+  const need = Number.isFinite(s.world.treat_meds) ? s.world.treat_meds : 1;
+  const reserve = pol.share > 0 ? 0 : 1;
+  const crit = db.peopleOrder.filter((id) => id !== 'you' && s.people[id].status === 'home' && (s.people[id].n.injury || 0) >= max && !s.flags[`treated_${id}`]);
+  for (const id of crit) { if ((s.world.meds || 0) < need + reserve) break; act(s, db, { type: 'treat', who: id }); }
 }
 function writeCauses(s, db, pol) {
   for (const id of db.peopleOrder) {
@@ -184,4 +204,4 @@ function play(db, seed, policyName) {
   return { s, trace };
 }
 
-module.exports = { POLICIES, CAREFUL, INSPECT, OPT, DEADLY, RECOVERY_BONUS, play, pickChoice, scoreChoice, deadlyText, isRecovery, isResource };
+module.exports = { POLICIES, CAREFUL, INSPECT, OPT, DEADLY, DEADLY_PENALTY, RECOVERY_BONUS, RISKY_FLAT_WARN, play, pickChoice, scoreChoice, deadlyText, deadlyRisk, isRecovery, isResource, treatResidents };

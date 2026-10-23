@@ -54,7 +54,7 @@
   const BED_ORDER = ['soonrye', 'seoha', 'gicheol', 'eunji', 'dongha', 'mari'];
   // 자리마다 당신이 옆 칸까지 걸어갈 수 있어야 한다(말 걸기·치료). 화로(13,10) 위쪽 칸(13~15,9)과 (16,10)은 판자·화로·담요·의자에 둘러싸인
   // 주머니라 (14,10)·(15,10) 으로만 드나든다 — 그 두 칸과 그 아래 칸(14,11)·(15,11)을 한꺼번에 막으면 안쪽 사람에게 못 간다.
-  // (13,11) = 화로 앞 · 아침에 당신이 서는 칸이라 비워 둔다. 은지 아침 자리(옛 18,10)는 의자 둘·담요 둘에 갇혀 있어 옮겼다.
+  // (13,11) = 화로 앞(화로를 조사하러 서는 칸) · (13,12) = 단계가 바뀔 때 당신이 물러서는 칸(fireStand) — 둘 다 비워 둔다. 은지 아침 자리(옛 18,10)는 의자 둘·담요 둘에 갇혀 있어 옮겼다.
   const SPOTS = {
     trace: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [21, 11], dongha: [22, 11], mari: [22, 10] },
     ration: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [21, 11], dongha: [22, 11], mari: [22, 10] },
@@ -253,6 +253,16 @@
       }
     }
   }
+  // 화로 앞 자리: 화로 바로 아래 칸(13,11)에 서 있으면 48px 몸이 화로 칸으로 올라가 드럼·불꽃이 머리에 얹힌 것처럼 보인다.
+  // 단계가 바뀌면(화로를 조사해 넘어가므로 대개 그 칸이다 — 아침·저녁·밤) 한 칸 물러서서(승강장 끝 선) 화로를 보고 선다. 비어 있지 않으면 그대로.
+  // 화로는 빈 칸 하나 건너서도 조사되므로(target) 그 자리에서 Space 로 바로 다음 단계로 간다.
+  function fireStand() {
+    const f = scene.map && scene.map.fire;
+    if (!f || scene.map.id !== 'station' || scene.moving) return;
+    if (scene.px !== f[0] || scene.py !== f[1] + 1) return;
+    if (blocked(f[0], f[1] + 2)) return;
+    scene.py = f[1] + 2; scene.face = 'up'; scene.auto = null;
+  }
   const front = () => { const [dx, dy] = DIRS[scene.face]; return [scene.px + dx, scene.py + dy]; };
   const EXIT_NAMES = { A: '지하상가 통로', B: '배수로 통로', S: '출구 계단', k: '역무실 문', R: '무너진 통로', E: '나가는 길' };
   const EXIT_AT = { A: [0, 6], B: [27, 13] };
@@ -296,6 +306,10 @@
     if (p) return { x: fx, y: fy, kind: 'npc', id: p.id, label: '말 걸기' };
     const o = objectsAt(fx, fy)[0] || objectsAt(scene.px, scene.py)[0];
     if (o) return { x: o.x, y: o.y, kind: 'obj', id: o.id, label: o.id === 'fire' ? fireLabel() : '조사' };
+    // 화로는 빈 칸 하나 건너서도 조사된다 (아침 자리 = 화로 두 칸 아래에서 화로를 본다)
+    const [ddx, ddy] = DIRS[scene.face];
+    const far = !blocked(fx, fy) ? objectsAt(fx + ddx, fy + ddy).find((q) => q.id === 'fire') : null;
+    if (far) return { x: far.x, y: far.y, kind: 'obj', id: far.id, label: fireLabel() };
     const ex = exitHere();
     if (ex) return { x: scene.px, y: scene.py, kind: 'exit', id: ex, label: state.phase === 'day' ? '원정' : '통로' };
     return null;
@@ -514,14 +528,14 @@
   async function phaseEnter(before) {
     const ph = state.phase;
     if (state.ended) { await endingScreen(); return; }
-    unstack();
+    unstack(); fireStand();
     if (before && state.day !== before.day) {
       const left = GOAL_DAY - state.day;
       await UI.card(`D${state.day}`, left > 0 ? `열차까지 ${left}일` : '열차가 오는 날');
       store.markMorning(state);
       await nightReport(before);
     }
-    if (ph === 'trace') { if (scene.map && scene.map.id !== 'station') { act({ type: 'move', map: 'station', x: 13, y: 11, quiet: true }); setScene('station', 13, 11); } }
+    if (ph === 'trace') { if (scene.map && scene.map.id !== 'station') { act({ type: 'move', map: 'station', x: 13, y: 11, quiet: true }); setScene('station', 13, 11); fireStand(); } }
     if (ph === 'ration') { await pendingFlow(); if (!state.ended) await rationFlow(); return; }
     if (ph === 'seat') { await pendingFlow(); if (!state.ended) { await UI.line('사람들이 제 자리로 흩어진다.'); await nextPhase(); } return; }
     if (ph === 'aftermath') { await pendingFlow(); if (!state.ended) { await dream(); await UI.line('밤이 지난다.', { black: true }); await nextPhase(); } return; }
@@ -658,7 +672,9 @@
     // 자원 다섯: 식량·물·땔감(always) + 약·부품(선택지 비용·치료에 드는 것 — 판단 정보). view.world 에 없는 것(표가 never 로 숨긴 것)은 그리지 않는다
     const it = (k) => (v.world[k] == null ? '' : `<div class="it ${(v.world[k] || 0) <= RES_LOW[k] ? 'low' : ''}">${ic(k)}<b>${v.world[k] || 0}</b><span>${resName(k)}</span></div>`);
     const PH = { trace: '아침 — 흔적', ration: '아침 — 배식', seat: '아침 — 자리', day: '낮', evening: '저녁', night: '밤', aftermath: '새벽', ended: '끝' };
-    const faces = db.peopleOrder.filter((id) => id !== 'you' && flagOn(MET[id] || '__')).map((id) => `<img alt="${esc(person(id).name)}" title="${esc(person(id).name)}" class="${home(id) ? '' : 'gone'}" src="${faceOf(id)}">`).join('');
+    // 얼굴이 흐려지는 사람: 판 중에는 역을 떠난 사람 전부, 끝난 뒤에는 죽거나 올라간 사람만 (같이 걸어 나갔거나 탄 사람은 그대로)
+    const lost = (id) => { const st = person(id).status; return state.ended ? st === 'dead' || st === 'ascended' : st !== 'home'; };
+    const faces = db.peopleOrder.filter((id) => id !== 'you' && flagOn(MET[id] || '__')).map((id) => `<img alt="${esc(person(id).name)}" title="${esc(person(id).name)}" class="${lost(id) ? 'gone' : ''}" src="${faceOf(id)}">`).join('');
     const left = Math.max(0, GOAL_DAY - state.day);
     $('hud').innerHTML = `<div class="day">D${state.day}<small>${left > 0 ? `열차까지 ${left}일` : '열차가 오는 날'}</small></div>${RES_ORDER.map(it).join('')}<div class="phase">${PH[state.phase] || ''}</div><div class="people">${faces}</div>`;
     // 치료 단추: 지금 감을 수 있는 사람이 있으면 밝힌다
@@ -697,7 +713,7 @@
   }
   async function notebook() {
     for (;;) {
-      const a = await UI.open('<p class="title">수첩</p><p class="mini">명부 · 사실 줄 · 일지</p>', { kind: 'book', cancel: true, cancelValue: null, cls: 'wide', options: [{ label: '명부', value: 'ledger' }, { label: '사실 줄', value: 'facts' }, { label: '일지', value: 'log' }, { label: '덮는다', value: null }] });
+      const a = await UI.open('<p class="title">수첩</p><p class="mini">명부 · 사실 줄 · 뒷장</p>', { kind: 'book', cancel: true, cancelValue: null, cls: 'wide', options: [{ label: '명부', value: 'ledger' }, { label: '사실 줄', value: 'facts' }, { label: '뒷장', value: 'log' }, { label: '덮는다', value: null }] });
       if (!a) return;
       if (a === 'ledger') {
         const ids = ['you'].concat(db.peopleOrder.filter((id) => id !== 'you' && flagOn(MET[id] || '__')));   // 당신 줄은 맨 위
@@ -712,7 +728,7 @@
       }
       let body = '';
       if (a === 'facts') body = `<p class="who">사실 줄</p><div class="list">${state.ledger.written.filter((w) => w && w.text).length ? state.ledger.written.filter((w) => w && w.text).slice(-7).map((w) => `<p><span class="d">D${w.day}</span>${esc(w.text)}</p>`).join('') : '<p class="mini">아직 아무것도 적지 않았다.</p>'}</div>`;
-      else body = `<p class="who">일지</p><div class="list">${state.log.filter((l) => l.kind === 'choice').slice(0, 7).map((l) => `<p><span class="d">D${l.day}</span>${esc(l.text)}</p>`).join('') || '<p class="mini">비어 있다.</p>'}</div>`;
+      else body = `<p class="who">뒷장 — 당신이 고른 것</p><div class="list">${state.log.filter((l) => l.kind === 'choice').slice(0, 7).map((l) => `<p><span class="d">D${l.day}</span>${esc(l.text)}</p>`).join('') || '<p class="mini">비어 있다.</p>'}</div>`;
       await UI.open(body, { kind: 'bookpage', cancel: true, cancelValue: null, options: [{ label: '돌아간다', value: null }] });
     }
   }
@@ -726,7 +742,7 @@
       if (blocked(scene.px, scene.py, true)) { const st = scene.map.start; scene.px = st[0]; scene.py = st[1]; }   // 저장의 자리가 벽 안(옛 저장·시뮬 저장의 0,0)이면 그 지도의 시작 칸
     }
     hud();
-    unstack();
+    unstack(); fireStand();
   }
   async function newGame(seed) {
     const s = E.newGame(db, seed == null ? ((Date.now() & 0x7fffffff) >>> 0) : seed);
@@ -813,7 +829,8 @@
   }
 
   // ── 봇·플레이스루 (?auto=<지점>, ?fast=1, ?seed=n) — 캡처(v4/tools/shot.py)용. 화면 규칙과 무관 ──
-  // 지점: car · morning3 · night3 · night5 · night8 · ending · death · evening5 · reveal · called3 · train
+  // 지점: car · morning3 · night3 · night5 · night8 · ending · death · evening5 · reveal · called3 · train · beds
+  //   beds = D2 밤 고정 사건이 지나간 뒤의 지도 (잠든 사람이 잠자리 위에 누운 모습 확인용)
   //   night5 = D5 밤 고정 사건(d5_rail_body) · evening5 = D5 저녁 화로 둘레에 앉은 사람과 말하는 창 · night8 = D8 밤 고정 사건(d8_patrol_return/d8_pillow)
   //   called3 = D3 밤 '이름이 불렸다'(d3_called_you) 선택 창 · train = 열차 결말(d10_train) 뒤 명부 한 장
 //   ?state=<주소> 가 있으면 그 저장에서 시작한다 (shot.py 가 train 에 시뮬 봇 저장을 붙인다 — 캡처 봇은 D10 전에 주민이 다 죽는다)
@@ -949,7 +966,9 @@
       if (holding || state.ended) break;
       const ph = state.phase, d = state.day;
       if (once('day' + d)) autoLog.push('[D' + d + ' food' + state.world.food + ' water' + state.world.water + ' hunger' + person('you').n.hunger + ']');
-      if (target === 'morning3' && d === 3 && ph === 'trace') { await use('notebook_you'); await goto(13, 11); UI.setBot(null); report('stop'); return; }
+      if (target === 'morning3' && d === 3 && ph === 'trace') { await use('notebook_you'); await goto(13, 12); scene.face = 'up'; UI.setBot(null); report('stop'); return; }
+      // 밤 잠자리: 밤 고정 사건이 다 지나간 뒤 지도 — 잠든 사람이 잠자리 위에 누워 있다 (D2 밤)
+      if (target === 'beds' && d === 2 && ph === 'night') { await goto(16, 10); scene.face = 'right'; UI.setBot(null); report('stop'); return; }
       if (target === 'night8' && d === 8 && ph === 'night') { await goto(17, 12); scene.face = 'up'; UI.setBot(null); report('stop (D8 밤 고정 사건이 걸리지 않았다)'); return; }
       // 열차 결말: D9 저녁까지 통로가 안 열렸으면 캡처용 지름길(setFlag)로 연다 — 기록에 남긴다
       if (target === 'train' && d === 9 && ph === 'evening' && once('shortcut')) {

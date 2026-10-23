@@ -204,7 +204,7 @@
     const roles = rolesFor(s, db, out);
     if (out && out.effects) FX.apply(s, db, out.effects, roles, lines);
     if (out && out.ledger) applyLedger(s, db, out.ledger, roles);
-    s.lastResult = { event: ev.id, choice: c.label, i, warned: warnText && !forced, forced, free: forced ? freeBefore : s.lastFree || null, roll, text: (out && out.text) || '', lines, image: (out && out.image) || '', target: roles.target, companion: roles.companion };
+    s.lastResult = { event: ev.id, choice: c.label, i, open: open.map((x) => ev.choices.indexOf(x)), warned: warnText && !forced, forced, free: forced ? freeBefore : s.lastFree || null, roll, text: (out && out.text) || '', lines, image: (out && out.image) || '', target: roles.target, companion: roles.companion };   // open = 고를 때 열려 있던 선택지 번호(봇 집계용)
     if (ev.once === 0 ? false : (ev.once || ev.kind === 'fixed' || ev.kind === 'trial' || ev.kind === 'ending')) s.done[ev.id] = s.day;   // once:0 이면 되풀이(미룬다 류)
     s.fired[ev.id] = (s.fired[ev.id] || 0) + 1;
     if (!s.phaseSeen.includes(ev.id)) s.phaseSeen.push(ev.id);
@@ -464,7 +464,7 @@
         for (const [k, v] of Object.entries(e)) { const d = db.numbers[k]; if (d && d.owner === 'world' && d.visible === 'always') for (const x of FX.list(v)) gain += typeof x === 'number' ? x : (x && x.n) || 0; } }
       return Object.assign(choiceState(s, db, ev, c), { i, axis, killYou: kill, killOther, check: !!c.check, gain }); });   // gain = 화면에 보이는 자원 변화 합(봇의 '자원 + 가장 큰 label')
   }
-  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, rationOf, rand: R.rand,
+  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, rationOf, rand: R.rand, killsYou,
     identity: (s, db) => ID.identity(s.axes, db.identity), signs: (s, db) => NIGHT.signs(s, db), readerId: (s, db) => LEDGER.readerId(s, db), ledger: LEDGER, night: NIGHT, cond: C };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).engine = API;

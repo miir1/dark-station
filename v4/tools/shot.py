@@ -1,5 +1,5 @@
 # 어두운 역 v4 — 헤드리스 캡처. 로컬 http 서버를 띄우고 Chrome/Edge headless 로 ?fast=1&auto=<지점> 을 열어 PNG 로 남긴다.
-# 쓰기:  python v4/tools/shot.py            (C:\dev\dark_station 에서)   → v4/shots/01_car.png … 11_train.png + shots.json
+# 쓰기:  python v4/tools/shot.py            (C:\dev\dark_station 에서)   → v4/shots/01_car.png … 12_beds.png + shots.json
 #        python v4/tools/shot.py car         (하나만)      python v4/tools/shot.py ending --seed=3   (시드 바꿔서)
 # 캡처 전에 v4/tools/manifest.py 로 그림 목록(v4/img/manifest.json)을 새로 만든다 — 새 그림이 자동으로 잡힌다.
 # shots.json: console_errors(오류·uncaught) + auto(봇이 남긴 [ds4 …] 줄: 도달한 날·고른 선택·그림 없는 장면)
@@ -10,12 +10,12 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 OUT = os.path.join(ROOT, 'v4', 'shots')
 PORT = 8765
 # 지점 → 파일. night5 = D5 밤 고정 사건(옛 이름 day5) · evening5 = D5 저녁 화로 둘레 대화 · night8 = D8 밤 고정 사건
-# called3 = D3 밤 '이름이 불렸다' 선택 창 · train = 열차 결말 뒤 명부
+# called3 = D3 밤 '이름이 불렸다' 선택 창 · train = 열차 결말 뒤 명부 · beds = D2 밤 지도(잠든 사람이 잠자리 위에 눕는다)
 SHOTS = [('car', '01_car'), ('morning3', '02_morning3'), ('night3', '03_night3'), ('night5', '04_night5'), ('night8', '05_night8'),
          ('ending', '06_ending'), ('death', '07_death'), ('evening5', '08_evening5'), ('reveal', '09_reveal'),
-         ('called3', '10_called3'), ('train', '11_train')]
+         ('called3', '10_called3'), ('train', '11_train'), ('beds', '12_beds')]
 BUDGET = {'car': 15000, 'morning3': 120000, 'night3': 150000, 'night5': 300000, 'night8': 450000, 'ending': 700000, 'death': 300000,
-          'evening5': 300000, 'reveal': 700000, 'called3': 150000, 'train': 700000}
+          'evening5': 300000, 'reveal': 700000, 'called3': 150000, 'train': 700000, 'beds': 120000}
 STALE = ['04_day5']                              # 이름이 바뀐 옛 캡처 — 전부 찍을 때 지운다
 # 처음부터 봇으로 가면 닿지 않는 지점은 시뮬 봇이 만든 저장에서 시작한다 (v4/tools/fixture.js → 메모리 → /__fixture/<사건 id>.json → ?state=)
 #   train: 열차 결말(d10_train)은 통로가 열리고 주민이 살아 있어야 걸린다 — 캡처 봇(시드 7)은 D10 전에 주민이 다 죽어 all_dead 로 끝난다

@@ -84,7 +84,7 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 #box .ledger .row { display: grid; grid-template-columns: 56px 1fr; gap: 4px; }
 #box .ledger .row .blank { color: var(--dim); }
 #box .list { font-size: 8px; max-height: 96px; overflow: hidden; }
-#box .list p { margin: 0 0 1px; }
+#box .list p, #box.opts .body .list p { margin: 0 0 1px; }   /* 수첩 목록 일곱 줄이 96px 안에 (본문 p 의 3px 여백을 이긴다) */
 #box .list .d { color: var(--accent); margin-right: 4px; }
 #box .nb { display: flex; gap: 8px; }
 #box .nb .col { flex: 1; min-width: 0; }

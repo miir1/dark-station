@@ -113,7 +113,7 @@
   {
     "id": "ascend",
     "role": "ascend",
-    "actor": "flag:stood_stairs_actor & self!=seoha",
+    "actor": "flag:stood_stairs_actor",
     "target": "",
     "cond": "fog>=4",
     "weight": 8,
@@ -1023,6 +1023,30 @@
     "oncePerRun": 0
   },
   {
+    "id": "hungry_blames_you",
+    "role": "grudge",
+    "actor": "needs.hunger>=8 & bowl_actor==empty",
+    "target": "you",
+    "cond": "day>=3",
+    "weight": 6,
+    "kind": "malice",
+    "trace": {
+      "blanket_actor": "rolled"
+    },
+    "rumor": {
+      "witness": "nearestSleeper",
+      "line": "rum_blames_you"
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "grudge",
+        "n": 2,
+        "who": "actor"
+      }
+    ]
+  },
+  {
     "id": "eye_you",
     "role": "grudge",
     "actor": "any",
@@ -1112,6 +1136,30 @@
       }
     ],
     "oncePerRun": 0
+  },
+  {
+    "id": "grudge_strike_you",
+    "role": "kill",
+    "actor": "grudge>=5 & self!=dongha",
+    "target": "you",
+    "cond": "!flag:dawn_strike & !flag:dawn_dongha & !flag:dawn_dongha2",
+    "weight": 7,
+    "kind": "malice",
+    "trace": {
+      "blanket_actor": "rolled",
+      "notebook_you": "moved"
+    },
+    "rumor": {
+      "witness": "nearestSleeper",
+      "line": "rum_over_you"
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "dawn_strike",
+        "set": 1
+      }
+    ]
   },
   {
     "id": "dongha_pipe_you",

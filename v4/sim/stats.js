@@ -1,14 +1,23 @@
 // 어두운 역 v4 — 정책별 통계와 합격선 판정 (docs/foundation/31_tables_schema.md §4)
 const N = require('../engine/night.js');
+const E = require('../engine/engine.js');
+const { DEADLY } = require('./bots.js');
 
 const pct = (n, d) => (d ? Math.round((1000 * n) / d) / 10 : 0);
 const avg = (a) => (a.length ? Math.round((100 * a.reduce((x, y) => x + y, 0)) / a.length) / 100 : 0);
 
 // 사인 선택지에 경고 글(warn·hint·taboo)이 있었나 — 옛 '형식' 기준(비교 열)
-function lastHadWarnText(db, cause) {
-  const ev = cause.choice != null && !cause.night ? db.events[cause.event] : null; if (!ev) return false;   // 밤 사건·새벽 위독은 선택이 아니다
-  const c = ev.choices.find((x) => x.label === cause.choice);
-  return !!(c && (c.warn || c.hint || c.taboo));
+const causeChoice = (db, cause) => { const ev = cause.choice != null && !cause.night ? db.events[cause.event] : null; return ev ? ev.choices.find((x) => x.label === cause.choice) || null : null; };   // 밤 사건·새벽 위독은 선택이 아니다
+function lastHadWarnText(db, cause) { const c = causeChoice(db, cause); return !!(c && (c.warn || c.hint || c.taboo)); }
+// 봇 버릇 점검(10-23): '죽음을 말하는 경고 글'(bots.DEADLY) 선택지를 골라 죽었는데, 그때 열려 있던 다른 선택지 가운데
+// '평범한 대안'(당신을 죽일 수 없고, 금기 아니고, 죽음 글 없음 — 예: 무릎을 꿇는다)이 있었나. 조심형 봇에선 0이어야 한다.
+// 다른 길이 모두 죽음 주사위거나 금기(남의 물병·담요)뿐이면 버릇이 아니라 그 사건이 낸 선택이다. 열린 선택지 = 엔진 lastResult.open
+const deathText = (c) => DEADLY.test(`${c.warn || ''} ${c.hint || ''}`);
+function deadlyPicked(db, s, cause) {
+  const c = causeChoice(db, cause); if (!c || cause.forced || !deathText(c)) return false;
+  const r = s.lastResult, ev = db.events[cause.event];
+  if (!r || r.event !== cause.event || !Array.isArray(r.open)) return false;
+  return r.open.some((j) => j !== r.i && ev.choices[j] && !E.killsYou(ev.choices[j]) && !ev.choices[j].taboo && !deathText(ev.choices[j]));
 }
 // 한 판에서 뽑는 값
 function measure(db, s, trace) {
@@ -37,6 +46,7 @@ function measure(db, s, trace) {
     freeBefore: dead && s.ended && s.ended.cause && s.ended.cause.free ? `${s.ended.cause.free.event}/${s.ended.cause.free.choice}` : null,
     warned: dead && !!(s.ended && s.ended.cause && s.ended.cause.warned),
     warnText: dead && !!(s.ended && s.ended.cause && lastHadWarnText(db, s.ended.cause)),
+    deadlyPick: dead && !!(s.ended && s.ended.cause && deadlyPicked(db, s, s.ended.cause)),
   };
 }
 
@@ -68,6 +78,7 @@ function aggregate(db, runs) {
     days: avg(runs.map((r) => r.days)), trips: avg(runs.map((r) => r.trips)), train: pct(runs.filter((r) => r.train).length, n), survived: pct(runs.filter((r) => r.survived).length, n), clock: avg(runs.map((r) => r.clock)),
     starveShare: pct(deaths.filter((r) => r.cause && r.cause.event === 'starve_you').length, deaths.length),
     forced: forced.length, forcedRate: pct(forced.length, deaths.length), forcedTraced: forced.filter((r) => r.freeBefore).length, byForced,
+    deadlyPick: deaths.filter((r) => r.deadlyPick).length,
   };
 }
 
@@ -90,13 +101,15 @@ function gate(aggs, candidates, careful) {
   const care = (careful || []).filter((k) => aggs[k]);
   const careN = care.reduce((t, k) => t + aggs[k].n, 0), careD = care.reduce((t, k) => t + aggs[k].deaths, 0), careF = care.reduce((t, k) => t + aggs[k].forced, 0);
   const careRate = pct(careD, careN), careForced = pct(careF, careD);
+  const careDeadly = care.reduce((t, k) => t + (aggs[k].deadlyPick || 0), 0);
   const idOk = Object.values(idAll).filter((v) => v >= 7).length;
   const rows = [
     ['당신 사망(올라감 포함)', '≥ 50%', `${b.deathRate}%`, b.deathRate >= 50, nearAny([[b.deathRate, 50]])],
-    ['사망 중 경고 있던 선택 (실질: 강제 사망은 경고 없음)', '100%', `${b.warnedRate}% (형식 기준 ${b.warnTextRate}%)`, b.warnedRate === 100 || b.deathRate === 0, nearAny([[b.warnedRate, 100]])],
+    ['사망 중 경고 있던 선택 (실질: 강제 사망은 경고 없음)', '100%', b.deaths ? `${b.warnedRate}% (형식 기준 ${b.warnTextRate}%)` : '사망 없음', b.warnedRate === 100 || b.deathRate === 0, nearAny([[b.warnedRate, 100]])],
     ['강제 사망 비율 (전 정책 합산)', '≤ 20% [제안]', `${forcedAll}% (${sum('forced')}/${sum('deaths')}, 그중 앞선 자유 경고 선택 있음 ${sum('forcedTraced')})`, forcedAll <= 20, nearAny([[forcedAll, 20]])],
     ['  강제 사망 중 앞선 자유 경고 선택 없음 (전 정책)', '0 판', `${sum('forced') - sum('forcedTraced')} 판`, sum('forced') - sum('forcedTraced') === 0, false],
     ['조심형 봇 사망 (' +(care.join('·') || '없음') + ' 합산)', '측정', care.length ? `${careRate}% (${careD}/${careN}), 그중 강제 ${careForced}%` : '-', true, false],
+    ['  봇 버릇 점검: 조심형이 평범한 대안(안 죽고·금기 아니고·죽음 글 없음)을 두고 죽음 글 선택지로 죽음', '0 판', care.length ? `${careDeadly} 판 (전 정책 ${sum('deadlyPick')})` : '-', careDeadly === 0, false],
     ['전멸', '≤ 25%', `${b.allDead}%`, b.allDead <= 25, nearAny([[b.allDead, 25]])],
     ['밤 사건 수 / 판', '≥ 6', `${b.nights}`, b.nights >= 6, false],
     ['  그중 malice / hymn', '≥ 2 / ≥ 1', `${b.malice} / ${b.hymn}`, b.malice >= 2 && b.hymn >= 1, false],

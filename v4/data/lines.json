@@ -2284,5 +2284,90 @@
     "text": "자리가 모자라면 누가 남소? 나는 딸이 둘이오. 미안하단 말은 안 하겠소.",
     "rumor": 0,
     "truth": 1
+  },
+  {
+    "id": "gicheol_counted",
+    "speaker": "gicheol",
+    "context": "day==4 & phase==trace",
+    "grade": "normal",
+    "text": "세는 것이 어젯밤엔 하나 더 셌소. 나는 귀를 막았소."
+  },
+  {
+    "id": "seoha_called",
+    "speaker": "seoha",
+    "context": "day==4 & phase==evening",
+    "grade": "normal",
+    "text": "부르는 거, 엄마 목소리로 와요. 엄마도 계단으로 올라갔어요."
+  },
+  {
+    "id": "eunji_eye",
+    "speaker": "eunji",
+    "context": "day==5 & phase==evening",
+    "grade": "normal",
+    "text": "눈이 위에만 있는 줄 알아? 셔터 너머에도 있어."
+  },
+  {
+    "id": "dongha_it",
+    "speaker": "dongha",
+    "context": "day==6 & phase==evening",
+    "grade": "normal",
+    "text": "그거가 제 진짜 이름을 알아요. 아무한테도 안 알려 줬는데요."
+  },
+  {
+    "id": "mari_calls",
+    "speaker": "mari",
+    "context": "day==7 & phase==evening",
+    "grade": "normal",
+    "text": "부르는 것은 다친 사람부터 불러요. 그래서 제가 먼저 이름을 불러 줘요."
+  },
+  {
+    "id": "eunchae_lord",
+    "speaker": "eunchae",
+    "context": "region==A & flag:met_eunchae",
+    "grade": "normal",
+    "text": "그분이 다 보세요. 약도 원래 그분 거예요."
+  },
+  {
+    "id": "dohyeon_water",
+    "speaker": "dohyeon",
+    "context": "region==B & flag:met_dohyeon",
+    "grade": "normal",
+    "text": "물소리가 이름을 불러. 대답만 안 하면 돼."
+  },
+  {
+    "id": "rum_over_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 새벽에 네 담요 옆에 앉아 있었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_over_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "새벽에 누가 화로 쪽으로 기어갔어. 누군지는 몰라.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_blames_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 네 그릇 얘기를 했어. 네 것만 찼다고.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_blames_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤새 누가 배고프다고 울었어.",
+    "rumor": 1,
+    "truth": 0
   }
 ]

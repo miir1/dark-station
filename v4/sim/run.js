@@ -62,7 +62,7 @@ function readReport(spec) {
   const label = eq > 0 ? spec.slice(0, eq) : '';
   const file = eq > 0 ? spec.slice(eq + 1) : spec;
   const p = fs.existsSync(file) ? file : path.join(__dirname, file);
-  if (!fs.existsSync(p)) return null;
+  if (!fs.existsSync(p)) { console.error(`--compare: 보고서를 못 찾음 ${file} (윈도에서는 C:/… 꼴 경로)`); return null; }
   const txt = fs.readFileSync(p, 'utf8');
   const gate = {}; const pol = {};
   const sec = txt.split(/^## 2\. 합격선 대비/m)[1] || '';
@@ -79,7 +79,7 @@ const ALIAS = { '찬가 발견율 (부지런 / 게으름)': ['찬가 발견율 (
 const prevOf = (cmp, k0) => { const k = k0.trim(); return cmp.gate[k] !== undefined ? cmp.gate[k] : (ALIAS[k] || []).map((a) => cmp.gate[a]).find((v) => v !== undefined) || '—'; };
 
 const cols = ['생존%', '사망%', '굶주림비중%', '실질경고%', '강제%', '열차%', '전멸%', '밤사건', '시계', 'malice', 'hymn', '발견%', '모름≥1%', '찬가발견%', 'explicit', '결정/일', '빈칸%', '원정', '날'];
-const row = (a) => [a.survived, a.deathRate, a.starveShare, a.warnedRate, a.forcedRate, a.train, a.allDead, a.nights, a.clock, a.malice, a.hymn, a.discovery, a.unknownOk, a.hymnDiscovery, a.explicit, a.decisions, a.blank, a.trips, a.days];
+const row = (a) => [a.survived, a.deathRate, a.deaths ? a.starveShare : '-', a.deaths ? a.warnedRate : '-', a.deaths ? a.forcedRate : '-', a.train, a.allDead, a.nights, a.clock, a.malice, a.hymn, a.discovery, a.unknownOk, a.hymnDiscovery, a.explicit, a.decisions, a.blank, a.trips, a.days];
 let md = `# 봇 보고서 — 정책 ${names.length} × ${N}판 × 시드 블록 ${blocks.length} (${new Date().toISOString().slice(0, 10)})\n\n`;
 md += `데이터: v4/data (밤 사건 ${db.nightEvents.length}, 사건 ${db.eventsList.length}, 후보 ${db.identity.candidates.length}). 시드 블록: ${blocks.map(blockName).join(', ')}. 걸린 시간 ${(ms / 1000).toFixed(1)}초. 규칙·데이터는 손대지 않았다.`;
 if (injected.length) md += ` **메모리에서만 더한 행: ${injected.join(', ')}** (표 파일은 그대로).`;
@@ -87,13 +87,13 @@ if (OPT.peek) md += ' **봇 조사 판단: 옛 판단(--peek).**';
 md += '\n\n';
 md += `## 1. 정책별 표 (블록 ${blocks.length}개를 합친 ${N * blocks.length}판)\n| 정책 | ${cols.join(' | ')} |\n|---|${cols.map(() => '---').join('|')}|\n`;
 for (const name of names) md += `| ${name} | ${row(aggs[name]).join(' | ')} |\n`;
-md += `\n정책: balanced 축 중립·보통 조사 / selfish 몫−손− / devoted 몫+손+ / silent 이름− / caller 이름+ / lazy 게으른 조사(1곳·말 0) / diligent 부지런(상한 보고용) / risky 모험(판정+경고 선택 우선 ≥35%, 원정 매일 1층→2층, 거래·협정·범람수는 자원 + 최대).\n`;
-for (const name of names) md += `- ${name} 사망 원인: ` + Object.entries(aggs[name].byCause).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ') + (aggs[name].unwarned ? ` (경고 없는 죽음 ${aggs[name].unwarned})` : '')
+md += `\n정책: balanced 축 중립·보통 조사 / selfish 몫−손− / devoted 몫+손+ / silent 이름− / caller 이름+ / lazy 게으른 조사(1곳·말 0) / diligent 부지런(상한 보고용) / risky 모험(판정+경고 선택 우선 ≥35%, 원정 매일 1층→2층, 거래·협정·범람수는 자원 + 최대) / steward 몫+손−이름+(정체 inspector 쪽 성향, 10-23 추가). 조심형(합격선 따로 집계) = ${CAREFUL.join('·')}.\n`;
+for (const name of names) md += `- ${name} 사망 원인: ` + (Object.entries(aggs[name].byCause).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ') || '없음') + (aggs[name].unwarned ? ` (경고 없는 죽음 ${aggs[name].unwarned})` : '') + (aggs[name].deadlyPick ? ` [평범한 대안 두고 죽음 글 선택 ${aggs[name].deadlyPick}]` : '')
   + (aggs[name].forced ? ` — 강제 ${aggs[name].forced}: ` + Object.entries(aggs[name].byForced).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ') : '') + '\n';
 md += `\n강제 = 그 순간 당신이 죽지 않는 열린 선택지가 0개였던 죽음(선택지 하나뿐, 나머지가 잠긴 주사위). "←" 뒤는 그 전 마지막 자유 경고 선택(대안이 있었는데 고른 경고 선택). 실질경고% = 사망 중 '경고 글이 있고 강제가 아닌' 선택으로 죽은 비율(10-22 리드 결정: 강제 사망은 경고 있음으로 세지 않는다). 둘 다 엔진의 사인 기록(ended.cause.forced·free)에서 읽는다.\n`;
 if (blocks.length > 1) {
   md += `\n### 블록별 (생존% / 사망% / 열차% / 강제%)\n| 정책 | ${blocks.map(blockName).join(' | ')} |\n|---|${blocks.map(() => '---').join('|')}|\n`;
-  for (const name of names) md += `| ${name} | ${byBlock.map((a) => `${a[name].survived} / ${a[name].deathRate} / ${a[name].train} / ${a[name].forcedRate}`).join(' | ')} |\n`;
+  for (const name of names) md += `| ${name} | ${byBlock.map((a) => `${a[name].survived} / ${a[name].deathRate} / ${a[name].train} / ${a[name].deaths ? a[name].forcedRate : '-'}`).join(' | ')} |\n`;
 }
 if (compares.length) {
   md += `\n### 정책별 비교 (생존% / 사망% / 열차%)\n| 정책 | 지금 | ${compares.map((c) => c.name).join(' | ')} |\n|---|---|${compares.map(() => '---').join('|')}|\n`;
@@ -101,7 +101,7 @@ if (compares.length) {
 }
 md += `\n### 정체 분포 (정책별 %)\n| 정책 | ${db.identity.candidates.map((c) => c.id).join(' | ')} |\n|---|${db.identity.candidates.map(() => '---').join('|')}|\n`;
 for (const name of names) md += `| ${name} | ${db.identity.candidates.map((c) => aggs[name].identity[c.id] || 0).join(' | ')} |\n`;
-md += `\n### 당신 사망 원인 (balanced, 판 수)\n` + Object.entries(aggs.balanced ? aggs.balanced.byCause : {}).sort((a, b) => b[1] - a[1]).map(([k, v]) => `- ${k}: ${v}`).join('\n') + '\n';
+md += `\n### 당신 사망 원인 (balanced, 판 수)\n` + Object.entries(aggs.balanced ? aggs.balanced.byCause : {}).sort((a, b) => b[1] - a[1]).map(([k, v]) => `- ${k}: ${v}`).join('\n') + (aggs.balanced && aggs.balanced.deaths ? '' : '- (사망 없음)') + '\n';
 md += `\n## 2. 합격선 대비 (블록마다 따로 잰다 — ✓ 모든 블록 통과·합격선 ±${S.MARGIN}%p 밖 / △ 블록마다 다르거나 ±${S.MARGIN}%p 안, 확정 안 함 / ✗ 모든 블록 미달)\n`;
 md += `| 항목 | 합격선 | ${blocks.map((b0) => `실측 ${blockName(b0)}`).join(' | ')} | 판정 |${compares.map((c) => ` ${c.name} |`).join('')}\n|---|---|${blocks.map(() => '---|').join('')}---|${compares.map(() => '---|').join('')}\n`;
 for (const r of combined) md += `| ${r.k} | ${r.want} | ${r.got.join(' | ')} | ${r.mark} |${compares.map((c) => ` ${prevOf(c, r.k)} |`).join('')}\n`;

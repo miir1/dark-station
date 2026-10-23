@@ -206,10 +206,10 @@
       "blocked": "insp_stairs_blocked"
     },
     "ledgerFact": {
-      "dry": "D{day}. 계단: 재 {fog}칸.",
-      "ash": "D{day}. 계단: 재 {fog}칸.",
-      "deep": "D{day}. 계단: 재 {fog}칸.",
-      "blocked": "D{day}. 계단: 재 {fog}칸."
+      "dry": "D{day}. 계단에 재가 없다.",
+      "ash": "D{day}. 계단 재가 한 칸 내려왔다.",
+      "deep": "D{day}. 계단 재가 발목까지 쌓였다.",
+      "blocked": "D{day}. 계단이 재로 막혔다."
     },
     "solid": 1,
     "light": 1,

@@ -124,7 +124,7 @@
     "grade": "fixed",
     "explicit": 0,
     "image": "cg_notebook",
-    "text": "「승객 명부」. 첫 줄에 당신 이름. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다.",
+    "text": "「승객 명부」. 첫 줄에 당신 이름이 적혀 있다. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다.",
     "choices": [
       {
         "label": "주머니에 넣는다",
@@ -687,7 +687,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "동하가 잊지 않는다",
         "out": {
           "text": "동하 그릇을 비웠다. 동하가 당신을 봤다. 그리고 안 봤다.",
           "effects": [
@@ -1399,6 +1399,54 @@
         }
       },
       {
+        "label": "틈으로 말을 건다",
+        "check": {
+          "skill": "talk",
+          "base": 60
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "틈으로 무엇이 들어올지 모른다",
+        "ok": {
+          "text": "셔터 틈으로 말을 주고받았다. 통조림 둘이 밀려 들어왔다. 너머가 역을 안다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 2
+            },
+            {
+              "verb": "flag",
+              "id": "patrol_knows",
+              "set": 1
+            },
+            {
+              "verb": "trace",
+              "id": "shutter_gap",
+              "state": "can"
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "틈으로 파이프 끝이 들어왔다. 손등이 터졌다. 웃음소리가 멀어졌다.",
+          "effects": [
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "flag",
+              "id": "patrol_knows",
+              "set": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
         "label": "셔터를 괸다",
         "check": null,
         "cost": {
@@ -1406,7 +1454,7 @@
         },
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "부품이 준다",
         "out": {
           "text": "의자 쇠틀로 셔터 밑을 괴었다. 두드림이 새벽까지 이어졌다.",
           "effects": [],
@@ -1528,7 +1576,72 @@
   {
     "id": "trial_d3_count",
     "kind": "fixed",
-    "when": "day==3 & phase==night & alive:soonrye",
+    "when": "day==3 & phase==night & alive:soonrye & alive:seoha",
+    "grade": "fixed",
+    "explicit": 1,
+    "image": "trial_d3_count",
+    "text": "밤새 출구 계단 위에서 누군가 숫자를 센다. 역에 있는 사람 수에서 멈추지 않는다. 하나 더 센다. 그리고 처음부터 다시 센다. 순례가 담요 속에서 입을 틀어막는다.",
+    "choices": [
+      {
+        "label": "숨을 죽인다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "세는 소리가 승강장 바로 위까지 왔다가 멀어졌다. 아무도 숨을 쉬지 않았다.",
+          "effects": [
+            {
+              "verb": "axis",
+              "id": "name",
+              "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "fear",
+              "who": "all",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "함께 센다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "answer_above",
+        "warn": "순례: 대답하지 마",
+        "out": {
+          "text": "이쪽 소리와 저쪽 소리가 겹쳤다. 순례가 신발을 벗었다. 서하가 허리를 안았고, 순례의 손끝이 재가 되어 서하 뺨에 묻었다.",
+          "effects": [
+            {
+              "verb": "axis",
+              "id": "name",
+              "n": 1
+            },
+            {
+              "verb": "flag",
+              "id": "counted_together",
+              "set": 1
+            },
+            {
+              "verb": "permanent",
+              "who": "soonrye",
+              "loss": "finger"
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "trial_d3_count_c",
+    "kind": "fixed",
+    "when": "day==3 & phase==night & alive:soonrye & !alive:seoha",
     "grade": "fixed",
     "explicit": 1,
     "image": "trial_d3_count",
@@ -1717,6 +1830,100 @@
     ]
   },
   {
+    "id": "d3_rat_fever",
+    "kind": "trial",
+    "when": "day>=3 & phase==trace & flag:rat_bite",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "쥐에 물린 자리가 검붉게 부었다. 밤새 이가 딱딱 부딪혔다. 열이 머리까지 오른다.",
+    "choices": [
+      {
+        "label": "약을 쓴다",
+        "check": null,
+        "cost": {
+          "meds": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "약이 준다",
+        "out": {
+          "text": "알약을 삼키고 상처를 씻었다. 붓기가 내렸다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "rat_bite",
+              "set": 0
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "째고 짜낸다",
+        "check": {
+          "skill": "tech",
+          "base": 55
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "잘못 째면 번진다",
+        "ok": {
+          "text": "칼끝으로 째고 고름을 짜냈다. 열이 내렸다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "rat_bite",
+              "set": 0
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "짜낸 자리가 더 붉어졌다. 열이 팔로 올라왔다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "rat_bite",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "둔다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "열이 몸으로 번진다",
+        "out": {
+          "text": "이를 악물었다. 열은 내려가지 않았다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "rat_bite",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
     "id": "d3_guess",
     "kind": "fixed",
     "when": "day==4 & phase==trace",
@@ -1733,7 +1940,7 @@
         "taboo": "",
         "warn": "",
         "out": {
-          "text": "뒷장에 한 줄. 당신 글씨.",
+          "text": "뒷장에 한 줄을 적었다. 당신 글씨였다.",
           "effects": [
             {
               "verb": "flag",
@@ -1752,7 +1959,7 @@
         "taboo": "",
         "warn": "",
         "out": {
-          "text": "뒷장에 한 줄. 당신 글씨.",
+          "text": "뒷장에 한 줄을 적었다. 당신 글씨였다.",
           "effects": [
             {
               "verb": "flag",
@@ -2144,7 +2351,152 @@
   {
     "id": "d5_rail_body",
     "kind": "fixed",
-    "when": "day==5 & phase==night & alive:mari",
+    "when": "day==5 & phase==night & alive:mari & alive:soonrye & alive:seoha",
+    "grade": "fixed",
+    "explicit": 1,
+    "image": "d5_rail",
+    "text": "선로에 사람이 걸려 있었다. 얼굴이 물에 불어 있었고 한쪽 신발이 없었다. 마리가 손목을 잡았다. \"하루는 안 됐어요.\" 누가 빈 깡통을 발로 밀었고, 마리가 가운에서 칼을 꺼냈다.",
+    "choices": [
+      {
+        "label": "받는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "eat_human",
+        "warn": "먹은 사람에게 값이 남는다",
+        "out": {
+          "text": "아침에 드럼통이 비어 있었다. 몇은 벽을 보고 앉아 있었다. 당신 입이 혼자 움직였다.",
+          "effects": [
+            {
+              "verb": "trace",
+              "id": "body_rail",
+              "state": "cut"
+            },
+            {
+              "verb": "trace",
+              "id": "bowl_you",
+              "state": "meat"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "you",
+              "n": -4
+            },
+            {
+              "verb": "flag",
+              "id": "ate_flesh_you",
+              "set": 1
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "food",
+              "n": 4
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "받지 않는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "오늘 밤 당신은 굶는다",
+        "out": {
+          "text": "밤새 드럼통 쪽을 보지 않았다. 당신 배에서 소리가 났다. 순례가 제 몫을 서하 앞에 놓았다.",
+          "effects": [
+            {
+              "verb": "trace",
+              "id": "body_rail",
+              "state": "cut"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "you",
+              "n": 2
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "칼을 빼앗는다",
+        "check": {
+          "skill": "str",
+          "base": 45
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "마리가 칼을 쥐고 있다",
+        "ok": {
+          "text": "칼을 빼앗았다. 시체를 선로 끝으로 끌어 덮었다. 그날 밤 아무도 먹지 않았다.",
+          "effects": [
+            {
+              "verb": "trace",
+              "id": "body_rail",
+              "state": "buried"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "who": "all",
+              "n": 2
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "칼날이 손등을 지나갔다. 마리는 사과하지 않았다. 아침에 선로가 비어 있었다.",
+          "effects": [
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "flag",
+              "id": "cut_hand",
+              "set": 1
+            },
+            {
+              "verb": "trace",
+              "id": "body_rail",
+              "state": "cut"
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "d5_rail_body_c",
+    "kind": "fixed",
+    "when": "day==5 & phase==night & alive:mari & !(alive:soonrye & alive:seoha)",
     "grade": "fixed",
     "explicit": 1,
     "image": "d5_rail",
@@ -2826,7 +3178,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "기철이 밟힌다. 창고가 빈다",
         "out": {
           "text": "남자가 발을 비볐다. 기철의 입이 열리지 않았다. 창고는 비고, 기철은 아침에도 그 자리였다.",
           "effects": [
@@ -2978,7 +3330,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "창고가 빈다. 또 온다",
         "out": {
           "text": "남자가 창고 문을 걷어찼다. 셔터가 내려가며 말했다. \"또 오지.\"",
           "effects": [
@@ -4239,7 +4591,7 @@
   {
     "id": "d9_inspection",
     "kind": "fixed",
-    "when": "day==9 & phase==evening",
+    "when": "day==9 & phase==evening & alive:seoha",
     "grade": "fixed",
     "explicit": 1,
     "image": "d9_inspection",
@@ -4251,7 +4603,66 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "펀치가 손을 뚫는다",
+        "out": {
+          "text": "펀치가 손등을 뚫었다, 지킨 수만큼. 어긴 줄에서는 살이 찢겼다. 서하는 자고 있었다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "punched",
+              "set": 1
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "axis",
+              "id": "name",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "고개를 돌린다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "운임은 빵과 물로만",
+        "out": {
+          "text": "차장은 말없이 열차로 돌아갔다. 열차는 소리 없이 어둠으로 미끄러졌다.",
+          "effects": [
+            {
+              "verb": "axis",
+              "id": "name",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "d9_inspection_b",
+    "kind": "fixed",
+    "when": "day==9 & phase==evening & !alive:seoha",
+    "grade": "fixed",
+    "explicit": 1,
+    "image": "d9_inspection",
+    "text": "열차 한 칸이 승강장에 서 있다. 온 소리는 없었다. 제복의 차장이 내리는데 얼굴이 보이지 않는다. 펀치를 쥔 손으로 당신 것과 같은 수첩을 펼친다. \"운임을 보여 주시겠습니까.\"",
+    "choices": [
+      {
+        "label": "수첩을 내민다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "펀치가 손을 뚫는다",
         "out": {
           "text": "펀치가 손등을 뚫었다, 지킨 수만큼. 어긴 줄에서는 살이 찢겼다. 아무도 깨지 않았다.",
           "effects": [
@@ -4440,8 +4851,8 @@
         },
         "cost": {},
         "req": {},
-        "taboo": "",
-        "warn": "그 사람이 안다",
+        "taboo": "steal_bowl",
+        "warn": "그 사람이 굶는다",
         "ok": {
           "text": "잠든 사람의 그릇을 끌어왔다. 그 사람이 눈을 떴다. 아무 말도 안 했다.",
           "effects": [
@@ -4482,7 +4893,7 @@
           "ledger": ""
         },
         "fail": {
-          "text": "손이 떨려 그릇을 엎었다. 바닥을 핥았다. 그 사람이 보고 있었다.",
+          "text": "손이 떨려 그릇을 엎었다. 그 사람이 손목을 잡았다. 주먹이 먼저 왔다.",
           "effects": [
             {
               "verb": "number",
@@ -4494,6 +4905,11 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
             }
           ],
           "ledger": ""
@@ -4510,24 +4926,29 @@
         "taboo": "",
         "warn": "쥐가 먼저 와 있다",
         "ok": {
-          "text": "레일 틈에서 통조림 하나를 찾았다. 쥐가 뜯다 만 것이었다.",
+          "text": "레일 틈에서 통조림 하나를 찾았다. 쥐가 뜯다 만 것이었다. 혼자 다 먹었다.",
           "effects": [
             {
               "verb": "number",
               "id": "hunger",
               "n": -4,
               "who": "you"
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
             }
           ],
           "ledger": ""
         },
         "fail": {
-          "text": "쥐가 손등을 물었다. 아무것도 못 찾았다.",
+          "text": "쥐 떼가 손등과 손목을 물었다. 아무것도 못 찾았다.",
           "effects": [
             {
               "verb": "injure",
               "who": "you",
-              "n": 1
+              "n": 2
             }
           ],
           "ledger": ""
@@ -5318,12 +5739,12 @@
         "taboo": "",
         "warn": "안에 무엇이 있다",
         "ok": {
-          "text": "구급 상자가 있었다. 붕대는 젖었고 약병 하나는 멀쩡했다.",
+          "text": "구급 상자가 있었다. 붕대는 젖었고 약병 둘은 멀쩡했다.",
           "effects": [
             {
               "verb": "number",
               "id": "meds",
-              "n": 1
+              "n": 2
             }
           ],
           "ledger": ""
@@ -5657,7 +6078,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "차장이 당신을 센다",
+        "warn": "세어진 사람은 올라간다",
         "out": {
           "text": "차장이 당신을 봤다. 셌다. 신발이 저절로 벗겨졌다.",
           "effects": [
@@ -5678,6 +6099,122 @@
       }
     ],
     "board": 1
+  },
+  {
+    "id": "d10_walk_weak",
+    "kind": "trial",
+    "when": "day==10 & phase==day & !flag:passage_open & (injury_you>=2 | hunger_you>=8)",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "열차는 서지 않았다. 걸어서 나가야 한다. 일어서자 무릎이 꺾였다. 상처가 뛰고 배가 등에 붙었다.",
+    "choices": [
+      {
+        "label": "마지막 빵을 먹는다",
+        "check": null,
+        "cost": {
+          "food": 1,
+          "water": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "남은 빵을 물에 불려 삼켰다. 다리에 피가 돌았다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "hunger",
+              "n": -4,
+              "who": "you"
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "옆 사람 물병을 비운다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "take_water",
+        "warn": "그 사람이 뒤처진다",
+        "out": {
+          "text": "옆 사람 물병을 빼앗아 비웠다. 그 사람은 말이 없었다. 한참 뒤에 처졌다.",
+          "target": "any",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "thirst",
+              "n": 4,
+              "who": "target"
+            },
+            {
+              "verb": "injure",
+              "who": "target",
+              "n": 1
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": 3,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "n": -2,
+              "who": "you"
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "이를 악물고 걷는다",
+        "check": {
+          "skill": "str",
+          "base": 70
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "주저앉으면 끝이다",
+        "ok": {
+          "text": "한 발씩 셌다. 셀 수가 떨어질 때쯤 바람이 왔다.",
+          "effects": [
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "선로에 주저앉았다. 안개 속에서 이름이 불렸다. 신발이 저절로 벗겨졌다.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "ascended"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "ascended",
+            "day": "10",
+            "cause": ""
+          },
+          "image": "death_counted"
+        }
+      }
+    ]
   },
   {
     "id": "d10_walk",
@@ -6021,7 +6558,7 @@
     "grade": "fixed",
     "explicit": 0,
     "image": "cg_ledger",
-    "text": "이름마다 한 줄이다. 날짜가 적힌 줄이 있고, 끝까지 빈 칸이 있다.",
+    "text": "수첩을 덮기 전에 한 장을 더 넘겼다. 날짜를 적은 줄이 있고, 끝내 아무것도 적지 못한 칸이 있었다.",
     "choices": [
       {
         "label": "덮는다",
@@ -6031,7 +6568,7 @@
         "taboo": "",
         "warn": "",
         "out": {
-          "text": "수첩은 주머니에 그대로 있었다.",
+          "text": "수첩은 주머니에 그대로 들어갔다.",
           "effects": [],
           "ledger": ""
         }
@@ -6114,7 +6651,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "물이 한 뼘 찬다",
         "out": {
           "text": "도현이 연장을 도로 쌌다. 통로 바닥에 물이 한 뼘 더 찼다.",
           "effects": [
@@ -6206,7 +6743,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "물이 한 뼘 찬다",
         "out": {
           "text": "바람이 틈으로만 왔다. 물이 한 뼘 더 찼다.",
           "effects": [
@@ -6327,7 +6864,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "물이 한 뼘 찬다",
         "out": {
           "text": "돌무더기를 한 번 더 봤다. 물이 한 뼘 더 찼다.",
           "effects": [
@@ -6449,7 +6986,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "물이 한 뼘 찬다",
         "out": {
           "text": "돌무더기를 한 번 더 봤다. 물이 한 뼘 더 찼다.",
           "effects": [
@@ -6474,11 +7011,11 @@
   {
     "id": "d2_rat_blanket",
     "kind": "fixed",
-    "when": "day==2 & phase==trace & alive:soonrye",
+    "when": "day==2 & phase==trace & alive:soonrye & alive:seoha",
     "grade": "normal",
     "explicit": 1,
     "image": "d2_rat_blanket",
-    "text": "승강장 끝 빈 담요 속에서 쥐가 새끼를 낳았다. 순례가 걸레로 눌렀다. 소리가 여섯 번 났다. 걸레 밑이 붉게 배어 나왔다.",
+    "text": "역무실 문틈으로 나온 담요 속에서 쥐가 새끼를 낳았다. 순례가 걸레로 눌렀다. 소리가 여섯 번 났다. 문 안에서 누가 담요를 도로 끌어당겼다.",
     "choices": [
       {
         "label": "본다",
@@ -6488,7 +7025,7 @@
         "taboo": "",
         "warn": "",
         "out": {
-          "text": "순례가 걸레를 선로에 버렸다. 그 담요는 아무도 덮지 않았다.",
+          "text": "순례가 걸레를 선로에 버렸다. 문 안은 다시 조용했다.",
           "effects": [],
           "ledger": ""
         }
@@ -6633,7 +7170,7 @@
         "taboo": "",
         "warn": "실패하면 선반이 넘어온다",
         "ok": {
-          "text": "통조림 다섯과 물 셋. 깔린 사람의 손이 상자를 쥐고 있었다.",
+          "text": "통조림 다섯과 물 셋, 구급함 하나. 깔린 사람의 손이 상자를 쥐고 있었다.",
           "effects": [
             {
               "verb": "number",
@@ -6644,6 +7181,11 @@
               "verb": "number",
               "id": "water",
               "n": 3
+            },
+            {
+              "verb": "number",
+              "id": "meds",
+              "n": 1
             }
           ],
           "ledger": ""
@@ -7717,13 +8259,8 @@
         "taboo": "",
         "warn": "못 찾으면 밤이 고비다",
         "ok": {
-          "text": "진열대 밑에서 약병 둘을 찾았다. 하나를 그 자리에서 썼다.",
+          "text": "진열대 밑에서 약병 하나를 찾았다. 그 자리에서 다 썼다.",
           "effects": [
-            {
-              "verb": "number",
-              "id": "meds",
-              "n": 1
-            },
             {
               "verb": "injure",
               "who": "you",
@@ -7856,15 +8393,62 @@
         }
       },
       {
+        "label": "불가에서 땀을 뺀다",
+        "check": {
+          "skill": "str",
+          "base": 70
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "못 버티면 끝이다",
+        "ok": {
+          "text": "불 앞에 웅크려 밤을 버텼다. 새벽에 땀이 식었다. 열이 내렸다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "treated_you",
+              "set": 1
+            },
+            {
+              "verb": "flag",
+              "id": "enduring_you",
+              "set": 0
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "불 앞에서 몸이 자꾸 기울었다. 아침에 누가 당신을 불가에서 끌어냈다.",
+          "image": "death_starve",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "dead"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      },
+      {
         "label": "썩은 데를 도려낸다",
-        "check": null,
+        "check": {
+          "skill": "str",
+          "base": 80
+        },
         "cost": {},
         "req": {
           "notPermanent": "leg"
         },
         "taboo": "",
-        "warn": "다리를 영구히 잃는다",
-        "out": {
+        "warn": "다리를 잃는다. 피가 안 멎으면 끝이다",
+        "ok": {
           "text": "칼끝을 불에 달궈 썩은 살을 도려냈다. 비명은 담요가 먹었다. 열이 내렸다.",
           "effects": [
             {
@@ -7889,6 +8473,28 @@
             }
           ],
           "ledger": ""
+        },
+        "fail": {
+          "text": "칼끝을 불에 달궈 썩은 살을 도려냈다. 피가 멎지 않았다. 담요가 검게 젖었다.",
+          "image": "death_starve",
+          "effects": [
+            {
+              "verb": "permanent",
+              "who": "you",
+              "loss": "leg"
+            },
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "dead"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
         }
       },
       {
@@ -7964,7 +8570,7 @@
         "check": null,
         "cost": {},
         "req": {},
-        "taboo": "",
+        "taboo": "take_blanket",
         "warn": "그 사람이 밤새 떤다",
         "out": {
           "text": "옆 담요를 끌어와 덮었다. 그 사람은 밤새 떨었다. 아침에 열이 내렸다.",
@@ -7999,6 +8605,245 @@
           ],
           "ledger": "",
           "target": "any"
+        }
+      }
+    ]
+  },
+  {
+    "id": "dawn_strike",
+    "kind": "trial",
+    "when": "phase==trace & flag:dawn_strike",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "once": 0,
+    "text": "숨이 막혀 깼다. 누가 당신 가슴 위에 올라앉아 있다. 두 손이 목을 누른다. 얼굴은 어둠 속이다.",
+    "choices": [
+      {
+        "label": "그릇 둘을 내민다",
+        "check": null,
+        "cost": {
+          "food": 2
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "목에서 손이 풀렸다. 그림자가 그릇 둘을 안고 어둠으로 갔다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -3,
+              "who": "all"
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "밀쳐 낸다",
+        "check": {
+          "skill": "str",
+          "base": 45
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "못 밀치면 끝이다",
+        "ok": {
+          "text": "무릎으로 배를 찼다. 그림자가 선로 쪽으로 굴렀다. 목에 손자국이 남았다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "손목을 떼어 내지 못했다. 화로 불빛이 점점 멀어졌다.",
+          "image": "death_starve",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "dead"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      },
+      {
+        "label": "소리친다",
+        "check": {
+          "skill": "talk",
+          "base": 50
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "아무도 안 깨면 끝이다",
+        "ok": {
+          "text": "목이 터져라 불렀다. 담요들이 일어났다. 그림자가 흩어졌다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "number",
+              "id": "fear",
+              "n": 2,
+              "who": "all"
+            },
+            {
+              "verb": "axis",
+              "id": "name",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "소리가 목에서 막혔다. 아무도 깨지 않았다.",
+          "image": "death_starve",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "dead"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      },
+      {
+        "label": "축 늘어진다",
+        "check": {
+          "skill": "str",
+          "base": 70
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "안 놓으면 끝이다",
+        "ok": {
+          "text": "힘을 뺐다. 귀가 먹먹해질 때까지 기다렸다. 손이 풀렸다. 목이 부었다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "손은 끝까지 풀리지 않았다. 아침에 담요가 반듯하게 덮여 있었다.",
+          "image": "death_starve",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "dead"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      },
+      {
+        "label": "옆 담요를 가리킨다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "give_other",
+        "warn": "그 사람이 대신 당한다",
+        "out": {
+          "text": "손가락으로 옆 담요를 가리켰다. 목에서 손이 풀렸다. 옆에서 숨 막히는 소리가 났다.",
+          "target": "any",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "target",
+              "n": 2
+            },
+            {
+              "verb": "number",
+              "id": "fear",
+              "n": 3,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": 3,
+              "who": "target"
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": -1
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            }
+          ],
+          "ledger": ""
         }
       }
     ]
@@ -8450,7 +9295,7 @@
         "check": null,
         "cost": {},
         "req": {},
-        "taboo": "",
+        "taboo": "answer_above",
         "warn": "대답한 사람은 올라간다",
         "out": {
           "text": "\"네.\" 신발이 저절로 벗겨졌다. 계단이 따뜻했다.",
@@ -8471,13 +9316,37 @@
         }
       },
       {
-        "label": "귀를 막는다",
+        "label": "불을 키우고 밤을 샌다",
         "check": null,
-        "cost": {},
+        "cost": {
+          "fuel": 2
+        },
         "req": {},
         "taboo": "",
         "warn": "",
         "out": {
+          "text": "장작 둘을 넣고 불 곁에서 밤을 샜다. 이름은 불빛 끝까지만 내려왔다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "named_you",
+              "set": 0
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "귀를 막는다",
+        "check": {
+          "skill": "obs",
+          "base": 70
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "잠결에 대답하면 끝이다",
+        "ok": {
           "text": "밤새 귀를 막았다. 아침에 손바닥에 재가 묻어 있었다.",
           "effects": [
             {
@@ -8493,6 +9362,28 @@
             }
           ],
           "ledger": ""
+        },
+        "fail": {
+          "text": "귀를 막은 채 잠이 들었다. 꿈속에서 \"네\" 하고 대답했다. 아침에 신발이 계단 아래 가지런했다.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you",
+              "how": "ascended"
+            },
+            {
+              "verb": "trace",
+              "id": "shoes_stairs",
+              "state": "pair"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "ascended",
+            "day": "{day}",
+            "cause": ""
+          },
+          "image": "death_counted"
         }
       },
       {
@@ -8500,8 +9391,8 @@
         "check": null,
         "cost": {},
         "req": {},
-        "taboo": "",
-        "warn": "",
+        "taboo": "name_other",
+        "warn": "그 사람이 불린다",
         "out": {
           "text": "잠든 사람의 이름을 댔다. 위의 목소리가 멈췄다. 그 사람이 담요째 떨었다.",
           "effects": [
@@ -8526,6 +9417,17 @@
               "verb": "axis",
               "id": "name",
               "n": 1
+            },
+            {
+              "verb": "number",
+              "id": "counted",
+              "n": 1,
+              "who": "target"
+            },
+            {
+              "verb": "flag",
+              "id": "stood_stairs_target",
+              "set": 1
             }
           ],
           "ledger": ""

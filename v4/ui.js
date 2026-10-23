@@ -52,7 +52,9 @@
     });
   }
   // 문장마다 끊되, 따옴표 안의 말은 한 번에.
-  // 닫는 따옴표 뒤는 따옴표 안 말이 문장 끝 부호(. ! ? … —)로 끝났을 때만 끊는다 — '동하가 "네" 하고 신발을 벗었다.'는 한 장
+  // 닫는 따옴표 뒤는 따옴표 안 말이 문장 끝 부호(. ! ? … —)로 끝났을 때만 끊는다 — '동하가 "네" 하고 신발을 벗었다.'는 한 장.
+  // 따옴표 안 말이 부호로 끝났어도 바로 뒤가 인용 낱말(라고·하고·하며…)이면 같은 문장이다 — '"됐어." 라고 했다.'
+  const QUOTE_TAIL = /^\s*(라고|라며|라는|라던|하고|하며|하는|하자|하기|하던|하더니|하곤|하면서|고\s|며\s)/;
   function splitSentences(text) {
     const out = []; let s = '', q = 0;
     const t = String(text);
@@ -60,7 +62,7 @@
       const c = t[i]; s += c;
       let closing = false;
       if (c === '“' || (c === '"' && q === 0)) q++; else if (c === '”' || (c === '"' && q > 0)) { q = Math.max(0, q - 1); closing = q === 0; }
-      const end = closing ? /[.!?…—]/.test(t[i - 1] || '') : /[.!?…]/.test(c);
+      const end = closing ? /[.!?…—]/.test(t[i - 1] || '') && !QUOTE_TAIL.test(t.slice(i + 1)) : /[.!?…]/.test(c);
       if (!q && end && /\s/.test(t[i + 1] || '') && /\S/.test(t.slice(i + 1))) { out.push(s.trim()); s = ''; }
     }
     if (s.trim()) out.push(s.trim());
