@@ -1,0 +1,13 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#000}iframe{border:0;width:1280px;height:720px}</style>
+<iframe id="f" src="/v4/index.html?fast=1&auto=car"></iframe>
+<script>
+const q = new URLSearchParams(location.search);
+const f = document.getElementById('f');
+const iv = setInterval(() => {
+  const w = f.contentWindow; const d = w && w.__ds4;
+  if (!d || !d.state || !d.scene || !d.scene.map || d.scene.map.id !== 'car') return;
+  const s = d.scene, m = d.db.maps[q.get('map')]; if (!m) return;
+  s.map = m; s.rows = m.rows; s.w = m.rows[0].length; s.h = m.rows.length; s.px = +q.get('x'); s.py = +q.get('y'); s.face = 'down'; s.moving = null; s.auto = null;
+  clearInterval(iv);
+}, 50);
+</script>
