@@ -141,6 +141,9 @@ def main():
             if p == '/inject':                   # 다음에 여는 페이지마다 먼저 도는 검수용 스크립트(본문 = JS)
                 r = cdp.run(cdp.send('Page.addScriptToEvaluateOnNewDocument', {'source': body.decode('utf-8')}))
                 return {'ok': True, 'r': r.get('result')}
+            if p == '/metrics':                  # 화면 크기 바꾸기 (노트북 창 등) — ?w=1366&h=650
+                r = cdp.run(cdp.send('Emulation.setDeviceMetricsOverride', {'width': int(q['w']), 'height': int(q['h']), 'deviceScaleFactor': 1, 'mobile': False}))
+                return {'ok': True}
             if p == '/console':
                 return {'lines': cdp.console[-int(q.get('n', 80)):]}
             if p == '/quit':

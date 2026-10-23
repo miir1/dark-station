@@ -1,0 +1,513 @@
+D0 day [line] pro_cold 덜컹. / ▼
+D0 day [line] pro_cold "승객 여러분께서는 침착하게—" / ▼
+D0 day [line] pro_cold … / ▼
+D0 day [line] pro_cold 누군가 당신의 이름을 불렀다. / ▼
+D0 day [line] pro_cold 아주 다정한 목소리였다. / ▼
+D0 day [event] pro_cold 덜컹. "승객 여러분께서는 침착하게—" … 누군가 당신의 이름을 불렀다. 아주 다정한 목소리였다. / 1 / 눈을 뜬다
+D0 day [line]  붉은 비상등이 깜빡인다. / ▼
+D0 day [line]  아무도 없다. / ▼
+D0 day [line]  바닥에 신발과 가방만 흩어져 있다. / ▼
+D0 day [line] pro_lever 비상 레버다. / ▼
+D0 day [line] pro_lever 문 옆 비상함에 생수 두 병이 보인다. / ▼
+D0 day [event] pro_lever 비상 레버다. 문 옆 비상함에 생수 두 병이 보인다. / 1 / 레버를 당긴다 / 2 / 그냥 둔다
+D0 day [line]  문이 쉭 하고 열렸다. / ▼
+D0 day [line]  찬 공기가 밀려들었다. / ▼
+D0 day [line]  생수 두 병을 챙겼다. / ▼
+D0 day [line] pro_notebook 「승객 명부」. / ▼
+D0 day [line] pro_notebook 첫 줄에 당신 이름이 적혀 있다. / ▼
+D0 day [line] pro_notebook 옆에 작게, 묵현. / ▼
+D0 day [line] pro_notebook 그 아래는 전부 빈칸이다. / ▼
+D0 day [line] pro_notebook 당신은 이 열차에 탄 기억이 없다. / ▼
+D0 day [event] pro_notebook 「승객 명부」. 첫 줄에 당신 이름이 적혀 있다. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다. / 1 / 주머니에 넣는다
+D0 day [line]  수첩을 주머니에 넣었다. / ▼
+D0 day [line]  연필도 있었다. / ▼
+D0 day [line] pro_gicheol "거기 서… 사람이오? 맨발이면 오지 마시오." / ▼
+D0 day [line] pro_gicheol 헤드램프가 당신 얼굴에서 비켜난다. / ▼
+D0 day [line] pro_gicheol "박기철, 정비사요. 이 잔해만 넘으면 묵현역이오." / ▼
+D0 day [event] pro_gicheol "거기 서… 사람이오? 맨발이면 오지 마시오." 헤드램프가 당신 얼굴에서 비켜난다. "박기철, 정비사요. 이 잔해만 넘으면 묵현역이오." / 1 / 길을 맡긴다 / 2 / 대피 공간을 뒤진다 / 3 / 함께 치운다
+D0 day [line]  생수와 건빵. / ▼
+D0 day [line]  상자 옆에 안전화 한 켤레가 가지런했다. / ▼
+D0 day [line]  기철이 고개를 돌렸다. / ▼
+D0 day [line] pro_platform 승강장에 닿았다. / ▼
+D0 day [line] pro_platform 드럼통 불가에 청소원 조끼의 할머니가 있다. / ▼
+D0 day [line] pro_platform "신발 신었어? …됐어, 사람이네." / ▼
+D0 day [line] pro_platform "저쪽 끝에 하나, 역무실에 하나." / ▼
+D0 day [event] pro_platform 승강장에 닿았다. 드럼통 불가에 청소원 조끼의 할머니가 있다. "신발 신었어? …됐어, 사람이네." "저쪽 끝에 하나, 역무실에 하나." / 1 / 둘러본다
+D0 day [line]  순례가 드럼통에 장작 하나를 더 넣었다. / ▼
+D0 day [line]  처음 보는 주황빛이었다. / ▼
+D0 day [line] pro_speaker 기둥의 스피커가 지직거린다. / ▼
+D0 day [line] pro_speaker "…생존자는 고지대 역으로, 열흘 뒤 정오…" / ▼
+D0 day [line] pro_speaker 사람 목소리 녹음이다. / ▼
+D0 day [line] pro_speaker 문장 사이에 숨을 쉰다. / ▼
+D0 day [event] pro_speaker 기둥의 스피커가 지직거린다. "…생존자는 고지대 역으로, 열흘 뒤 정오…" 사람 목소리 녹음이다. 문장 사이에 숨을 쉰다. / 1 / 듣는다
+D0 day [line]  같은 말이 되풀이됐다. / ▼
+D0 day [line]  기철: "통로를 이어야 열차가 서오. 열흘이오." / ▼
+D0 day [line] pro_mari 승강장 끝 담요에 여자가 앉아 있다. / ▼
+D0 day [line] pro_mari 입술이 움직인다. / ▼
+D0 day [line] pro_mari 이름을 외우고 있다. / ▼
+D0 day [event] pro_mari 승강장 끝 담요에 여자가 앉아 있다. 입술이 움직인다. 이름을 외우고 있다. / 1 / 말을 건다
+D0 day [line]  "퇴근하다 붙들렸어요. 간호사예요. 다친 데 있으면 말해요." / ▼
+D0 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D0 evening [line] d0_ledger 화로에서 수첩을 편다. / ▼
+D0 evening [line] d0_ledger 발견한 사람이 한 명씩 이름을 말한다. / ▼
+D0 evening [line] d0_ledger 순례가 묻는다. / ▼
+D0 evening [line] d0_ledger "자네가 적어? 그럼 자네가 데려가는 거야." / ▼
+D0 evening [event] d0_ledger 화로에서 수첩을 편다. 발견한 사람이 한 명씩 이름을 말한다. 순례가 묻는다. "자네가 적어? 그럼 자네가 데려가는 거야." / 1 / 데려가겠습니다소리 내어 한 약속이다 / 2 / 말없이 적는다
+D0 evening [line]  이름이 한 줄씩 찼다. / ▼
+D0 evening [line]  당신 글씨였다. / ▼
+D0 evening [line]  순례는 더 묻지 않았다. / ▼
+D0 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D0 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D0 aftermath [line]  밤이 지난다. / ▼
+D1 trace [line]  땔감 −1 / ▼
+D1 trace [line]  당신 수첩이다. / ▼
+D1 trace [line]  연필이 위에 있다. / ▼
+D1 trace [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D1 ration [line] trial_d1_bowls 그릇이 일곱이다. / ▼
+D1 ration [line] trial_d1_bowls 식량은 그보다 적다. / ▼
+D1 ration [line] trial_d1_bowls 당신 그릇도 그 안에 있다. / ▼
+D1 ration [event] trial_d1_bowls 그릇이 일곱이다. 식량은 그보다 적다. 당신 그릇도 그 안에 있다. / 1 / 내 그릇을 비운다굶으면 손이 떨린다 / 2 / 남의 그릇을 비운다동하가 잊지 않는다 / 3 / 똑같이 조금씩
+D1 ration [line]  일곱 그릇이 반씩 찼다. / ▼
+D1 ration [line]  동하가 제일 먼저 비웠다. / ▼
+D1 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 박기철 / 최은지 / 한동하 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 박기철 그릇을 뺀다 / 5 / 최은지 그릇을 뺀다 / 6 / 한동하 그릇을 뺀다 / 7 / 정마리 그릇을 뺀다 / 8 / 배식한다 (그릇 7)
+D1 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D1 day [line] d1_shutter_knock 셔터 너머에서 두드리는 소리가 난다. / ▼
+D1 day [line] d1_shutter_knock 셔터 틈이 흔들린다. / ▼
+D1 day [line] d1_shutter_knock 발소리는 둘이다. / ▼
+D1 day [line] d1_shutter_knock 더 뒤에 여럿이 있다. / ▼
+D1 day [event] d1_shutter_knock 셔터 너머에서 두드리는 소리가 난다. 셔터 틈이 흔들린다. 발소리는 둘이다. 더 뒤에 여럿이 있다. / 1 / 연다너머의 여럿도 역을 안다 / 2 / 두드려 답한다 / 3 / 둔다
+D1 day [line]  저쪽이 세 번 두드렸다. / ▼
+D1 day [line]  발소리가 멀어졌다가 돌아왔다. / ▼
+D1 day [line]  밤새 그랬다. / ▼
+D1 day [trip]  배수로 통로 / 물소리가 난다. 아래가 젖어 있다. / 1 / 나간다 / 2 / 돌아선다
+D1 day [line] trip_b1_debris 물에 떠내려온 가방이 배수관에 걸려 있다. / ▼
+D1 day [line] trip_b1_debris 손을 넣으려면 허리까지 젖는다. / ▼
+D1 day [event] trip_b1_debris 물에 떠내려온 가방이 배수관에 걸려 있다. 손을 넣으려면 허리까지 젖는다. / 1 / 꺼낸다55%물 밑이 보이지 않는다 / 2 / 지나간다
+D1 day [line]  가방이 물살에 한 번 흔들렸다. / ▼
+D1 day [deeper]  묻힌 개천 배수로 / 계단이 아래로 이어진다. 아래는 덜 뒤져졌다. 돌아오는 길은 멀다. / 1 / 아래층으로 내려간다더 많고, 더 다친다 / 2 / 역으로 돌아간다
+D1 day [line]  역으로 돌아왔다. / ▼
+D1 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D1 evening [line] d1_names_quiet 화로. / ▼
+D1 evening [line] d1_names_quiet 오늘 만난 사람이 이름을 말한다. / ▼
+D1 evening [line] d1_names_quiet 기철은 성까지 붙여 말했다. / ▼
+D1 evening [line] d1_names_quiet "박기철이오." / ▼
+D1 evening [event] d1_names_quiet 화로. 오늘 만난 사람이 이름을 말한다. 기철은 성까지 붙여 말했다. "박기철이오." / 1 / 적는다 / 2 / 하나씩 불러 확인한다
+D1 evening [line]  줄이 늘었다. / ▼
+D1 evening [line]  당신 글씨였다. / ▼
+D1 evening [line]  <김순례> 김순례 / 아들이 남주에 있어. / ▼
+D1 evening [line]  <김순례> 김순례 / 그날 아침에 전화를 못 받았지. / ▼
+D1 evening [line]  <김순례> 김순례 / 일할 땐 안 받아. / ▼
+D1 evening [line]  <김순례> 김순례 / 삼십 년을 그랬어. / ▼
+D1 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D1 night [line] d1_night_storage 불가 밖이 어둡다. / ▼
+D1 night [line] d1_night_storage 창고 쪽에서 갉는 소리가 난다. / ▼
+D1 night [line] d1_night_storage 순례: "밤엔 창고 가지 마. 쥐가 사람 가리지 않아." / ▼
+D1 night [event] d1_night_storage 불가 밖이 어둡다. 창고 쪽에서 갉는 소리가 난다. 순례: "밤엔 창고 가지 마. 쥐가 사람 가리지 않아." / 1 / 창고를 보러 간다50%순례: 가지 마 / 2 / 불가에 있는다봉지가 빈다
+D1 night [line]  아침에 건빵 봉지 둘이 비어 있었다. / ▼
+D1 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D1 aftermath [line]  밤이 지난다. / ▼
+D2 trace [line] d2_key 땔감 −1 / ▼
+D2 trace [line] d2_key 순례가 조끼에서 열쇠 꾸러미를 꺼낸다. / ▼
+D2 trace [line] d2_key "역무실 열쇠야. 자네가 열어. 밥은 문 틈으로 넣어." / ▼
+D2 trace [event] d2_key 순례가 조끼에서 열쇠 꾸러미를 꺼낸다. "역무실 열쇠야. 자네가 열어. 밥은 문 틈으로 넣어." / 1 / 받는다
+D2 trace [line] d2_soonrye_shutter 열쇠가 차가웠다. / ▼
+D2 trace [line] d2_soonrye_shutter 순례가 셔터를 반 뼘 올렸다. / ▼
+D2 trace [line] d2_soonrye_shutter 여자와 큰 청년이 기어 들어왔다. / ▼
+D2 trace [line] d2_soonrye_shutter "시장 사람 둘." / ▼
+D2 trace [event] d2_soonrye_shutter 순례가 셔터를 반 뼘 올렸다. 여자와 큰 청년이 기어 들어왔다. "시장 사람 둘." / 1 / 본다
+D2 trace [line] d2_rat_blanket 은지가 당신을 훑었다. / ▼
+D2 trace [line] d2_rat_blanket 동하는 고개만 꾸벅했다. / ▼
+D2 trace [line] d2_rat_blanket 역무실 문틈으로 나온 담요 속에서 쥐가 새끼를 낳았다. / ▼
+D2 trace [line] d2_rat_blanket 순례가 걸레로 눌렀다. / ▼
+D2 trace [line] d2_rat_blanket 소리가 여섯 번 났다. / ▼
+D2 trace [line] d2_rat_blanket 문 안에서 누가 담요를 도로 끌어당겼다. / ▼
+D2 trace [event] d2_rat_blanket 역무실 문틈으로 나온 담요 속에서 쥐가 새끼를 낳았다. 순례가 걸레로 눌렀다. 소리가 여섯 번 났다. 문 안에서 누가 담요를 도로 끌어당겼다. / 1 / 본다
+D2 trace [line]  순례가 걸레를 선로에 버렸다. / ▼
+D2 trace [line]  문 안은 다시 조용했다. / ▼
+D2 trace [line]  당신 수첩이다. / ▼
+D2 trace [line]  연필이 위에 있다. / ▼
+D2 trace [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D2 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 박기철 / 최은지 / 한동하 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 박기철 그릇을 뺀다 / 5 / 최은지 그릇을 뺀다 / 6 / 한동하 그릇을 뺀다 / 7 / 정마리 그릇을 뺀다 / 8 / 배식한다 (그릇 7)
+D2 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D2 day [trip]  지하상가 통로 / 셔터 너머가 어둡다. 발소리가 여럿이다. / 1 / 나간다 / 2 / 돌아선다
+D2 day [line] trip_a1_pharmacy 유리문 안쪽에서 약사 가운의 여자가 내다본다. / ▼
+D2 day [line] trip_a1_pharmacy "혼자 어머니를 돌봐요." / ▼
+D2 day [line] trip_a1_pharmacy "뒷문은 열 수 있는데… 낯선 사람한테는." / ▼
+D2 day [event] trip_a1_pharmacy 유리문 안쪽에서 약사 가운의 여자가 내다본다. "혼자 어머니를 돌봐요." "뒷문은 열 수 있는데… 낯선 사람한테는." / 1 / 자물쇠를 딴다45%실패하면 손이 뚫린다 / 2 / 약 하나를 밀어 넣는다약 −1 / 3 / 지나친다
+D2 day [line]  뒷문 빗장이 풀렸다. / ▼
+D2 day [line]  "빚은 안 질게요. 사흘 뒤 소식 가져갈게요." / ▼
+D2 day [deeper]  묵현 지하상가 / 계단이 아래로 이어진다. 아래는 덜 뒤져졌다. 돌아오는 길은 멀다. / 1 / 아래층으로 내려간다더 많고, 더 다친다 / 2 / 역으로 돌아간다
+D2 day [line]  역으로 돌아왔다. / ▼
+D2 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D2 evening [line] d2_soonrye_bread 순례가 제 건빵 반쪽을 들고 역무실 쪽으로 간다. / ▼
+D2 evening [line] d2_soonrye_bread 돌아왔을 때 손이 비어 있었다. / ▼
+D2 evening [line] d2_soonrye_bread 순례는 그날 저녁 아무것도 먹지 않았다. / ▼
+D2 evening [event] d2_soonrye_bread 순례가 제 건빵 반쪽을 들고 역무실 쪽으로 간다. 돌아왔을 때 손이 비어 있었다. 순례는 그날 저녁 아무것도 먹지 않았다. / 1 / 내 몫을 보탠다식량 −1식량이 모자라다 / 2 / 본다
+D2 evening [line]  순례는 불가에 앉아 손만 쬐었다. / ▼
+D2 evening [line]  <김순례> 김순례 / 아들이 남주에 있어. / ▼
+D2 evening [line]  <김순례> 김순례 / 그날 아침에 전화를 못 받았지. / ▼
+D2 evening [line]  <김순례> 김순례 / 일할 땐 안 받아. / ▼
+D2 evening [line]  <김순례> 김순례 / 삼십 년을 그랬어. / ▼
+D2 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D2 night [line] d2_night_shutter 셔터 너머에서 다시 두드린다. / ▼
+D2 night [line] d2_night_shutter 발소리가 여럿이다. / ▼
+D2 night [line] d2_night_shutter 다른 사람들은 자는 척한다. / ▼
+D2 night [event] d2_night_shutter 셔터 너머에서 다시 두드린다. 발소리가 여럿이다. 다른 사람들은 자는 척한다. / 1 / 혼자 연다60%못 달래면 죽는다 / 2 / 틈으로 말을 건다65%틈으로 무엇이 들어올지 모른다 / 3 / 셔터를 괸다부품 −1부품이 준다 / 4 / 둔다아무도 못 잔다
+D2 night [line]  두드림이 새벽에 그쳤다. / ▼
+D2 night [line]  아무도 못 잤다. / ▼
+D2 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D2 aftermath [line]  밤이 지난다. / ▼
+D3 trace [line] d3_soonrye_opens 땔감 −1 밤에 무슨 소리가 났다. / ▼
+D3 trace [line] d3_soonrye_opens 흔적이 남았을 것이다. / ▼
+D3 trace [line] d3_soonrye_opens 순례가 역무실 문을 열었다. / ▼
+D3 trace [line] d3_soonrye_opens "어젯밤 소리에 애가 문을 긁었어." / ▼
+D3 trace [line] d3_soonrye_opens 여학생이 담요를 끌고 나왔다. / ▼
+D3 trace [event] d3_soonrye_opens 순례가 역무실 문을 열었다. "어젯밤 소리에 애가 문을 긁었어." 여학생이 담요를 끌고 나왔다. / 1 / 본다
+D3 trace [line]  서하라고 했다. / ▼
+D3 trace [line]  당신을 보지 않았다. / ▼
+D3 trace [line]  연필이 옆으로 옮겨져 있다. / ▼
+D3 trace [line]  누가 펼쳐 봤다. / ▼
+D3 trace [write]  수첩 / D2 밤. 수첩 옆 연필이 옮겨졌다. / 1 / 수첩에 적는다 / 2 / 둔다
+D3 trace [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D3 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 박기철 / 최은지 / 한동하 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 박기철 그릇을 뺀다 / 5 / 최은지 그릇을 뺀다 / 6 / 한동하 그릇을 뺀다 / 7 / 정마리 그릇을 뺀다 / 8 / 배식한다 (그릇 7)
+D3 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D3 day [trip]  배수로 통로 / 물소리가 난다. 아래가 젖어 있다. / 1 / 나간다 / 2 / 돌아선다
+D3 day [line] trip_b1_gate 허리까지 찬 물 너머 불빛이 깜빡인다. / ▼
+D3 day [line] trip_b1_gate 정비복 남자가 배수관에 발이 낀 채 매달려 있다. / ▼
+D3 day [line] trip_b1_gate "거기 누구 있소! 물이 차!" / ▼
+D3 day [event] trip_b1_gate 허리까지 찬 물 너머 불빛이 깜빡인다. 정비복 남자가 배수관에 발이 낀 채 매달려 있다. "거기 누구 있소! 물이 차!" / 1 / 물에 들어가 끌어낸다55%실패하면 같이 가라앉는다 / 2 / 밧줄을 던진다조건이 맞지 않다 / 3 / 지나친다통로는 늦고 비싸진다
+D3 day [line]  판정 55% — 됐다. / ▼
+D3 day [line]  남자는 권도현이라 했다. / ▼
+D3 day [line]  "이틀 뒤에 보답하지." / ▼
+D3 day [line]  바지를 안 짰다. / ▼
+D3 day [deeper]  묻힌 개천 배수로 / 계단이 아래로 이어진다. 아래는 덜 뒤져졌다. 돌아오는 길은 멀다. / 1 / 아래층으로 내려간다더 많고, 더 다친다 / 2 / 역으로 돌아간다
+D3 day [line]  역으로 돌아왔다. / ▼
+D3 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D3 evening [line]  <김순례> 김순례 / 아들이 남주에 있어. / ▼
+D3 evening [line]  <김순례> 김순례 / 그날 아침에 전화를 못 받았지. / ▼
+D3 evening [line]  <김순례> 김순례 / 일할 땐 안 받아. / ▼
+D3 evening [line]  <김순례> 김순례 / 삼십 년을 그랬어. / ▼
+D3 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D3 night [line] trial_d3_count 밤새 출구 계단 위에서 누군가 숫자를 센다. / ▼
+D3 night [line] trial_d3_count 역에 있는 사람 수에서 멈추지 않는다. / ▼
+D3 night [line] trial_d3_count 하나 더 센다. / ▼
+D3 night [line] trial_d3_count 그리고 처음부터 다시 센다. / ▼
+D3 night [line] trial_d3_count 순례가 담요 속에서 입을 틀어막는다. / ▼
+D3 night [event] trial_d3_count 밤새 출구 계단 위에서 누군가 숫자를 센다. 역에 있는 사람 수에서 멈추지 않는다. 하나 더 센다. 그리고 처음부터 다시 센다. 순례가 담요 속에서 입을 틀어막는다. / 1 / 숨을 죽인다 / 2 / 함께 센다순례: 대답하지 마
+D3 night [line]  세는 소리가 승강장 바로 위까지 왔다가 멀어졌다. / ▼
+D3 night [line]  아무도 숨을 쉬지 않았다. / ▼
+D3 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D3 aftermath [line]  밤이 지난다. / ▼
+D4 trace [line] d3_guess 땔감 −1 밤에 무슨 소리가 났다. / ▼
+D4 trace [line] d3_guess 흔적이 남았을 것이다. / ▼
+D4 trace [line] d3_guess 수첩 뒷장이 비어 있다. / ▼
+D4 trace [line] d3_guess 어젯밤 일을 어떻게 적나. / ▼
+D4 trace [line] d3_guess 사실이 아니라 짐작이다. / ▼
+D4 trace [event] d3_guess 수첩 뒷장이 비어 있다. 어젯밤 일을 어떻게 적나. 사실이 아니라 짐작이다. / 1 / 불빛 때문인 것 같다 / 2 / 둘이 서면 흐려지는 듯 / 3 / 적지 않는다
+D4 trace [line] hymn_fire_kept 뒷장에 한 줄을 적었다. / ▼
+D4 trace [line] hymn_fire_kept 당신 글씨였다. / ▼
+D4 trace [line] hymn_fire_kept 화로가 밤새 꺼지지 않았다. / ▼
+D4 trace [line] hymn_fire_kept 재 위에 둘이 앉았던 자국이 있다. / ▼
+D4 trace [line] hymn_fire_kept 빈 그릇 하나가 불 옆에 엎어져 있다. / ▼
+D4 trace [line] hymn_fire_kept 아무도 자기가 했다고 말하지 않는다. / ▼
+D4 trace [event] hymn_fire_kept 화로가 밤새 꺼지지 않았다. 재 위에 둘이 앉았던 자국이 있다. 빈 그릇 하나가 불 옆에 엎어져 있다. 아무도 자기가 했다고 말하지 않는다. / 1 / 불을 쬔다 / 2 / 그릇을 씻어 둔다
+D4 trace [line]  손바닥이 오랜만에 따뜻했다. / ▼
+D4 trace [line]  연필이 옆으로 옮겨져 있다. / ▼
+D4 trace [line]  누가 펼쳐 봤다. / ▼
+D4 trace [write]  수첩 / D3 밤. 수첩 옆 연필이 옮겨졌다. / 1 / 수첩에 적는다 / 2 / 둔다
+D4 trace [fire]  화로 / 화로 곁 재에 둘이 앉았던 자국이 있다. 불이 밤새 꺼지지 않았다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D4 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 박기철 / 최은지 / 한동하 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 박기철 그릇을 뺀다 / 5 / 최은지 그릇을 뺀다 / 6 / 한동하 그릇을 뺀다 / 7 / 정마리 그릇을 뺀다 / 8 / 배식한다 (그릇 7)
+D4 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D4 day [line] trial_d4_gicheol 기철: "통로는 이틀이면 되오. 부품은 넉넉하오." / ▼
+D4 day [line] trial_d4_gicheol 헤드램프가 당신 얼굴에서 비켜나지 않는다. / ▼
+D4 day [line] trial_d4_gicheol 창고의 부품 상자는 보이지 않는다. / ▼
+D4 day [event] trial_d4_gicheol 기철: "통로는 이틀이면 되오. 부품은 넉넉하오." 헤드램프가 당신 얼굴에서 비켜나지 않는다. 창고의 부품 상자는 보이지 않는다. / 1 / 믿는다 / 2 / 상자를 센다 / 3 / 추궁한다45%헤드램프가 얼굴에 멈춰 있다
+D4 day [line]  고개를 끄덕였다. / ▼
+D4 day [line]  기철이 헤드램프를 껐다. / ▼
+D4 day [trip]  지하상가 통로 / 셔터 너머가 어둡다. 발소리가 여럿이다. / 1 / 나간다 / 2 / 돌아선다
+D4 day [line] trip_a1_backroom 약국 뒷방 문이 반쯤 열려 있다. / ▼
+D4 day [line] trip_a1_backroom 은채는 계산대에 있다. / ▼
+D4 day [line] trip_a1_backroom 안에서 냄새가 난다. / ▼
+D4 day [event] trip_a1_backroom 약국 뒷방 문이 반쯤 열려 있다. 은채는 계산대에 있다. 안에서 냄새가 난다. / 1 / 뒷방을 본다 / 2 / 보지 않는다
+D4 day [line]  은채의 어머니는 침대에 있었다. / ▼
+D4 day [line]  이불 밑이 움직였다, 구더기였다. / ▼
+D4 day [line]  은채가 문을 닫았다. / ▼
+D4 day [line]  "주무세요." / ▼
+D4 day [deeper]  묵현 지하상가 / 계단이 아래로 이어진다. 아래는 덜 뒤져졌다. 돌아오는 길은 멀다. / 1 / 아래층으로 내려간다더 많고, 더 다친다 / 2 / 역으로 돌아간다
+D4 day [line] trip_g_rats 바닥이 움직인다. / ▼
+D4 day [line] trip_g_rats 쥐 떼다. / ▼
+D4 day [line] trip_g_rats 통로를 가득 메우고 이쪽으로 온다. / ▼
+D4 day [event] trip_g_rats 바닥이 움직인다. 쥐 떼다. 통로를 가득 메우고 이쪽으로 온다. / 1 / 맞선다60% / 2 / 피한다시간이 든다
+D4 day [line]  판정 60% — 됐다. / ▼
+D4 day [line]  파이프로 바닥을 쳤다. / ▼
+D4 day [line]  쥐가 갈라졌다. / ▼
+D4 day [line]  역으로 돌아왔다. / ▼
+D4 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D4 evening [line] d4_dohyeon_key 도현이 바지가 젖은 채 역에 와 있다. / ▼
+D4 evening [line] d4_dohyeon_key "이 열쇠로 통로를 열 수 있어. 낡아서 같이 고쳐야 해." / ▼
+D4 evening [line] d4_dohyeon_key 통로가 없으면 열차는 서지 않는다. / ▼
+D4 evening [event] d4_dohyeon_key 도현이 바지가 젖은 채 역에 와 있다. "이 열쇠로 통로를 열 수 있어. 낡아서 같이 고쳐야 해." 통로가 없으면 열차는 서지 않는다. / 1 / 부품을 내고 약속한다부품 −2소리 내어 한 약속이다 / 2 / 기다려 달라 한다 / 3 / 필요 없다 한다
+D4 evening [line] d4_shoes_home 도현은 이틀 뒤에 오겠다고 했다. / ▼
+D4 evening [line] d4_shoes_home 계단을 오르며 흥얼거렸다. / ▼
+D4 evening [line] d4_shoes_home 기철이 안전화 셋을 화로 옆에 말린다. / ▼
+D4 evening [line] d4_shoes_home 한 짝 안에 발이 남아 있다. / ▼
+D4 evening [line] d4_shoes_home 기철이 그걸 꺼내 불에 넣었다. / ▼
+D4 evening [line] d4_shoes_home 냄새가 났다. / ▼
+D4 evening [event] d4_shoes_home 기철이 안전화 셋을 화로 옆에 말린다. 한 짝 안에 발이 남아 있다. 기철이 그걸 꺼내 불에 넣었다. 냄새가 났다. / 1 / 본다 / 2 / 꺼내 묻는다
+D4 evening [line]  기철: "신발은 쓸모가 있소." / ▼
+D4 evening [line]  <김순례> 김순례 / 아들이 남주에 있어. / ▼
+D4 evening [line]  <김순례> 김순례 / 그날 아침에 전화를 못 받았지. / ▼
+D4 evening [line]  <김순례> 김순례 / 일할 땐 안 받아. / ▼
+D4 evening [line]  <김순례> 김순례 / 삼십 년을 그랬어. / ▼
+D4 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D4 night [line] starve_you 사흘째 빈 그릇이다. / ▼
+D4 night [line] starve_you 손이 떨려 연필을 못 쥔다. / ▼
+D4 night [line] starve_you 눈앞이 어둡다. / ▼
+D4 night [event] starve_you 사흘째 빈 그릇이다. 손이 떨려 연필을 못 쥔다. 눈앞이 어둡다. / 1 / 눈을 감는다굶으면 아침에 못 일어난다 / 2 / 창고를 턴다식량 −2들키면 아침에 안다식량이 모자라다 / 3 / 남의 그릇을 뺏는다55%그 사람이 굶는다 / 4 / 선로 밑을 뒤진다45%쥐가 먼저 와 있다
+D4 night [confirm2] starve_you 되돌릴 수 없다 / 남의 그릇을 뺏는다 — 그 사람이 굶는다 / 1 / 그렇게 한다 / 2 / 다시 고른다
+D4 night [line]  판정 55% — 안 됐다. / ▼
+D4 night [line]  손이 떨려 그릇을 엎었다. / ▼
+D4 night [line]  그 사람이 손목을 잡았다. / ▼
+D4 night [line]  주먹이 먼저 왔다. / ▼
+D4 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D4 aftermath [line]  꿈. / ▼
+D4 aftermath [line]  승강장에 서 있다. / ▼
+D4 aftermath [line]  열차가 지나간다. / ▼
+D4 aftermath [line]  서지 않는다. / ▼
+D4 aftermath [line]  밤이 지난다. / ▼
+D5 trace [line]  한동하가 밤에 갔다. / ▼
+D5 trace [line]  땔감 −1 밤에 무슨 소리가 났다. / ▼
+D5 trace [line]  흔적이 남았을 것이다. / ▼
+D5 trace [line]  당신 수첩이다. / ▼
+D5 trace [line]  연필이 위에 있다. / ▼
+D5 trace [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D5 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 박기철 / 최은지 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 박기철 그릇을 뺀다 / 5 / 최은지 그릇을 뺀다 / 6 / 정마리 그릇을 뺀다 / 7 / 배식한다 (그릇 6)
+D5 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D5 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D5 evening [line]  <김순례> 김순례 / 아들이 남주에 있어. / ▼
+D5 evening [line]  <김순례> 김순례 / 그날 아침에 전화를 못 받았지. / ▼
+D5 evening [line]  <김순례> 김순례 / 일할 땐 안 받아. / ▼
+D5 evening [line]  <김순례> 김순례 / 삼십 년을 그랬어. / ▼
+D5 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D5 night [line] d5_rail_body 선로에 사람이 걸려 있었다. / ▼
+D5 night [line] d5_rail_body 얼굴이 물에 불어 있었고 한쪽 신발이 없었다. / ▼
+D5 night [line] d5_rail_body 마리가 손목을 잡았다. / ▼
+D5 night [line] d5_rail_body "하루는 안 됐어요." / ▼
+D5 night [line] d5_rail_body 누가 빈 깡통을 발로 밀었고, 마리가 가운에서 칼을 꺼냈다. / ▼
+D5 night [event] d5_rail_body 선로에 사람이 걸려 있었다. 얼굴이 물에 불어 있었고 한쪽 신발이 없었다. 마리가 손목을 잡았다. "하루는 안 됐어요." 누가 빈 깡통을 발로 밀었고, 마리가 가운에서 칼을 꺼냈다. / 1 / 받는다먹은 사람에게 값이 남는다 / 2 / 받지 않는다오늘 밤 당신은 굶는다 / 3 / 칼을 빼앗는다50%마리가 칼을 쥐고 있다
+D5 night [confirm2] d5_rail_body 되돌릴 수 없다 / 받는다 — 먹은 사람에게 값이 남는다 / 1 / 그렇게 한다 / 2 / 다시 고른다
+D5 night [line] d5_flood 아침에 드럼통이 비어 있었다. / ▼
+D5 night [line] d5_flood 몇은 벽을 보고 앉아 있었다. / ▼
+D5 night [line] d5_flood 당신 입이 혼자 움직였다. / ▼
+D5 night [line] d5_flood 역이 한 번 크게 기울었다. / ▼
+D5 night [line] d5_flood 물이 거꾸로 빨려 들어갔다가 숨을 내쉬듯 쏟아졌다. / ▼
+D5 night [line] d5_flood 선로의 물이 승강장을 넘었다. / ▼
+D5 night [event] d5_flood 역이 한 번 크게 기울었다. 물이 거꾸로 빨려 들어갔다가 숨을 내쉬듯 쏟아졌다. 선로의 물이 승강장을 넘었다. / 1 / 창고를 버리고 뺀다식량이 준다 / 2 / 모두 매달려 퍼낸다
+D5 night [line] d5_lullaby 밤새 양동이를 날랐다. / ▼
+D5 night [line] d5_lullaby 손잡이가 피로 미끌거렸다. / ▼
+D5 night [line] d5_lullaby 물은 내려갔다. / ▼
+D5 night [line] d5_lullaby 배수로 쪽에서 자장가가 들린다. / ▼
+D5 night [line] d5_lullaby 누군가의 어머니 목소리다. / ▼
+D5 night [line] d5_lullaby 한 사람이 일어나 맨발로 물가를 향해 걷는다. / ▼
+D5 night [line] d5_lullaby 눈을 뜬 채 자고 있다. / ▼
+D5 night [event] d5_lullaby 배수로 쪽에서 자장가가 들린다. 누군가의 어머니 목소리다. 한 사람이 일어나 맨발로 물가를 향해 걷는다. 눈을 뜬 채 자고 있다. / 1 / 붙잡는다55%물속에서 당긴다 / 2 / 놓친다물에서 돌아오지 않는다
+D5 night [line]  판정 55% — 됐다. / ▼
+D5 night [line]  허리를 붙잡고 뒤로 넘어졌다. / ▼
+D5 night [line]  발목에 손자국 멍이 남았다. / ▼
+D5 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D5 aftermath [line]  밤이 지난다. / ▼
+D6 trace [line] d6_morning 박기철이 밤에 갔다. / ▼
+D6 trace [line] d6_morning 땔감 −1 밤에 무슨 소리가 났다. / ▼
+D6 trace [line] d6_morning 흔적이 남았을 것이다. / ▼
+D6 trace [line] d6_morning 안개가 계단 한 칸을 더 내려왔다. / ▼
+D6 trace [line] d6_morning 재를 손가락으로 문지르니 따뜻했다. / ▼
+D6 trace [line] d6_morning 밤마다 한 칸이다. / ▼
+D6 trace [event] d6_morning 안개가 계단 한 칸을 더 내려왔다. 재를 손가락으로 문지르니 따뜻했다. 밤마다 한 칸이다. / 1 / 쇠줄을 긋는다부품 −1 / 2 / 이름을 안 부르기로화로가 식는다
+D6 trace [line]  녹인 쇠로 계단 아래 줄을 그었다. / ▼
+D6 trace [line]  안개가 그 앞에서 머뭇거렸다. / ▼
+D6 trace [line]  당신 수첩이다. / ▼
+D6 trace [line]  연필이 위에 있다. / ▼
+D6 trace [fire]  화로 / 화로 곁 재에 둘이 앉았던 자국이 있다. 불이 밤새 꺼지지 않았다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D6 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 최은지 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 최은지 그릇을 뺀다 / 5 / 정마리 그릇을 뺀다 / 6 / 배식한다 (그릇 5)
+D6 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D6 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D6 evening [line] d6_dohyeon_back 도현이 다시 왔다. / ▼
+D6 evening [line] d6_dohyeon_back 바지가 젖어 있다. / ▼
+D6 evening [line] d6_dohyeon_back "기다렸지. 부품 셋이면 오늘부터 잇지." / ▼
+D6 evening [event] d6_dohyeon_back 도현이 다시 왔다. 바지가 젖어 있다. "기다렸지. 부품 셋이면 오늘부터 잇지." / 1 / 부품 셋을 내고 약속한다부품 −3소리 내어 한 약속이다 / 2 / 더 기다려 달라 한다통로는 늦어진다 / 3 / 필요 없다 한다
+D6 evening [line]  도현이 열쇠를 도로 넣었다. / ▼
+D6 evening [line]  다시 오지 않았다. / ▼
+D6 evening [line]  <김순례> 김순례 / 아들이 남주에 있어. / ▼
+D6 evening [line]  <김순례> 김순례 / 그날 아침에 전화를 못 받았지. / ▼
+D6 evening [line]  <김순례> 김순례 / 일할 땐 안 받아. / ▼
+D6 evening [line]  <김순례> 김순례 / 삼십 년을 그랬어. / ▼
+D6 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D6 night [line] d6_shutter_b 셔터가 반쯤 올라가 있었다. / ▼
+D6 night [line] d6_shutter_b 횃불 넷. / ▼
+D6 night [line] d6_shutter_b 앞의 남자가 승강장을 한 번 훑었다. / ▼
+D6 night [line] d6_shutter_b 창고를 턱으로 가리켰다. / ▼
+D6 night [line] d6_shutter_b "열쇠." / ▼
+D6 night [event] d6_shutter_b 셔터가 반쯤 올라가 있었다. 횃불 넷. 앞의 남자가 승강장을 한 번 훑었다. 창고를 턱으로 가리켰다. "열쇠." / 1 / 열쇠를 내준다창고가 빈다 / 2 / 맞선다35%넷이다. 크게 다친다 / 3 / 아무것도 하지 않는다창고가 빈다. 또 온다
+D6 night [line]  남자가 열쇠를 받아 갔다. / ▼
+D6 night [line]  창고가 비었다. / ▼
+D6 night [line]  셔터가 내려갔다. / ▼
+D6 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D6 aftermath [line]  꿈. / ▼
+D6 aftermath [line]  창 안의 사람들이 밖을 본다. / ▼
+D6 aftermath [line]  당신을 보지 않는다. / ▼
+D6 aftermath [line]  밤이 지난다. / ▼
+D7 trace [line]  땔감 −1 밤에 무슨 소리가 났다. / ▼
+D7 trace [line]  흔적이 남았을 것이다. / ▼
+D7 trace [line]  연필이 옆으로 옮겨져 있다. / ▼
+D7 trace [line]  누가 펼쳐 봤다. / ▼
+D7 trace [write]  수첩 / D6 밤. 수첩 옆 연필이 옮겨졌다. / 1 / 수첩에 적는다 / 2 / 둔다
+D7 trace [fire]  화로 / 화로 가장자리가 젖어 있다. 누가 물을 흘렸다. 재에 손자국이 있다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D7 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 최은지 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 최은지 그릇을 뺀다 / 5 / 정마리 그릇을 뺀다 / 6 / 배식한다 (그릇 5)
+D7 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D7 day [line] passage_alone_b 무너진 통로. / ▼
+D7 day [line] passage_alone_b 도현은 없다. / ▼
+D7 day [line] passage_alone_b 돌무더기가 사람 키만 하다. / ▼
+D7 day [line] passage_alone_b 부품 다섯이면 우리끼리도 될 것 같다. / ▼
+D7 day [event] passage_alone_b 무너진 통로. 도현은 없다. 돌무더기가 사람 키만 하다. 부품 다섯이면 우리끼리도 될 것 같다. / 1 / 우리끼리 잇는다50%부품 −5실패하면 다친다부품이 모자라다 / 2 / 두고 걷기로 한다열차는 서지 않는다 / 3 / 내일 다시 본다물이 한 뼘 찬다
+D7 day [line]  돌무더기에서 손을 뗐다. / ▼
+D7 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D7 evening [line] d7_broadcast 자정, 스피커가 혼자 켜졌다. / ▼
+D7 evening [line] d7_broadcast 녹음이 아니다. / ▼
+D7 evening [line] d7_broadcast 목소리가 이름을 하나씩 읽고, 맨 처음에 당신을 읽는다. / ▼
+D7 evening [line] d7_broadcast "열차는 명부의 이름만 태웁니다, 운임은 빵과 물과 소리 내어 한 약속, 사흘 뒤 정오." / ▼
+D7 evening [line] d7_broadcast 숨을 쉬지 않는다. / ▼
+D7 evening [event] d7_broadcast 자정, 스피커가 혼자 켜졌다. 녹음이 아니다. 목소리가 이름을 하나씩 읽고, 맨 처음에 당신을 읽는다. "열차는 명부의 이름만 태웁니다, 운임은 빵과 물과 소리 내어 한 약속, 사흘 뒤 정오." 숨을 쉬지 않는다. / 1 / 수첩에 받아 적는다 / 2 / "여기 있습니다."대답이다. 저 위도 듣는다 / 3 / 스피커 선을 끊는다45%선이 살아 있다
+D7 evening [line]  다 쓰고 보니 빈칸에 누가 이미 같은 글씨로 써 두었다. / ▼
+D7 evening [line]  <김순례> 김순례 / 아들이 남주에 있어. / ▼
+D7 evening [line]  <김순례> 김순례 / 그날 아침에 전화를 못 받았지. / ▼
+D7 evening [line]  <김순례> 김순례 / 일할 땐 안 받아. / ▼
+D7 evening [line]  <김순례> 김순례 / 삼십 년을 그랬어. / ▼
+D7 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D7 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D7 aftermath [line]  밤이 지난다. / ▼
+D8 trace [line] trial_d8_key 땔감 −1 밤에 무슨 소리가 났다. / ▼
+D8 trace [line] trial_d8_key 흔적이 남았을 것이다. / ▼
+D8 trace [line] trial_d8_key 창고 열쇠를 누가 갖나. / ▼
+D8 trace [line] trial_d8_key 어젯밤 봉지가 또 비었다. / ▼
+D8 trace [line] trial_d8_key 순례: "내가 갖지. 삼십 년 가졌어." / ▼
+D8 trace [event] trial_d8_key 창고 열쇠를 누가 갖나. 어젯밤 봉지가 또 비었다. 순례: "내가 갖지. 삼십 년 가졌어." / 1 / 내가 갖는다열쇠 가진 사람이 밤에 찾아진다 / 2 / 순례에게 / 3 / 열어 둔다밤에 또 빈다 / 4 / 운임을 따로 챙긴다식량 −1 · 물 −1순례가 본다식량이 모자라다, 물이 모자라다
+D8 trace [line]  순례가 조끼 안주머니에 넣었다. / ▼
+D8 trace [line]  당신 수첩이다. / ▼
+D8 trace [line]  연필이 위에 있다. / ▼
+D8 trace [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D8 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 최은지 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 최은지 그릇을 뺀다 / 5 / 정마리 그릇을 뺀다 / 6 / 배식한다 (그릇 5)
+D8 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D8 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D8 evening [line]  <김순례> 김순례 / 아들이 남주에 있어. / ▼
+D8 evening [line]  <김순례> 김순례 / 그날 아침에 전화를 못 받았지. / ▼
+D8 evening [line]  <김순례> 김순례 / 일할 땐 안 받아. / ▼
+D8 evening [line]  <김순례> 김순례 / 삼십 년을 그랬어. / ▼
+D8 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D8 night [line] starve_you 사흘째 빈 그릇이다. / ▼
+D8 night [line] starve_you 손이 떨려 연필을 못 쥔다. / ▼
+D8 night [line] starve_you 눈앞이 어둡다. / ▼
+D8 night [event] starve_you 사흘째 빈 그릇이다. 손이 떨려 연필을 못 쥔다. 눈앞이 어둡다. / 1 / 눈을 감는다굶으면 아침에 못 일어난다 / 2 / 창고를 턴다식량 −2들키면 아침에 안다식량이 모자라다 / 3 / 남의 그릇을 뺏는다55%그 사람이 굶는다 / 4 / 선로 밑을 뒤진다45%쥐가 먼저 와 있다
+D8 night [confirm2] starve_you 되돌릴 수 없다 / 남의 그릇을 뺏는다 — 그 사람이 굶는다 / 1 / 그렇게 한다 / 2 / 다시 고른다
+D8 night [line]  판정 55% — 안 됐다. / ▼
+D8 night [line]  손이 떨려 그릇을 엎었다. / ▼
+D8 night [line]  그 사람이 손목을 잡았다. / ▼
+D8 night [line]  주먹이 먼저 왔다. / ▼
+D8 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D8 aftermath [line]  꿈. / ▼
+D8 aftermath [line]  노란 선 위에 서 있다. / ▼
+D8 aftermath [line]  아무도 끌어내리지 않는다. / ▼
+D8 aftermath [line]  밤이 지난다. / ▼
+D9 trace [line] d9_stairs 밤에 무슨 소리가 났다. / ▼
+D9 trace [line] d9_stairs 흔적이 남았을 것이다. / ▼
+D9 trace [line] d9_stairs 아침에 계단을 봤다. / ▼
+D9 trace [line] d9_stairs 재가 한 칸도 안 내려와 있었다. / ▼
+D9 trace [line] d9_stairs 계단 아래 순례의 신발이 가지런했다. / ▼
+D9 trace [line] d9_stairs 순례는 담요 속에 있었고 발이 검었다. / ▼
+D9 trace [line] d9_stairs 밤새 혼자 거기 서 있었다 — 둘이 서야 한다는 걸 아는 사람이. / ▼
+D9 trace [event] d9_stairs 아침에 계단을 봤다. 재가 한 칸도 안 내려와 있었다. 계단 아래 순례의 신발이 가지런했다. 순례는 담요 속에 있었고 발이 검었다. 밤새 혼자 거기 서 있었다 — 둘이 서야 한다는 걸 아는 사람이. / 1 / 묻는다 / 2 / 묻지 않는다 / 3 / 오늘 밤 내가 선다혼자 선 사람은 불린다
+D9 trace [line] d9_hoard "잠이 안 왔어." / ▼
+D9 trace [line] d9_hoard 그뿐이었다. / ▼
+D9 trace [line] d9_hoard 걸레를 집어 들고 계단을 닦았다. / ▼
+D9 trace [line] d9_hoard 은지의 담요 밑이 불룩하다. / ▼
+D9 trace [line] d9_hoard 건빵 봉지 셋이 끈으로 묶여 있다. / ▼
+D9 trace [line] d9_hoard 운임이다. / ▼
+D9 trace [line] d9_hoard 은지가 눈을 피하지 않는다. / ▼
+D9 trace [event] d9_hoard 은지의 담요 밑이 불룩하다. 건빵 봉지 셋이 끈으로 묶여 있다. 운임이다. 은지가 눈을 피하지 않는다. / 1 / 모른 척한다 / 2 / 창고에 돌려놓는다50%은지가 잊지 않는다 / 3 / 하나만 나눠 받는다
+D9 trace [line] dawn_strike 판정 50% — 됐다. / ▼
+D9 trace [line] dawn_strike 봉지를 창고에 넣었다. / ▼
+D9 trace [line] dawn_strike 은지는 말리지 않았다. / ▼
+D9 trace [line] dawn_strike 다만 오래 봤다. / ▼
+D9 trace [line] dawn_strike 숨이 막혀 깼다. / ▼
+D9 trace [line] dawn_strike 누가 당신 가슴 위에 올라앉아 있다. / ▼
+D9 trace [line] dawn_strike 두 손이 목을 누른다. / ▼
+D9 trace [line] dawn_strike 얼굴은 어둠 속이다. / ▼
+D9 trace [event] dawn_strike 숨이 막혀 깼다. 누가 당신 가슴 위에 올라앉아 있다. 두 손이 목을 누른다. 얼굴은 어둠 속이다. / 1 / 그릇 둘을 내민다식량 −2 / 2 / 밀쳐 낸다50%못 밀치면 끝이다 / 3 / 소리친다55%아무도 안 깨면 끝이다 / 4 / 축 늘어진다75%안 놓으면 끝이다 / 5 / 옆 담요를 가리킨다그 사람이 대신 당한다
+D9 trace [line]  목에서 손이 풀렸다. / ▼
+D9 trace [line]  그림자가 그릇 둘을 안고 어둠으로 갔다. / ▼
+D9 trace [line]  연필이 옆으로 옮겨져 있다. / ▼
+D9 trace [line]  누가 펼쳐 봤다. / ▼
+D9 trace [write]  수첩 / D8 밤. 수첩 옆 연필이 옮겨졌다. / 1 / 수첩에 적는다 / 2 / 둔다
+D9 trace [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D9 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 최은지 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 최은지 그릇을 뺀다 / 5 / 정마리 그릇을 뺀다 / 6 / 배식한다 (그릇 5)
+D9 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D9 day [treat]  치료 / 약 1 · 한 사람에 약 −1 · 낮·저녁에, 하루 한 번 / 1 / 당신 — 깊이 다쳤다약 −1 / 2 / 윤서하 — 다쳤다약 −1 / 3 / 돌아간다
+D9 day [line]  상처를 씻고 붕대를 새로 감았다. / ▼
+D9 day [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 저녁이 된다. / 1 / 앉는다 / 2 / 아직
+D9 evening [line] d9_inspection 열차 한 칸이 승강장에 서 있다. / ▼
+D9 evening [line] d9_inspection 온 소리는 없었다. / ▼
+D9 evening [line] d9_inspection 제복의 차장이 내리는데 얼굴이 보이지 않는다. / ▼
+D9 evening [line] d9_inspection 펀치를 쥔 손으로 당신 것과 같은 수첩을 펼친다. / ▼
+D9 evening [line] d9_inspection "운임을 보여 주시겠습니까." / ▼
+D9 evening [event] d9_inspection 열차 한 칸이 승강장에 서 있다. 온 소리는 없었다. 제복의 차장이 내리는데 얼굴이 보이지 않는다. 펀치를 쥔 손으로 당신 것과 같은 수첩을 펼친다. "운임을 보여 주시겠습니까." / 1 / 수첩을 내민다펀치가 손을 뚫는다 / 2 / 고개를 돌린다운임은 빵과 물로만
+D9 evening [line]  차장은 말없이 열차로 돌아갔다. / ▼
+D9 evening [line]  열차는 소리 없이 어둠으로 미끄러졌다. / ▼
+D9 evening [line]  <김순례> 김순례 / 잠이 안 왔어. / ▼
+D9 evening [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불을 돋우면 밤이다. 더 이야기할 사람이 없나. / 1 / 잠자리로 / 2 / 아직
+D9 night [line] starve_you 사흘째 빈 그릇이다. / ▼
+D9 night [line] starve_you 손이 떨려 연필을 못 쥔다. / ▼
+D9 night [line] starve_you 눈앞이 어둡다. / ▼
+D9 night [event] starve_you 사흘째 빈 그릇이다. 손이 떨려 연필을 못 쥔다. 눈앞이 어둡다. / 1 / 눈을 감는다굶으면 아침에 못 일어난다 / 2 / 창고를 턴다식량 −2들키면 아침에 안다식량이 모자라다 / 3 / 남의 그릇을 뺏는다55%그 사람이 굶는다 / 4 / 선로 밑을 뒤진다45%쥐가 먼저 와 있다
+D9 night [confirm2] starve_you 되돌릴 수 없다 / 남의 그릇을 뺏는다 — 그 사람이 굶는다 / 1 / 그렇게 한다 / 2 / 다시 고른다
+D9 night [line]  판정 55% — 됐다. / ▼
+D9 night [line]  잠든 사람의 그릇을 끌어왔다. / ▼
+D9 night [line]  그 사람이 눈을 떴다. / ▼
+D9 night [line]  아무 말도 안 했다. / ▼
+D9 night [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 잠든다. 아침까지 누구도 깨우지 않는다. / 1 / 잠든다 / 2 / 아직
+D9 aftermath [line]  밤이 지난다. / ▼
+D10 trace [line] dawn_strike 밤에 무슨 소리가 났다. / ▼
+D10 trace [line] dawn_strike 흔적이 남았을 것이다. / ▼
+D10 trace [line] dawn_strike 숨이 막혀 깼다. / ▼
+D10 trace [line] dawn_strike 누가 당신 가슴 위에 올라앉아 있다. / ▼
+D10 trace [line] dawn_strike 두 손이 목을 누른다. / ▼
+D10 trace [line] dawn_strike 얼굴은 어둠 속이다. / ▼
+D10 trace [event] dawn_strike 숨이 막혀 깼다. 누가 당신 가슴 위에 올라앉아 있다. 두 손이 목을 누른다. 얼굴은 어둠 속이다. / 1 / 그릇 둘을 내민다식량 −2식량이 모자라다 / 2 / 밀쳐 낸다50%못 밀치면 끝이다 / 3 / 소리친다55%아무도 안 깨면 끝이다 / 4 / 축 늘어진다75%안 놓으면 끝이다 / 5 / 옆 담요를 가리킨다그 사람이 대신 당한다
+D10 trace [confirm2] dawn_strike 되돌릴 수 없다 / 옆 담요를 가리킨다 — 그 사람이 대신 당한다 / 1 / 그렇게 한다 / 2 / 다시 고른다
+D10 trace [line]  손가락으로 옆 담요를 가리켰다. / ▼
+D10 trace [line]  목에서 손이 풀렸다. / ▼
+D10 trace [line]  옆에서 숨 막히는 소리가 났다. / ▼
+D10 trace [line]  연필이 옆으로 옮겨져 있다. / ▼
+D10 trace [line]  누가 펼쳐 봤다. / ▼
+D10 trace [write]  수첩 / D9 밤. 수첩 옆 연필이 옮겨졌다. / 1 / 수첩에 적는다 / 2 / 둔다
+D10 trace [fire]  화로 / 드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다. / 불 앞에 앉으면 배식이다. / 1 / 그릇을 꺼낸다 / 2 / 아직
+D10 ration [ration]  배식 / 당신 / 김순례 / 윤서하 / 최은지 / 정마리 / 1 / 당신 그릇을 뺀다 / 2 / 김순례 그릇을 뺀다 / 3 / 윤서하 그릇을 뺀다 / 4 / 최은지 그릇을 뺀다 / 5 / 정마리 그릇을 뺀다 / 6 / 배식한다 (그릇 5)
+D10 seat [line]  사람들이 제 자리로 흩어진다. / ▼
+D10 day [line] d10_walk_weak 열차는 서지 않았다. / ▼
+D10 day [line] d10_walk_weak 걸어서 나가야 한다. / ▼
+D10 day [line] d10_walk_weak 일어서자 무릎이 꺾였다. / ▼
+D10 day [line] d10_walk_weak 상처가 뛰고 배가 등에 붙었다. / ▼
+D10 day [event] d10_walk_weak 열차는 서지 않았다. 걸어서 나가야 한다. 일어서자 무릎이 꺾였다. 상처가 뛰고 배가 등에 붙었다. / 1 / 마지막 빵을 먹는다식량 −1 · 물 −1물이 모자라다 / 2 / 옆 사람 물병을 비운다그 사람이 뒤처진다 / 3 / 이를 악물고 걷는다75%주저앉으면 끝이다
+D10 day [confirm2] d10_walk_weak 되돌릴 수 없다 / 옆 사람 물병을 비운다 — 그 사람이 뒤처진다 / 1 / 그렇게 한다 / 2 / 다시 고른다
+D10 day [line] d10_walk_other 옆 사람 물병을 빼앗아 비웠다. / ▼
+D10 day [line] d10_walk_other 그 사람은 말이 없었다. / ▼
+D10 day [line] d10_walk_other 한참 뒤에 처졌다. / ▼
+D10 day [line] d10_walk_other 열차는 서지 않았다. / ▼
+D10 day [line] d10_walk_other 선로를 따라 걷는다, 고가 구간까지 한 역 반. / ▼
+D10 day [line] d10_walk_other 둘씩 붙어 걷는다. / ▼
+D10 day [line] d10_walk_other 환기구 아래서 이름 하나가 불렸다. / ▼
+D10 day [line] d10_walk_other 옆에서 걷던 사람이 멈춰 섰다. / ▼
+D10 day [event] d10_walk_other 열차는 서지 않았다. 선로를 따라 걷는다, 고가 구간까지 한 역 반. 둘씩 붙어 걷는다. 환기구 아래서 이름 하나가 불렸다. 옆에서 걷던 사람이 멈춰 섰다. / 1 / 붙잡는다45%잡은 손이 재가 된다 / 2 / 대신 대답한다대답한 사람은 올라간다 / 3 / 걷는다
+D10 day [confirm2] d10_walk_other 되돌릴 수 없다 / 걷는다 / 1 / 그렇게 한다 / 2 / 다시 고른다
+D10 ended [line]  그 사람이 대답했다. / ▼
+D10 ended [line]  신발을 벗었다. / ▼
+D10 ended [line]  아무도 붙잡지 않았다. / ▼
+D10 ended [ending]  김순례가 수첩을 주워 읽는다. / 수첩을 덮기 전에 한 장을 더 넘겼다. 날짜를 적은 줄이 있고, 끝내 아무것도 적지 못한 칸이 있었다. / 1 / 덮는다
