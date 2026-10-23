@@ -18,6 +18,7 @@ const POLICIES = {
 };
 const CAREFUL = Object.keys(POLICIES).filter((k) => POLICIES[k].avoidWarn >= 1 && !POLICIES[k].risky);
 const RESOURCE_EVENTS = ['trade_shutter', 'patrol_pact', 'drink_flood'];
+const isResource = (id) => RESOURCE_EVENTS.some((r) => id === r || String(id || '').startsWith(r + '_'));   // 변형 행(trade_shutter_b·patrol_pact_b)도 같은 거래·협정
 // 경고 글이 죽음을 바로 말한다 — 판정 없는 선택만(판정이 있으면 %가 따로 보인다). 화면에 보이는 글이라 E6 안이다.
 // '센다' = 차장·위의 것이 세는 것(이 게임에서 세어진 사람은 올라간다 — d3·d9·명부에서 여러 번 보인다)
 const DEADLY = /끝이다|죽는다|올라간다|못 일어난다|센다/;
@@ -26,7 +27,10 @@ const deadlyText = (c) => !c.check && DEADLY.test(`${c.warn || ''} ${c.hint || '
 // 약으로 몸을 고치는 선택: 비용이 약뿐이고, 원정·거래 사건이 아니고, 봇이 몸이 성치 않음을 알 때(부상 ≥1, 또는 제 손으로 고른 일로 생긴 병 — 범람수를 마심·손을 베임)
 const SICK_FLAGS = ['drank_flood', 'flood_sick_days', 'cut_hand'];
 const unwell = (s) => (s.people.you.n.injury || 0) >= 1 || SICK_FLAGS.some((f) => s.flags[f]);
-const isRecovery = (c, eventId, ctx) => !!(ctx && ctx.unwell && ctx.kind !== 'trip' && c.cost && c.cost.meds && Object.keys(c.cost).every((k) => k === 'meds') && !RESOURCE_EVENTS.includes(eventId));
+const isRecovery = (c, eventId, ctx) => !!(ctx && ctx.unwell && ctx.kind !== 'trip' && c.cost && c.cost.meds && Object.keys(c.cost).every((k) => k === 'meds') && !isResource(eventId));
+// 몸이 성치 않을 때 약으로 고치는 선택은 먼저 고른다(모든 정책). 모험의 판정 가점(+4)보다 크다 — 약을 손에 두고 열 주사위에 목숨을 거는 건
+// 모험(위험 ↔ 보상)이 아니라 봇의 버릇이다(10-22 검증 3: verify_risky3 — 아플 때 약을 쓰면 모험 생존이 약 두 배). 회복 선택의 경고 글('약이 준다')은 비용을 다시 말할 뿐이다.
+const RECOVERY_BONUS = 5;
 const OPT = { peek: false };   // run.js --peek: 옛 '바뀐 흔적' 판단으로 비교
 const INSPECT = { diligent: { objects: 99, talk: 2, rumors: 99 }, normal: { objects: 2, talk: 1, rumors: 1 }, lazy: { objects: 1, talk: 0, rumors: 0 } };
 
@@ -36,13 +40,14 @@ function scoreChoice(c, pol, eventId, ctx) {
   if (c.locked) return -Infinity;
   let sc = 0;
   if (pol.risky) {
-    if (RESOURCE_EVENTS.includes(eventId)) return (c.gain || 0) * 10 + (c.cost ? -0.5 : 0);
+    if (isResource(eventId)) return (c.gain || 0) * 10 + (c.cost ? -0.5 : 0);
     if (c.check && (c.warn || c.hint)) sc += c.chance >= 35 ? 4 : -2;   // 모험이 즐기는 위험 = 판정(%)이 있는 것. 판정 없는 경고에 주던 +1 은 뺐다(10-22 검증 3)
   }
   for (const [k, v] of Object.entries(c.axis || {})) sc += (pol[k] || 0) * v * 2;
   // 봇은 메타의 killYou 를 안 본다 — 화면처럼 warn·hint·cost·% 와 경고 글만 본다. (killYou 는 통계용으로만 메타에 남긴다)
   if (c.warn || c.hint) sc -= 2 * pol.avoidWarn;
-  if (c.cost && !isRecovery(c, eventId, ctx)) sc -= 0.5;      // 아플 때 약을 쓰는 건 비용 감점 없음
+  if (isRecovery(c, eventId, ctx)) sc += RECOVERY_BONUS;      // 아플 때 약을 쓰는 건 비용 감점 없이 먼저
+  else if (c.cost) sc -= 0.5;
   if (c.chance != null) sc += (c.chance - 50) / 50;            // 판정 % 가 낮으면 감점
   if (c.taboo) sc -= 3;
   if (deadlyText(c)) sc -= DEADLY_PENALTY * (pol.avoidDeadly != null ? pol.avoidDeadly : 1);
@@ -179,4 +184,4 @@ function play(db, seed, policyName) {
   return { s, trace };
 }
 
-module.exports = { POLICIES, CAREFUL, INSPECT, OPT, DEADLY, play, pickChoice, scoreChoice, deadlyText, isRecovery };
+module.exports = { POLICIES, CAREFUL, INSPECT, OPT, DEADLY, RECOVERY_BONUS, play, pickChoice, scoreChoice, deadlyText, isRecovery, isResource };

@@ -140,7 +140,7 @@ function tripTables(t, size) {
   t.events.push(ev('trip_f1', 'trip', 'day>=1 & floor==1', [pass('함께 맞선다', { effects: { injure: { who: 'companion', n: 1 }, fear: { who: 'party', n: 2 } } })]));
   t.events.push(ev('trip_f2', 'trip', 'day>=1 & floor==2', [pass('내려간다', { effects: { kill: { who: 'companion' } }, ledger: { who: 'companion', status: 'dead', day: '{day}', cause: '' } })]));
 }
-test('요청4·20 원정: trip_party 만큼 동행(미성년·위독 제외), companion·party 효과, 낮에 한 번·1층→2층 순서', () => {
+test('요청4·20 원정: trip_party 만큼 동행(위독 제외, 나이 무관), companion·party 효과, 낮에 한 번·1층→2층 순서', () => {
   const { db, s } = setup((t) => tripTables(t, 2), 5);
   toPhase(s, db, 1, 'day');
   s.people.gicheol.n.injury = 3;                        // 위독은 못 따라간다
@@ -149,7 +149,6 @@ test('요청4·20 원정: trip_party 만큼 동행(미성년·위독 제외), co
   const fear0 = s.people.you.n.fear;
   assert.ok(E.dispatch(s, { type: 'trip', region: 'A', floor: 1 }, db).ok);
   assert.strictEqual(s.trip.party.length, 2);
-  assert.ok(!s.trip.party.includes('seoha'), '미성년(17)은 동행이 아니다');
   assert.ok(!s.trip.party.includes('gicheol'), '위독은 동행이 아니다');
   assert.deepStrictEqual(E.view(s, db).trip.party, s.trip.party);
   const comp = s.trip.party[0];
@@ -164,13 +163,17 @@ test('요청4·20 원정: trip_party 만큼 동행(미성년·위독 제외), co
   E.dispatch(s, { type: 'choose', i: 0 }, db);
   assert.strictEqual(s.people[comp].status, 'dead', '2층에서 동행이 죽었다');
   assert.strictEqual(s.lastResult.companion, comp);
-  // with 로 고르기: 미성년·바깥 사람·정원 초과는 거절
+  // with 로 고르기: 바깥 사람·정원 초과는 거절, 서하(17)는 다른 주민과 똑같이 고를 수 있다(10-22 미성년 처리 금지)
   const { db: db2, s: s2 } = setup((t) => tripTables(t, 1), 6);
   toPhase(s2, db2, 1, 'day');
-  assert.strictEqual(E.dispatch(s2, { type: 'trip', region: 'A', floor: 1, with: ['seoha'] }, db2).ok, false);
+  assert.strictEqual(E.dispatch(s2, { type: 'trip', region: 'A', floor: 1, with: ['eunchae'] }, db2).ok, false, '바깥 사람은 동행이 아니다');
   assert.strictEqual(E.dispatch(s2, { type: 'trip', region: 'A', floor: 1, with: ['soonrye', 'mari'] }, db2).ok, false);
   assert.ok(E.dispatch(s2, { type: 'trip', region: 'A', floor: 1, with: ['mari'] }, db2).ok);
   assert.deepStrictEqual(s2.trip.party, ['mari']);
+  const { db: db4, s: s4 } = setup((t) => tripTables(t, 1), 6);
+  toPhase(s4, db4, 1, 'day');
+  assert.ok(E.dispatch(s4, { type: 'trip', region: 'A', floor: 1, with: ['seoha'] }, db4).ok, '서하(17)도 동행이 될 수 있다');
+  assert.deepStrictEqual(s4.trip.party, ['seoha']);
   // trip_party 행이 없으면 혼자 (companion 효과는 아무 일도 없다)
   const { db: db3, s: s3 } = setup((t) => tripTables(t, null), 7);
   toPhase(s3, db3, 1, 'day');
@@ -345,14 +348,14 @@ test('위독: 밤 굴림 직전에 이미 위독이던 사람만 아침에 죽�
 });
 
 // ── 사건 대상 열 ──
-test('사건 target 열: 걸릴 때 대상을 정한다(무작위는 성인 주민만), 결과의 who:target 과 명부가 같은 사람', () => {
+test('사건 target 열: 걸릴 때 대상을 정한다(무작위는 역의 주민, 나이 무관), 결과의 who:target 과 명부가 같은 사람', () => {
   const lull = (t) => t.events.push(ev('lull_x', 'fixed', 'day==0 & phase==evening', [pass('놓친다', { effects: { kill: { who: 'target' } }, ledger: { who: 'target', status: 'dead', day: '{day}', cause: '물에 들어갔다' } })], { target: 'randomSleeper' }));
   const seen = new Set();
   for (let seed = 1; seed <= 30; seed++) {
     const { db, s } = setup(lull, seed);
     toPhase(s, db, 0, 'evening');
     const v = E.eventView(s, db);
-    assert.ok(v.target && v.target !== 'seoha' && v.target !== 'you', v.target);
+    assert.ok(v.target && v.target !== 'you' && s.people[v.target].status === 'home', v.target);
     assert.strictEqual(v.targetName, s.people[v.target].name);
     E.dispatch(s, { type: 'choose', i: 0 }, db);
     assert.strictEqual(s.people[v.target].status, 'dead');

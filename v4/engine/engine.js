@@ -14,9 +14,7 @@
   const SAVE_V = 1;
   const MAX_LOG = 80;
   const SKILL_PCT = 5;                      // 판정: base% + 기술 × 5%p (화면의 % = 실제 %)
-  const ADULT_AGE = NIGHT.ADULT_AGE;        // 디렉터 결정: 미성년(people.age < 19)은 잔혹 장면 프레임 밖 — 사건의 무작위 대상·원정 동행·밤 악의의 무작위/조건 역할이 되지 않는다 (night.js 가 한 곳에서 정한다)
   const EVENT_RANDOM = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper'];   // 사건 대상 낱말(자리 정보 없음 = 무작위)
-  const isMinor = NIGHT.isMinor;
   const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
   // 선택지가 당신을 죽일 수 있는가(결과 out·ok·fail 중 하나라도 kill 이 당신에게 닿는다) — 강제 사망 판정과 봇 메타가 같이 쓴다
   const meWho = (w) => !w || w === 'you' || w === 'self' || w === 'actor' || w === 'party' || w === 'all';
@@ -101,11 +99,12 @@
       break;
     }
   }
-  // 사건 대상: 사람 id(역에 있어야) · any/randomSleeper/… = 역에 있는 성인 주민 중 무작위 · mostInjured = 가장 많이 다친 주민 · bond = 당신의 bond
+  // 사건 대상: 사람 id(역에 있어야) · any/randomSleeper/… = 역에 있는 주민 중 무작위 · mostInjured = 가장 많이 다친 주민 · bond = 당신의 bond
+  // (나이로 거르지 않는다 — 10-22 디렉터 결정 '미성년 처리 금지': 서하(17)도 다른 주민과 똑같다)
   function eventTarget(s, db, spec) {
     if (!spec) return null;
     if (db.people[spec]) return s.people[spec] && s.people[spec].status === 'home' ? spec : null;
-    const res = db.peopleOrder.filter((id) => id !== 'you' && s.people[id].status === 'home' && !isMinor(db, id));
+    const res = db.peopleOrder.filter((id) => id !== 'you' && s.people[id].status === 'home');
     if (EVENT_RANDOM.includes(spec)) return R.pick(s, res) || null;
     if (spec === 'mostInjured') { const hurt = res.filter((id) => (s.people[id].n.injury || 0) > 0).sort((a, b) => (s.people[b].n.injury || 0) - (s.people[a].n.injury || 0)); return hurt[0] || null; }
     if (spec === 'bond') { const b = s.people.you.needs.bond; return b && s.people[b] && s.people[b].status === 'home' ? b : null; }
@@ -307,11 +306,11 @@
     return true;
   }
   // 원정 편성: numbers 표의 trip_party(동행 수, 없으면 0 = 혼자). with:[id] 로 고르거나, 안 주면 시드 난수로 고른다.
-  // 동행이 될 수 있는 사람 = 역에 있는 주민 중 위독이 아니고 미성년이 아닌 사람. 고를 수 없는 사람이 있으면 null(거절).
+  // 동행이 될 수 있는 사람 = 역에 있는 주민 중 위독이 아닌 사람(나이 무관). 고를 수 없는 사람이 있으면 null(거절).
   function pickParty(s, db, want) {
     const size = Number.isFinite(s.world.trip_party) ? Math.max(0, s.world.trip_party) : 0;
     const injMax = injuryMax(db);
-    const ok = (id) => typeof id === 'string' && id !== 'you' && s.people[id] && s.people[id].status === 'home' && (s.people[id].n.injury || 0) < injMax && !isMinor(db, id);
+    const ok = (id) => typeof id === 'string' && id !== 'you' && s.people[id] && s.people[id].status === 'home' && (s.people[id].n.injury || 0) < injMax;
     if (Array.isArray(want)) { const u = Array.from(new Set(want)); return u.length <= size && u.every(ok) ? u : null; }
     const pool = db.peopleOrder.filter(ok), out = [];
     while (out.length < size && pool.length) out.push(pool.splice(Math.floor(R.rand(s) * pool.length), 1)[0]);
@@ -465,7 +464,7 @@
         for (const [k, v] of Object.entries(e)) { const d = db.numbers[k]; if (d && d.owner === 'world' && d.visible === 'always') for (const x of FX.list(v)) gain += typeof x === 'number' ? x : (x && x.n) || 0; } }
       return Object.assign(choiceState(s, db, ev, c), { i, axis, killYou: kill, killOther, check: !!c.check, gain }); });   // gain = 화면에 보이는 자원 변화 합(봇의 '자원 + 가장 큰 label')
   }
-  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, rationOf, rand: R.rand, ADULT_AGE, isMinor,
+  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, rationOf, rand: R.rand,
     identity: (s, db) => ID.identity(s.axes, db.identity), signs: (s, db) => NIGHT.signs(s, db), readerId: (s, db) => LEDGER.readerId(s, db), ledger: LEDGER, night: NIGHT, cond: C };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).engine = API;

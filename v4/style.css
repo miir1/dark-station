@@ -48,7 +48,7 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 #stage:has(#cg:not([hidden]))::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.45); z-index: 5; pointer-events: none; }
 
 /* 글 상자: 무대 아래. 높이 고정, 스크롤 0 */
-#box { position: absolute; left: 4px; right: 4px; bottom: 4px; z-index: 20; background: var(--panel); border: 1px solid #8a7d66; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #2a251d; padding: 6px 8px; overflow: hidden; }
+#box { position: absolute; left: 4px; right: 4px; bottom: 4px; z-index: 20; word-break: keep-all; overflow-wrap: break-word; background: var(--panel); border: 1px solid #8a7d66; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #2a251d; padding: 6px 8px; overflow: hidden; }
 #box[hidden] { display: none !important; }
 #box.line { height: 96px; display: flex; gap: 6px; align-items: flex-start; cursor: pointer; }
 #box.line .face { width: 80px; height: 80px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }

@@ -32,8 +32,9 @@
   const youGone = () => { const s = person('you').status; return s === 'dead' || s === 'ascended'; };
   const lineOf = (id, extra) => { const l = B.pickLine(db, id, Object.assign(B.lineCtx(state), extra || {})); return l ? l.text : ''; };
   const josa = (name, pair) => B.fill('{who:' + pair + '}', name);       // 순례가 / 기철이
-  // 자원 이름 (numbers 표에 이름 칸이 없다 → 화면이 붙인다). 패널·선택지 비용·잠김 이유·밤 보고서가 같이 쓴다
+  // 자원 이름: numbers 표의 name 칸이 먼저, 없으면 이 표. 패널·선택지 비용·잠김 이유·밤 보고서가 같이 쓴다
   const RES = { food: '식량', water: '물', fuel: '땔감', meds: '약', parts: '부품' };
+  const resName = (k) => (db && db.numbers[k] && db.numbers[k].name) || RES[k] || k;
   const RES_ORDER = ['food', 'water', 'fuel', 'meds', 'parts'];
   const RES_ICON = { food: 'food', water: 'water', fuel: 'gen', meds: 'meds', parts: 'parts' };
   const RES_LOW = { food: 1, water: 1, fuel: 1, meds: 0, parts: 0 };     // 이 값 이하면 패널 숫자가 붉다
@@ -51,12 +52,15 @@
 
   // ── 사람 자리 (화면이 정한다 — 표에는 자리가 없다). 잠자리는 maps.beds 순서 = 담요 순서 ──
   const BED_ORDER = ['soonrye', 'seoha', 'gicheol', 'eunji', 'dongha', 'mari'];
+  // 자리마다 당신이 옆 칸까지 걸어갈 수 있어야 한다(말 걸기·치료). 화로(13,10) 위쪽 칸(13~15,9)과 (16,10)은 판자·화로·담요·의자에 둘러싸인
+  // 주머니라 (14,10)·(15,10) 으로만 드나든다 — 그 두 칸과 그 아래 칸(14,11)·(15,11)을 한꺼번에 막으면 안쪽 사람에게 못 간다.
+  // (13,11) = 화로 앞 · 아침에 당신이 서는 칸이라 비워 둔다. 은지 아침 자리(옛 18,10)는 의자 둘·담요 둘에 갇혀 있어 옮겼다.
   const SPOTS = {
-    trace: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [18, 10], dongha: [22, 11], mari: [22, 10] },
-    ration: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [18, 10], dongha: [22, 11], mari: [22, 10] },
-    seat: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [18, 10], dongha: [22, 11], mari: [22, 10] },
+    trace: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [21, 11], dongha: [22, 11], mari: [22, 10] },
+    ration: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [21, 11], dongha: [22, 11], mari: [22, 10] },
+    seat: { soonrye: [10, 10], seoha: [16, 10], gicheol: [20, 10], eunji: [21, 11], dongha: [22, 11], mari: [22, 10] },
     day: { soonrye: [9, 9], seoha: [14, 3], gicheol: [25, 10], eunji: [2, 5], dongha: [3, 5], mari: [22, 11] },
-    evening: { soonrye: [12, 10], seoha: [11, 10], gicheol: [14, 10], mari: [15, 10], eunji: [14, 11], dongha: [15, 11] },   // 화로(13,10) 둘레에 앉는다
+    evening: { dongha: [10, 10], eunji: [11, 10], soonrye: [12, 10], seoha: [14, 10], gicheol: [14, 11], mari: [16, 10] },   // 화로(13,10) 둘레에 앉는다. (15,10)·(15,11)은 비워 둔다 = 오른쪽 사람에게 가는 길
   };
   const sat = { day: -1, ids: new Set() };   // 오늘 저녁 이야기한 사람 (화면 기억, 저장 안 함) — 아직이면 머리 위 '…'
   const MET = { soonrye: 'arrived', mari: 'met_mari', gicheol: 'met_gicheol', eunji: 'met_eunji', dongha: 'met_eunji', seoha: 'met_seoha' };
@@ -65,7 +69,7 @@
   // ── 몸에 보이는 신호 (판단 정보는 친절하게, 수치는 안 보인다) ──
   // eyes  = 오늘 밤 잠들지 않을 사람 (밤 사건표에서 밤에 일어나 움직이는 문턱: needs.fear>=8, 또는 계단에 섰던 사람)
   // mouth = 굶주린 사람(needs.hunger>=7, 남의 것을 훔치는 문턱) · 사람을 먹은 흔적이 있는 사람(ate_flesh_x, dongha_ate_unknowing)
-  // [엔진 메모] view.people[].signs 가 생기면 그 값을 먼저 쓴다 — 문턱을 표가 갖게 하려는 것.
+  // 엔진 view.people[].signs(밤 사건표의 문턱으로 정한 값)를 먼저 쓴다. 아래 문턱은 signs 가 없을 때(옛 엔진)만 쓰는 예비.
   const SIGN = { sleeplessFear: 8, hungry: 7 };
   function signOf(id) {
     const p = person(id);
@@ -273,9 +277,7 @@
     if (scene.map.id === 'tunnel' && t === 'E') { flow(() => enterMap('station')); return; }
     if (scene.map.id === 'station' && (t === 'A' || t === 'B')) { if (state.phase === 'day') UI.toast(`${EXIT_NAMES[t]} — 조사하면 원정`, 1500); }
   }
-  // 지도에 들어선다: move 로 자리를 옮기고, 그 지도에 걸린 고정 장면(눈을 뜬다·승강장)이 있으면 건다.
-  // [엔진 메모] move 는 사건을 걸지 않으므로, 사건이 없는 물건 하나를 조사해 enterPhase 를 깨운다 (car: shoe_cab, station: board).
-  const POKE = { car: 'shoe_cab', station: 'board', tunnel: null };
+  // 지도에 들어선다: move 로 자리를 옮긴다. 그 지도에 걸린 고정 장면(눈을 뜬다·승강장)은 엔진 move 가 바로 건다(checkEvents).
   async function enterMap(mapId) {
     const m = db.maps[mapId];
     const [x, y] = m.start;
@@ -283,7 +285,6 @@
     else if (mapId === 'tunnel') await UI.card('어두운 터널', '');
     act({ type: 'move', map: mapId, x, y });
     setScene(mapId, x, y);
-    if (POKE[mapId] && !state.pending) act({ type: 'inspect', object: POKE[mapId], quiet: true });
     await pendingFlow();
   }
 
@@ -322,8 +323,8 @@
     if (state.ended) await endingScreen();
   }
   // 선택지 부제: 확률 · 비용(늘 보인다, '약 −1') · 경고 · 잠김 이유. 엔진의 잠김 이유에 남은 영문 id(meds이(가) 모자라다)는 한국어로 바꾼다
-  const costText = (cost) => Object.entries(cost || {}).map(([k, v]) => `${RES[k] || k} −${v}`).join(' · ');
-  const reasonKo = (r) => String(r || '').replace(/(\S+)이\(가\) 모자라다/g, (m, k) => `${josa(RES[k] || k, '이가')} 모자라다`);
+  const costText = (cost) => Object.entries(cost || {}).map(([k, v]) => `${resName(k)} −${v}`).join(' · ');
+  const reasonKo = (r) => String(r || '').replace(/(\S+)이\(가\) 모자라다/g, (m, k) => `${josa(resName(k), '이가')} 모자라다`);
   const choiceSub = (c) => [c.chance != null ? `<small class="chance">${c.chance}%</small>` : '', c.cost && Object.keys(c.cost).length ? `<small class="cost">${esc(costText(c.cost))}</small>` : '',
     c.warn ? `<small class="warn">${esc(c.warn)}</small>` : c.hint ? `<small>${esc(c.hint)}</small>` : '', c.locked ? `<small class="lock">${esc(reasonKo(c.reason))}</small>` : ''].join('');
   // 장면 그림: v4 cg/<image> → v4 cg/<사건 id> → v3 대체 (art.js). 없으면 그림 층을 열지 않는다
@@ -560,7 +561,7 @@
   // 밤 보고서: 달라진 것만 + 잃은 것 한 줄 (수치 이름은 패널에 있는 자원 — 식량·물·땔감·약·부품 — 만)
   async function nightReport(before) {
     const parts = [];
-    for (const k of RES_ORDER) { const d = (state.world[k] || 0) - (before.world[k] || 0); if (d) parts.push(`${RES[k]} ${d > 0 ? '+' : '−'}${Math.abs(d)}`); }
+    for (const k of RES_ORDER) { const d = (state.world[k] || 0) - (before.world[k] || 0); if (d) parts.push(`${resName(k)} ${d > 0 ? '+' : '−'}${Math.abs(d)}`); }
     const gone = Object.values(state.people).filter((p) => before.status[p.id] === 'home' && p.status !== 'home' && p.id !== 'you')
       .map((p) => josa(p.name, '이가') + (p.status === 'ascended' ? ' 올라갔다' : p.status === 'stayed' ? ' 셔터 너머로 갔다' : ' 밤에 갔다'));
     const noise = state.nightLog.some((e) => e.day === before.day && e.role !== 'clock');
@@ -608,9 +609,9 @@
     if (c.image && !/^death_/.test(c.image)) { const s = ART.cgSrc(c.image, c.event); if (s) return s; }   // 데이터가 사망 그림 대신 장면 그림을 달았으면 그것
     return ART.deathSrc(deathKind());
   }
-  // 사망 한 줄: 올라감 · 재가 됨(계단 그림인데 status dead) · 물 · 그 밖
+  // 사망 한 줄: 올라감(계단·선로·열차 어디서든) · 재가 됨(계단 그림인데 status dead) · 물 · 그 밖
   function deathLine(kind) {
-    if (person('you').status === 'ascended') return '당신 신발이 계단 아래 가지런히 남았다.';
+    if (person('you').status === 'ascended') return '당신 신발만 가지런히 남았다.';
     if (kind === 'death_counted') return '계단 위에 당신 구두만 남았다.';
     if (kind === 'death_drown') return '당신은 떠오르지 않았다.';
     return '당신은 일어나지 않았다.';
@@ -655,7 +656,7 @@
     viewPeople = Object.fromEntries(v.people.map((p) => [p.id, p]));
     const ic = (k) => (ART.iconSrc(RES_ICON[k] || k) ? `<img class="ic" alt="" src="${ART.iconSrc(RES_ICON[k] || k)}">` : '');
     // 자원 다섯: 식량·물·땔감(always) + 약·부품(선택지 비용·치료에 드는 것 — 판단 정보). view.world 에 없는 것(표가 never 로 숨긴 것)은 그리지 않는다
-    const it = (k) => (v.world[k] == null ? '' : `<div class="it ${(v.world[k] || 0) <= RES_LOW[k] ? 'low' : ''}">${ic(k)}<b>${v.world[k] || 0}</b><span>${RES[k]}</span></div>`);
+    const it = (k) => (v.world[k] == null ? '' : `<div class="it ${(v.world[k] || 0) <= RES_LOW[k] ? 'low' : ''}">${ic(k)}<b>${v.world[k] || 0}</b><span>${resName(k)}</span></div>`);
     const PH = { trace: '아침 — 흔적', ration: '아침 — 배식', seat: '아침 — 자리', day: '낮', evening: '저녁', night: '밤', aftermath: '새벽', ended: '끝' };
     const faces = db.peopleOrder.filter((id) => id !== 'you' && flagOn(MET[id] || '__')).map((id) => `<img alt="${esc(person(id).name)}" title="${esc(person(id).name)}" class="${home(id) ? '' : 'gone'}" src="${faceOf(id)}">`).join('');
     const left = Math.max(0, GOAL_DAY - state.day);
@@ -719,8 +720,11 @@
 
   function startGame(s) {
     state = s; endShown = false;
-    if (!state.pos.map) { setScene('car', db.maps.car.start[0], db.maps.car.start[1]); }
-    else setScene(state.pos.map, state.pos.x, state.pos.y);
+    if (!state.pos.map || !db.maps[state.pos.map]) { setScene('car', db.maps.car.start[0], db.maps.car.start[1]); }
+    else {
+      setScene(state.pos.map, state.pos.x, state.pos.y);
+      if (blocked(scene.px, scene.py, true)) { const st = scene.map.start; scene.px = st[0]; scene.py = st[1]; }   // 저장의 자리가 벽 안(옛 저장·시뮬 저장의 0,0)이면 그 지도의 시작 칸
+    }
     hud();
     unstack();
   }

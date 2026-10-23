@@ -132,7 +132,7 @@
 | 조심형 봇 사망 (10-22 추가) | 측정 | balanced·selfish·silent·lazy·diligent 합산 | 경고 글이 죽음을 바로 말하는 선택을 피하는 사람의 사망률 — "봇의 버릇"이 아니라 게임이 죽이는 정도 |
 기준값은 `sim/baseline.json`에 저장, ±10% 밖이면 경고. 보고서 1장(이 표에 실측 열 추가)이 작업 6의 결과물.
 **판정 규칙 (10-22 추가)**: 합격선은 서로 다른 시드 블록 둘 이상(기본 시드 1~N 과 1001~1000+N, `run.js --blocks=` · `--seed0=`)에서 따로 잰다. 모든 블록 통과이고 %로 재는 줄의 실측이 합격선에서 5%p 밖이면 ✓, 모든 블록 미달이면 ✗, 그 밖(블록마다 다름 · ±5%p 안)은 △ — ✓로 확정하지 않는다. 정책별 표는 블록을 합친 값, 블록별 생존·사망·열차·강제 %는 따로 싣는다.
-**봇 선택 규칙 (10-22 추가, 화면 정보만 — E6)**: 판정 없는 선택의 경고 글이 죽음을 바로 말하면(끝이다·죽는다·올라간다·못 일어난다·센다) 대안이 있는 한 고르지 않는다(헌신·부르는 사람은 축이 세게 끌면 고를 수 있다). 몸이 성치 않을 때(부상 ≥1, 제 손으로 고른 병) 약만 드는 회복 선택은 비용 감점이 없다. 모험 봇은 판정(%) 있는 위험만 가점, 판정 없는 경고에는 가점 없음.
+**봇 선택 규칙 (10-22 추가, 화면 정보만 — E6)**: 판정 없는 선택의 경고 글이 죽음을 바로 말하면(끝이다·죽는다·올라간다·못 일어난다·센다) 대안이 있는 한 고르지 않는다(헌신·부르는 사람은 축이 세게 끌면 고를 수 있다). 몸이 성치 않을 때(부상 ≥1, 제 손으로 고른 병) 약만 드는 회복 선택은 비용 감점 없이 가점 +5 — 모험의 판정 가점(+4)보다 커서, 약을 손에 두고 열·병 주사위에 목숨을 걸지 않는다(원정·거래·협정과 그 변형 행 `trade_shutter_b` 등은 회복이 아니다). 모험 봇은 판정(%) 있는 위험만 가점, 판정 없는 경고에는 가점 없음.
 
 ## 5. 일정 재어림 (R1: 수직 슬라이스 = 열흘 전체, D3·D5는 점검점)
 | 작업 | 범위 | 어림 | 주 |
@@ -151,7 +151,7 @@
 | 단계 표 `hook` 열 | 선택. `rollNight` = 그 단계를 떠날 때 밤 사건을 굴린다. 단계 이름은 조건식에서 `phase==이름` 으로 쓴다 |
 | effects 두 꼴 | 정식 = 객체 `{food:-1, hunger:{who:'actor', n:-3}, flag:{x:true}, trace:{crate_food:'open'}, axis:{share:1}, injure:{who,n}, kill:{who}, permanent:{who, kind}}`. 배열 `[{verb:'number', id, n, who}, {verb:'flag', id, set}, {verb:'trace', id, state}, {verb:'axis', id, n}, {verb:'injure', who, n}, {verb:'kill', who}, {verb:'permanent', who, loss}]` 도 받으며 **로더가 객체 꼴로 바꾼다** |
 | 자리표시 | 흔적 물건 id 의 `{actor}`/`{target}` 또는 `_actor`/`_target` 접미 → 사람 id 로 치환 (`bowl_actor` → `bowl_gicheol`). 그런 물건이 objects 에 하나는 있어야 한다 |
-| 밤 사건 대상 키워드 | `bond` · `any`/`randomSleeper`/`nearestSleeper`/`farthestSleeper`(자리 정보가 없어 전부 무작위) · `mostInjured` · 사람 id · 조건식. **kind malice 행에서는 무작위·mostInjured·조건식 대상과 any·조건식 행위자에 미성년(people.age < 19)이 들지 않는다**(10-22, 디렉터 결정 "미성년은 잔혹 장면 프레임 밖"). 이름 지목·`bond`·`you` 와 neutral·hymn 행은 거르지 않는다. **그리고 어느 행이든(kind 무관, 이름 지목·`bondOfActor` 포함) 밤 사건의 부상(`injure` n>0)·영구 손상(`permanent`)은 미성년에게 닿지 않는다**(10-22 리드 결정 "미성년은 밤 폭력·부상의 피해자가 아니다"; 예: `ascend` 의 permanent bondOfActor — 순례·기철의 bond 가 서하). 회복(injure 음수)·다른 수치는 그대로. neutral 행의 죽음(`starve_resident` 굶어 죽음·`ascend` 올라감)은 디렉터 확인 전이라 거르지 않는다 |
+| 밤 사건 대상 키워드 | `bond` · `any`/`randomSleeper`/`nearestSleeper`/`farthestSleeper`(자리 정보가 없어 전부 무작위) · `mostInjured` · 사람 id · 조건식. **나이로 거르지 않는다**(10-22 디렉터 결정 "미성년 처리 금지" — 서하(17)도 행위자·대상·부상·영구 손상·죽음이 다른 주민과 똑같다. 그림에서만 생성기 거부 때문에 서하를 잔혹 장면 프레임 밖에 둔다) |
 | 밤 사건 금지 어휘 | `you_*`·`pos*`·`map`·`inspect:`·`talk:` — 당신의 위치·조작은 조건이 될 수 없다(표 검사 오류) |
 | 정체 규칙 | `rule` 에는 **축 이름만**(몫·손·이름). 세계 수치·깃발 금지(표 검사 오류). 후보 키는 `id`(`candidate` 도 받음), 표 머리의 `thresholds`·`note` 는 메모로 무시 |
 | 추가 약속 (10-21 늦게) | `injure.n` 은 ±1~3(음수 = 부상 회복) · `people.addressYou.default` = 정체가 안 기운 때의 기본 호칭 · 조건식에 빈 글 비교 `x==''` / `x!=''`(없는 값도 빈 글, `==`/`!=` 만) · `rumor.line: ""` = 소문 없음 |
@@ -165,7 +165,7 @@
 | 결과 그림 | 선택 결과(out/ok/fail)의 `image` 열 → `lastResult.image`, 당신이 끝났으면 `ended.cause.image` |
 | 효과 목록 | 한 결과 안에서 같은 수치 id·`injure`·`kill`·`permanent` 를 여러 번 쓰면 **값이 목록**이 되고 차례로 전부 적용된다(객체 꼴로 직접 쓸 때도 `injure:[{who,n},{who,n}]` 허용). 같은 `axis` 두 번은 합. 빈 목록은 표 검사 오류. 한 번만 쓴 키는 지금처럼 값 하나 |
 | who 낱말 | `you` · `self`/`actor` · `target` · `companion`(원정 동행 중 살아 있는 첫 사람) · `party`(원정 편성 전원, 당신 포함) · `all`(역에 있는 사람 전부, 당신 포함) · `bondOfActor`(행위자의 bond) · `world` · 사람 id. 그 밖은 표 검사 오류. 풀 수 없으면(동행 없음 등) 아무 일도 없다 |
-| 사건 `target` 열 (새, 선택) | 사람 id 또는 `any`·`randomSleeper`·`nearestSleeper`·`farthestSleeper`(무작위)·`mostInjured`·`bond`. 사건이 걸릴 때 정하고(못 정하면 그 사건은 안 걸린다) 결과의 `who:'target'`·명부 줄이 같은 사람을 가리킨다. **무작위 대상은 역에 있는 성인 주민만**(미성년 = people.age < 19, 디렉터 결정). 결과의 `target` 열이 있으면 그것이 먼저. `eventView` 에 `target`·`targetName` |
+| 사건 `target` 열 (새, 선택) | 사람 id 또는 `any`·`randomSleeper`·`nearestSleeper`·`farthestSleeper`(무작위)·`mostInjured`·`bond`. 사건이 걸릴 때 정하고(못 정하면 그 사건은 안 걸린다) 결과의 `who:'target'`·명부 줄이 같은 사람을 가리킨다. 무작위 대상은 역에 있는 주민(당신 제외, 나이 무관 — 10-22 미성년 처리 금지). 결과의 `target` 열이 있으면 그것이 먼저. `eventView` 에 `target`·`targetName` |
 | 결말 열 (새, kind ending 전용) | `board: 1` = 이 결말이 걸려 있는 동안 `board` 동작이 열린다(단계 actions 에 없어도), 결말에서 `board_<id>` 깃발 주민은 `boarded`. `endStatus: walked` = 결말 뒤 역에 남은 산 사람(당신 포함)의 status. 없으면 그대로(명부 '남았다'). 다른 kind 에 쓰면 표 검사 오류 |
 | 명부 status `walked` | '걸어 나갔다'. ledger rows·format·저장 정규화가 안다 |
 | 결과의 명부 줄 `ledger` | `{who, status, day, cause, text}` 또는 그 **목록**, 또는 글 한 줄(당신의 사실 줄). `status` boarded/stayed/walked → 아직 역에 있는 그 사람의 status 를 바꾼다(dead/ascended 는 kill 효과가 정하고 여기선 기록만). `day` "{day}"·정수. `cause` 글 → 사인 칸, `"물건:상태"` → 그 물건의 ledgerFact 줄. `text` 가 있을 때만 사실 줄(written)에 쌓는다 — text 없는 행은 더 이상 쌓이지 않는다. 표 검사: status 값·`물건:상태` 참조·who |
@@ -176,7 +176,7 @@
 | 소문 발견 | 들은 소문은 **참(truth 1)일 때만** 발견이다 |
 | 배식 흔적 | 받은 그릇 `full`, 못 받은 그릇(0 이거나 식량·물 부족) `empty`. 둘 다 당신이 한 일이라 본 것(seen)·`by:'you'`. 밤에 빈 그릇이 차면 아침에 구별된다 |
 | 몸 신호 `view.people[].signs` | `{sleepless, starving, ateFlesh}`(역에 없는 사람 null). 문턱은 밤 사건표 actor 조건식: role `fear`·`ascend` 행 → sleepless(당신 제외), role `steal`·`starve` 행 → starving(`any`·이름 지목 행 제외). ateFlesh = 깃발 `ate_flesh_<id>` 또는 `<id>_ate…`. `E.signs(s, db)` 로도 |
-| 원정 `trip` | 낮 단계에 한 번(지역 하나). 첫 동작은 1층, 그다음은 **바로 아래층만**, 층마다 한 번. 편성: numbers `trip_party`(동행 수, 행이 없으면 0 = 혼자). `with:[id]` 로 고르거나 안 주면 시드 난수. 동행 = 역에 있는 주민 중 위독 아님·미성년 아님. `view.trip = {region, floor, floors, party}` |
+| 원정 `trip` | 낮 단계에 한 번(지역 하나). 첫 동작은 1층, 그다음은 **바로 아래층만**, 층마다 한 번. 편성: numbers `trip_party`(동행 수, 행이 없으면 0 = 혼자). `with:[id]` 로 고르거나 안 주면 시드 난수. 동행 = 역에 있는 주민 중 위독 아님(나이 무관 — 10-22 미성년 처리 금지). `view.trip = {region, floor, floors, party}` |
 | 바깥 사람 | 밤 사건 actor/target 에 **이름으로 지목된** 바깥 사람(outside)은 역 밖에서 행동·대상이 될 수 있다(any·조건식·무작위는 역의 주민만). kill 은 바깥 사람에게도 듣는다(status dead → 명부에 나온다) |
 | 위독 판정 | 아침 사망 = injury 가 numbers 표 최대값이고 치료 깃발이 없고 **그날 마지막 치료 기회(actions 에 `treat` 가 있는 단계)를 떠날 때 이미 위독이던** 사람(`s.critical`). 그 뒤 — 밤 단계의 고정·시험 사건(예: d6_shutter)이나 밤 굴림 — 에 막 위독이 된 사람은 하루를 받는다(다음 날 경고 사건·치료 기회). 표에 치료 단계가 없으면 밤 굴림 직전에 찍는다 (10-22 수정: 전에는 늘 밤 굴림 직전이라 밤 단계 사건의 부상은 유예가 없었다) |
 | 밤 소문 목격자 | `rumor.witness: target` 허용(대상이 역의 주민일 때) |

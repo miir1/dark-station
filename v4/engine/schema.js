@@ -7,7 +7,7 @@
   const ID = /^[a-z0-9_]{1,24}$/;
   const EFFECT_VERBS = ['flag', 'trace', 'axis', 'injure', 'kill', 'permanent'];   // 그 밖의 키는 numbers id 여야 한다
   const PERMANENT = ['finger', 'leg', 'ear'];
-  const EVENT_TARGETS = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper', 'mostInjured', 'bond'];   // 사건 대상 낱말 (자리 정보가 없어 앞의 넷은 무작위·미성년 제외, bond = 당신의 bond)
+  const EVENT_TARGETS = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper', 'mostInjured', 'bond'];   // 사건 대상 낱말 (자리 정보가 없어 앞의 넷은 무작위, bond = 당신의 bond)
   const FORBIDDEN_NIGHT_NAMES = /^(you|pos|player|map|x|y|where|at)(_|$)|^(inspect|talk|choice|chose):/;   // 밤 사건 조건에 당신 위치·선택(조사·말 걸기) 금지
 
   // 열 정의: type(id|str|int|num|bool|enum|list|obj|cond|any), req(필수), enum, min, max, of(목록 원소 검사 함수 이름)

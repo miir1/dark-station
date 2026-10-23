@@ -37,7 +37,7 @@
   "ok": true,
   "console_errors": [],
   "auto": [
-   "[ds4 auto] night8 hold D8 night you=home food=0 | D5 night d5_rail_body → 받는다 / D5 night d5_flood → 모두 매달려 퍼낸다 / D5 night d5_lullaby → 놓친다 / D5 night d5_rail_body_b → 받는다 / D6 trace d6_morning → 쇠줄을 긋는다 / [D6 food8 water4 hunger3] / D6 day passage_alone → 내일 다시 본다 / D6 night d6_shutter_b → 아무것도 하지 않는다 / [꿈 D6] / D7 trace d3_bottle → 내 물을 순례에게 / [D7 food0 water0 hunger2] / D7 day passage_alone → 내일 다시 본다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 내가 갖는다 / [D8 food0 water0 hunger4] / D8 day passage_alone → 내일 다시 본다",
+   "[ds4 auto] night8 hold D8 night you=home food=0 | [꿈 D4] / [D5 food0 water4 hunger9] / D5 night d5_rail_body → 받는다 / D5 night d5_flood → 모두 매달려 퍼낸다 / D5 night d5_lullaby → 붙잡는다 / D6 trace d6_morning → 쇠줄을 긋는다 / [D6 food4 water4 hunger7] / D6 day passage_alone → 내일 다시 본다 / D6 night d6_shutter_b → 아무것도 하지 않는다 / [꿈 D6] / [D7 food0 water0 hunger5] / D7 day passage_alone → 내일 다시 본다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 내가 갖는다 / [D8 food0 water0 hunger7] / D8 day passage_alone → 내일 다시 본다",
    "[ds4 missing] dawn_dongha@dawn_dongha d5_lullaby@d5_lullaby d7_broadcast@d7_broadcast"
   ]
  },
@@ -46,7 +46,7 @@
   "ok": true,
   "console_errors": [],
   "auto": [
-   "[ds4 auto] ending hold D10 ended ended=d10_walk_other you=walked food=0 | D6 night d6_shutter_b → 아무것도 하지 않는다 / [꿈 D6] / D7 trace d3_bottle → 내 물을 순례에게 / [D7 food0 water0 hunger2] / D7 day passage_alone → 내일 다시 본다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food0 water0 hunger4] / D8 day passage_alone → 내일 다시 본다 / [꿈 D8] / D9 trace d9_stairs → 묻는다 / [D9 food0 water0 hunger6] / D9 day passage_alone_b → 내일 다시 본다 / D9 evening d9_inspection → 고개를 돌린다 / [D10 food0 water0 hunger8] / D10 day d10_walk_other → 걷는다",
+   "[ds4 auto] ending hold D10 ended ended=d10_walk_other you=walked food=0 | [D7 food0 water0 hunger5] / D7 day passage_alone → 내일 다시 본다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food0 water0 hunger7] / D8 day passage_alone → 내일 다시 본다 / [꿈 D8] / D9 trace d3_bottle → 내 물을 순례에게 / D9 trace d9_stairs → 묻는다 / D9 trace d9_hoard → 창고에 돌려놓는다 / [D9 food0 water0 hunger9] / D9 day passage_alone → 내일 다시 본다 / D9 evening d9_inspection → 고개를 돌린다 / D9 night starve_you → 남의 그릇을 뺏는다 / [D10 food0 water0 hunger10] / D10 day d10_walk_other → 걷는다",
    "[ds4 missing] dawn_dongha@dawn_dongha d5_lullaby@d5_lullaby d7_broadcast@d7_broadcast d9_stairs@d9_stairs"
   ]
  },
@@ -73,7 +73,7 @@
   "ok": true,
   "console_errors": [],
   "auto": [
-   "[ds4 auto] reveal hold D10 ended ended=d10_walk_other you=walked food=0 | [꿈 D6] / D7 trace d3_bottle → 내 물을 순례에게 / [D7 food0 water0 hunger5] / D7 day passage_alone → 내일 다시 본다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food0 water0 hunger7] / D8 day passage_alone → 내일 다시 본다 / [꿈 D8] / D9 trace d9_stairs → 묻는다 / [D9 food0 water0 hunger9] / D9 day passage_alone → 내일 다시 본다 / D9 evening d9_inspection → 고개를 돌린다 / D9 night starve_you → 남의 그릇을 뺏는다 / [D10 food0 water0 hunger10] / D10 day d10_walk_other → 걷는다",
+   "[ds4 auto] reveal hold D10 ended ended=d10_walk_other you=walked food=0 | [D7 food0 water0 hunger5] / D7 day passage_alone → 내일 다시 본다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food0 water0 hunger7] / D8 day passage_alone → 내일 다시 본다 / [꿈 D8] / D9 trace d3_bottle → 내 물을 순례에게 / D9 trace d9_stairs → 묻는다 / D9 trace d9_hoard → 창고에 돌려놓는다 / [D9 food0 water0 hunger9] / D9 day passage_alone → 내일 다시 본다 / D9 evening d9_inspection → 고개를 돌린다 / D9 night starve_you → 남의 그릇을 뺏는다 / [D10 food0 water0 hunger10] / D10 day d10_walk_other → 걷는다",
    "[ds4 missing] dawn_dongha@dawn_dongha d5_lullaby@d5_lullaby d7_broadcast@d7_broadcast d9_stairs@d9_stairs"
   ]
  },
@@ -91,7 +91,7 @@
   "ok": true,
   "console_errors": [],
   "auto": [
-   "[ds4 auto] train hold D10 ended ended=d10_train you=boarded food=0 | [저장에서 시작 D10 day d10_train seed66] / D10 day d10_train → 탄다"
+   "[ds4 auto] train hold D10 ended ended=d10_train you=boarded food=1 | [저장에서 시작 D10 day d10_train seed66] / D10 day d10_train → 탄다"
   ]
  }
 ]
