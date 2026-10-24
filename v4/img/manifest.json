@@ -1,6 +1,8 @@
 [
 "cg/d0_ledger",
 "cg/d10_walk",
+"cg/d10_walk_alone",
+"cg/d10_walk_other",
 "cg/d1_rats",
 "cg/d2_rat_blanket",
 "cg/d3_called_you",
@@ -34,6 +36,8 @@
 "cg_s/b1_gate",
 "cg_s/d0_ledger",
 "cg_s/d10_walk",
+"cg_s/d10_walk_alone",
+"cg_s/d10_walk_other",
 "cg_s/d1_rats",
 "cg_s/d2_rat_blanket",
 "cg_s/d3_called_you",
