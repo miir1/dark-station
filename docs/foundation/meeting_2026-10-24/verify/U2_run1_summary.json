@@ -1,0 +1,407 @@
+{
+ "tunnel": [
+  {
+   "label": "d7",
+   "you": [
+    9,
+    2
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [],
+   "npc": {
+    "id": "gicheol",
+    "face": "left",
+    "pose": null,
+    "beam": {
+     "deg": 162,
+     "r": 6.5
+    },
+    "name": "헤드램프의 남자"
+   }
+  },
+  {
+   "label": "d6",
+   "you": [
+    10,
+    2
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [],
+   "npc": {
+    "id": "gicheol",
+    "face": "left",
+    "pose": null,
+    "beam": {
+     "deg": 172,
+     "r": 6.5
+    },
+    "name": "헤드램프의 남자"
+   }
+  },
+  {
+   "label": "d4",
+   "you": [
+    12,
+    2
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "거기 서."
+    ]
+   ],
+   "npc": {
+    "id": "gicheol",
+    "face": "left",
+    "pose": null,
+    "beam": {
+     "deg": 169,
+     "r": 6.5
+    },
+    "name": "헤드램프의 남자"
+   }
+  },
+  {
+   "label": "d2",
+   "you": [
+    14,
+    2
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "…발 좀 보이시오."
+    ]
+   ],
+   "npc": {
+    "id": "gicheol",
+    "face": "left",
+    "pose": null,
+    "beam": {
+     "deg": 147,
+     "r": 3.09
+    },
+    "name": "헤드램프의 남자"
+   }
+  },
+  {
+   "label": "d1",
+   "you": [
+    15,
+    2
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "…신었군."
+    ]
+   ],
+   "npc": {
+    "id": "gicheol",
+    "face": "left",
+    "pose": null,
+    "beam": {
+     "deg": 142,
+     "r": 2.4
+    },
+    "name": "헤드램프의 남자"
+   }
+  },
+  {
+   "label": "d1_wait_more",
+   "you": [
+    15,
+    2
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "…신었군."
+    ]
+   ],
+   "npc": {
+    "id": "gicheol",
+    "face": "left",
+    "pose": null,
+    "beam": {
+     "deg": 142,
+     "r": 2.4
+    },
+    "name": "헤드램프의 남자"
+   }
+  }
+ ],
+ "gicheol_box": "헤드램프의 남자\n\n헤드램프 빛이 당신 신발에 머물다가 비켜난다.\n\n▼",
+ "arrive": {
+  "day": 0,
+  "phase": "day",
+  "map": "station",
+  "x": 1,
+  "y": 11,
+  "face": "down",
+  "moving": false,
+  "pending": null,
+  "ended": null,
+  "open": ""
+ },
+ "station": [
+  {
+   "label": "soonrye_d6",
+   "you": [
+    7,
+    11
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [],
+   "npc": {
+    "id": "soonrye",
+    "face": "left",
+    "pose": "crouch",
+    "beam": null,
+    "stoke": false,
+    "name": "청소원 조끼의 할머니"
+   }
+  },
+  {
+   "label": "soonrye_d4",
+   "you": [
+    9,
+    11
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "멈춰."
+    ]
+   ],
+   "npc": {
+    "id": "soonrye",
+    "face": "left",
+    "pose": "crouch",
+    "beam": null,
+    "stoke": false,
+    "name": "청소원 조끼의 할머니"
+   }
+  },
+  {
+   "label": "soonrye_d2",
+   "you": [
+    11,
+    11
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "…발."
+    ]
+   ],
+   "npc": {
+    "id": "soonrye",
+    "face": "down",
+    "pose": "crouch",
+    "beam": null,
+    "stoke": false,
+    "name": "청소원 조끼의 할머니"
+   }
+  },
+  {
+   "label": "soonrye_d2_wait",
+   "you": [
+    11,
+    11
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "…발."
+    ]
+   ],
+   "npc": {
+    "id": "soonrye",
+    "face": "down",
+    "pose": "crouch",
+    "beam": null,
+    "stoke": false,
+    "name": "청소원 조끼의 할머니"
+   }
+  },
+  {
+   "label": "mari_d6",
+   "you": [
+    14,
+    11
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "…영자 씨, 순덕 씨, 광호 씨…"
+    ]
+   ],
+   "npc": {
+    "id": "soonrye",
+    "face": "right",
+    "pose": "crouch",
+    "beam": null,
+    "stoke": false,
+    "name": "청소원 조끼의 할머니"
+   }
+  },
+  {
+   "label": "mari_d4",
+   "you": [
+    17,
+    12
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [
+    [
+     "…다쳤어요?"
+    ]
+   ],
+   "npc": {
+    "id": "soonrye",
+    "face": "right",
+    "pose": "crouch",
+    "beam": null,
+    "stoke": true,
+    "name": "청소원 조끼의 할머니"
+   }
+  },
+  {
+   "label": "mari_d1",
+   "you": [
+    20,
+    12
+   ],
+   "open": "",
+   "pending": null,
+   "bubbles_seen": [],
+   "npc": {
+    "id": "soonrye",
+    "face": "right",
+    "pose": "crouch",
+    "beam": null,
+    "stoke": true,
+    "name": "청소원 조끼의 할머니"
+   }
+  }
+ ],
+ "soonrye_hint": "Space 말 걸기 — 청소원 조끼의 할머니",
+ "platform_box": "청소원 조끼의 할머니\n\n할머니가 당신 발을 오래 본다.\n\n▼",
+ "retalk_soonrye": [
+  [
+   [
+    "lines",
+    "청소원 조끼의 할머니",
+    "앉든지 둘러보든지 해. 계단만 빼고.",
+    ""
+   ]
+  ],
+  [
+   [
+    "lines",
+    "",
+    "할머니가 장작을 뒤집는다.",
+    ""
+   ]
+  ],
+  [
+   [
+    "lines",
+    "청소원 조끼의 할머니",
+    "앉든지 둘러보든지 해. 계단만 빼고.",
+    ""
+   ]
+  ],
+  [
+   [
+    "lines",
+    "",
+    "할머니가 장작을 뒤집는다.",
+    ""
+   ]
+  ]
+ ],
+ "talkLog": [
+  {
+   "who": "soonrye",
+   "day": 0,
+   "phase": "day",
+   "key": "soonrye_meet#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 0,
+   "phase": "day",
+   "key": "soonrye_idle"
+  },
+  {
+   "who": "soonrye",
+   "day": 0,
+   "phase": "day",
+   "key": "soonrye_meet#0",
+   "fresh": false
+  },
+  {
+   "who": "soonrye",
+   "day": 0,
+   "phase": "day",
+   "key": "soonrye_idle"
+  }
+ ],
+ "mari_hint": "Space 말 걸기 — 담요의 여자",
+ "mari_box": "담요의 여자\n\n여자가 당신 손등과 발목을 차례로 본다.\n\n▼",
+ "retalk_mari": [
+  [
+   [
+    "lines",
+    "",
+    "담요가 개어 있다.",
+    ""
+   ]
+  ],
+  [
+   [
+    "lines",
+    "",
+    "담요가 개어 있다.",
+    ""
+   ]
+  ],
+  [
+   [
+    "lines",
+    "",
+    "담요가 개어 있다.",
+    ""
+   ]
+  ]
+ ],
+ "ledger_d0_day": "승객 명부\n\n당신\n당신 글씨\n청소원 조끼의 할머니\n헤드램프의 남자\n담요의 여자\n1\n돌아간다",
+ "ledger_d0_eve": "승객 명부\n\n당신\n당신 글씨\n김순례\n박기철\n정마리\n1\n돌아간다",
+ "end_state": {
+  "day": 1,
+  "phase": "trace",
+  "map": "station",
+  "x": 13,
+  "y": 12,
+  "face": "up",
+  "moving": false,
+  "pending": null,
+  "ended": null,
+  "open": ""
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "rubble_tries": [
+  "blocked",
+  "blocked",
+  "blocked",
+  "crossed"
+ ],
+ "hurry_tunnel": {
+  "walk_ms": 3243,
+  "bubbles": [
+   [
+    18921,
+    13,
+    [
+     "거기 서."
+    ]
+   ]
+  ]
+ },
+ "retry_after_fail": [
+  [
+   "무너진 구간이다. 잔해 앞에 헤드램프 불빛이 흔들린다."
+  ],
+  [
+   "무너진 구간이다. 잔해 앞에 헤드램프 불빛이 흔들린다."
+  ],
+  [
+   "무너진 구간이다. 잔해 앞에 헤드램프 불빛이 흔들린다."
+  ]
+ ],
+ "hurry_soonrye": {
+  "ms": 2251,
+  "bubbles": [
+   [
+    45121,
+    9,
+    11,
+    [
+     "멈춰."
+    ]
+   ],
+   [
+    45925,
+    11,
+    10,
+    [
+     "…발."
+    ]
+   ]
+  ]
+ },
+ "end": {
+  "day": 2,
+  "phase": "trace",
+  "map": "station",
+  "x": 12,
+  "y": 10,
+  "face": "right",
+  "moving": false,
+  "pending": null,
+  "ended": null,
+  "open": ""
+ },
+ "heard": {
+  "bark_gicheol_4#0": 0,
+  "bark_gicheol_2#0": 0,
+  "bark_gicheol_1#0": 0,
+  "bark_soonrye_4#0": 0,
+  "bark_soonrye_2#0": 0,
+  "bark_mari_6#0": 0,
+  "bark_mari_4#0": 0,
+  "testify_soonrye#0": 0,
+  "testify_soonrye_book#0": 0,
+  "bark_soonrye_rule_train#0": 1,
+  "bark_shutter_8#0": 1,
+  "bark_shutter_3#0": 1,
+  "testify_gicheol#0": 1,
+  "testify_eunji#0": 1,
+  "testify_dongha#0": 1,
+  "testify_mari#0": 1,
+  "bark_gicheol_rule_rail#0": 1
+ }
+}

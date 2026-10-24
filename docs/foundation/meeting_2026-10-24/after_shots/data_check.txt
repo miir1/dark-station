@@ -1,0 +1,167 @@
+# P0-D1·P0-D2 데이터 점검 (2026-10-24, data 담당)
+
+## 데이터 로드
+data OK
+
+## node --test "v4/test/*.test.js"
+# tests 93
+# pass 93
+# fail 0
+
+## 끝 증거 점검 (문장 규칙·이름 grep·1번 자리 죽음·이유 낱말·배치·새 행)
+## 1. 문장 규칙 (바꾼·새 행)
+  글 153개 검사
+## 2. 첫 만남 줄에서 진짜 이름
+  이름 0건
+## 3. 선택지 [0] 에 kill·taboo
+  · 참고: d8_pillow [0] "일어난다" 이 남을 죽인다(모든 선택지가 그 사람을 죽이거나 피할 수 없는 장면: 전부 kill)
+  · 참고: d10_walk [0] "동하를 붙잡는다" 이 남을 죽인다(모든 선택지가 그 사람을 죽이거나 피할 수 없는 장면: 전부 kill)
+  · 참고: d10_walk_other [0] "붙잡는다" 이 남을 죽인다(모든 선택지가 그 사람을 죽이거나 피할 수 없는 장면: 전부 kill)
+  당신 죽음·금기 1번 자리 0건
+## 4. 이유 낱말 (때문에|왜냐하면)
+  0건
+## 5. 물건 배치
+  ? station (19,11) 단단하지 않은 물건 scissors·bottle_mari·bandage_mari — 주인 (접미 없음)/mari
+  station start (1,11) 타일 ',' 윗칸 ',' 윗칸 물건 없음
+  car start (3,3) 타일 '.' 윗칸 'h' 윗칸 물건 없음
+  tunnel start (1,2) 타일 '~' 윗칸 '~' 윗칸 물건 없음
+  mall_a1 start (1,1) 타일 'E' 윗칸 '#' 윗칸 물건 없음
+  mall_a2 start (1,1) 타일 'E' 윗칸 '#' 윗칸 물건 없음
+  drain_b1 start (1,1) 타일 'E' 윗칸 '#' 윗칸 물건 없음
+  drain_b2 start (1,1) 타일 'E' 윗칸 '#' 윗칸 물건 없음
+## 6. people metFlag/startAway
+  soonrye: metFlag 'met_soonrye' startAway 0 outside 0
+  seoha: metFlag 'met_seoha' startAway 0 outside 0
+  gicheol: metFlag 'met_gicheol' startAway 1 outside 0
+  eunji: metFlag 'met_eunji' startAway 1 outside 0
+  dongha: metFlag 'met_eunji' startAway 1 outside 0
+  mari: metFlag 'met_mari' startAway 0 outside 0
+  eunchae: metFlag '' startAway 0 outside 1
+  dohyeon: metFlag '' startAway 0 outside 1
+  you: metFlag '' startAway 0 outside 0
+## 7. 새 행
+  lines 38 · events 6 · objects 2 확인
+
+결과: 통과
+
+## 이름 grep (plan P0-D1 끝 증거: lines *_meet·bark_*, events pro_*·d1_shutter_knock·d3_soonrye_opens)
+진짜 이름 0 건 (testify_* 7행에만 있음: 6 행)
+
+## 첫 만남 길 (엔진으로 걸어 봄, 시드 7·11)
+
+### 아무도 안 부르는 길 (수첩 없음)
+  {"type":"move","map":"car","x":3,"y":3} 
+  사건 pro_cold → [1] 눈을 뜬다
+  {"type":"inspect","object":"lever"} 
+  사건 pro_lever → [1] 레버를 당긴다
+  {"type":"move","map":"tunnel","x":1,"y":2} 
+  {"type":"inspect","object":"rubble"} 
+  사건 pro_rubble_alone → [1] 혼자 넘어 본다
+  {"type":"inspect","object":"rubble"} 
+  {"type":"inspect","object":"rubble"} 
+  {"type":"move","map":"station","x":1,"y":11} 
+  soonrye:home(모름) seoha:home(모름) gicheol:away(모름) eunji:away(모름) dongha:away(모름) mari:home(모름) eunchae:outside dohyeon:outside
+ - D0 evening
+  사건 pro_platform → [1] 불가에 앉는다
+  사건 d0_mari_fire → [1] 고개를 끄덕인다
+  사건 d0_ledger_b → [1] 데려가겠습니다
+  soonrye:home seoha:home(모름) gicheol:away(모름) eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+ - D0 night
+ - D0 aftermath
+ - D1 trace
+  사건 d1_gicheol_arrive → [1] 받는다
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+  배식 그릇 you,soonrye,gicheol,mari
+ - D1 ration
+  사건 trial_d1_bowls (대상 mari) → [1] 내 그릇을 비운다
+ - D1 seat
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+  {"type":"inspect","object":"shutter_gap"} 거절 지금(seat)은 할 수 없는 동작: inspect
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+ - D1 day
+ - D1 evening
+  사건 d1_names_quiet → [1] 적는다
+ - D1 night
+  사건 d1_night_storage → [1] 창고를 보러 간다
+ - D1 aftermath
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+  깃발: arrived=1 met_soonrye=1 met_mari=1 met_gicheol=1 met_eunji=0 met_seoha=0 notebook=1
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+
+### 수첩 줍고 기철 지나침
+  {"type":"move","map":"car","x":3,"y":3} 
+  사건 pro_cold → [1] 눈을 뜬다
+  {"type":"inspect","object":"notebook_dash"} 
+  사건 pro_notebook → [1] 주머니에 넣는다
+  {"type":"inspect","object":"lever"} 
+  사건 pro_lever → [1] 레버를 당긴다
+  {"type":"move","map":"tunnel","x":1,"y":2} 
+  {"type":"inspect","object":"rubble"} 
+  사건 pro_rubble_alone → [1] 혼자 넘어 본다
+  {"type":"inspect","object":"rubble"} 
+  {"type":"inspect","object":"rubble"} 
+  {"type":"move","map":"station","x":1,"y":11} 
+  {"type":"talk","who":"soonrye"} 
+  사건 pro_platform → [1] 불가에 앉는다
+  {"type":"talk","who":"mari"} 
+  사건 pro_mari → [1] 손을 내민다
+  {"type":"inspect","object":"stairs_ash"} 
+  사건 pro_stairs → [1] 돌아선다
+ - D0 evening
+  사건 d0_ledger → [1] 데려가겠습니다
+ - D0 night
+ - D0 aftermath
+ - D1 trace
+  사건 d1_gicheol_arrive_b → [1] 고개를 끄덕인다
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+  깃발: arrived=1 met_soonrye=1 met_mari=1 met_gicheol=1 met_eunji=0 met_seoha=0 notebook=1
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+
+### 기철 만나고 수첩 없음
+  {"type":"move","map":"car","x":3,"y":3} 
+  사건 pro_cold → [1] 눈을 뜬다
+  {"type":"inspect","object":"lever"} 
+  사건 pro_lever → [1] 레버를 당긴다
+  {"type":"move","map":"tunnel","x":1,"y":2} 
+  {"type":"talk","who":"gicheol"} 
+  사건 pro_gicheol → [1] 그가 비춘 곳을 밟는다
+  soonrye:home(모름) seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home(모름) eunchae:outside dohyeon:outside
+  {"type":"move","map":"station","x":1,"y":11} 
+  {"type":"inspect","object":"fire"} 
+  사건 pro_platform → [1] 불가에 앉는다
+  {"type":"inspect","object":"blanket_mari"} 
+  사건 pro_mari → [1] 손을 내민다
+ - D0 evening
+  사건 d0_gicheol_notebook → [1] 받는다
+  사건 d0_ledger → [1] 데려가겠습니다
+ - D0 night
+ - D0 aftermath
+ - D1 trace
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+  깃발: arrived=1 met_soonrye=1 met_mari=1 met_gicheol=1 met_eunji=0 met_seoha=0 notebook=1
+  soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home eunchae:outside dohyeon:outside
+  사건 pro_cold  → 눈을 뜬다
+  사건 pro_gicheol  → 그가 비춘 곳을 밟는다
+  사건 pro_platform  → 불가에 앉는다
+  사건 pro_mari  → 손을 내민다
+  사건 d0_gicheol_notebook  → 받는다
+  사건 d0_ledger  → 데려가겠습니다
+  사건 trial_d1_bowls (대상 gicheol) → 내 그릇을 비운다
+   D1 day soonrye:home seoha:home(모름) gicheol:home eunji:away(모름) dongha:away(모름) mari:home
+  사건 d1_shutter_knock  → 연다
+   D1 day soonrye:home seoha:home(모름) gicheol:home eunji:home dongha:home mari:home
+  사건 d1_names  → 적는다
+   D1 evening soonrye:home seoha:home(모름) gicheol:home eunji:home dongha:home mari:home
+  사건 d1_night_storage  → 창고를 보러 간다
+  사건 d2_key  → 받는다
+  사건 d2_rat_blanket  → 본다
+  사건 d2_soonrye_bread  → 내 몫을 보탠다
+  사건 d2_night_shutter  → 틈으로 말을 건다
+  사건 d2_night_count  → 숨을 참는다
+   D2 night soonrye:home seoha:home(모름) gicheol:home eunji:home dongha:home mari:home
+  사건 d3_soonrye_opens  → 본다
+  사건 d3_bottle  → 내 물을 순례에게
+  사건 d3_rat_fever  → 약을 쓴다
+  사건 trial_d3_count  → 숨을 죽인다
+   D3 night soonrye:home seoha:home gicheol:home eunji:home dongha:home mari:home
+heardKey testify_soonrye row0 = testify_soonrye#0 | insp_stairs_line row1 = insp_stairs_line#1

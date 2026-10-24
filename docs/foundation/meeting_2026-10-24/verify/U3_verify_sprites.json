@@ -1,0 +1,283 @@
+{
+ "walk_sheet_frame_diffs": {
+  "you": {
+   "sid": "player",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 737,
+    "S_L": 346,
+    "S_R": 354,
+    "L_R": 278
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 664,
+    "S_L": 330,
+    "S_R": 319,
+    "L_R": 258
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 540,
+    "S_L": 421,
+    "S_R": 421,
+    "L_R": 407
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 515,
+    "S_L": 448,
+    "S_R": 446,
+    "L_R": 285
+   }
+  },
+  "soonrye": {
+   "sid": "soonrye",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 513,
+    "S_L": 167,
+    "S_R": 165,
+    "L_R": 102
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 490,
+    "S_L": 164,
+    "S_R": 152,
+    "L_R": 122
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 442,
+    "S_L": 241,
+    "S_R": 240,
+    "L_R": 140
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 444,
+    "S_L": 254,
+    "S_R": 253,
+    "L_R": 167
+   }
+  },
+  "gicheol": {
+   "sid": "gicheol",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 735,
+    "S_L": 320,
+    "S_R": 304,
+    "L_R": 193
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 743,
+    "S_L": 330,
+    "S_R": 319,
+    "L_R": 212
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 540,
+    "S_L": 424,
+    "S_R": 418,
+    "L_R": 366
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 559,
+    "S_L": 403,
+    "S_R": 415,
+    "L_R": 288
+   }
+  },
+  "mari": {
+   "sid": "mari",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 546,
+    "S_L": 208,
+    "S_R": 210,
+    "L_R": 214
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 519,
+    "S_L": 214,
+    "S_R": 211,
+    "L_R": 183
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 412,
+    "S_L": 466,
+    "S_R": 523,
+    "L_R": 369
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 408,
+    "S_L": 280,
+    "S_R": 274,
+    "L_R": 134
+   }
+  },
+  "seoha": {
+   "sid": "seoha",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 439,
+    "S_L": 128,
+    "S_R": 146,
+    "L_R": 106
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 450,
+    "S_L": 124,
+    "S_R": 125,
+    "L_R": 110
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 386,
+    "S_L": 232,
+    "S_R": 249,
+    "L_R": 170
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 401,
+    "S_L": 247,
+    "S_R": 265,
+    "L_R": 181
+   }
+  },
+  "eunji": {
+   "sid": "eunji",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 550,
+    "S_L": 199,
+    "S_R": 205,
+    "L_R": 202
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 541,
+    "S_L": 210,
+    "S_R": 215,
+    "L_R": 165
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 503,
+    "S_L": 366,
+    "S_R": 337,
+    "L_R": 279
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 507,
+    "S_L": 354,
+    "S_R": 362,
+    "L_R": 275
+   }
+  },
+  "dongha": {
+   "sid": "dongha",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 787,
+    "S_L": 365,
+    "S_R": 359,
+    "L_R": 285
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 764,
+    "S_L": 351,
+    "S_R": 361,
+    "L_R": 280
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 515,
+    "S_L": 714,
+    "S_R": 706,
+    "L_R": 490
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 522,
+    "S_L": 733,
+    "S_R": 749,
+    "L_R": 560
+   }
+  },
+  "dohyeon": {
+   "sid": "dohyeon",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 707,
+    "S_L": 304,
+    "S_R": 307,
+    "L_R": 293
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 695,
+    "S_L": 289,
+    "S_R": 292,
+    "L_R": 204
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 573,
+    "S_L": 695,
+    "S_R": 409,
+    "L_R": 632
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 567,
+    "S_L": 443,
+    "S_R": 425,
+    "L_R": 412
+   }
+  },
+  "eunchae": {
+   "sid": "eunchae",
+   "down": {
+    "size": "32x48",
+    "opaqueS": 607,
+    "S_L": 267,
+    "S_R": 280,
+    "L_R": 264
+   },
+   "up": {
+    "size": "32x48",
+    "opaqueS": 623,
+    "S_L": 265,
+    "S_R": 256,
+    "L_R": 177
+   },
+   "left": {
+    "size": "32x48",
+    "opaqueS": 539,
+    "S_L": 382,
+    "S_R": 366,
+    "L_R": 260
+   },
+   "right": {
+    "size": "32x48",
+    "opaqueS": 549,
+    "S_L": 393,
+    "S_R": 386,
+    "L_R": 264
+   }
+  }
+ }
+}

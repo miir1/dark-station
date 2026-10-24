@@ -1,0 +1,863 @@
+{
+ "station_before": {
+  "cam": {
+   "ox": -256,
+   "oy": -192,
+   "px": 15,
+   "py": 12,
+   "map": "station"
+  },
+  "hand_props": [
+   {
+    "id": "radio",
+    "state": "idle",
+    "cell": [
+     2,
+     13
+    ],
+    "onscreen": false,
+    "visible_px": 16,
+    "max_dL": 35,
+    "bbox_wh": [
+     463,
+     304
+    ],
+    "mean_L_prop": 39.0
+   },
+   {
+    "id": "scissors",
+    "state": "clean",
+    "cell": [
+     17,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 45,
+    "max_dL": 50,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 37.266666666666666
+   },
+   {
+    "id": "notebook_you",
+    "state": "moved",
+    "cell": [
+     12,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 154,
+    "max_dL": 162,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 63.246753246753244
+   },
+   {
+    "id": "bottle_soonrye",
+    "state": "full",
+    "cell": [
+     15,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 138,
+    "max_dL": 141,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 93.42028985507247
+   },
+   {
+    "id": "bottle_seoha",
+    "state": "full",
+    "cell": [
+     17,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 126,
+    "max_dL": 135,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 82.51587301587301
+   },
+   {
+    "id": "bottle_gicheol",
+    "state": "full",
+    "cell": [
+     19,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 128,
+    "max_dL": 90,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 66.265625
+   },
+   {
+    "id": "bottle_eunji",
+    "state": "full",
+    "cell": [
+     15,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 20,
+    "max_dL": 40,
+    "bbox_wh": [
+     463,
+     307
+    ],
+    "mean_L_prop": 47.75
+   },
+   {
+    "id": "bottle_dongha",
+    "state": "full",
+    "cell": [
+     17,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 131,
+    "max_dL": 136,
+    "bbox_wh": [
+     473,
+     300
+    ],
+    "mean_L_prop": 88.3969465648855
+   },
+   {
+    "id": "bottle_mari",
+    "state": "full",
+    "cell": [
+     19,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 111,
+    "max_dL": 101,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 68.13513513513513
+   },
+   {
+    "id": "bottle_you",
+    "state": "full",
+    "cell": [
+     11,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 128,
+    "max_dL": 151,
+    "bbox_wh": [
+     463,
+     281
+    ],
+    "mean_L_prop": 92.65625
+   },
+   {
+    "id": "bowl_soonrye",
+    "state": "empty",
+    "cell": [
+     12,
+     10
+    ],
+    "onscreen": true,
+    "visible_px": 170,
+    "max_dL": 54,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 65.41764705882353
+   },
+   {
+    "id": "bowl_seoha",
+    "state": "empty",
+    "cell": [
+     14,
+     10
+    ],
+    "onscreen": true,
+    "visible_px": 187,
+    "max_dL": 79,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 68.3048128342246
+   },
+   {
+    "id": "bowl_gicheol",
+    "state": "empty",
+    "cell": [
+     15,
+     10
+    ],
+    "onscreen": true,
+    "visible_px": 215,
+    "max_dL": 74,
+    "bbox_wh": [
+     472,
+     275
+    ],
+    "mean_L_prop": 64.76279069767442
+   },
+   {
+    "id": "bowl_eunji",
+    "state": "empty",
+    "cell": [
+     11,
+     10
+    ],
+    "onscreen": true,
+    "visible_px": 211,
+    "max_dL": 69,
+    "bbox_wh": [
+     477,
+     285
+    ],
+    "mean_L_prop": 61.48341232227488
+   },
+   {
+    "id": "bowl_dongha",
+    "state": "empty",
+    "cell": [
+     14,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 222,
+    "max_dL": 75,
+    "bbox_wh": [
+     463,
+     302
+    ],
+    "mean_L_prop": 70.33783783783784
+   },
+   {
+    "id": "bowl_mari",
+    "state": "empty",
+    "cell": [
+     15,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 77,
+    "max_dL": 148,
+    "bbox_wh": [
+     466,
+     275
+    ],
+    "mean_L_prop": 62.94805194805195
+   },
+   {
+    "id": "bowl_you",
+    "state": "empty",
+    "cell": [
+     13,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 129,
+    "max_dL": 50,
+    "bbox_wh": [
+     463,
+     275
+    ],
+    "mean_L_prop": 71.01550387596899
+   }
+  ],
+  "errors": []
+ },
+ "station_after": {
+  "cam": {
+   "ox": -256,
+   "oy": -192,
+   "px": 15,
+   "py": 12,
+   "map": "station"
+  },
+  "hand_props": [
+   {
+    "id": "radio",
+    "state": "idle",
+    "cell": [
+     2,
+     13
+    ],
+    "onscreen": false,
+    "visible_px": 0,
+    "max_dL": 0,
+    "bbox_wh": null,
+    "mean_L_prop": null
+   },
+   {
+    "id": "scissors",
+    "state": "clean",
+    "cell": [
+     19,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 77,
+    "max_dL": 107,
+    "bbox_wh": [
+     14,
+     10
+    ],
+    "mean_L_prop": 56.84415584415584
+   },
+   {
+    "id": "notebook_you",
+    "state": "moved",
+    "cell": [
+     12,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 25,
+    "max_dL": 121,
+    "bbox_wh": [
+     9,
+     5
+    ],
+    "mean_L_prop": 65.36
+   },
+   {
+    "id": "bottle_soonrye",
+    "state": "empty",
+    "cell": [
+     15,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 55,
+    "max_dL": 151,
+    "bbox_wh": [
+     23,
+     4
+    ],
+    "mean_L_prop": 77.23636363636363
+   },
+   {
+    "id": "bottle_seoha",
+    "state": "full",
+    "cell": [
+     17,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 69,
+    "max_dL": 112,
+    "bbox_wh": [
+     21,
+     10
+    ],
+    "mean_L_prop": 62.04347826086956
+   },
+   {
+    "id": "bottle_gicheol",
+    "state": "full",
+    "cell": [
+     19,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 61,
+    "max_dL": 117,
+    "bbox_wh": [
+     21,
+     10
+    ],
+    "mean_L_prop": 56.65573770491803
+   },
+   {
+    "id": "bottle_eunji",
+    "state": "full",
+    "cell": [
+     15,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 42,
+    "max_dL": 174,
+    "bbox_wh": [
+     21,
+     10
+    ],
+    "mean_L_prop": 100.64285714285714
+   },
+   {
+    "id": "bottle_dongha",
+    "state": "full",
+    "cell": [
+     17,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 61,
+    "max_dL": 164,
+    "bbox_wh": [
+     21,
+     10
+    ],
+    "mean_L_prop": 71.72131147540983
+   },
+   {
+    "id": "bottle_mari",
+    "state": "full",
+    "cell": [
+     19,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 34,
+    "max_dL": 74,
+    "bbox_wh": [
+     4,
+     10
+    ],
+    "mean_L_prop": 52.61764705882353
+   },
+   {
+    "id": "bottle_you",
+    "state": "empty",
+    "cell": [
+     11,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 66,
+    "max_dL": 117,
+    "bbox_wh": [
+     24,
+     4
+    ],
+    "mean_L_prop": 62.09090909090909
+   },
+   {
+    "id": "bowl_soonrye",
+    "state": "full",
+    "cell": [
+     12,
+     10
+    ],
+    "onscreen": true,
+    "visible_px": 30,
+    "max_dL": 129,
+    "bbox_wh": [
+     8,
+     5
+    ],
+    "mean_L_prop": 86.33333333333333
+   },
+   {
+    "id": "bowl_seoha",
+    "state": "full",
+    "cell": [
+     14,
+     10
+    ],
+    "onscreen": true,
+    "visible_px": 23,
+    "max_dL": 194,
+    "bbox_wh": [
+     8,
+     4
+    ],
+    "mean_L_prop": 126.52173913043478
+   },
+   {
+    "id": "bowl_gicheol",
+    "state": "full",
+    "cell": [
+     15,
+     10
+    ],
+    "onscreen": true,
+    "visible_px": 30,
+    "max_dL": 169,
+    "bbox_wh": [
+     8,
+     5
+    ],
+    "mean_L_prop": 98.46666666666667
+   },
+   {
+    "id": "bowl_eunji",
+    "state": "empty",
+    "cell": [
+     11,
+     10
+    ],
+    "onscreen": true,
+    "visible_px": 22,
+    "max_dL": 43,
+    "bbox_wh": [
+     8,
+     4
+    ],
+    "mean_L_prop": 36.40909090909091
+   },
+   {
+    "id": "bowl_dongha",
+    "state": "empty",
+    "cell": [
+     14,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 17,
+    "max_dL": 78,
+    "bbox_wh": [
+     8,
+     4
+    ],
+    "mean_L_prop": 62.23529411764706
+   },
+   {
+    "id": "bowl_mari",
+    "state": "empty",
+    "cell": [
+     10,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 10,
+    "max_dL": 50,
+    "bbox_wh": [
+     6,
+     3
+    ],
+    "mean_L_prop": 62.3
+   },
+   {
+    "id": "bowl_you",
+    "state": "full",
+    "cell": [
+     13,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 30,
+    "max_dL": 136,
+    "bbox_wh": [
+     8,
+     5
+    ],
+    "mean_L_prop": 102.56666666666666
+   },
+   {
+    "id": "bandage_soonrye",
+    "state": "clean",
+    "cell": [
+     15,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 58,
+    "max_dL": 130,
+    "bbox_wh": [
+     23,
+     4
+    ],
+    "mean_L_prop": 73.15517241379311
+   },
+   {
+    "id": "bandage_seoha",
+    "state": "clean",
+    "cell": [
+     17,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 83,
+    "max_dL": 112,
+    "bbox_wh": [
+     21,
+     10
+    ],
+    "mean_L_prop": 60.06024096385542
+   },
+   {
+    "id": "bandage_gicheol",
+    "state": "clean",
+    "cell": [
+     19,
+     9
+    ],
+    "onscreen": true,
+    "visible_px": 75,
+    "max_dL": 100,
+    "bbox_wh": [
+     21,
+     10
+    ],
+    "mean_L_prop": 53.21333333333333
+   },
+   {
+    "id": "bandage_eunji",
+    "state": "clean",
+    "cell": [
+     15,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 42,
+    "max_dL": 174,
+    "bbox_wh": [
+     21,
+     10
+    ],
+    "mean_L_prop": 100.64285714285714
+   },
+   {
+    "id": "bandage_dongha",
+    "state": "clean",
+    "cell": [
+     17,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 76,
+    "max_dL": 132,
+    "bbox_wh": [
+     21,
+     10
+    ],
+    "mean_L_prop": 66.55263157894737
+   },
+   {
+    "id": "bandage_mari",
+    "state": "clean",
+    "cell": [
+     19,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 66,
+    "max_dL": 114,
+    "bbox_wh": [
+     13,
+     10
+    ],
+    "mean_L_prop": 61.10606060606061
+   },
+   {
+    "id": "bandage_you",
+    "state": "clean",
+    "cell": [
+     11,
+     11
+    ],
+    "onscreen": true,
+    "visible_px": 69,
+    "max_dL": 110,
+    "bbox_wh": [
+     24,
+     4
+    ],
+    "mean_L_prop": 62.0
+   }
+  ],
+  "errors": []
+ },
+ "after_extra": {
+  "open_icon": {
+   "src": "icons/meds.png",
+   "natural": 40,
+   "client": 80,
+   "medkit": "open"
+  },
+  "car_after_open_objs": [
+   {
+    "id": "lever",
+    "x": 20,
+    "y": 1,
+    "state": "up",
+    "overlay": null
+   },
+   {
+    "id": "bag",
+    "x": 10,
+    "y": 4,
+    "state": "closed",
+    "overlay": null
+   },
+   {
+    "id": "cab_door",
+    "x": 19,
+    "y": 3,
+    "state": "open",
+    "overlay": null
+   },
+   {
+    "id": "radio_cab",
+    "x": 20,
+    "y": 4,
+    "state": "idle",
+    "overlay": null
+   },
+   {
+    "id": "medkit",
+    "x": 19,
+    "y": 1,
+    "state": "open",
+    "overlay": "medkit_open_ov"
+   },
+   {
+    "id": "notebook_dash",
+    "x": 18,
+    "y": 4,
+    "state": "there",
+    "overlay": null
+   },
+   {
+    "id": "shoe_cab",
+    "x": 18,
+    "y": 2,
+    "state": "there",
+    "overlay": null
+   },
+   {
+    "id": "car_shoes",
+    "x": 4,
+    "y": 3,
+    "state": "there",
+    "overlay": null
+   },
+   {
+    "id": "car_shoes",
+    "x": 11,
+    "y": 3,
+    "state": "there",
+    "overlay": null
+   },
+   {
+    "id": "car_shoes",
+    "x": 16,
+    "y": 3,
+    "state": "there",
+    "overlay": null
+   }
+  ],
+  "tunnel_cam": {
+   "ox": -160,
+   "oy": 80,
+   "px": 12,
+   "py": 2,
+   "map": "tunnel"
+  },
+  "evening_people": [
+   {
+    "id": "soonrye",
+    "x": 14,
+    "y": 10,
+    "pose": "sitting",
+    "react": "",
+    "mark": "…"
+   },
+   {
+    "id": "seoha",
+    "x": 14,
+    "y": 12,
+    "pose": "sitting",
+    "react": "mouth",
+    "mark": "…"
+   },
+   {
+    "id": "gicheol",
+    "x": 12,
+    "y": 12,
+    "pose": "sitting",
+    "react": "",
+    "mark": "…"
+   },
+   {
+    "id": "eunji",
+    "x": 11,
+    "y": 10,
+    "pose": "sitting",
+    "react": "",
+    "mark": "…"
+   },
+   {
+    "id": "dongha",
+    "x": 10,
+    "y": 10,
+    "pose": "sitting",
+    "react": "mouth",
+    "mark": "…"
+   },
+   {
+    "id": "mari",
+    "x": 16,
+    "y": 10,
+    "pose": "sitting",
+    "react": "",
+    "mark": "…"
+   }
+  ],
+  "evening_cam": {
+   "ox": -192,
+   "oy": -192,
+   "px": 13,
+   "py": 12,
+   "map": "station"
+  },
+  "beds_people": [
+   {
+    "id": "soonrye",
+    "x": 16,
+    "y": 9,
+    "pose": "lying"
+   },
+   {
+    "id": "gicheol",
+    "x": 20,
+    "y": 9,
+    "pose": "lying"
+   },
+   {
+    "id": "eunji",
+    "x": 16,
+    "y": 11,
+    "pose": "lying"
+   },
+   {
+    "id": "dongha",
+    "x": 18,
+    "y": 11,
+    "pose": "lying"
+   },
+   {
+    "id": "mari",
+    "x": 20,
+    "y": 11,
+    "pose": "lying"
+   }
+  ],
+  "beds_cam": {
+   "ox": -288,
+   "oy": -176,
+   "px": 16,
+   "py": 10,
+   "map": "station"
+  },
+  "errors": []
+ }
+}

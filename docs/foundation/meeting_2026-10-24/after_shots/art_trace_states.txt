@@ -1,0 +1,11 @@
+밝기 차 12 이상 픽셀 수 (빛 1.0 / 0.6 / 0.45)   ← 옛 그림
+      bandage → bandage_wet     [22, 22, 21]   ← [9, 9, 9]
+      bandage → bandage_rot     [25, 22, 21]   ← [8, 8, 8]
+      bandage → bandage_blood   [17, 17, 15]   ← [8, 8, 8]
+         bowl → bowl_empty      [23, 23, 22]   ← [14, 14, 14]
+         bowl → bowl_meat       [22, 22, 21]   ← [10, 10, 10]
+   bowl_empty → bowl_meat       [23, 20, 20]   ← [11, 10, 9]
+     scissors → scissors_blood  [20, 19, 18]   ← [8, 8, 8]
+       bottle → bottle_empty    [42, 41, 40]   ← [42, 41, 40]
+       bottle → bottle_wet      [49, 47, 44]   ← [49, 47, 44]
+비교판 → docs\foundation\meeting_2026-10-24\after_shots\art_trace_states.png (위: 옛 그림 빛 1.0·0.5, 아래: 새 그림)

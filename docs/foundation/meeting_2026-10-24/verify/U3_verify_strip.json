@@ -1,0 +1,161 @@
+{
+ "walk_strip_real": {
+  "right": {
+   "tiles_crossed": 2,
+   "ms_per_tile": [
+    237.0
+   ],
+   "stall_frames_same_logical_pos": 0,
+   "walk_beat_order": "LSRS",
+   "walk_beat_runs": [
+    "L7",
+    "S7",
+    "R7",
+    "S8"
+   ],
+   "walk_beat_mismatch_frames": 0,
+   "you_draw_dy_offset_by_beat": {
+    "S": [
+     0
+    ],
+    "L": [
+     1
+    ],
+    "R": [
+     1
+    ]
+   },
+   "you_sprite_ids_by_beat": {
+    "S": [
+     1
+    ],
+    "L": [
+     8
+    ],
+    "R": [
+     9
+    ]
+   },
+   "frames_without_you_draw": 0,
+   "error": null
+  },
+  "left": {
+   "tiles_crossed": 2,
+   "ms_per_tile": [
+    235.9
+   ],
+   "stall_frames_same_logical_pos": 0,
+   "walk_beat_order": "LSRS",
+   "walk_beat_runs": [
+    "L7",
+    "S7",
+    "R7",
+    "S8"
+   ],
+   "walk_beat_mismatch_frames": 0,
+   "you_draw_dy_offset_by_beat": {
+    "S": [
+     0
+    ],
+    "L": [
+     1
+    ],
+    "R": [
+     1
+    ]
+   },
+   "you_sprite_ids_by_beat": {
+    "S": [
+     10
+    ],
+    "L": [
+     11
+    ],
+    "R": [
+     12
+    ]
+   },
+   "frames_without_you_draw": 0,
+   "error": null
+  },
+  "down": {
+   "tiles_crossed": 2,
+   "ms_per_tile": [
+    236.3
+   ],
+   "stall_frames_same_logical_pos": 0,
+   "walk_beat_order": "LSRS",
+   "walk_beat_runs": [
+    "L7",
+    "S7",
+    "R7",
+    "S8"
+   ],
+   "walk_beat_mismatch_frames": 0,
+   "you_draw_dy_offset_by_beat": {
+    "S": [
+     0
+    ],
+    "L": [
+     1
+    ],
+    "R": [
+     1
+    ]
+   },
+   "you_sprite_ids_by_beat": {
+    "S": [
+     13
+    ],
+    "L": [
+     14
+    ],
+    "R": [
+     15
+    ]
+   },
+   "frames_without_you_draw": 0,
+   "error": null
+  },
+  "up": {
+   "tiles_crossed": 2,
+   "ms_per_tile": [
+    236.7
+   ],
+   "stall_frames_same_logical_pos": 0,
+   "walk_beat_order": "LSRS",
+   "walk_beat_runs": [
+    "L7",
+    "S7",
+    "R7",
+    "S8"
+   ],
+   "walk_beat_mismatch_frames": 0,
+   "you_draw_dy_offset_by_beat": {
+    "S": [
+     0
+    ],
+    "L": [
+     1
+    ],
+    "R": [
+     1
+    ]
+   },
+   "you_sprite_ids_by_beat": {
+    "S": [
+     16
+    ],
+    "L": [
+     17
+    ],
+    "R": [
+     18
+    ]
+   },
+   "frames_without_you_draw": 0,
+   "error": null
+  }
+ },
+ "walk_strip_console_errors": []
+}

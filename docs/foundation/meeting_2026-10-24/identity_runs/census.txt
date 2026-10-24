@@ -1,0 +1,372 @@
+# 정체 축 전수 집계 — root=C:/Users/gdjy0/AppData/Local/Temp/claude/C--Users-gdjy0/9ba10cd2-b159-4bbe-91d7-679cc9e23f56/scratchpad/wt/v4
+사건 119 · 선택지 282 · 축을 움직이는 선택지 120 · 축이 걸린 사건 60
+밤 사건 43개 중 축 효과 0개. 배식(그릇)·치료·원정 행동은 축을 움직이지 않는다(engine.js ration/treat 에 axis 없음).
+문턱: {"share":2,"hand":1,"name":1}
+
+## 1. 축 · 방향별 선택지 수 (W = 경고·힌트·금기 있음, U = 경고 없음)
+| 축 | + 경고없음 | + 경고있음 | − 경고없음 | − 경고있음 |
+|---|---|---|---|---|
+| share | 9 | 12 | 4 | 16 |
+| hand | 10 | 28 | 10 | 6 |
+| name | 7 | 15 | 7 | 4 |
+
+## 2. 사건을 하나씩 다 본다고 칠 때 기대 축 이동 합 (판정은 기본 확률 가중)
+- 안전해 보이는 쪽(경고·비용·조건 없음) 평균을 고르면: share +3.13 · hand +1.92 · name -2.67
+- 열린 선택지 중 아무거나(고르게): share +0.73 · hand +5.42 · name +5.04
+- 맨 위 선택지만: share +10.40 · hand +13.70 · name +4.00
+  - kind=fixed (30사건) 안전 쪽: share +0.83 · hand +2.12 · name -3.50
+  - kind=trial (24사건) 안전 쪽: share +1.30 · hand +1.80 · name +0.83
+  - kind=trip (4사건) 안전 쪽: share +1.00 · hand +0.00 · name +0.00
+  - kind=ending (2사건) 안전 쪽: share +0.00 · hand -2.00 · name +0.00
+
+## 3. 축이 걸린 사건 전부 — 안전 쪽 기대 이동이 0 이 아닌 것 먼저
+
+### d1_names (fixed) when: day==1 & phase==evening & flag:met_eunji
+안전 쪽 기대: share +0.00 · hand +0.00 · name +1.50  | 고르게: share +0.00 · hand +0.00 · name +1.50
+  0. 적는다  → name+1
+  1. 하나씩 불러 확인한다  → name+2
+
+### d1_names_quiet (fixed) when: day==1 & phase==evening & !flag:met_eunji
+안전 쪽 기대: share +0.00 · hand +0.00 · name +1.50  | 고르게: share +0.00 · hand +0.00 · name +1.50
+  0. 적는다  → name+1
+  1. 하나씩 불러 확인한다  → name+2
+
+### d0_ledger (fixed) when: day==0 & phase==evening & flag:notebook
+안전 쪽 기대: share +0.00 · hand +0.00 · name -1.00  | 고르게: share +0.50 · hand +0.00 · name +0.00
+  0. 데려가겠습니다 [경고] → name+1 share+1
+  1. 말없이 적는다  → name-1
+
+### d0_ledger_b (fixed) when: day==0 & phase==evening & !flag:notebook & !flag:met_gicheol
+안전 쪽 기대: share +0.00 · hand +0.00 · name -1.00  | 고르게: share +0.50 · hand +0.00 · name +0.00
+  0. 데려가겠습니다 [경고] → name+1 share+1
+  1. 말없이 외운다  → name-1
+
+### trial_d1_bowls (trial) when: day>=1 & phase==ration
+안전 쪽 기대: share +1.00 · hand +0.00 · name +0.00  | 고르게: share +0.33 · hand +0.00 · name +0.00
+  0. 내 그릇을 비운다 [경고] → share+1
+  1. 남의 그릇을 비운다 [경고] → share-1
+  2. 똑같이 조금씩  → share+1
+
+### trial_d3_count (fixed) when: day==3 & phase==night & alive:soonrye & alive:seoha
+안전 쪽 기대: share +0.00 · hand +0.00 · name -1.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 숨을 죽인다  → name-1
+  1. 함께 센다 [경고][금기][죽음글] → name+1
+
+### trial_d3_count_c (fixed) when: day==3 & phase==night & alive:soonrye & !alive:seoha
+안전 쪽 기대: share +0.00 · hand +0.00 · name -1.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 숨을 죽인다  → name-1
+  1. 함께 센다 [경고][금기][죽음글] → name+1
+
+### trial_d3_count_b (fixed) when: day==3 & phase==night & !alive:soonrye
+안전 쪽 기대: share +0.00 · hand +0.00 · name -1.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 숨을 죽인다  → name-1
+  1. 함께 센다 [경고][금기][죽음글] → name+1
+
+### d5_rail_body (fixed) when: day==5 & phase==night & alive:mari & alive:soonrye & alive:seoha
+안전 쪽 기대: share +0.50 · hand +0.50 · name +0.00  | 고르게: share +0.00 · hand +0.33 · name +0.00
+  0. 받지 않는다 [경고] → share+1
+  1. 받는다 [경고][금기] → share-1
+  2. 칼을 빼앗는다 [경고][판정] → hand+1
+
+### d5_rail_body_c (fixed) when: day==5 & phase==night & alive:mari & !(alive:soonrye & alive:seoha)
+안전 쪽 기대: share +0.50 · hand +0.50 · name +0.00  | 고르게: share +0.00 · hand +0.33 · name +0.00
+  0. 받지 않는다 [경고] → share+1
+  1. 받는다 [경고][금기] → share-1
+  2. 칼을 빼앗는다 [경고][판정] → hand+1
+
+### d5_rail_body_b (fixed) when: day==5 & phase==night & !alive:mari
+안전 쪽 기대: share +0.50 · hand +0.50 · name +0.00  | 고르게: share +0.00 · hand +0.33 · name +0.00
+  0. 받지 않는다 [경고] → share+1
+  1. 받는다 [경고][금기] → share-1
+  2. 칼을 빼앗는다 [경고][판정] → hand+1
+
+### d7_fingers_self (fixed) when: day==7 & phase==day & flag:gicheol_fingers & alive:gicheol & !alive:mari
+안전 쪽 기대: share +0.00 · hand -1.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 내가 자른다 [경고][판정] → hand+1
+  1. 고개를 돌린다  → hand-1
+
+### d7_fingers_dead (fixed) when: day==7 & phase==day & flag:gicheol_fingers & !alive:gicheol
+안전 쪽 기대: share -0.50 · hand +0.50 · name +0.00  | 고르게: share -0.50 · hand +0.50 · name +0.00
+  0. 묻는다  → hand+1
+  1. 헤드램프를 챙긴다  → share-1
+
+### d7_broadcast (fixed) when: day==7 & phase==evening
+안전 쪽 기대: share +0.00 · hand +0.00 · name -1.00  | 고르게: share +0.00 · hand +0.00 · name +0.20
+  0. 수첩에 받아 적는다  → name-1
+  1. "여기 있습니다." [경고][금기] → name+2
+  2. 스피커 선을 끊는다 [경고][판정] → name-0.4
+
+### d9_stairs (fixed) when: day==9 & phase==trace & fog>=4 & alive:soonrye
+안전 쪽 기대: share -0.50 · hand +0.50 · name +0.00  | 고르게: share +0.00 · hand +0.67 · name +0.00
+  0. 묻는다  → hand+1
+  1. 묻지 않는다  → share-1
+  2. 오늘 밤 내가 선다 [경고] → share+1 hand+1
+
+### d9_hoard (trial) when: day==9 & phase==trace & flag:fare_known & alive:eunji
+안전 쪽 기대: share -0.50 · hand -0.50 · name +0.00  | 고르게: share -0.33 · hand +0.00 · name +0.00
+  0. 모른 척한다  → hand-1
+  1. 창고에 돌려놓는다 [경고][판정] → hand+1
+  2. 하나만 나눠 받는다  → share-1
+
+### d9_night_stand (fixed) when: day==9 & phase==night & flag:stand_you
+안전 쪽 기대: share +0.00 · hand +0.00 · name -1.00  | 고르게: share +0.00 · hand +0.00 · name -0.50
+  0. 대답하지 않는다  → name-1
+  1. 대답한다 [경고][금기][죽음글] → 축 없음
+
+### trip_a1_pharmacy (trip) when: day>=2 & region==A & floor==1 & !flag:met_eunchae
+안전 쪽 기대: share +0.00 · hand -1.00 · name +0.00  | 고르게: share +0.33 · hand -0.33 · name +0.00
+  0. 자물쇠를 딴다 [경고][판정] → 축 없음
+  1. 약 하나를 밀어 넣는다 [비용] → share+1
+  2. 지나친다  → hand-1
+
+### trip_b1_gate (trip) when: day>=2 & region==B & floor==1 & !flag:met_dohyeon & !flag:skipped_dohyeon
+안전 쪽 기대: share +0.00 · hand +1.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 물에 들어가 끌어낸다 [경고][판정] → hand+1
+  1. 밧줄을 던진다 [조건] → hand+1
+  2. 지나친다 [경고][금기] → hand-1
+
+### d10_walk (ending) when: day==10 & phase==day & !flag:passage_open & alive:dongha
+안전 쪽 기대: share +0.00 · hand -1.00 · name +0.00  | 고르게: share +0.00 · hand -0.33 · name +0.00
+  0. 동하를 붙잡는다 [경고][판정] → 축 없음
+  1. 대신 대답한다 [경고][금기][죽음글] → 축 없음
+  2. 걷는다  → hand-1
+
+### d10_walk_other (ending) when: day==10 & phase==day & !flag:passage_open & !alive:dongha
+안전 쪽 기대: share +0.00 · hand -1.00 · name +0.00  | 고르게: share +0.00 · hand -0.33 · name +0.00
+  0. 붙잡는다 [경고][판정] → 축 없음
+  1. 대신 대답한다 [경고][금기][죽음글] → 축 없음
+  2. 걷는다  → hand-1
+
+### trip_a2_bodybag (trip) when: day>=3 & region==A & floor==2 & trace:bodybag_a2==normal
+안전 쪽 기대: share +1.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 지퍼를 닫는다  → share+1
+  1. 가져간다 [경고][금기] → share-1
+
+### dawn_strike (trial) when: phase==trace & flag:dawn_strike
+안전 쪽 기대: share +1.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand -0.25 · name +0.10
+  0. 그릇 둘을 내민다 [비용] → share+1
+  1. 밀쳐 낸다 [경고][죽음글][판정] → hand+0.45
+  2. 소리친다 [경고][죽음글][판정] → name+0.5
+  3. 축 늘어진다 [경고][죽음글][판정] → hand-0.7
+  4. 옆 담요를 가리킨다 [경고][금기] → hand-1 share-1
+
+### dawn_dongha (trial) when: phase==trace & flag:dawn_dongha & alive:dongha
+안전 쪽 기대: share +0.00 · hand +0.00 · name +1.00  | 고르게: share +0.25 · hand +0.10 · name +0.25
+  0. 동하 그릇을 채운다 [비용] → share+1
+  1. 파이프를 빼앗는다 [경고][판정] → hand+0.4
+  2. "동하야." 하고 부른다 [판정] → name+1
+  3. 모른 척한다 [경고] → 축 없음
+
+### starve_you (trial) when: day>=2 & phase==night & hunger_you>=8
+안전 쪽 기대: share -0.70 · hand +0.00 · name +0.00  | 고르게: share -0.60 · hand +0.13 · name +0.00
+  0. 선로 밑을 뒤진다 [경고][판정] → share-0.4
+  1. 창고를 턴다 [경고][비용] → share-1
+  2. 남의 그릇을 뺏는다 [경고][금기][판정] → share-1 hand+0.5
+  3. 눈을 감는다 [경고][죽음글] → 축 없음
+
+### patrol_pact (trial) when: day>=6 & phase==day & flag:patrol_knows & !flag:pact_done & alive:dongha
+안전 쪽 기대: share -0.20 · hand +0.47 · name +0.00  | 고르게: share -0.20 · hand +0.47 · name +0.00
+  0. 내가 간다 [경고][판정] → share+0.4 hand+0.4
+  1. 동하를 보낸다 [경고] → share-1 hand+1
+  2. 거절한다 [경고] → 축 없음
+
+### d1_shutter_knock (fixed) when: day==1 & phase==day & !flag:met_eunji & inspect:shutter_gap
+안전 쪽 기대: share +0.00 · hand -0.50 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 연다 [경고] → hand+1
+  1. 두드려 답한다  → 축 없음
+  2. 둔다  → hand-1
+
+### trial_d4_gicheol (trial) when: day==4 & phase==day & flag:met_dohyeon & alive:gicheol
+안전 쪽 기대: share +0.00 · hand +0.50 · name +0.00  | 고르게: share +0.00 · hand +0.47 · name +0.00
+  0. 믿는다  → 축 없음
+  1. 상자를 센다  → hand+1
+  2. 추궁한다 [경고][판정] → hand+0.4
+
+### d6_morning (trial) when: day==6 & phase==trace
+안전 쪽 기대: share +0.00 · hand +0.00 · name -0.50  | 고르게: share +0.00 · hand +0.00 · name -0.50
+  0. 쇠줄을 긋는다 [비용] → 축 없음
+  1. 이름을 안 부르기로 [경고] → name-1
+
+### d6_vent_voice (fixed) when: day==6 & phase==evening & alive:dongha
+안전 쪽 기대: share +0.00 · hand +0.50 · name +0.00  | 고르게: share +0.00 · hand +0.50 · name +0.00
+  0. 듣는다  → 축 없음
+  1. 동하의 입을 막아 준다  → hand+1
+
+### hymn_names (fixed) when: day>=8 & phase==trace & trace:blanket_mari==paired & alive:mari
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.50  | 고르게: share +0.00 · hand +0.00 · name +0.50
+  0. 마리를 눕힌다  → 축 없음
+  1. 이름을 이어 부른다  → name+1
+
+### d4_shoes_home (fixed) when: day==4 & phase==evening & alive:gicheol
+안전 쪽 기대: share +0.00 · hand +0.50 · name +0.00  | 고르게: share +0.00 · hand +0.50 · name +0.00
+  0. 본다  → 축 없음
+  1. 꺼내 묻는다  → hand+1
+
+### dawn_dongha2 (trial) when: phase==trace & flag:dawn_dongha2 & alive:dongha
+안전 쪽 기대: share +0.50 · hand +0.00 · name +0.00  | 고르게: share +0.20 · hand +0.08 · name +0.07
+  0. 그릇 둘을 내민다 [비용] → share+1
+  1. 파이프를 막는다 [경고][죽음글][판정] → hand+0.4
+  2. "동하야." 하고 부른다 [경고][죽음글][판정] → name+0.35
+  3. 도망친다 [경고][죽음글][판정] → 축 없음
+  4. 파이프를 손으로 받는다 [경고][조건] → 축 없음
+  5. 무릎을 꿇는다 [경고] → 축 없음
+
+### patrol_pact_b (trial) when: day>=6 & phase==day & flag:patrol_knows & !flag:pact_done & !alive:dongha
+안전 쪽 기대: share +0.20 · hand +0.20 · name +0.00  | 고르게: share +0.20 · hand +0.20 · name +0.00
+  0. 내가 간다 [경고][판정] → share+0.4 hand+0.4
+  1. 거절한다 [경고] → 축 없음
+
+### d3_bottle (fixed) when: day>=3 & phase==trace & flag:met_seoha & trace:bottle_seoha==full & trace:bottle_soonrye==empty & alive:soonrye & alive:seoha & alive:gicheol
+안전 쪽 기대: share +0.33 · hand +0.00 · name +0.00  | 고르게: share +0.33 · hand +0.00 · name +0.00
+  0. 내 물을 순례에게  → share+1
+  1. 기철 몫을 깎는다  → hand+1
+  2. 그대로 둔다  → hand-1
+
+### trial_d8_key_b (trial) when: day==8 & phase==trace & !alive:soonrye
+안전 쪽 기대: share +0.00 · hand +0.33 · name +0.00  | 고르게: share +0.00 · hand +0.33 · name +0.00
+  0. 내가 갖는다 [경고] → hand+1
+  1. 열어 둔다 [경고] → share+1
+  2. 운임을 따로 챙긴다 [경고][비용] → share-1
+
+### rail_killed (trial) when: phase==trace & flag:dongha_killed & alive:dongha
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.33  | 고르게: share +0.00 · hand +0.00 · name +0.33
+  0. 같이 묻는다  → hand+1
+  1. 수첩에 적는다  → name+1
+  2. 못 본 척한다  → hand-1
+
+### passage_day1 (trial) when: day>=5 & phase==day & flag:passage_work & !flag:passage_half & !flag:passage_wait & !flag:dohyeon_gone
+안전 쪽 기대: share +0.00 · hand +0.25 · name +0.00  | 고르게: share +0.00 · hand +0.25 · name +0.00
+  0. 오늘 반을 잇는다 [경고][비용][판정] → hand+0.5
+  1. 내일로 미룬다 [경고] → 축 없음
+
+### passage_day2 (trial) when: day>=5 & phase==day & flag:passage_half & !flag:passage_open & !flag:passage_wait
+안전 쪽 기대: share +0.00 · hand +0.25 · name +0.00  | 고르게: share +0.00 · hand +0.25 · name +0.00
+  0. 끝까지 잇는다 [경고][비용][판정] → hand+0.5
+  1. 내일로 미룬다 [경고] → 축 없음
+
+### passage_alone (trial) when: day>=6 & phase==day & (!flag:met_dohyeon | flag:dohyeon_gone | flag:dohyeon_refused) & !flag:passage_half & !flag:walk_decided & !flag:passage_wait & alive:gicheol
+안전 쪽 기대: share +0.00 · hand +0.15 · name +0.00  | 고르게: share +0.00 · hand +0.15 · name +0.00
+  0. 우리끼리 잇는다 [경고][비용][판정] → hand+0.45
+  1. 두고 걷기로 한다 [경고] → 축 없음
+  2. 내일 다시 본다 [경고] → 축 없음
+
+### passage_alone_b (trial) when: day>=6 & phase==day & (!flag:met_dohyeon | flag:dohyeon_gone | flag:dohyeon_refused) & !flag:passage_half & !flag:walk_decided & !flag:passage_wait & !alive:gicheol
+안전 쪽 기대: share +0.00 · hand +0.15 · name +0.00  | 고르게: share +0.00 · hand +0.15 · name +0.00
+  0. 우리끼리 잇는다 [경고][비용][판정] → hand+0.45
+  1. 두고 걷기로 한다 [경고] → 축 없음
+  2. 내일 다시 본다 [경고] → 축 없음
+
+### d6_shutter (fixed) when: day==6 & phase==night & flag:met_eunji & alive:gicheol & alive:dongha
+안전 쪽 기대: share +0.00 · hand +0.12 · name +0.00  | 고르게: share +0.00 · hand +0.12 · name +0.00
+  0. 열쇠를 내준다 [경고] → hand+1
+  1. 동하와 덤빈다 [경고][판정] → hand+0.35
+  2. 아무것도 하지 않는다 [경고] → hand-1
+
+### pro_gicheol (fixed) when: day==0 & map==tunnel & talk:gicheol
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.33 · name +0.00
+  0. 그가 비춘 곳을 밟는다  → 축 없음
+  1. 벽감 상자부터 연다 [경고] → 축 없음
+  2. 돌을 같이 든다 [경고] → hand+1
+
+### d4_dohyeon_key (fixed) when: day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_gone
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.33
+  0. 부품을 내고 약속한다 [경고][비용] → name+1
+  1. 기다려 달라 한다  → 축 없음
+  2. 필요 없다 한다  → 축 없음
+
+### d6_dohyeon_back (trial) when: day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & !flag:dohyeon_price_up
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.33
+  0. 부품 셋을 내고 약속한다 [경고][비용] → name+1
+  1. 더 기다려 달라 한다 [경고] → 축 없음
+  2. 필요 없다 한다  → 축 없음
+
+### d6_dohyeon_price (trial) when: day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & flag:dohyeon_price_up
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.33
+  0. 부품 다섯을 내고 약속한다 [경고][비용] → name+1
+  1. 더 기다려 달라 한다 [경고] → 축 없음
+  2. 필요 없다 한다  → 축 없음
+
+### d5_lullaby (fixed) when: day==5 & phase==night & flood>=3
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 붙잡는다 [경고][판정] → hand+1
+  1. 놓친다 [경고] → hand-1
+
+### d6_shutter_b (fixed) when: day==6 & phase==night & flag:met_eunji & !(alive:gicheol & alive:dongha)
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 열쇠를 내준다 [경고] → 축 없음
+  1. 맞선다 [경고][판정] → hand+1
+  2. 아무것도 하지 않는다 [경고] → hand-1
+
+### d7_fingers (fixed) when: day==7 & phase==day & flag:gicheol_fingers & alive:gicheol & alive:mari
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 손을 잡아 준다  → hand+1
+  1. 고개를 돌린다  → hand-1
+
+### d7_rot (trial) when: day==7 & phase==night & flag:cut_hand & !flag:treated
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 약을 쓴다 [경고][비용] → share-1
+  1. 직접 짜낸다 [경고][판정] → 축 없음
+  2. 둔다 [경고] → share+1
+
+### trial_d8_key (trial) when: day==8 & phase==trace & alive:soonrye
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.25 · name +0.00
+  0. 내가 갖는다 [경고] → hand+1
+  1. 순례에게  → 축 없음
+  2. 열어 둔다 [경고] → share+1
+  3. 운임을 따로 챙긴다 [경고][비용] → share-1
+
+### d8_pillow (fixed) when: day==8 & phase==night & injury_gicheol>=2 & meds==0 & alive:gicheol & alive:mari
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.33
+  0. 일어난다  → hand+1
+  1. 눈을 감는다  → hand-1
+  2. 수첩을 꺼낸다 [경고] → name+1
+
+### d9_inspection (fixed) when: day==9 & phase==evening & alive:seoha
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 수첩을 내민다 [경고] → name+1
+  1. 고개를 돌린다 [경고] → name-1
+
+### d9_inspection_b (fixed) when: day==9 & phase==evening & !alive:seoha
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 수첩을 내민다 [경고] → name+1
+  1. 고개를 돌린다 [경고] → name-1
+
+### trip_b1_workers (trip) when: day>=4 & region==B & floor==1 & trace:worker_pipe==bodies
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.00
+  0. 신발을 챙긴다  → share-1
+  1. 그대로 둔다  → share+1
+
+### d10_walk_weak (trial) when: day==10 & phase==day & !flag:passage_open & (injury_you>=2 | hunger_you>=8)
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share -0.33 · hand +0.23 · name +0.00
+  0. 마지막 빵을 먹는다 [비용] → 축 없음
+  1. 옆 사람 물병을 비운다 [경고][금기] → share-1
+  2. 이를 악물고 걷는다 [경고][죽음글][판정] → hand+0.7
+
+### d2_soonrye_bread (fixed) when: day==2 & phase==evening & alive:soonrye
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.50 · hand +0.00 · name +0.00
+  0. 내 몫을 보탠다 [비용] → share+1
+  1. 본다  → 축 없음
+
+### trade_shutter (trial) when: day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap & alive:eunji & alive:dongha
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share -0.25 · hand +0.00 · name +0.00
+  0. 부품 둘을 준다 [경고][비용] → 축 없음
+  1. 약 하나를 준다 [경고][비용] → 축 없음
+  2. 동하를 하루 보낸다 [경고] → share-1
+  3. 거래하지 않는다  → 축 없음
+
+### fever_night (trial) when: (phase==night | phase==aftermath) & injury_you>=3 & !flag:treated_you
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share -0.20 · hand +0.00 · name +0.00
+  0. 약을 쓴다 [비용] → 축 없음
+  1. 눈을 감는다 [경고][죽음글][판정] → 축 없음
+  2. 불가에서 땀을 뺀다 [경고][죽음글][판정] → 축 없음
+  3. 썩은 데를 도려낸다 [경고][죽음글][판정][조건] → 축 없음
+  4. 젖은 천으로 식힌다 [경고][비용] → 축 없음
+  5. 위에 대고 빈다 [경고][조건] → 축 없음
+  6. 남의 담요를 끌어온다 [경고][금기] → share-1
+
+### called_up (trial) when: phase==night & flag:named_you
+안전 쪽 기대: share +0.00 · hand +0.00 · name +0.00  | 고르게: share +0.00 · hand +0.00 · name +0.25
+  0. 불을 키우고 밤을 샌다 [비용] → 축 없음
+  1. 귀를 막는다 [경고][죽음글][판정] → 축 없음
+  2. 다른 이름을 댄다 [경고][금기] → name+1
+  3. 대답한다 [경고][금기][죽음글] → 축 없음

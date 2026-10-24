@@ -19,7 +19,7 @@
     const ctx = Object.assign({}, s.world, { day: s.day });
     ctx.flags = s.flags;
     ctx.alive = {}; ctx.trace = {}; ctx.status = {};
-    for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' ? 1 : 0; ctx.status[p.id] = p.status; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }
+    for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' || p.status === 'away' ? 1 : 0; ctx.status[p.id] = p.status; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }   // away(아직 안 온 사람)도 살아 있음 — 행위자·대상은 아래 sleepers·reachable 이 home 만 고른다
     for (const [id, tr] of Object.entries(s.traces)) { ctx.trace[id] = tr.st; if (ctx[id] === undefined) ctx[id] = tr.st; }
     return ctx;
   }
@@ -45,7 +45,7 @@
   // 나이로 거르지 않는다(10-22 디렉터 결정 '미성년 처리 금지') — 서하(17)도 밤 사건의 행위자·대상·피해자가 다른 주민과 똑같이 된다.
 
   // 이름으로 지목된 행위자·대상은 바깥 사람(outside)이어도 된다 — 역 밖에서 하는 일(은채가 순찰대를 데려온다, 도현이 밸브를 잠근다).
-  // any·조건식 행위자와 무작위 대상은 역에서 자는 사람(home)만.
+  // any·조건식 행위자와 무작위 대상은 역에서 자는 사람(home)만. 아직 안 온 사람(away)은 어느 쪽도 아니다(10-24 P0-E1).
   const reachable = (p) => p && (p.status === 'home' || p.status === 'outside');
   function resolveActors(s, db, n, base) {
     const home = sleepers(s);
@@ -109,7 +109,7 @@
     let rumor = null;
     if (n.rumor && n.rumor.line) {
       let witness = null;
-      if (n.rumor.witness && db.people[n.rumor.witness]) witness = n.rumor.witness;
+      if (n.rumor.witness && db.people[n.rumor.witness]) witness = s.people[n.rumor.witness] && s.people[n.rumor.witness].status === 'away' ? null : n.rumor.witness;   // 아직 안 온 사람은 본 것이 없다
       else if (n.rumor.witness === 'actor') witness = roles.actor;
       else if (n.rumor.witness === 'target' && roles.target && roles.target !== 'you' && s.people[roles.target] && s.people[roles.target].status === 'home') witness = roles.target;
       else { const w = R.pick(s, sleepers(s).filter((p) => p.id !== roles.actor && p.id !== roles.target)); witness = w ? w.id : null; }

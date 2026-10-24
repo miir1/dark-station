@@ -1,0 +1,4083 @@
+{
+ "notes": [
+  "car start {'day': 0, 'phase': 'day', 'map': 'car', 'x': 3, 'y': 3, 'face': 'right', 'moving': False, 'pending': None, 'ended': None, 'open': ''}",
+  "after car {'day': 0, 'phase': 'day', 'map': 'tunnel', 'x': 1, 'y': 2, 'face': 'down', 'moving': False, 'pending': None, 'ended': None, 'open': ''}",
+  "probe {\"label\": \"d7\", \"you\": [9, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 162, \"r\": 6.5}, \"name\": \"헤드램프의 남자\"}}",
+  "probe {\"label\": \"d6\", \"you\": [10, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 172, \"r\": 6.5}, \"name\": \"헤드램프의 남자\"}}",
+  "probe {\"label\": \"d4\", \"you\": [12, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"거기 서.\"]], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 169, \"r\": 6.5}, \"name\": \"헤드램프의 남자\"}}",
+  "probe {\"label\": \"d2\", \"you\": [14, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…발 좀 보이시오.\"]], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 147, \"r\": 3.09}, \"name\": \"헤드램프의 남자\"}}",
+  "probe {\"label\": \"d1\", \"you\": [15, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…신었군.\"]], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 142, \"r\": 2.4}, \"name\": \"헤드램프의 남자\"}}",
+  "probe {\"label\": \"d1_wait_more\", \"you\": [15, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…신었군.\"]], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 142, \"r\": 2.4}, \"name\": \"헤드램프의 남자\"}}",
+  "tunnel hint before talk: Space 말 걸기 — 헤드램프의 남자",
+  "after pro_gicheol {'day': 0, 'phase': 'day', 'map': 'tunnel', 'x': 15, 'y': 2, 'face': 'right', 'moving': False, 'pending': None, 'ended': None, 'open': ''}",
+  "arrive {'day': 0, 'phase': 'day', 'map': 'station', 'x': 1, 'y': 11, 'face': 'down', 'moving': False, 'pending': None, 'ended': None, 'open': ''}",
+  "probe {\"label\": \"soonrye_d6\", \"you\": [7, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [], \"npc\": {\"id\": \"soonrye\", \"face\": \"left\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}",
+  "probe {\"label\": \"soonrye_d4\", \"you\": [9, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"멈춰.\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"left\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}",
+  "probe {\"label\": \"soonrye_d2\", \"you\": [11, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…발.\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"down\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}",
+  "probe {\"label\": \"soonrye_d2_wait\", \"you\": [11, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…발.\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"down\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}",
+  "moved up {'day': 0, 'phase': 'day', 'map': 'station', 'x': 11, 'y': 10, 'face': 'up', 'moving': False, 'pending': None, 'ended': None, 'open': ''}",
+  "soonrye hint: Space 말 걸기 — 청소원 조끼의 할머니",
+  "retalk soonrye 1: [[\"lines\", \"청소원 조끼의 할머니\", \"앉든지 둘러보든지 해. 계단만 빼고.\", \"\"]]",
+  "retalk soonrye 2: [[\"lines\", \"\", \"할머니가 장작을 뒤집는다.\", \"\"]]",
+  "retalk soonrye 3: [[\"lines\", \"청소원 조끼의 할머니\", \"앉든지 둘러보든지 해. 계단만 빼고.\", \"\"]]",
+  "retalk soonrye 4: [[\"lines\", \"\", \"할머니가 장작을 뒤집는다.\", \"\"]]",
+  "probe {\"label\": \"mari_d6\", \"you\": [14, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…영자 씨, 순덕 씨, 광호 씨…\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"right\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}",
+  "probe {\"label\": \"mari_d4\", \"you\": [17, 12], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…다쳤어요?\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"right\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": true, \"name\": \"청소원 조끼의 할머니\"}}",
+  "probe {\"label\": \"mari_d1\", \"you\": [20, 12], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [], \"npc\": {\"id\": \"soonrye\", \"face\": \"right\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": true, \"name\": \"청소원 조끼의 할머니\"}}",
+  "mari hint: Space 말 걸기 — 담요의 여자",
+  "retalk mari 1: [[\"lines\", \"\", \"담요가 개어 있다.\", \"\"]]",
+  "retalk mari 2: [[\"lines\", \"\", \"담요가 개어 있다.\", \"\"]]",
+  "retalk mari 3: [[\"lines\", \"\", \"담요가 개어 있다.\", \"\"]]",
+  "evening? {'day': 0, 'phase': 'evening', 'map': 'station', 'x': 13, 'y': 12, 'face': 'up', 'moving': False, 'pending': None, 'ended': None, 'open': ''}",
+  "end {'day': 1, 'phase': 'trace', 'map': 'station', 'x': 13, 'y': 12, 'face': 'up', 'moving': False, 'pending': None, 'ended': None, 'open': ''}"
+ ],
+ "console": [],
+ "ev": [
+  {
+   "t": 42,
+   "kind": "bubbles",
+   "list": [],
+   "near": {}
+  },
+  {
+   "t": 43,
+   "kind": "hudfaces",
+   "text": ""
+  },
+  {
+   "t": 43,
+   "kind": "box",
+   "open": true,
+   "okind": "title"
+  },
+  {
+   "t": 604,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "덜컹. \"승객 여러분께서는 침착하게—\" … 누군가 당신의 이름을 불렀다. 아주 다정한 목소리였다.",
+   "name": "",
+   "tag": "pro_cold",
+   "face": ""
+  },
+  {
+   "t": 1679,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "okind": "event",
+   "body": "덜컹. \"승객 여러분께서는 침착하게—\" … 누군가 당신의 이름을 불렀다. 아주 다정한 목소리였다.",
+   "opts": [
+    {
+     "label": "눈을 뜬다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_cold",
+   "picked": 0
+  },
+  {
+   "t": 2173,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "붉은 비상등이 깜빡인다. 아무도 없다. 바닥에 신발과 가방만 흩어져 있다.",
+   "name": "",
+   "tag": "pro_cold:out",
+   "face": ""
+  },
+  {
+   "t": 2723,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "Space 조사 — 가지런한 신발"
+  },
+  {
+   "t": 2723,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "전동차 안을 살핀다"
+  },
+  {
+   "t": 2723,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 3376,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "car start {'day': 0, 'phase': 'day', 'map': 'car', 'x': 3, 'y': 3, 'face': 'right', 'moving': False, 'pending': None, 'ended': None, 'open': ''}"
+  },
+  {
+   "t": 6850,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "「승객 명부」. 첫 줄에 당신 이름이 적혀 있다. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다.",
+   "name": "",
+   "tag": "pro_notebook",
+   "face": ""
+  },
+  {
+   "t": 6888,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 7521,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "okind": "event",
+   "body": "「승객 명부」. 첫 줄에 당신 이름이 적혀 있다. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다.",
+   "opts": [
+    {
+     "label": "주머니에 넣는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_notebook",
+   "picked": 0
+  },
+  {
+   "t": 8009,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "수첩을 주머니에 넣었다. 연필도 있었다.",
+   "name": "",
+   "tag": "pro_notebook:out",
+   "face": ""
+  },
+  {
+   "t": 8379,
+   "kind": "toast",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "명부에 한 줄 — Tab"
+  },
+  {
+   "t": 8404,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "전동차 안을 살핀다"
+  },
+  {
+   "t": 8404,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 9787,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "비상 레버다. 문 옆 비상함에 생수 두 병이 보인다.",
+   "name": "",
+   "tag": "pro_lever",
+   "face": ""
+  },
+  {
+   "t": 9807,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 10098,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "okind": "event",
+   "body": "비상 레버다. 문 옆 비상함에 생수 두 병이 보인다.",
+   "opts": [
+    {
+     "label": "레버를 당긴다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "그냥 둔다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_lever",
+   "picked": 0
+  },
+  {
+   "t": 10601,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 11002,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "문이 쉭 하고 열렸다. 찬 공기가 밀려들었다. 생수 두 병을 챙겼다.",
+   "name": "",
+   "tag": "pro_lever:out",
+   "face": "http://127.0.0.1:18831/v3/img/icons/water.png"
+  },
+  {
+   "t": 11005,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 11486,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "Space 조사 — 비상 레버"
+  },
+  {
+   "t": 11486,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "오른쪽 끝 열린 문으로 나간다"
+  },
+  {
+   "t": 11486,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 12653,
+   "kind": "card",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 21,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "어두운 터널 / "
+  },
+  {
+   "t": 15485,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 1,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "앞쪽 불빛으로"
+  },
+  {
+   "t": 17343,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 1,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "after car {'day': 0, 'phase': 'day', 'map': 'tunnel', 'x': 1, 'y': 2, 'face': 'down', 'moving': False, 'pending': None, 'ended': None, 'open': ''}"
+  },
+  {
+   "t": 22210,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 9,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "probe {\"label\": \"d7\", \"you\": [9, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 162, \"r\": 6.5}, \"name\": \"헤드램프의 남자\"}}"
+  },
+  {
+   "t": 24986,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 10,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "probe {\"label\": \"d6\", \"you\": [10, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 172, \"r\": 6.5}, \"name\": \"헤드램프의 남자\"}}"
+  },
+  {
+   "t": 25321,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 12,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "list": [
+    {
+     "text": "거기 서.",
+     "vis": true
+    }
+   ],
+   "near": {
+    "gicheol": {
+     "at": [
+      16,
+      2
+     ],
+     "face": "left",
+     "pose": null,
+     "dist": 4,
+     "bubble": "거기 서.",
+     "name": "헤드램프의 남자"
+    }
+   }
+  },
+  {
+   "t": 27563,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 12,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "probe {\"label\": \"d4\", \"you\": [12, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"거기 서.\"]], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 169, \"r\": 6.5}, \"name\": \"헤드램프의 남자\"}}"
+  },
+  {
+   "t": 27885,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 14,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "list": [
+    {
+     "text": "…발 좀 보이시오.",
+     "vis": true
+    }
+   ],
+   "near": {
+    "gicheol": {
+     "at": [
+      16,
+      2
+     ],
+     "face": "left",
+     "pose": null,
+     "dist": 2,
+     "bubble": "…발 좀 보이시오.",
+     "name": "헤드램프의 남자"
+    }
+   }
+  },
+  {
+   "t": 30143,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 14,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "probe {\"label\": \"d2\", \"you\": [14, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…발 좀 보이시오.\"]], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 147, \"r\": 3.09}, \"name\": \"헤드램프의 남자\"}}"
+  },
+  {
+   "t": 30245,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "list": [
+    {
+     "text": "…신었군.",
+     "vis": true
+    }
+   ],
+   "near": {
+    "gicheol": {
+     "at": [
+      16,
+      2
+     ],
+     "face": "left",
+     "pose": null,
+     "dist": 1,
+     "bubble": "…신었군.",
+     "name": "헤드램프의 남자"
+    }
+   }
+  },
+  {
+   "t": 30481,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "Space 말 걸기 — 헤드램프의 남자"
+  },
+  {
+   "t": 31674,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "probe {\"label\": \"d1\", \"you\": [15, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…신었군.\"]], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 142, \"r\": 2.4}, \"name\": \"헤드램프의 남자\"}}"
+  },
+  {
+   "t": 33001,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "list": [],
+   "near": {
+    "gicheol": {
+     "at": [
+      16,
+      2
+     ],
+     "face": "left",
+     "pose": null,
+     "dist": 1,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    }
+   }
+  },
+  {
+   "t": 35788,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "probe {\"label\": \"d1_wait_more\", \"you\": [15, 2], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…신었군.\"]], \"npc\": {\"id\": \"gicheol\", \"face\": \"left\", \"pose\": null, \"beam\": {\"deg\": 142, \"r\": 2.4}, \"name\": \"헤드램프의 남자\"}}"
+  },
+  {
+   "t": 35789,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "tunnel hint before talk: Space 말 걸기 — 헤드램프의 남자"
+  },
+  {
+   "t": 35791,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "헤드램프 빛이 당신 신발에 머물다가 비켜난다. \"사람이면 됐소. 이 잔해만 넘으면 역이오.\" \"발 디딜 곳만 보시오. 위는 보지 말고.\"",
+   "name": "헤드램프의 남자",
+   "tag": "pro_gicheol",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/gicheol.png"
+  },
+  {
+   "t": 35810,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 36966,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "okind": "event",
+   "body": "헤드램프의 남자헤드램프 빛이 당신 신발에 머물다가 비켜난다. \"사람이면 됐소. 이 잔해만 넘으면 역이오.\" \"발 디딜 곳만 보시오. 위는 보지 말고.\"",
+   "opts": [
+    {
+     "label": "그가 비춘 곳을 밟는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "벽감 상자부터 연다",
+     "sub": "식량·물 · 그가 본다",
+     "dis": false,
+     "warn": true
+    },
+    {
+     "label": "돌을 같이 든다",
+     "sub": "손을 다칠 수 있다",
+     "dis": false,
+     "warn": true
+    }
+   ],
+   "pending": "pro_gicheol",
+   "picked": 0
+  },
+  {
+   "t": 37458,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "남자가 침목을 짚으며 앞서 넘었다. 빛이 한 칸씩 앞을 비췄다.",
+   "name": "",
+   "tag": "pro_gicheol:out",
+   "face": ""
+  },
+  {
+   "t": 37494,
+   "kind": "hudfaces",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "헤드램프의 남자"
+  },
+  {
+   "t": 37841,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "터널 끝 승강장으로"
+  },
+  {
+   "t": 37841,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 38517,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "after pro_gicheol {'day': 0, 'phase': 'day', 'map': 'tunnel', 'x': 15, 'y': 2, 'face': 'right', 'moving': False, 'pending': None, 'ended': None, 'open': ''}"
+  },
+  {
+   "t": 41758,
+   "kind": "card",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 29,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "묵현역 / 환선 · 지하 2층"
+  },
+  {
+   "t": 44603,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 1,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 48757,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 1,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "arrive {'day': 0, 'phase': 'day', 'map': 'station', 'x': 1, 'y': 11, 'face': 'down', 'moving': False, 'pending': None, 'ended': None, 'open': ''}"
+  },
+  {
+   "t": 52783,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 7,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "probe {\"label\": \"soonrye_d6\", \"you\": [7, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [], \"npc\": {\"id\": \"soonrye\", \"face\": \"left\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}"
+  },
+  {
+   "t": 53122,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "list": [
+    {
+     "text": "멈춰.",
+     "vis": true
+    }
+   ],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "left",
+     "pose": "crouch",
+     "dist": 4,
+     "bubble": "멈춰.",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 17,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 11,
+     "bubble": "",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 53363,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "Space 조사 — 마리 그릇"
+  },
+  {
+   "t": 55385,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "probe {\"label\": \"soonrye_d4\", \"you\": [9, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"멈춰.\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"left\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}"
+  },
+  {
+   "t": 55766,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "list": [
+    {
+     "text": "…발.",
+     "vis": true
+    }
+   ],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "down",
+     "pose": "crouch",
+     "dist": 2,
+     "bubble": "…발.",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 15,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 9,
+     "bubble": "",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 55960,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "Space 조사 — 당신 수첩"
+  },
+  {
+   "t": 57986,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "probe {\"label\": \"soonrye_d2\", \"you\": [11, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…발.\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"down\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}"
+  },
+  {
+   "t": 58363,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "list": [],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "down",
+     "pose": "crouch",
+     "dist": 2,
+     "bubble": "",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 15,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 9,
+     "bubble": "",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 62134,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "probe {\"label\": \"soonrye_d2_wait\", \"you\": [11, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…발.\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"down\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}"
+  },
+  {
+   "t": 62380,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "moved up {'day': 0, 'phase': 'day', 'map': 'station', 'x': 11, 'y': 10, 'face': 'up', 'moving': False, 'pending': None, 'ended': None, 'open': ''}"
+  },
+  {
+   "t": 62404,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "Space 말 걸기 — 청소원 조끼의 할머니"
+  },
+  {
+   "t": 62683,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "soonrye hint: Space 말 걸기 — 청소원 조끼의 할머니"
+  },
+  {
+   "t": 62684,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "할머니가 당신 발을 오래 본다. \"신발 신었어? …됐어, 사람이네.\" \"저쪽 끝에 하나, 역무실에 하나.\" \"계단 줄 위로는 가지 마.\"",
+   "name": "청소원 조끼의 할머니",
+   "tag": "pro_platform",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/soonrye.png"
+  },
+  {
+   "t": 62721,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 64005,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "okind": "event",
+   "body": "청소원 조끼의 할머니할머니가 당신 발을 오래 본다. \"신발 신었어? …됐어, 사람이네.\" \"저쪽 끝에 하나, 역무실에 하나.\" \"계단 줄 위로는 가지 마.\"",
+   "opts": [
+    {
+     "label": "불가에 앉는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "계단 쪽을 본다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_platform",
+   "picked": 0
+  },
+  {
+   "t": 64497,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "할머니가 장작 하나를 더 넣었다. 처음 보는 주황빛이었다.",
+   "name": "",
+   "tag": "pro_platform:out",
+   "face": ""
+  },
+  {
+   "t": 64534,
+   "kind": "hudfaces",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "청소원 조끼의 할머니,헤드램프의 남자"
+  },
+  {
+   "t": 64884,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "Space 말 걸기 — 청소원 조끼의 할머니"
+  },
+  {
+   "t": 64884,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 64884,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 65863,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "앉든지 둘러보든지 해. 계단만 빼고.",
+   "name": "청소원 조끼의 할머니",
+   "tag": "",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/soonrye.png"
+  },
+  {
+   "t": 65882,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 66321,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "Space 말 걸기 — 청소원 조끼의 할머니"
+  },
+  {
+   "t": 66321,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 66321,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 67002,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "retalk soonrye 1: [[\"lines\", \"청소원 조끼의 할머니\", \"앉든지 둘러보든지 해. 계단만 빼고.\", \"\"]]"
+  },
+  {
+   "t": 67305,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "할머니가 장작을 뒤집는다.",
+   "name": "",
+   "tag": "soonrye_idle",
+   "face": ""
+  },
+  {
+   "t": 67324,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 67640,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "Space 말 걸기 — 청소원 조끼의 할머니"
+  },
+  {
+   "t": 67640,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 67640,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 68301,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "retalk soonrye 2: [[\"lines\", \"\", \"할머니가 장작을 뒤집는다.\", \"\"]]"
+  },
+  {
+   "t": 68604,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "앉든지 둘러보든지 해. 계단만 빼고.",
+   "name": "청소원 조끼의 할머니",
+   "tag": "",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/soonrye.png"
+  },
+  {
+   "t": 68641,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 69085,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "Space 말 걸기 — 청소원 조끼의 할머니"
+  },
+  {
+   "t": 69085,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 69085,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 69741,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "retalk soonrye 3: [[\"lines\", \"청소원 조끼의 할머니\", \"앉든지 둘러보든지 해. 계단만 빼고.\", \"\"]]"
+  },
+  {
+   "t": 70044,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "할머니가 장작을 뒤집는다.",
+   "name": "",
+   "tag": "soonrye_idle",
+   "face": ""
+  },
+  {
+   "t": 70081,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 70363,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "Space 말 걸기 — 청소원 조끼의 할머니"
+  },
+  {
+   "t": 70363,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 70363,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 71044,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 11,
+   "y": 10,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "retalk soonrye 4: [[\"lines\", \"\", \"할머니가 장작을 뒤집는다.\", \"\"]]"
+  },
+  {
+   "t": 71766,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "list": [
+    {
+     "text": "…영자 씨, 순덕 씨, 광호 씨…",
+     "vis": true
+    }
+   ],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "right",
+     "pose": "crouch",
+     "dist": 3,
+     "bubble": "",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 12,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 6,
+     "bubble": "…영자 씨, 순덕 씨, 광호 씨…",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 75128,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "probe {\"label\": \"mari_d6\", \"you\": [14, 11], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…영자 씨, 순덕 씨, 광호 씨…\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"right\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": false, \"name\": \"청소원 조끼의 할머니\"}}"
+  },
+  {
+   "t": 75453,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 15,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "list": [],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "right",
+     "pose": "crouch",
+     "dist": 4,
+     "bubble": "",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 11,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 5,
+     "bubble": "",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 75963,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 17,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "list": [
+    {
+     "text": "…다쳤어요?",
+     "vis": true
+    }
+   ],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "right",
+     "pose": "crouch",
+     "dist": 7,
+     "bubble": "",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 10,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 4,
+     "bubble": "…다쳤어요?",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 78766,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 17,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "list": [],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "right",
+     "pose": "crouch",
+     "dist": 7,
+     "bubble": "",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 10,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 4,
+     "bubble": "",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 79311,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 17,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "probe {\"label\": \"mari_d4\", \"you\": [17, 12], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [[\"…다쳤어요?\"]], \"npc\": {\"id\": \"soonrye\", \"face\": \"right\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": true, \"name\": \"청소원 조끼의 할머니\"}}"
+  },
+  {
+   "t": 83257,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "probe {\"label\": \"mari_d1\", \"you\": [20, 12], \"open\": \"\", \"pending\": null, \"bubbles_seen\": [], \"npc\": {\"id\": \"soonrye\", \"face\": \"right\", \"pose\": \"crouch\", \"beam\": null, \"stoke\": true, \"name\": \"청소원 조끼의 할머니\"}}"
+  },
+  {
+   "t": 83284,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "Space 말 걸기 — 담요의 여자"
+  },
+  {
+   "t": 83559,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "mari hint: Space 말 걸기 — 담요의 여자"
+  },
+  {
+   "t": 83560,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "여자가 당신 손등과 발목을 차례로 본다. 손길이 익숙하다. \"피는 안 나네요. 다치면 바로 말해요.\"",
+   "name": "담요의 여자",
+   "tag": "pro_mari",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/mari.png"
+  },
+  {
+   "t": 83565,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 84738,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "okind": "event",
+   "body": "담요의 여자여자가 당신 손등과 발목을 차례로 본다. 손길이 익숙하다. \"피는 안 나네요. 다치면 바로 말해요.\"",
+   "opts": [
+    {
+     "label": "손을 내민다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "물러선다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_mari",
+   "picked": 0
+  },
+  {
+   "t": 85227,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "여자가 긁힌 자국을 닦았다. 소독약 냄새가 났다. 입술이 다시 움직였다.",
+   "name": "",
+   "tag": "pro_mari:out",
+   "face": ""
+  },
+  {
+   "t": 85245,
+   "kind": "hudfaces",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "청소원 조끼의 할머니,헤드램프의 남자,담요의 여자"
+  },
+  {
+   "t": 85765,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 조사 — 마리 담요"
+  },
+  {
+   "t": 85765,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 85766,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 86735,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "담요가 개어 있다.",
+   "name": "",
+   "tag": "",
+   "face": ""
+  },
+  {
+   "t": 86773,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 87045,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 조사 — 마리 담요"
+  },
+  {
+   "t": 87045,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 87045,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 87732,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "retalk mari 1: [[\"lines\", \"\", \"담요가 개어 있다.\", \"\"]]"
+  },
+  {
+   "t": 88034,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "담요가 개어 있다.",
+   "name": "",
+   "tag": "",
+   "face": ""
+  },
+  {
+   "t": 88052,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 88363,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 조사 — 마리 담요"
+  },
+  {
+   "t": 88363,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 88363,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 89027,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "retalk mari 2: [[\"lines\", \"\", \"담요가 개어 있다.\", \"\"]]"
+  },
+  {
+   "t": 89330,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "담요가 개어 있다.",
+   "name": "",
+   "tag": "",
+   "face": ""
+  },
+  {
+   "t": 89366,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 89641,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 조사 — 마리 담요"
+  },
+  {
+   "t": 89641,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 89641,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 90328,
+   "kind": "note",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 20,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "retalk mari 3: [[\"lines\", \"\", \"담요가 개어 있다.\", \"\"]]"
+  },
+  {
+   "t": 96335,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 4,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "순례가 그은 분필 줄이다. 그 위로는 발자국이 없다.",
+   "name": "",
+   "tag": "",
+   "face": ""
+  },
+  {
+   "t": 96367,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 4,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 96607,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 4,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 조사 — 분필 줄"
+  },
+  {
+   "t": 96607,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 4,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 96607,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 4,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 97552,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "출구 계단 한가운데 안개가 벽처럼 멈춰 있다. 양복 입은 남자가 엎어져 있다. 안개에 잠긴 다리가 재였다. 바람도 없는데 흘러내렸다. 구두만 남았다.",
+   "name": "",
+   "tag": "pro_stairs",
+   "face": ""
+  },
+  {
+   "t": 97564,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 98290,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "event",
+   "body": "출구 계단 한가운데 안개가 벽처럼 멈춰 있다. 양복 입은 남자가 엎어져 있다. 안개에 잠긴 다리가 재였다. 바람도 없는데 흘러내렸다. 구두만 남았다.",
+   "opts": [
+    {
+     "label": "돌아선다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "구두를 가지러 오른다",
+     "sub": "순례: 계단 줄 위로는 가지 마",
+     "dis": false,
+     "warn": true
+    }
+   ],
+   "pending": "pro_stairs",
+   "picked": 0
+  },
+  {
+   "t": 98778,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "순례: \"세고 있는 거야. 저 위에서. 몇 명 남았나.\"",
+   "name": "",
+   "tag": "pro_stairs:out",
+   "face": ""
+  },
+  {
+   "t": 99009,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 조사 — 출구 계단"
+  },
+  {
+   "t": 99009,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 99009,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 101787,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "기둥의 스피커가 지직거린다. \"…열흘 뒤 정오… 선로가 이어진 역에만 섭니다…\" 녹음인데 숨을 쉰다.",
+   "name": "",
+   "tag": "pro_speaker",
+   "face": ""
+  },
+  {
+   "t": 101809,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 102152,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "event",
+   "body": "기둥의 스피커가 지직거린다. \"…열흘 뒤 정오… 선로가 이어진 역에만 섭니다…\" 녹음인데 숨을 쉰다.",
+   "opts": [
+    {
+     "label": "듣는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_speaker",
+   "picked": 0
+  },
+  {
+   "t": 102642,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "같은 말이 되풀이됐다.",
+   "name": "",
+   "tag": "pro_speaker:out",
+   "face": ""
+  },
+  {
+   "t": 102880,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 조사 — 기둥 스피커"
+  },
+  {
+   "t": 102880,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 102880,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 103558,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "book",
+   "body": "수첩명부 · 사실 줄 · 뒷장",
+   "opts": [
+    {
+     "label": "명부",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "사실 줄",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "뒷장",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "덮는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": "ledger"
+  },
+  {
+   "t": 103565,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "book"
+  },
+  {
+   "t": 104261,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "bookpage",
+   "body": "승객 명부당신당신 글씨청소원 조끼의 할머니헤드램프의 남자담요의 여자",
+   "opts": [
+    {
+     "label": "돌아간다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": null
+  },
+  {
+   "t": 105136,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "book",
+   "body": "수첩명부 · 사실 줄 · 뒷장",
+   "opts": [
+    {
+     "label": "명부",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "사실 줄",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "뒷장",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "덮는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": null
+  },
+  {
+   "t": 105765,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 조사 — 기둥 스피커"
+  },
+  {
+   "t": 105765,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 105765,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 9,
+   "y": 5,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 110202,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 13,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "fire",
+   "body": "화로드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다.불 앞에 앉으면 저녁이 된다.",
+   "opts": [
+    {
+     "label": "앉는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "아직",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": true
+  },
+  {
+   "t": 110204,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 13,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "fire"
+  },
+  {
+   "t": 110684,
+   "kind": "lines",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "김순례. 그날 아침 하늘이 한 번 깜빡였어. 그 뒤로 계단 위가 저래.",
+   "name": "김순례",
+   "tag": "testify_soonrye",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/soonrye.png"
+  },
+  {
+   "t": 111128,
+   "kind": "lines",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "첫 줄에 벌써 자네 이름이네. 누가 적었어?",
+   "name": "김순례",
+   "tag": "testify_soonrye_book",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/soonrye.png"
+  },
+  {
+   "t": 111134,
+   "kind": "hudfaces",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "김순례,헤드램프의 남자,담요의 여자"
+  },
+  {
+   "t": 111417,
+   "kind": "lines",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "박기철이오. 선로에 신발만 줄지어 있었소. 사람은 없었소.",
+   "name": "박기철",
+   "tag": "testify_gicheol",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/gicheol.png"
+  },
+  {
+   "t": 111850,
+   "kind": "lines",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "정마리요. 병동에서 누가 환자 이름을 불렀어요. 대답한 사람들이 계단으로 올라갔어요. 안 내려왔어요.",
+   "name": "정마리",
+   "tag": "testify_mari",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/mari.png"
+  },
+  {
+   "t": 111856,
+   "kind": "hudfaces",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "김순례,박기철,담요의 여자"
+  },
+  {
+   "t": 112428,
+   "kind": "lines",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "화로에서 수첩을 편다. 방금 들은 이름을 한 줄씩 적는다. 순례가 묻는다. \"자네가 적어? 그럼 자네가 데려가는 거야.\"",
+   "name": "",
+   "tag": "d0_ledger",
+   "face": ""
+  },
+  {
+   "t": 112455,
+   "kind": "hudfaces",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "김순례,박기철,정마리"
+  },
+  {
+   "t": 113005,
+   "kind": "open",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "event",
+   "body": "화로에서 수첩을 편다. 방금 들은 이름을 한 줄씩 적는다. 순례가 묻는다. \"자네가 적어? 그럼 자네가 데려가는 거야.\"",
+   "opts": [
+    {
+     "label": "데려가겠습니다",
+     "sub": "소리 내어 한 약속이다",
+     "dis": false,
+     "warn": true
+    },
+    {
+     "label": "말없이 적는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "d0_ledger",
+   "picked": 1
+  },
+  {
+   "t": 113492,
+   "kind": "lines",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "이름이 한 줄씩 찼다. 당신 글씨였다. 순례는 더 묻지 않았다.",
+   "name": "",
+   "tag": "d0_ledger:out",
+   "face": ""
+  },
+  {
+   "t": 114016,
+   "kind": "hint",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 밤으로 — 화로"
+  },
+  {
+   "t": 114016,
+   "kind": "goal",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 114016,
+   "kind": "box",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 115316,
+   "kind": "note",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "evening? {'day': 0, 'phase': 'evening', 'map': 'station', 'x': 13, 'y': 12, 'face': 'up', 'moving': False, 'pending': None, 'ended': None, 'open': ''}"
+  },
+  {
+   "t": 115801,
+   "kind": "lines",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "아들이 남주에 있어. 그날 아침에 전화를 못 받았지. 일할 땐 안 받아. 삼십 년을 그랬어.",
+   "name": "김순례",
+   "tag": "",
+   "face": "http://127.0.0.1:18831/v4/img/portraits80/soonrye.png"
+  },
+  {
+   "t": 115813,
+   "kind": "box",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 116413,
+   "kind": "hint",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 말 걸기 — 김순례"
+  },
+  {
+   "t": 116413,
+   "kind": "goal",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 116413,
+   "kind": "box",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 117113,
+   "kind": "lines",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "할머니가 장작을 뒤집는다.",
+   "name": "",
+   "tag": "soonrye_idle",
+   "face": ""
+  },
+  {
+   "t": 117131,
+   "kind": "box",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 117288,
+   "kind": "hint",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 말 걸기 — 김순례"
+  },
+  {
+   "t": 117288,
+   "kind": "goal",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 117289,
+   "kind": "box",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 117968,
+   "kind": "open",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "book",
+   "body": "수첩명부 · 사실 줄 · 뒷장",
+   "opts": [
+    {
+     "label": "명부",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "사실 줄",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "뒷장",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "덮는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": "ledger"
+  },
+  {
+   "t": 118001,
+   "kind": "box",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "book"
+  },
+  {
+   "t": 118670,
+   "kind": "open",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "bookpage",
+   "body": "승객 명부당신당신 글씨김순례박기철정마리",
+   "opts": [
+    {
+     "label": "돌아간다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": null
+  },
+  {
+   "t": 119540,
+   "kind": "open",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "book",
+   "body": "수첩명부 · 사실 줄 · 뒷장",
+   "opts": [
+    {
+     "label": "명부",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "사실 줄",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "뒷장",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "덮는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": null
+  },
+  {
+   "t": 120162,
+   "kind": "hint",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 말 걸기 — 김순례"
+  },
+  {
+   "t": 120162,
+   "kind": "goal",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 120162,
+   "kind": "box",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 14,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 121619,
+   "kind": "open",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "fire",
+   "body": "화로드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다.불을 돋우면 밤이다. 더 이야기할 사람이 없나.",
+   "opts": [
+    {
+     "label": "잠자리로",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "아직",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": true
+  },
+  {
+   "t": 121651,
+   "kind": "box",
+   "day": 0,
+   "phase": "evening",
+   "map": "station",
+   "x": 13,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "fire"
+  },
+  {
+   "t": 122131,
+   "kind": "hint",
+   "day": 0,
+   "phase": "night",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 잠든다 — 화로"
+  },
+  {
+   "t": 122131,
+   "kind": "goal",
+   "day": 0,
+   "phase": "night",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 122131,
+   "kind": "box",
+   "day": 0,
+   "phase": "night",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 123765,
+   "kind": "open",
+   "day": 0,
+   "phase": "night",
+   "map": "station",
+   "x": 13,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "okind": "fire",
+   "body": "화로드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다.잠든다. 아침까지 누구도 깨우지 않는다.",
+   "opts": [
+    {
+     "label": "잠든다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "아직",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "",
+   "picked": true
+  },
+  {
+   "t": 123768,
+   "kind": "box",
+   "day": 0,
+   "phase": "night",
+   "map": "station",
+   "x": 13,
+   "y": 11,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "fire"
+  },
+  {
+   "t": 124274,
+   "kind": "line",
+   "day": 0,
+   "phase": "aftermath",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "밤이 지난다.",
+   "name": "",
+   "tag": ""
+  },
+  {
+   "t": 124431,
+   "kind": "card",
+   "day": 1,
+   "phase": "trace",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "D1 / 열차까지 9일"
+  },
+  {
+   "t": 124442,
+   "kind": "box",
+   "day": 1,
+   "phase": "trace",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 127243,
+   "kind": "lines",
+   "day": 1,
+   "phase": "trace",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "땔감 −1",
+   "name": "",
+   "tag": "",
+   "face": ""
+  },
+  {
+   "t": 127248,
+   "kind": "box",
+   "day": 1,
+   "phase": "trace",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 127368,
+   "kind": "hint",
+   "day": 1,
+   "phase": "trace",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "Space 배식으로 — 화로"
+  },
+  {
+   "t": 127368,
+   "kind": "goal",
+   "day": 1,
+   "phase": "trace",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "아침 — 흔적을 살피고 말을 건다 · 화로를 조사하면 배식"
+  },
+  {
+   "t": 127368,
+   "kind": "box",
+   "day": 1,
+   "phase": "trace",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 128666,
+   "kind": "note",
+   "day": 1,
+   "phase": "trace",
+   "map": "station",
+   "x": 13,
+   "y": 12,
+   "testified": [
+    "testify_soonrye#0",
+    "testify_soonrye_book#0",
+    "testify_gicheol#0",
+    "testify_mari#0"
+   ],
+   "met": [
+    "soonrye",
+    "gicheol",
+    "mari"
+   ],
+   "text": "end {'day': 1, 'phase': 'trace', 'map': 'station', 'x': 13, 'y': 12, 'face': 'up', 'moving': False, 'pending': None, 'ended': None, 'open': ''}"
+  }
+ ]
+}

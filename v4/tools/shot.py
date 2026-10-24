@@ -2,9 +2,10 @@
 # 쓰기:  python v4/tools/shot.py            (C:\dev\dark_station 에서)   → v4/shots/01_car.png … 12_beds.png + shots.json
 #        python v4/tools/shot.py car         (하나만)      python v4/tools/shot.py ending --seed=3   (시드 바꿔서)
 # 캡처 전에 v4/tools/manifest.py 로 그림 목록(v4/img/manifest.json)을 새로 만든다 — 새 그림이 자동으로 잡힌다.
-# shots.json: console_errors(오류·uncaught) + auto(봇이 남긴 [ds4 …] 줄: 도달한 날·고른 선택·그림 없는 장면)
-# 브라우저 쪽 자동 진행은 game.js 의 autoRun(?auto=) 이 맡는다. 화면 갱신은 setInterval 이라 숨은 창에서도 돈다.
-import os, sys, subprocess, threading, time, http.server, socketserver, functools, shutil, json, urllib.request
+# shots.json: ok + why(실패 까닭) + tries + console_errors(오류·uncaught) + auto(봇이 남긴 [ds4 …] 줄: 도달한 날·고른 선택·그림 없는 장면)
+#   ok = PNG 가 생겼고 + 봇 기록([ds4 auto]) 줄이 있고 + PNG 에서 잰 배율(png_scale)이 2 이고 + 시작 오류가 없다. 실패한 지점은 한 번 더 찍는다. 하나라도 실패면 끝 코드 1.
+# 브라우저 쪽 자동 진행은 game.js 의 autoRun(?auto=) 이 맡는다. 화면 갱신은 requestAnimationFrame + 보조 타이머(100ms 넘게 rAF 가 없으면 대신 한 번)라 숨은 창·헤드리스에서도 돈다.
+import os, re, sys, subprocess, threading, time, http.server, socketserver, functools, shutil, json, urllib.request
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 OUT = os.path.join(ROOT, 'v4', 'shots')
@@ -82,27 +83,76 @@ def decode(b):
     return b.decode('utf-8', errors='replace')
 
 
+EXPECT_K = 2                                     # 창 1280×720 → 논리 640×320 의 정수 배율 2 (game.js fitApp)
+RETRY = 1                                        # 실패한 지점은 한 번 더 찍는다 (다른 Chrome 이 동시에 돌 때 페이지가 아예 안 뜨는 경우)
+
+
+def png_scale(out):
+    """캡처 PNG 에서 배율을 잰다: 게임 화면(논리 640 폭)이 차지한 가로 폭 / 640. 헤드리스는 캡처 직전에 창 크기를 바꾸므로
+    게임 안에서 잰 배율은 캡처 때 배율이 아닐 수 있다 — 그림이 진짜 증거다. PIL 이 없으면 None."""
+    try:
+        from PIL import Image
+    except ImportError:
+        return None
+    try:
+        im = Image.open(out).convert('L')
+        bb = im.point(lambda v: 255 if v > 12 else 0).getbbox()
+        return 0 if not bb else round((bb[2] - bb[0]) / 640, 2)
+    except Exception:
+        return None
+
+
+def judge(out, lines):
+    """캡처가 진짜 게임 화면인가: PNG 가 있고, 봇 기록([ds4 auto] 줄)이 있고, 그림의 배율이 2 이고, 시작 실패·엔진 순서 오류가 없다.
+    PNG 만 보면 게임이 시작조차 안 된 검은 화면(배율 1, 빈 패널)도 성공으로 잡힌다 (2026-10-24 검증 #8)."""
+    why = []
+    if not os.path.exists(out):
+        return ['PNG 없음'], None
+    auto = [ln for ln in lines if 'CONSOLE' in ln and '[ds4 auto]' in ln]
+    if not auto:
+        why.append('봇 기록([ds4 auto]) 없음 - 게임이 끝까지 돌지 않았다')
+    k = png_scale(out)
+    if k is not None and k < EXPECT_K - 0.1:
+        why.append(f'그림 배율 {k} (기대 {EXPECT_K}) - 화면이 1배이거나 비었다')
+    bad = [ln for ln in lines if '시작하지 못했다' in ln or 'DS4 엔진이 먼저 읽혀야 한다' in ln or 'Uncaught' in ln]
+    if bad:
+        why.append('시작 오류: ' + bad[0][:120])
+    return why, k
+
+
 def shot(browser, key, name, log, seed=None):
     os.makedirs(OUT, exist_ok=True)
     out = os.path.join(OUT, name + '.png')
-    url = f'http://127.0.0.1:{PORT}/v4/index.html?fast=1&auto={key}&shot={int(time.time())}' + (f'&seed={seed}' if seed else '')
-    if key in FIXTURE:
-        url += f'&state=/__fixture/{FIXTURE[key]}.json' if FIXTURE[key] in FIXTURES else ''
-    prof = os.path.join(OUT, '.profile')
-    args = [browser, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
-            f'--user-data-dir={prof}', '--window-size=1280,720', f'--virtual-time-budget={BUDGET.get(key, 60000)}',
-            '--enable-logging=stderr', '--v=0', f'--screenshot={out}', url]
-    r = subprocess.run(args, capture_output=True, timeout=600)
-    lines = [decode(b) for b in (r.stderr or b'').splitlines()]
-    errs = [ln for ln in lines if 'CONSOLE' in ln and ('error' in ln.lower() or 'uncaught' in ln.lower())]
-    auto = [ln[ln.index('[ds4'):].split('", source')[0] for ln in lines if 'CONSOLE' in ln and '[ds4' in ln]
-    log.append({'shot': name, 'ok': os.path.exists(out), 'console_errors': errs, 'auto': auto})
-    print(('OK  ' if os.path.exists(out) else 'FAIL'), name, f'(console errors {len(errs)})')
+    tries = []
+    for attempt in range(1 + RETRY):
+        if os.path.exists(out):
+            os.remove(out)                       # 옛 캡처가 남아 있으면 '파일이 생겼다'로 오판한다
+        url = f'http://127.0.0.1:{PORT}/v4/index.html?fast=1&auto={key}&shot={int(time.time())}{attempt}' + (f'&seed={seed}' if seed else '')
+        if key in FIXTURE:
+            url += f'&state=/__fixture/{FIXTURE[key]}.json' if FIXTURE[key] in FIXTURES else ''
+        prof = os.path.join(OUT, '.profile')
+        args = [browser, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
+                f'--user-data-dir={prof}', '--window-size=1280,720', f'--virtual-time-budget={BUDGET.get(key, 60000)}',
+                '--enable-logging=stderr', '--v=0', f'--screenshot={out}', url]
+        r = subprocess.run(args, capture_output=True, timeout=600)
+        lines = [decode(b) for b in (r.stderr or b'').splitlines()]
+        errs = [ln for ln in lines if 'CONSOLE' in ln and ('error' in ln.lower() or 'uncaught' in ln.lower())]
+        auto = [ln[ln.index('[ds4'):].split('", source')[0] for ln in lines if 'CONSOLE' in ln and '[ds4' in ln]
+        why, k = judge(out, lines)
+        tries.append({'attempt': attempt + 1, 'ok': not why, 'why': why, 'png_scale': k, 'console_errors': len(errs)})
+        if not why:
+            break
+    log.append({'shot': name, 'ok': not why, 'why': why, 'png_scale': k, 'tries': tries, 'console_errors': errs, 'auto': auto})
+    print(('OK  ' if not why else 'FAIL'), name, f'(console errors {len(errs)}{", try " + str(len(tries)) if len(tries) > 1 else ""})' + (' - ' + ' / '.join(why) if why else ''))
     for e in errs + auto:
         print('   ', e.encode('ascii', 'backslashreplace').decode('ascii')[:300])
 
 
 def main():
+    try:
+        sys.stdout.reconfigure(errors='replace')   # Windows 콘솔(cp949)에서 못 찍는 글자가 있어도 멈추지 않게
+    except Exception:
+        pass
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     seed = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--seed=')), None)
     only = set(args)
@@ -144,6 +194,11 @@ def main():
         log = [old[n] for _, n in SHOTS if n in old]
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(log, f, ensure_ascii=False, indent=1)
+    bad = [x['shot'] for x in log if not x.get('ok')]
+    errs = sum(len(x.get('console_errors') or []) for x in log)
+    print(f'shots {len(log) - len(bad)}/{len(log)} ok · console errors {errs}' + (' · FAIL ' + ', '.join(bad) if bad else ''))
+    if bad:
+        sys.exit(1)
 
 
 if __name__ == '__main__':

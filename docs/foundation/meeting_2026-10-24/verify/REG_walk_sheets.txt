@@ -1,0 +1,10 @@
+dohyeon standH [45, 45, 45, 45] exp 45 standTop [3, 3, 3, 3] anyTop0 False feet [47] sideEdgeCells 0 OK
+dongha standH [46, 46, 46, 46] exp 46 standTop [2, 2, 2, 2] anyTop0 False feet [47] sideEdgeCells 0 OK
+eunchae standH [44, 44, 44, 44] exp 44 standTop [4, 4, 4, 4] anyTop0 False feet [47] sideEdgeCells 0 OK
+eunji standH [44, 44, 44, 44] exp 44 standTop [4, 4, 4, 4] anyTop0 False feet [47] sideEdgeCells 0 OK
+gicheol standH [45, 45, 45, 45] exp 45 standTop [3, 3, 3, 3] anyTop0 False feet [47] sideEdgeCells 0 OK
+mari standH [42, 42, 42, 42] exp 42 standTop [6, 6, 6, 6] anyTop0 False feet [47] sideEdgeCells 0 OK
+player standH [46, 46, 46, 46] exp 46 standTop [2, 2, 2, 2] anyTop0 False feet [47] sideEdgeCells 0 OK
+seoha standH [41, 41, 41, 41] exp 41 standTop [7, 7, 7, 7] anyTop0 False feet [47] sideEdgeCells 0 OK
+soonrye standH [39, 39, 39, 39] exp 39 standTop [9, 9, 9, 9] anyTop0 False feet [47] sideEdgeCells 0 OK
+bad 0

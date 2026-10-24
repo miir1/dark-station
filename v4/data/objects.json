@@ -241,6 +241,21 @@
     "resetOn": "inspect"
   },
   {
+    "id": "stairs_line",
+    "name": "분필 줄",
+    "states": [
+      "drawn"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "drawn": "insp_stairs_line"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
     "id": "shutter_gap",
     "name": "지하상가 셔터",
     "states": [
@@ -440,7 +455,8 @@
     },
     "solid": 0,
     "light": 0,
-    "resetOn": "inspect"
+    "resetOn": "inspect",
+    "owner": "mari"
   },
   {
     "id": "pillow_gicheol",
@@ -1141,18 +1157,35 @@
     "resetOn": "never"
   },
   {
+    "id": "car_shoes",
+    "name": "가지런한 신발",
+    "states": [
+      "there"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "there": "insp_car_shoes"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
     "id": "shelter_box",
     "name": "대피 공간 비상 상자",
     "states": [
       "closed",
-      "open"
+      "open",
+      "left"
     ],
     "overlay": {
       "open": "box_open_ov"
     },
     "inspectLine": {
       "closed": "insp_shelter",
-      "open": "insp_shelter_open"
+      "open": "insp_shelter_open",
+      "left": "insp_shelter_left"
     },
     "ledgerFact": {},
     "solid": 1,

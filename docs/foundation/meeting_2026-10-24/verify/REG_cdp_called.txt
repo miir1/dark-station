@@ -1,0 +1,4 @@
+d3_called_you mash deaths 0 chose 0
+d3_called_you hold deaths 0 chose 0
+d3_called_you arrowhold deaths 4 chose 4
+exit=0

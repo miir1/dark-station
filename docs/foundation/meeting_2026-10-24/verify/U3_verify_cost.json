@@ -1,0 +1,29 @@
+{
+ "frame_cost_real": {
+  "tunnel": {
+   "callbacks": 181,
+   "avg_ms": 1.03,
+   "p95_ms": 1.3,
+   "max_ms": 1.6,
+   "over_6.9ms(144Hz budget)": 0,
+   "bubbles_in_dom": 0
+  },
+  "morning3": {
+   "callbacks": 182,
+   "avg_ms": 1.75,
+   "p95_ms": 2.3,
+   "max_ms": 2.6,
+   "over_6.9ms(144Hz budget)": 0,
+   "bubbles_in_dom": 0
+  },
+  "eve3": {
+   "callbacks": 180,
+   "avg_ms": 2.17,
+   "p95_ms": 2.8,
+   "max_ms": 3.2,
+   "over_6.9ms(144Hz budget)": 0,
+   "bubbles_in_dom": 0
+  }
+ },
+ "frame_cost_console_errors": []
+}

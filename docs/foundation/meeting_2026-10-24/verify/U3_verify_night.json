@@ -1,0 +1,38 @@
+{
+ "sleep_detector_control_fake_day": {
+  "samples": 20,
+  "samples_with_patch": 16,
+  "patch_counts": [
+   5,
+   5,
+   5,
+   4,
+   4,
+   1,
+   1,
+   1,
+   1,
+   0,
+   0,
+   0,
+   0,
+   1,
+   1,
+   4,
+   4,
+   4,
+   4,
+   5
+  ]
+ },
+ "sleep_night_real": {
+  "frames": 212,
+  "lying_people": [
+   5
+  ],
+  "blanket_patch_draws": 0,
+  "BREATH_AT_NIGHT": false,
+  "phase": "night",
+  "console_errors": []
+ }
+}

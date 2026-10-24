@@ -1,0 +1,31 @@
+{
+ "portrait": {
+  "tag": "IMG",
+  "src": "portraits80/soonrye.png",
+  "naturalWidth": 80,
+  "naturalHeight": 80,
+  "shownW": 164,
+  "shownH": 164,
+  "scale": 2,
+  "contentW": 80,
+  "integer_scale": true
+ },
+ "choice_cg": {
+  "big": {
+   "src": "cg/pro_stairs.png",
+   "naturalWidth": 384,
+   "shown": false,
+   "w": 0,
+   "contentW": 0
+  },
+  "small": {
+   "src": "cg_s/pro_stairs.png",
+   "naturalWidth": 256,
+   "shown": true,
+   "w": 516,
+   "contentW": 256
+  },
+  "kind": "event"
+ },
+ "console_errors": []
+}

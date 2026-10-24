@@ -1,0 +1,260 @@
+{
+ "fire_real": {
+  "info": {
+   "fire": [
+    13,
+    10
+   ],
+   "obj": {
+    "x": 13,
+    "y": 10,
+    "state": "lit"
+   },
+   "drumOpen": true,
+   "people": [
+    [
+     "soonrye",
+     12,
+     10,
+     "crouch"
+    ],
+    [
+     "gicheol",
+     25,
+     10,
+     ""
+    ],
+    [
+     "mari",
+     20,
+     11,
+     "sitting"
+    ]
+   ]
+  },
+  "frames": 181,
+  "span_s": 2.999,
+  "fps": 60.4,
+  "flame_frame_changes": 30,
+  "flame_changes_per_s": 10.0,
+  "distinct_flame_frames": 5,
+  "flame_order_first25": [
+   6,
+   9,
+   10,
+   11,
+   12,
+   6,
+   9,
+   10,
+   11,
+   12,
+   6,
+   9,
+   10,
+   11,
+   12,
+   6,
+   9,
+   10,
+   11,
+   12,
+   6,
+   9,
+   10,
+   11,
+   12
+  ],
+  "flame_draws_per_frame": [
+   1
+  ],
+  "sparks_per_frame": [
+   1,
+   2
+  ],
+  "drum_open_id": 5,
+  "v3_drum_id": 13,
+  "imgs_drawn_at_fire_cell_w>=16": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "tick_changes_3s": 90,
+  "tick_span": 90
+ },
+ "breath_real": {
+  "method": "player stands next to each person 3 s (inside player light)",
+  "people": [
+   [
+    "soonrye",
+    10,
+    10,
+    ""
+   ],
+   [
+    "seoha",
+    16,
+    10,
+    ""
+   ],
+   [
+    "gicheol",
+    20,
+    10,
+    ""
+   ],
+   [
+    "eunji",
+    21,
+    11,
+    ""
+   ],
+   [
+    "dongha",
+    23,
+    11,
+    ""
+   ],
+   [
+    "mari",
+    22,
+    10,
+    ""
+   ]
+  ],
+  "per_person": {
+   "soonrye": {
+    "frames": 181,
+    "frames_upper_down_1px": 72,
+    "toggles": 2,
+    "toggle_gaps_ms": [
+     1201
+    ],
+    "no_draw_frames": 0,
+    "draw_variants(sy,offset,nargs)": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      0,
+      1,
+      8
+     ]
+    ]
+   },
+   "seoha": {
+    "frames": 180,
+    "frames_upper_down_1px": 77,
+    "toggles": 3,
+    "toggle_gaps_ms": [
+     1200,
+     1200
+    ],
+    "no_draw_frames": 0,
+    "draw_variants(sy,offset,nargs)": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      0,
+      1,
+      8
+     ]
+    ]
+   },
+   "gicheol": {
+    "frames": 180,
+    "frames_upper_down_1px": 97,
+    "toggles": 3,
+    "toggle_gaps_ms": [
+     1201,
+     1199
+    ],
+    "no_draw_frames": 0,
+    "draw_variants(sy,offset,nargs)": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      0,
+      1,
+      8
+     ]
+    ]
+   },
+   "eunji": {
+    "frames": 181,
+    "frames_upper_down_1px": 72,
+    "toggles": 2,
+    "toggle_gaps_ms": [
+     1200
+    ],
+    "no_draw_frames": 0,
+    "draw_variants(sy,offset,nargs)": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      0,
+      1,
+      8
+     ]
+    ]
+   },
+   "dongha": {
+    "frames": 180,
+    "frames_upper_down_1px": 86,
+    "toggles": 3,
+    "toggle_gaps_ms": [
+     1201,
+     1199
+    ],
+    "no_draw_frames": 0,
+    "draw_variants(sy,offset,nargs)": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      0,
+      1,
+      8
+     ]
+    ]
+   },
+   "mari": {
+    "frames": 181,
+    "frames_upper_down_1px": 72,
+    "toggles": 2,
+    "toggle_gaps_ms": [
+     1200
+    ],
+    "no_draw_frames": 0,
+    "draw_variants(sy,offset,nargs)": [
+     [
+      0,
+      0,
+      2
+     ],
+     [
+      0,
+      1,
+      8
+     ]
+    ]
+   }
+  }
+ },
+ "fire_breath_console_errors": []
+}

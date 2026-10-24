@@ -31,6 +31,15 @@
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
+    "text": "게시판이다. 「아들」이라고 적힌 전화번호 종이가 붙어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_board",
+    "speaker": "narrator",
+    "context": "flag:met_soonrye & day>=1",
+    "grade": "normal",
     "text": "게시판이다. 순례가 아들 번호를 적어 둔 종이가 붙어 있다.",
     "rumor": 0,
     "truth": 1
@@ -67,7 +76,7 @@
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
-    "text": "창고 상자다. 뚜껑이 닫혀 있다.",
+    "text": "창고 상자다. 뚜껑이 닫혀 있다. 배식 때만 연다.",
     "rumor": 0,
     "truth": 1
   },
@@ -157,6 +166,15 @@
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
+    "text": "세로줄이 그어져 있다. 밤마다 한 줄씩 는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_chalk_lines",
+    "speaker": "narrator",
+    "context": "flag:met_soonrye & day>=1",
+    "grade": "normal",
     "text": "세로줄이 그어져 있다. 순례가 밤마다 긋는다.",
     "rumor": 0,
     "truth": 1
@@ -175,7 +193,7 @@
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
-    "text": "출구 계단이다. 한가운데에 잿빛이 벽처럼 멈춰 있다.",
+    "text": "출구 계단이다. 한가운데에 안개가 벽처럼 멈춰 있다.",
     "rumor": 0,
     "truth": 1
   },
@@ -203,6 +221,33 @@
     "context": "",
     "grade": "normal",
     "text": "재가 승강장 바로 위다. 숨을 쉬면 입안이 텁텁하다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_line",
+    "speaker": "narrator",
+    "context": "!flag:met_soonrye",
+    "grade": "normal",
+    "text": "분필로 그은 줄이다. 발자국이 줄 앞에서 끊긴다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_line",
+    "speaker": "narrator",
+    "context": "flag:met_soonrye",
+    "grade": "normal",
+    "text": "할머니가 말한 분필 줄이다. 그 위로는 발자국이 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_line",
+    "speaker": "narrator",
+    "context": "flag:met_soonrye & day>=1",
+    "grade": "normal",
+    "text": "순례가 그은 분필 줄이다. 그 위로는 발자국이 없다.",
     "rumor": 0,
     "truth": 1
   },
@@ -445,6 +490,24 @@
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
+    "text": "가위다. 붕대를 자를 때 쓴다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_scissors",
+    "speaker": "narrator",
+    "context": "flag:met_mari",
+    "grade": "normal",
+    "text": "담요 여자의 가위다. 붕대를 자를 때 쓴다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_scissors",
+    "speaker": "narrator",
+    "context": "flag:met_mari & (day>=2 | day>=1 & !flag:met_late_mari)",
+    "grade": "normal",
     "text": "마리의 가위다. 붕대를 자를 때 쓴다.",
     "rumor": 0,
     "truth": 1
@@ -462,6 +525,24 @@
     "id": "insp_pillow",
     "speaker": "narrator",
     "context": "",
+    "grade": "normal",
+    "text": "누군가의 베개다. 접은 옷이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pillow",
+    "speaker": "narrator",
+    "context": "flag:met_gicheol",
+    "grade": "normal",
+    "text": "헤드램프 남자의 베개다. 접은 옷이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pillow",
+    "speaker": "narrator",
+    "context": "flag:met_gicheol & (day>=2 | day>=1 & !flag:met_late_gicheol)",
     "grade": "normal",
     "text": "기철의 베개다. 접은 옷이다.",
     "rumor": 0,
@@ -643,7 +724,7 @@
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
-    "text": "주인 없는 가방들이다. 하나가 유난히 무겁다.",
+    "text": "좌석 밑에 주인 없는 가방들이 밀려 있다. 하나가 유난히 무겁다.",
     "rumor": 0,
     "truth": 1
   },
@@ -729,11 +810,29 @@
     "truth": 1
   },
   {
+    "id": "insp_car_shoes",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "신발 한 켤레가 가지런하다. 주인은 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_car_shoes",
+    "speaker": "narrator",
+    "context": "map==tunnel",
+    "grade": "normal",
+    "text": "안전화 한 켤레가 가지런하다. 주인은 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
     "id": "insp_shelter",
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
-    "text": "대피 공간의 비상 상자다. 옆에 안전화 한 켤레가 가지런히 벗겨져 있다.",
+    "text": "벽감에 비상 상자가 있다. 옆에 안전화 한 켤레가 가지런하다.",
     "rumor": 0,
     "truth": 1
   },
@@ -747,11 +846,38 @@
     "truth": 1
   },
   {
+    "id": "insp_shelter_left",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "닫힌 비상 상자다. 등 뒤의 헤드램프 빛이 상자를 지킨다. 상자는 두고 간다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelter_left",
+    "speaker": "narrator",
+    "context": "flag:shelter_shut",
+    "grade": "normal",
+    "text": "뚜껑을 닫아 둔 비상 상자다. 헤드램프 빛이 그 위에 머문다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelter_left",
+    "speaker": "narrator",
+    "context": "flag:met_gicheol",
+    "grade": "normal",
+    "text": "닫힌 비상 상자다. 앞선 빛이 멀어진다. 상자는 두고 간다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
     "id": "insp_vent",
     "speaker": "narrator",
     "context": "",
     "grade": "normal",
-    "text": "환기 통로다. 안쪽이 잿빛이다. 발이 움직이지 않는다.",
+    "text": "환기 통로다. 안쪽에 안개가 차 있다. 발이 움직이지 않는다.",
     "rumor": 0,
     "truth": 1
   },
@@ -1629,20 +1755,74 @@
     "truth": 1
   },
   {
-    "id": "soonrye_meet",
-    "speaker": "soonrye",
-    "context": "day==0",
+    "id": "soonrye_idle",
+    "speaker": "narrator",
+    "context": "",
     "grade": "normal",
-    "text": "신발 신었어? …됐어, 사람이네. 김순례야. 저쪽 끝에 하나, 역무실에 하나.",
+    "text": "할머니가 장작을 뒤집는다.",
     "rumor": 0,
     "truth": 1
   },
   {
-    "id": "soonrye_d1",
-    "speaker": "soonrye",
-    "context": "day==1",
+    "id": "gicheol_idle",
+    "speaker": "narrator",
+    "context": "",
     "grade": "normal",
-    "text": "할 일은 셋이야. 뒤지기, 물 긷기, 쉬기. 사람은 자네가 세.",
+    "text": "남자가 헤드램프 끈을 고쳐 맨다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "mari_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "여자가 붕대를 다시 만다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "eunji_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "여자가 셔터 쪽을 본다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dongha_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "청년이 무릎을 끌어안는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "seoha_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "아이가 휴대폰을 뒤집어 든다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_meet",
+    "speaker": "soonrye",
+    "context": "day==0",
+    "grade": "normal",
+    "text": "앉든지 둘러보든지 해. 계단만 빼고.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_rule_train",
+    "speaker": "soonrye",
+    "context": "day==1 & flag:met_soonrye",
+    "grade": "normal",
+    "text": "저 소리가 열흘이래. 스피커 말이야. 사람은 자네가 세.",
     "rumor": 0,
     "truth": 1
   },
@@ -1665,9 +1845,9 @@
     "truth": 1
   },
   {
-    "id": "soonrye_d3",
+    "id": "soonrye_rule_answer",
     "speaker": "soonrye",
-    "context": "day==3",
+    "context": "day==3 & flag:met_soonrye",
     "grade": "normal",
     "text": "어젯밤에 저 위에서 뭔가 셌어. 오늘 밤엔 대답하지 마. 누가 불러도.",
     "rumor": 0,
@@ -1705,7 +1885,7 @@
     "speaker": "mari",
     "context": "day==0",
     "grade": "normal",
-    "text": "퇴근하다 붙들렸어요. 간호사예요. 다친 데 있으면 말해요.",
+    "text": "다치면 바로 말해요. 여기선 곪으면 끝이에요.",
     "rumor": 0,
     "truth": 1
   },
@@ -1732,7 +1912,7 @@
     "speaker": "gicheol",
     "context": "day==0",
     "grade": "normal",
-    "text": "거기 서… 사람이오? 맨발이면 오지 마시오. 박기철, 정비사요.",
+    "text": "…역이오. 불은 저 할머니 거요.",
     "rumor": 0,
     "truth": 1
   },
@@ -1746,11 +1926,20 @@
     "truth": 1
   },
   {
-    "id": "gicheol_d1",
+    "id": "gicheol_rule_rail",
     "speaker": "gicheol",
-    "context": "day==1",
+    "context": "day==1 & flag:met_gicheol",
     "grade": "normal",
-    "text": "발전기를 돌리면 물을 길을 수 있소. 대신 소리가 나오. 위는 보지 마시오.",
+    "text": "선로가 잠겼소. 통로를 이어야 열차가 서오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_rule_count",
+    "speaker": "gicheol",
+    "context": "day>=1 & day<=2 & flag:met_gicheol",
+    "grade": "normal",
+    "text": "세는 것이 밤마다 머릿수를 세오. 숨죽이면 지나가오.",
     "rumor": 0,
     "truth": 1
   },
@@ -1795,7 +1984,7 @@
     "speaker": "eunji",
     "context": "day<=2",
     "grade": "normal",
-    "text": "시장 사람 둘. 나는 은지, 얘는 동하. 문 열어 줘서 고맙단 말은 안 해.",
+    "text": "문 열어 줘서 고맙단 말은 안 해.",
     "rumor": 0,
     "truth": 1
   },
@@ -1822,7 +2011,7 @@
     "speaker": "dongha",
     "context": "day<=2",
     "grade": "normal",
-    "text": "…한동하요.",
+    "text": "…고마워요.",
     "rumor": 0,
     "truth": 1
   },
@@ -2369,5 +2558,239 @@
     "text": "밤새 누가 배고프다고 울었어.",
     "rumor": 1,
     "truth": 0
+  },
+  {
+    "id": "look_soonrye",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "청소원 조끼의 할머니",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_gicheol",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "헤드램프의 남자",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_mari",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "담요의 여자",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_eunji",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "셔터의 여자",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_dongha",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "큰 청년",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_seoha",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "담요 속 여학생",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_soonrye",
+    "speaker": "soonrye",
+    "context": "",
+    "grade": "normal",
+    "text": "김순례. 그날 아침 하늘이 한 번 깜빡였어. 그 뒤로 계단 위가 저래.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_soonrye_book",
+    "speaker": "soonrye",
+    "context": "flag:notebook",
+    "grade": "normal",
+    "text": "첫 줄에 벌써 자네 이름이네. 누가 적었어?",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_mari",
+    "speaker": "mari",
+    "context": "flag:met_mari",
+    "grade": "normal",
+    "text": "정마리요. 병동에서 누가 환자 이름을 불렀어요. 대답한 사람들이 계단으로 올라갔어요. 안 내려왔어요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_gicheol",
+    "speaker": "gicheol",
+    "context": "flag:met_gicheol",
+    "grade": "normal",
+    "text": "박기철이오. 선로에 신발만 줄지어 있었소. 사람은 없었소.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_eunji",
+    "speaker": "eunji",
+    "context": "flag:met_eunji",
+    "grade": "normal",
+    "text": "최은지. 하늘 봤어. 바로 눈 감았어. 그래서 여기 있어.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_dongha",
+    "speaker": "dongha",
+    "context": "flag:met_eunji",
+    "grade": "normal",
+    "text": "…한동하요. 시장 지붕에서 누가 이름이 불렸어요. 대답한 사람은 위로 갔어요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_seoha",
+    "speaker": "seoha",
+    "context": "flag:met_seoha",
+    "grade": "normal",
+    "text": "…윤서하요. 창으로 계단을 봤어요. 신발이 하루에 한 켤레씩 늘어요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_4",
+    "speaker": "gicheol",
+    "context": "day==0 & !flag:met_gicheol",
+    "grade": "toast",
+    "text": "거기 서.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_2",
+    "speaker": "gicheol",
+    "context": "day==0 & !flag:met_gicheol",
+    "grade": "toast",
+    "text": "…발 좀 보이시오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_1",
+    "speaker": "gicheol",
+    "context": "day==0 & !flag:met_gicheol",
+    "grade": "toast",
+    "text": "…신었군.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_soonrye_4",
+    "speaker": "soonrye",
+    "context": "day==0 & !flag:met_soonrye",
+    "grade": "toast",
+    "text": "멈춰.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_soonrye_2",
+    "speaker": "soonrye",
+    "context": "day==0 & !flag:met_soonrye",
+    "grade": "toast",
+    "text": "…발.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_mari_6",
+    "speaker": "mari",
+    "context": "day==0 & !flag:met_mari",
+    "grade": "toast",
+    "text": "…영자 씨, 순덕 씨, 광호 씨…",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_mari_4",
+    "speaker": "mari",
+    "context": "day==0 & !flag:met_mari",
+    "grade": "toast",
+    "text": "…다쳤어요?",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_shutter_8",
+    "speaker": "narrator",
+    "context": "day==1 & phase==day & !flag:met_eunji",
+    "grade": "toast",
+    "text": "쿵. 쿵. 쿵.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_shutter_3",
+    "speaker": "eunji",
+    "context": "day==1 & phase==day & !flag:met_eunji",
+    "grade": "toast",
+    "text": "열어. 사람이야. 신발 신었어.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_soonrye_rule_train",
+    "speaker": "soonrye",
+    "context": "day==1 & flag:met_soonrye",
+    "grade": "toast",
+    "text": "저 스피커 소리, 열흘이래.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_rule_rail",
+    "speaker": "gicheol",
+    "context": "day==1 & flag:met_gicheol",
+    "grade": "toast",
+    "text": "선로가 잠겼소. 통로를 이어야 서오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_rule_count",
+    "speaker": "gicheol",
+    "context": "day==2 & flag:met_gicheol",
+    "grade": "toast",
+    "text": "밤에 세거든 숨죽이시오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_soonrye_rule_answer",
+    "speaker": "soonrye",
+    "context": "day==3 & flag:met_soonrye",
+    "grade": "toast",
+    "text": "오늘 밤엔 대답하지 마.",
+    "rumor": 0,
+    "truth": 1
   }
 ]

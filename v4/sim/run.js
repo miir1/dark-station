@@ -1,4 +1,4 @@
-// node v4/sim/run.js [판수=200] [정책,정책…] [--report] [--suffix=b] [--compare=report_x.md,다른보고서.md] [--peek] [--inject=numbers:trip_party=2,objects:fire.resetOn=morning] [--blocks=1,1001] [--seed0=2001]
+// node v4/sim/run.js [판수=200] [정책,정책…] [--report] [--suffix=b] [--out=v4/sim/report_x.md] [--compare=report_x.md,다른보고서.md] [--peek] [--inject=numbers:trip_party=2,objects:fire.resetOn=morning] [--blocks=1,1001] [--seed0=2001]
 // 정책 × 판수 × 시드 블록을 돌려 표를 찍고, --report 면 v4/sim/report_<날짜><suffix>.md 에 쓴다 (C:\dev\dark_station 에서 실행).
 //   --blocks   시드 블록 시작값들(쉼표). 기본 1,1001 = 시드 1~N 과 1001~1000+N. 합격선은 블록마다 따로 재서 범위로 보고한다
 //   --seed0    블록 하나만, 이 시드부터 N판 (예: --seed0=2001 → 2001~2000+N). --blocks 가 있으면 무시
@@ -19,6 +19,7 @@ const report = args.includes('--report');
 const opt = (k) => { const a = args.find((x) => x.startsWith(`--${k}=`)); return a ? a.slice(k.length + 3) : ''; };
 const suffix = opt('suffix');
 OPT.peek = args.includes('--peek');
+OPT.perObject = args.includes('--per-object');   // 옛 아침 조사(물건 하나씩)로 비교 (10-24 P0-E2 전)
 const dataDir = path.join(__dirname, '..', 'data');
 let db = T.loadDir(dataDir);
 const injected = [];
@@ -40,6 +41,7 @@ if (!blocks.length) throw new Error('--blocks / --seed0: 시드 시작값이 없
 const blockName = (b0) => `시드 ${b0}~${b0 + N - 1}`;
 
 const t0 = Date.now();
+const TODAY = ((d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`)(new Date());   // 이 컴퓨터의 날짜(전에는 UTC 라 한국 아침에 하루 전 날짜가 찍혔다)
 const aggs = {}; const samples = {}; const byBlock = blocks.map(() => ({}));
 for (const name of names) {
   const all = [];
@@ -78,15 +80,17 @@ const ALIAS = { '찬가 발견율 (부지런 / 게으름)': ['찬가 발견율 (
   '사망 중 경고 있던 선택 (실질: 강제 사망은 경고 없음)': ['사망 중 경고 있던 선택'], '경고 없는 사망 (전 정책 합산, 강제 사망 포함)': ['경고 없는 사망 (전 정책 합산)'] };   // 10-22 실질 기준으로 바뀐 줄
 const prevOf = (cmp, k0) => { const k = k0.trim(); return cmp.gate[k] !== undefined ? cmp.gate[k] : (ALIAS[k] || []).map((a) => cmp.gate[a]).find((v) => v !== undefined) || '—'; };
 
-const cols = ['생존%', '사망%', '굶주림비중%', '실질경고%', '강제%', '열차%', '전멸%', '밤사건', '시계', 'malice', 'hymn', '발견%', '모름≥1%', '찬가발견%', 'explicit', '결정/일', '빈칸%', '원정', '날'];
-const row = (a) => [a.survived, a.deathRate, a.deaths ? a.starveShare : '-', a.deaths ? a.warnedRate : '-', a.deaths ? a.forcedRate : '-', a.train, a.allDead, a.nights, a.clock, a.malice, a.hymn, a.discovery, a.unknownOk, a.hymnDiscovery, a.explicit, a.decisions, a.blank, a.trips, a.days];
-let md = `# 봇 보고서 — 정책 ${names.length} × ${N}판 × 시드 블록 ${blocks.length} (${new Date().toISOString().slice(0, 10)})\n\n`;
+const cols = ['생존%', '사망%', '굶주림비중%', '실질경고%', '강제%', '열차%', '전멸%', '밤사건', '시계', 'malice', 'hymn', '발견%', '모름≥1%', '찬가발견%', 'explicit', '결정/일', '빈칸%', '원정', '날', '굶주림', 'D3셈%', '함께센다%'];
+const row = (a) => [a.survived, a.deathRate, a.deaths ? a.starveShare : '-', a.deaths ? a.warnedRate : '-', a.deaths ? a.forcedRate : '-', a.train, a.allDead, a.nights, a.clock, a.malice, a.hymn, a.discovery, a.unknownOk, a.hymnDiscovery, a.explicit, a.decisions, a.blank, a.trips, a.days, a.hunger, a.d3Reached, a.d3Reached ? a.d3Together : '-'];
+let md = `# 봇 보고서 — 정책 ${names.length} × ${N}판 × 시드 블록 ${blocks.length} (${TODAY})\n\n`;
 md += `데이터: v4/data (밤 사건 ${db.nightEvents.length}, 사건 ${db.eventsList.length}, 후보 ${db.identity.candidates.length}). 시드 블록: ${blocks.map(blockName).join(', ')}. 걸린 시간 ${(ms / 1000).toFixed(1)}초. 규칙·데이터는 손대지 않았다.`;
 if (injected.length) md += ` **메모리에서만 더한 행: ${injected.join(', ')}** (표 파일은 그대로).`;
 if (OPT.peek) md += ' **봇 조사 판단: 옛 판단(--peek).**';
+if (OPT.perObject) md += ' **봇 아침 조사: 옛 물건 하나씩(--per-object).**';
 md += '\n\n';
 md += `## 1. 정책별 표 (블록 ${blocks.length}개를 합친 ${N * blocks.length}판)\n| 정책 | ${cols.join(' | ')} |\n|---|${cols.map(() => '---').join('|')}|\n`;
 for (const name of names) md += `| ${name} | ${row(aggs[name]).join(' | ')} |\n`;
+md += `\n굶주림 = 아침마다 잰 당신 굶주림의 판 평균(10-24 추가) · D3셈% = D3 밤 셈(trial_d3_count·_b·_c)까지 간 판 · 함께센다% = 그중 '함께 센다'를 고른 비율. 아침 조사는 칸 단위(10-24 P0-E2: 그 칸의 물건 전부, 조사 수 = 칸 수).\n`;
 md += `\n정책: balanced 축 중립·보통 조사 / selfish 몫−손− / devoted 몫+손+ / silent 이름− / caller 이름+ / lazy 게으른 조사(1곳·말 0) / diligent 부지런(상한 보고용) / risky 모험(판정+경고 선택 우선 ≥35%, 원정 매일 1층→2층, 거래·협정·범람수는 자원 + 최대) / steward 몫+손−이름+(정체 inspector 쪽 성향, 10-23 추가). 조심형(합격선 따로 집계) = ${CAREFUL.join('·')}.\n`;
 for (const name of names) md += `- ${name} 사망 원인: ` + (Object.entries(aggs[name].byCause).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ') || '없음') + (aggs[name].unwarned ? ` (경고 없는 죽음 ${aggs[name].unwarned})` : '') + (aggs[name].deadlyPick ? ` [평범한 대안 두고 죽음 글 선택 ${aggs[name].deadlyPick}]` : '')
   + (aggs[name].forced ? ` — 강제 ${aggs[name].forced}: ` + Object.entries(aggs[name].byForced).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ') : '') + '\n';
@@ -108,7 +112,7 @@ for (const r of combined) md += `| ${r.k} | ${r.want} | ${r.got.join(' | ')} | $
 
 console.log(md);
 if (report) {
-  const out = path.join(__dirname, `report_${new Date().toISOString().slice(0, 10)}${suffix}.md`);
+  const out = opt('out') ? path.resolve(opt('out')) : path.join(__dirname, `report_${TODAY}${suffix}.md`);   // --out=경로: 이름을 정해 쓴다
   fs.writeFileSync(out, md + '\n<!-- §3 원인 추정은 구현·검증 부장이 손으로 덧붙인다 -->\n', 'utf8');
   console.log('written', out);
 }

@@ -1,0 +1,25 @@
+그림(art) 담당 끝 증거 요약 — 2026-10-24  (다시 만들기: sh tools/build_art_v4.sh)
+
+P0-A1 걷기 9장 덩어리 단위 재자르기
+  python tools/check_walk.py → 9명 중 실패 0 (상세 art_walk_check.txt, 확대판 art_walk_x4.png)
+  - 잘림 0px (9명×12칸, 칸 위·좌·우 경계에 닿는 픽셀 0, 위로 넘친 줄 0)
+  - 방향마다 섬 칸 머리 꼭대기 차이 0px (≤1 관문)
+  - 섬 칸 키 = 키 표(46·46·45·45·44·44·42·41·39), 발바닥 y=47 전 칸
+  - 이웃 장 차이 300 초과 줄은 상체 고정 합성 시도·기록(art_src/walk_recut_log.json). 허리 이음매 ≤4px 이고 떨어진 큰 조각이 없을 때만 적용,
+    불통과 장(동하 좌·우 4장, 마리 좌 2장, 도현 좌L 1장)은 원본 유지.
+  - 서하: 전체 해상도에서 덩어리 12개로 떨어져 있어 끊기·Codex 불필요. 오른쪽 서기 칸 발밑 검은 덩어리 사라짐.
+  - 기철: 모자 앞 헤드램프 2px(아래·왼·오른 보기).
+P0-A2 크기 기준표·손찍기·drum_open·입 아이콘
+  python tools/check_scale.py → 실패 0 (상세 art_check_scale.txt). 손 물건 18장 긴 변 ≤12, 상태 짝 다른 픽셀 ≥8, drum_open 32×32=v3 drum.
+  판: art_props_scale.png (46px 사람 옆 물건 40장, 같은 바닥 줄)
+P0-A3 수납 가구 짝·찾은 물건 아이콘
+  짝 11쌍(+빔 1) 모두 캔버스·바닥 줄 같음, 가로 어긋남 0, 다른 픽셀 ≥8. 판: art_containers.png, 좌석 줄: art_seat_row.png
+  Codex 호출 2회(①②), 재시도 0 — art_src/codex_log.md
+P0-A4 초상 80·작은 장면 그림·꿈 48색
+  portraits80 9 + portraits80_hurt 9 (80×80), cg_s 39장 = 쓰이는 장면 39장(256×144), 꿈 4장 각 48색. 판: art_portrait80.png
+  (cg_s 는 art.js·events.json 에서 '쓰이는 그림'을 풀어 정한다. 오늘 첫 실행 40 → 다른 담당이 cg_camp 를 빼서 39)
+
+공통
+  git status v3/ → 변경 0
+  data OK, node --test 93/93 통과 (그림만 바꿨다, 코드·데이터 안 건드림)
+  tools/build_art.sh 실행 안 함

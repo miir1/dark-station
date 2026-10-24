@@ -1,0 +1,170 @@
+== pro_lever | when: day==0 & map==car & inspect:lever & trace:lever==up
+   text: 비상 레버다. 문 옆 비상함에 생수 두 병이 보인다.
+   - 레버를 당긴다 | eff: [{"verb": "number", "id": "water", "n": 2}, {"verb": "trace", "id": "lever", "state": "pulled"}] | keys 
+       out: 문이 쉭 하고 열렸다. 찬 공기가 밀려들었다. 생수 두 병을 챙겼다.
+   - 그냥 둔다 | eff: [] | keys 
+       out: 레버는 그대로 두었다.
+== pro_bag | when: day==0 & map==car & inspect:bag & trace:bag==closed
+   text: 주인 없는 가방 사이에 공구 가방이 있다.
+   - 연다 | eff: [{"verb": "number", "id": "parts", "n": 1}, {"verb": "flag", "id": "has_rope", "set": 1}, {"verb": "trace", "id": "bag", "state": "open"}] | keys 
+       out: 케이블 뭉치가 들어 있었다. 사원증 사진이 웃고 있었다.
+== pro_notebook | when: day==0 & map==car & inspect:notebook_dash & trace:notebook_dash==there
+   text: 「승객 명부」. 첫 줄에 당신 이름이 적혀 있다. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다.
+   - 주머니에 넣는다 | eff: [{"verb": "flag", "id": "notebook", "set": 1}, {"verb": "trace", "id": "notebook_dash", "state": "taken"}] | keys 
+       out: 수첩을 주머니에 넣었다. 연필도 있었다.
+== pro_radio | when: day==0 & map==car & inspect:radio_cab & trace:radio_cab==idle
+   text: 무전기가 혼자 지직거린다. 문장 사이에 숨소리가 섞여 있다.
+   - 든다 | eff: [{"verb": "trace", "id": "radio_cab", "state": "used"}] | keys 
+       out: "…위로 나오지 마십시오… 열흘 뒤 정오…" 끊겼다. 사람이었다.
+   - 둔다 | eff: [] | keys 
+       out: 지직거림이 등 뒤에서 이어졌다.
+== pro_medkit | when: day==0 & map==car & inspect:medkit & trace:medkit==closed
+   text: 벽의 구급함이다. 잠금쇠가 녹슬었다.
+   - 뜯는다 | eff: [{"verb": "number", "id": "meds", "n": 1}, {"verb": "trace", "id": "medkit", "state": "open"}] | keys 
+       out: 붕대와 소독약, 진통제 한 줄. 손이 떨려 두 번 떨어뜨렸다.
+== pro_vent | when: day==0 & map==tunnel & inspect:vent_shaft
+   text: 맨발 자국이 환기 통로로 꺾인다. 안쪽에 안개가 차 있다. 아주 작게 숫자 세는 소리가 난다.
+   - 들어가 본다 | eff: [{"verb": "number", "id": "fear", "who": "you", "n": 1}] | keys 
+       out: 발이 움직이지 않았다. 세는 소리가 하나 더 셌다.
+   - 돌아선다 | eff: [] | keys 
+       out: 앞쪽에서 무언가 무너지는 소리가 났다.
+== pro_rubble_alone | when: day==0 & map==tunnel & inspect:rubble & !flag:met_gicheol
+   text: 무너진 구간이다. 헤드램프 빛이 당신 발을 비추고 있다.
+   - 혼자 넘어 본다 | eff: [] | keys ['label', 'check', 'cost', 'req', 'taboo', 'warn', 'ok', 'fail']
+       out: 
+   - 그만둔다 | eff: [] | keys 
+       out: 남자가 이쪽을 보지 않았다.
+== pro_platform | when: day==0 & map==station & !flag:arrived & (talk:soonrye | inspect:fire | phase==evening)
+   text: 할머니가 당신 발을 오래 본다. "신발 신었어? …됐어, 사람이네." "저쪽 끝에 하나, 역무실에 하나." "계단 줄 위로는 가지 마."
+   - 불가에 앉는다 | eff: [{"verb": "flag", "id": "arrived", "set": 1}, {"verb": "flag", "id": "met_soonrye", "set": 1}] | keys 
+       out: 할머니가 장작 하나를 더 넣었다. 처음 보는 주황빛이었다.
+   - 계단 쪽을 본다 | eff: [{"verb": "flag", "id": "arrived", "set": 1}, {"verb": "flag", "id": "met_soonrye", "set": 1}] | keys 
+       out: "저 구두 임자도 줄을 넘었어." 할머니는 더 말하지 않았다.
+== pro_stairs | when: day==0 & map==station & inspect:stairs_ash & flag:met_soonrye
+   text: 출구 계단 한가운데 안개가 벽처럼 멈춰 있다. 양복 입은 남자가 엎어져 있다. 안개에 잠긴 다리가 재였다. 바람도 없는데 흘러내렸다. 구두만 남았다.
+   - 돌아선다 | eff: [] | keys 
+       out: 순례: "세고 있는 거야. 저 위에서. 몇 명 남았나."
+   - 구두를 가지러 오른다 | eff: [{"verb": "kill", "who": "you", "how": "ashed"}] | keys 
+       out: 줄을 넘었다. 발목이 가벼워졌다. 내려다보니 발이 없었다.
+== pro_stairs_b | when: day==0 & map==station & inspect:stairs_ash & !flag:met_soonrye
+   text: 출구 계단 한가운데 안개가 벽처럼 멈춰 있다. 양복 입은 남자가 엎어져 있다. 안개에 잠긴 다리가 재였다. 바람도 없는데 흘러내렸다. 구두만 남았다.
+   - 돌아선다 | eff: [] | keys 
+       out: 등 뒤에서 장작 타는 소리가 났다.
+   - 구두를 가지러 오른다 | eff: [{"verb": "kill", "who": "you", "how": "ashed"}] | keys 
+       out: 줄을 넘었다. 발목이 가벼워졌다. 내려다보니 발이 없었다.
+== pro_speaker | when: day==0 & map==station & inspect:speaker
+   text: 기둥의 스피커가 지직거린다. "…열흘 뒤 정오… 선로가 이어진 역에만 섭니다…" 녹음인데 숨을 쉰다.
+   - 듣는다 | eff: [{"verb": "flag", "id": "heard_broadcast", "set": 1}] | keys 
+       out: 같은 말이 되풀이됐다.
+== pro_mari | when: day==0 & map==station & (talk:mari | inspect:blanket_mari) & !flag:met_mari
+   text: 여자가 당신 손등과 발목을 차례로 본다. 손길이 익숙하다. "피는 안 나네요. 다치면 바로 말해요."
+   - 손을 내민다 | eff: [{"verb": "flag", "id": "met_mari", "set": 1}] | keys 
+       out: 여자가 긁힌 자국을 닦았다. 소독약 냄새가 났다. 입술이 다시 움직였다.
+   - 물러선다 | eff: [{"verb": "flag", "id": "met_mari", "set": 1}] | keys 
+       out: 여자가 고개를 끄덕였다. 다시 무언가를 외웠다. 사람 이름이었다.
+== d1_shutter_knock | when: day==1 & phase==day & !flag:met_eunji & inspect:shutter_gap
+   text: 셔터 틈으로 손가락 넷이 보인다. 신발 코가 둘이다. "열어, 뒤에 순찰대가 와." 더 멀리서 발소리가 여럿이다.
+   - 연다 | eff: [{"verb": "flag", "id": "met_eunji", "set": 1}, {"verb": "flag", "id": "talked_to_outside", "set": 1}, {"verb": "axis", "id": "hand", "n": 1}] | keys 
+       out: 여자와 큰 청년이 기어 들어왔다. 여자가 당신 신발부터 봤다.
+   - 두드려 답한다 | eff: [{"verb": "flag", "id": "knocked_back", "set": 1}] | keys 
+       out: 저쪽이 세 번 두드렸다. 발소리가 멀어졌다가 돌아왔다. 밤새 그랬다.
+   - 둔다 | eff: [{"verb": "axis", "id": "hand", "n": -1}] | keys 
+       out: 두드림이 그쳤다. 순례가 셔터를 오래 봤다.
+== d1_rats | when: day==1 & inspect:stairs_ash & alive:soonrye
+   text: 계단 밑에서 쥐가 양복 남자의 남은 발을 먹고 있다. 순례가 돌을 던졌다. 쥐는 비키지 않았다. 재는 먹지 않는다.
+   - 돌아선다 | eff: [{"verb": "flag", "id": "saw_rats", "set": 1}] | keys 
+       out: 뒤에서 씹는 소리가 이어졌다.
+== d2_seoha | when: day>=2 & inspect:office_door & flag:has_office_key & !flag:met_seoha & alive:seoha
+   text: 역무실 문. 문 틈에 담요 자락이 보인다. 안은 소리가 없다.
+   - 문을 연다 | eff: [{"verb": "flag", "id": "met_seoha", "set": 1}, {"verb": "trace", "id": "office_door", "state": "open"}] | keys 
+       out: 책상 밑에 여학생이 있었다. 휴대폰을 뒤집어 들고 있었다. "…밖에서 온 사람은 처음이에요."
+   - 밥을 틈으로 넣는다 | eff: [{"verb": "number", "id": "food", "n": -1}] | keys 
+       out: 건빵이 틈으로 사라졌다. 안에서 씹는 소리가 났다.
+== d3_bottle | when: day>=3 & phase==trace & flag:met_seoha & trace:bottle_seoha==full & trace:bottle_soonrye==empty & alive:soonrye & alive:seoha & alive:gicheol
+   text: 서하 물통이 차 있다. 순례 물통은 비었다. 순례의 입술이 터져 있다. 기철이 눈을 피한다. 계단 재가 한 칸 내려왔다 — 누구도 왜인지 모른다.
+   - 내 물을 순례에게 | eff: [{"verb": "trace", "id": "bottle_you", "state": "empty"}, {"verb": "number", "id": "thirst", "who": "you", "n": 3}, {"verb": "axis", "id": "share", "n": 1}] | keys 
+       out: 순례가 받았다. "됐어." 그래도 마셨다.
+   - 기철 몫을 깎는다 | eff: [{"verb": "trace", "id": "bottle_gicheol", "state": "empty"}, {"verb": "number", "id": "thirst", "who": "gicheol", "n": 3}, {"verb": "axis", "id": "hand", "n": 1}] | keys 
+       out: 기철 물통을 순례 앞에 놓았다. 기철은 반박하지 않았다. 하루 종일 당신을 안 봤다.
+   - 그대로 둔다 | eff: [{"verb": "axis", "id": "hand", "n": -1}] | keys 
+       out: 순례는 아침 내내 앉아 있었다.
+== d8_shoes_morning | when: day==8 & phase==trace & trace:grave!=none
+   text: 묻은 사람의 신발이 계단 아래 가지런히 놓여 있다. 어제까지 무덤 옆에 있었다. 아무도 옮기지 않았다.
+   - 본다 | eff: [{"verb": "trace", "id": "shoes_stairs", "state": "pair"}] | keys 
+       out: 발끝이 계단 위를 향해 있었다.
+== hymn_fire_kept | when: day>=4 & phase==trace & trace:fire==kept
+   text: 화로가 밤새 꺼지지 않았다. 재 위에 둘이 앉았던 자국이 있다. 빈 그릇 하나가 불 옆에 엎어져 있다. 아무도 자기가 했다고 말하지 않는다.
+   - 불을 쬔다 | eff: [] | keys 
+       out: 손바닥이 오랜만에 따뜻했다.
+   - 그릇을 씻어 둔다 | eff: [{"verb": "number", "id": "fear", "n": -1, "who": "all"}] | keys 
+       out: 그릇을 씻어 불가에 엎어 두었다. 아침에 누가 그걸 봤다.
+== hymn_names | when: day>=8 & phase==trace & trace:blanket_mari==paired & alive:mari
+   text: 마리가 다친 사람 담요 옆에서 일어난다. 입술이 아직 움직인다. 밤새 이름을 불러 준 것이다.
+   - 마리를 눕힌다 | eff: [] | keys 
+       out: 마리는 눕자마자 잠들었다. 입술은 계속 움직였다.
+   - 이름을 이어 부른다 | eff: [{"verb": "axis", "id": "name", "n": 1}] | keys 
+       out: 마리가 멈춘 데서부터 이름을 불렀다. 다친 사람이 눈을 떴다.
+== hymn_paired | when: day>=6 & phase==trace & (trace:blanket_soonrye==paired | trace:blanket_gicheol==paired | trace:blanket_eunji==paired | trace:blanket_dongha==paired | trace:blanket_seoha==paired)
+   text: 담요 둘이 붙어 있다. 다친 사람 옆에서 누가 밤새 붙어 잤다. 먼저 일어난 사람이 제 담요를 소리 없이 갠다.
+   - 모른 척한다 | eff: [] | keys 
+       out: 담요 개는 소리가 그쳤다.
+   - 같이 갠다 | eff: [{"verb": "number", "id": "fear", "n": -1, "who": "all"}] | keys 
+       out: 담요 끝을 맞잡았다. 서로 아무 말도 하지 않았다.
+== trip_a1_phone | when: day>=2 & region==A & floor==1 & trace:phonebooth==card
+   text: 셔터 사이 공중전화 부스. 수화기가 늘어져 있다. 반환구에 전화카드 한 장. 뒷면에 볼펜으로 "남주".
+   - 카드를 챙긴다 | eff: [{"verb": "flag", "id": "card_soonrye", "set": 1}, {"verb": "trace", "id": "phonebooth", "state": "taken"}] | keys 
+       out: 카드를 주머니에 넣었다. 순례 아들이 남주에 있다고 했다. 부스 안에서 수화기가 혼자 흔들렸다.
+   - 그냥 둔다 | eff: [{"verb": "trace", "id": "phonebooth", "state": "taken"}] | keys 
+       out: 돌아보니 수화기가 제자리에 걸려 있었다.
+== trip_b1_workers | when: day>=4 & region==B & floor==1 & trace:worker_pipe==bodies
+   text: 배수관 안에 셋이 포개져 있다. 안전화가 보인다. 맨 위 사람의 안전화를 당기자 발이 같이 빠졌다.
+   - 신발을 챙긴다 | eff: [{"verb": "trace", "id": "worker_pipe", "state": "stripped"}, {"verb": "number", "id": "parts", "n": 1}, {"verb": "axis", "id": "share", "n": -1}] | keys 
+       out: 셋의 신발을 챙겼다. 빠진 발은 관 안으로 밀어 넣었다.
+   - 그대로 둔다 | eff: [{"verb": "axis", "id": "share", "n": 1}] | keys 
+       out: 신발을 도로 신기려 했다. 발은 들어가지 않았다.
+== trip_b1_valve | when: day>=3 & region==B & floor==1 & trace:valve==closed
+   text: 수문 밸브다. 돌리면 역의 물이 빠진다. 아래쪽에서 물이 숨 쉬는 소리가 난다.
+   - 돌린다 | eff: [{"verb": "number", "id": "flood", "n": -2}, {"verb": "trace", "id": "valve", "state": "open"}, {"verb": "flag", "id": "valve_opened", "set": 1}] | keys 
+       out: 물이 빠지는 소리가 났다. 그 밑에서 긴 숨소리가 올라왔다.
+   - 둔다 | eff: [] | keys 
+       out: 손을 뗐다.
+== trip_a2_bones | when: day>=4 & region==A & floor==2 & trace:bone_pile==normal
+   text: 뼈 무더기 뒤에서 무엇이 일어선다. 사람 모양이다. 손가락이 너무 많다. 부서진 것을 줍는다. 은지의 간판이 그 발밑에 있다.
+   - 손가락 하나를 내준다 | eff: [{"verb": "permanent", "who": "you", "loss": "finger"}, {"verb": "flag", "id": "sign_eunji", "set": 1}, {"verb": "trace", "id": "bone_pile", "state": "scattered"}] | keys 
+       out: 새끼손가락이 뚝 소리를 냈다. 그것이 주워 갔다. 간판을 들고 나왔다.
+   - 싸운다 | eff: [] | keys ['label', 'check', 'cost', 'req', 'taboo', 'warn', 'ok', 'fail']
+       out: 
+   - 물러난다 | eff: [] | keys 
+       out: 뒷걸음질로 나왔다. 그것은 따라오지 않았다.
+== trip_a2_bodybag | when: day>=3 & region==A & floor==2 & trace:bodybag_a2==normal
+   text: 시체 자루다. 지퍼가 안에서 열려 있고 안의 사람은 사흘쯤 됐다. 역에서는 아무도 무게를 묻지 않을 것이다.
+   - 지퍼를 닫는다 | eff: [{"verb": "axis", "id": "share", "n": 1}] | keys 
+       out: 지퍼를 닫았다. 손에 냄새가 남았다.
+   - 가져간다 | eff: [{"verb": "number", "id": "food", "n": 6}, {"verb": "flag", "id": "ate_flesh_you", "set": 1}, {"verb": "axis", "id": "share", "n": -1}] | keys 
+       out: 자루를 어깨에 졌다. 무거웠다. 역에서는 아무도 묻지 않았다.
+== trade_shutter | when: day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap & alive:eunji & alive:dongha
+   text: 은지가 셔터 틈에 입을 대고 말한다. 너머에서 답이 온다. 은지: "저쪽이 통조림을 내. 뭘 줄래."
+   - 부품 둘을 준다 | eff: [{"verb": "number", "id": "food", "n": 4}, {"verb": "flag", "id": "patrol_knows", "set": 1}, {"verb": "trace", "id": "shutter_gap", "state": "can"}] | keys 
+       out: 셔터 밑으로 통조림 넷이 들어왔다. 너머에서 웃었다.
+   - 약 하나를 준다 | eff: [{"verb": "number", "id": "food", "n": 4}, {"verb": "number", "id": "water", "n": 2}, {"verb": "flag", "id": "patrol_knows", "set": 1}, {"verb": "trace", "id": "shutter_gap", "state": "can"}] | keys 
+       out: 통조림 넷과 물 둘. 은지: "약은 비싸."
+   - 동하를 하루 보낸다 | eff: [{"verb": "number", "id": "food", "n": 6}, {"verb": "injure", "who": "dongha", "n": 1}, {"verb": "flag", "id": "patrol_knows", "set": 1}, {"verb": "number", "id": "fear", "who": "dongha", "n": 3}, {"verb": "axis", "id": "share", "n": -1}, {"verb": "number", "id": "grudge", "who": "eunji", "n": 4}] | keys 
+       out: 동하가 셔터 밑으로 기어갔다. 저녁에 통조림 여섯과 함께 돌아왔다. 손톱이 둘 없었다.
+   - 거래하지 않는다 | eff: [] | keys 
+       out: 은지가 입을 뗐다. 너머가 조용해졌다.
+== trade_shutter_b | when: day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap & alive:eunji & !alive:dongha
+   text: 은지가 셔터 틈에 입을 대고 말한다. 너머에서 답이 온다. 은지: "저쪽이 통조림을 내. 뭘 줄래."
+   - 부품 둘을 준다 | eff: [{"verb": "number", "id": "food", "n": 4}, {"verb": "flag", "id": "patrol_knows", "set": 1}, {"verb": "trace", "id": "shutter_gap", "state": "can"}] | keys 
+       out: 셔터 밑으로 통조림 넷이 들어왔다. 너머에서 웃었다.
+   - 약 하나를 준다 | eff: [{"verb": "number", "id": "food", "n": 4}, {"verb": "number", "id": "water", "n": 2}, {"verb": "flag", "id": "patrol_knows", "set": 1}, {"verb": "trace", "id": "shutter_gap", "state": "can"}] | keys 
+       out: 통조림 넷과 물 둘. 은지: "약은 비싸."
+   - 거래하지 않는다 | eff: [] | keys 
+       out: 은지가 입을 뗐다. 너머가 조용해졌다.
+== drink_flood | when: day>=3 & phase==day & flood>=3 & water<=2 & inspect:body_rail
+   text: 선로의 물이 승강장 턱까지 왔다. 흙냄새가 난다. 끓이지 않은 물은 배를 뒤튼다.
+   - 끓여서 긷는다 | eff: [{"verb": "number", "id": "water", "n": 4}] | keys 
+       out: 드럼통에 물을 끓였다. 물 넷. 불이 한 단 낮아졌다.
+   - 그냥 마신다 | eff: [{"verb": "number", "id": "water", "n": 3}, {"verb": "flag", "id": "drank_flood", "set": 1}] | keys 
+       out: 물 셋을 길었다. 흙이 씹혔다. 밤에 배가 뒤틀렸다.
+   - 마시지 않는다 | eff: [{"verb": "number", "id": "thirst", "who": "you", "n": 1}] | keys 
+       out: 입술이 갈라졌다.

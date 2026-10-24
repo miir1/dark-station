@@ -1,0 +1,78 @@
+{
+ "you_react": [
+  [
+   "soonrye",
+   "",
+   ""
+  ],
+  [
+   "seoha",
+   "mouth",
+   ""
+  ],
+  [
+   "gicheol",
+   "",
+   ""
+  ],
+  [
+   "eunji",
+   "",
+   ""
+  ],
+  [
+   "dongha",
+   "mouth",
+   ""
+  ],
+  [
+   "mari",
+   "",
+   ""
+  ]
+ ],
+ "walkTo_16_7": {
+  "ok": true,
+  "pos": [
+   16,
+   7
+  ],
+  "open": false,
+  "kind": "",
+  "box": "",
+  "auto": false
+ },
+ "after_close_open": false,
+ "seoha_up": {
+  "(16, 7)": {
+   "open": false,
+   "frames": 36,
+   "dirs": [
+    "up"
+   ],
+   "head_min": 1.0,
+   "ov": [],
+   "stray_max": 0,
+   "outC": 0,
+   "breath": [
+    0
+   ]
+  },
+  "(16, 9)": {
+   "open": false,
+   "frames": 37,
+   "dirs": [
+    "up"
+   ],
+   "head_min": 1.0,
+   "ov": [],
+   "stray_max": 0,
+   "outC": 0,
+   "breath": [
+    0,
+    1
+   ]
+  }
+ },
+ "console_errors": []
+}

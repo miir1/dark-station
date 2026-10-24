@@ -5,23 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b0a09">
 <title>어두운 역 v4</title>
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
-<!-- PC 가로 틀: 논리 640×360 을 정수 배율로 키운다 (720p = 2배, 1080p = 3배). 지도 480×320 + 띠 40, 오른쪽 패널 160 -->
+<!-- PC 가로 틀: 논리 640×320 을 정수 배율로 키운다 (1366×768 노트북 = 2배, 1080p = 3배). 지도 480×320, 오른쪽 패널 160 (목표 줄은 패널 안) -->
 <div id="viewport">
   <div id="app">
     <div id="main">
       <div id="stage">
         <canvas id="cv" width="480" height="320"></canvas>
+        <div id="bubbles"></div>
         <div id="cg" hidden></div>
         <div id="box" hidden></div>
         <div id="toast" hidden></div>
       </div>
-      <div id="strip"><span id="goal"></span><span id="hint"></span></div>
     </div>
     <aside id="panel">
       <div id="hud"></div>
+      <div id="strip"><span id="goal"></span><span id="hint"></span></div>
       <div id="tabs">
         <button type="button" id="tabTreat" title="H">치료</button>
         <button type="button" id="tabBook" title="Tab">수첩</button>
@@ -43,10 +44,11 @@
 <script src="engine/ledger.js"></script>
 <script src="engine/engine.js"></script>
 <script src="engine/save.js"></script>
-<script src="engine/browser.js?v=3"></script>
-<script src="art.js?v=5"></script>
-<script src="ui.js?v=6"></script>
-<script src="render.js?v=5"></script>
-<script src="game.js?v=9"></script>
+<script src="engine/browser.js?v=4"></script>
+<script src="spots.js?v=2"></script>
+<script src="art.js?v=7"></script>
+<script src="ui.js?v=8"></script>
+<script src="render.js?v=7"></script>
+<script src="game.js?v=11"></script>
 </body>
 </html>

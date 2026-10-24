@@ -1,0 +1,152 @@
+{
+ "items": [
+  {
+   "map": "station",
+   "id": "crate_food",
+   "name": "창고 상자",
+   "states": {
+    "closed": {
+     "vsFirst": 0,
+     "vsEmpty": 339
+    },
+    "open": {
+     "vsFirst": 257,
+     "vsEmpty": 357
+    },
+    "empty": {
+     "vsFirst": 254,
+     "vsEmpty": 355
+    },
+    "moved": {
+     "vsFirst": 273,
+     "vsEmpty": 474
+    }
+   }
+  },
+  {
+   "map": "station",
+   "id": "parts_crate",
+   "name": "부품 상자",
+   "states": {
+    "storage": {
+     "vsFirst": 0,
+     "vsEmpty": 339
+    },
+    "office": {
+     "vsFirst": 273,
+     "vsEmpty": 474
+    },
+    "hidden": {
+     "vsFirst": 254,
+     "vsEmpty": 355
+    }
+   }
+  },
+  {
+   "map": "car",
+   "id": "medkit",
+   "name": "운전실 구급함",
+   "states": {
+    "closed": {
+     "vsFirst": 0,
+     "vsEmpty": 196
+    },
+    "open": {
+     "vsFirst": 206,
+     "vsEmpty": 264
+    }
+   }
+  },
+  {
+   "map": "car",
+   "id": "bag",
+   "name": "좌석 밑 가방",
+   "states": {
+    "closed": {
+     "vsFirst": 0,
+     "vsEmpty": 74
+    },
+    "open": {
+     "vsFirst": 56,
+     "vsEmpty": 86
+    }
+   }
+  },
+  {
+   "map": "car",
+   "id": "lever",
+   "name": "비상 레버",
+   "states": {
+    "up": {
+     "vsFirst": 0,
+     "vsEmpty": 301
+    },
+    "pulled": {
+     "vsFirst": 329,
+     "vsEmpty": 397
+    }
+   }
+  },
+  {
+   "map": "tunnel",
+   "id": "shelter_box",
+   "name": "대피 공간 비상 상자",
+   "states": {
+    "closed": {
+     "vsFirst": 0,
+     "vsEmpty": 384
+    },
+    "open": {
+     "vsFirst": 319,
+     "vsEmpty": 413
+    }
+   }
+  },
+  {
+   "map": "mall_a1",
+   "id": "phonebooth",
+   "name": "공중전화",
+   "states": {
+    "card": {
+     "vsFirst": 0,
+     "vsEmpty": 95
+    },
+    "taken": {
+     "vsFirst": 119,
+     "vsEmpty": 119
+    }
+   }
+  },
+  {
+   "map": "station",
+   "id": "office_door",
+   "name": "역무실 문",
+   "states": {
+    "locked": {
+     "vsFirst": 0,
+     "vsEmpty": 0
+    },
+    "open": {
+     "vsFirst": 0,
+     "vsEmpty": 0
+    }
+   }
+  },
+  {
+   "map": "car",
+   "id": "notebook_dash",
+   "name": "계기판 위 수첩",
+   "states": {
+    "there": {
+     "vsFirst": 0,
+     "vsEmpty": 62
+    },
+    "taken": {
+     "vsFirst": 32,
+     "vsEmpty": 30
+    }
+   }
+  }
+ ],
+ "sameCrates": 0
+}

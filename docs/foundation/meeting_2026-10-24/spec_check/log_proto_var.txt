@@ -1,0 +1,1 @@
+done C:/dev/dark_station/docs/foundation/meeting_2026-10-24/spec_check/proto_var.json selfish_nb:600 selfish_rt:600

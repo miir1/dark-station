@@ -42,16 +42,40 @@
     if (!fit.length) return null;
     return pickRow ? pickRow(fit) : fit[fit.length - 1];
   }
-  // 조건식이 보는 값 (엔진 phaseCtx 와 같은 모양 + 정체 축)
+  // 조건식이 보는 값 (엔진 phaseCtx 와 같은 모양 + 정체 축). alive: 엔진과 같이 away(아직 역에 안 온 사람)도 살아 있음
   function lineCtx(s) {
     const ctx = Object.assign({}, s.world, s.axes, { day: s.day });
     ctx.flags = s.flags; ctx.phase = s.phase || '';
     ctx.map = s.pos.map || ''; ctx.region = s.trip ? s.trip.region : ''; ctx.floor = s.trip ? s.trip.floor : 0;
     ctx.trace = {}; for (const [id, t] of Object.entries(s.traces)) ctx.trace[id] = t.st;
-    ctx.alive = {}; for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' ? 1 : 0; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }
+    ctx.alive = {}; for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' || p.status === 'away' ? 1 : 0; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }
     const c = D4.engine.identity(s, db_);
     ctx.identity = c ? c.id : '';
     return ctx;
+  }
+  // 조건 낱말 수 (말 걸기 줄 고르기: 조건이 많은 줄 = 더 구체적인 줄)
+  function condWords(src) { try { return D4.cond.names(D4.cond.compile(src)).length; } catch (e) { return 0; } }
+  // 말 걸기 줄 고르기 (2026-10-24 P0-S5, game.js talkTo · v4/tools/audit_narrative_timeline.js 가 같이 쓴다):
+  //   그 사람의 맞는 줄 전부(<사람>_* — _idle 빼고) 가운데 ① 오늘 안 들은 줄 ② 조건 낱말이 많은 줄 ③ 표에서 뒤에 오는 줄.
+  //   돌려주는 값 { id, i(행 번호), row, key('<줄id>#<행번호>' = 엔진 heard 열쇠), fresh(오늘 안 들었나), words } 또는 null
+  function talkPick(db, s, who, ctx) {
+    ctx = ctx || lineCtx(s);
+    const heard = s.heard || {};
+    const cands = [];
+    let order = 0;
+    for (const id of Object.keys(db.lines)) {
+      if (!id.startsWith(who + '_') || id === who + '_idle') continue;
+      db.lines[id].forEach((row, i) => {
+        let ok = false;
+        try { ok = D4.cond.test(row.context, ctx); } catch (e) { ok = false; }
+        if (!ok) return;
+        const key = `${id}#${i}`;
+        cands.push({ id, i, row, key, fresh: heard[key] !== s.day, words: condWords(row.context), order: order++ });
+      });
+    }
+    if (!cands.length) return null;
+    cands.sort((a, b) => (Number(b.fresh) - Number(a.fresh)) || (b.words - a.words) || (b.order - a.order));
+    return cands[0];
   }
   let db_ = null;
   const setDb = (db) => { db_ = db; };
@@ -69,5 +93,5 @@
     });
   }
 
-  D4.browser = { params, fast, loadTables, pickLine, lineCtx, setDb, fill };
+  D4.browser = { params, fast, loadTables, pickLine, lineCtx, setDb, fill, talkPick, condWords };
 })(typeof globalThis !== 'undefined' ? globalThis : this);

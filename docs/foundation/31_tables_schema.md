@@ -37,6 +37,8 @@
 | needs | hunger / thirst / fear 0~10, bond = 사람 id | 욕구 4 |
 | secretFlag · malice · hymn | flag id · 조건식 → 밤 사건 id | 비밀(화면 글에 안 나옴) · 악의/찬가가 터지는 조건과 사건(⑦) |
 | callsGod · addressYou[] | 글 ≤6자 · 후보 id → 호칭 | 신을 부르는 그 사람만의 말 · 정체가 기울 때 당신을 부르는 말 |
+| **metFlag** (10-24) | 깃발 id(소문자·숫자·밑줄 24자) 또는 빈칸 | 만남 깃발. 빈칸 = 처음부터 아는 사람. 있으면 그 깃발이 서기 전까지 '안 만난 사람'(§6-3) |
+| **startAway** (10-24) | 0 / 1 | 1 = 처음엔 역 밖(status `away`). metFlag 깃발이 서면 역에 온다(`home`). 1 이면 metFlag 필수, outside 와 함께 못 씀 |
 예: `soonrye, 김순례, 68, 전 역사 청소원, {2,1,1,2}, {3,2,4,seoha}, believes_plus_one, fog>=2→inform_up, water==0→give_water, "저 위", {driver:기사 양반, …}` · `you, 당신, -, -, {1,1,1,1}, {0,0,0,-}, -, -, -, -, -`
 ### ⑤ 지도표 `maps` — 역·원정 층
 | 열 | 값 범위 | 뜻 |
@@ -71,6 +73,8 @@
 | states[] · overlay | 상태 id ≤4(normal 포함) · 상태별 덧그림 id | 빈/찬/옮겨짐/피 · 표현 부장의 덧그림 ~20장이 여기 걸린다 |
 | inspectLine · ledgerFact | 상태별 lines id · 수첩 사실 줄 서식/빈칸 | 조사 글(사실만) · 수첩에 적을 수 있는 줄 |
 | solid · light · resetOn | 0/1 · 0~6 · never / inspect / morning | 막힘 · 광원 · 흔적이 지워지는 때(저장에 상태·날짜·행위자 보관) |
+| **owner** (10-24) | 사람 id 또는 빈칸 | 주인. 빈칸이면 id 끝 `_<사람 id>`(bottle_mari → mari)가 주인, 그것도 없으면 주인 없는 물건. 배치 검사(§6-4 같은 칸 = 같은 주인)만 쓴다. id 끝과 다르면 오류 |
+| **holds** (P1-11 엔진 몫) | `{ text, effects, state }` 또는 빈칸 | 수납 내용. 닫힌(states[0]) 채로 조사했고 그 조사에 걸린 사건이 없으면 '닫힘→얻음→열림'(§6-5). text = 열 때 한 번 보이는 글, effects = 사건 결과와 같은 효과(두 꼴), state = 연 뒤 상태(기본 open) |
 예: `bowl_seoha, 서하 물통, [full, empty], {empty: bowl_empty_ov}, {empty: insp_bowl_empty}, {empty: "D{day} 밤. 서하 물통 빔."}, 0, 0, inspect` · `pillow_gicheol, 기철 베개, [normal, blood], {blood: pillow_blood_ov}, …, never`
 ### ⑨ 정체 결정표 `identity` — 후보 4~7로 늘고 줄 수 있게
 | 열 | 값 범위 | 뜻 |
@@ -184,3 +188,47 @@
 | 위독 판정 | 아침 사망 = injury 가 numbers 표 최대값이고 치료 깃발이 없고 **그날 마지막 치료 기회(actions 에 `treat` 가 있는 단계)를 떠날 때 이미 위독이던** 사람(`s.critical`). 그 뒤 — 밤 단계의 고정·시험 사건(예: d6_shutter)이나 밤 굴림 — 에 막 위독이 된 사람은 하루를 받는다(다음 날 경고 사건·치료 기회). 표에 치료 단계가 없으면 밤 굴림 직전에 찍는다 (10-22 수정: 전에는 늘 밤 굴림 직전이라 밤 단계 사건의 부상은 유예가 없었다) |
 | 밤 소문 목격자 | `rumor.witness: target` 허용(대상이 역의 주민일 때) |
 | 저장 | 새 칸 `fired`·`phaseSeen`·`critical`·`trip.floors`·`trip.party`·`lastFree` 는 정규화가 빈 값으로 채운다(SAVE_V 그대로 1) |
+
+### §6-3. 약속 추가 (2026-10-24, 디렉터 피드백 U2 — plan.md P0-E1, 테스트 v4/test/meet.test.js · contract.test.js)
+| 항목 | 약속 |
+|---|---|
+| 인물표 새 칸 | `metFlag`(id 꼴 또는 빈칸)·`startAway`(0/1). 표 검사 오류: startAway 1 인데 metFlag 빈칸 · startAway 와 outside 를 같이 씀 · you 에 metFlag · **metFlag 깃발을 세우는 사건 효과(events 선택 결과·밤 사건의 effects.flag)가 하나도 없음**(오타 = 영영 못 만난다) |
+| 계획 값 (P0-D1 이 넣는다) | soonrye `met_soonrye`/0 · mari `met_mari`/0 · seoha `met_seoha`/0 · gicheol `met_gicheol`/1 · eunji `met_eunji`/1 · dongha `met_eunji`/1 · eunchae·dohyeon 빈칸/0(outside 그대로) · you 빈칸/0 |
+| status `away` | 새 판: `outside` 이면 outside, 아니고 startAway 1 이면 **away**, 아니면 home. away = 아직 역에 안 온 사람: 배식·새 날 수치(perDay)·밤 사건 행위자/대상/이름 지목 목격자·무작위 대상·동행·`all` 효과·위독 판정에서 빠진다. 저장 정규화가 아는 status 에 `away` 를 더했다 |
+| 도착 | 선택 결과 효과 적용 직후·밤 굴림 직후·`setFlag` 직후·새 판·저장 불러오기에서, away 이면서 metFlag 깃발이 선 사람은 **home** 이 된다. 온 날은 `people[id].arrived`(명부의 날짜 칸 `day` 는 건드리지 않는다 — 살아 남은 사람 줄에 'D1' 이 찍히지 않게). 같은 깃발을 쓰는 사람(은지·동하)은 같이 온다. 효과 적용 직후라 이어지는 사건(연쇄)이 그 사람을 본다 |
+| `alive:x` | 사건 when(엔진 phaseCtx)·밤 사건 조건(worldCtx)에서 **away 도 1**(살아 있음). 아직 안 온 사람의 도착 사건 조건(`alive:gicheol` 등)을 지킨다. 행위자·대상 고르기는 따로 home 만 본다 |
+| 만남 `known` | `E.known(s, db, id)` = metFlag 가 비었거나 그 깃발이 섬. `view.people[].met` = 1/0. 화면은 met 0 인 사람의 진짜 이름·그릇을 보이지 않는다 |
+| 안 만난 사람 빼기 | 배식 `ration`: home **이고 known** 인 사람만 받는다(bowls 에 있어도 건너뜀 — 식량·물·굶주림·그릇 흔적 그대로) · 사건 대상 무작위(`any`·`randomSleeper`…)·`mostInjured`: home 이고 known · 원정 동행: home 이고 known · 명부 `ledger.rows`: outside·away·안 만난 사람은 줄이 없다(당신 글씨라 모르는 이름은 못 적는다). 밤 sleepers 는 home 만이라 away 는 저절로 빠진다(안 만난 home 사람 — 잠긴 역무실의 서하 — 은 밤 사건에 그대로 나온다) |
+| 말 걸기 `talk` | home 또는 **away** 인 사람에게 건다(역 밖에서 마주친 사람 — 터널의 기철). outside 는 그대로 못 건다. 안 만난 home 사람(순례 첫 만남)도 건다 — `talk:soonrye` 가 pro_platform 을 연다 |
+| 들은 줄 `heard` | 상태 칸 `heard = {}`. 동작 `{type:'heard', key:'<줄id>#<행번호>'}` → `heard[key] = 오늘(day)`. **행번호 = lines 표에서 그 id 의 행들 가운데 몇 번째인가(0부터, 파일에 적힌 순서 = `db.lines[id]` 의 순서)**. `E.heardKey(db, id, 행 또는 번호)` 가 열쇠를 만든다. 없는 줄·행 번호는 거절. 어느 단계에서나 되고(actions 와 무관), 결정 수에 안 든다. 화면의 '오늘 안 들은 줄 먼저' = `heard[key] !== day` |
+| 저장 | `heard` 는 정규화가 빈 값 `{}` 으로 채운다(옛 저장·깨진 값). away·arrived 는 그대로 왕복. SAVE_V 그대로 1 |
+| 봇 (sim) | prologue: 승강장 물건 조사 뒤 `talk soonrye` 도 시도 · 배식·말 걸기·주민 치료는 known 인 사람만 · DEADLY 정규식에 '세어진다' · 전멸 집계에서 away 는 산 사람 |
+
+### §6-4. 약속 추가 (2026-10-24, 디렉터 피드백 U4·U5·U2 — plan.md P0-E2, 테스트 v4/test/schema.test.js · stand.test.js · sim.test.js)
+| 항목 | 약속 |
+|---|---|
+| 물건표 새 칸 | `owner`(사람 id 또는 빈칸). 주인 = owner > id 끝 `_<사람 id>`(가장 긴 것) > 없음. 표 검사 오류: people 에 없는 사람 · id 끝이 가리키는 주인과 다름 |
+| 배치 검사 (오류) | 지도마다 `objects[]` 의 칸을 본다. ① 자리가 지도 밖 ② **한 칸에 단단한(solid 1) 물건 2개 이상** ③ 단단하지 않은 물건이 한 칸에 여럿일 때 **주인이 둘 이상**이거나 **주인 없는 물건이 둘 이상** ④ **단단하지 않은 물건이 `#`(벽)·`=`(승강장 끝선) 칸**에 있음. 단단한 물건 하나 + 단단하지 않은 물건은 한 칸에 둘 수 있고, 단단한 물건은 벽 칸에 둘 수 있다(벽걸이 구급함·벽감 상자) |
+| 배치 경고 `owner` | 주인 없는 물건 **하나**가 한 사람의 물건 묶음과 한 칸에 있다(예: 승강장 (19,11) `scissors` + 마리 물통·붕대). 표는 읽힌다. 그 물건에 `owner` 를 적으면(`scissors` → `"owner": "mari"`) 사라진다. 오류로 두지 않은 까닭: 계획(P0-D2)이 마리 가위를 그 칸에 두라고 했고, 데이터가 owner 를 적기 전에 게임이 멈추면 안 된다 |
+| 경고 `firstDeath` | 사건의 선택지 [0](Space 를 누른 채 지나가면 골리는 자리, P0-S7)에 **금기(taboo)** 가 있거나, **당신이 죽을 수 있거나**(out·ok·fail 의 kill 이 you·self·actor·party·all·빈칸), **다른 사람이 죽을 수 있는데 뒤에 아무도 안 죽는 선택지가 있다**. 모든 선택지가 같은 사람을 죽이는 장면(d8_pillow·d10_walk 등)은 자리를 바꿔도 같아서 세지 않는다. 선택지가 하나뿐인 사건도 뺀다 |
+| 경고 `reasonWord` | 사건 본문·선택지 label·warn·hint·결과 text, 대사 text, 밤 사건 text 에 `때문에`·`왜냐하면` |
+| 경고 읽기 | `T.warnings(표)` = `[{table,row,id,kind,msg,text}]`, `T.load()` 결과의 `db.warnings`. 오류(`T.validate`)와 따로 — 경고는 표를 막지 않는다. `S.check(표)` = `{errors, warnings}` |
+| 서는 칸 검사 (`stand.test.js`) | `v4/spots.js`(화면 P0-S3)와 maps 를 읽는다. 지도마다 `start`, 화로가 있는 지도의 `fireStand`(= fire + `spots.FIRE_STAND`), 단계별 `SPOTS` 칸이 ① 지도 안 ② 지나갈 수 있는 타일(`#`·`t`·`R`·`h`·`D`·`C` 아님) ③ 그 칸에 단단한 물건 없음 ④ **윗칸에 키 큰 단단한 물건(`spots.TALL` 이면서 solid 1) 없음** ⑤ 같은 단계의 다른 사람이 같은 칸·윗칸에 없음(start·fireStand 는 아랫칸도 본다). SPOTS 의 단계 = phases id, 사람 = 주민 id. spots.js 가 없으면 이 검사만 건너뛴다(대체 규칙) |
+| 봇 아침 조사 (sim) | 물건 하나씩이 아니라 **칸 단위** — 칸을 골라 그 칸의 물건 전부를 inspect 한다(화면 P0-S6 '한 칸 전부 조사'와 같다). 조사 수(`INSPECT.objects`: 부지런 99·보통 2·게으름 1) = 칸 수. 칸에 바뀐 흔적이 하나라도 있으면 그 칸을 먼저 본다 |
+| 재측정 집계 (sim) | 봇 `trace.hunger`(아침 trace 단계마다 당신 굶주림) · `trace.d3`(D3 셈 trial_d3_count·_b·_c 에서 고른 선택 label). 보고서 열 `굶주림`(판 평균)·`D3셈%`(그 사건까지 간 판)·`함께센다%`. `run.js --out=경로` 로 보고서 이름을 정한다. 날짜는 이 컴퓨터의 날짜(전에는 UTC). 고치기 전·후 비교 = `node v4/sim/before_after.js measure --root=<v4 폴더> --json=…` 두 번 + `table --before --after` (봇 코드를 고치지 않고 dispatch 를 감싸서 잰다) |
+
+### §6-5. 약속 추가 (2026-10-24, 디렉터 피드백 U4 '걸어가서 수납을 연다' — plan.md P1-11 의 엔진 몫, 테스트 v4/test/holds.test.js)
+지금 표에는 holds·`inspect:` 원정 사건이 없어서 게임은 그대로다(같은 표로 봇 540판의 결과 해시가 고치기 전과 같다). 데이터가 원정 지도 m칸을 수납 물건으로 바꾸고 화면이 원정 지도를 걷게 하면 그때 쓰인다.
+| 항목 | 약속 |
+|---|---|
+| 물건표 새 칸 `holds` | `{ "text": "건빵 두 봉지가 있었다.", "effects": [{"verb":"number","id":"food","n":2}], "state": "open" }` — 셋 다 선택. effects 는 사건 결과와 같은 두 꼴(배열이면 로더가 객체 꼴로). 빈 `{}` 는 없는 것. 표 검사 오류: states 가 둘 미만 · holds 에 text·effects·state 밖의 키 · state 가 states 밖이거나 연 뒤 상태가 첫 상태와 같음 · effects 의 모르는 수치·동사 · **effects 에 kill·permanent**(여는 것만으로 죽거나 몸을 잃지 않는다 — 위험은 선택지가 있는 사건으로) |
+| 연 뒤 상태 | `holds.state` > `'open'`(states 에 있고 첫 상태가 아니면) > `states[1]`. `E.openStateOf(물건 행)` |
+| 열기 흐름 | `inspect` 한 번 = ① 그 조사에 걸린 사건(원정 아닌 사건, when 에 `inspect:x`) → ② 원정 중이면 `inspect:x` 가 걸린 원정 사건 → ③ 둘 다 없고, 물건에 holds 가 있고, 지금 상태가 첫 상태(닫힘)이고, **사건이 쥐고 있지 않으면** 연다: effects 적용 → 연 뒤 상태(`by:'you'`, 본 것 seen) → 만남 깃발 도착 처리. 조사 전에 이미 걸린 사건이 있었으면 ②③ 은 없다. 연 것은 열린 채 남는다(resetOn never) |
+| 사건이 쥔 물건 | when 에 `inspect:<그 물건>` 이 나오는 사건(어느 kind 든) 가운데 **지금 조건이 맞는 것**이 있으면 — 이미 고른 사건(done·phaseSeen·같은 원정의 trip.done)도 센다 — holds 를 열지 않는다. 위험한 수납 사건('비틀어 연다 / 둔다')을 거절한 뒤 다시 조사해 내용을 위험 없이 꺼내지 못하게 한다(10-21 '생존은 위험 대 보상'). 사건 조건이 더는 안 맞으면(날이 지났다·깃발이 섰다) holds 가 기본 흐름이 된다. 위험한 수납은 내용을 **사건 결과**에 두고 holds 는 비워 두면 된다 |
+| 결과 `s.found` · `view.found` | 방금 연 수납 `{ object, state, day, text, lines }` 또는 null. lines = 바뀐 수치 `[{kind:'number', id, who, from, to}]`(lastResult.lines 와 같은 꼴) — 화면의 열기 3박자·찾은 물건 아이콘(ART.iconSrc(id))·패널 숫자 깜빡임이 읽는다. 다음 `inspect`·`next` 가 지운다. 저장 정규화: 없는 물건을 가리키거나 꼴이 깨지면 null(SAVE_V 그대로 1) |
+| 닫힌 수납 묻기 | `E.closedHolds(s, db, 물건 id)` = holds 가 있고 지금 첫 상태. 화면 안내줄 'Space 열기 — <이름>' 에 쓸 수 있다 |
+| 원정 사건 두 갈래 | **도착 사건** = when 에 `inspect:` 가 없는 원정 사건: 지금처럼 `trip` 동작(층에 들어설 때) 시드 난수로 하나. **조사 사건** = when 에 `inspect:` 가 나오는 원정 사건(`|` 로 섞여 있어도): 도착 때 걸지 않고, 원정 중 그 물건을 조사할 때 표 순서로 첫 맞는 것을 건다. 같은 원정에서 같은 사건은 한 번(trip.done), once 사건은 한 판에 한 번, target 열이 있으면 걸 때 정한다. `E.inspectGated(사건 행)` |
+| `trip` 의 `walk` | `{type:'trip', region, floor, walk:true}` → 그 층에 들어섰으면 **도착 사건이 없어도 ok:true**(원정 지도를 걸어서 뒤지는 화면·봇용). walk 가 없으면 지금처럼 도착 사건이 걸렸을 때만 true(옛 화면은 false 를 '아무것도 없었다'로 읽는다). 어느 쪽이든 층에 들어서면 `s.trip` 은 바뀐다 |
+| 엔진이 안 하는 것 | 원정 중 당신 자리(`s.pos`)는 바꾸지 않는다(화면이 지금 원정 지도를 보여 줘도 엔진의 map 은 역 그대로 — `map==station` 조건이 원정 뒤에도 그대로 맞게). 원정 지도의 물건은 화면이 그 지도에서만 조사하게 한다 |
+| 봇 (sim) | 원정 동작에 `walk:true`. 층에 들어선 뒤 도착 사건을 고르고 `tripSearch`: 그 층 지도(`TRIP_MAPS` A → mall_a1·mall_a2, B → drain_b1·drain_b2 — 화면 game.js 의 TRIP_MAPS 와 같아야 하고 holds.test 가 맞춰 본다)의 물건 가운데 **닫힌 수납 또는 조사 원정 사건이 가리키는 물건**을 지도에 적힌 순서대로 조사한다. 집계 `trace.searched` = 원정에서 조사한 물건 수. 그런 물건이 없는 표(지금)에서는 아무것도 하지 않는다 |
+| 경고 `holdsRefill` | holds 가 있는 물건의 resetOn 이 morning·inspect — 연 수납이 닫힌 상태로 돌아가 다시 찬다(위험 없이 매일 얻는 샘). 한 번 연 것을 열린 채 두려면 never. 이유 낱말 경고(`reasonWord`)는 holds.text 도 본다 |

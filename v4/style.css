@@ -1,4 +1,4 @@
-/* 어두운 역 v4 — PC 가로 틀. 모든 치수는 논리 640×360 기준, #app 이 정수 배율로 커진다. 글자 9px = 720p 에서 18px */
+/* 어두운 역 v4 — PC 가로 틀. 모든 치수는 논리 640×320 기준, #app 이 정수 배율로 커진다(1366×768 노트북 2배 · 1080p 3배). 글자 9px = 2배에서 18px */
 :root {
   --bg: #0b0a09; --panel: #15130f; --panel2: #1d1a15; --fg: #e4ddd0; --dim: #9b9385; --line: #5d5548;
   --accent: #e0a24a; --bad: #e07a6b; --good: #93b87c; --warn: #d9b45e; --water: #6d8fb3;
@@ -7,22 +7,27 @@
 html, body { margin: 0; height: 100%; background: #000; color: var(--fg); overflow: hidden; }
 body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-height: 1.5; user-select: none; -webkit-user-select: none; }
 #viewport { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #000; }
-#app { position: relative; width: 640px; height: 360px; background: var(--bg); display: flex; transform-origin: center center; overflow: hidden; }
-#main { position: relative; width: 480px; height: 360px; display: flex; flex-direction: column; }
+#app { position: relative; width: 640px; height: 320px; background: var(--bg); display: flex; transform-origin: center center; overflow: hidden; }
+#main { position: relative; width: 480px; height: 320px; display: flex; flex-direction: column; }
 #stage { position: relative; width: 480px; height: 320px; background: #000; overflow: hidden; cursor: crosshair; }
 #cv { image-rendering: pixelated; image-rendering: crisp-edges; display: block; width: 480px; height: 320px; }
-#strip { height: 40px; padding: 4px 8px; border-top: 1px solid #262219; background: #0e0d0b; display: flex; flex-direction: column; justify-content: center; gap: 2px; font-size: 8px; }
-#goal { color: #e0c9a0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 목표 줄: 오른쪽 패널 안 (논리 화면 640×320 — 지도 아래 띠를 없앴다) */
+#strip { padding: 4px 0 0; border-top: 1px solid #262219; display: flex; flex-direction: column; gap: 2px; font-size: 8px; line-height: 1.4; }
+#goal { color: #e0c9a0; max-height: 4.2em; overflow: hidden; word-break: keep-all; overflow-wrap: break-word; }
 #goal:not(:empty)::before { content: '◆ '; color: #9a7428; }
-#hint { color: var(--dim); min-height: 1.5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#hint { color: var(--dim); min-height: 1.4em; max-height: 2.8em; overflow: hidden; word-break: keep-all; overflow-wrap: break-word; }
+/* 말풍선 층: #app 배율을 1/k 로 되돌린 화면 픽셀 층 (render.js setScale). 글씨 화면 12px, 최대 폭 논리 120px. 빛 덮개와 상관없다 */
+#bubbles { position: absolute; left: 0; top: 0; width: 480px; height: 320px; transform-origin: 0 0; pointer-events: none; z-index: 4; overflow: hidden; }
+#bubbles .bub { position: absolute; left: 0; top: 0; font-size: 12px; line-height: 1.35; padding: 2px 6px 3px; background: rgba(14, 12, 10, .92); border: 1px solid #8a7d66; color: #ece4d6; word-break: keep-all; overflow-wrap: break-word; white-space: normal; width: max-content; }
 #toast { position: absolute; left: 50%; top: 6px; transform: translateX(-50%); background: rgba(14, 12, 10, .92); border: 1px solid var(--line); padding: 3px 8px; font-size: 8px; max-width: 92%; pointer-events: none; z-index: 30; }
 
 /* 오른쪽 패널: 날짜·숫자 셋·목표. 수치(신뢰·스트레스·정체)는 없다 */
-#panel { width: 160px; height: 360px; background: #0e0d0b; border-left: 1px solid #262219; display: flex; flex-direction: column; padding: 8px; gap: 8px; }
-#hud { display: flex; flex-direction: column; gap: 3px; font-size: 9px; }
-#hud .day { font-size: 13px; font-weight: 700; }
+#panel { width: 160px; height: 320px; background: #0e0d0b; border-left: 1px solid #262219; display: flex; flex-direction: column; padding: 6px 8px; gap: 5px; }
+#hud { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 4px; font-size: 9px; }
+#hud .day { grid-column: 1 / -1; font-size: 13px; font-weight: 700; line-height: 1.4; }
 #hud .day small { font-size: 8px; color: var(--accent); font-weight: 400; margin-left: 4px; }
-#hud .it { display: flex; align-items: center; gap: 4px; color: var(--dim); }
+#hud .phase, #hud .people { grid-column: 1 / -1; }
+#hud .it { display: flex; align-items: center; gap: 3px; color: var(--dim); line-height: 1.4; white-space: nowrap; }
 #hud .it b { color: var(--fg); min-width: 14px; }
 #hud .it.low b { color: var(--bad); }
 #hud .ic { width: 12px; height: 12px; image-rendering: pixelated; }
@@ -30,29 +35,36 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 #hud .people { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 4px; }
 #hud .people img { width: 24px; height: 24px; image-rendering: pixelated; border: 1px solid #3a342b; background: #120f0d; }
 #hud .people img.gone { opacity: .3; filter: grayscale(1); }
-#tabs { display: flex; flex-direction: column; gap: 3px; margin-top: auto; }
-#tabs button { background: var(--panel2); color: var(--fg); border: 1px solid var(--line); font: inherit; font-size: 8px; padding: 3px 6px; cursor: pointer; text-align: left; }
+#tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: auto; }
+#tabs button { background: var(--panel2); color: var(--fg); border: 1px solid var(--line); font: inherit; font-size: 8px; padding: 2px 4px; cursor: pointer; text-align: left; white-space: nowrap; }
 #tabs button:hover { border-color: var(--accent); }
 #tabs button::after { content: attr(title); float: right; color: var(--dim); }
 #tabs button.urgent { border-color: var(--bad); color: #f0c2b8; }
 #tabs button.urgent::before { content: '● '; color: var(--bad); }
 #keys { font-size: 6px; color: #5d5548; line-height: 1.4; }
 
-/* 그림 층 (A안): 지도 위에 384×216. 선택 창이 열리면 256×144 로 작아진다 */
+/* 그림 층 (A안): 지도 위에 384×216. 선택 창이 열리면 256×144 — v4 cg_s(원본에서 256×144 로 뽑은 것)가 있으면 그것을 원래 크기로, 없으면 큰 그림을 줄인다 */
 #cg { position: absolute; left: 0; right: 0; top: 4px; display: flex; justify-content: center; z-index: 10; pointer-events: none; }
 #cg[hidden] { display: none !important; }
-#cg img, #cg .ph { width: 384px; height: 216px; image-rendering: pixelated; border: 1px solid #3a342b; box-shadow: 0 0 0 1px #000, 0 0 24px rgba(0,0,0,.8); background: #0a0908; }
+#cg img, #cg .ph { width: 384px; height: 216px; image-rendering: pixelated; border: 1px solid #3a342b; box-shadow: 0 0 0 1px #000, 0 0 24px rgba(0,0,0,.8); background: #0a0908; box-sizing: content-box; }
+#cg img.small { display: none; width: 256px; height: 144px; }
 #cg .ph { display: flex; align-items: center; justify-content: center; color: #6d665a; font-size: 10px; letter-spacing: .2em; }
 #stage:has(#box.opts) #cg { top: 6px; }
 #stage:has(#box.opts) #cg img, #stage:has(#box.opts) #cg .ph { width: 256px; height: 144px; }
+#stage:has(#box.opts) #cg.hassmall img.big { display: none; }
+#stage:has(#box.opts) #cg.hassmall img.small { display: block; }
 #stage:has(#cg:not([hidden]))::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.45); z-index: 5; pointer-events: none; }
 
 /* 글 상자: 무대 아래. 높이 고정, 스크롤 0 */
 #box { position: absolute; left: 4px; right: 4px; bottom: 4px; z-index: 20; word-break: keep-all; overflow-wrap: break-word; background: var(--panel); border: 1px solid #8a7d66; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #2a251d; padding: 6px 8px; overflow: hidden; }
 #box[hidden] { display: none !important; }
 #box.line { height: 96px; display: flex; gap: 6px; align-items: flex-start; cursor: pointer; }
-#box.line .face { width: 80px; height: 80px; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }
+#box.line .face { width: 80px; height: 80px; box-sizing: content-box; image-rendering: pixelated; border: 1px solid #5d5548; background: #120f0d; flex: none; }   /* 그림 칸 = 정확히 80 (테두리는 바깥) — portraits80 은 원래 크기 그대로 */
 #box.line .face.ph { background: #1a1612; }
+#box.line .face.icon { background: #0e0d0b; border-color: #8a7d66; }   /* 찾은 물건: 아이콘 40px 을 정확히 2배(80), 픽셀 그대로 */
+/* 패널 숫자 두 번 깜빡임 (찾은 물건이 패널에 더해질 때, P0-S6) */
+#hud .it.blink b { animation: ds-blink2 .45s steps(1) 2; animation-delay: var(--bd, 0ms); }
+@keyframes ds-blink2 { 0% { color: #fff3c8; text-shadow: 0 0 3px #e0a24a; } 50% { color: var(--fg); text-shadow: none; } }
 #box.line .lt { flex: 1; min-width: 0; position: relative; height: 100%; }
 #box.line .who { color: var(--accent); font-weight: 700; margin: 0 0 2px; font-size: 8px; letter-spacing: .08em; }
 #box.line .tw { font-size: 9.5px; line-height: 1.6; margin: 0; max-width: 350px; }

@@ -1,0 +1,458 @@
+{
+ "screens": {
+  "1366x650": {
+   "tf": "matrix(2, 0, 0, 2, 0, 0)",
+   "x": 43,
+   "y": 5,
+   "w": 1280,
+   "h": 640,
+   "vw": 1366,
+   "vh": 650,
+   "sw": 1366,
+   "sh": 650,
+   "cvw": 480,
+   "cvh": 320,
+   "goalInPanel": true,
+   "stripOutsidePanel": false,
+   "scale": 2.0,
+   "fits": true,
+   "expected": 2,
+   "console_errors": []
+  },
+  "1366x768": {
+   "tf": "matrix(2, 0, 0, 2, 0, 0)",
+   "x": 43,
+   "y": 64,
+   "w": 1280,
+   "h": 640,
+   "vw": 1366,
+   "vh": 768,
+   "sw": 1366,
+   "sh": 768,
+   "cvw": 480,
+   "cvh": 320,
+   "goalInPanel": true,
+   "stripOutsidePanel": false,
+   "scale": 2.0,
+   "fits": true,
+   "expected": 2,
+   "console_errors": []
+  },
+  "1280x720": {
+   "tf": "matrix(2, 0, 0, 2, 0, 0)",
+   "x": 0,
+   "y": 40,
+   "w": 1280,
+   "h": 640,
+   "vw": 1280,
+   "vh": 720,
+   "sw": 1280,
+   "sh": 720,
+   "cvw": 480,
+   "cvh": 320,
+   "goalInPanel": true,
+   "stripOutsidePanel": false,
+   "scale": 2.0,
+   "fits": true,
+   "expected": 2,
+   "console_errors": []
+  },
+  "1536x730": {
+   "tf": "matrix(2, 0, 0, 2, 0, 0)",
+   "x": 128,
+   "y": 45,
+   "w": 1280,
+   "h": 640,
+   "vw": 1536,
+   "vh": 730,
+   "sw": 1536,
+   "sh": 730,
+   "cvw": 480,
+   "cvh": 320,
+   "goalInPanel": true,
+   "stripOutsidePanel": false,
+   "scale": 2.0,
+   "fits": true,
+   "expected": 2,
+   "console_errors": []
+  },
+  "1920x950": {
+   "tf": "matrix(2, 0, 0, 2, 0, 0)",
+   "x": 320,
+   "y": 155,
+   "w": 1280,
+   "h": 640,
+   "vw": 1920,
+   "vh": 950,
+   "sw": 1920,
+   "sh": 950,
+   "cvw": 480,
+   "cvh": 320,
+   "goalInPanel": true,
+   "stripOutsidePanel": false,
+   "scale": 2.0,
+   "fits": true,
+   "expected": 2,
+   "console_errors": []
+  },
+  "1920x1080": {
+   "tf": "matrix(3, 0, 0, 3, 0, 0)",
+   "x": 0,
+   "y": 60,
+   "w": 1920,
+   "h": 960,
+   "vw": 1920,
+   "vh": 1080,
+   "sw": 1920,
+   "sh": 1080,
+   "cvw": 480,
+   "cvh": 320,
+   "goalInPanel": true,
+   "stripOutsidePanel": false,
+   "scale": 3.0,
+   "fits": true,
+   "expected": 3,
+   "console_errors": []
+  },
+  "2560x1300": {
+   "tf": "matrix(4, 0, 0, 4, 0, 0)",
+   "x": 0,
+   "y": 10,
+   "w": 2560,
+   "h": 1280,
+   "vw": 2560,
+   "vh": 1300,
+   "sw": 2560,
+   "sh": 1300,
+   "cvw": 480,
+   "cvh": 320,
+   "goalInPanel": true,
+   "stripOutsidePanel": false,
+   "scale": 4.0,
+   "fits": true,
+   "expected": 4,
+   "console_errors": []
+  }
+ },
+ "space": {
+  "pro_stairs": {
+   "mash": {
+    "runs": 10,
+    "deaths": 0,
+    "chose": 0,
+    "samples": [
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     }
+    ],
+    "lasts": []
+   },
+   "hold": {
+    "runs": 10,
+    "deaths": 0,
+    "chose": 0,
+    "samples": [
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     }
+    ],
+    "lasts": []
+   },
+   "arrowhold": {
+    "runs": 10,
+    "deaths": 10,
+    "chose": 10,
+    "samples": [
+     {
+      "chosen": 1,
+      "last": "눈을 뜬다",
+      "you": "dead",
+      "ended": true,
+      "open": "death_ledger",
+      "pending": "",
+      "cursor": "1덮는다",
+      "died": true
+     },
+     {
+      "chosen": 1,
+      "last": "눈을 뜬다",
+      "you": "dead",
+      "ended": true,
+      "open": "death_ledger",
+      "pending": "",
+      "cursor": "1덮는다",
+      "died": true
+     },
+     {
+      "chosen": 1,
+      "last": "눈을 뜬다",
+      "you": "dead",
+      "ended": true,
+      "open": "death_ledger",
+      "pending": "",
+      "cursor": "1덮는다",
+      "died": true
+     }
+    ],
+    "lasts": [
+     "눈을 뜬다"
+    ]
+   },
+   "enterhold": {
+    "runs": 4,
+    "deaths": 0,
+    "chose": 0,
+    "samples": [
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "pro_stairs",
+      "cursor": null,
+      "died": false
+     }
+    ],
+    "lasts": []
+   }
+  },
+  "pro_stairs_b": {
+   "error": "no fixture"
+  },
+  "d3_called_you": {
+   "error": "no fixture"
+  },
+  "trial_d3_count": {
+   "mash": {
+    "runs": 10,
+    "deaths": 0,
+    "chose": 0,
+    "samples": [
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     }
+    ],
+    "lasts": []
+   },
+   "hold": {
+    "runs": 10,
+    "deaths": 0,
+    "chose": 0,
+    "samples": [
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "event",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     }
+    ],
+    "lasts": []
+   },
+   "arrowhold": {
+    "runs": 10,
+    "deaths": 0,
+    "chose": 10,
+    "samples": [
+     {
+      "chosen": 1,
+      "last": "눈을 뜬다",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "d3_called_you",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 1,
+      "last": "눈을 뜬다",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "d3_called_you",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 1,
+      "last": "눈을 뜬다",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "d3_called_you",
+      "cursor": null,
+      "died": false
+     }
+    ],
+    "lasts": [
+     "눈을 뜬다"
+    ]
+   },
+   "enterhold": {
+    "runs": 4,
+    "deaths": 0,
+    "chose": 0,
+    "samples": [
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     },
+     {
+      "chosen": 0,
+      "last": "",
+      "you": "home",
+      "ended": false,
+      "open": "line",
+      "pending": "trial_d3_count",
+      "cursor": null,
+      "died": false
+     }
+    ],
+    "lasts": []
+   }
+  },
+  "console_errors": []
+ }
+}

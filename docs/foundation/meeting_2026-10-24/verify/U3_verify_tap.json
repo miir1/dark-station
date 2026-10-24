@@ -1,0 +1,89 @@
+{
+ "tap_reserve_shim60": {
+  "late_tap_t~0.75": {
+   "moving_t_when_tapped": 0.8843478261128715,
+   "end": [
+    7,
+    4
+   ],
+   "steps_taken": 1,
+   "frames_standing_on_(7,3)_between_steps": 0,
+   "frames_around_turn(t_ms,px,py,mt,face)": [
+    [
+     187,
+     7,
+     3,
+     0.8139,
+     "right"
+    ],
+    [
+     203,
+     7,
+     3,
+     0.8843,
+     "right"
+    ],
+    [
+     220,
+     7,
+     3,
+     0.9574,
+     "right"
+    ],
+    [
+     237,
+     7,
+     4,
+     0.03,
+     "down"
+    ],
+    [
+     253,
+     7,
+     4,
+     0.1004,
+     "down"
+    ],
+    [
+     269,
+     7,
+     4,
+     0.1717,
+     "down"
+    ]
+   ]
+  },
+  "early_tap_t~0.2": {
+   "moving_t_when_tapped": 0.37565217393895856,
+   "end": [
+    7,
+    3
+   ],
+   "steps_taken": 0,
+   "frames_standing_on_(7,3)_between_steps": null,
+   "frames_around_turn(t_ms,px,py,mt,face)": [
+    [
+     0,
+     7,
+     3,
+     0,
+     "right"
+    ],
+    [
+     17,
+     7,
+     3,
+     0.0743,
+     "right"
+    ],
+    [
+     34,
+     7,
+     3,
+     0.1487,
+     "right"
+    ]
+   ]
+  }
+ }
+}

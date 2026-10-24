@@ -1,0 +1,254 @@
+{
+ "root": "C:/Users/gdjy0/AppData/Local/Temp/claude/C--Users-gdjy0/9ba10cd2-b159-4bbe-91d7-679cc9e23f56/scratchpad/a3_identity/wt/v4",
+ "n": 200,
+ "blocks": [
+  1,
+  1001,
+  2001
+ ],
+ "patches": [],
+ "when": "2026-10-24T00:37:13.911Z",
+ "partial": true,
+ "policies": {
+  "balanced": {
+   "n": 600,
+   "dead": 51,
+   "identity": {
+    "platform_one": 71.2,
+    "passenger": 17,
+    "conductor": 10.8,
+    "counted": 0.7,
+    "counting_child": 0.3
+   },
+   "identityDead": {
+    "platform_one": 35.8,
+    "passenger": 8.2,
+    "conductor": 6.7,
+    "counting_child": 0.3
+   },
+   "octant": {
+    "−+−": 71.2,
+    "+−−": 4.3,
+    "++−": 10.8,
+    "−−−": 12.7,
+    "−++": 0.7,
+    "−−+": 0.3
+   },
+   "hist": {
+    "share": {
+     "0": 143,
+     "1": 105,
+     "2": 63,
+     "3": 25,
+     "4": 3,
+     "-1": 112,
+     "-3": 38,
+     "-2": 90,
+     "-4": 18,
+     "-5": 3
+    },
+    "hand": {
+     "0": 68,
+     "1": 108,
+     "2": 122,
+     "3": 107,
+     "4": 85,
+     "5": 50,
+     "6": 19,
+     "7": 4,
+     "8": 1,
+     "-1": 25,
+     "-2": 9,
+     "-3": 1,
+     "-4": 1
+    },
+    "name": {
+     "0": 121,
+     "1": 6,
+     "-1": 189,
+     "-3": 111,
+     "-2": 173
+    }
+   },
+   "contrib": {
+    "name- d0_ledger:말없이 적는다": 100,
+    "share+ trial_d1_bowls:똑같이 조금씩": 100,
+    "name- trial_d3_count:숨을 죽인다": 100,
+    "hand+ d5_lullaby:붙잡는다": 100,
+    "name- d7_broadcast:수첩에 받아 적는다": 97.2,
+    "share- starve_you:선로 밑을 뒤진다": 89.3,
+    "name+ d1_names_quiet:적는다": 54,
+    "hand- trip_a1_pharmacy:지나친다": 52,
+    "hand+ d4_shoes_home:꺼내 묻는다": 51.5,
+    "share- patrol_pact:동하를 보낸다": 49.3,
+    "hand+ patrol_pact:동하를 보낸다": 49.3,
+    "name+ d1_names_quiet:하나씩 불러 확인한다": 46,
+    "hand+ d5_rail_body:칼을 빼앗는다": 40.8,
+    "hand+ trip_b1_gate:밧줄을 던진다": 40.5,
+    "share+ d5_rail_body:받지 않는다": 37.7,
+    "hand+ d10_walk_weak:이를 악물고 걷는다": 37.7,
+    "share+ trip_a2_bodybag:지퍼를 닫는다": 31.3,
+    "hand- d6_shutter_b:아무것도 하지 않는다": 30.7,
+    "hand- d10_walk_other:걷는다": 29.8,
+    "name- d9_inspection:고개를 돌린다": 25.3,
+    "name+ d9_inspection:수첩을 내민다": 24.8,
+    "hand+ d6_vent_voice:동하의 입을 막아 준다": 24,
+    "hand- d9_hoard:모른 척한다": 24,
+    "hand+ d3_bottle:기철 몫을 깎는다": 23.7,
+    "hand- d3_bottle:그대로 둔다": 23.5,
+    "share- d9_hoard:하나만 나눠 받는다": 22.8,
+    "share+ d3_bottle:내 물을 순례에게": 22.2,
+    "hand+ d9_stairs:묻는다": 21.8,
+    "hand- d6_shutter:아무것도 하지 않는다": 21.3,
+    "share- d9_stairs:묻지 않는다": 20.7,
+    "hand+ d6_shutter:열쇠를 내준다": 19,
+    "hand+ trial_d8_key_b:내가 갖는다": 17.5,
+    "share+ d7_rot:둔다": 17,
+    "share+ trip_b1_workers:그대로 둔다": 16.3,
+    "share- trip_b1_workers:신발을 챙긴다": 15.5,
+    "hand+ d7_fingers:손을 잡아 준다": 15.3,
+    "hand- d10_walk:걷는다": 15.2,
+    "share+ trial_d8_key_b:열어 둔다": 15,
+    "name+ d9_inspection_b:수첩을 내민다": 13.8,
+    "hand- d7_fingers:고개를 돌린다": 13.7
+   },
+   "flipOut": {
+    "share- starve_you:선로 밑을 뒤진다": 28,
+    "name- d0_ledger:말없이 적는다": 15.7,
+    "name- trial_d3_count:숨을 죽인다": 15.7,
+    "name- d7_broadcast:수첩에 받아 적는다": 15,
+    "hand+ d5_lullaby:붙잡는다": 14.8,
+    "hand+ patrol_pact:동하를 보낸다": 9.5,
+    "share- patrol_pact:동하를 보낸다": 7,
+    "hand+ d10_walk_weak:이를 악물고 걷는다": 7,
+    "hand+ d4_shoes_home:꺼내 묻는다": 6.3,
+    "hand+ trip_b1_gate:밧줄을 던진다": 5.2,
+    "hand+ d5_rail_body:칼을 빼앗는다": 4.8,
+    "hand+ d6_vent_voice:동하의 입을 막아 준다": 3,
+    "hand+ d9_stairs:묻는다": 2,
+    "hand+ trial_d8_key_b:내가 갖는다": 1.8,
+    "share- trip_b1_workers:신발을 챙긴다": 1.7
+   },
+   "flipIn": {
+    "share+ trial_d1_bowls:똑같이 조금씩": 7.8,
+    "hand- trip_a1_pharmacy:지나친다": 7.5,
+    "share+ trip_a2_bodybag:지퍼를 닫는다": 4.5,
+    "share+ d5_rail_body:받지 않는다": 3.8,
+    "hand- d3_bottle:그대로 둔다": 3.5,
+    "hand- d6_shutter:아무것도 하지 않는다": 3.5,
+    "hand- d9_hoard:모른 척한다": 3,
+    "share+ d3_bottle:내 물을 순례에게": 2.8,
+    "share+ trip_b1_workers:그대로 둔다": 2.7,
+    "hand- d6_shutter_b:아무것도 하지 않는다": 2.7,
+    "hand- d10_walk_other:걷는다": 2.3,
+    "hand- d10_walk:걷는다": 2.3,
+    "share+ d7_rot:둔다": 2,
+    "share+ trial_d8_key_b:열어 둔다": 1.8,
+    "hand- d8_pillow:눈을 감는다": 1.3
+   }
+  },
+  "selfish": {
+   "n": 600,
+   "dead": 2,
+   "identity": {
+    "passenger": 99.3,
+    "counting_child": 0.5,
+    "platform_one": 0.2
+   },
+   "identityDead": {
+    "passenger": 2
+   },
+   "octant": {
+    "−−−": 99.3,
+    "−−+": 0.5,
+    "−+−": 0.2
+   },
+   "hist": {
+    "share": {
+     "0": 1,
+     "-3": 126,
+     "-5": 128,
+     "-6": 81,
+     "-4": 168,
+     "-7": 20,
+     "-1": 12,
+     "-2": 50,
+     "-8": 13,
+     "-9": 1
+    },
+    "hand": {
+     "0": 7,
+     "1": 1,
+     "-4": 132,
+     "-3": 141,
+     "-6": 59,
+     "-5": 133,
+     "-7": 36,
+     "-1": 21,
+     "-2": 64,
+     "-8": 6
+    },
+    "name": {
+     "0": 148,
+     "1": 3,
+     "-1": 139,
+     "-2": 155,
+     "-3": 155
+    }
+   },
+   "contrib": {
+    "name- d0_ledger:말없이 적는다": 100,
+    "share- trial_d1_bowls:남의 그릇을 비운다": 100,
+    "name- trial_d3_count:숨을 죽인다": 100,
+    "hand- d5_lullaby:놓친다": 100,
+    "name- d7_broadcast:수첩에 받아 적는다": 100,
+    "share- d5_rail_body:받는다": 89.2,
+    "hand- d6_shutter_b:아무것도 하지 않는다": 71.3,
+    "hand- trip_a1_pharmacy:지나친다": 69,
+    "hand- d10_walk_other:걷는다": 63.7,
+    "hand+ trip_b1_gate:밧줄을 던진다": 61.7,
+    "hand- d3_bottle:그대로 둔다": 58.7,
+    "share- trip_b1_workers:신발을 챙긴다": 53.5,
+    "share- d9_stairs:묻지 않는다": 52.2,
+    "name+ d1_names_quiet:적는다": 51.2,
+    "name+ d1_names_quiet:하나씩 불러 확인한다": 48.8,
+    "share+ trip_a2_bodybag:지퍼를 닫는다": 45.5,
+    "share- d5_rail_body_c:받는다": 42,
+    "share- d10_walk_weak:옆 사람 물병을 비운다": 41,
+    "share- patrol_pact:동하를 보낸다": 39.8,
+    "hand+ patrol_pact:동하를 보낸다": 39.8,
+    "hand- d6_shutter:아무것도 하지 않는다": 28.7,
+    "name- d9_inspection:고개를 돌린다": 27.3,
+    "name+ d9_inspection:수첩을 내민다": 24.8,
+    "hand- d10_walk:걷는다": 22.5,
+    "name- d9_inspection_b:고개를 돌린다": 22,
+    "hand- d9_hoard:모른 척한다": 21.3,
+    "name+ d9_inspection_b:수첩을 내민다": 21.2,
+    "share- d9_hoard:하나만 나눠 받는다": 19.8,
+    "share- d5_rail_body_b:받는다": 17.3,
+    "hand- d7_fingers:고개를 돌린다": 17.2,
+    "share- trial_d8_key_b:운임을 따로 챙긴다": 12.5,
+    "share+ trial_d8_key_b:열어 둔다": 12.5,
+    "hand+ trial_d8_key_b:내가 갖는다": 11.5,
+    "share- starve_you:선로 밑을 뒤진다": 10.2,
+    "hand- d7_fingers_self:고개를 돌린다": 9.5,
+    "share- dawn_strike:옆 담요를 가리킨다": 8.7,
+    "hand- dawn_strike:옆 담요를 가리킨다": 8.7,
+    "hand- rail_killed:못 본 척한다": 6.5,
+    "name+ hymn_names:이름을 이어 부른다": 2.7,
+    "hand- d8_pillow:눈을 감는다": 2.5
+   },
+   "flipOut": {
+    "hand+ trip_b1_gate:밧줄을 던진다": 0.2,
+    "hand+ patrol_pact:동하를 보낸다": 0.2,
+    "hand+ trial_d8_key_b:내가 갖는다": 0.2
+   },
+   "flipIn": {
+    "hand- d5_lullaby:놓친다": 1.2,
+    "hand- d6_shutter_b:아무것도 하지 않는다": 1.2,
+    "hand- trip_a1_pharmacy:지나친다": 0.3,
+    "hand- d3_bottle:그대로 둔다": 0.2
+   }
+  }
+ }
+}

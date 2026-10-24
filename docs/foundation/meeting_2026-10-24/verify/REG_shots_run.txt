@@ -1,0 +1,14 @@
+fixture {'d10_train': True} 
+OK   01_car (console errors 0)
+OK   02_morning3 (console errors 0)
+OK   03_night3 (console errors 0)
+OK   04_night5 (console errors 0)
+OK   05_night8 (console errors 0)
+OK   06_ending (console errors 0)
+OK   07_death (console errors 0)
+OK   08_evening5 (console errors 0)
+OK   09_reveal (console errors 0)
+OK   10_called3 (console errors 0)
+OK   11_train (console errors 1)
+OK   12_beds (console errors 0)
+exit=0

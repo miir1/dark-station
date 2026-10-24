@@ -1,0 +1,89 @@
+OK   손 물건 bandage          10×4 (긴 변 10 ≤ 12)
+OK   손 물건 bandage_blood    12×4 (긴 변 12 ≤ 12)
+OK   손 물건 bandage_rot      12×6 (긴 변 12 ≤ 12)
+OK   손 물건 bandage_wet      12×4 (긴 변 12 ≤ 12)
+OK   손 물건 bottle           4×10 (긴 변 10 ≤ 12)
+OK   손 물건 bottle_empty     10×4 (긴 변 10 ≤ 12)
+OK   손 물건 bottle_wet       10×5 (긴 변 10 ≤ 12)
+OK   손 물건 bowl             10×6 (긴 변 10 ≤ 12)
+OK   손 물건 bowl_empty       10×5 (긴 변 10 ≤ 12)
+OK   손 물건 bowl_meat        10×6 (긴 변 10 ≤ 12)
+OK   손 물건 can              5×6 (긴 변 6 ≤ 12)
+OK   손 물건 knife            9×3 (긴 변 9 ≤ 12)
+OK   손 물건 notebook         7×5 (긴 변 7 ≤ 12)
+OK   손 물건 notebook_moved   9×5 (긴 변 9 ≤ 12)
+OK   손 물건 scissors         8×7 (긴 변 8 ≤ 12)
+OK   손 물건 scissors_blood   10×7 (긴 변 10 ≤ 12)
+OK   손 물건 shoe_one         8×5 (긴 변 8 ≤ 12)
+OK   손 물건 shoe_pair        10×5 (긴 변 10 ≤ 12)
+OK   짝 barrel↔barrel_open: 캔버스 28×24/28×24 바닥 줄 (23, 23) 가로 어긋남 0 다른 픽셀 316
+OK   짝 medkit↔medkit_open: 캔버스 24×16/24×16 바닥 줄 (15, 15) 가로 어긋남 0 다른 픽셀 206
+OK   짝 lever_box↔lever_box_open: 캔버스 28×20/28×20 바닥 줄 (19, 19) 가로 어긋남 0 다른 픽셀 329
+OK   짝 toolbox↔toolbox_open: 캔버스 20×18/20×18 바닥 줄 (17, 17) 가로 어긋남 0 다른 픽셀 245
+OK   짝 crate↔crate_open: 캔버스 24×20/24×20 바닥 줄 (19, 19) 가로 어긋남 0 다른 픽셀 257
+OK   짝 crate↔crate_empty: 캔버스 24×20/24×20 바닥 줄 (19, 19) 가로 어긋남 0 다른 픽셀 254
+OK   짝 locker↔locker_open: 캔버스 50×48/50×48 바닥 줄 (47, 47) 가로 어긋남 0 다른 픽셀 1415
+OK   짝 drawer↔drawer_open: 캔버스 32×28/32×28 바닥 줄 (27, 27) 가로 어긋남 0 다른 픽셀 502
+OK   짝 shelter_box↔shelter_box_open: 캔버스 24×21/24×21 바닥 줄 (20, 20) 가로 어긋남 0 다른 픽셀 319
+OK   짝 bag↔bag_open: 캔버스 14×11/14×11 바닥 줄 (10, 10) 가로 어긋남 0 다른 픽셀 56
+OK   짝 shelf↔shelf_empty: 캔버스 32×40/32×40 바닥 줄 (39, 39) 가로 어긋남 0 다른 픽셀 634
+OK   상태 bottle↔bottle_empty: 캔버스 같음 True, 바닥 줄 9/9, 다른 픽셀 52 (≥8)
+OK   상태 bottle↔bottle_wet: 캔버스 같음 True, 바닥 줄 9/9, 다른 픽셀 59 (≥8)
+OK   상태 bottle_empty↔bottle_wet: 캔버스 같음 True, 바닥 줄 9/9, 다른 픽셀 42 (≥8)
+OK   상태 bowl↔bowl_empty: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 23 (≥8)
+OK   상태 bowl↔bowl_meat: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 25 (≥8)
+OK   상태 bowl_empty↔bowl_meat: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 29 (≥8)
+OK   상태 bandage↔bandage_wet: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 24 (≥8)
+OK   상태 bandage↔bandage_rot: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 27 (≥8)
+OK   상태 bandage↔bandage_blood: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 19 (≥8)
+OK   상태 bandage_wet↔bandage_rot: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 27 (≥8)
+OK   상태 bandage_wet↔bandage_blood: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 24 (≥8)
+OK   상태 bandage_rot↔bandage_blood: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 27 (≥8)
+OK   상태 notebook↔notebook_moved: 캔버스 같음 True, 바닥 줄 4/4, 다른 픽셀 12 (≥8)
+OK   상태 scissors↔scissors_blood: 캔버스 같음 True, 바닥 줄 6/6, 다른 픽셀 21 (≥8)
+OK   상태 pipe_stand↔pipe_stand_blood: 캔버스 같음 True, 바닥 줄 23/23, 다른 픽셀 10 (≥8)
+OK   상태 phonebooth↔phonebooth_taken: 캔버스 같음 True, 바닥 줄 63/63, 다른 픽셀 102 (≥8)
+OK   상태 pharmacy_shutter↔pharmacy_shutter_half: 캔버스 같음 True, 바닥 줄 47/47, 다른 픽셀 1207 (≥8)
+OK   상태 pharmacy_shutter↔pharmacy_shutter_open: 캔버스 같음 True, 바닥 줄 47/47, 다른 픽셀 1987 (≥8)
+OK   상태 pharmacy_shutter↔pharmacy_shutter_dark: 캔버스 같음 True, 바닥 줄 47/47, 다른 픽셀 1819 (≥8)
+OK   상태 pharmacy_shutter_half↔pharmacy_shutter_open: 캔버스 같음 True, 바닥 줄 47/47, 다른 픽셀 962 (≥8)
+OK   상태 pharmacy_shutter_half↔pharmacy_shutter_dark: 캔버스 같음 True, 바닥 줄 47/47, 다른 픽셀 2832 (≥8)
+OK   상태 pharmacy_shutter_open↔pharmacy_shutter_dark: 캔버스 같음 True, 바닥 줄 47/47, 다른 픽셀 3624 (≥8)
+OK   drum_open: 캔버스 32×32 = v3 drum 32×32, 바닥 줄 31/31
+OK   icons/bottle 40×40
+OK   icons/cable 40×40
+OK   icons/crackers 40×40
+OK   icons/fuse 40×40
+OK   icons/glove 40×40
+OK   icons/key 40×40
+OK   icons/matches 40×40
+OK   icons/notebook 40×40
+OK   icons/phonecard 40×40
+OK   icons/radio 40×40
+OK   icons/rope 40×40
+OK   tiles/dash_0 32×32
+OK   tiles/seatBottom_0 32×32
+OK   tiles/seatTop_0 32×32
+OK   sit/dohyeon 32×128 머리 꼭대기 줄 [8, 8, 8, 8] 바닥 줄 [31, 31, 31, 31]
+OK   sit/dongha 32×128 머리 꼭대기 줄 [7, 7, 7, 7] 바닥 줄 [31, 31, 31, 31]
+OK   sit/eunchae 32×128 머리 꼭대기 줄 [8, 8, 8, 8] 바닥 줄 [31, 31, 31, 31]
+OK   sit/eunji 32×128 머리 꼭대기 줄 [8, 8, 8, 8] 바닥 줄 [31, 31, 31, 31]
+OK   sit/gicheol 32×128 머리 꼭대기 줄 [8, 8, 8, 8] 바닥 줄 [31, 31, 31, 31]
+OK   sit/mari 32×128 머리 꼭대기 줄 [9, 9, 9, 9] 바닥 줄 [31, 31, 31, 31]
+OK   sit/player 32×128 머리 꼭대기 줄 [7, 7, 7, 7] 바닥 줄 [31, 31, 31, 31]
+OK   sit/seoha 32×128 머리 꼭대기 줄 [10, 10, 10, 10] 바닥 줄 [31, 31, 31, 31]
+OK   sit/soonrye 32×128 머리 꼭대기 줄 [11, 11, 11, 11] 바닥 줄 [31, 31, 31, 31]
+OK   sleep/dohyeon 32×32
+OK   sleep/dongha 32×32
+OK   sleep/eunchae 32×32
+OK   sleep/eunji 32×32
+OK   sleep/gicheol 32×32
+OK   sleep/mari 32×32
+OK   sleep/player 32×32
+OK   sleep/seoha 32×32
+OK   sleep/soonrye 32×32
+OK   앉기 down 칸: 가장 닮은 두 사람 seoha·soonrye 다른 픽셀 186 (≥60)
+OK   앉기 left 칸: 가장 닮은 두 사람 eunchae·eunji 다른 픽셀 312 (≥60)
+OK   앉기 right 칸: 가장 닮은 두 사람 seoha·soonrye 다른 픽셀 289 (≥60)
+OK   앉기 up 칸: 가장 닮은 두 사람 seoha·soonrye 다른 픽셀 270 (≥60)
+check_scale: 실패 0

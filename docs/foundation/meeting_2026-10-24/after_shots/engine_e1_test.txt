@@ -1,0 +1,22 @@
+# P0-E1 검증 출력 (2026-10-24)
+
+$ node --test "v4/test/*.test.js"
+ok 12 - people.metFlag(id 꼴 또는 빈칸)·startAway(0/1) 칸: 받는 값과 오류
+ok 33 - E1-1 은지·동하: D1 셔터 전에는 away · 배식 0 · 밤 행위자·대상이 아니다 → 셔터를 열면 같이 역에 온다
+ok 34 - E1-2 서하: 만나기 전에는 home 이지만 배식·무작위 대상·mostInjured·동행에서 빠진다 → 만나면 들어간다
+ok 35 - E1-3 alive: 아직 안 온 사람(away)·안 만난 사람도 살아 있음 — alive:x 사건이 만나기 전에도 걸린다 (사건·밤 시계)
+ok 36 - E1-4 away 는 저장을 불러온 뒤에도 유지된다 · 온 뒤의 home·온 날도 · 옛 저장(heard 없음)은 빈 기록
+ok 37 - E1-5 heard: {type:heard, key:"<줄id>\#<행번호>"} → heard[key] = 그날 · 어느 단계에서나 · 없는 줄·행은 거절
+ok 38 - E1 말 걸기: 역 밖(away)에서 마주친 사람에게도 말을 건다(터널의 기철) — 만남 깃발이 서면 역에 온다
+ok 39 - E1 명부: 아직 안 온 사람·안 만난 사람은 명부에 없다(모르는 이름은 못 적는다)
+ok 40 - E1 실데이터 + 계획 값(plan P0-D1 people 칸): 봇이 끝까지 돈다 · 은지·동하는 D2 아침까지 온다 · 배식은 만난 사람만
+# tests 93
+# pass 93
+# fail 0
+
+$ node -e "...T.loadDir(v4/data)..."
+data OK
+
+$ node v4/sim/run.js  (exit 코드는 engine_e1_sim.txt 끝 줄)
+exit=0
+exit=0

@@ -3,12 +3,16 @@
 # 쓰기: python v4/tools/audit_walk.py   (C:\dev\dark_station 에서)
 #   → docs/foundation/meeting_2026-10-24/audit_shots/  walk_<장면>_strip.png(당신 둘레를 프레임마다 4배로 잘라 이은 띠)
 #                                                     walk_<장면>_full_<n>.png(그 순간 전체 화면 1280×720) · npc_face_*.png · walk_timing.json
+#       python v4/tools/audit_walk.py --after   → 고친 뒤 다시 잰 것을 after_shots/screen_audit_walk_* 로 (검수 원본 audit_shots 는 그대로 둔다)
+# 걷기 그림 번호: 화면이 scene.walkFrame(걸은 거리 4박자)을 남기면 그것, 없으면(고치기 전 코드) 예전 공식
 import os, sys, json, time, base64, io, asyncio, subprocess, tempfile, threading, functools, http.server, socketserver, shutil, urllib.request
 from PIL import Image, ImageDraw
 import websockets
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-OUTD = os.path.join(ROOT, 'docs', 'foundation', 'meeting_2026-10-24', 'audit_shots')
+AFTER = '--after' in sys.argv
+OUTD = os.path.join(ROOT, 'docs', 'foundation', 'meeting_2026-10-24', 'after_shots' if AFTER else 'audit_shots')
+PFX = 'screen_audit_' if AFTER else ''
 PORT, DBG = 8766, 9333
 T, PH = 32, 48
 
@@ -77,7 +81,7 @@ REC = r"""
     if (!rc.on) return;
     const m = sc.moving;
     const mx = m ? sc.px - m.dx * (1 - m.t) : sc.px, my = m ? sc.py - m.dy * (1 - m.t) : sc.py;
-    const fr = m && m.t > 0.15 && m.t < 0.85 ? (sc.steps % 2 ? 1 : 2) : 0;
+    const fr = sc.walkFrame != null ? sc.walkFrame : (m && m.t > 0.15 && m.t < 0.85 ? (sc.steps % 2 ? 1 : 2) : 0);
     const f = { t: t0, drawMs: +(t1 - t0).toFixed(2), tick, px: sc.px, py: sc.py, mt: m ? +m.t.toFixed(3) : null, mx: +mx.toFixed(4), my: +my.toFixed(4),
       sx: Math.round(mx * 32) + sc.cam.ox, sy: Math.round(my * 32) + sc.cam.oy, frame: fr, face: sc.face, ox: sc.cam.ox, oy: sc.cam.oy, steps: sc.steps,
       people: people.map((p) => [p.id, p.x, p.y, p.face, p.pose || '']) };
@@ -103,7 +107,7 @@ async def wait_ready(c, limit=240):
 
 
 async def place(c, x, y, face):
-    await c.ev(f"(() => {{ const s = __ds4.scene; s.moving = null; s.auto = null; s.px = {x}; s.py = {y}; s.face = '{face}'; return 1; }})()", False)
+    await c.ev(f"(() => {{ const s = __ds4.scene; s.moving = null; s.auto = null; s.px = {x}; s.py = {y}; s.face = '{face}'; if ('walkDist' in s) s.walkDist = 0; return 1; }})()", False)
     await asyncio.sleep(0.15)
 
 
@@ -204,7 +208,7 @@ async def main():
             for name, (x, y, face), key, ms in scen:
                 await place(c, x, y, face)
                 fr = await hold(c, key, ms)
-                strip(fr, os.path.join(OUTD, f'walk_{name}_strip.png'))
+                strip(fr, os.path.join(OUTD, f'{PFX}walk_{name}_strip.png'))
                 tm = timing(fr)
                 result[name] = tm
                 print(name, json.dumps(tm, ensure_ascii=False))
@@ -212,7 +216,7 @@ async def main():
                 await place(c, x, y, face)
                 await c.send('Input.dispatchKeyEvent', {'type': 'keyDown', 'key': key, 'code': key, 'windowsVirtualKeyCode': {'ArrowUp': 38, 'ArrowDown': 40, 'ArrowLeft': 37, 'ArrowRight': 39}[key]})
                 await asyncio.sleep(0.33)
-                await c.shot(os.path.join(OUTD, f'walk_{name}_full.png'))
+                await c.shot(os.path.join(OUTD, f'{PFX}walk_{name}_full.png'))
                 await asyncio.sleep(0.1)
                 await c.send('Input.dispatchKeyEvent', {'type': 'keyUp', 'key': key, 'code': key, 'windowsVirtualKeyCode': {'ArrowUp': 38, 'ArrowDown': 40, 'ArrowLeft': 37, 'ArrowRight': 39}[key]})
                 await asyncio.sleep(0.5)
@@ -234,18 +238,18 @@ async def main():
                     # 당신 둘레 7×5칸을 3배로
                     cx, cy = f['sx'] + 16, f['sy'] + 16
                     box = (max(0, cx - 112), max(0, cy - 96), min(480, cx + 112), min(320, cy + 64))
-                    im.crop(box).resize(((box[2] - box[0]) * 3, (box[3] - box[1]) * 3), Image.NEAREST).save(os.path.join(OUTD, f'{name}.png'))
+                    im.crop(box).resize(((box[2] - box[0]) * 3, (box[3] - box[1]) * 3), Image.NEAREST).save(os.path.join(OUTD, f'{PFX}{name}.png'))
                     result[name] = {'you': [x, y], 'people': f['people']}
                     print(name, f['people'])
             # ── 지도 맨 위 가장자리에서 서 있을 때 / 화로 앞
             await place(c, 20, 1, 'up')
             await asyncio.sleep(0.2)
-            await c.shot(os.path.join(OUTD, 'edge_top_full.png'))
+            await c.shot(os.path.join(OUTD, f'{PFX}edge_top_full.png'))
     finally:
         proc.terminate()
         httpd.shutdown()
         shutil.rmtree(prof, ignore_errors=True)
-        with open(os.path.join(OUTD, 'walk_timing.json'), 'w', encoding='utf-8') as f:
+        with open(os.path.join(OUTD, f'{PFX}walk_timing.json'), 'w', encoding='utf-8') as f:
             json.dump(result, f, ensure_ascii=False, indent=1)
 
 

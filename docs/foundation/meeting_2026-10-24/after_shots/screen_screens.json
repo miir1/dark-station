@@ -1,0 +1,14 @@
+{
+ "d01_laptop_1366x650": {
+  "transform": "matrix(2, 0, 0, 2, 0, 0)",
+  "scale": 2.0
+ },
+ "d02_fhd_1920x1080": {
+  "transform": "matrix(3, 0, 0, 3, 0, 0)",
+  "scale": 3.0
+ },
+ "d02b_fhd_window_1920x950": {
+  "transform": "matrix(2, 0, 0, 2, 0, 0)",
+  "scale": 2.0
+ }
+}

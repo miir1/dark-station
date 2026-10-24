@@ -1,0 +1,60 @@
+OK   손 물건 bandage          6×4 (긴 변 6 ≤ 12)
+OK   손 물건 bandage_blood    6×4 (긴 변 6 ≤ 12)
+OK   손 물건 bandage_rot      6×4 (긴 변 6 ≤ 12)
+OK   손 물건 bandage_wet      6×4 (긴 변 6 ≤ 12)
+OK   손 물건 bottle           4×10 (긴 변 10 ≤ 12)
+OK   손 물건 bottle_empty     10×4 (긴 변 10 ≤ 12)
+OK   손 물건 bottle_wet       10×5 (긴 변 10 ≤ 12)
+OK   손 물건 bowl             8×5 (긴 변 8 ≤ 12)
+OK   손 물건 bowl_empty       8×4 (긴 변 8 ≤ 12)
+OK   손 물건 bowl_meat        8×5 (긴 변 8 ≤ 12)
+OK   손 물건 can              5×6 (긴 변 6 ≤ 12)
+OK   손 물건 knife            9×3 (긴 변 9 ≤ 12)
+OK   손 물건 notebook         7×5 (긴 변 7 ≤ 12)
+OK   손 물건 notebook_moved   9×5 (긴 변 9 ≤ 12)
+OK   손 물건 scissors         7×6 (긴 변 7 ≤ 12)
+OK   손 물건 scissors_blood   7×6 (긴 변 7 ≤ 12)
+OK   손 물건 shoe_one         8×5 (긴 변 8 ≤ 12)
+OK   손 물건 shoe_pair        10×5 (긴 변 10 ≤ 12)
+OK   짝 barrel↔barrel_open: 캔버스 28×24/28×24 바닥 줄 (23, 23) 가로 어긋남 0 다른 픽셀 316
+OK   짝 medkit↔medkit_open: 캔버스 24×16/24×16 바닥 줄 (15, 15) 가로 어긋남 0 다른 픽셀 206
+OK   짝 lever_box↔lever_box_open: 캔버스 28×20/28×20 바닥 줄 (19, 19) 가로 어긋남 0 다른 픽셀 329
+OK   짝 toolbox↔toolbox_open: 캔버스 20×18/20×18 바닥 줄 (17, 17) 가로 어긋남 0 다른 픽셀 245
+OK   짝 crate↔crate_open: 캔버스 24×20/24×20 바닥 줄 (19, 19) 가로 어긋남 0 다른 픽셀 257
+OK   짝 crate↔crate_empty: 캔버스 24×20/24×20 바닥 줄 (19, 19) 가로 어긋남 0 다른 픽셀 254
+OK   짝 locker↔locker_open: 캔버스 50×48/50×48 바닥 줄 (47, 47) 가로 어긋남 0 다른 픽셀 1415
+OK   짝 drawer↔drawer_open: 캔버스 32×28/32×28 바닥 줄 (27, 27) 가로 어긋남 0 다른 픽셀 502
+OK   짝 shelter_box↔shelter_box_open: 캔버스 24×21/24×21 바닥 줄 (20, 20) 가로 어긋남 0 다른 픽셀 319
+OK   짝 bag↔bag_open: 캔버스 14×11/14×11 바닥 줄 (10, 10) 가로 어긋남 0 다른 픽셀 56
+OK   짝 shelf↔shelf_empty: 캔버스 32×40/32×40 바닥 줄 (39, 39) 가로 어긋남 0 다른 픽셀 634
+OK   상태 bottle↔bottle_empty: 캔버스 같음 True, 바닥 줄 9/9, 다른 픽셀 52 (≥8)
+OK   상태 bottle↔bottle_wet: 캔버스 같음 True, 바닥 줄 9/9, 다른 픽셀 59 (≥8)
+OK   상태 bottle_empty↔bottle_wet: 캔버스 같음 True, 바닥 줄 9/9, 다른 픽셀 42 (≥8)
+OK   상태 bowl↔bowl_empty: 캔버스 같음 True, 바닥 줄 4/4, 다른 픽셀 14 (≥8)
+OK   상태 bowl↔bowl_meat: 캔버스 같음 True, 바닥 줄 4/4, 다른 픽셀 10 (≥8)
+OK   상태 bowl_empty↔bowl_meat: 캔버스 같음 True, 바닥 줄 4/4, 다른 픽셀 13 (≥8)
+OK   상태 bandage↔bandage_wet: 캔버스 같음 True, 바닥 줄 3/3, 다른 픽셀 9 (≥8)
+OK   상태 bandage↔bandage_rot: 캔버스 같음 True, 바닥 줄 3/3, 다른 픽셀 8 (≥8)
+OK   상태 bandage↔bandage_blood: 캔버스 같음 True, 바닥 줄 3/3, 다른 픽셀 8 (≥8)
+OK   상태 bandage_wet↔bandage_rot: 캔버스 같음 True, 바닥 줄 3/3, 다른 픽셀 10 (≥8)
+OK   상태 bandage_wet↔bandage_blood: 캔버스 같음 True, 바닥 줄 3/3, 다른 픽셀 10 (≥8)
+OK   상태 bandage_rot↔bandage_blood: 캔버스 같음 True, 바닥 줄 3/3, 다른 픽셀 8 (≥8)
+OK   상태 notebook↔notebook_moved: 캔버스 같음 True, 바닥 줄 4/4, 다른 픽셀 12 (≥8)
+OK   상태 scissors↔scissors_blood: 캔버스 같음 True, 바닥 줄 5/5, 다른 픽셀 8 (≥8)
+OK   상태 pipe_stand↔pipe_stand_blood: 캔버스 같음 True, 바닥 줄 23/23, 다른 픽셀 10 (≥8)
+OK   drum_open: 캔버스 32×32 = v3 drum 32×32, 바닥 줄 31/31
+OK   icons/bottle 40×40
+OK   icons/cable 40×40
+OK   icons/crackers 40×40
+OK   icons/fuse 40×40
+OK   icons/glove 40×40
+OK   icons/key 40×40
+OK   icons/matches 40×40
+OK   icons/notebook 40×40
+OK   icons/phonecard 40×40
+OK   icons/radio 40×40
+OK   icons/rope 40×40
+OK   tiles/dash_0 32×32
+OK   tiles/seatBottom_0 32×32
+OK   tiles/seatTop_0 32×32
+check_scale: 실패 0

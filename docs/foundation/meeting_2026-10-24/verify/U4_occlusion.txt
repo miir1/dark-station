@@ -1,0 +1,7 @@
+container visibility while the player stands at the opening cell (lit render, tick 0)
+closedPx = container pixels with no player; closedVisiblePct = share still visible with player there; openChange = pixels that change closed->open; openChangeVisiblePct = share of that change visible with player there
+{"map": "car", "id": "medkit", "stand": [19, 2], "face": "up", "closedPx": 196, "closedVisibleWithPlayer": 100, "closedVisiblePct": 51, "openChangePx": 206, "openChangeVisibleWithPlayer": 123, "openChangeVisiblePct": 60}
+{"map": "car", "id": "lever", "stand": [20, 2], "face": "up", "closedPx": 301, "closedVisibleWithPlayer": 154, "closedVisiblePct": 51, "openChangePx": 329, "openChangeVisibleWithPlayer": 203, "openChangeVisiblePct": 62}
+{"map": "tunnel", "id": "shelter_box", "stand": [14, 1], "face": "up", "closedPx": 384, "closedVisibleWithPlayer": 227, "closedVisiblePct": 59, "openChangePx": 319, "openChangeVisibleWithPlayer": 206, "openChangeVisiblePct": 65}
+{"map": "station", "id": "crate_food", "stand": [8, 3], "face": "up", "closedPx": 339, "closedVisibleWithPlayer": 193, "closedVisiblePct": 57, "openChangePx": 257, "openChangeVisibleWithPlayer": 156, "openChangeVisiblePct": 61}
+{"map": "car", "id": "bag", "stand": [10, 3], "face": "down", "closedPx": 74, "closedVisibleWithPlayer": 74, "closedVisiblePct": 100, "openChangePx": 56, "openChangeVisibleWithPlayer": 56, "openChangeVisiblePct": 100}

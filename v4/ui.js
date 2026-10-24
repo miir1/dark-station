@@ -1,6 +1,9 @@
 // 어두운 역 v4 — 창. 그림은 무대(#cg) 위에, 글은 아래 상자(#box, 높이 고정, 스크롤 0)에. OS confirm/alert/prompt 없음.
 // 모든 창은 Promise 로 열리고 고른 값으로 닫힌다. 키: Space/Enter/Z 다음·결정, ↑↓ 고르기, 1~9 번호, Esc/X 취소(취소 가능한 창만).
 // 글이 상자를 넘치면 스크롤하지 않고 다음 장으로 나눈다(한 줄 창) / 앞 문장을 덜어 낸다(선택 창 — 그 문장들은 이미 한 줄씩 지나갔다).
+// 연타 보호(2026-10-24 P0-S7): 눌린 채 반복되는 키(e.repeat)는 무시 · 선택 창은 열린 뒤 결정 키를 한 번 뗀 다음부터 Space·Enter 를 받는다 ·
+//   경고(warn)·금기(taboo)가 있는 선택지가 하나라도 있으면 커서 없이 열고 첫 방향키가 커서를 놓는다 · 열린 뒤 0.4초는 입력을 막는다 ·
+//   방향키도 열릴 때 눌려 있었으면 한 번 뗀 다음부터 받고, 창이 열려 있는 동안 방향키 자동 반복은 버린다 (검증 #12).
 (function () {
   'use strict';
   const $ = (id) => document.getElementById(id);
@@ -9,14 +12,38 @@
   let cur = null;          // 선택 창 { resolve, options, sel, cancel, cancelValue }
   let lineCur = null;      // 한 줄 창 { next }
   let openedAt = 0;
-  let bot = null;          // 봇: (kind, info) → 고를 번호 / 'hold'(그대로 둔다 = 캡처 지점) / undefined(기본값). 플레이스루·캡처용
+  let bot = null;          // 봇: (kind, info) → 고를 번호 / 'hold'(그대로 둔다 = 캡처 지점) / undefined(첫 번째 열린 선택지). 플레이스루·캡처용
+  const BLOCK_MS = 400;    // 선택 창이 열린 뒤 입력을 막는 시간
+  const OK_KEYS = ['z', 'Z', 'Enter', ' '];
+  const okDown = new Set(); // 지금 눌려 있는 결정 키
+  let armed = true;        // 선택 창이 열린 뒤 결정 키를 한 번 뗐는가 (열릴 때 결정 키가 안 눌려 있었으면 처음부터 true)
+  // 방향키도 같다 (2026-10-24 검증 #12): 계단 쪽으로 ↑ 를 누른 채 걸어가 Space 로 조사하면, 창이 열린 뒤에도 ↑ 자동 반복이 커서를 맨 아래(죽는 선택)에 놓고 돌렸다.
+  //   선택 창·확인창이 열릴 때 방향키가 눌려 있었으면 그 키를 뗄 때까지 방향키를 받지 않는다 · 창이 열려 있는 동안 방향키 자동 반복(e.repeat)은 버린다
+  const DIR_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', 'W', 'A', 'S', 'D'];
+  const dirDown = new Set(); // 지금 눌려 있는 방향키
+  let dirArmed = true;     // 선택 창이 열린 뒤 방향키를 다 뗐는가
+  // 캡처 단계에서 먼저 듣는다: 반복 입력은 게임 쪽 처리기(game.js)까지 가지 않는다 (방향키 반복은 그대로 — 걷기·커서)
+  document.addEventListener('keydown', (e) => {
+    if (OK_KEYS.includes(e.key)) okDown.add(e.key);
+    if (DIR_KEYS.includes(e.key)) dirDown.add(e.key);
+    if (e.target && e.target.tagName === 'INPUT') return;                      // 저장 코드 칸에서는 글자를 눌러 쓸 수 있게
+    if (cur && e.repeat && DIR_KEYS.includes(e.key)) { e.preventDefault(); e.stopImmediatePropagation(); return; }   // 선택 창이 열려 있으면 방향키 자동 반복은 버린다
+    if (e.repeat && !/^Arrow/.test(e.key) && !['w', 'a', 's', 'd', 'W', 'A', 'S', 'D', 'Shift'].includes(e.key)) { e.preventDefault(); e.stopImmediatePropagation(); }
+  }, true);
+  document.addEventListener('keyup', (e) => {
+    if (OK_KEYS.includes(e.key)) { okDown.delete(e.key); if (!okDown.size) armed = true; }
+    if (DIR_KEYS.includes(e.key)) { dirDown.delete(e.key); dirDown.delete(e.key.length === 1 ? (e.key === e.key.toLowerCase() ? e.key.toUpperCase() : e.key.toLowerCase()) : e.key); if (!dirDown.size) dirArmed = true; }
+  }, true);
+  window.addEventListener('blur', () => { okDown.clear(); armed = true; dirDown.clear(); dirArmed = true; });
 
   // ── 무대 그림 층: 다음 그림이 올 때까지 유지. 그림이 없으면 층을 열지 않는다(자리표시 상자 없음) ──
+  // 선택 창이 열리면 256×144 로 작아진다: 같은 이름의 v4 cg_s 그림(원본에서 그 크기로 뽑은 것)이 있으면 그것을 원래 크기로 (art.js cgSmall)
   function cg(src) {
     const el = $('cg');
     if (!src) { el.hidden = true; el.innerHTML = ''; el.className = ''; return; }
-    el.hidden = false; el.className = '';
-    el.innerHTML = `<img alt="" src="${src}">`;
+    const small = window.ART && ART.cgSmall ? ART.cgSmall(src) : '';
+    el.hidden = false; el.className = small ? 'hassmall' : '';
+    el.innerHTML = `<img class="big" alt="" src="${src}">${small ? `<img class="small" alt="" src="${small}">` : ''}`;
   }
   const cgClear = () => cg(null);
   // 무대에 글 한 장(명부 등). html 은 부른 쪽이 esc 해서 넘긴다
@@ -35,7 +62,7 @@
     if (cur) close(undefined);
     const box = $('box');
     box.className = 'line' + (o.black ? ' black' : '') + (o.face ? ' hasface' : '');
-    const face = o.face ? `<img class="face" alt="" src="${o.face}">` : (o.name ? '<div class="face ph"></div>' : '');
+    const face = o.face ? `<img class="face${o.faceCls ? ' ' + o.faceCls : ''}" alt="" src="${o.face}">` : (o.name ? '<div class="face ph"></div>' : '');   // faceCls 'icon' = 찾은 물건 아이콘 40px 을 2배(80)로
     box.innerHTML = `${face}<div class="lt">${o.name ? `<p class="who">${esc(o.name)}</p>` : ''}<p class="tw"></p><p class="more">▼</p></div>`;
     box.hidden = false;
     const el = box.querySelector('.tw');
@@ -83,7 +110,8 @@
   }
   async function lines(text, o) { for (const s of splitSentences(text)) for (const p of paginate(s)) await line(p, o); }
 
-  // ── 선택 창: 글 + 번호 선택지. o.options: [{label, sub(HTML), disabled, value}]. o.fit: [문장…] 이면 넘칠 때 앞 문장부터 덜어 낸다 ──
+  // ── 선택 창: 글 + 번호 선택지. o.options: [{label, sub(HTML), disabled, value, warn}]. o.fit: [문장…] 이면 넘칠 때 앞 문장부터 덜어 낸다 ──
+  // o.sel: 처음 커서 자리(되돌릴 수 없는 확인창 = '다시 고른다'). 없으면 경고 있는 창은 커서 없음(-1), 아니면 첫 번째 열린 선택지
   function open(body, o) {
     o = o || {};
     if (cur) close(undefined);
@@ -103,10 +131,16 @@
     }
     if (!ok()) box.classList.add('tight');                                      // 그래도 넘치면 글씨를 한 단계 줄인다
     openedAt = Date.now();
+    armed = okDown.size === 0;
+    dirArmed = dirDown.size === 0;                                              // 방향키를 누른 채 열렸으면 뗄 때까지 커서가 안 움직인다
+    const firstOpen = () => options.findIndex((x) => !x.disabled);
+    const warned = options.some((x) => x.warn || x.taboo || /class="warn"/.test(String(x.sub || '')));
+    const sel = Number.isInteger(o.sel) && options[o.sel] && !options[o.sel].disabled ? o.sel : warned ? -1 : Math.max(0, firstOpen());
     return new Promise((resolve) => {
-      cur = { resolve, options, sel: Math.max(0, options.findIndex((x) => !x.disabled)), cancel: !!o.cancel, cancelValue: o.cancelValue === undefined ? null : o.cancelValue, kind: o.kind || 'menu' };
+      cur = { resolve, options, sel, cancel: !!o.cancel, cancelValue: o.cancelValue === undefined ? null : o.cancelValue, kind: o.kind || 'menu' };
       paint();
-      if (bot) setTimeout(() => { if (!cur) return; const i = bot(cur.kind, { options: cur.options.map((x) => Object.assign({}, x, { sub: undefined })) }); if (i === 'hold') return; if (Number.isInteger(i) && cur.options[i] && !cur.options[i].disabled) choose(i, true); else if (cur.cancel) close(cur.cancelValue); else choose(cur.sel, true); }, 0);
+      // 봇(캡처·플레이스루): 고른 번호, 아니면 취소 가능한 창은 취소, 아니면 '첫 번째 열린 선택지'를 명시해서 고른다 (커서 자리에 기대지 않는다)
+      if (bot) setTimeout(() => { if (!cur) return; const i = bot(cur.kind, { options: cur.options.map((x) => Object.assign({}, x, { sub: undefined })) }); if (i === 'hold') return; if (Number.isInteger(i) && cur.options[i] && !cur.options[i].disabled) choose(i, true); else if (cur.cancel) close(cur.cancelValue); else { const f = cur.options.findIndex((x) => !x.disabled); if (f >= 0) choose(f, true); } }, 0);
     });
   }
   function paint() {
@@ -122,22 +156,30 @@
     if (!cur) return;
     const op = cur.options[i];
     if (!op || op.disabled) return;
-    if (!force && Date.now() - openedAt < 120) return;
+    if (!force && Date.now() - openedAt < BLOCK_MS) return;
     close(op.value === undefined ? i : op.value);
   }
   function key(k) {
     if (lineCur) { if (k === 'ok' || k === 'back') lineCur.next(); return true; }
     if (!cur) return false;
+    if (Date.now() - openedAt < BLOCK_MS) return true;                          // 열린 뒤 0.4초는 막는다
     const n = cur.options.length;
     if (k === 'up' || k === 'down') {
+      if (!dirArmed) return true;                                               // 창이 열릴 때 눌려 있던 방향키 — 한 번 뗀 다음부터
+      if (cur.sel < 0) {                                                        // 커서 없이 열린 창: 첫 방향키가 커서를 놓는다 (↓ 맨 위 열린 것 · ↑ 맨 아래 열린 것)
+        const order = Array.from({ length: n }, (_, j) => (k === 'up' ? n - 1 - j : j));
+        const i = order.find((j) => !cur.options[j].disabled);
+        if (i != null) { cur.sel = i; paint(); }
+        return true;
+      }
       let i = cur.sel;
       for (let step = 0; step < n; step++) { i = (i + (k === 'up' ? -1 : 1) + n) % n; if (!cur.options[i].disabled) break; }
       cur.sel = i; paint();
-    } else if (k === 'ok') choose(cur.sel);
+    } else if (k === 'ok') { if (armed && cur.sel >= 0) choose(cur.sel); }      // 결정 키를 한 번 뗀 다음부터
     else if (k === 'back' && cur.cancel) close(cur.cancelValue);
     return true;
   }
-  const pick = (i) => { if (cur && cur.options[i]) choose(i, true); else if (lineCur) lineCur.next(); };
+  const pick = (i) => { if (cur && cur.options[i]) choose(i); else if (lineCur) lineCur.next(); };
   document.addEventListener('click', (e) => {
     if (lineCur && e.target.closest('#box')) { if (Date.now() - openedAt > 80) lineCur.next(); return; }
     const b = e.target.closest('#box .opt');

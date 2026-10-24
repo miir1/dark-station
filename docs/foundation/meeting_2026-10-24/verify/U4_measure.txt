@@ -1,0 +1,75 @@
+player visible bbox (station (5,6), lit): {'x0': 165, 'y0': 178, 'x1': 186, 'y1': 223, 'w': 22, 'h': 46, 'n': 791}
+map | id | name | cell | tile | state | solid | hiddenD0 | v4name | hand | prop | drawn w x h | height/player | inCell
+station | fire | 화로 | (13,10) | , | lit | 1 | 0 | None | 0 | drum | 16x35 | 76% | {'dx0': 8, 'dy0': -3, 'dx1': 23, 'dy1': 31}
+station | board | 게시판 | (12,9) | , | intact | 1 | 0 | None | 0 | board | 32x27 | 59% | {'dx0': 0, 'dy0': 5, 'dx1': 31, 'dy1': 31}
+station | bench1 | 승강장 의자 | (17,10) | , | intact | 1 | 0 | None | 0 | seat | 32x22 | 48% | {'dx0': 0, 'dy0': 10, 'dx1': 31, 'dy1': 31}
+station | bench2 | 승강장 의자 | (19,10) | , | intact | 1 | 0 | None | 0 | seat | 32x22 | 48% | {'dx0': 0, 'dy0': 10, 'dx1': 31, 'dy1': 31}
+station | crate_food | 창고 상자 | (8,2) | . | closed | 1 | 0 | crate | 0 | crate | 19x20 | 44% | {'dx0': 7, 'dy0': 12, 'dx1': 25, 'dy1': 31}
+station | parts_crate | 부품 상자 | (9,1) | . | storage | 1 | 0 | crate | 0 | crate | 19x20 | 44% | {'dx0': 7, 'dy0': 12, 'dx1': 25, 'dy1': 31}
+station | office_door | 역무실 문 | (15,2) | k | locked | 1 | 0 | None | 0 | door | NOT DRAWN | - | None
+station | chalk_wall | 분필 벽 | (21,1) | . | blank | 1 | 0 | None | 0 | mark | 11x28 | 61% | {'dx0': 10, 'dy0': 4, 'dx1': 20, 'dy1': 31}
+station | stairs_ash | 출구 계단 | (2,2) | . | dry | 1 | 0 | None | 0 | stairsUp | 30x32 | 70% | {'dx0': 1, 'dy0': 0, 'dx1': 30, 'dy1': 31}
+station | shoes_stairs | 계단의 신발 | (3,2) | . | none | 0 | 1 | shoe_one | 1 | None | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+station | stairs_line | 분필 줄 | (2,3) | . | drawn | 0 | 0 | chalk_line | 0 | pr:chalk | 28x4 | 9% | {'dx0': 2, 'dy0': 2, 'dx1': 29, 'dy1': 5}
+station | shutter_gap | 지하상가 셔터 | (1,6) | . | shut | 0 | 0 | None | 0 | None | 32x12 | 26% | {'dx0': 0, 'dy0': 20, 'dx1': 31, 'dy1': 31}
+station | speaker | 기둥 스피커 | (10,5) | . | on | 1 | 0 | None | 0 | lamp | 8x24 | 52% | {'dx0': 12, 'dy0': 8, 'dx1': 19, 'dy1': 31}
+station | train_seat | 전동차 좌석 | (3,13) | C | intact | 1 | 0 | None | 0 | seat | 32x22 | 48% | {'dx0': 0, 'dy0': 10, 'dx1': 31, 'dy1': 31}
+station | cab_window | 운전실 유리창 | (1,13) | C | normal | 1 | 0 | None | 0 | None | NOT DRAWN | - | None
+station | radio | 운전실 무전기 | (2,13) | C | idle | 1 | 0 | None | 1 | radio | 10x9 | 20% | {'dx0': 11, 'dy0': 20, 'dx1': 20, 'dy1': 28}
+station | body_rail | 선로의 사람 | (9,14) | ~ | none | 1 | 1 | None | 0 | None | NOT DRAWN | - | None
+station | grave | 무덤 | (24,11) | , | none | 0 | 1 | None | 0 | None | NOT DRAWN | - | None
+station | pipe | 쇠파이프 | (14,9) | , | clean | 0 | 0 | pipe_stand | 0 | pr:pipe | 3x24 | 52% | {'dx0': 15, 'dy0': 5, 'dx1': 17, 'dy1': 28}
+station | scissors | 가위 | (19,11) | , | clean | 0 | 0 | scissors | 1 | tr:knife | 7x6 | 13% | {'dx0': 12, 'dy0': 23, 'dx1': 18, 'dy1': 28}
+station | notebook_you | 당신 수첩 | (12,11) | , | inplace | 0 | 0 | notebook | 1 | pr:notebook | 7x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 18, 'dy1': 28}
+station | blanket_soonrye | 순례 담요 | (16,9) | , | folded | 1 | 0 | None | 0 | bed | 29x32 | 70% | {'dx0': 1, 'dy0': 0, 'dx1': 29, 'dy1': 31}
+station | blanket_seoha | 서하 담요 | (18,9) | , | folded | 1 | 0 | None | 0 | bed | 29x32 | 70% | {'dx0': 1, 'dy0': 0, 'dx1': 29, 'dy1': 31}
+station | blanket_gicheol | 기철 담요 | (20,9) | , | folded | 1 | 0 | None | 0 | bed | 29x32 | 70% | {'dx0': 1, 'dy0': 0, 'dx1': 29, 'dy1': 31}
+station | blanket_eunji | 은지 담요 | (16,11) | , | folded | 1 | 0 | None | 0 | bed | 29x32 | 70% | {'dx0': 1, 'dy0': 0, 'dx1': 29, 'dy1': 31}
+station | blanket_dongha | 동하 담요 | (18,11) | , | folded | 1 | 0 | None | 0 | bed | 29x32 | 70% | {'dx0': 1, 'dy0': 0, 'dx1': 29, 'dy1': 31}
+station | blanket_mari | 마리 담요 | (20,11) | , | folded | 1 | 0 | None | 0 | bed | 29x32 | 70% | {'dx0': 1, 'dy0': 0, 'dx1': 29, 'dy1': 31}
+station | pillow_gicheol | 기철 베개 | (21,9) | , | normal | 0 | 0 | None | 0 | tr:pillow | 20x14 | 30% | {'dx0': 6, 'dy0': 18, 'dx1': 25, 'dy1': 31}
+station | bottle_soonrye | 순례 물통 | (15,9) | , | full | 0 | 0 | bottle | 1 | None | 4x10 | 22% | {'dx0': 14, 'dy0': 19, 'dx1': 17, 'dy1': 28}
+station | bottle_seoha | 서하 물통 | (17,9) | , | full | 0 | 0 | bottle | 1 | None | 4x10 | 22% | {'dx0': 14, 'dy0': 19, 'dx1': 17, 'dy1': 28}
+station | bottle_gicheol | 기철 물통 | (19,9) | , | full | 0 | 1 | bottle | 1 | None | 4x10 | 22% | {'dx0': 14, 'dy0': 19, 'dx1': 17, 'dy1': 28}
+station | bottle_eunji | 은지 물통 | (15,11) | , | full | 0 | 1 | bottle | 1 | None | 4x10 | 22% | {'dx0': 14, 'dy0': 19, 'dx1': 17, 'dy1': 28}
+station | bottle_dongha | 동하 물통 | (17,11) | , | full | 0 | 1 | bottle | 1 | None | 4x10 | 22% | {'dx0': 14, 'dy0': 19, 'dx1': 17, 'dy1': 28}
+station | bottle_mari | 마리 물통 | (19,11) | , | full | 0 | 0 | bottle | 1 | None | 4x10 | 22% | {'dx0': 14, 'dy0': 19, 'dx1': 17, 'dy1': 28}
+station | bottle_you | 당신 물통 | (11,11) | , | full | 0 | 0 | bottle | 1 | None | 4x10 | 22% | {'dx0': 14, 'dy0': 19, 'dx1': 17, 'dy1': 28}
+station | bowl_soonrye | 순례 그릇 | (12,10) | , | full | 0 | 0 | bowl | 1 | None | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+station | bowl_seoha | 서하 그릇 | (14,10) | , | full | 0 | 0 | bowl | 1 | None | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+station | bowl_gicheol | 기철 그릇 | (15,10) | , | full | 0 | 1 | bowl | 1 | None | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+station | bowl_eunji | 은지 그릇 | (11,10) | , | full | 0 | 1 | bowl | 1 | None | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+station | bowl_dongha | 동하 그릇 | (14,11) | , | full | 0 | 1 | bowl | 1 | None | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+station | bowl_mari | 마리 그릇 | (10,11) | , | full | 0 | 0 | bowl | 1 | None | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+station | bowl_you | 당신 그릇 | (13,9) | , | full | 0 | 0 | bowl | 1 | None | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+station | repair_rubble | 무너진 통로 | (26,9) | , | blocked | 1 | 0 | None | 0 | rubble | 32x28 | 61% | {'dx0': 0, 'dy0': 4, 'dx1': 31, 'dy1': 31}
+station | bandage_soonrye | 순례 붕대 | (15,9) | , | clean | 0 | 0 | bandage | 1 | None | 6x4 | 9% | {'dx0': 13, 'dy0': 25, 'dx1': 18, 'dy1': 28}
+station | bandage_seoha | 서하 붕대 | (17,9) | , | clean | 0 | 0 | bandage | 1 | None | 6x4 | 9% | {'dx0': 13, 'dy0': 25, 'dx1': 18, 'dy1': 28}
+station | bandage_gicheol | 기철 붕대 | (19,9) | , | clean | 0 | 1 | bandage | 1 | None | 6x4 | 9% | {'dx0': 13, 'dy0': 25, 'dx1': 18, 'dy1': 28}
+station | bandage_eunji | 은지 붕대 | (15,11) | , | clean | 0 | 1 | bandage | 1 | None | 6x4 | 9% | {'dx0': 13, 'dy0': 25, 'dx1': 18, 'dy1': 28}
+station | bandage_dongha | 동하 붕대 | (17,11) | , | clean | 0 | 1 | bandage | 1 | None | 6x4 | 9% | {'dx0': 13, 'dy0': 25, 'dx1': 18, 'dy1': 28}
+station | bandage_mari | 마리 붕대 | (19,11) | , | clean | 0 | 0 | bandage | 1 | None | 6x4 | 9% | {'dx0': 13, 'dy0': 25, 'dx1': 18, 'dy1': 28}
+station | bandage_you | 당신 붕대 | (11,11) | , | clean | 0 | 0 | bandage | 1 | None | 6x4 | 9% | {'dx0': 13, 'dy0': 25, 'dx1': 18, 'dy1': 28}
+car | lever | 비상 레버 | (20,1) | # | up | 1 | 0 | lever_box | 0 | lever | 16x20 | 44% | {'dx0': 8, 'dy0': 12, 'dx1': 23, 'dy1': 31}
+car | bag | 좌석 밑 가방 | (10,4) | h | closed | 0 | 0 | bag | 0 | sack | 11x10 | 22% | {'dx0': 10, 'dy0': 19, 'dx1': 20, 'dy1': 28}
+car | cab_door | 운전실 문 | (19,3) | . | open | 0 | 0 | None | 0 | None | NOT DRAWN | - | None
+car | radio_cab | 운전실 무전기 | (20,4) | D | idle | 1 | 0 | None | 1 | radio | 10x9 | 20% | {'dx0': 11, 'dy0': 20, 'dx1': 20, 'dy1': 28}
+car | medkit | 운전실 구급함 | (19,1) | # | closed | 1 | 0 | medkit | 1 | medkit | 13x16 | 35% | {'dx0': 9, 'dy0': 13, 'dx1': 21, 'dy1': 28}
+car | notebook_dash | 계기판 위 수첩 | (18,4) | D | there | 0 | 0 | notebook | 1 | pr:notebook | 11x7 | 15% | {'dx0': 11, 'dy0': 23, 'dx1': 21, 'dy1': 29}
+car | shoe_cab | 구두 한 짝 | (18,2) | . | there | 0 | 0 | shoe_one | 1 | heel | 8x5 | 11% | {'dx0': 12, 'dy0': 24, 'dx1': 19, 'dy1': 28}
+car | car_shoes | 가지런한 신발 | (4,3) | . | there | 0 | 0 | shoe_pair | 1 | shoes | 10x5 | 11% | {'dx0': 11, 'dy0': 24, 'dx1': 20, 'dy1': 28}
+car | car_shoes | 가지런한 신발 | (11,3) | . | there | 0 | 0 | shoe_pair | 1 | shoes | 10x5 | 11% | {'dx0': 11, 'dy0': 24, 'dx1': 20, 'dy1': 28}
+car | car_shoes | 가지런한 신발 | (16,3) | . | there | 0 | 0 | shoe_pair | 1 | shoes | 10x5 | 11% | {'dx0': 11, 'dy0': 24, 'dx1': 20, 'dy1': 28}
+tunnel | shelter_box | 대피 공간 비상 상자 | (14,0) | # | closed | 1 | 0 | shelter_box | 0 | crate | 20x20 | 44% | {'dx0': 6, 'dy0': 12, 'dx1': 25, 'dy1': 31}
+tunnel | vent_shaft | 환기 통로 | (6,3) | ~ | grey | 1 | 0 | None | 0 | pr:vent | 20x18 | 39% | {'dx0': 6, 'dy0': 10, 'dx1': 25, 'dy1': 27}
+tunnel | rubble | 무너진 구간 | (17,1) | ~ | blocked | 1 | 0 | None | 0 | rubble | 32x28 | 61% | {'dx0': 0, 'dy0': 4, 'dx1': 31, 'dy1': 31}
+mall_a1 | pharmacy_shutter | 약국 셔터 | (12,2) | # | closed | 1 | 0 | None | 0 | kiosk | 31x32 | 70% | {'dx0': 1, 'dy0': 0, 'dx1': 31, 'dy1': 31}
+mall_a1 | phonebooth | 공중전화 | (17,1) | . | card | 1 | 0 | None | 0 | phone | 14x12 | 26% | {'dx0': 9, 'dy0': 20, 'dx1': 22, 'dy1': 31}
+mall_a1 | stall_cart | 노점 수레 | (2,8) | . | normal | 1 | 0 | None | 0 | cart | 32x22 | 48% | {'dx0': 0, 'dy0': 10, 'dx1': 31, 'dy1': 31}
+mall_a2 | bone_pile | 뼈 무더기 | (17,5) | . | normal | 1 | 0 | None | 0 | bones | 24x18 | 39% | {'dx0': 4, 'dy0': 14, 'dx1': 27, 'dy1': 31}
+mall_a2 | bodybag_a2 | 시체 자루 | (15,6) | . | normal | 0 | 0 | None | 0 | bodybag | 32x26 | 56% | {'dx0': 0, 'dy0': 6, 'dx1': 31, 'dy1': 31}
+drain_b1 | valve | 수문 밸브 | (9,1) | . | closed | 1 | 0 | None | 0 | valve | 19x24 | 52% | {'dx0': 6, 'dy0': 8, 'dx1': 24, 'dy1': 31}
+drain_b1 | pump_room | 펌프실 | (12,6) | . | locked | 1 | 0 | None | 0 | chaindoor | 31x47 | 102% | {'dx0': 0, 'dy0': -15, 'dx1': 30, 'dy1': 31}
+drain_b1 | worker_pipe | 배수관 | (17,1) | . | bodies | 1 | 0 | None | 0 | sludge | 32x23 | 50% | {'dx0': 0, 'dy0': 9, 'dx1': 31, 'dy1': 31}
+drain_b2 | cistern | 저수조 | (10,5) | . | normal | 1 | 0 | None | 0 | tank | 26x32 | 70% | {'dx0': 3, 'dy0': 0, 'dx1': 28, 'dy1': 31}
+drain_b2 | ladder_b2 | 잠긴 사다리 | (17,2) | . | normal | 0 | 0 | None | 0 | ladder | 24x23 | 50% | {'dx0': 4, 'dy0': 9, 'dx1': 27, 'dy1': 31}

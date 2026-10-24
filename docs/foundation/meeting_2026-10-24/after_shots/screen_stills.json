@@ -1,0 +1,137 @@
+{
+ "fire_zoom": {
+  "fire_tile_on_canvas": [
+   224,
+   128
+  ]
+ },
+ "people_status": {
+  "soonrye": "home",
+  "seoha": "home",
+  "gicheol": "home",
+  "eunji": "home",
+  "dongha": "home",
+  "mari": "home"
+ },
+ "breath": {
+  "who": "soonrye",
+  "at": [
+   10,
+   10
+  ],
+  "upper_shift_vs_first": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   -1,
+   -1,
+   -1,
+   -1,
+   -1,
+   -1,
+   -1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   -1
+  ],
+  "lower_shift_vs_first": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "upper_changes": 3,
+  "lower_nonzero": 0
+ },
+ "outside_map": {
+  "oy": 48,
+  "top_band_rows": 48,
+  "top_band_std": 0.5910233177313238,
+  "top_band_colors": 3,
+  "bottom_band_std": 0.5910233177313238
+ },
+ "arrival": {
+  "you": [
+   1,
+   11
+  ],
+  "start": [
+   1,
+   11
+  ],
+  "fire": [
+   13,
+   10
+  ]
+ },
+ "tunnel": {
+  "rubble_state": "blocked",
+  "you": [
+   12,
+   2
+  ],
+  "bubble": {
+   "text": "거기 서.",
+   "font": "12px",
+   "x": 707,
+   "y": 275,
+   "w": 58,
+   "h": 23.1875
+  }
+ },
+ "evening": {
+  "spots": {
+   "dongha": [
+    10,
+    10
+   ],
+   "eunji": [
+    11,
+    10
+   ],
+   "soonrye": [
+    14,
+    10
+   ],
+   "mari": [
+    16,
+    10
+   ],
+   "gicheol": [
+    12,
+    12
+   ],
+   "seoha": [
+    14,
+    12
+   ]
+  },
+  "vertical_pairs": []
+ },
+ "console_errors": []
+}

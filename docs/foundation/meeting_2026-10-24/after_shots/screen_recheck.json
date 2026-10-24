@@ -1,0 +1,530 @@
+{
+ "fire_states": {
+  "lit": {
+   "overlay": null,
+   "drumPx": 272,
+   "coveredByOverlay": 0,
+   "coveredPct": 0
+  },
+  "low": {
+   "overlay": "fire_low_ov",
+   "drumPx": 272,
+   "coveredByOverlay": 0,
+   "coveredPct": 0
+  },
+  "wet": {
+   "overlay": "fire_wet_ov",
+   "drumPx": 272,
+   "coveredByOverlay": 0,
+   "coveredPct": 0
+  },
+  "kept": {
+   "overlay": "footprints",
+   "drumPx": 272,
+   "coveredByOverlay": 0,
+   "coveredPct": 0
+  }
+ },
+ "brightness_now": {
+  "mean": 36.4,
+  "pct_below_40": 65.1
+ },
+ "brightness_p1": {
+  "mean": 38.2,
+  "pct_below_40": 61.7
+ },
+ "brightness_p1_mode_on": true,
+ "crates": {
+  "parts": [
+   20,
+   18
+  ],
+  "crate": [
+   24,
+   20
+  ],
+  "same": false,
+  "parts_is_toolbox": true,
+  "parts_hidden_is_open_toolbox": true
+ },
+ "occlusion": [
+  {
+   "map": "car",
+   "id": "medkit",
+   "stand": [
+    19,
+    2
+   ],
+   "face": "up",
+   "closedVisiblePct": 100,
+   "openChangeVisiblePct": 100,
+   "onWall": true
+  },
+  {
+   "map": "car",
+   "id": "lever",
+   "stand": [
+    20,
+    2
+   ],
+   "face": "up",
+   "closedVisiblePct": 100,
+   "openChangeVisiblePct": 100,
+   "onWall": true
+  },
+  {
+   "map": "tunnel",
+   "id": "shelter_box",
+   "stand": [
+    14,
+    1
+   ],
+   "face": "up",
+   "closedVisiblePct": 95,
+   "openChangeVisiblePct": 98,
+   "onWall": true
+  },
+  {
+   "map": "station",
+   "id": "crate_food",
+   "stand": [
+    8,
+    3
+   ],
+   "face": "up",
+   "closedVisiblePct": 57,
+   "openChangeVisiblePct": 61,
+   "onWall": false,
+   "openChangeVisiblePct_crouch": 100,
+   "closedVisiblePct_crouch": 99
+  },
+  {
+   "map": "car",
+   "id": "bag",
+   "stand": [
+    10,
+    3
+   ],
+   "face": "down",
+   "closedVisiblePct": 100,
+   "openChangeVisiblePct": 100,
+   "onWall": false,
+   "openChangeVisiblePct_crouch": 100,
+   "closedVisiblePct_crouch": 100
+  }
+ ],
+ "evening_tags": {
+  "you": [
+   14,
+   11
+  ],
+  "below": "seoha",
+  "youBox": {
+   "x0": 454,
+   "x1": 473,
+   "y0": 338,
+   "y1": 384
+  },
+  "tags": [
+   {
+    "who": "eunji",
+    "kind": "mouth",
+    "x0": 372,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "eunji",
+    "kind": "mark",
+    "x0": 384,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "dongha",
+    "kind": "mouth",
+    "x0": 340,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "dongha",
+    "kind": "mark",
+    "x0": 352,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "mari",
+    "kind": "mouth",
+    "x0": 532,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "mari",
+    "kind": "mark",
+    "x0": 544,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "you",
+    "kind": "mouth",
+    "x0": 468,
+    "y0": 328,
+    "onYou": false
+   },
+   {
+    "who": "seoha",
+    "kind": "mark",
+    "x0": 475,
+    "y0": 374,
+    "onYou": false
+   },
+   {
+    "who": "gicheol",
+    "kind": "mark",
+    "x0": 404,
+    "y0": 374,
+    "onYou": false
+   }
+  ],
+  "tags_on_you": 0
+ },
+ "evening_tags_forced_14_11": {
+  "you": [
+   14,
+   11
+  ],
+  "below": "seoha",
+  "youBox": {
+   "x0": 454,
+   "x1": 473,
+   "y0": 338,
+   "y1": 384
+  },
+  "tags": [
+   {
+    "who": "eunji",
+    "kind": "mouth",
+    "x0": 372,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "eunji",
+    "kind": "mark",
+    "x0": 384,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "dongha",
+    "kind": "mouth",
+    "x0": 340,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "dongha",
+    "kind": "mark",
+    "x0": 352,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "mari",
+    "kind": "mouth",
+    "x0": 532,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "mari",
+    "kind": "mark",
+    "x0": 544,
+    "y0": 310,
+    "onYou": false
+   },
+   {
+    "who": "you",
+    "kind": "mouth",
+    "x0": 468,
+    "y0": 328,
+    "onYou": false
+   },
+   {
+    "who": "seoha",
+    "kind": "mark",
+    "x0": 475,
+    "y0": 374,
+    "onYou": false
+   },
+   {
+    "who": "gicheol",
+    "kind": "mark",
+    "x0": 404,
+    "y0": 374,
+    "onYou": false
+   }
+  ],
+  "tags_on_you": 0
+ },
+ "names_d0_before": {
+  "day": 0,
+  "phase": "day",
+  "secret": [
+   "기철",
+   "순례",
+   "서하",
+   "은지",
+   "동하",
+   "마리"
+  ],
+  "leaks": [],
+  "bowls_shown": [
+   "bowl_gicheol:그릇",
+   "bowl_you:당신 그릇"
+  ],
+  "owned_names": [
+   "blanket_soonrye:담요",
+   "blanket_seoha:담요",
+   "blanket_gicheol:담요",
+   "blanket_eunji:담요",
+   "blanket_dongha:담요",
+   "blanket_mari:담요",
+   "pillow_gicheol:베개",
+   "bottle_soonrye:물통",
+   "bottle_seoha:물통",
+   "bottle_gicheol:물통",
+   "bottle_mari:물통",
+   "bowl_gicheol:그릇",
+   "bandage_soonrye:붕대",
+   "bandage_seoha:붕대",
+   "bandage_gicheol:붕대",
+   "bandage_mari:붕대"
+  ]
+ },
+ "hints_d0_before": {
+  "gicheol_blanket": "Space 조사 — 담요",
+  "gicheol_pillow": "Space 조사 — 베개",
+  "seoha_blanket": "Space 조사 — 담요",
+  "seoha_bottle": "Space 조사 — 물통 · 붕대",
+  "seoha_bowl_cell": "",
+  "mari_bowl_cell": ""
+ },
+ "hint_leaks_before": [],
+ "mari_before": {
+  "mari": [
+   20,
+   11,
+   "sitting"
+  ],
+  "hint": "Space 말 걸기 — 담요의 여자"
+ },
+ "mari_after": {
+  "met": true,
+  "mari": [
+   20,
+   11,
+   "sitting"
+  ],
+  "target": "npc:담요의 여자",
+  "hint": "Space 말 걸기 — 담요의 여자",
+  "blanket": "담요",
+  "bowl": {
+   "name": "그릇",
+   "hidden": false
+  }
+ },
+ "retalk_d0": {
+  "mari": {
+   "seq": [
+    {
+     "key": "mari_meet#0",
+     "lines": [
+      "다치면 바로 말해요.",
+      "여기선 곪으면 끝이에요."
+     ],
+     "toast": ""
+    },
+    {
+     "key": "mari_idle",
+     "lines": [
+      "여자가 붕대를 다시 만다."
+     ],
+     "toast": ""
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "toast": "더 할 말은 없어 보인다."
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "toast": "더 할 말은 없어 보인다."
+    }
+   ],
+   "same_line_twice": false
+  },
+  "soonrye": {
+   "seq": [
+    {
+     "key": "soonrye_meet#0",
+     "lines": [
+      "앉든지 둘러보든지 해.",
+      "계단만 빼고."
+     ],
+     "toast": "더 할 말은 없어 보인다."
+    },
+    {
+     "key": "soonrye_idle",
+     "lines": [
+      "할머니가 장작을 뒤집는다."
+     ],
+     "toast": "더 할 말은 없어 보인다."
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "toast": "더 할 말은 없어 보인다."
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "toast": "더 할 말은 없어 보인다."
+    }
+   ],
+   "same_line_twice": false
+  }
+ },
+ "names_d0_after_meet": {
+  "day": 0,
+  "phase": "day",
+  "secret": [
+   "기철",
+   "순례",
+   "서하",
+   "은지",
+   "동하",
+   "마리"
+  ],
+  "leaks": [],
+  "bowls_shown": [
+   "bowl_soonrye:그릇",
+   "bowl_gicheol:그릇",
+   "bowl_mari:그릇",
+   "bowl_you:당신 그릇"
+  ],
+  "owned_names": [
+   "blanket_soonrye:담요",
+   "blanket_seoha:담요",
+   "blanket_gicheol:담요",
+   "blanket_eunji:담요",
+   "blanket_dongha:담요",
+   "blanket_mari:담요",
+   "pillow_gicheol:베개",
+   "bottle_soonrye:물통",
+   "bottle_seoha:물통",
+   "bottle_gicheol:물통",
+   "bottle_mari:물통",
+   "bowl_soonrye:그릇",
+   "bowl_gicheol:그릇",
+   "bowl_mari:그릇",
+   "bandage_soonrye:붕대",
+   "bandage_seoha:붕대",
+   "bandage_gicheol:붕대",
+   "bandage_mari:붕대"
+  ]
+ },
+ "objective_d0": {
+  "day": "승강장을 둘러본다 · 화로를 조사하면 저녁",
+  "evening": "저녁 — 한 사람과 이야기할 수 있다 · 화로를 조사하면 밤이다.",
+  "night": "밤 — 화로를 조사하면 잠든다"
+ },
+ "found_icons": {
+  "faces": [
+   {
+    "tag": "pro_bag:out",
+    "face": "icons/cable.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_bag:out",
+    "face": "icons/cable.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_notebook:out",
+    "face": "icons/notebook.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_notebook:out",
+    "face": "icons/notebook.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_medkit:out",
+    "face": "icons/meds.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_medkit:out",
+    "face": "icons/meds.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_lever:out",
+    "face": "icons/bottle.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_lever:out",
+    "face": "icons/bottle.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_lever:out",
+    "face": "icons/bottle.png",
+    "cls": "icon"
+   }
+  ],
+  "foundLog": [
+   {
+    "event": "pro_bag",
+    "choice": 0,
+    "icon": "cable",
+    "day": 0
+   },
+   {
+    "event": "pro_notebook",
+    "choice": 0,
+    "icon": "notebook",
+    "day": 0
+   },
+   {
+    "event": "pro_medkit",
+    "choice": 0,
+    "icon": "meds",
+    "day": 0
+   },
+   {
+    "event": "pro_lever",
+    "choice": 0,
+    "icon": "bottle",
+    "day": 0
+   }
+  ]
+ },
+ "death_ledger": {
+  "reached": "line",
+  "day": 0,
+  "head": "",
+  "rows": [],
+  "leaks": []
+ },
+ "console_errors": []
+}

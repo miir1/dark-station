@@ -34,6 +34,8 @@
       id: { type: 'id', req: true }, name: { type: 'str', req: true }, age: { type: 'any' }, bio: { type: 'str' },
       skills: { type: 'obj', req: true }, needs: { type: 'obj' }, secretFlag: { type: 'str' }, malice: { type: 'any' }, hymn: { type: 'any' },
       callsGod: { type: 'str', maxLen: 6 }, addressYou: { type: 'obj' }, outside: { type: 'bool01' },
+      metFlag: { type: 'id' },        // 만남 깃발(id 꼴 또는 빈칸). 비었으면 처음부터 아는 사람. 있으면 그 깃발이 서기 전까지 '안 만난 사람'(배식·무작위 대상·명부에서 빠진다)
+      startAway: { type: 'bool01' },  // 1 = 처음엔 역 밖(status away). metFlag 깃발이 서면 역에 온다(home). 밤 사건·배식·새 날 수치에서 빠진다
     } },
     maps: { key: 'id', cols: {
       id: { type: 'id', req: true }, displayName: { type: 'str', req: true }, rows: { type: 'list', req: true, minLen: 1 },
@@ -54,6 +56,8 @@
       id: { type: 'id', req: true }, name: { type: 'str', req: true }, states: { type: 'list', req: true, minLen: 1, maxLen: 4, ofId: true },
       overlay: { type: 'obj' }, inspectLine: { type: 'obj' }, ledgerFact: { type: 'obj' }, solid: { type: 'bool01' }, light: { type: 'int', min: 0, max: 6 },
       resetOn: { type: 'enum', enum: ['never', 'inspect', 'morning'] }, map: { type: 'str' },
+      owner: { type: 'id' },          // (10-24 P0-E2) 주인 사람 id. 비면 id 끝 '_<사람 id>'(bottle_mari → mari)가 주인, 그것도 없으면 주인 없는 물건. 배치 검사(같은 칸 = 같은 주인)만 쓴다
+      holds: { type: 'obj' },         // (P1-11 엔진 몫) 수납 내용 { text, effects, state }. 닫힌(states[0]) 채로 조사하고 그 조사에 걸린 사건이 없으면 '닫힘→얻음→열림': effects 적용 → state(기본 open, 없으면 states[1]) → 결과는 s.found
     } },
   };
   // 정체 결정표는 행 목록이 아니라 { axes:[...], candidates:[...] } 한 덩어리
@@ -129,12 +133,60 @@
     for (const ob of obs) if (!ob.states.includes(st)) err(`${o}: 상태 "${st}"는 ${ob.id}의 ${ob.states.join('/')} 중 하나여야 함`);
   }
 
-  function validate(tables) {
-    const errors = [];
+  // ── 수납 내용 holds (P1-11 엔진 몫 · U4 '걸어가서 수납을 연다') ──
+  // { text: 열 때 한 번 보이는 글, effects: 사건 결과와 같은 효과, state: 연 뒤 상태 } — 셋 다 선택.
+  // 연 뒤 상태 = state > 'open'(states 에 있고 첫 상태가 아니면) > states[1]. engine.js openStateOf 와 같은 규칙.
+  const HOLDS_KEYS = ['text', 'effects', 'state'];
+  const holdsOpenState = (o) => (o.holds && typeof o.holds.state === 'string' && o.holds.state ? o.holds.state : o.states.includes('open') && o.states[0] !== 'open' ? 'open' : o.states[1]);
+  function checkHolds(o, ctx, err) {
+    const h = o.holds;
+    if (!isObj(h)) return;                                                  // 꼴 오류는 열 검사가 말했다
+    for (const k of Object.keys(h)) if (!HOLDS_KEYS.includes(k)) err(`holds.${k}: holds 는 ${HOLDS_KEYS.join('·')} 만 쓴다`);
+    if (!Array.isArray(o.states) || o.states.length < 2) { err('holds: 닫힘·열림 두 상태 이상이 있어야 한다 (states[0] = 닫힌 상태)'); return; }
+    if (h.state != null && (typeof h.state !== 'string' || !o.states.includes(h.state))) err(`holds.state: "${h.state}" — states(${o.states.join('/')}) 가운데 하나`);
+    else if (holdsOpenState(o) === o.states[0]) err(`holds.state: 연 뒤 상태가 닫힌 상태(states[0] "${o.states[0]}")와 같다`);
+    if (h.text != null && typeof h.text !== 'string') err('holds.text: 글');
+    if (h.effects != null) {
+      checkEffects(h.effects, ctx, (m) => err('holds.' + m));
+      if (isObj(h.effects) && (h.effects.kill || h.effects.permanent)) err('holds.effects: kill·permanent 는 쓸 수 없다 — 여는 것만으로 죽거나 몸을 잃지 않는다. 위험은 선택지가 있는 사건(when 에 inspect:물건)으로');
+    }
+  }
+
+  // ── 배치·경고 도우미 (10-24 P0-E2) ──
+  const isSolid = (o) => !!o && (o.solid === 1 || o.solid === true);
+  // 물건의 주인: owner 칸(사람 id) > id 끝 '_<사람 id>'(가장 긴 것) > null(주인 없음)
+  function ownerOf(ctx, id) {
+    const o = ctx.objects[id];
+    if (o && typeof o.owner === 'string' && o.owner && o.owner !== '-') return o.owner;
+    return suffixOwner(ctx, id);
+  }
+  function suffixOwner(ctx, id) {
+    let best = null;
+    for (const p of Object.keys(ctx.people)) if (id.length > p.length + 1 && id.endsWith('_' + p) && (!best || p.length > best.length)) best = p;
+    return best;
+  }
+  // 선택지 결과의 kill 대상(who) 목록 — out·ok·fail 전부
+  function killWhos(c) {
+    const out = [];
+    for (const o of [c.out, c.ok, c.fail]) if (isObj(o) && isObj(o.effects) && o.effects.kill) for (const k of Array.isArray(o.effects.kill) ? o.effects.kill : [o.effects.kill]) if (isObj(k)) out.push(k.who || 'you');
+    return out;
+  }
+  const ME_WHO = ['you', 'self', 'actor', 'party', 'all'];   // engine.js meWho 와 같은 낱말 (빈칸 = 행위자 = 당신)
+  const REASON_WORDS = /때문에|왜냐하면/;                   // 문장 규칙(plan P0-D1): 이유를 대는 낱말은 쓰지 않는다
+  const SOFT_FLOOR_BAN = ['#', '='];                       // 단단하지 않은 물건(바닥에 놓인 것)을 둘 수 없는 칸: 벽 · 승강장 끝선
+
+  // 검사 = { errors, warnings }. errors 가 하나라도 있으면 표를 읽지 않는다(load 가 던진다). warnings 는 읽되 알린다.
+  //   warnings[].kind: firstDeath(1번 자리 죽음) · reasonWord(이유 낱말) · owner(주인 없는 물건이 남의 머리맡 묶음에) · holdsRefill(다시 차는 수납, P1-11)
+  function validate(tables) { return check(tables).errors; }
+  function warnings(tables) { return check(tables).warnings; }
+  function check(tables) {
+    const errors = [], warns = [];
     const push = (table, i, id, msg) => errors.push({ table, row: i, id, msg, text: `${table}[${i}]${id ? ' ' + id : ''}: ${msg}` });
-    if (!isObj(tables)) return [{ text: '표 묶음이 객체가 아님' }];
+    const warn = (table, i, id, kind, msg) => warns.push({ table, row: i, id, kind, msg, text: `${table}[${i}]${id ? ' ' + id : ''}: [${kind}] ${msg}` });
+    const done = () => ({ errors, warnings: warns });
+    if (!isObj(tables)) return { errors: [{ text: '표 묶음이 객체가 아님' }], warnings: [] };
     for (const name of TABLE_NAMES) if (tables[name] === undefined) push(name, -1, '', '표가 없음');
-    if (errors.length) return errors;
+    if (errors.length) return done();
 
     // 1) 열 검사
     for (const [name, spec] of Object.entries(T)) {
@@ -167,7 +219,7 @@
       });
       if (fb !== 1) push('identity', -1, '', `fallback=1 인 후보가 정확히 1개여야 함 (지금 ${fb})`);
     }
-    if (errors.length) return errors;
+    if (errors.length) return done();
 
     // 2) 표 사이 참조 검사
     const by = (name) => Object.fromEntries(tables[name].map((r) => [r.id, r]));
@@ -202,8 +254,19 @@
       if ((ev.board || ev.endStatus) && ev.kind !== 'ending') err('board·endStatus 는 kind ending 사건에만');
       if (ev.image && ev.image !== '-' && typeof ev.image !== 'string') err('image는 그림 id 글');
     });
+    // 사건·밤 사건 결과가 세우는 깃발 전부 (metFlag 가 영영 안 서는 오타를 잡는다)
+    const setFlags = new Set();
+    const addFlags = (eff) => { if (isObj(eff) && isObj(eff.flag)) for (const [f, on] of Object.entries(eff.flag)) if (on) setFlags.add(f); };
+    tables.events.forEach((ev) => (Array.isArray(ev.choices) ? ev.choices : []).forEach((c) => { if (isObj(c)) for (const o of [c.out, c.ok, c.fail]) if (isObj(o)) addFlags(o.effects); }));
+    tables.nightEvents.forEach((n) => addFlags(n.effects));
     tables.people.forEach((p, i) => {
       const err = (m) => push('people', i, p.id, m);
+      const metFlag = typeof p.metFlag === 'string' && p.metFlag !== '-' ? p.metFlag : '';
+      const away = p.startAway === 1 || p.startAway === true, out = p.outside === 1 || p.outside === true;
+      if (away && !metFlag) err('startAway: 1 이면 metFlag 가 있어야 한다 (만남 깃발이 없으면 영영 역에 오지 않는다)');
+      if (away && out) err('startAway: outside(바깥 사람)와 같이 쓸 수 없다');
+      if (metFlag && p.id === 'you') err('metFlag: 당신(you)에게는 쓸 수 없다');
+      if (metFlag && !setFlags.has(metFlag)) err(`metFlag: "${metFlag}" 깃발을 세우는 사건 효과(effects.flag)가 없다 — 영영 만나지 못한다`);
       for (const k of ['obs', 'str', 'tech', 'talk']) { const v = p.skills[k]; if (!isInt(v) || v < 0 || v > 3) err(`skills.${k}: 0~3 정수`); }
       if (p.needs) { for (const k of ['hunger', 'thirst', 'fear']) { const v = p.needs[k]; if (v !== undefined && (!isInt(v) || v < 0 || v > 10)) err(`needs.${k}: 0~10`); } if (p.needs.bond && p.needs.bond !== '-' && !ctx.people[p.needs.bond]) err(`needs.bond: 없는 사람 "${p.needs.bond}"`); }
       if (p.addressYou) for (const cid of Object.keys(p.addressYou)) if (cid !== 'default' && !idn.candidates.some((c) => c.id === cid)) err(`addressYou.${cid}: identity에 없는 후보 (기본 호칭은 default)`);
@@ -229,20 +292,76 @@
       for (const col of ['overlay', 'inspectLine', 'ledgerFact']) if (o[col]) for (const st of Object.keys(o[col])) if (!o.states.includes(st)) err(`${col}.${st}: states에 없는 상태`);
       if (o.inspectLine) for (const l of Object.values(o.inspectLine)) if (!ctx.lines[l]) err(`inspectLine: lines에 없음 "${l}"`);
       if (o.map && !ctx.maps[o.map]) err(`map: maps에 없음 "${o.map}"`);
+      if (typeof o.owner === 'string' && o.owner && o.owner !== '-') {
+        if (!ctx.people[o.owner]) err(`owner: people 에 없는 사람 "${o.owner}"`);
+        else { const sfx = suffixOwner(ctx, o.id); if (sfx && sfx !== o.owner) err(`owner: "${o.owner}" — id 끝(_${sfx})이 가리키는 주인과 다르다`); }
+      }
+      if (o.holds !== undefined) checkHolds(o, ctx, err);
     });
     tables.maps.forEach((m, i) => {
       const err = (x) => push('maps', i, m.id, x);
       const w = m.rows[0] ? m.rows[0].length : 0;
       m.rows.forEach((r, k) => { if (typeof r !== 'string' || r.length !== w) err(`rows[${k}]: 길이가 첫 줄(${w})과 다름`); });
       if (m.objects) m.objects.forEach((ob, k) => { if (!isObj(ob) || !ctx.objects[ob.id]) err(`objects[${k}]: objects 표에 없는 물건`); });
+      // 배치 검사 (10-24 P0-E2 · U4): 단단한 물건은 한 칸에 하나 · 단단하지 않은 물건이 한 칸에 여럿이면 같은 주인 것만 · 단단하지 않은 물건은 벽(#)·끝선(=) 칸에 두지 않는다
+      const cells = new Map();
+      (m.objects || []).forEach((ob, k) => {
+        if (!isObj(ob) || !ctx.objects[ob.id]) return;                                         // 위에서 보고함
+        const row = m.rows[ob.y];
+        if (!isInt(ob.x) || !isInt(ob.y) || typeof row !== 'string' || ob.x < 0 || ob.x >= row.length) { err(`objects[${k}] ${ob.id}: 자리 (${ob.x},${ob.y})가 지도 밖`); return; }
+        const key = `${ob.x},${ob.y}`;
+        if (!cells.has(key)) cells.set(key, []);
+        cells.get(key).push(ob.id);
+        const tile = row[ob.x];
+        if (!isSolid(ctx.objects[ob.id]) && SOFT_FLOOR_BAN.includes(tile)) err(`objects[${k}] ${ob.id}: 단단하지 않은 물건이 '${tile}' 칸 (${key})에 있다 — 바닥 칸으로 옮긴다`);
+      });
+      for (const [key, ids] of cells) {
+        const solid = ids.filter((id) => isSolid(ctx.objects[id]));
+        if (solid.length > 1) err(`(${key}) 한 칸에 단단한 물건 ${solid.length}개: ${solid.join('·')} — 단단한 물건은 한 칸에 하나`);
+        const soft = ids.filter((id) => !isSolid(ctx.objects[id]));
+        if (soft.length < 2) continue;
+        const owners = soft.map((id) => ownerOf(ctx, id));
+        const named = Array.from(new Set(owners.filter(Boolean)));
+        const anon = soft.filter((id, j) => !owners[j]);
+        const list = soft.map((id, j) => `${id}(${owners[j] || '주인 없음'})`).join('·');
+        if (named.length > 1) err(`(${key}) 다른 주인의 물건이 한 칸에: ${list} — 같은 칸은 같은 주인 흔적만`);
+        else if (anon.length > 1) err(`(${key}) 주인 없는 물건이 한 칸에 둘 이상: ${list} — 같은 칸은 같은 주인 흔적만`);
+        else if (anon.length === 1) warn('maps', i, m.id, 'owner', `(${key}) ${anon[0]}: 주인이 없는 물건(id 끝 _<사람>·owner 칸 없음)이 ${named[0]}의 물건과 한 칸에 있다 — objects 의 ${anon[0]} 에 owner:"${named[0]}" 를 적거나 칸을 옮긴다`);
+      }
     });
     idn.candidates.forEach((c, i) => { if (c.reveal) c.reveal.forEach((l) => { if (!ctx.lines[l]) push('identity', i, c.id, `reveal: lines에 없음 "${l}"`); }); });
     tables.phases.forEach((p, i) => { if (p.skipIf) { try { C.parse(p.skipIf); } catch (e) { push('phases', i, p.id, 'skipIf: ' + e.message); } } });
     void phaseIds;
-    return errors;
+
+    // 3) 경고 (10-24 P0-E2) — 표는 읽히지만 고칠 것
+    //  firstDeath: 선택지 [0](Space 를 누른 채 지나가면 골리는 자리, P0-S7)에 금기가 있거나, 당신이 죽을 수 있거나,
+    //              다른 사람이 죽을 수 있는데 뒤에 아무도 안 죽는 선택지가 있다. (모든 선택지가 같은 사람을 죽이는 장면 — d8_pillow 등 — 은 자리를 바꿔도 같아 빼고 센다)
+    tables.events.forEach((ev, i) => {
+      if (!Array.isArray(ev.choices) || ev.choices.length < 2 || !isObj(ev.choices[0])) return;
+      const c0 = ev.choices[0], k0 = killWhos(c0);
+      const why = c0.taboo ? `금기("${c0.taboo}")가 있다`
+        : k0.some((w) => ME_WHO.includes(w)) ? '당신이 죽을 수 있다'
+          : k0.length && ev.choices.slice(1).some((c) => isObj(c) && !killWhos(c).length) ? `${k0.join('·')} 이(가) 죽을 수 있는데 아무도 안 죽는 선택지가 뒤에 있다` : '';
+      if (why) warn('events', i, ev.id, 'firstDeath', `choices[0] "${c0.label}": 1번 자리에 ${why} — 죽는 선택·금기는 1번에 두지 않는다`);
+    });
+    //  reasonWord: 화면 글에 '때문에·왜냐하면' (문장 규칙 — 이유는 말하지 않는다)
+    const reason = (table, i, id, col, v) => { if (typeof v === 'string' && REASON_WORDS.test(v)) warn(table, i, id, 'reasonWord', `${col}: '${REASON_WORDS.exec(v)[0]}' — 이유를 대는 낱말은 쓰지 않는다 ("${v.slice(0, 30)}…")`); };
+    tables.events.forEach((ev, i) => {
+      reason('events', i, ev.id, 'text', ev.text);
+      (Array.isArray(ev.choices) ? ev.choices : []).forEach((c, k) => { if (!isObj(c)) return; for (const col of ['label', 'warn', 'hint']) reason('events', i, ev.id, `choices[${k}].${col}`, c[col]); for (const r of ['out', 'ok', 'fail']) if (isObj(c[r])) reason('events', i, ev.id, `choices[${k}].${r}.text`, c[r].text); });
+    });
+    tables.lines.forEach((l, i) => reason('lines', i, l.id, 'text', l.text));
+    tables.nightEvents.forEach((n, i) => reason('nightEvents', i, n.id, 'text', n.text));
+    //  holdsRefill (P1-11): 수납 내용이 있는 물건이 resetOn morning·inspect — 첫 상태(닫힘)로 돌아가 매번 다시 찬다(위험 없는 샘, 10-21 '생존은 위험 대 보상')
+    tables.objects.forEach((o, i) => {
+      if (!isObj(o.holds)) return;
+      reason('objects', i, o.id, 'holds.text', o.holds.text);
+      if (o.resetOn === 'morning' || o.resetOn === 'inspect') warn('objects', i, o.id, 'holdsRefill', `resetOn "${o.resetOn}": 연 수납이 닫힌 상태로 돌아가 다시 찬다 — 위험 없이 매일 얻는 샘이 된다. 한 번 연 것은 열린 채 두려면 never`);
+    });
+    return done();
   }
 
-  const API = { TABLES: T, IDENTITY_COLS, TABLE_NAMES, EFFECT_VERBS, PERMANENT, EVENT_TARGETS, WHO_WORDS, LEDGER_STATUS, validate };
+  const API = { TABLES: T, IDENTITY_COLS, TABLE_NAMES, EFFECT_VERBS, PERMANENT, EVENT_TARGETS, WHO_WORDS, LEDGER_STATUS, validate, warnings, check, holdsOpenState, ownerOf: (tables, id) => ownerOf({ objects: Object.fromEntries((tables.objects || []).map((o) => [o.id, o])), people: Object.fromEntries((tables.people || []).map((p) => [p.id, p])) }, id) };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else (root.DS4 = root.DS4 || {}).schema = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

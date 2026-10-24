@@ -1,0 +1,1 @@
+done C:/dev/dark_station/docs/foundation/meeting_2026-10-24/spec_check/noA4.json balanced:600 lazy:600 diligent:600

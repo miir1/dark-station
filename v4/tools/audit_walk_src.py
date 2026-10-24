@@ -52,8 +52,11 @@ def main():
         print(name, 'cells crossing grid:', len(bad))
         for dr, cl, n, over, nb in bad:
             print(f'   {dr:5s} {cl}  top-cross px={n:3d} (over by {over:3d}px src)  bottom-cross px={nb}')
-    # 게임이 쓰는 최종 시트 4배 + 칸 맨 윗줄 표시
-    fs = sorted(glob.glob(os.path.join(ROOT, 'v3', 'img', 'walk', '*.png')))
+    # 게임이 쓰는 최종 시트 4배 + 칸 맨 윗줄 표시 — v4/img/walk(덩어리 단위로 다시 자른 것, P0-A1)가 있으면 그것(끝 증거는 after_shots), 없으면 v3
+    v4w = sorted(glob.glob(os.path.join(ROOT, 'v4', 'img', 'walk', '*.png')))
+    fs = v4w or sorted(glob.glob(os.path.join(ROOT, 'v3', 'img', 'walk', '*.png')))
+    final = os.path.join(ROOT, 'docs', 'foundation', 'meeting_2026-10-24', 'after_shots', 'screen_walk_final_x4.png') if v4w else os.path.join(OUTD, 'walk_final_x4.png')
+    touching = 0
     K = 4
     sheet = Image.new('RGB', (len(fs) * (96 * K + 16), 192 * K + 30), (40, 40, 40))
     dd = ImageDraw.Draw(sheet)
@@ -68,11 +71,14 @@ def main():
         for r in range(4):
             for c in range(3):
                 hit = sum(1 for x in range(32) if a.getpixel((c * 32 + x, r * 48)) > 0)
+                touching += 1 if hit else 0
                 col = (255, 40, 40) if hit else (60, 160, 60)
                 dd.line([(ox + c * 32 * K, 30 + r * 48 * K), (ox + (c + 1) * 32 * K - 1, 30 + r * 48 * K)], fill=col, width=2)
         dd.text((ox + 4, 8), os.path.basename(f)[:-4], fill=(255, 255, 255))
-    sheet.save(os.path.join(OUTD, 'walk_final_x4.png'))
-    print('saved', os.path.join(OUTD, 'walk_final_x4.png'))
+    os.makedirs(os.path.dirname(final), exist_ok=True)
+    sheet.save(final)
+    print('final sheets:', 'v4/img/walk' if v4w else 'v3/img/walk', len(fs), '· cells whose top row is opaque (head cut):', touching)
+    print('saved', final)
 
 
 if __name__ == '__main__':

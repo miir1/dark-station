@@ -1,0 +1,91 @@
+{
+ "scale": {
+  "k2_1366x650": {
+   "portrait": {
+    "src": "portraits80/soonrye.png",
+    "naturalWidth": 80,
+    "clientWidth": 80,
+    "offsetWidth": 82,
+    "k": 2,
+    "x": 71,
+    "y": 461,
+    "cw": 160,
+    "who": "김순례",
+    "pixel_exact": {
+     "ok": true,
+     "match_frac": 1.0,
+     "max_diff": 0
+    }
+   },
+   "choice_cg": {
+    "pending": "d8_patrol_return",
+    "big": {
+     "src": "cg/d8_patrol_return.png",
+     "naturalWidth": 384,
+     "shown": false,
+     "clientWidth": 0,
+     "k": 0,
+     "x": 0,
+     "y": 0,
+     "cw": 0,
+     "ch": 0
+    },
+    "small": {
+     "src": "cg_s/d8_patrol_return.png",
+     "naturalWidth": 256,
+     "shown": true,
+     "clientWidth": 256,
+     "k": 2,
+     "x": 267,
+     "y": 19,
+     "cw": 512,
+     "ch": 288
+    },
+    "cgHidden": false,
+    "pixel_exact": {
+     "ok": true,
+     "match_frac": 1.0,
+     "max_diff": 0
+    }
+   },
+   "choice_stage": {
+    "x": 43,
+    "y": 5,
+    "width": 960,
+    "height": 640
+   },
+   "errors": []
+  },
+  "k3_1920x1080": {
+   "portrait": {
+    "src": "portraits80/soonrye.png",
+    "naturalWidth": 80,
+    "clientWidth": 80,
+    "offsetWidth": 82,
+    "k": 3,
+    "x": 42,
+    "y": 744,
+    "cw": 240,
+    "who": "김순례",
+    "pixel_exact": {
+     "ok": true,
+     "match_frac": 1.0,
+     "max_diff": 0
+    }
+   },
+   "choice_cg": {
+    "pending": null,
+    "big": null,
+    "small": null,
+    "cgHidden": true
+   },
+   "choice_stage": {
+    "x": 0,
+    "y": 60,
+    "width": 1440,
+    "height": 960
+   },
+   "errors": []
+  }
+ }
+}

@@ -9,13 +9,15 @@
   const ALIVE = ['home', 'stayed', 'walked'];          // 수첩을 주울 수 있는 산 사람 (탄 사람은 그다음)
 
   // 행: { line, id, name, status, day, cause(줄 글 또는 null), written[] }
+  // 명부에 없는 사람: 바깥 사람(outside) · 아직 역에 안 온 사람(away) · 만나지 않은 사람(people.metFlag 깃발이 안 섬 — 당신 글씨라 모르는 이름은 못 적는다, 10-24 P0-E1)
+  const unmet = (s, db, id) => { const row = db.people[id]; const f = row && typeof row.metFlag === 'string' && row.metFlag !== '-' ? row.metFlag : ''; return !!f && s.flags[f] !== true; };
   function rows(s, db) {
     const order = ['you'].concat(db.peopleOrder.filter((id) => id !== 'you'));
     const out = [];
     let line = 0;
     for (const id of order) {
       const p = s.people[id];
-      if (!p || p.status === 'outside') continue;
+      if (!p || p.status === 'outside' || p.status === 'away' || unmet(s, db, id)) continue;
       const status = p.status === 'home' ? 'stayed' : p.status;
       const causeId = Object.prototype.hasOwnProperty.call(s.ledger.causes, id) ? s.ledger.causes[id] : null;
       out.push({ line: line++, id, name: p.name, status, day: p.day == null ? null : p.day, cause: causeId, written: s.ledger.written.filter((w) => w.who === id).map((w) => w.text) });

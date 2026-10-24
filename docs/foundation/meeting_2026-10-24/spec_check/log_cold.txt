@@ -1,0 +1,1 @@
+done C:/dev/dark_station/docs/foundation/meeting_2026-10-24/spec_check/cold.json balanced:600 selfish:600 lazy:600

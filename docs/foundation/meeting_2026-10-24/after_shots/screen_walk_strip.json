@@ -1,0 +1,19 @@
+{
+ "up": {
+  "frames": 49,
+  "beats": "SLSRS"
+ },
+ "down": {
+  "frames": 49,
+  "beats": "SLSRS"
+ },
+ "right": {
+  "frames": 50,
+  "beats": "SLSRS"
+ },
+ "left": {
+  "frames": 48,
+  "beats": "SLSRS"
+ },
+ "console_errors": []
+}

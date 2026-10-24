@@ -1,0 +1,28 @@
+{
+ "hidden_dead_raf": {
+  "reached_car_point_s": 1.2,
+  "tiles_crossed": 2,
+  "ms_per_tile": [
+   385.2
+  ],
+  "frame_dt_avg": 98.56,
+  "frame_dt_max": 108.2,
+  "frames_from_rAF": 0,
+  "frames_total": 15,
+  "stall_frames_same_logical_pos": 0,
+  "walk_beat_order": "LSRSL",
+  "raf_counters": {
+   "req": 1,
+   "cb": 0
+  },
+  "error": null,
+  "reached_morning3_s": 26.4,
+  "console_errors": []
+ },
+ "background_tab_real": {
+  "visibility": "hidden",
+  "frames_2s": 3,
+  "from_rAF": 1,
+  "dt_max": 1004.4
+ }
+}

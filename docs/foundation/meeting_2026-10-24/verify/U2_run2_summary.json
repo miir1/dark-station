@@ -1,0 +1,440 @@
+{
+ "end": {
+  "day": 4,
+  "phase": "trace",
+  "map": "station",
+  "x": 13,
+  "y": 12,
+  "face": "up",
+  "moving": false,
+  "pending": null,
+  "ended": null,
+  "open": ""
+ },
+ "heard": {
+  "bark_gicheol_4#0": 0,
+  "bark_gicheol_2#0": 0,
+  "bark_soonrye_4#0": 0,
+  "bark_soonrye_2#0": 0,
+  "bark_mari_6#0": 0,
+  "bark_mari_4#0": 0,
+  "soonrye_meet#0": 0,
+  "gicheol_meet#0": 0,
+  "testify_soonrye#0": 0,
+  "testify_soonrye_book#0": 0,
+  "testify_gicheol#0": 0,
+  "testify_mari#0": 0,
+  "soonrye_sit#0": 3,
+  "bark_soonrye_rule_train#0": 1,
+  "soonrye_rule_train#0": 1,
+  "bark_gicheol_rule_rail#0": 1,
+  "gicheol_rule_count#0": 2,
+  "gicheol_rule_rail#0": 1,
+  "bark_shutter_8#0": 1,
+  "bark_shutter_3#0": 1,
+  "testify_eunji#0": 1,
+  "testify_dongha#0": 1,
+  "soonrye_d1_dark#0": 1,
+  "soonrye_d2#0": 2,
+  "bark_gicheol_rule_count#0": 2,
+  "gicheol_d2#0": 2,
+  "bark_soonrye_rule_answer#0": 3,
+  "soonrye_d3_after#0": 3,
+  "seoha_meet#0": 3,
+  "soonrye_rule_answer#0": 3,
+  "testify_seoha#0": 3
+ },
+ "hearLog": [
+  {
+   "key": "bark_gicheol_4#0",
+   "day": 0,
+   "phase": "day",
+   "how": "bark",
+   "map": "tunnel",
+   "steps": 31
+  },
+  {
+   "key": "bark_gicheol_2#0",
+   "day": 0,
+   "phase": "day",
+   "how": "bark",
+   "map": "tunnel",
+   "steps": 33
+  },
+  {
+   "key": "bark_soonrye_4#0",
+   "day": 0,
+   "phase": "day",
+   "how": "bark",
+   "map": "station",
+   "steps": 56
+  },
+  {
+   "key": "bark_soonrye_2#0",
+   "day": 0,
+   "phase": "day",
+   "how": "bark",
+   "map": "station",
+   "steps": 58
+  },
+  {
+   "key": "bark_mari_6#0",
+   "day": 0,
+   "phase": "day",
+   "how": "bark",
+   "map": "station",
+   "steps": 101
+  },
+  {
+   "key": "bark_mari_4#0",
+   "day": 0,
+   "phase": "day",
+   "how": "bark",
+   "map": "station",
+   "steps": 105
+  },
+  {
+   "key": "soonrye_meet#0",
+   "day": 0,
+   "phase": "day",
+   "how": "talk",
+   "map": "station",
+   "steps": 117
+  },
+  {
+   "key": "gicheol_meet#0",
+   "day": 0,
+   "phase": "day",
+   "how": "talk",
+   "map": "station",
+   "steps": 132
+  },
+  {
+   "key": "testify_soonrye#0",
+   "day": 0,
+   "phase": "evening",
+   "how": "testify",
+   "map": "station",
+   "steps": 146
+  },
+  {
+   "key": "testify_soonrye_book#0",
+   "day": 0,
+   "phase": "evening",
+   "how": "testify",
+   "map": "station",
+   "steps": 146
+  },
+  {
+   "key": "testify_gicheol#0",
+   "day": 0,
+   "phase": "evening",
+   "how": "testify",
+   "map": "station",
+   "steps": 146
+  },
+  {
+   "key": "testify_mari#0",
+   "day": 0,
+   "phase": "evening",
+   "how": "testify",
+   "map": "station",
+   "steps": 146
+  },
+  {
+   "key": "soonrye_sit#0",
+   "day": 0,
+   "phase": "evening",
+   "how": "talk",
+   "map": "station",
+   "steps": 148
+  },
+  {
+   "key": "bark_soonrye_rule_train#0",
+   "day": 1,
+   "phase": "trace",
+   "how": "topic",
+   "map": "station",
+   "steps": 151
+  },
+  {
+   "key": "soonrye_rule_train#0",
+   "day": 1,
+   "phase": "trace",
+   "how": "talk",
+   "map": "station",
+   "steps": 154
+  },
+  {
+   "key": "bark_gicheol_rule_rail#0",
+   "day": 1,
+   "phase": "trace",
+   "how": "topic",
+   "map": "station",
+   "steps": 163
+  },
+  {
+   "key": "gicheol_rule_count#0",
+   "day": 1,
+   "phase": "trace",
+   "how": "talk",
+   "map": "station",
+   "steps": 168
+  },
+  {
+   "key": "gicheol_rule_rail#0",
+   "day": 1,
+   "phase": "day",
+   "how": "talk",
+   "map": "station",
+   "steps": 204
+  },
+  {
+   "key": "bark_shutter_8#0",
+   "day": 1,
+   "phase": "day",
+   "how": "bark",
+   "map": "station",
+   "steps": 227
+  },
+  {
+   "key": "bark_shutter_3#0",
+   "day": 1,
+   "phase": "day",
+   "how": "bark",
+   "map": "station",
+   "steps": 244
+  },
+  {
+   "key": "testify_eunji#0",
+   "day": 1,
+   "phase": "evening",
+   "how": "testify",
+   "map": "station",
+   "steps": 260
+  },
+  {
+   "key": "testify_dongha#0",
+   "day": 1,
+   "phase": "evening",
+   "how": "testify",
+   "map": "station",
+   "steps": 260
+  },
+  {
+   "key": "soonrye_d1_dark#0",
+   "day": 1,
+   "phase": "evening",
+   "how": "talk",
+   "map": "station",
+   "steps": 263
+  },
+  {
+   "key": "soonrye_d2#0",
+   "day": 2,
+   "phase": "trace",
+   "how": "talk",
+   "map": "station",
+   "steps": 269
+  },
+  {
+   "key": "bark_gicheol_rule_count#0",
+   "day": 2,
+   "phase": "trace",
+   "how": "topic",
+   "map": "station",
+   "steps": 278
+  },
+  {
+   "key": "gicheol_rule_count#0",
+   "day": 2,
+   "phase": "trace",
+   "how": "talk",
+   "map": "station",
+   "steps": 291
+  },
+  {
+   "key": "gicheol_d2#0",
+   "day": 2,
+   "phase": "day",
+   "how": "talk",
+   "map": "station",
+   "steps": 335
+  },
+  {
+   "key": "soonrye_sit#0",
+   "day": 2,
+   "phase": "evening",
+   "how": "talk",
+   "map": "station",
+   "steps": 351
+  },
+  {
+   "key": "bark_soonrye_rule_answer#0",
+   "day": 3,
+   "phase": "trace",
+   "how": "topic",
+   "map": "station",
+   "steps": 354
+  },
+  {
+   "key": "soonrye_d3_after#0",
+   "day": 3,
+   "phase": "trace",
+   "how": "talk",
+   "map": "station",
+   "steps": 357
+  },
+  {
+   "key": "seoha_meet#0",
+   "day": 3,
+   "phase": "trace",
+   "how": "talk",
+   "map": "station",
+   "steps": 363
+  },
+  {
+   "key": "soonrye_rule_answer#0",
+   "day": 3,
+   "phase": "day",
+   "how": "talk",
+   "map": "station",
+   "steps": 371
+  },
+  {
+   "key": "testify_seoha#0",
+   "day": 3,
+   "phase": "evening",
+   "how": "testify",
+   "map": "station",
+   "steps": 374
+  },
+  {
+   "key": "soonrye_sit#0",
+   "day": 3,
+   "phase": "evening",
+   "how": "talk",
+   "map": "station",
+   "steps": 377
+  }
+ ],
+ "talkLog": [
+  {
+   "who": "soonrye",
+   "day": 0,
+   "phase": "day",
+   "key": "soonrye_meet#0",
+   "fresh": true
+  },
+  {
+   "who": "gicheol",
+   "day": 0,
+   "phase": "day",
+   "key": "gicheol_meet#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 0,
+   "phase": "evening",
+   "key": "soonrye_sit#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 1,
+   "phase": "trace",
+   "key": "soonrye_rule_train#0",
+   "fresh": true
+  },
+  {
+   "who": "gicheol",
+   "day": 1,
+   "phase": "trace",
+   "key": "gicheol_rule_count#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 1,
+   "phase": "day",
+   "key": "soonrye_idle"
+  },
+  {
+   "who": "gicheol",
+   "day": 1,
+   "phase": "day",
+   "key": "gicheol_rule_rail#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 1,
+   "phase": "evening",
+   "key": "soonrye_d1_dark#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 2,
+   "phase": "trace",
+   "key": "soonrye_d2#0",
+   "fresh": true
+  },
+  {
+   "who": "gicheol",
+   "day": 2,
+   "phase": "trace",
+   "key": "gicheol_rule_count#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 2,
+   "phase": "day",
+   "key": "soonrye_idle"
+  },
+  {
+   "who": "gicheol",
+   "day": 2,
+   "phase": "day",
+   "key": "gicheol_d2#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 2,
+   "phase": "evening",
+   "key": "soonrye_sit#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 3,
+   "phase": "trace",
+   "key": "soonrye_d3_after#0",
+   "fresh": true
+  },
+  {
+   "who": "seoha",
+   "day": 3,
+   "phase": "trace",
+   "key": "seoha_meet#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 3,
+   "phase": "day",
+   "key": "soonrye_rule_answer#0",
+   "fresh": true
+  },
+  {
+   "who": "soonrye",
+   "day": 3,
+   "phase": "evening",
+   "key": "soonrye_sit#0",
+   "fresh": true
+  }
+ ]
+}

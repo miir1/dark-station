@@ -1,0 +1,145 @@
+object keys: ['id', 'inspectLine', 'ledgerFact', 'light', 'name', 'overlay', 'resetOn', 'solid', 'states']
+== MAP station 묵현역 start [1, 11] keys ['id', 'displayName', 'rows', 'start', 'fire', 'beds', 'exits', 'objects', 'floodRows', 'dark']
+    ############################
+    #SS.#..........#...........#
+    #S..#..........k...........#
+    #...#..........#...........#
+    #...############...........#
+    #..........................#
+    A....tt.tt.tt..............#
+    #..........................#
+    ########dd#########dd#######
+    #,,,,,,,,,,,,,,,,,,,,,,,,,,R
+    #,,,,,,,,,,,,,,,,,,,,,,,,,,R
+    #,,,,,,,,,,,,,,,,,,,,,,,,,,#
+    #==========================#
+    #CCCC~~~~~~~~~~~~~~~~~~~~~~B
+    #CCCC~~~~~~~~~~~~~~~~~~~~~~B
+    ############################
+   fire (13, 10) tile ',' | 화로 solid 1 states ['lit', 'low', 'wet', 'kept'] ov {'low': 'fire_low_ov', 'wet': 'fire_wet_ov', 'kept': 'footprints'} {}
+   board (12, 9) tile ',' | 게시판 solid 1 states ['intact', 'torn'] ov {'torn': 'board_torn_ov'} {}
+   bench1 (17, 10) tile ',' | 승강장 의자 solid 1 states ['intact', 'torn'] ov {'torn': 'bench_torn_ov'} {}
+   bench2 (19, 10) tile ',' | 승강장 의자 solid 1 states ['intact', 'torn'] ov {'torn': 'bench_torn_ov'} {}
+   crate_food (8, 2) tile '.' | 창고 상자 solid 1 states ['closed', 'open', 'empty', 'moved'] ov {'open': 'crate_open_ov', 'empty': 'crate_empty_ov', 'moved': 'crate_moved_ov'} {}
+   parts_crate (9, 1) tile '.' | 부품 상자 solid 1 states ['storage', 'office', 'hidden'] ov {'office': 'parts_office_ov', 'hidden': 'parts_gone_ov'} {}
+   office_door (15, 2) tile 'k' | 역무실 문 solid 1 states ['locked', 'open'] ov {'open': 'door_open_ov'} {}
+   chalk_wall (21, 1) tile '.' | 분필 벽 solid 1 states ['blank', 'lines', 'names'] ov {'lines': 'chalk_lines_ov', 'names': 'chalk_names_ov'} {}
+   stairs_ash (2, 2) tile '.' | 출구 계단 solid 1 states ['dry', 'ash', 'deep', 'blocked'] ov {'ash': 'ash1_ov', 'deep': 'ash2_ov', 'blocked': 'ash3_ov'} {}
+   shoes_stairs (3, 2) tile '.' | 계단의 신발 solid 0 states ['none', 'one', 'pair'] ov {'one': 'shoe_one_ov', 'pair': 'shoe_pair_ov'} {}
+   stairs_line (2, 3) tile '.' | 분필 줄 solid 0 states ['drawn'] ov {} {}
+   shutter_gap (1, 6) tile '.' | 지하상가 셔터 solid 0 states ['shut', 'can', 'blood', 'open'] ov {'can': 'shutter_can_ov', 'blood': 'shutter_blood_ov', 'open': 'shutter_open_ov'} {}
+   speaker (10, 5) tile '.' | 기둥 스피커 solid 1 states ['on', 'cut'] ov {'cut': 'speaker_cut_ov'} {}
+   train_seat (3, 13) tile 'C' | 전동차 좌석 solid 1 states ['intact', 'torn'] ov {'torn': 'seat_torn_ov'} {}
+   cab_window (1, 13) tile 'C' | 운전실 유리창 solid 1 states ['normal'] ov {} {}
+   radio (2, 13) tile 'C' | 운전실 무전기 solid 1 states ['idle', 'on'] ov {'on': 'radio_on_ov'} {}
+   body_rail (9, 14) tile '~' | 선로의 사람 solid 1 states ['none', 'whole', 'cut', 'buried'] ov {'whole': 'body_whole_ov', 'cut': 'body_cut_ov', 'buried': 'body_buried_ov'} {}
+   grave (24, 11) tile ',' | 무덤 solid 0 states ['none', 'one', 'two', 'three'] ov {'one': 'grave1_ov', 'two': 'grave2_ov', 'three': 'grave3_ov'} {}
+   pipe (14, 9) tile ',' | 쇠파이프 solid 0 states ['clean', 'blood'] ov {'blood': 'pipe_blood_ov'} {}
+   scissors (19, 11) tile ',' | 가위 solid 0 states ['clean', 'blood'] ov {'blood': 'scissors_blood_ov'} {}
+   notebook_you (12, 11) tile ',' | 당신 수첩 solid 0 states ['inplace', 'moved'] ov {'moved': 'notebook_moved_ov'} {}
+   blanket_soonrye (16, 9) tile ',' | 순례 담요 solid 1 states ['folded', 'rolled', 'paired', 'empty'] ov {'rolled': 'blanket_rolled_ov', 'paired': 'blanket_paired_ov', 'empty': 'blanket_empty_ov'} {}
+   blanket_seoha (18, 9) tile ',' | 서하 담요 solid 1 states ['folded', 'rolled', 'paired', 'empty'] ov {'rolled': 'blanket_rolled_ov', 'paired': 'blanket_paired_ov', 'empty': 'blanket_empty_ov'} {}
+   blanket_gicheol (20, 9) tile ',' | 기철 담요 solid 1 states ['folded', 'rolled', 'paired', 'empty'] ov {'rolled': 'blanket_rolled_ov', 'paired': 'blanket_paired_ov', 'empty': 'blanket_empty_ov'} {}
+   blanket_eunji (16, 11) tile ',' | 은지 담요 solid 1 states ['folded', 'rolled', 'paired', 'empty'] ov {'rolled': 'blanket_rolled_ov', 'paired': 'blanket_paired_ov', 'empty': 'blanket_empty_ov'} {}
+   blanket_dongha (18, 11) tile ',' | 동하 담요 solid 1 states ['folded', 'rolled', 'paired', 'empty'] ov {'rolled': 'blanket_rolled_ov', 'paired': 'blanket_paired_ov', 'empty': 'blanket_empty_ov'} {}
+   blanket_mari (20, 11) tile ',' | 마리 담요 solid 1 states ['folded', 'rolled', 'paired', 'empty'] ov {'rolled': 'blanket_rolled_ov', 'paired': 'blanket_paired_ov', 'empty': 'blanket_empty_ov'} {}
+   pillow_gicheol (21, 9) tile ',' | 기철 베개 solid 0 states ['normal', 'moved', 'blood'] ov {'moved': 'pillow_moved_ov', 'blood': 'pillow_blood_ov'} {}
+   bottle_soonrye (15, 9) tile ',' | 순례 물통 solid 0 states ['full', 'empty', 'wet'] ov {'empty': 'bottle_empty_ov', 'wet': 'bottle_wet_ov'} {}
+   bottle_seoha (17, 9) tile ',' | 서하 물통 solid 0 states ['full', 'empty', 'wet'] ov {'empty': 'bottle_empty_ov', 'wet': 'bottle_wet_ov'} {}
+   bottle_gicheol (19, 9) tile ',' | 기철 물통 solid 0 states ['full', 'empty', 'wet'] ov {'empty': 'bottle_empty_ov', 'wet': 'bottle_wet_ov'} {}
+   bottle_eunji (15, 11) tile ',' | 은지 물통 solid 0 states ['full', 'empty', 'wet'] ov {'empty': 'bottle_empty_ov', 'wet': 'bottle_wet_ov'} {}
+   bottle_dongha (17, 11) tile ',' | 동하 물통 solid 0 states ['full', 'empty', 'wet'] ov {'empty': 'bottle_empty_ov', 'wet': 'bottle_wet_ov'} {}
+   bottle_mari (19, 11) tile ',' | 마리 물통 solid 0 states ['full', 'empty', 'wet'] ov {'empty': 'bottle_empty_ov', 'wet': 'bottle_wet_ov'} {}
+   bottle_you (11, 11) tile ',' | 당신 물통 solid 0 states ['full', 'empty', 'wet'] ov {'empty': 'bottle_empty_ov', 'wet': 'bottle_wet_ov'} {}
+   bowl_soonrye (12, 10) tile ',' | 순례 그릇 solid 0 states ['full', 'empty', 'meat'] ov {'empty': 'bowl_empty_ov', 'meat': 'bowl_meat_ov'} {}
+   bowl_seoha (14, 10) tile ',' | 서하 그릇 solid 0 states ['full', 'empty', 'meat'] ov {'empty': 'bowl_empty_ov', 'meat': 'bowl_meat_ov'} {}
+   bowl_gicheol (15, 10) tile ',' | 기철 그릇 solid 0 states ['full', 'empty', 'meat'] ov {'empty': 'bowl_empty_ov', 'meat': 'bowl_meat_ov'} {}
+   bowl_eunji (11, 10) tile ',' | 은지 그릇 solid 0 states ['full', 'empty', 'meat'] ov {'empty': 'bowl_empty_ov', 'meat': 'bowl_meat_ov'} {}
+   bowl_dongha (14, 11) tile ',' | 동하 그릇 solid 0 states ['full', 'empty', 'meat'] ov {'empty': 'bowl_empty_ov', 'meat': 'bowl_meat_ov'} {}
+   bowl_mari (10, 11) tile ',' | 마리 그릇 solid 0 states ['full', 'empty', 'meat'] ov {'empty': 'bowl_empty_ov', 'meat': 'bowl_meat_ov'} {}
+   bowl_you (13, 9) tile ',' | 당신 그릇 solid 0 states ['full', 'empty', 'meat'] ov {'empty': 'bowl_empty_ov', 'meat': 'bowl_meat_ov'} {}
+   repair_rubble (26, 9) tile ',' | 무너진 통로 solid 1 states ['blocked', 'working', 'open'] ov {'working': 'rubble_work_ov', 'open': 'rubble_open_ov'} {}
+   bandage_soonrye (15, 9) tile ',' | 순례 붕대 solid 0 states ['clean', 'wet', 'rot'] ov {'wet': 'bandage_wet_ov', 'rot': 'bandage_rot_ov'} {}
+   bandage_seoha (17, 9) tile ',' | 서하 붕대 solid 0 states ['clean', 'wet', 'rot'] ov {'wet': 'bandage_wet_ov', 'rot': 'bandage_rot_ov'} {}
+   bandage_gicheol (19, 9) tile ',' | 기철 붕대 solid 0 states ['clean', 'wet', 'rot'] ov {'wet': 'bandage_wet_ov', 'rot': 'bandage_rot_ov'} {}
+   bandage_eunji (15, 11) tile ',' | 은지 붕대 solid 0 states ['clean', 'wet', 'rot'] ov {'wet': 'bandage_wet_ov', 'rot': 'bandage_rot_ov'} {}
+   bandage_dongha (17, 11) tile ',' | 동하 붕대 solid 0 states ['clean', 'wet', 'rot'] ov {'wet': 'bandage_wet_ov', 'rot': 'bandage_rot_ov'} {}
+   bandage_mari (19, 11) tile ',' | 마리 붕대 solid 0 states ['clean', 'wet', 'rot'] ov {'wet': 'bandage_wet_ov', 'rot': 'bandage_rot_ov'} {}
+   bandage_you (11, 11) tile ',' | 당신 붕대 solid 0 states ['clean', 'wet', 'rot'] ov {'wet': 'bandage_wet_ov', 'rot': 'bandage_rot_ov'} {}
+== MAP car 멈춘 전동차 start [3, 3] keys ['id', 'displayName', 'rows', 'start', 'fire', 'beds', 'exits', 'objects', 'floodRows', 'dark']
+    ######################
+    #######.######.#######
+    #hhhhhh.hhhhhh.hh....#
+    #....................E
+    #hhhhhh.hhhhhh.hh.DDD#
+    #######.######.#######
+    ######################
+   lever (20, 1) tile '#' | 비상 레버 solid 1 states ['up', 'pulled'] ov {'pulled': 'lever_pulled_ov'} {}
+   bag (10, 4) tile 'h' | 좌석 밑 가방 solid 0 states ['closed', 'open'] ov {'open': 'bag_open_ov'} {}
+   cab_door (19, 3) tile '.' | 운전실 문 solid 0 states ['open'] ov {} {}
+   radio_cab (20, 4) tile 'D' | 운전실 무전기 solid 1 states ['idle', 'used'] ov {} {}
+   medkit (19, 1) tile '#' | 운전실 구급함 solid 1 states ['closed', 'open'] ov {'open': 'medkit_open_ov'} {}
+   notebook_dash (18, 4) tile 'D' | 계기판 위 수첩 solid 0 states ['there', 'taken'] ov {'taken': 'notebook_gone_ov'} {}
+   shoe_cab (18, 2) tile '.' | 구두 한 짝 solid 0 states ['there'] ov {} {}
+   car_shoes (4, 3) tile '.' | 가지런한 신발 solid 0 states ['there'] ov {} {}
+   car_shoes (11, 3) tile '.' | 가지런한 신발 solid 0 states ['there'] ov {} {}
+   car_shoes (16, 3) tile '.' | 가지런한 신발 solid 0 states ['there'] ov {} {}
+== MAP tunnel 어두운 터널 start [1, 2] keys ['id', 'displayName', 'rows', 'start', 'fire', 'beds', 'exits', 'objects', 'floodRows', 'dark']
+    ##############################
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+    .~~~~~~~~~~~~~~~~~~~~~~~~~~~~E
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+    ##############################
+   shelter_box (14, 0) tile '#' | 대피 공간 비상 상자 solid 1 states ['closed', 'open'] ov {'open': 'box_open_ov'} {}
+   vent_shaft (6, 3) tile '~' | 환기 통로 solid 1 states ['grey'] ov {} {}
+   rubble (17, 1) tile '~' | 무너진 구간 solid 1 states ['blocked', 'crossed'] ov {} {}
+== MAP mall_a1 묵현 지하상가 start [1, 1] keys ['id', 'displayName', 'rows', 'start', 'fire', 'beds', 'exits', 'objects', 'floodRows', 'dark']
+    ####################
+    #E....#.....#......#
+    #.....#..m..#......#
+    #..........###..m..#
+    #.....#............#
+    ###.###.....##.##.##
+    #........#.........#
+    #..m.....#....v....#
+    #........#.........#
+    ####################
+   pharmacy_shutter (12, 2) tile '#' | 약국 셔터 solid 1 states ['closed', 'half', 'open', 'dark'] ov {'half': 'pharm_half_ov', 'open': 'pharm_open_ov', 'dark': 'pharm_dark_ov'} {}
+   phonebooth (17, 1) tile '.' | 공중전화 solid 1 states ['card', 'taken'] ov {'taken': 'booth_taken_ov'} {}
+   stall_cart (2, 8) tile '.' | 노점 수레 solid 1 states ['normal'] ov {} {}
+== MAP mall_a2 지하상가 창고층 start [1, 1] keys ['id', 'displayName', 'rows', 'start', 'fire', 'beds', 'exits', 'objects', 'floodRows', 'dark']
+    ####################
+    #E.......#.........#
+    #........#..m......#
+    #..###.......####..#
+    #..#m#.......#..#..#
+    #..#.#.......#..#..#
+    #...........m......#
+    ####################
+   bone_pile (17, 5) tile '.' | 뼈 무더기 solid 1 states ['normal', 'scattered'] ov {'scattered': 'bones_scat_ov'} {}
+   bodybag_a2 (15, 6) tile '.' | 시체 자루 solid 0 states ['normal'] ov {} {}
+== MAP drain_b1 묻힌 개천 배수로 start [1, 1] keys ['id', 'displayName', 'rows', 'start', 'fire', 'beds', 'exits', 'objects', 'floodRows', 'dark']
+    ####################
+    #E.wwww#....#ww....#
+    #..wwww#..m.#ww..m.#
+    #...ww......#ww....#
+    #....w.##.......w..#
+    ##.###.##.###.####.#
+    #wwww....#.........#
+    #wmww....#....v....#
+    #wwww....#.........#
+    ####################
+   valve (9, 1) tile '.' | 수문 밸브 solid 1 states ['closed', 'open'] ov {'open': 'valve_open_ov'} {}
+   pump_room (12, 6) tile '.' | 펌프실 solid 1 states ['locked', 'open'] ov {'open': 'pump_open_ov'} {}
+   worker_pipe (17, 1) tile '.' | 배수관 solid 1 states ['bodies', 'stripped'] ov {'stripped': 'pipe_stripped_ov'} {}
+== MAP drain_b2 수문 아래 start [1, 1] keys ['id', 'displayName', 'rows', 'start', 'fire', 'beds', 'exits', 'objects', 'floodRows', 'dark']
+    ####################
+    #E..ww.....#ww.....#
+    #..wwww..m.#ww..m..#
+    #...ww.....#.......#
+    #wwwwwwwww...wwwww.#
+    #wwwm.wwww...wwww..#
+    #wwwwwwww..........#
+    ####################
+   cistern (10, 5) tile '.' | 저수조 solid 1 states ['normal'] ov {} {}
+   ladder_b2 (17, 2) tile '.' | 잠긴 사다리 solid 0 states ['normal'] ov {} {}

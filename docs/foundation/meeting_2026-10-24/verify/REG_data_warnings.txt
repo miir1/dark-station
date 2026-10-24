@@ -1,0 +1,2 @@
+warnings 1
+maps[0] station: [owner] (19,11) scissors: 주인이 없는 물건(id 끝 _<사람>·owner 칸 없음)이 mari의 물건과 한 칸에 있다 — objects 의 scissors 에 owner:"mari" 를 적거나 칸을 옮긴다

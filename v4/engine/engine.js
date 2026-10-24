@@ -36,7 +36,31 @@
     // 사람 수치의 첫 값: numbers.start, 단 people.needs 에 적힌 값(hunger·thirst·fear)이 있으면 그것
     for (const def of db.numbersList) if (def.owner === 'person') n[def.id] = Number.isInteger(needs[def.id]) ? needs[def.id] : def.start;
     return { id, name: p.name, skills: Object.assign({}, p.skills), n, needs: { bond: needs.bond && needs.bond !== '-' ? needs.bond : '' },
-      status: p.outside ? 'outside' : 'home', day: null, permanent: {}, secretFlag: p.secretFlag || null };
+      status: p.outside ? 'outside' : p.startAway ? 'away' : 'home', day: null, permanent: {}, secretFlag: p.secretFlag || null };
+  }
+  // ── 만남 (10-24 P0-E1) ──
+  // metFlag = people 표의 만남 깃발. 비었으면 처음부터 아는 사람. known = 깃발이 없거나 그 깃발이 섬.
+  // away = 아직 역에 안 온 사람(startAway:1). 만남 깃발이 서면 역에 온다(home) — 온 날은 p.arrived(명부의 날짜 칸 p.day 와 따로).
+  const metFlagOf = (db, id) => { const row = db.people[id]; const f = row && typeof row.metFlag === 'string' ? row.metFlag : ''; return f && f !== '-' ? f : ''; };
+  function known(s, db, id) { const f = metFlagOf(db, id); return !f || s.flags[f] === true; }
+  // 효과(깃발)를 적용한 뒤 부른다: away 이면서 만남 깃발이 선 사람 → home
+  function arrive(s, db) {
+    for (const id of db.peopleOrder) {
+      const p = s.people[id];
+      if (!p || p.status !== 'away') continue;
+      const f = metFlagOf(db, id);
+      if (f && s.flags[f] === true) { p.status = 'home'; p.arrived = s.day; }
+    }
+  }
+  // 들은 줄 기록 열쇠: '<줄id>#<행번호>' — 행번호 = lines 표에서 그 id 의 행들 가운데 몇 번째인가(0부터, 파일에 적힌 순서 = db.lines[id] 의 순서)
+  const HEARD_KEY = /^([a-z0-9_]{1,24})#(\d{1,4})$/;
+  function heardKey(db, id, row) { const rows = db.lines[id]; if (!rows) return null; const i = typeof row === 'number' ? row : rows.indexOf(row); return i >= 0 && i < rows.length ? `${id}#${i}` : null; }
+  function heard(s, db, key) {
+    const m = typeof key === 'string' ? HEARD_KEY.exec(key) : null;
+    if (!m || !db.lines[m[1]] || Number(m[2]) >= db.lines[m[1]].length) return false;
+    if (!s.heard || typeof s.heard !== 'object') s.heard = {};
+    s.heard[key] = s.day;
+    return true;
   }
   function newGame(db, seed) {
     seed = (seed == null ? 1 : seed) >>> 0;
@@ -47,12 +71,13 @@
     const s = {
       v: SAVE_V, seed, rng: seed, day: world.day != null ? world.day : 0, phase: null, ended: null,
       world, people: {}, pos: { map: null, x: 0, y: 0 },
-      flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {}, fired: {}, phaseSeen: [], critical: null, trip: null, lastFree: null,
+      flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {}, fired: {}, phaseSeen: [], critical: null, trip: null, lastFree: null, heard: {}, found: null,
       pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0 },
-    };   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 그날 마지막 치료 기회 때의 위독자(아침 판정용) · lastFree = 마지막 자유 경고 선택 {event, choice, day}(사인 기록용)
+    };   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 그날 마지막 치료 기회 때의 위독자(아침 판정용) · lastFree = 마지막 자유 경고 선택 {event, choice, day}(사인 기록용) · heard = 들은 줄 '<줄id>#<행번호>' → 마지막으로 들은 날 · found = 방금 연 수납의 결과(P1-11, 다음 조사·next 에 지워진다)
     if (!db.people.you) throw new Error('people 표에 you 가 없음');
     for (const o of Object.values(db.objects)) s.traces[o.id] = { st: o.states[0], day: 0, by: null, seen: false };   // 물건의 첫 상태 = states[0]
     for (const id of db.peopleOrder) s.people[id] = makePerson(db, id);
+    arrive(s, db);
     s.phase = firstPhase(s, db);
     enterPhase(s, db);
     return s;
@@ -65,7 +90,7 @@
     ctx.flags = s.flags; ctx.phase = s.phase || '';
     ctx.map = s.pos.map || ''; ctx.region = s.trip ? s.trip.region : ''; ctx.floor = s.trip ? s.trip.floor : 0;
     ctx.trace = {}; for (const [id, t] of Object.entries(s.traces)) ctx.trace[id] = t.st;
-    ctx.alive = {}; for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' ? 1 : 0; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }   // hunger_you, injury_gicheol (밤 사건 조건과 같은 어휘)
+    ctx.alive = {}; for (const p of Object.values(s.people)) { ctx.alive[p.id] = p.status === 'home' || p.status === 'away' ? 1 : 0; for (const [k, v] of Object.entries(p.n)) ctx[`${k}_${p.id}`] = v; }   // hunger_you, injury_gicheol (밤 사건 조건과 같은 어휘) · away(아직 안 온 사람)도 살아 있음 — 도착 사건 조건(alive:x)을 지킨다
     Object.assign(ctx, s.people.you.n);                                                                     // 사건 when 에서 hunger·injury 는 당신 것
     ctx.inspect = {}; ctx.talk = {};
     if (extra) Object.assign(ctx, extra);
@@ -101,10 +126,11 @@
   }
   // 사건 대상: 사람 id(역에 있어야) · any/randomSleeper/… = 역에 있는 주민 중 무작위 · mostInjured = 가장 많이 다친 주민 · bond = 당신의 bond
   // (나이로 거르지 않는다 — 10-22 디렉터 결정 '미성년 처리 금지': 서하(17)도 다른 주민과 똑같다)
+  // 무작위·mostInjured 는 만난 사람(known)만 — 안 만난 사람의 이름이 사건에 나오지 않게(10-24 P0-E1)
   function eventTarget(s, db, spec) {
     if (!spec) return null;
     if (db.people[spec]) return s.people[spec] && s.people[spec].status === 'home' ? spec : null;
-    const res = db.peopleOrder.filter((id) => id !== 'you' && s.people[id].status === 'home');
+    const res = db.peopleOrder.filter((id) => id !== 'you' && s.people[id].status === 'home' && known(s, db, id));
     if (EVENT_RANDOM.includes(spec)) return R.pick(s, res) || null;
     if (spec === 'mostInjured') { const hurt = res.filter((id) => (s.people[id].n.injury || 0) > 0).sort((a, b) => (s.people[b].n.injury || 0) - (s.people[a].n.injury || 0)); return hurt[0] || null; }
     if (spec === 'bond') { const b = s.people.you.needs.bond; return b && s.people[b] && s.people[b].status === 'home' ? b : null; }
@@ -203,6 +229,7 @@
     if (c.check) { const ok = R.rand(s) * 100 < st.chance; roll = { chance: st.chance, success: ok }; out = ok ? c.ok : c.fail; }
     const roles = rolesFor(s, db, out);
     if (out && out.effects) FX.apply(s, db, out.effects, roles, lines);
+    arrive(s, db);                     // 만남 깃발이 섰으면 역에 온다 — 이어지는 사건(연쇄)이 그 사람을 본다
     if (out && out.ledger) applyLedger(s, db, out.ledger, roles);
     s.lastResult = { event: ev.id, choice: c.label, i, open: open.map((x) => ev.choices.indexOf(x)), warned: warnText && !forced, forced, free: forced ? freeBefore : s.lastFree || null, roll, text: (out && out.text) || '', lines, image: (out && out.image) || '', target: roles.target, companion: roles.companion };   // open = 고를 때 열려 있던 선택지 번호(봇 집계용)
     if (ev.once === 0 ? false : (ev.once || ev.kind === 'fixed' || ev.kind === 'trial' || ev.kind === 'ending')) s.done[ev.id] = s.day;   // once:0 이면 되풀이(미룬다 류)
@@ -249,19 +276,76 @@
   }
 
   // ── 조사·소문·명부 ──
+  // 조사 한 번의 순서 (P1-11 엔진 몫): ① 그 조사에 걸린 사건(when 에 inspect:x — 원정 아닌 사건) → ② 원정 중이면 inspect:x 가 걸린 원정 사건
+  //   → ③ 둘 다 없고 물건에 수납 내용(holds)이 있고 닫혀(states[0]) 있고 사건이 쥐고 있지 않으면(claimedByEvent) '닫힘→얻음→열림'.
+  //   조사 전에 걸린 사건이 있었으면 ②③ 은 하지 않는다.
   function inspect(s, db, objId) {
     if (!db.objects[objId]) return false;
     const t = s.traces[objId];
+    const waiting = !!s.pending;
+    s.found = null;
     if (t) { t.seen = true; NIGHT.markInspected(s, objId); }
     s.stats.decisions++;
     checkEvents(s, db, { inspect: { [objId]: 1 } });
+    if (!waiting && !s.pending && s.trip) tripInspect(s, db, objId);
+    if (!waiting && !s.pending) openHolds(s, db, objId);
     return true;
+  }
+  // 수납 열기: 닫힘(states[0]) → 내용(effects) 적용 → 연 뒤 상태. 결과는 s.found = { object, state, day, text, lines } (화면의 '열기 3박자'·찾은 물건 아이콘이 읽는다)
+  //   lines = 바뀐 수치 [{kind:'number', id, who, from, to}] (사건 결과의 lastResult.lines 와 같은 꼴). 연 것은 열린 채 남는다(resetOn never 일 때).
+  const openStateOf = (o) => (o.holds && typeof o.holds.state === 'string' && o.holds.state ? o.holds.state : o.states.includes('open') && o.states[0] !== 'open' ? 'open' : o.states[1]);   // schema.js holdsOpenState 와 같은 규칙
+  const closedHolds = (s, db, objId) => { const o = db.objects[objId], t = s.traces[objId]; return !!(o && o.holds && t && t.st === o.states[0] && o.states.length > 1); };
+  // 사건이 쥔 물건: when 에 inspect:<그 물건> 이 나오는 사건(어느 kind 든) 가운데 지금 조건이 맞는 것이 있다 — 이미 고른 사건(done·phaseSeen·trip.done)도 센다.
+  //   그 동안은 holds 를 열지 않는다. 위험한 수납 사건('비틀어 연다 / 지나간다')을 거절하고 다시 조사해서 내용을 위험 없이 꺼내지 못하게(10-21 위험 대 보상).
+  //   사건 조건이 더는 맞지 않으면(그날이 지났다·깃발이 섰다) holds 가 기본 흐름이 된다.
+  function claimedByEvent(s, db, objId) {
+    const ctx = phaseCtx(s, { inspect: { [objId]: 1 } });
+    const name = 'inspect:' + objId;
+    return db.eventsList.some((ev) => inspectGated(ev) && C.names(C.compile(ev.when)).includes(name) && C.test(ev.when, ctx));
+  }
+  function openHolds(s, db, objId) {
+    if (!closedHolds(s, db, objId) || claimedByEvent(s, db, objId)) return false;
+    const o = db.objects[objId];
+    const lines = [];
+    const roles = rolesFor(s, db, null);
+    if (o.holds.effects) FX.apply(s, db, o.holds.effects, roles, lines);
+    const st = openStateOf(o);
+    FX.setTrace(s, db, objId, st, s.day, 'you');
+    s.traces[objId].seen = true;                                             // 당신이 한 일이라 본 것(배식 그릇과 같다)
+    arrive(s, db);                                                           // 내용에 만남 깃발이 있으면 역에 온다
+    s.found = { object: objId, state: st, day: s.day, text: o.holds.text || '', lines };
+    say(s, o.name, 'found');
+    return true;
+  }
+  // when 에 inspect: 가 나오는 원정 사건 = 그 물건을 조사해야 걸리는 사건(도착하자마자 걸지 않는다)
+  const GATED = new Map();
+  function inspectGated(ev) {
+    const key = ev.when == null ? '' : String(ev.when);
+    if (!GATED.has(key)) GATED.set(key, C.names(C.compile(key)).some((n) => C.prefixOf(n) === 'inspect'));
+    return GATED.get(key);
+  }
+  // 원정 중 조사: inspect:x 가 걸린 원정 사건 중 표 순서로 첫 것 (같은 원정에서 같은 사건은 한 번 · once 사건은 한 판에 한 번 · target 이 있으면 걸 때 정한다)
+  function tripInspect(s, db, objId) {
+    const ctx = phaseCtx(s, { inspect: { [objId]: 1 } });
+    for (const ev of db.eventsList) {
+      if (ev.kind !== 'trip' || !inspectGated(ev)) continue;
+      if ((s.trip.done || []).includes(ev.id) || (ev.once && has(s.done, ev.id))) continue;
+      if (!C.test(ev.when, ctx)) continue;
+      let target = null;
+      if (ev.target) { target = eventTarget(s, db, ev.target); if (!target) continue; }
+      s.pending = { id: ev.id, kind: 'trip' };
+      if (target) s.pending.target = target;
+      (s.trip.done = s.trip.done || []).push(ev.id);
+      return true;
+    }
+    return false;
   }
   function hear(s, i) { const r = s.rumors[i]; if (!r) return false; r.heard = true; NIGHT.markHeard(s, r); return true; }
   // 원정: 지금 지역·층에 맞는 원정 사건 하나를 건다 (같은 원정에서 같은 사건은 한 번)
+  // 도착 사건 = when 에 inspect: 가 없는 원정 사건. inspect: 가 있는 원정 사건은 그 물건을 조사할 때 건다(tripInspect, P1-11).
   function startTripEvent(s, db) {
     const ctx = phaseCtx(s);
-    const fit = db.eventsList.filter((ev) => ev.kind === 'trip' && !(s.trip.done || []).includes(ev.id) && !(ev.once && Object.prototype.hasOwnProperty.call(s.done, ev.id)) && C.test(ev.when, ctx));
+    const fit = db.eventsList.filter((ev) => ev.kind === 'trip' && !inspectGated(ev) && !(s.trip.done || []).includes(ev.id) && !(ev.once && Object.prototype.hasOwnProperty.call(s.done, ev.id)) && C.test(ev.when, ctx));
     if (!fit.length) return false;
     const ev = R.pick(s, fit);
     s.pending = { id: ev.id, kind: 'trip' };
@@ -272,11 +356,12 @@
   function rationOf(s) { const w = s.world; return { food: Number.isFinite(w.ration_food) ? w.ration_food : 1, water: Number.isFinite(w.ration_water) ? w.ration_water : 1, hunger: Number.isFinite(w.ration_hunger) ? w.ration_hunger : -4, thirst: Number.isFinite(w.ration_thirst) ? w.ration_thirst : -4 }; }
   // 받은 그릇은 full, 못 받은 그릇(bowls 에 0 이거나 식량·물이 모자람)은 empty — 둘 다 당신이 한 일이라 본 것(seen)으로 둔다.
   // 그래서 밤에 그릇이 바뀌면(빈 그릇이 찼다·찬 그릇이 비었다) 아침 흔적으로 구별된다.
+  // 역에 있고(home) 만난(known) 사람만 받는다 — 역 밖(away)·안 만난 사람은 bowls 에 있어도 건너뛴다(식량·물·그릇 그대로).
   function ration(s, db, bowls) {
     if (!bowls || typeof bowls !== 'object') return false;
     const RATION = rationOf(s);
     for (const [who, on] of Object.entries(bowls)) {
-      const p = s.people[who]; if (!p || p.status !== 'home') continue;
+      const p = s.people[who]; if (!p || p.status !== 'home' || !known(s, db, who)) continue;
       let fed = false;
       if (on && (s.world.food || 0) >= RATION.food && (s.world.water || 0) >= RATION.water) {
         FX.setNumber(s, db, 'food', who, -RATION.food); FX.setNumber(s, db, 'water', who, -RATION.water);
@@ -306,17 +391,19 @@
     return true;
   }
   // 원정 편성: numbers 표의 trip_party(동행 수, 없으면 0 = 혼자). with:[id] 로 고르거나, 안 주면 시드 난수로 고른다.
-  // 동행이 될 수 있는 사람 = 역에 있는 주민 중 위독이 아닌 사람(나이 무관). 고를 수 없는 사람이 있으면 null(거절).
+  // 동행이 될 수 있는 사람 = 역에 있는 만난(known) 주민 중 위독이 아닌 사람(나이 무관). 고를 수 없는 사람이 있으면 null(거절).
   function pickParty(s, db, want) {
     const size = Number.isFinite(s.world.trip_party) ? Math.max(0, s.world.trip_party) : 0;
     const injMax = injuryMax(db);
-    const ok = (id) => typeof id === 'string' && id !== 'you' && s.people[id] && s.people[id].status === 'home' && (s.people[id].n.injury || 0) < injMax;
+    const ok = (id) => typeof id === 'string' && id !== 'you' && s.people[id] && s.people[id].status === 'home' && known(s, db, id) && (s.people[id].n.injury || 0) < injMax;
     if (Array.isArray(want)) { const u = Array.from(new Set(want)); return u.length <= size && u.every(ok) ? u : null; }
     const pool = db.peopleOrder.filter(ok), out = [];
     while (out.length < size && pool.length) out.push(pool.splice(Math.floor(R.rand(s) * pool.length), 1)[0]);
     return out;
   }
   // 원정 동작: 낮에 한 번(지역 하나). 첫 동작은 1층, 그다음은 바로 아래층만(층마다 한 번). 걸린 사건이 있으면 못 간다.
+  // 돌려주는 값: 도착 사건이 걸렸으면 true. walk:true(원정 지도를 걸어서 뒤지는 화면·봇, P1-11)면 그 층에 들어섰으면 true — 도착 사건이 없어도.
+  //   어느 쪽이든 층에 들어서면 s.trip 은 바뀐다(옛 화면은 false 를 '아무것도 없었다'로 읽는다).
   function trip(s, db, a) {
     if (s.pending) return false;
     if (!s.trip) {
@@ -332,7 +419,8 @@
       if (floors.includes(a.floor) || !floors.includes(a.floor - 1)) return false;
       s.trip.floor = a.floor; s.trip.floors = floors.concat([a.floor]);
     }
-    return startTripEvent(s, db);
+    const got = startTripEvent(s, db);
+    return a.walk === true ? true : got;
   }
   function writeCause(s, db, who, line) {
     const p = s.people[who];
@@ -359,7 +447,7 @@
     const phase = phaseOf(db, s.phase);
     const ALIAS = { writeCause: 'writeLedger', writeFact: 'writeLedger', hear: 'talk', ration: 'setBowl' };   // 표의 동작 이름 ↔ 엔진 동작
     const pend = s.pending ? db.events[s.pending.id] : null;
-    const allowed = (t) => t === 'next' || t === 'choose' || t === 'move' || t === 'setFlag' || (phase && (phase.actions.includes(t) || phase.actions.includes(ALIAS[t])))
+    const allowed = (t) => t === 'next' || t === 'choose' || t === 'move' || t === 'setFlag' || t === 'heard' || (phase && (phase.actions.includes(t) || phase.actions.includes(ALIAS[t])))
       || (t === 'board' && !!(pend && pend.board));          // board:1 결말이 걸려 있으면 태울 사람을 고를 수 있다
     if (!allowed(a.type)) return { ok: false, error: `지금(${s.phase})은 할 수 없는 동작: ${a.type}` };
     let ok = false;
@@ -374,13 +462,14 @@
           const youWere = s.people.you.status;
           const n0 = s.nightLog.length;
           const got = NIGHT.rollNight(s, db); s.stats.nights++; for (const g of got) say(s, `[밤] ${g.id}`, 'night');
+          arrive(s, db);                                                     // 밤 사건 효과가 만남 깃발을 세웠으면 역에 온다
           if (youWere === 'home' && s.people.you.status !== 'home') {        // 밤 사건이 당신을 데려갔다 → 사인은 그 밤 사건 (그 전 선택이 아니다)
             const e = s.nightLog.slice(n0).find((x) => (x.lines || []).some((l) => l.who === 'you' && l.kind !== 'number' && l.kind !== 'permanent'));
             const row = e ? db.nightEvents.find((n) => n.id === e.id) : null;
             s.lastResult = { event: e ? e.id : 'night', choice: null, i: null, warned: false, forced: false, free: s.lastFree || null, night: true, roll: null, text: (row && row.text) || '', lines: e ? e.lines : [], image: '' };
           }
         }
-        s.trip = null;
+        s.trip = null; s.found = null;
         if (s.morningReset) { s.morningReset = false; for (const [id, t] of Object.entries(s.traces)) { const o = db.objects[id]; if (!o) continue; if (o.resetOn === 'morning' || (o.resetOn === 'inspect' && t.seen && t.day < s.day)) s.traces[id] = { st: o.states[0], day: s.day, by: null, seen: false }; } }   // 지워짐 = 첫 상태로
         const nx = nextPhase(s, db);
         if (nx === null) newDay(s, db); else { newPhase(s, nx); enterPhase(s, db); }
@@ -393,11 +482,12 @@
       case 'writeFact': if (typeof a.object !== 'string') break; ok = writeFact(s, db, a.object); break;
       case 'trip': ok = trip(s, db, a); break;
       case 'ration': ok = ration(s, db, a.bowls); break;
-      case 'talk': { const p = s.people[a.who]; if (!p || p.status !== 'home' || a.who === 'you') break; s.stats.decisions++; checkEvents(s, db, { talk: { [a.who]: 1 } }); ok = true; break; }
+      case 'talk': { const p = s.people[a.who]; if (!p || (p.status !== 'home' && p.status !== 'away') || a.who === 'you') break; s.stats.decisions++; checkEvents(s, db, { talk: { [a.who]: 1 } }); ok = true; break; }   // away = 역 밖에서 마주친 사람(터널의 기철)에게도 말을 건다
       case 'treat': if (typeof a.who !== 'string') break; ok = treat(s, db, a.who); break;
       case 'board': { const p = s.people[a.who]; if (!p || p.status !== 'home' || a.who === 'you') break; if (s.flags[`board_${a.who}`]) delete s.flags[`board_${a.who}`]; else s.flags[`board_${a.who}`] = true; ok = true; break; }   // 다시 누르면 내린다
       case 'move': if (!a.map || !db.maps[a.map] || !Number.isInteger(a.x) || !Number.isInteger(a.y)) break; s.pos = { map: a.map, x: a.x, y: a.y }; checkEvents(s, db); ok = true; break;   // 지도에 들어서면 그 지도에 걸린 사건을 찾는다
-      case 'setFlag': if (typeof a.flag !== 'string' || !/^[a-z_]{1,24}$/.test(a.flag)) break; s.flags[a.flag] = true; ok = true; break;
+      case 'setFlag': if (typeof a.flag !== 'string' || !/^[a-z_]{1,24}$/.test(a.flag)) break; s.flags[a.flag] = true; arrive(s, db); ok = true; break;
+      case 'heard': ok = heard(s, db, a.key); break;          // {type:'heard', key:'<줄id>#<행번호>'} → heard[key] = 오늘 (화면이 고른 대사 줄을 남긴다, 어느 단계에서나)
       default: return { ok: false, error: '알 수 없는 동작' };
     }
     return { ok, error: ok ? '' : '지금은 할 수 없는 동작' };
@@ -410,9 +500,11 @@
     const base = newGame(db, raw.seed || 1);
     const s = Object.assign(base, raw);
     for (const k of ['world', 'flags', 'traces', 'axes', 'onceNight', 'done', 'fired', 'stats']) s[k] = Object.assign({}, base[k], raw[k] || {});
+    s.heard = raw.heard && typeof raw.heard === 'object' && !Array.isArray(raw.heard) ? Object.assign({}, raw.heard) : {};   // 옛 저장(heard 없음)은 빈 기록
     if (!Array.isArray(s.phaseSeen)) s.phaseSeen = [];
     if (!s.critical || typeof s.critical !== 'object' || !Array.isArray(s.critical.ids)) s.critical = null;
     if (!s.lastFree || typeof s.lastFree !== 'object' || typeof s.lastFree.event !== 'string') s.lastFree = null;
+    if (!s.found || typeof s.found !== 'object' || typeof s.found.object !== 'string' || !db.objects[s.found.object]) s.found = null;   // 옛 저장(found 없음)·깨진 값
     for (const def of db.numbersList) if (def.owner === 'world' && !Number.isFinite(s.world[def.id])) s.world[def.id] = def.start;
     for (const k of ['nightLog', 'rumors', 'log']) if (!Array.isArray(s[k])) s[k] = [];
     if (!s.ledger || typeof s.ledger !== 'object') s.ledger = { causes: {}, written: [] };
@@ -422,9 +514,10 @@
       if (!p || typeof p !== 'object') { s.people[id] = bp; continue; }
       p.n = Object.assign({}, bp.n, p.n || {}); p.needs = Object.assign({}, bp.needs, p.needs || {}); p.skills = Object.assign({}, bp.skills, p.skills || {});
       if (!p.permanent || typeof p.permanent !== 'object') p.permanent = {};
-      if (!['home', 'dead', 'ascended', 'boarded', 'outside', 'stayed', 'walked'].includes(p.status)) p.status = 'home';
+      if (!['home', 'away', 'dead', 'ascended', 'boarded', 'outside', 'stayed', 'walked'].includes(p.status)) p.status = 'home';
       for (const def of db.numbersList) if (def.owner === 'person' && !Number.isFinite(p.n[def.id])) p.n[def.id] = def.start;
     }
+    arrive(s, db);                                               // 깃발은 섰는데 away 로 남은 저장(손으로 고친 것 등)을 맞춘다
     if (typeof s.rng !== 'number') s.rng = s.seed >>> 0;
     if (!Number.isInteger(s.day)) s.day = 0;
     if (s.trip !== null && typeof s.trip !== 'object') s.trip = null;
@@ -438,17 +531,21 @@
 
   // ── 화면·봇이 보는 것 ──
   // people[].signs = { sleepless, starving, ateFlesh } — 몸에 보이는 신호(참/거짓만, 문턱은 밤 사건표). 역에 없는 사람은 null.
+  // people[].met = 1 이면 만난 사람(metFlag 가 없거나 그 깃발이 섬), 0 이면 아직 안 만난 사람 — 화면은 met:0 인 사람의 이름·그릇을 보이지 않는다.
+  //   status 'away' = 아직 역에 안 온 사람(지도에 그 사람 물건을 그리지 않는다)
   // trip = { region, floor, floors, party } (원정 중일 때) — party 는 동행 id 목록(당신 제외)
+  // found = 방금 조사로 연 수납 { object, state, day, text, lines } 또는 null (P1-11 — 화면의 열기 3박자·찾은 물건 아이콘)
   function view(s, db) {
     const phase = phaseOf(db, s.phase);
     const sg = NIGHT.signs(s, db);
     return {
       day: s.day, phase: s.phase, ended: s.ended, actions: phase ? phase.actions.slice() : [],
       world: Object.fromEntries(db.numbersList.filter((d) => d.owner === 'world' && d.visible !== 'never').map((d) => [d.id, s.world[d.id]])),
-      people: db.peopleOrder.map((id) => { const p = s.people[id]; return { id, name: p.name, status: p.status, injury: p.n.injury || 0, permanent: Object.keys(p.permanent), signs: sg[id] || null }; }),
+      people: db.peopleOrder.map((id) => { const p = s.people[id]; return { id, name: p.name, status: p.status, met: known(s, db, id) ? 1 : 0, injury: p.n.injury || 0, permanent: Object.keys(p.permanent), signs: sg[id] || null }; }),
       trip: s.trip ? { region: s.trip.region, floor: s.trip.floor, floors: (s.trip.floors || []).slice(), party: (s.trip.party || []).slice() } : null,
       traces: Object.entries(s.traces).map(([id, t]) => ({ id, state: t.st, seen: t.seen })),
       rumors: s.rumors.filter((r) => !r.heard).length,
+      found: s.found ? { object: s.found.object, state: s.found.state, day: s.found.day, text: s.found.text || '', lines: (s.found.lines || []).slice() } : null,
       event: eventView(s, db),
     };
   }
@@ -464,7 +561,7 @@
         for (const [k, v] of Object.entries(e)) { const d = db.numbers[k]; if (d && d.owner === 'world' && d.visible === 'always') for (const x of FX.list(v)) gain += typeof x === 'number' ? x : (x && x.n) || 0; } }
       return Object.assign(choiceState(s, db, ev, c), { i, axis, killYou: kill, killOther, check: !!c.check, gain }); });   // gain = 화면에 보이는 자원 변화 합(봇의 '자원 + 가장 큰 label')
   }
-  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, rationOf, rand: R.rand, killsYou,
+  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, rationOf, rand: R.rand, killsYou, known, heardKey, closedHolds, openStateOf, inspectGated,
     identity: (s, db) => ID.identity(s.axes, db.identity), signs: (s, db) => NIGHT.signs(s, db), readerId: (s, db) => LEDGER.readerId(s, db), ledger: LEDGER, night: NIGHT, cond: C };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).engine = API;

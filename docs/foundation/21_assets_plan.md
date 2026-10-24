@@ -47,6 +47,52 @@
 | 아이콘 | 40 (패널 24) | 1px | 1px | 8 | icons.py |
 | 화면 | 논리 640×360, 정수 배율 | 720p=×2 | | | |
 
+### 2-1. 크기 기준표 (2026-10-24 합동 회의 P0-A2 — 위 규격표보다 이것이 먼저다)
+원본은 `tools/art_scale.json` 한 곳이다. 그림 도구(walk_recut·tiny_props·containers)와 검사(`tools/check_scale.py`·`tools/check_walk.py`)가 같은 파일을 읽는다. 아래 표는 그 사본이다.
+
+**기준**: 사람 46px = 170cm, 1px ≈ 3.7cm. 손에 드는 물건만 읽히도록 실제의 1.5배까지 과장을 허용한다.
+
+| 갈래 | 규칙 | 크기 (가로×세로 px, 외곽선 포함) |
+|---|---|---|
+| 사람(걷기 섬 칸 키) | 칸 32×48, 상한 46. 발바닥 y=47, 머리 가운데 x=16 | 당신·동하 46 · 기철·도현 45 · 은지·은채 44 · 마리 42 · 서하 41 · 순례 39 |
+| 손 물건 | 긴 변 ≤12px. 10px 이하는 Codex 금지, `tiny_props.py` 점 찍기 | 물통 4×10 · 그릇 8×4(+더미 1줄) · 붕대 6×4 · 수첩 6×5 · 가위 8×6 · 구두 한 짝 8×5 · 한 켤레 10×5 · 깡통 5×6 · 칼 9×3 |
+| 품 물건 | 긴 변 12~18px (긴 물건은 예외) | 가방 14×10 · 배낭 12×15 · 베개 14×8 / 예외: 세운 파이프 3×24 · 분필 줄 28×4 |
+| 가구 | 실제 크기. 수납은 닫힘·열림(·빔) 짝 | 상자 24×20 · 드럼통 16×24 · 공구함 20×14 · 사물함 32×48 · 서랍장 32×28 · 계기판 32×24 · 벽걸이 구급함 16×16 · 레버 비상함 16×20 · 벽감 비상 상자 24×20 · 선반 32×40 |
+| 장소 물건 | 2~3칸 (P1-10, Codex ③ — 10-24 검증 뒤 손찍기 대체가 먼저 들어감) | 공중전화 부스 32×64 · 약국 셔터 96×48 · 물탱크(저수조) 64×64 |
+| 찾은 물건 아이콘 | 패널 아이콘과 같은 40×40. 대사창 얼굴 칸에는 정확히 2배(80) | |
+| 초상 | 80×80 원본 (CSS 축소 없음) | portraits80 · portraits80_hurt |
+| 작은 장면 그림 | 256×144 원본 (선택 창) | cg_s |
+| 반응 아이콘 | 7×5 (머리 위 꼬리표 11×11 안) | poses/eyes · poses/mouth |
+| 앉은 사람 | 칸 32×32 4줄(아래·왼·오른·위), 무릎 세워 앉음, 앉은 키 = 선 키의 52~55%, 바닥 줄 31, 머리 안 잘림 | sit/<id> 32×128 |
+| 잠든 사람 | 32×32, 잠자리(bed) 위에 겹침. 머리 0~11줄 · 담요 10~29줄 | sleep/<id> |
+
+**짝 규칙**: 수납 가구는 `<이름>`(닫힘) · `<이름>_open`(열림) · 필요하면 `<이름>_empty`(빔). 짝은 캔버스 크기와 바닥 줄이 같고, 몸통 겹침이 가장 큰 가로 자리가 0px 어긋남이다(check_scale.py). 열 수 있는 것(닫힘 그림)에만 같은 놋쇠색 손잡이 2px(#C49848)을 찍는다. 열린 그림에는 없다(뒤진 곳은 표시가 사라진다).
+**캔버스가 몸통보다 넓은 짝**: 문이 옆으로 열리거나 뚜껑이 기대 서는 그림은 짝 캔버스를 몸통 가운데 기준으로 좌우를 똑같이 넓혔다(사물함 50×48, 레버 비상함 28×20, 드럼통 28×24, 구급함 24×16 등). 화면은 캔버스를 칸 아래 가운데에 그리면 몸통이 칸 가운데에 온다.
+**상태 규칙**: 흔적 소품의 상태 그림(가득·빔·젖음·썩음·피·옮겨짐)은 같은 캔버스·같은 바닥 줄이고 서로 8픽셀 이상 다르다(1배 화면에서 갈림).
+**상태 규칙 보강 (2026-10-24 검증 U1-2 뒤)**: 실제 크기로 줄인 손 물건은 '8픽셀'만으로는 아침에 바뀐 것이 잘 안 보였다(빛 아래 밝기 차 12 이상인 픽셀 8~14개). 그래서
+물건 크기는 그대로 두고 **상태가 바닥에 남기는 자국**(물웅덩이와 물빛, 진물 자국과 파리, 핏방울·피 고임, 숟가락·부스러기, 국물)을 같은 캔버스 안에 함께 찍는다(긴 변 ≤12 안).
+목표: 빛 0.45에서도 상태 사이 밝기 차 12 이상 픽셀 ≥15. 재는 도구 `tools/trace_contrast.py`(검증과 같은 문턱). 지금 붕대 21·21·15, 그릇 22·21, 가위 18 (옛 9·8·8, 14·10, 8).
+작은 크기 자체는 디렉터 요청(U4)이므로 그대로다 — 더 크게 할지는 디렉터 확인 사항으로 남긴다.
+
+**v4/img 새 그림 이름표** (화면이 manifest 에 있을 때만 쓴다. 없으면 plan.md 의 대체 규칙)
+| 폴더 | 그림 | 만든 도구 |
+|---|---|---|
+| walk/ | player·soonrye·seoha·gicheol·eunji·dongha·mari·eunchae·dohyeon (96×192 = 32×48 칸 3열 왼발·섬·오른발 × 4행 아래·왼·오른·위) | walk_recut.py |
+| props/ (손 물건) | bottle·bottle_empty(쓰러짐)·bottle_wet(쓰러짐+웅덩이) / bowl·bowl_empty·bowl_meat / bandage·bandage_wet·bandage_rot·bandage_blood / notebook·notebook_moved / scissors·scissors_blood / shoe_one·shoe_pair / pipe_stand·pipe_stand_blood / chalk_line / can / knife | tiny_props.py |
+| props/ (화로) | drum_open — v3 drum 과 같은 32×32, 불을 지우고 아가리(13~15줄, x 10~22)를 찍음. 불은 화면 코드 불꽃 하나 | tiny_props.py |
+| props/ (수납) | dash · medkit(_open) · lever_box(_open) · toolbox(_open) · crate(_open·_empty) · locker(_open) · drawer(_open) · barrel(_open) · shelter_box(_open) · shelf(_empty) · bag(_open) | containers.py (Codex ①②) |
+| tiles/ | seatTop_0(위 벽 좌석 줄) · seatBottom_0(아래 벽 좌석 줄) · dash_0(전동차 바닥+계기판) | seat_tiles.py · containers.py |
+| icons/ | notebook · cable · radio · key · phonecard · crackers · bottle · rope · glove · fuse · matches (40×40) | containers.py (Codex ②) |
+| portraits80/ · portraits80_hurt/ | 9명씩 80×80 | portrait_cg_v4.py |
+| cg_s/ | 게임이 띄우는 장면 그림 전부 256×144 (art.js cgKey 를 따라 정함, 이름 = 풀린 그림 파일 이름) | portrait_cg_v4.py |
+| cg/dream_* | 꿈 그림 4장 48색으로 다시(차가운 색조 유지, 색조판 원본은 art_src/cg_dream) | portrait_cg_v4.py |
+| poses/ | eyes·mouth 7×5 | tiny_props.py |
+| props/ (장소) | phonebooth(카드가 반환구에·수화기가 줄에 늘어짐) · phonebooth_taken(반환구 빔·수화기 제자리) 32×64 / pharmacy_shutter(셔터 내림·유리문 안 흰 얼굴) · _half · _open(거의 빈 선반) · _dark(유리문까지 내림·간판 꺼짐) 96×48 / cistern 64×64(검은 물·물결·물 밑 흐린 형체) | place_props.py (손찍기, Codex 0 — Codex ③ 그림이 더 나으면 같은 이름으로 덮어씀) |
+| sit/ | 9명 32×128: 자기 걷기 그림 윗몸(머리 꼭대기~키 52%) + 공용 '무릎 세워 앉기' 다리 틀(허벅지·정강이·신발·손을 그 사람 색으로). 앞모습은 무릎을 끌어안은 두 팔과 깍지 손, 옆모습은 가슴 앞에 솟은 무릎, 뒷모습은 자기 등 | people_poses.py (P1-2, Codex 0) |
+| sleep/ | 9명 32×32: 자기 머리(모자·머리카락 그대로) + 몸 높이 지도로 음영한 담요(어깨 둥근 턱·두 다리·발끝 솟음·주름) + 사람마다 담요 천과 표식 하나(발치에 개어 둔 자기 옷 / 기철 헤드램프 / 서하·은채 베개에 퍼진 머리 / 마리 간호모 / 도현 멜빵) | people_poses.py (P1-2, Codex 0) |
+
+한 번에 다시 뽑기: `sh tools/build_art_v4.sh` (v4/img 로만 낸다. **tools/build_art.sh 는 실행 금지** — v3/img 를 지운다). Codex 호출 기록은 `art_src/codex_log.md`.
+
 ## 3. 새 자산 — 수 · 우선순위 · 기한 (기준: D0~D10 전부, R1)
 
 ### 3-1. 목록

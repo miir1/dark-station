@@ -1,0 +1,344 @@
+{
+ "walk_hold_real": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   229.9,
+   230.0,
+   230.0,
+   230.1,
+   230.0
+  ],
+  "ms_per_tile_avg": 230.0,
+  "frames_walking": 84,
+  "stall_frames_same_logical_pos": 0,
+  "same_int_pixel_consecutive": 0,
+  "same_int_pixel_3_in_row": 0,
+  "frame_dt_avg": 16.67,
+  "frame_dt_min": 15.4,
+  "frame_dt_max": 17.8,
+  "px_per_frame_avg": 2.32,
+  "px_per_frame_max": 2.49,
+  "px_at_tile_boundary": [
+   2.38,
+   2.31,
+   2.24,
+   2.27,
+   2.35,
+   2.38
+  ],
+  "line_fit_px_per_ms": 0.13913,
+  "max_abs_deviation_from_line_px": 0.03,
+  "walk_beat_mismatch_frames": 0,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "walk_beat_runs": [
+   "L7",
+   "S7",
+   "R7",
+   "S7",
+   "L7",
+   "S7",
+   "R7",
+   "S7",
+   "L7",
+   "S6",
+   "R7",
+   "S7",
+   "L1"
+  ],
+  "you_draw_dy_offset_by_beat": {
+   "S": [
+    0
+   ],
+   "L": [
+    1
+   ],
+   "R": [
+    1
+   ]
+  },
+  "you_sprite_ids_by_beat": {
+   "S": [
+    1
+   ],
+   "L": [
+    2
+   ],
+   "R": [
+    3
+   ]
+  },
+  "frames_without_you_draw": 0,
+  "frames_from_rAF": 122,
+  "frames_total": 122,
+  "draw_ms_avg": 1.72,
+  "draw_ms_max": 3.2,
+  "raf_counters": {
+   "req": 164,
+   "cb": 163
+  },
+  "console_errors": []
+ },
+ "run_hold_real": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   126.5,
+   126.4,
+   126.5,
+   126.5,
+   126.6
+  ],
+  "ms_per_tile_avg": 126.5,
+  "stall_frames_same_logical_pos": 0,
+  "max_abs_deviation_from_line_px": 0.04,
+  "walk_beat_mismatch_frames": 0,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "error": null
+ },
+ "click_walk_real": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   230.0,
+   230.1,
+   229.9,
+   230.0,
+   230.1
+  ],
+  "ms_per_tile_avg": 230.0,
+  "stall_frames_same_logical_pos": 0,
+  "max_abs_deviation_from_line_px": 0.02,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "end": [
+   10,
+   3
+  ],
+  "error": null
+ },
+ "walk_hold_shim60": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   230.0,
+   229.9,
+   230.1,
+   229.9,
+   230.0
+  ],
+  "ms_per_tile_avg": 230.0,
+  "frames_walking": 83,
+  "stall_frames_same_logical_pos": 0,
+  "same_int_pixel_consecutive": 0,
+  "same_int_pixel_3_in_row": 0,
+  "frame_dt_avg": 16.87,
+  "frame_dt_min": 15.7,
+  "frame_dt_max": 18.0,
+  "px_per_frame_avg": 2.348,
+  "px_per_frame_max": 2.5,
+  "px_at_tile_boundary": [
+   2.27,
+   2.3,
+   2.34,
+   2.31,
+   2.32,
+   2.37
+  ],
+  "line_fit_px_per_ms": 0.13913,
+  "max_abs_deviation_from_line_px": 0.06,
+  "walk_beat_mismatch_frames": 0,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "walk_beat_runs": [
+   "L7",
+   "S7",
+   "R7",
+   "S7",
+   "L7",
+   "S7",
+   "R6",
+   "S7",
+   "L7",
+   "S7",
+   "R6",
+   "S7",
+   "L1"
+  ],
+  "you_draw_dy_offset_by_beat": {
+   "S": [
+    0
+   ],
+   "L": [
+    1
+   ],
+   "R": [
+    1
+   ]
+  },
+  "you_sprite_ids_by_beat": {
+   "S": [
+    1
+   ],
+   "L": [
+    2
+   ],
+   "R": [
+    3
+   ]
+  },
+  "frames_without_you_draw": 0,
+  "frames_from_rAF": 121,
+  "frames_total": 121,
+  "draw_ms_avg": 1.6,
+  "draw_ms_max": 3.7,
+  "raf_counters": {
+   "req": 178,
+   "cb": 177
+  },
+  "console_errors": []
+ },
+ "run_hold_shim60": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   126.5,
+   126.6,
+   126.4,
+   126.5,
+   126.5
+  ],
+  "ms_per_tile_avg": 126.5,
+  "stall_frames_same_logical_pos": 0,
+  "max_abs_deviation_from_line_px": 0.06,
+  "walk_beat_mismatch_frames": 0,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "error": null
+ },
+ "click_walk_shim60": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   229.9,
+   230.1,
+   229.9,
+   230.0,
+   230.1
+  ],
+  "ms_per_tile_avg": 230.0,
+  "stall_frames_same_logical_pos": 0,
+  "max_abs_deviation_from_line_px": 0.01,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "end": [
+   10,
+   3
+  ],
+  "error": null
+ },
+ "walk_hold_shim144": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   230.1,
+   230.0,
+   229.9,
+   230.0,
+   230.0
+  ],
+  "ms_per_tile_avg": 230.0,
+  "frames_walking": 197,
+  "stall_frames_same_logical_pos": 0,
+  "same_int_pixel_consecutive": 4,
+  "same_int_pixel_3_in_row": 0,
+  "frame_dt_avg": 7.07,
+  "frame_dt_min": 6.1,
+  "frame_dt_max": 9.5,
+  "px_per_frame_avg": 0.983,
+  "px_per_frame_max": 1.32,
+  "px_at_tile_boundary": [
+   1.06,
+   1.07,
+   1.03,
+   1.02,
+   0.97,
+   0.9
+  ],
+  "line_fit_px_per_ms": 0.13913,
+  "max_abs_deviation_from_line_px": 0.02,
+  "walk_beat_mismatch_frames": 1,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "walk_beat_runs": [
+   "L17",
+   "S16",
+   "R16",
+   "S16",
+   "L17",
+   "S16",
+   "R16",
+   "S17",
+   "L15",
+   "S17",
+   "R16",
+   "S17",
+   "L1"
+  ],
+  "you_draw_dy_offset_by_beat": {
+   "S": [
+    0
+   ],
+   "L": [
+    1
+   ],
+   "R": [
+    1
+   ]
+  },
+  "you_sprite_ids_by_beat": {
+   "S": [
+    1
+   ],
+   "L": [
+    2
+   ],
+   "R": [
+    3
+   ]
+  },
+  "frames_without_you_draw": 0,
+  "frames_from_rAF": 286,
+  "frames_total": 286,
+  "draw_ms_avg": 1.42,
+  "draw_ms_max": 2.8,
+  "raf_counters": {
+   "req": 424,
+   "cb": 423
+  },
+  "console_errors": []
+ },
+ "run_hold_shim144": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   126.5,
+   126.6,
+   126.4,
+   126.5,
+   126.6
+  ],
+  "ms_per_tile_avg": 126.5,
+  "stall_frames_same_logical_pos": 0,
+  "max_abs_deviation_from_line_px": 0.07,
+  "walk_beat_mismatch_frames": 0,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "error": null
+ },
+ "click_walk_shim144": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   229.9,
+   230.1,
+   230.0,
+   230.0,
+   230.0
+  ],
+  "ms_per_tile_avg": 230.0,
+  "stall_frames_same_logical_pos": 0,
+  "max_abs_deviation_from_line_px": 0.02,
+  "walk_beat_order": "LSRSLSRSLSRSL",
+  "end": [
+   10,
+   3
+  ],
+  "error": null
+ }
+}

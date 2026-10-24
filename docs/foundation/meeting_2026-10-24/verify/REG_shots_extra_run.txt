@@ -1,0 +1,9 @@
+OK   x_tunnel (console errors 0)
+OK   x_arrive (console errors 0)
+OK   x_eve3 (console errors 0)
+OK   x_manual (console errors 0)
+OK   x_testify (console errors 0)
+OK   x_ration1 (console errors 0)
+OK   x_shutter1 (console errors 0)
+OK   x_open (console errors 0)
+exit=0

@@ -1,5 +1,6 @@
 // 어두운 역 v4 — 그림. 새 그림(img/, 목록 = img/manifest.json)을 먼저 보고, 없으면 프로토타입 자산(../v3/img, 읽기만), 그래도 없으면 자리표시.
-// 타일 32, 사람 32×48(걷기 묶음 3열×4행), 소품 32×32, 자세 앉기 32×32·눕기 48×24, 반응 아이콘 16, 초상 96(+귀 패치 12), 장면 384×216.
+// 타일 32, 사람 32×48(걷기 묶음 3열×4행 — v4/img/walk 가 있으면 그것, 칸 크기는 시트에서 계산), 소품 32×32, 자세 앉기 32×32·눕기 48×24,
+// 반응 아이콘(꼬리표 안 ≤9px), 초상 80(v4 portraits80, 없으면 v3 96 — 귀 패치), 장면 384×216(선택 창에서는 v4 cg_s 256×144).
 // 목록은 python v4/tools/manifest.py 가 만든다 (그림을 넣고 그것만 다시 돌리면 화면이 잡는다. 없는 파일을 찔러 보지 않으므로 콘솔 404 가 없다).
 (function () {
   'use strict';
@@ -26,6 +27,38 @@
   const once = (key, make) => { if (!cache.has(key)) cache.set(key, make()); return cache.get(key); };
   const toCanvas = (im) => { const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; c.getContext('2d').drawImage(im, 0, 0); return c; };
   const blank = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+  // 그림의 처음 불투명한 줄 (머리 꼭대기·드럼통 아가리 자리를 그림에서 읽는다 — 그림이 바뀌어도 맞는다)
+  const topCache = new WeakMap();
+  function opaqueTop(im) {
+    if (!im) return 0;
+    if (topCache.has(im)) return topCache.get(im);
+    let r = 0;
+    try {
+      const c = im.getContext ? im : toCanvas(im);
+      const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+      r = -1;
+      for (let y = 0; y < c.height && r < 0; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 40) { r = y; break; }
+      if (r < 0) r = 0;
+    } catch (e) { r = 0; }
+    topCache.set(im, r);
+    return r;
+  }
+  // 그림의 불투명한 상자 { x0, y0, x1, y1 } (끝 포함). 다 투명하면 캔버스 전체. 꼬리표가 당신 몸을 피할 때 쓴다
+  const boxCache = new WeakMap();
+  function opaqueBox(im) {
+    if (!im) return { x0: 0, y0: 0, x1: 0, y1: 0 };
+    if (boxCache.has(im)) return boxCache.get(im);
+    let b = { x0: 0, y0: 0, x1: im.width - 1, y1: im.height - 1 };
+    try {
+      const c = im.getContext ? im : toCanvas(im);
+      const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+      let x0 = c.width, y0 = c.height, x1 = -1, y1 = -1;
+      for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 40) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      if (x1 >= 0) b = { x0, y0, x1, y1 };
+    } catch (e) { /* 읽을 수 없으면 캔버스 전체 */ }
+    boxCache.set(im, b);
+    return b;
+  }
 
   // ── 자리표시: 색 사각형 + 이름 (그림이 정말 없을 때만) ──
   function hashColor(name) { let h = 7; for (const ch of String(name)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; const hue = h % 360; return `hsl(${hue} 35% 38%)`; }
@@ -42,12 +75,13 @@
     return c;
   }
 
-  // ── 타일: tiles/<종류>_<0~3> 중 자리에 따라 하나 ──
+  // ── 타일: v4 tiles/<종류>_<0~3>(P0-A3 전동차 좌석·계기판) → v3 tiles/<종류>_<0~3> 중 자리에 따라 하나 ──
   function tile(kind, x, y) {
     const v = (((x * 73856093) ^ (y * 19349663)) >>> 0) % 4;
-    const name = IMG['tiles/' + kind + '_' + v] ? 'tiles/' + kind + '_' + v : IMG['tiles/' + kind + '_0'] ? 'tiles/' + kind + '_0' : null;
-    return once('t:' + kind + ':' + v + ':' + !!name, () => (name ? toCanvas(IMG[name]) : flatTile(kind)));
+    const name = ['v4/tiles/', 'tiles/'].map((p) => (IMG[p + kind + '_' + v] ? p + kind + '_' + v : IMG[p + kind + '_0'] ? p + kind + '_0' : null)).find(Boolean) || null;
+    return once('t:' + kind + ':' + v + ':' + (name || ''), () => (name ? toCanvas(IMG[name]) : flatTile(kind)));
   }
+  const hasTile = (kind) => !!(IMG['v4/tiles/' + kind + '_0'] || IMG['tiles/' + kind + '_0']);
   const FLAT = { wall: '#2a2420', floor: '#3a3029', concourse: '#35302a', edge: '#5a4a1e', track: '#17141a', water: '#1b2d36', carFloor: '#2d2622', carWall: '#241f1c', tunnelWall: '#1b1816', marketFloor: '#2a2520', drainFloor: '#1d2428' };
   function flatTile(kind) { const c = blank(T, T); const g = c.getContext('2d'); g.fillStyle = FLAT[kind] || '#333'; g.fillRect(0, 0, T, T); g.fillStyle = 'rgba(0,0,0,.15)'; g.fillRect(0, 0, T, 1); g.fillRect(0, 0, 1, T); return c; }
 
@@ -70,6 +104,9 @@
       for (let y = 12; y < 27; y += 3) { g.fillStyle = '#1e1c19'; g.fillRect(7, y, 18, 2); }
       g.fillStyle = 'rgba(190,190,180,.35)'; g.fillRect(9, 13, 14, 1);
       g.fillStyle = '#8c8880'; g.fillRect(6, 10, 20, 1);
+    },
+    chalk(g) {                                      // 계단 분필 줄 (props/chalk_line 이 없을 때): 칸 위쪽을 가로지르는 흰 점선 — 노란 안전선과 다른 색·모양
+      for (let x = 2; x < 30; x += 4) { g.fillStyle = '#d8d4c8'; g.fillRect(x, 3, 2, 1); g.fillStyle = 'rgba(216,212,200,.45)'; g.fillRect(x + 2, 4, 1, 1); }
     },
   };
   // ── 손으로 찍은 작은 덧그림 (흔적 상태 중 그림 파일이 없는 것) ──
@@ -108,25 +145,37 @@
     for (let i = 0; i < hurt * 6; i++) g.fillRect(w * 0.2 + R() * w * 0.6, h * 0.18 + R() * h * 0.66, 2 + R() * 4, 2 + R() * 6);
     g.globalCompositeOperation = 'source-over';
   }
+  // 걷기 시트: v4/img/walk/<id>(덩어리 단위로 다시 자른 것, P0-A1)가 먼저, 없으면 v3 walk/<id>
+  const walkSheet = (id) => IMG['v4/walk/' + id] || IMG['walk/' + id] || null;
   function person(id, frame, hurt, dir) {
-    const walk = IMG['walk/' + id], still = IMG['sprites/' + id];
+    const v4w = IMG['v4/walk/' + id], walk = IMG['walk/' + id], still = IMG['sprites/' + id];
     return once('h:' + id + ':' + (frame || 0) + ':' + (hurt || 0) + ':' + (dir || 'down'), () => {
+      const col = frame === 1 ? 0 : frame === 2 ? 2 : 1, row = DIR_ROW[dir] || 0;
+      if (v4w) {                                                   // 칸 크기는 시트에서, 칸 바닥 = 타일 바닥 (화면이 캔버스 아래를 타일 아래에 맞춘다), 원래 크기 그대로
+        const cw = Math.floor(v4w.width / 3), ch = Math.floor(v4w.height / 4);
+        const c = blank(Math.max(T, cw), Math.max(PH, ch)); const g = c.getContext('2d');
+        g.drawImage(v4w, col * cw, row * ch, cw, ch, Math.round((c.width - cw) / 2), c.height - ch, cw, ch);
+        bloodOver(g, id, hurt, c.width, c.height);
+        return c;
+      }
       const c = blank(T, PH);
       const g = c.getContext('2d');
-      if (walk) { const cw = walk.width / 3, ch = walk.height / 4, col = frame === 1 ? 0 : frame === 2 ? 2 : 1; g.drawImage(walk, col * cw, (DIR_ROW[dir] || 0) * ch, cw, ch, 0, 0, T, PH); }
+      if (walk) { const cw = walk.width / 3, ch = walk.height / 4; g.drawImage(walk, col * cw, row * ch, cw, ch, 0, 0, T, PH); }
       else if (still) g.drawImage(still, 0, 0);
       else { g.drawImage(placeholder(id, 24, 40, id.slice(0, 3)), 4, 6); }
       bloodOver(g, id, hurt, T, PH);
       return c;
     });
   }
+  // 머리 꼭대기: 그 사람·방향·걸음 그림에서 처음 불투명한 줄 (사람 캔버스 위에서 몇 줄 아래인가)
+  const headTop = (id, frame, dir) => once('head:' + id + ':' + (frame || 0) + ':' + (dir || 'down'), () => opaqueTop(person(id, frame, 0, dir)));
   // 사람 id → 그림 파일 이름 (당신 = player)
   const spriteId = (id) => (id === 'you' ? 'player' : id);
 
   // ── 자세: 공용 실루엣(앉기·눕기)을 그 사람 옷 색으로 물들인다. 옷 색 = 걷기 그림 몸통 평균 ──
   function tintOf(id) {
     return once('tint:' + id, () => {
-      const walk = IMG['walk/' + id];
+      const walk = walkSheet(id);
       if (!walk) return [120, 110, 100];
       try {
         const cw = walk.width / 3, ch = walk.height / 4;
@@ -167,7 +216,8 @@
     return once('sleep:' + k + ':' + (hurt || 0), () => {
       const c = blank(T, T); const g = c.getContext('2d');
       g.imageSmoothingEnabled = false;
-      g.drawImage(person(k, 0, 0, 'down'), 8, 0, 16, 13, 8, -1, 16, 13);              // 머리 (걷기 그림 머리 줄 0~12)
+      const pc = person(k, 0, 0, 'down'), headY = opaqueTop(pc);                         // 머리 = 아래 줄 섬 칸에서 처음 불투명한 줄부터 13줄 (그림이 바뀌어도 맞는다)
+      g.drawImage(pc, Math.round((pc.width - 16) / 2), headY, 16, 13, 8, 0, 16, 13);
       const [r0, g0, b0] = tintOf(k);
       const col = (m, a) => `rgba(${Math.round(Math.min(255, r0 * m))},${Math.round(Math.min(255, g0 * m))},${Math.round(Math.min(255, b0 * m))},${a == null ? 1 : a})`;
       const blanket = (x, y, w, h) => { g.beginPath(); g.moveTo(x + 3, y); g.lineTo(x + w - 3, y); g.quadraticCurveTo(x + w, y, x + w, y + 3); g.lineTo(x + w, y + h - 3); g.quadraticCurveTo(x + w, y + h, x + w - 3, y + h); g.lineTo(x + 3, y + h); g.quadraticCurveTo(x, y + h, x, y + h - 3); g.lineTo(x, y + 3); g.quadraticCurveTo(x, y, x + 3, y); g.closePath(); };
@@ -186,28 +236,100 @@
   }
   // 머리 위 반응 아이콘 16×16: 'eyes'(안 잠) · 'mouth'(입이 움직인다). 없으면 null
   const react = (kind) => (IMG['v4/poses/' + kind] ? once('re:' + kind, () => toCanvas(IMG['v4/poses/' + kind])) : null);
+  // 꼬리표(11×11) 안에 넣는 아이콘: 불투명한 곳만 잘라, 9px 를 넘으면 정확히 ½(2×2 칸에서 가장 진하고 밝은 점) — 새 7×5 그림(P0-A2)이 오면 원래 크기 그대로
+  function reactIcon(kind) {
+    const im = IMG['v4/poses/' + kind];
+    if (!im) return null;
+    return once('ri:' + kind, () => {
+      const c = toCanvas(im); const g = c.getContext('2d');
+      let d; try { d = g.getImageData(0, 0, c.width, c.height).data; } catch (e) { return c; }
+      let x0 = c.width, y0 = c.height, x1 = -1, y1 = -1;
+      for (let y = 0; y < c.height; y++) for (let x = 0; x < c.width; x++) if (d[(y * c.width + x) * 4 + 3] > 40) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
+      if (x1 < 0) return blank(1, 1);
+      const w = x1 - x0 + 1, h = y1 - y0 + 1;
+      const n = w > 9 || h > 9 ? 2 : 1;
+      const ow = Math.ceil(w / n), oh = Math.ceil(h / n);
+      const o = blank(ow, oh); const og = o.getContext('2d'); const od = og.createImageData(ow, oh);
+      for (let y = 0; y < oh; y++) for (let x = 0; x < ow; x++) {
+        let best = -1, bi = -1;
+        for (let dy = 0; dy < n; dy++) for (let dx = 0; dx < n; dx++) {
+          const sx = x0 + x * n + dx, sy = y0 + y * n + dy;
+          if (sx > x1 || sy > y1) continue;
+          const i = (sy * c.width + sx) * 4, sc = d[i + 3] * 4 + (d[i] + d[i + 1] + d[i + 2]) / 3;
+          if (sc > best) { best = sc; bi = i; }
+        }
+        if (bi >= 0) { const j = (y * ow + x) * 4; od.data[j] = d[bi]; od.data[j + 1] = d[bi + 1]; od.data[j + 2] = d[bi + 2]; od.data[j + 3] = d[bi + 3]; }
+      }
+      og.putImageData(od, 0, 0);
+      return o;
+    });
+  }
+  // v4 소품 그림(img/props/<이름>, P0-A2·A3)이 있으면 캔버스, 없으면 null — 화면은 대체 규칙으로 간다
+  const v4prop = (name) => (IMG['v4/props/' + name] ? once('v4p:' + name, () => toCanvas(IMG['v4/props/' + name])) : null);
+  // 정확히 ½ (손 물건의 대체 규칙: 옛 32px 그림을 16px 로 — 원래 크기로는 그리지 않는다). 2×2 칸에서 가장 진하고 밝은 점을 남긴다(가는 선이 사라지지 않게)
+  function half(im) {
+    if (!im) return null;
+    if (!half.cache) half.cache = new WeakMap();
+    if (half.cache.has(im)) return half.cache.get(im);
+    const c = im.getContext ? im : toCanvas(im);
+    const w = Math.ceil(c.width / 2), h = Math.ceil(c.height / 2), o = blank(w, h);
+    try {
+      const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data, og = o.getContext('2d'), od = og.createImageData(w, h);
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+        let best = -1, bi = -1;
+        for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) { const sx = x * 2 + dx, sy = y * 2 + dy; if (sx >= c.width || sy >= c.height) continue; const i = (sy * c.width + sx) * 4, sc = d[i + 3] * 4 + (d[i] + d[i + 1] + d[i + 2]) / 3; if (sc > best) { best = sc; bi = i; } }
+        if (bi >= 0) { const j = (y * w + x) * 4; od.data[j] = d[bi]; od.data[j + 1] = d[bi + 1]; od.data[j + 2] = d[bi + 2]; od.data[j + 3] = d[bi + 3]; }
+      }
+      og.putImageData(od, 0, 0);
+    } catch (e) { const g = o.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(c, 0, 0, w, h); }
+    half.cache.set(im, o);
+    return o;
+  }
+  // 연 수납의 대체 그림(열린 그림이 없을 때): 닫힌 그림을 30% 어둡게 + 위쪽에 2px 검은 틈 (바닥에 판자를 더 얹지 않는다)
+  function opened(im) {
+    if (!im) return null;
+    if (!opened.cache) opened.cache = new WeakMap();
+    if (opened.cache.has(im)) return opened.cache.get(im);
+    const c = toCanvas(im); const g = c.getContext('2d');
+    g.globalCompositeOperation = 'source-atop'; g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillRect(0, 0, c.width, c.height);
+    g.globalCompositeOperation = 'source-over';
+    const top = opaqueTop(im), w = Math.max(4, Math.round(c.width * 0.6));
+    g.fillStyle = '#050404'; g.fillRect(Math.round((c.width - w) / 2), top + 1, w, 2);
+    opened.cache.set(im, c);
+    return c;
+  }
 
-  // ── 초상 96×96. 중상 이상이면 다친 얼굴, 귀를 잃었으면 귀 패치(12×12)를 덧칠 ──
-  // 귀 자리(패치 왼쪽 위, 96 기준): 눈으로 맞춘 값. 그림이 바뀌면 이 표만 고친다
+  // ── 초상: v4 portraits80/<id>(원본에서 80px 로 다시 뽑은 것, P0-A4)이 있으면 그것을 원래 크기로(대사창 얼굴 칸 = 80), 없으면 v3 96 ──
+  // 중상 이상이면 다친 얼굴, 귀를 잃었으면 귀 패치를 덧칠. 귀 자리(패치 왼쪽 위): 96 기준 표, 80 기준은 ×5/6 반올림
   const EAR_AT = { player: [14, 36], gicheol: [13, 37], soonrye: [12, 38], seoha: [16, 38], eunji: [16, 38], dongha: [15, 36], mari: [15, 38], eunchae: [16, 38], dohyeon: [13, 37] };
+  const EAR_AT80 = Object.fromEntries(Object.entries(EAR_AT).map(([k, [x, y]]) => [k, [Math.round(x * 5 / 6), Math.round(y * 5 / 6)]]));
+  function portraitKey(k, hurt) {
+    if (hurt >= 2) {
+      if (IMG['v4/portraits80_hurt/' + k]) return 'v4/portraits80_hurt/' + k;
+      if (IMG['portraits_hurt/' + k]) return 'portraits_hurt/' + k;
+    }
+    return IMG['v4/portraits80/' + k] ? 'v4/portraits80/' + k : 'portraits/' + k;
+  }
   function portraitSrc(id, hurt, ear) {
     const k = spriteId(id);
-    const key = hurt >= 2 && IMG['portraits_hurt/' + k] ? 'portraits_hurt/' + k : 'portraits/' + k;
-    const patch = IMG['v4/portrait_patch/ear_patch'];
+    const key = portraitKey(k, hurt);
+    const is80 = key.startsWith('v4/portraits80');
+    const patch = (is80 && IMG['v4/portrait_patch/ear_patch80']) || IMG['v4/portrait_patch/ear_patch'];
     if (!ear || !patch || !IMG[key]) return src(key);
-    return once('ear:' + key, () => { const c = toCanvas(IMG[key]); const [x, y] = EAR_AT[k] || [14, 37]; c.getContext('2d').drawImage(patch, x, y); try { return c.toDataURL(); } catch (e) { return src(key); } });
+    return once('ear:' + key, () => { const c = toCanvas(IMG[key]); const [x, y] = (is80 ? EAR_AT80[k] || [12, 31] : EAR_AT[k] || [14, 37]); c.getContext('2d').drawImage(patch, x, y); try { return c.toDataURL(); } catch (e) { return src(key); } });
   }
 
   // ── 장면 그림 ──
   // 찾는 순서: v4 cg/<image> → v4 cg/<사건 id> → V4_ALIAS(옛 image 이름 → v4 파일) → EV_V3(사건별 v3) → CG_ALIAS(v3 대체) → v3 cg/<image 에서 cg_ 뗀 것> → ''(그림 층을 안 연다, 자리표시 없음)
   // 데이터의 image 칸이 v4 파일 이름이나 사건 id 로 바뀌면 위 두 단계에서 바로 잡힌다.
   const V4_ALIAS = { scene_cannibal: 'd5_rail', scene_shutter: 'd6_shutter', cg_scissors: 'd7_fingers', scene_pillow: 'd8_pillow', cg_conductor: 'd9_inspection', cg_rot: 'd7_rot' };
-  const CG_ALIAS = { title_dark: '', cg_camp: 'open_camp', cg_stairs: 'open_stairs', cg_speaker: 'open_speaker', cg_gicheol: 'open_gicheol', cg_notebook: 'open_cab', cg_bottles: 'n_thief',
+  const CG_ALIAS = { title_dark: '', cg_stairs: 'open_stairs', cg_speaker: 'open_speaker', cg_gicheol: 'open_gicheol', cg_notebook: 'open_cab', cg_bottles: 'n_thief',
     cg_count: 'story_voice', cg_notebook_back: 'story_ticket', scene_cannibal: 'corpse', cg_flood: 'flood_break', cg_pharmacy: 'a1_pharmacy', cg_gate: 'b1_gate', cg_dohyeon: 'dohyeon_key',
     cg_train: 'story_ticket', cg_ledger: '', cg_speaker_night: 'open_speaker', cg_bonepicker: 'a3_traces', cg_drowned: 'b4_tank', cg_walk: 'open_tunnel', scene_shutter: 'patrol', scene_pillow: 'n_fever',
     cg_scissors: 'n_rot', cg_conductor: 'story_ticket', title: 'title' };
   // 같은 image 이름을 여러 사건이 나눠 쓸 때, 사건마다 더 맞는 v3 대체 (v4 그림이 생기면 위에서 먼저 잡힌다)
-  const EV_V3 = { d0_ledger: 'n_quiet' };
+  // d0_ledger 는 2026-10-24 P0-D1 에서 image 를 비웠다(그림 없이 글로) — 대체 항목도 지웠다
+  const EV_V3 = {};
   function cgKey(id, evId) {
     if (id && IMG['v4/cg/' + id]) return 'v4/cg/' + id;
     if (evId && IMG['v4/cg/' + evId]) return 'v4/cg/' + evId;
@@ -224,7 +346,18 @@
   // 정체 → 꿈·밝혀짐 그림 (정체 단어는 화면에 안 나온다 — 그림 한 장 + 한 줄)
   const IDENT_CG = { driver: 'dream_cab', conductor: 'story_ticket', inspector: 'dream_punch', passenger: 'dream_seat', counted: 'dream_stairs', platform_one: 'open_tunnel', counting_child: 'story_fog' };
   const identSrc = (cand) => { const f = IDENT_CG[cand]; if (!f) return ''; return src(IMG['v4/cg/' + f] ? 'v4/cg/' + f : IMG['cg/' + f] ? 'cg/' + f : ''); };
-  const iconSrc = (name) => src('icons/' + name);
+  // 아이콘 40×40: v4 icons/<이름>(찾은 물건, P0-A3) → v3 icons/<이름>(패널 자원)
+  const iconSrc = (name) => src(IMG['v4/icons/' + name] ? 'v4/icons/' + name : 'icons/' + name);
+  // 선택 창의 작은 장면 그림: 큰 그림(v4 cg/<이름> 또는 v3 cg/<이름>)과 같은 이름의 v4 cg_s/<이름>(256×144, P0-A4). 없으면 '' (큰 그림을 줄여 보인다)
+  let smallMap = null;
+  function cgSmall(full) {
+    if (!full) return '';
+    if (!smallMap) {
+      smallMap = new Map();
+      for (const k of Object.keys(IMG)) { const m = /^(?:v4\/)?cg\/(.+)$/.exec(k); if (m && IMG['v4/cg_s/' + m[1]]) smallMap.set(IMG[k].src, IMG['v4/cg_s/' + m[1]].src); }
+    }
+    return smallMap.get(full) || '';
+  }
 
-  window.ART = { T, PH, ready, has, src, tile, prop, hasProp, trace, hasTrace, person, pose, sleeper, react, spriteId, portraitSrc, cgSrc, cgKey, deathSrc, identSrc, iconSrc, placeholder, hashColor, IMG };
+  window.ART = { T, PH, ready, has, src, tile, hasTile, prop, hasProp, trace, hasTrace, person, headTop, opaqueTop, opaqueBox, pose, sleeper, react, reactIcon, v4prop, half, opened, spriteId, portraitSrc, cgSrc, cgSmall, cgKey, deathSrc, identSrc, iconSrc, placeholder, hashColor, IMG };
 })();

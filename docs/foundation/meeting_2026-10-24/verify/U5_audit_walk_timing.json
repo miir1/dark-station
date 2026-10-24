@@ -1,0 +1,629 @@
+{
+ "env": {
+  "dpr": 1,
+  "iw": 1264,
+  "ih": 625,
+  "app": "matrix(1, 0, 0, 1, 0, 0)",
+  "smooth": true
+ },
+ "up": {
+  "n": 139,
+  "dt_ms_min": 15.2,
+  "dt_ms_max": 18.0,
+  "dt_ms_avg": 16.7,
+  "px_per_frame_hist": {
+   "1.8": 1,
+   "2.1": 3,
+   "2.2": 16,
+   "2.3": 29,
+   "2.4": 26,
+   "2.5": 8
+  },
+  "stall_frames_while_walking": 0,
+  "tiles": 6,
+  "walk_seq": "MMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+  "draw_ms_avg": 2.18,
+  "draw_ms_max": 2.8,
+  "head_top_min": 16,
+  "cam_oy": [
+   -80,
+   -78,
+   -76,
+   -73,
+   -71,
+   -69,
+   -66,
+   -64,
+   -61,
+   -59,
+   -57,
+   -55,
+   -52,
+   -50,
+   -48,
+   -45,
+   -43,
+   -41,
+   -38,
+   -36,
+   -34,
+   -31,
+   -29,
+   -27,
+   -24,
+   -22,
+   -20,
+   -17,
+   -15,
+   -13,
+   -10,
+   -8,
+   -6,
+   -4,
+   -1,
+   0
+  ]
+ },
+ "down": {
+  "n": 138,
+  "dt_ms_min": 15.2,
+  "dt_ms_max": 18.0,
+  "dt_ms_avg": 16.7,
+  "px_per_frame_hist": {
+   "1.9": 1,
+   "2.1": 1,
+   "2.2": 16,
+   "2.3": 35,
+   "2.4": 27,
+   "2.5": 3
+  },
+  "stall_frames_while_walking": 0,
+  "tiles": 6,
+  "walk_seq": "MMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+  "draw_ms_avg": 2.09,
+  "draw_ms_max": 3.2,
+  "head_top_min": 16,
+  "cam_oy": [
+   -80,
+   -78,
+   -76,
+   -73,
+   -71,
+   -69,
+   -67,
+   -64,
+   -62,
+   -59,
+   -57,
+   -55,
+   -53,
+   -50,
+   -48,
+   -46,
+   -43,
+   -41,
+   -39,
+   -36,
+   -34,
+   -32,
+   -29,
+   -27,
+   -25,
+   -22,
+   -20,
+   -18,
+   -15,
+   -13,
+   -11,
+   -8,
+   -6,
+   -4,
+   -2,
+   0
+  ]
+ },
+ "right": {
+  "n": 119,
+  "dt_ms_min": 15.1,
+  "dt_ms_max": 18.3,
+  "dt_ms_avg": 16.7,
+  "px_per_frame_hist": {
+   "1.5": 1,
+   "2.1": 1,
+   "2.2": 17,
+   "2.3": 41,
+   "2.4": 35,
+   "2.5": 2
+  },
+  "stall_frames_while_walking": 0,
+  "tiles": 7,
+  "walk_seq": "MMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRMMMMMMMLLLLLLLMMMMMMMMMMMMMMMMMMMMMM",
+  "draw_ms_avg": 2.23,
+  "draw_ms_max": 4.7,
+  "head_top_min": 128,
+  "cam_oy": [
+   -16
+  ]
+ },
+ "left": {
+  "n": 121,
+  "dt_ms_min": 15.1,
+  "dt_ms_max": 18.1,
+  "dt_ms_avg": 16.7,
+  "px_per_frame_hist": {
+   "1.6": 1,
+   "2.1": 3,
+   "2.2": 21,
+   "2.3": 40,
+   "2.4": 23,
+   "2.5": 9
+  },
+  "stall_frames_while_walking": 0,
+  "tiles": 7,
+  "walk_seq": "MMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMMMMMMMMMMMMMMMMM",
+  "draw_ms_avg": 2.07,
+  "draw_ms_max": 2.6,
+  "head_top_min": 128,
+  "cam_oy": [
+   -16
+  ]
+ },
+ "up_platform": {
+  "n": 79,
+  "dt_ms_min": 15.7,
+  "dt_ms_max": 17.8,
+  "dt_ms_avg": 16.7,
+  "px_per_frame_hist": {
+   "1.4": 1,
+   "2.2": 4,
+   "2.3": 15,
+   "2.4": 7,
+   "2.5": 1
+  },
+  "stall_frames_while_walking": 0,
+  "tiles": 2,
+  "walk_seq": "MMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+  "draw_ms_avg": 2.0,
+  "draw_ms_max": 2.5,
+  "head_top_min": 128,
+  "cam_oy": [
+   -192,
+   -189,
+   -187,
+   -185,
+   -182,
+   -180,
+   -178,
+   -176,
+   -173,
+   -171,
+   -168,
+   -166,
+   -164,
+   -162,
+   -159,
+   -157,
+   -155,
+   -152,
+   -150,
+   -148,
+   -145,
+   -144
+  ]
+ },
+ "timing_nosnap_right": {
+  "n": 216,
+  "dt_ms_min": 15.1,
+  "dt_ms_max": 18.2,
+  "dt_ms_avg": 16.7,
+  "px_per_frame_hist": {
+   "0.9": 1,
+   "2.1": 1,
+   "2.2": 26,
+   "2.3": 43,
+   "2.4": 31,
+   "2.5": 9
+  },
+  "stall_frames_while_walking": 0,
+  "tiles": 8,
+  "walk_seq": "MMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMRRRRRRRMMMMMMMLLLLLLLMMMMMMMRRRRRRRMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+  "draw_ms_avg": 1.96,
+  "draw_ms_max": 2.8,
+  "head_top_min": 128,
+  "cam_oy": [
+   -16
+  ],
+  "first40": [
+   [
+    0,
+    null,
+    0,
+    32
+   ],
+   [
+    16,
+    null,
+    0,
+    32
+   ],
+   [
+    33,
+    null,
+    0,
+    32
+   ],
+   [
+    50,
+    null,
+    0,
+    32
+   ],
+   [
+    67,
+    null,
+    0,
+    32
+   ],
+   [
+    83,
+    null,
+    0,
+    32
+   ],
+   [
+    100,
+    null,
+    0,
+    32
+   ],
+   [
+    117,
+    null,
+    0,
+    32
+   ],
+   [
+    133,
+    0,
+    1,
+    32
+   ],
+   [
+    149,
+    0.072,
+    1,
+    34.3
+   ],
+   [
+    166,
+    0.143,
+    1,
+    36.6
+   ],
+   [
+    183,
+    0.218,
+    1,
+    39.0
+   ],
+   [
+    201,
+    0.296,
+    1,
+    41.5
+   ],
+   [
+    216,
+    0.363,
+    1,
+    43.6
+   ],
+   [
+    233,
+    0.434,
+    1,
+    45.9
+   ],
+   [
+    251,
+    0.513,
+    0,
+    48.4
+   ],
+   [
+    267,
+    0.583,
+    0,
+    50.6
+   ],
+   [
+    283,
+    0.651,
+    0,
+    52.8
+   ],
+   [
+    300,
+    0.725,
+    0,
+    55.2
+   ],
+   [
+    317,
+    0.799,
+    0,
+    57.6
+   ],
+   [
+    333,
+    0.871,
+    0,
+    59.9
+   ],
+   [
+    350,
+    0.944,
+    0,
+    62.2
+   ],
+   [
+    367,
+    0.017,
+    2,
+    64.5
+   ],
+   [
+    383,
+    0.089,
+    2,
+    66.8
+   ],
+   [
+    399,
+    0.159,
+    2,
+    69.1
+   ],
+   [
+    416,
+    0.23,
+    2,
+    71.4
+   ],
+   [
+    433,
+    0.306,
+    2,
+    73.8
+   ],
+   [
+    449,
+    0.376,
+    2,
+    76.0
+   ],
+   [
+    467,
+    0.454,
+    2,
+    78.5
+   ],
+   [
+    484,
+    0.524,
+    0,
+    80.8
+   ],
+   [
+    500,
+    0.593,
+    0,
+    83.0
+   ],
+   [
+    517,
+    0.671,
+    0,
+    85.5
+   ],
+   [
+    533,
+    0.738,
+    0,
+    87.6
+   ],
+   [
+    550,
+    0.813,
+    0,
+    90.0
+   ],
+   [
+    566,
+    0.886,
+    0,
+    92.3
+   ],
+   [
+    583,
+    0.955,
+    0,
+    94.6
+   ],
+   [
+    600,
+    0.03,
+    1,
+    96.9
+   ],
+   [
+    617,
+    0.103,
+    1,
+    99.3
+   ],
+   [
+    632,
+    0.173,
+    1,
+    101.5
+   ],
+   [
+    650,
+    0.25,
+    1,
+    104.0
+   ]
+  ]
+ },
+ "npc_face_up": {
+  "you": [
+   20,
+   7
+  ],
+  "people": [
+   [
+    "soonrye",
+    10,
+    10,
+    "down",
+    ""
+   ],
+   [
+    "seoha",
+    16,
+    10,
+    "down",
+    ""
+   ],
+   [
+    "gicheol",
+    20,
+    10,
+    "up",
+    ""
+   ],
+   [
+    "eunji",
+    21,
+    11,
+    "down",
+    ""
+   ],
+   [
+    "dongha",
+    23,
+    11,
+    "down",
+    ""
+   ],
+   [
+    "mari",
+    22,
+    10,
+    "down",
+    ""
+   ]
+  ]
+ },
+ "npc_face_left": {
+  "you": [
+   18,
+   10
+  ],
+  "people": [
+   [
+    "soonrye",
+    10,
+    10,
+    "down",
+    ""
+   ],
+   [
+    "seoha",
+    16,
+    10,
+    "right",
+    ""
+   ],
+   [
+    "gicheol",
+    20,
+    10,
+    "left",
+    ""
+   ],
+   [
+    "eunji",
+    21,
+    11,
+    "down",
+    ""
+   ],
+   [
+    "dongha",
+    23,
+    11,
+    "down",
+    ""
+   ],
+   [
+    "mari",
+    22,
+    10,
+    "down",
+    ""
+   ]
+  ]
+ },
+ "npc_face_right": {
+  "you": [
+   23,
+   10
+  ],
+  "people": [
+   [
+    "soonrye",
+    10,
+    10,
+    "down",
+    ""
+   ],
+   [
+    "seoha",
+    16,
+    10,
+    "down",
+    ""
+   ],
+   [
+    "gicheol",
+    20,
+    10,
+    "right",
+    ""
+   ],
+   [
+    "eunji",
+    21,
+    11,
+    "right",
+    ""
+   ],
+   [
+    "dongha",
+    23,
+    11,
+    "up",
+    ""
+   ],
+   [
+    "mari",
+    22,
+    10,
+    "right",
+    ""
+   ]
+  ]
+ }
+}

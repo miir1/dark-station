@@ -1,0 +1,53 @@
+{
+ "run0": {
+  "state": {
+   "has": true,
+   "day": 10,
+   "phase": "ended",
+   "ended": "d10_train",
+   "open": "ending",
+   "log": [
+    "[저장에서 시작 D10 day d10_train seed154]",
+    "D10 day d10_train → 탄다"
+   ],
+   "goal": ""
+  },
+  "console": [
+   "log: [ds4 auto] train hold D10 ended ended=d10_train you=boarded food=3 | [저장에서 시작 D10 day d10_train seed154] / D10 day d10_train → 탄다"
+  ]
+ },
+ "run1": {
+  "state": {
+   "has": true,
+   "day": 10,
+   "phase": "ended",
+   "ended": "d10_train",
+   "open": "ending",
+   "log": [
+    "[저장에서 시작 D10 day d10_train seed154]",
+    "D10 day d10_train → 탄다"
+   ],
+   "goal": ""
+  },
+  "console": [
+   "log: [ds4 auto] train hold D10 ended ended=d10_train you=boarded food=3 | [저장에서 시작 D10 day d10_train seed154] / D10 day d10_train → 탄다"
+  ]
+ },
+ "run2": {
+  "state": {
+   "has": true,
+   "day": 10,
+   "phase": "ended",
+   "ended": "d10_train",
+   "open": "ending",
+   "log": [
+    "[저장에서 시작 D10 day d10_train seed154]",
+    "D10 day d10_train → 탄다"
+   ],
+   "goal": ""
+  },
+  "console": [
+   "log: [ds4 auto] train hold D10 ended ended=d10_train you=boarded food=3 | [저장에서 시작 D10 day d10_train seed154] / D10 day d10_train → 탄다"
+  ]
+ }
+}

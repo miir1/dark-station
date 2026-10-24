@@ -1,0 +1,120 @@
+
+=== car_medkit ===
+before: {"medkit": "closed"} {"food": 6, "water": 6, "meds": 1, "parts": 4}
+stand: [19, 2] up | hint: 'Space 열기 — 운전실 구급함' | target: {"x": 19, "y": 1, "kind": "obj", "id": "medkit", "ids": ["medkit"], "label": "열기", "verb": "열기", "name": "운전실 구급함"}
+    {"k": "line", "text": "벽의 구급함이다.", "face": "", "tag": "pro_medkit"}
+    {"k": "line", "text": "잠금쇠가 녹슬었다.", "face": "", "tag": "pro_medkit"}
+    {"k": "event", "options": ["뜯는다"], "pick": 0}
+    {"k": "line", "text": "붕대와 소독약, 진통제 한 줄.", "face": "icon", "tag": "pro_medkit:out"}
+    {"k": "line", "text": "손이 떨려 두 번 떨어뜨렸다.", "face": "icon", "tag": "pro_medkit:out"}
+after : {"medkit": "open"} {"food": 6, "water": 6, "meds": 2, "parts": 4}
+openLog tail: [{"ids": ["medkit"], "event": "pro_medkit", "day": 0, "gained": ["meds"]}]
+
+=== car_bag ===
+before: {"bag": "closed"} {"food": 6, "water": 6, "meds": 2, "parts": 4}
+stand: [10, 3] down | hint: 'Space 열기 — 좌석 밑 가방' | target: {"x": 10, "y": 4, "kind": "obj", "id": "bag", "ids": ["bag"], "label": "열기", "verb": "열기", "name": "좌석 밑 가방"}
+    {"k": "line", "text": "주인 없는 가방 사이에 공구 가방이 있다.", "face": "", "tag": "pro_bag"}
+    {"k": "event", "options": ["연다"], "pick": 0}
+    {"k": "line", "text": "케이블 뭉치가 들어 있었다.", "face": "icon", "tag": "pro_bag:out"}
+    {"k": "line", "text": "사원증 사진이 웃고 있었다.", "face": "icon", "tag": "pro_bag:out"}
+after : {"bag": "open"} {"food": 6, "water": 6, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["medkit"], "event": "pro_medkit", "day": 0, "gained": ["meds"]}, {"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}]
+
+=== car_lever ===
+before: {"lever": "up"} {"food": 6, "water": 6, "meds": 2, "parts": 5}
+stand: [20, 2] up | hint: 'Space 열기 — 비상 레버' | target: {"x": 20, "y": 1, "kind": "obj", "id": "lever", "ids": ["lever"], "label": "열기", "verb": "열기", "name": "비상 레버"}
+    {"k": "line", "text": "비상 레버다.", "face": "", "tag": "pro_lever"}
+    {"k": "line", "text": "문 옆 비상함에 생수 두 병이 보인다.", "face": "", "tag": "pro_lever"}
+    {"k": "event", "options": ["레버를 당긴다", "그냥 둔다"], "pick": 0}
+    {"k": "line", "text": "문이 쉭 하고 열렸다.", "face": "icon", "tag": "pro_lever:out"}
+    {"k": "line", "text": "찬 공기가 밀려들었다.", "face": "icon", "tag": "pro_lever:out"}
+    {"k": "line", "text": "생수 두 병을 챙겼다.", "face": "icon", "tag": "pro_lever:out"}
+after : {"lever": "pulled"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["medkit"], "event": "pro_medkit", "day": 0, "gained": ["meds"]}, {"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}]
+
+=== car_notebook_dash ===
+before: {"notebook_dash": "there"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+stand: [18, 3] down | hint: 'Space 조사 — 계기판 위 수첩' | target: {"x": 18, "y": 4, "kind": "obj", "id": "notebook_dash", "ids": ["notebook_dash"], "label": "조사", "verb": "조사", "name": "계기판 위 수첩"}
+    {"k": "line", "text": "「승객 명부」.", "face": "", "tag": "pro_notebook"}
+    {"k": "line", "text": "첫 줄에 당신 이름이 적혀 있다.", "face": "", "tag": "pro_notebook"}
+    {"k": "line", "text": "옆에 작게, 묵현.", "face": "", "tag": "pro_notebook"}
+    {"k": "line", "text": "그 아래는 전부 빈칸이다.", "face": "", "tag": "pro_notebook"}
+    {"k": "line", "text": "당신은 이 열차에 탄 기억이 없다.", "face": "", "tag": "pro_notebook"}
+    {"k": "event", "options": ["주머니에 넣는다"], "pick": 0}
+    {"k": "line", "text": "수첩을 주머니에 넣었다.", "face": "", "tag": "pro_notebook:out"}
+    {"k": "line", "text": "연필도 있었다.", "face": "", "tag": "pro_notebook:out"}
+after : {"notebook_dash": "taken"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["medkit"], "event": "pro_medkit", "day": 0, "gained": ["meds"]}, {"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}]
+
+=== car_radio_cab ===
+before: {"radio_cab": "idle"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+stand: [20, 3] down | hint: 'Space 조사 — 운전실 무전기' | target: {"x": 20, "y": 4, "kind": "obj", "id": "radio_cab", "ids": ["radio_cab"], "label": "조사", "verb": "조사", "name": "운전실 무전기"}
+    {"k": "line", "text": "무전기가 혼자 지직거린다.", "face": "", "tag": "pro_radio"}
+    {"k": "line", "text": "문장 사이에 숨소리가 섞여 있다.", "face": "", "tag": "pro_radio"}
+    {"k": "event", "options": ["든다", "둔다"], "pick": 0}
+    {"k": "line", "text": "\"…위로 나오지 마십시오… 열흘 뒤 정오…\"", "face": "", "tag": "pro_radio:out"}
+    {"k": "line", "text": "끊겼다.", "face": "", "tag": "pro_radio:out"}
+    {"k": "line", "text": "사람이었다.", "face": "", "tag": "pro_radio:out"}
+after : {"radio_cab": "used"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["medkit"], "event": "pro_medkit", "day": 0, "gained": ["meds"]}, {"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}]
+
+=== car_shoe_cab ===
+before: {"shoe_cab": "there"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+stand: [17, 2] right | hint: 'Space 조사 — 구두 한 짝' | target: {"x": 18, "y": 2, "kind": "obj", "id": "shoe_cab", "ids": ["shoe_cab"], "label": "조사", "verb": "조사", "name": "구두 한 짝"}
+    {"k": "line", "text": "구두 한 짝이다.", "face": "", "tag": ""}
+after : {"shoe_cab": "there"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["medkit"], "event": "pro_medkit", "day": 0, "gained": ["meds"]}, {"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}]
+
+map now: tunnel [1, 2]
+
+=== tunnel_shelter_box_inspect ===
+before: {"shelter_box": "closed"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+stand: [14, 1] up | hint: 'Space 열기 — 대피 공간 비상 상자' | target: {"x": 14, "y": 0, "kind": "obj", "id": "shelter_box", "ids": ["shelter_box"], "label": "열기", "verb": "열기", "name": "대피 공간 비상 상자"}
+    {"k": "line", "text": "벽감에 비상 상자가 있다.", "face": "", "tag": ""}
+    {"k": "line", "text": "옆에 안전화 한 켤레가 가지런하다.", "face": "", "tag": ""}
+after : {"shelter_box": "closed"} {"food": 6, "water": 8, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["medkit"], "event": "pro_medkit", "day": 0, "gained": ["meds"]}, {"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}]
+
+=== tunnel_gicheol_choice1 ===
+    {"k": "line", "text": "헤드램프 빛이 당신 신발에 머물다가 비켜난다.", "face": "", "tag": "pro_gicheol"}
+    {"k": "line", "text": "\"사람이면 됐소. 이 잔해만 넘으면 역이오.\"", "face": "", "tag": "pro_gicheol"}
+    {"k": "line", "text": "\"발 디딜 곳만 보시오. 위는 보지 말고.\"", "face": "", "tag": "pro_gicheol"}
+    {"k": "event", "options": ["그가 비춘 곳을 밟는다", "벽감 상자부터 연다", "돌을 같이 든다"], "pick": 1}
+    {"k": "line", "text": "생수와 건빵이 있었다.", "face": "icon", "tag": "pro_gicheol:out"}
+    {"k": "line", "text": "옆의 안전화는 그대로 두었다.", "face": "icon", "tag": "pro_gicheol:out"}
+    {"k": "line", "text": "남자가 고개를 돌렸다.", "face": "icon", "tag": "pro_gicheol:out"}
+after : {"shelter_box": "open", "rubble": "crossed"} {"food": 9, "water": 11, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}, {"ids": ["shelter_box"], "event": "pro_gicheol", "day": 0, "gained": ["food", "water"]}]
+
+map now: station [1, 11]
+walkTo crate_food at D0: {'ok': False, 'auto': False}
+pos after walk attempt: [1, 11] office_door: locked
+
+=== station_crate_food_open_attempt ===
+before: {"crate_food": "closed"} {"food": 9, "water": 11, "meds": 2, "parts": 5}
+stand: [8, 3] up | hint: 'Space 열기 — 창고 상자' | target: {"x": 8, "y": 2, "kind": "obj", "id": "crate_food", "ids": ["crate_food"], "label": "열기", "verb": "열기", "name": "창고 상자"}
+    {"k": "line", "text": "창고 상자다.", "face": "", "tag": ""}
+    {"k": "line", "text": "뚜껑이 닫혀 있다.", "face": "", "tag": ""}
+after : {"crate_food": "closed"} {"food": 9, "water": 11, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}, {"ids": ["shelter_box"], "event": "pro_gicheol", "day": 0, "gained": ["food", "water"]}]
+
+=== station_parts_crate ===
+before: {"parts_crate": "storage"} {"food": 9, "water": 11, "meds": 2, "parts": 5}
+stand: [9, 2] up | hint: 'Space 조사 — 부품 상자' | target: {"x": 9, "y": 1, "kind": "obj", "id": "parts_crate", "ids": ["parts_crate"], "label": "조사", "verb": "조사", "name": "부품 상자"}
+    {"k": "line", "text": "부품 상자다.", "face": "", "tag": ""}
+    {"k": "line", "text": "통로를 잇는 데 든다.", "face": "", "tag": ""}
+after : {"parts_crate": "storage"} {"food": 9, "water": 11, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}, {"ids": ["shelter_box"], "event": "pro_gicheol", "day": 0, "gained": ["food", "water"]}]
+
+=== station_bundle_you ===
+before: {"bottle_you": "full", "bandage_you": "clean"} {"food": 9, "water": 11, "meds": 2, "parts": 5}
+stand: [11, 12] up | hint: 'Space 조사 — 당신 물통 · 당신 붕대' | target: {"x": 11, "y": 11, "kind": "obj", "id": "bottle_you", "ids": ["bottle_you", "bandage_you"], "label": "조사", "verb": "조사", "name": "당신 물통 · 당신 붕대"}
+    {"k": "line", "text": "물통이다.", "face": "", "tag": ""}
+    {"k": "line", "text": "반쯤 차 있다.", "face": "", "tag": ""}
+    {"k": "line", "text": "흰 붕대다.", "face": "", "tag": ""}
+    {"k": "line", "text": "오늘 감았다.", "face": "", "tag": ""}
+after : {"bottle_you": "full", "bandage_you": "clean"} {"food": 9, "water": 11, "meds": 2, "parts": 5}
+openLog tail: [{"ids": ["bag"], "event": "pro_bag", "day": 0, "gained": ["parts"]}, {"ids": ["lever"], "event": "pro_lever", "day": 0, "gained": ["water"]}, {"ids": ["shelter_box"], "event": "pro_gicheol", "day": 0, "gained": ["food", "water"]}]
+cellLog tail: [{"cell": [8, 2], "id": "crate_food", "day": 0, "phase": "day"}, {"cell": [9, 1], "id": "parts_crate", "day": 0, "phase": "day"}, {"cell": [11, 11], "id": "bottle_you", "day": 0, "phase": "day"}, {"cell": [11, 11], "id": "bandage_you", "day": 0, "phase": "day"}]
+
+console errors: []

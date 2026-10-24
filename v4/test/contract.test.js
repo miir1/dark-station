@@ -142,3 +142,28 @@ test('추가 약속: injure 음수(회복) · addressYou.default · 빈 글 비�
   assert.ok(E.dispatch(s, { type: 'choose', i: 0 }, db).ok);
   assert.strictEqual(s.people.you.n.injury, 1);
 });
+
+// ── 10-24 P0-E1: 인물표 metFlag·startAway 칸 (데이터 담당이 값을 넣는다) ──
+test('people.metFlag(id 꼴 또는 빈칸)·startAway(0/1) 칸: 받는 값과 오류', () => {
+  const meetFx = (t) => t.events.push({ id: 'meet_seoha', kind: 'trial', when: 'day==0 & phase==day', grade: 'normal', text: '문이 열린다.',
+    choices: [{ label: '본다', out: { text: '', effects: { flag: { met_seoha: true } } } }] });
+  const t = rawTables(); meetFx(t);
+  const seoha = t.people.find((p) => p.id === 'seoha');
+  seoha.metFlag = 'met_seoha'; seoha.startAway = 1;
+  t.people.find((p) => p.id === 'soonrye').metFlag = '';          // 빈칸 = 처음부터 아는 사람
+  t.people.find((p) => p.id === 'mari').metFlag = '-';
+  t.people.find((p) => p.id === 'gicheol').startAway = 0;
+  assert.deepStrictEqual(T.validate(t), []);
+  const bad = (edit) => { const x = rawTables(); meetFx(x); edit(x); return T.validate(x).map((e) => e.text); };
+  const P = (x, id) => x.people.find((p) => p.id === id);
+  assert.ok(bad((x) => { P(x, 'seoha').metFlag = 'Met-Seoha'; }).some((e) => e.includes('people[2] seoha: metFlag: id는 소문자')));
+  assert.ok(bad((x) => { P(x, 'seoha').startAway = 2; }).some((e) => e.includes('seoha: startAway: 0/1 이어야 함')));
+  assert.ok(bad((x) => { P(x, 'seoha').startAway = 1; }).some((e) => e.includes('seoha: startAway: 1 이면 metFlag 가 있어야 한다')));
+  assert.ok(bad((x) => { const e = P(x, 'eunchae'); e.startAway = 1; e.metFlag = 'met_seoha'; }).some((e) => e.includes('eunchae: startAway: outside(바깥 사람)와 같이 쓸 수 없다')));
+  assert.ok(bad((x) => { P(x, 'seoha').metFlag = 'met_seoah'; }).some((e) => e.includes('seoha: metFlag: "met_seoah" 깃발을 세우는 사건 효과(effects.flag)가 없다')), '오타 = 영영 못 만남');
+  assert.ok(bad((x) => { P(x, 'you').metFlag = 'met_seoha'; }).some((e) => e.includes('you: metFlag: 당신(you)에게는 쓸 수 없다')));
+  // 배열 꼴 effects 로 세우는 깃발도 찾는다
+  const t2 = rawTables(); P(t2, 'seoha').metFlag = 'met_seoha';
+  t2.events.push({ id: 'meet_b', kind: 'trial', when: 'day==0', grade: 'normal', text: '문.', choices: [{ label: '본다', out: { text: '', effects: [{ verb: 'flag', id: 'met_seoha', set: true }] } }] });
+  assert.deepStrictEqual(T.validate(t2), []);
+});

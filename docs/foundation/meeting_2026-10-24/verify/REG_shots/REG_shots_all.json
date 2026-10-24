@@ -1,0 +1,236 @@
+[
+ {
+  "shot": "01_car",
+  "key": "car",
+  "seed": null,
+  "ok": true,
+  "secs": 1.5,
+  "console_errors": [],
+  "auto": [],
+  "console_all_count": 0,
+  "console_other": []
+ },
+ {
+  "shot": "02_morning3",
+  "key": "morning3",
+  "seed": null,
+  "ok": true,
+  "secs": 5.0,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] morning3 stop D3 trace you=home food=0 | D1 ration trial_d1_bowls → 똑같이 조금씩 / D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 둔다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2]"
+  ],
+  "console_all_count": 6,
+  "console_other": [
+   "[27652:6996:1024/093703.899:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[27652:6996:1024/093704.160:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[27652:6996:1024/093704.161:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[27652:6996:1024/093704.928:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[27652:6996:1024/093704.928:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "03_night3",
+  "key": "night3",
+  "seed": null,
+  "ok": true,
+  "secs": 6.4,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] night3 hold D3 night you=home food=0 | D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 둔다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다"
+  ],
+  "console_all_count": 7,
+  "console_other": [
+   "[23316:31172:1024/093709.029:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[23316:31172:1024/093709.293:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[23316:31172:1024/093709.293:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[23316:31172:1024/093709.923:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[23316:31172:1024/093709.924:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[23316:31172:1024/093710.190:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "04_night5",
+  "key": "night5",
+  "seed": null,
+  "ok": true,
+  "secs": 11.6,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] night5 hold D5 night you=home food=2 | D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다 / D3 night trial_d3_count → 숨을 죽인다 / D4 trace d3_guess → 불빛 때문인 것 같다 / [D4 food0 water4 hunger4] / D4 day trial_d4_gicheol → 믿는다 / D4 day trip_a1_stall → 좌판을 눈여겨본다 / D4 day trip_a2_bodybag → 가져간다 / D4 evening d4_dohyeon_key → 기다려 달라 한다 / D4 evening d4_shoes_home → 본다 / [꿈 D4] / [D5 food6 water4 hunger6] / D5 day trip_b1_valve → 둔다 / D5 day trip_b2_lockers → 비틀어 연다"
+  ],
+  "console_all_count": 7,
+  "console_other": [
+   "[24588:12732:1024/093715.405:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[24588:12732:1024/093715.642:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[24588:12732:1024/093715.643:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[24588:12732:1024/093716.411:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[24588:12732:1024/093716.411:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[24588:12732:1024/093716.739:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "05_night8",
+  "key": "night8",
+  "seed": null,
+  "ok": true,
+  "secs": 17.7,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] night8 hold D8 night you=home food=1 | D6 evening d6_dohyeon_back → 필요 없다 한다 / D6 evening d6_vent_voice → 듣는다 / D6 night d6_shutter → 아무것도 하지 않는다 / [꿈 D6] / D7 trace hymn_fire_kept → 불을 쬔다 / D7 trace hymn_paired → 모른 척한다 / [D7 food0 water1 hunger4] / D7 day d7_fingers → 손을 잡아 준다 / D7 day passage_alone → 두고 걷기로 한다 / D7 day trip_g_crates → 뒤진다 / D7 day trip_b2_lockers → 비틀어 연다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 내가 갖는다 / [D8 food3 water2 hunger6] / D8 day trip_a1_vending → 줍는다 / D8 day trip_a2_bones → 물러난다",
+   "[ds4 missing] d5_lullaby@d5_lullaby d7_broadcast@d7_broadcast trip_a2_bones@trip_a2_bones"
+  ],
+  "console_all_count": 11,
+  "console_other": [
+   "[19708:30740:1024/093727.240:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[19708:30740:1024/093727.525:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[19708:30740:1024/093727.525:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[19708:30740:1024/093728.157:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[19708:30740:1024/093728.157:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[19708:30740:1024/093728.420:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[19708:30740:1024/093729.421:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[19708:30740:1024/093729.676:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[19708:30740:1024/093729.940:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "06_ending",
+  "key": "ending",
+  "seed": null,
+  "ok": true,
+  "secs": 29.0,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] ending hold D10 ended ended=d10_walk_other you=walked food=1 | D7 day trip_g_crates → 뒤진다 / D7 day trip_b2_lockers → 비틀어 연다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food3 water2 hunger6] / D8 day trip_a1_stall → 좌판을 눈여겨본다 / D8 day trip_g_rats → 맞선다 / [꿈 D8] / D9 trace d9_stairs → 묻는다 / D9 trace d9_hoard → 창고에 돌려놓는다 / [D9 food1 water0 hunger4] / D9 day trip_b1_workers → 신발을 챙긴다 / D9 day trip_b2_drowned → 물러난다 / D9 evening d9_inspection → 고개를 돌린다 / [D10 food1 water0 hunger6] / D10 day d10_walk_other → 걷는다",
+   "[ds4 missing] d5_lullaby@d5_lullaby d7_broadcast@d7_broadcast d9_stairs@d9_stairs"
+  ],
+  "console_all_count": 10,
+  "console_other": [
+   "[31356:26452:1024/093744.916:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[31356:26452:1024/093745.226:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[31356:26452:1024/093745.226:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[31356:26452:1024/093746.092:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[31356:26452:1024/093746.092:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[31356:26452:1024/093746.444:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[31356:26452:1024/093747.541:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[31356:26452:1024/093747.940:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "07_death",
+  "key": "death",
+  "seed": null,
+  "ok": true,
+  "secs": 11.7,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] death hold D3 ended ended=you_gone you=ascended food=0 | [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls → 남의 그릇을 비운다 / D1 day d1_shutter_knock → 연다 / D1 evening d1_names → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_rat_blanket → 본다 / [D2 food4 water8 hunger7] / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 혼자 연다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food4 water4 hunger9] / D3 night trial_d3_count → 함께 센다 / D3 night d3_called_you → 대답한다"
+  ],
+  "console_all_count": 7,
+  "console_other": [
+   "[25808:30268:1024/093813.754:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[25808:30268:1024/093814.022:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[25808:30268:1024/093814.022:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[25808:30268:1024/093814.252:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[25808:30268:1024/093814.253:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[25808:30268:1024/093814.489:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "08_evening5",
+  "key": "evening5",
+  "seed": null,
+  "ok": true,
+  "secs": 16.9,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] evening5 hold D5 evening you=home food=2 | D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다 / D3 night trial_d3_count → 숨을 죽인다 / D4 trace d3_guess → 불빛 때문인 것 같다 / [D4 food0 water4 hunger4] / D4 day trial_d4_gicheol → 믿는다 / D4 day trip_a1_stall → 좌판을 눈여겨본다 / D4 day trip_a2_bodybag → 가져간다 / D4 evening d4_dohyeon_key → 기다려 달라 한다 / D4 evening d4_shoes_home → 본다 / [꿈 D4] / [D5 food6 water4 hunger6] / D5 day trip_b1_valve → 둔다 / D5 day trip_b2_lockers → 비틀어 연다"
+  ],
+  "console_all_count": 7,
+  "console_other": [
+   "[14216:29308:1024/093825.397:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[14216:29308:1024/093825.725:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[14216:29308:1024/093825.725:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[14216:29308:1024/093826.507:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[14216:29308:1024/093826.507:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[14216:29308:1024/093826.770:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "09_reveal",
+  "key": "reveal",
+  "seed": null,
+  "ok": true,
+  "secs": 53.8,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] reveal hold D10 ended ended=d10_walk_other you=walked food=1 | D7 day trip_g_crates → 뒤진다 / D7 day trip_b2_lockers → 비틀어 연다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food3 water2 hunger6] / D8 day trip_a1_stall → 좌판을 눈여겨본다 / D8 day trip_g_rats → 맞선다 / [꿈 D8] / D9 trace d9_stairs → 묻는다 / D9 trace d9_hoard → 창고에 돌려놓는다 / [D9 food1 water0 hunger4] / D9 day trip_b1_workers → 신발을 챙긴다 / D9 day trip_b2_drowned → 물러난다 / D9 evening d9_inspection → 고개를 돌린다 / [D10 food1 water0 hunger6] / D10 day d10_walk_other → 걷는다",
+   "[ds4 missing] d5_lullaby@d5_lullaby d7_broadcast@d7_broadcast d9_stairs@d9_stairs"
+  ],
+  "console_all_count": 10,
+  "console_other": [
+   "[32276:26644:1024/093842.421:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32276:26644:1024/093842.755:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32276:26644:1024/093842.756:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32276:26644:1024/093843.656:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32276:26644:1024/093843.656:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32276:26644:1024/093844.023:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32276:26644:1024/093845.223:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32276:26644:1024/093845.605:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "10_called3",
+  "key": "called3",
+  "seed": null,
+  "ok": true,
+  "secs": 44.6,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] called3 hold D3 night you=home food=0 | D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 둔다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다 / D3 night trial_d3_count → 함께 센다"
+  ],
+  "console_all_count": 7,
+  "console_other": [
+   "[22212:34460:1024/093936.579:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[22212:34460:1024/093936.954:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[22212:34460:1024/093936.955:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[22212:34460:1024/093937.871:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[22212:34460:1024/093937.871:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[22212:34460:1024/093938.235:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ },
+ {
+  "shot": "11_train",
+  "key": "train",
+  "seed": null,
+  "ok": true,
+  "secs": 69.2,
+  "console_errors": [
+   "[35640:35668:1024/094021.137:INFO:CONSOLE:1286] \"TypeError: Cannot read properties of undefined (reading 'signs')\", source: http://127.0.0.1:18765/v4/game.js?v=11 (1286)"
+  ],
+  "auto": [],
+  "console_all_count": 1,
+  "console_other": [
+   "[35640:35668:1024/094021.137:INFO:CONSOLE:1286] \"TypeError: Cannot read properties of undefined (reading 'signs')\", source: http://127.0.0.1:18765/v4/game.js?v=11 (1286)"
+  ]
+ },
+ {
+  "shot": "12_beds",
+  "key": "beds",
+  "seed": null,
+  "ok": true,
+  "secs": 24.4,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] beds stop D2 night you=home food=0 | [D0 food9 water11 hunger3] / D0 evening d0_ledger → 말없이 적는다 / [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls → 똑같이 조금씩 / D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 둔다 / D2 night d2_night_count → 숨을 참는다"
+  ],
+  "console_all_count": 6,
+  "console_other": [
+   "[32996:28524:1024/094131.456:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32996:28524:1024/094131.801:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32996:28524:1024/094131.801:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32996:28524:1024/094132.666:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)",
+   "[32996:28524:1024/094132.666:INFO:CONSOLE:38] \"Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently\", source: http://127.0.0.1:18765/v4/art.js?v=7 (38)"
+  ]
+ }
+]

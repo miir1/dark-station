@@ -1,0 +1,84 @@
+{
+ "_about": "크기 기준표 (2026-10-24 회의 P0-A2). 그림 도구(walk_recut·tiny_props·containers·check_scale)와 검사가 이 파일 하나만 읽는다. 사람 46px = 170cm, 1px ≈ 3.7cm. 같은 표를 docs/foundation/21_assets_plan.md §2-1 에 붙였다.",
+ "base": { "person_px": 46, "person_cm": 170, "cm_per_px": 3.7, "tile": 32 },
+
+ "people": {
+  "_about": "섬(서기) 칸 키, 외곽선 포함. 칸 32×48, 상한 46. 걷기 그림 v4/img/walk/<id>.png (32×48 칸 3열×4행).",
+  "cell": [32, 48],
+  "max": 46,
+  "height": { "player": 46, "dongha": 46, "gicheol": 45, "dohyeon": 45, "eunji": 44, "eunchae": 44, "mari": 42, "seoha": 41, "soonrye": 39 }
+ },
+
+ "hand": {
+  "_about": "손 물건: 긴 변 ≤12px (실제의 1.5배까지 과장 허용). 10px 이하는 Codex 로 만들지 않고 tools/tiny_props.py 로 점 단위 손찍기. [가로, 세로].",
+  "max_long": 12,
+  "items": {
+   "bottle": [4, 10], "bowl": [8, 4], "bandage": [6, 4], "notebook": [6, 5], "scissors": [8, 6],
+   "shoe_one": [8, 5], "shoe_pair": [10, 5], "can": [5, 6], "knife": [9, 3],
+   "radio_hand": [6, 9], "phone": [5, 8], "key": [6, 3]
+  }
+ },
+
+ "carry": {
+  "_about": "품 물건: 긴 변 12~18px. 긴 물건은 예외(파이프).",
+  "min": 12, "max": 18,
+  "items": { "bag": [14, 10], "backpack": [12, 15], "pillow": [14, 8] },
+  "long_exceptions": { "pipe_stand": [3, 24], "chalk_line": [28, 4] }
+ },
+
+ "furniture": {
+  "_about": "가구: 실제 크기. 수납 가구는 <이름>(닫힘)·<이름>_open(열림)·필요하면 <이름>_empty(빔) 짝. 짝은 캔버스 크기·바닥 기준점이 같다(check_scale.py).",
+  "items": {
+   "crate": [24, 20], "drum": [16, 24], "barrel": [16, 24], "toolbox": [20, 14], "locker": [32, 48], "drawer": [32, 28], "dash": [32, 24],
+   "medkit": [16, 16], "lever_box": [16, 20], "shelter_box": [24, 20], "shelf": [32, 40]
+  }
+ },
+
+ "place": {
+  "_about": "장소 물건: 2~3칸 (P1-10, Codex ③).",
+  "items": { "booth": [32, 64], "pharmacy_shutter": [96, 48], "tank": [64, 64] },
+  "files": { "phonebooth": [32, 64], "pharmacy_shutter": [96, 48], "cistern": [64, 64] },
+  "_files": "2026-10-24 검증 뒤 tools/place_props.py 로 손찍기(Codex 0). 10/26 Codex ③ 그림이 더 나으면 같은 이름으로 덮어쓴다."
+ },
+
+ "poses": {
+  "_about": "사람마다 앉기·잠 (P1-2, tools/people_poses.py, Codex 0). 앉기 = v4/img/sit/<id>.png 32×128 (32×32 칸 4줄: 아래·왼·오른·위 = 걷기 그림 줄 순서), 무릎을 세우고 앉음, 앉은 키 ≈ 선 키의 52~55%, 칸 바닥 31줄 = 바닥. 잠 = v4/img/sleep/<id>.png 32×32, 잠자리(bed) 위에 겹침, 머리 0~11줄·담요 10~29줄.",
+  "sit_cell": [32, 32], "sit_rows": ["down", "left", "right", "up"], "sleep": [32, 32]
+ },
+
+ "icon": { "_about": "찾은 물건 아이콘 = 패널 아이콘과 같은 40×40. 대사창 얼굴 칸에는 정확히 2배(80).", "size": 40 },
+
+ "pairs": {
+  "_about": "닫힘·열림(·빔) 짝. 앞이 닫힘 그림. check_scale.py 가 캔버스 크기·바닥 줄이 같고 몸통 겹침이 가장 큰 가로 어긋남이 0 인지 본다.",
+  "props": [
+   ["barrel", "barrel_open"],
+   ["medkit", "medkit_open"],
+   ["lever_box", "lever_box_open"],
+   ["toolbox", "toolbox_open"],
+   ["crate", "crate_open", "crate_empty"],
+   ["locker", "locker_open"],
+   ["drawer", "drawer_open"],
+   ["shelter_box", "shelter_box_open"],
+   ["bag", "bag_open"],
+   ["shelf", "shelf_empty"]
+  ],
+  "states": [
+   ["bottle", "bottle_empty", "bottle_wet"],
+   ["bowl", "bowl_empty", "bowl_meat"],
+   ["bandage", "bandage_wet", "bandage_rot", "bandage_blood"],
+   ["notebook", "notebook_moved"],
+   ["scissors", "scissors_blood"],
+   ["pipe_stand", "pipe_stand_blood"],
+   ["phonebooth", "phonebooth_taken"],
+   ["pharmacy_shutter", "pharmacy_shutter_half", "pharmacy_shutter_open", "pharmacy_shutter_dark"]
+  ],
+  "state_min_diff": 8
+ },
+
+ "anchors": {
+  "_about": "화면이 그림 위에 코드로 덧그릴 자리 (그림 왼쪽 위 0,0 기준 픽셀).",
+  "drum_open": { "mouth_top_y": 13, "mouth_x0": 10, "mouth_x1": 22, "center_x": 16, "_note": "v3 drum 과 같은 32×32 캔버스. 불은 아가리(13~15줄) 위에 코드 불꽃 하나만 그린다." }
+ },
+
+ "handle": { "_about": "열 수 있는 것에는 같은 놋쇠색 손잡이 2px.", "rgb": [196, 152, 72] }
+}

@@ -1,0 +1,15 @@
+[
+ {
+  "shot": "11_train",
+  "key": "train",
+  "seed": null,
+  "ok": true,
+  "secs": 18.4,
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] train hold D10 ended ended=d10_train you=boarded food=3 | [저장에서 시작 D10 day d10_train seed154] / D10 day d10_train → 탄다"
+  ],
+  "console_all_count": 1,
+  "console_other": []
+ }
+]

@@ -36,7 +36,9 @@
       "counting_child": "",
       "default": "자네"
     },
-    "outside": 0
+    "outside": 0,
+    "metFlag": "met_soonrye",
+    "startAway": 0
   },
   {
     "id": "seoha",
@@ -75,7 +77,9 @@
       "counting_child": "",
       "default": "저기요"
     },
-    "outside": 0
+    "outside": 0,
+    "metFlag": "met_seoha",
+    "startAway": 0
   },
   {
     "id": "gicheol",
@@ -114,7 +118,9 @@
       "counting_child": "",
       "default": "당신"
     },
-    "outside": 0
+    "outside": 0,
+    "metFlag": "met_gicheol",
+    "startAway": 1
   },
   {
     "id": "eunji",
@@ -153,7 +159,9 @@
       "counting_child": "",
       "default": "너"
     },
-    "outside": 0
+    "outside": 0,
+    "metFlag": "met_eunji",
+    "startAway": 1
   },
   {
     "id": "dongha",
@@ -192,7 +200,9 @@
       "counting_child": "",
       "default": "형"
     },
-    "outside": 0
+    "outside": 0,
+    "metFlag": "met_eunji",
+    "startAway": 1
   },
   {
     "id": "mari",
@@ -231,7 +241,9 @@
       "counting_child": "",
       "default": "씨"
     },
-    "outside": 0
+    "outside": 0,
+    "metFlag": "met_mari",
+    "startAway": 0
   },
   {
     "id": "eunchae",
@@ -270,7 +282,9 @@
       "counting_child": "",
       "default": "역 분"
     },
-    "outside": 1
+    "outside": 1,
+    "metFlag": "",
+    "startAway": 0
   },
   {
     "id": "dohyeon",
@@ -309,7 +323,9 @@
       "counting_child": "",
       "default": "너"
     },
-    "outside": 1
+    "outside": 1,
+    "metFlag": "",
+    "startAway": 0
   },
   {
     "id": "you",
@@ -333,6 +349,8 @@
     "hymn": null,
     "callsGod": "",
     "addressYou": {},
-    "outside": 0
+    "outside": 0,
+    "metFlag": "",
+    "startAway": 0
   }
 ]

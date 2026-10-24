@@ -1,0 +1,1 @@
+done C:/dev/dark_station/docs/foundation/meeting_2026-10-24/spec_check/base_a.json balanced:600 selfish:600 devoted:600 silent:600 caller:600

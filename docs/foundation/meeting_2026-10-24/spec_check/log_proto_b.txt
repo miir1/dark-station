@@ -1,0 +1,1 @@
+done C:/dev/dark_station/docs/foundation/meeting_2026-10-24/spec_check/proto_b.json lazy:600 diligent:600 risky:600 steward:600

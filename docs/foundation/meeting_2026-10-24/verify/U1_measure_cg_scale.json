@@ -1,0 +1,134 @@
+{
+ "choice_k3": {
+  "pending": "d8_patrol_return",
+  "kind": "event",
+  "big": {
+   "src": "cg/d8_patrol_return.png",
+   "naturalWidth": 384,
+   "shown": false,
+   "clientWidth": 0,
+   "k": 0,
+   "x": 0,
+   "y": 0,
+   "cw": 0,
+   "ch": 0
+  },
+  "small": {
+   "src": "cg_s/d8_patrol_return.png",
+   "naturalWidth": 256,
+   "shown": true,
+   "clientWidth": 256,
+   "k": 3,
+   "x": 336,
+   "y": 81,
+   "cw": 768,
+   "ch": 432
+  },
+  "cgHidden": false,
+  "pixel_exact": {
+   "ok": true,
+   "match_frac": 1.0,
+   "max_diff": 0
+  },
+  "errors": []
+ },
+ "line_k3": {
+  "pending": "d5_rail_body",
+  "kind": "line",
+  "big": {
+   "src": "cg/d5_rail.png",
+   "naturalWidth": 384,
+   "shown": true,
+   "clientWidth": 384,
+   "k": 3,
+   "x": 144,
+   "y": 75,
+   "cw": 1152,
+   "ch": 648
+  },
+  "small": {
+   "src": "cg_s/d5_rail.png",
+   "naturalWidth": 256,
+   "shown": false,
+   "clientWidth": 0,
+   "k": 0,
+   "x": 0,
+   "y": 0,
+   "cw": 0,
+   "ch": 0
+  },
+  "cgHidden": false,
+  "pixel_exact": {
+   "ok": false,
+   "match_frac": 0.9914,
+   "max_diff": 172
+  },
+  "errors": []
+ },
+ "choice_k2": {
+  "pending": "d8_patrol_return",
+  "kind": "event",
+  "big": {
+   "src": "cg/d8_patrol_return.png",
+   "naturalWidth": 384,
+   "shown": false,
+   "clientWidth": 0,
+   "k": 0,
+   "x": 0,
+   "y": 0,
+   "cw": 0,
+   "ch": 0
+  },
+  "small": {
+   "src": "cg_s/d8_patrol_return.png",
+   "naturalWidth": 256,
+   "shown": true,
+   "clientWidth": 256,
+   "k": 2,
+   "x": 267,
+   "y": 19,
+   "cw": 512,
+   "ch": 288
+  },
+  "cgHidden": false,
+  "pixel_exact": {
+   "ok": true,
+   "match_frac": 1.0,
+   "max_diff": 0
+  },
+  "errors": []
+ },
+ "line_k2": {
+  "pending": "d5_rail_body",
+  "kind": "line",
+  "big": {
+   "src": "cg/d5_rail.png",
+   "naturalWidth": 384,
+   "shown": true,
+   "clientWidth": 384,
+   "k": 2,
+   "x": 139,
+   "y": 15,
+   "cw": 768,
+   "ch": 432
+  },
+  "small": {
+   "src": "cg_s/d5_rail.png",
+   "naturalWidth": 256,
+   "shown": false,
+   "clientWidth": 0,
+   "k": 0,
+   "x": 0,
+   "y": 0,
+   "cw": 0,
+   "ch": 0
+  },
+  "cgHidden": false,
+  "pixel_exact": {
+   "ok": false,
+   "match_frac": 0.9914,
+   "max_diff": 172
+  },
+  "errors": []
+ }
+}

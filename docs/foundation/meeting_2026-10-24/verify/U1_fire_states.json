@@ -1,0 +1,64 @@
+{
+ "before": {
+  "lit": {
+   "id": "fire",
+   "x": 13,
+   "y": 10,
+   "state": "lit",
+   "overlay": null
+  },
+  "low": {
+   "id": "fire",
+   "x": 13,
+   "y": 10,
+   "state": "low",
+   "overlay": "fire_low_ov"
+  },
+  "out": {
+   "id": "fire",
+   "x": 13,
+   "y": 10,
+   "state": "out",
+   "overlay": null
+  },
+  "wet": {
+   "id": "fire",
+   "x": 13,
+   "y": 10,
+   "state": "wet",
+   "overlay": "fire_wet_ov"
+  }
+ },
+ "before_errors": [],
+ "after": {
+  "lit": {
+   "id": "fire",
+   "x": 13,
+   "y": 10,
+   "state": "lit",
+   "overlay": null
+  },
+  "low": {
+   "id": "fire",
+   "x": 13,
+   "y": 10,
+   "state": "low",
+   "overlay": "fire_low_ov"
+  },
+  "out": {
+   "id": "fire",
+   "x": 13,
+   "y": 10,
+   "state": "out",
+   "overlay": null
+  },
+  "wet": {
+   "id": "fire",
+   "x": 13,
+   "y": 10,
+   "state": "wet",
+   "overlay": "fire_wet_ov"
+  }
+ },
+ "after_errors": []
+}

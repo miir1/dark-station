@@ -1,0 +1,19 @@
+fixture {'pro_stairs': True, 'pro_stairs_b': False, 'd3_called_you': False, 'trial_d3_count': True}
+screen 1366 650 2.0 True
+screen 1366 768 2.0 True
+screen 1280 720 2.0 True
+screen 1536 730 2.0 True
+screen 1920 950 2.0 True
+screen 1920 1080 3.0 True
+screen 2560 1300 4.0 True
+pro_stairs mash deaths 0 chose 0
+pro_stairs hold deaths 0 chose 0
+pro_stairs arrowhold deaths 10 chose 10
+pro_stairs enterhold deaths 0 chose 0
+pro_stairs_b no fixture
+d3_called_you no fixture
+trial_d3_count mash deaths 0 chose 0
+trial_d3_count hold deaths 0 chose 0
+trial_d3_count arrowhold deaths 0 chose 10
+trial_d3_count enterhold deaths 0 chose 0
+exit=0

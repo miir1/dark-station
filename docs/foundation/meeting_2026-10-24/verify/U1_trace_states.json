@@ -1,0 +1,228 @@
+{
+ "before": {
+  "bandage_mari": "not on map",
+  "bowl_mari": {
+   "cell": [
+    15,
+    11
+   ],
+   "full": {
+    "vs_first_px_dL12": 0
+   },
+   "empty": {
+    "vs_first_px_dL12": 58,
+    "max_dL": 148,
+    "overlay": "bowl_empty_ov"
+   },
+   "meat": {
+    "vs_first_px_dL12": 34,
+    "max_dL": 75,
+    "overlay": "bowl_meat_ov"
+   }
+  },
+  "bottle_mari": {
+   "cell": [
+    19,
+    11
+   ],
+   "full": {
+    "vs_first_px_dL12": 0
+   },
+   "empty": {
+    "vs_first_px_dL12": 91,
+    "max_dL": 101,
+    "overlay": "bottle_empty_ov"
+   },
+   "wet": {
+    "vs_first_px_dL12": 145,
+    "max_dL": 96,
+    "overlay": "bottle_wet_ov"
+   }
+  },
+  "scissors": {
+   "cell": [
+    17,
+    11
+   ],
+   "clean": {
+    "vs_first_px_dL12": 0
+   },
+   "blood": {
+    "vs_first_px_dL12": 15,
+    "max_dL": 32,
+    "overlay": "scissors_blood_ov"
+   }
+  },
+  "bowl_eunji": {
+   "cell": [
+    11,
+    10
+   ],
+   "full": {
+    "vs_first_px_dL12": 0
+   },
+   "empty": {
+    "vs_first_px_dL12": 193,
+    "max_dL": 69,
+    "overlay": "bowl_empty_ov"
+   },
+   "meat": {
+    "vs_first_px_dL12": 99,
+    "max_dL": 95,
+    "overlay": "bowl_meat_ov"
+   }
+  },
+  "bottle_eunji": {
+   "cell": [
+    15,
+    11
+   ],
+   "full": {
+    "vs_first_px_dL12": 0
+   },
+   "empty": {
+    "vs_first_px_dL12": 16,
+    "max_dL": 166,
+    "overlay": "bottle_empty_ov"
+   },
+   "wet": {
+    "vs_first_px_dL12": 95,
+    "max_dL": 159,
+    "overlay": "bottle_wet_ov"
+   }
+  },
+  "bandage_eunji": "not on map"
+ },
+ "before_errors": [],
+ "after": {
+  "bandage_mari": {
+   "cell": [
+    19,
+    11
+   ],
+   "clean": {
+    "vs_first_px_dL12": 0
+   },
+   "wet": {
+    "vs_first_px_dL12": 9,
+    "max_dL": 74,
+    "overlay": "bandage_wet_ov"
+   },
+   "rot": {
+    "vs_first_px_dL12": 8,
+    "max_dL": 89,
+    "overlay": "bandage_rot_ov"
+   }
+  },
+  "bowl_mari": {
+   "cell": [
+    10,
+    11
+   ],
+   "full": {
+    "vs_first_px_dL12": 0
+   },
+   "empty": {
+    "vs_first_px_dL12": 14,
+    "max_dL": 112,
+    "overlay": "bowl_empty_ov"
+   },
+   "meat": {
+    "vs_first_px_dL12": 10,
+    "max_dL": 110,
+    "overlay": "bowl_meat_ov"
+   }
+  },
+  "bottle_mari": {
+   "cell": [
+    19,
+    11
+   ],
+   "full": {
+    "vs_first_px_dL12": 0
+   },
+   "empty": {
+    "vs_first_px_dL12": 50,
+    "max_dL": 83,
+    "overlay": "bottle_empty_ov"
+   },
+   "wet": {
+    "vs_first_px_dL12": 49,
+    "max_dL": 83,
+    "overlay": "bottle_wet_ov"
+   }
+  },
+  "scissors": {
+   "cell": [
+    19,
+    11
+   ],
+   "clean": {
+    "vs_first_px_dL12": 0
+   },
+   "blood": {
+    "vs_first_px_dL12": 8,
+    "max_dL": 75,
+    "overlay": "scissors_blood_ov"
+   }
+  },
+  "bowl_eunji": {
+   "cell": [
+    11,
+    10
+   ],
+   "full": {
+    "vs_first_px_dL12": 0
+   },
+   "empty": {
+    "vs_first_px_dL12": 14,
+    "max_dL": 117,
+    "overlay": "bowl_empty_ov"
+   },
+   "meat": {
+    "vs_first_px_dL12": 10,
+    "max_dL": 114,
+    "overlay": "bowl_meat_ov"
+   }
+  },
+  "bottle_eunji": {
+   "cell": [
+    15,
+    11
+   ],
+   "full": {
+    "vs_first_px_dL12": 0
+   },
+   "empty": {
+    "vs_first_px_dL12": 31,
+    "max_dL": 156,
+    "overlay": "bottle_empty_ov"
+   },
+   "wet": {
+    "vs_first_px_dL12": 32,
+    "max_dL": 151,
+    "overlay": "bottle_wet_ov"
+   }
+  },
+  "bandage_eunji": {
+   "cell": [
+    15,
+    11
+   ],
+   "clean": {
+    "vs_first_px_dL12": 0
+   },
+   "wet": {
+    "vs_first_px_dL12": 9,
+    "max_dL": 118,
+    "overlay": "bandage_wet_ov"
+   },
+   "rot": {
+    "vs_first_px_dL12": 8,
+    "max_dL": 143,
+    "overlay": "bandage_rot_ov"
+   }
+  }
+ },
+ "after_errors": []
+}

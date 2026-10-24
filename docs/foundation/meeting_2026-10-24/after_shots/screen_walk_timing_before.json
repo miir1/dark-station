@@ -1,0 +1,44 @@
+{
+ "60Hz": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   264.0,
+   273.6,
+   266.5,
+   262.3,
+   264.6
+  ],
+  "ms_per_tile_avg": 266.2,
+  "frames_walking": 48,
+  "stall_frames_same_pos": 5,
+  "same_int_pixel_frames": 5,
+  "frame_dt_avg": 33.24,
+  "walk_frames": "------------------------------------------------",
+  "stand_3s_frames": 91,
+  "stand_fps": 30.5,
+  "tick_span": 90,
+  "fire_frame_changes_3s": 22,
+  "console_errors": []
+ },
+ "144Hz": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   268.5,
+   263.2,
+   263.3,
+   261.2,
+   265.0
+  ],
+  "ms_per_tile_avg": 264.2,
+  "frames_walking": 49,
+  "stall_frames_same_pos": 5,
+  "same_int_pixel_frames": 6,
+  "frame_dt_avg": 32.99,
+  "walk_frames": "-------------------------------------------------",
+  "stand_3s_frames": 92,
+  "stand_fps": 30.6,
+  "tick_span": 91,
+  "fire_frame_changes_3s": 23,
+  "console_errors": []
+ }
+}

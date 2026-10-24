@@ -2,6 +2,7 @@
 const N = require('../engine/night.js');
 const E = require('../engine/engine.js');
 const { DEADLY } = require('./bots.js');
+const D3_TOGETHER = '함께 센다';   // trial_d3_count·_b·_c 의 소리 내는 선택
 
 const pct = (n, d) => (d ? Math.round((1000 * n) / d) / 10 : 0);
 const avg = (a) => (a.length ? Math.round((100 * a.reduce((x, y) => x + y, 0)) / a.length) / 100 : 0);
@@ -24,7 +25,7 @@ function measure(db, s, trace) {
   const you = s.people.you;
   const dead = you.status === 'dead' || you.status === 'ascended';
   const residents = db.peopleOrder.filter((id) => id !== 'you' && db.people[id] && !db.people[id].outside);
-  const allDead = residents.every((id) => !['home', 'boarded', 'walked'].includes(s.people[id].status));
+  const allDead = residents.every((id) => !['home', 'away', 'boarded', 'walked'].includes(s.people[id].status));   // away = 아직 안 온 사람(살아 있다)
   // explicit = 고른 적 있는 적나라 사건 수(서로 다른 id). s.fired 는 once:0(되풀이) 사건도 센다 — s.done 만 보면 빠졌다
   const explicit = Object.keys(s.fired || s.done).filter((id) => db.events[id] && db.events[id].explicit).length;
   const disc = N.discovery(s);
@@ -47,6 +48,9 @@ function measure(db, s, trace) {
     warned: dead && !!(s.ended && s.ended.cause && s.ended.cause.warned),
     warnText: dead && !!(s.ended && s.ended.cause && lastHadWarnText(db, s.ended.cause)),
     deadlyPick: dead && !!(s.ended && s.ended.cause && deadlyPicked(db, s, s.ended.cause)),
+    // 10-24 재측정(P0-E2): 아침마다 잰 당신 굶주림의 판 평균 · D3 셈(trial_d3_count*)에서 고른 선택 label(못 갔으면 null)
+    hunger: trace && Array.isArray(trace.hunger) && trace.hunger.length ? trace.hunger.reduce((a, b) => a + b, 0) / trace.hunger.length : null,
+    d3: trace && trace.d3 != null ? trace.d3 : null,
   };
 }
 
@@ -79,6 +83,9 @@ function aggregate(db, runs) {
     starveShare: pct(deaths.filter((r) => r.cause && r.cause.event === 'starve_you').length, deaths.length),
     forced: forced.length, forcedRate: pct(forced.length, deaths.length), forcedTraced: forced.filter((r) => r.freeBefore).length, byForced,
     deadlyPick: deaths.filter((r) => r.deadlyPick).length,
+    hunger: avg(runs.filter((r) => r.hunger != null).map((r) => r.hunger)),                       // 당신 굶주림(아침) 평균
+    d3Reached: pct(runs.filter((r) => r.d3 != null).length, n),                                 // D3 셈 사건까지 간 판
+    d3Together: pct(runs.filter((r) => r.d3 === D3_TOGETHER).length, runs.filter((r) => r.d3 != null).length),   // 그중 '함께 센다'
   };
 }
 
@@ -141,4 +148,4 @@ function combine(gates) {
   });
 }
 
-module.exports = { measure, aggregate, gate, combine, pct, avg, MARGIN };
+module.exports = { measure, aggregate, gate, combine, pct, avg, MARGIN, D3_TOGETHER };

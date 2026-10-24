@@ -1,0 +1,992 @@
+{
+ "notes": [
+  "death ledger: \"청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.\\n\\n당신\\n갔다 · D0 ___\\n김순례\\n남았다\\n박기철\\n남았다\\n1\\n덮는다\""
+ ],
+ "console": [],
+ "ev": [
+  {
+   "t": 41,
+   "kind": "bubbles",
+   "list": [],
+   "near": {}
+  },
+  {
+   "t": 41,
+   "kind": "hudfaces",
+   "text": ""
+  },
+  {
+   "t": 41,
+   "kind": "box",
+   "open": true,
+   "okind": "title"
+  },
+  {
+   "t": 605,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "덜컹. \"승객 여러분께서는 침착하게—\" … 누군가 당신의 이름을 불렀다. 아주 다정한 목소리였다.",
+   "name": "",
+   "tag": "pro_cold",
+   "face": ""
+  },
+  {
+   "t": 1672,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "okind": "event",
+   "body": "덜컹. \"승객 여러분께서는 침착하게—\" … 누군가 당신의 이름을 불렀다. 아주 다정한 목소리였다.",
+   "opts": [
+    {
+     "label": "눈을 뜬다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_cold",
+   "picked": 0
+  },
+  {
+   "t": 2161,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "붉은 비상등이 깜빡인다. 아무도 없다. 바닥에 신발과 가방만 흩어져 있다.",
+   "name": "",
+   "tag": "pro_cold:out",
+   "face": ""
+  },
+  {
+   "t": 2680,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "Space 조사 — 가지런한 신발"
+  },
+  {
+   "t": 2680,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "전동차 안을 살핀다"
+  },
+  {
+   "t": 2681,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 3,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 6833,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "「승객 명부」. 첫 줄에 당신 이름이 적혀 있다. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다.",
+   "name": "",
+   "tag": "pro_notebook",
+   "face": ""
+  },
+  {
+   "t": 6845,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 7502,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "okind": "event",
+   "body": "「승객 명부」. 첫 줄에 당신 이름이 적혀 있다. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다.",
+   "opts": [
+    {
+     "label": "주머니에 넣는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_notebook",
+   "picked": 0
+  },
+  {
+   "t": 7988,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "수첩을 주머니에 넣었다. 연필도 있었다.",
+   "name": "",
+   "tag": "pro_notebook:out",
+   "face": ""
+  },
+  {
+   "t": 8356,
+   "kind": "toast",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "명부에 한 줄 — Tab"
+  },
+  {
+   "t": 8360,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "전동차 안을 살핀다"
+  },
+  {
+   "t": 8360,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 18,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 9763,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "비상 레버다. 문 옆 비상함에 생수 두 병이 보인다.",
+   "name": "",
+   "tag": "pro_lever",
+   "face": ""
+  },
+  {
+   "t": 9769,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 10074,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "okind": "event",
+   "body": "비상 레버다. 문 옆 비상함에 생수 두 병이 보인다.",
+   "opts": [
+    {
+     "label": "레버를 당긴다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "그냥 둔다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_lever",
+   "picked": 0
+  },
+  {
+   "t": 10568,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 10969,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "문이 쉭 하고 열렸다. 찬 공기가 밀려들었다. 생수 두 병을 챙겼다.",
+   "name": "",
+   "tag": "pro_lever:out",
+   "face": "http://127.0.0.1:18832/v3/img/icons/water.png"
+  },
+  {
+   "t": 11014,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 11443,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "Space 조사 — 비상 레버"
+  },
+  {
+   "t": 11443,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "오른쪽 끝 열린 문으로 나간다"
+  },
+  {
+   "t": 11443,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 20,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 12595,
+   "kind": "card",
+   "day": 0,
+   "phase": "day",
+   "map": "car",
+   "x": 21,
+   "y": 3,
+   "testified": [],
+   "met": [],
+   "text": "어두운 터널 / "
+  },
+  {
+   "t": 15415,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 1,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "앞쪽 불빛으로"
+  },
+  {
+   "t": 18971,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 13,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "list": [
+    {
+     "text": "거기 서.",
+     "vis": true
+    }
+   ],
+   "near": {
+    "gicheol": {
+     "at": [
+      16,
+      2
+     ],
+     "face": "left",
+     "pose": null,
+     "dist": 3,
+     "bubble": "거기 서.",
+     "name": "헤드램프의 남자"
+    }
+   }
+  },
+  {
+   "t": 19528,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "text": "헤드램프 빛이 당신 신발에 머물다가 비켜난다. \"사람이면 됐소. 이 잔해만 넘으면 역이오.\" \"발 디딜 곳만 보시오. 위는 보지 말고.\"",
+   "name": "헤드램프의 남자",
+   "tag": "pro_gicheol",
+   "face": "http://127.0.0.1:18832/v4/img/portraits80/gicheol.png"
+  },
+  {
+   "t": 19572,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 19903,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [],
+   "okind": "event",
+   "body": "헤드램프의 남자헤드램프 빛이 당신 신발에 머물다가 비켜난다. \"사람이면 됐소. 이 잔해만 넘으면 역이오.\" \"발 디딜 곳만 보시오. 위는 보지 말고.\"",
+   "opts": [
+    {
+     "label": "그가 비춘 곳을 밟는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "벽감 상자부터 연다",
+     "sub": "식량·물 · 그가 본다",
+     "dis": false,
+     "warn": true
+    },
+    {
+     "label": "돌을 같이 든다",
+     "sub": "손을 다칠 수 있다",
+     "dis": false,
+     "warn": true
+    }
+   ],
+   "pending": "pro_gicheol",
+   "picked": 0
+  },
+  {
+   "t": 20392,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "남자가 침목을 짚으며 앞서 넘었다. 빛이 한 칸씩 앞을 비췄다.",
+   "name": "",
+   "tag": "pro_gicheol:out",
+   "face": ""
+  },
+  {
+   "t": 20412,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "list": [],
+   "near": {}
+  },
+  {
+   "t": 20412,
+   "kind": "hudfaces",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "헤드램프의 남자"
+  },
+  {
+   "t": 20772,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "터널 끝 승강장으로"
+  },
+  {
+   "t": 20772,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 15,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 24693,
+   "kind": "card",
+   "day": 0,
+   "phase": "day",
+   "map": "tunnel",
+   "x": 29,
+   "y": 2,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "묵현역 / 환선 · 지하 2층"
+  },
+  {
+   "t": 27524,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 1,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 31166,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 10,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "list": [
+    {
+     "text": "멈춰.",
+     "vis": true
+    }
+   ],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "left",
+     "pose": "crouch",
+     "dist": 3,
+     "bubble": "멈춰.",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 16,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 10,
+     "bubble": "",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 31736,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "text": "할머니가 당신 발을 오래 본다. \"신발 신었어? …됐어, 사람이네.\" \"저쪽 끝에 하나, 역무실에 하나.\" \"계단 줄 위로는 가지 마.\"",
+   "name": "청소원 조끼의 할머니",
+   "tag": "pro_platform",
+   "face": "http://127.0.0.1:18832/v4/img/portraits80/soonrye.png"
+  },
+  {
+   "t": 31767,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 32253,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "gicheol"
+   ],
+   "okind": "event",
+   "body": "청소원 조끼의 할머니할머니가 당신 발을 오래 본다. \"신발 신었어? …됐어, 사람이네.\" \"저쪽 끝에 하나, 역무실에 하나.\" \"계단 줄 위로는 가지 마.\"",
+   "opts": [
+    {
+     "label": "불가에 앉는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "계단 쪽을 본다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_platform",
+   "picked": 0
+  },
+  {
+   "t": 32744,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "할머니가 장작 하나를 더 넣었다. 처음 보는 주황빛이었다.",
+   "name": "",
+   "tag": "pro_platform:out",
+   "face": ""
+  },
+  {
+   "t": 32772,
+   "kind": "bubbles",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "list": [],
+   "near": {
+    "soonrye": {
+     "at": [
+      12,
+      10
+     ],
+     "face": "down",
+     "pose": "crouch",
+     "dist": 1,
+     "bubble": "",
+     "name": "청소원 조끼의 할머니"
+    },
+    "gicheol": {
+     "at": [
+      25,
+      10
+     ],
+     "face": "down",
+     "pose": null,
+     "dist": 14,
+     "bubble": "",
+     "name": "헤드램프의 남자"
+    },
+    "mari": {
+     "at": [
+      20,
+      11
+     ],
+     "face": "down",
+     "pose": "sitting",
+     "dist": 8,
+     "bubble": "",
+     "name": "담요의 여자"
+    }
+   }
+  },
+  {
+   "t": 32772,
+   "kind": "hudfaces",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "청소원 조끼의 할머니,헤드램프의 남자"
+  },
+  {
+   "t": 33125,
+   "kind": "hint",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "Space 말 걸기 — 청소원 조끼의 할머니"
+  },
+  {
+   "t": 33125,
+   "kind": "goal",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "승강장을 둘러본다 · 화로를 조사하면 저녁"
+  },
+  {
+   "t": 33125,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 12,
+   "y": 11,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": false,
+   "okind": ""
+  },
+  {
+   "t": 37979,
+   "kind": "lines",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "출구 계단 한가운데 안개가 벽처럼 멈춰 있다. 양복 입은 남자가 엎어져 있다. 안개에 잠긴 다리가 재였다. 바람도 없는데 흘러내렸다. 구두만 남았다.",
+   "name": "",
+   "tag": "pro_stairs",
+   "face": ""
+  },
+  {
+   "t": 38003,
+   "kind": "box",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "open": true,
+   "okind": "line"
+  },
+  {
+   "t": 38674,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "okind": "event",
+   "body": "출구 계단 한가운데 안개가 벽처럼 멈춰 있다. 양복 입은 남자가 엎어져 있다. 안개에 잠긴 다리가 재였다. 바람도 없는데 흘러내렸다. 구두만 남았다.",
+   "opts": [
+    {
+     "label": "돌아선다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "구두를 가지러 오른다",
+     "sub": "순례: 계단 줄 위로는 가지 마",
+     "dis": false,
+     "warn": true
+    }
+   ],
+   "pending": "pro_stairs",
+   "picked": 1
+  },
+  {
+   "t": 39164,
+   "kind": "open",
+   "day": 0,
+   "phase": "day",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "okind": "confirm2",
+   "body": "되돌릴 수 없다구두를 가지러 오른다 — 순례: 계단 줄 위로는 가지 마",
+   "opts": [
+    {
+     "label": "그렇게 한다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    },
+    {
+     "label": "다시 고른다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": "pro_stairs",
+   "picked": true
+  },
+  {
+   "t": 39685,
+   "kind": "lines",
+   "day": 0,
+   "phase": "ended",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "줄을 넘었다. 발목이 가벼워졌다. 내려다보니 발이 없었다.",
+   "name": "",
+   "tag": "pro_stairs:out",
+   "face": ""
+  },
+  {
+   "t": 40133,
+   "kind": "line",
+   "day": 0,
+   "phase": "ended",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "계단 위에 당신 구두만 남았다.",
+   "name": "",
+   "tag": "death"
+  },
+  {
+   "t": 40278,
+   "kind": "open",
+   "day": 0,
+   "phase": "ended",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "okind": "death_ledger",
+   "body": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.당신갔다 · D0 ___김순례남았다 박기철남았다 ",
+   "opts": [
+    {
+     "label": "덮는다",
+     "sub": "",
+     "dis": false,
+     "warn": false
+    }
+   ],
+   "pending": ""
+  },
+  {
+   "t": 41224,
+   "kind": "note",
+   "day": 0,
+   "phase": "ended",
+   "map": "station",
+   "x": 2,
+   "y": 3,
+   "testified": [],
+   "met": [
+    "soonrye",
+    "gicheol"
+   ],
+   "text": "death ledger: \"청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.\\n\\n당신\\n갔다 · D0 ___\\n김순례\\n남았다\\n박기철\\n남았다\\n1\\n덮는다\""
+  }
+ ]
+}
