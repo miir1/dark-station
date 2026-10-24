@@ -428,7 +428,7 @@
           "ledger": ""
         },
         "fail": {
-          "text": "가방이 찢겨 생수 한 병이 굴렀다. 혼자서는 못 넘겠다. 헤드램프 빛이 아직 당신 발에 있다.",
+          "text": "가방이 찢겨 생수 한 병이 굴렀다. 발이 미끄러져 도로 내려왔다. 헤드램프 빛이 아직 당신 발에 있다.",
           "effects": [
             {
               "verb": "number",
@@ -1023,10 +1023,20 @@
               "id": "grudge",
               "who": "target",
               "n": 4
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "n": -2,
+              "who": "you"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 2
             }
           ],
-          "ledger": "",
-          "target": "dongha"
+          "ledger": ""
         }
       },
       {
@@ -1056,6 +1066,155 @@
       }
     ],
     "target": "randomSleeper"
+  },
+  {
+    "id": "repay_bowl",
+    "kind": "trial",
+    "when": "day>=2 & phase==ration & karma>=1",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "줄 끝에 누가 빈 그릇을 들고 서 있다. 당신 쪽을 등지고 있다.",
+    "choices": [
+      {
+        "label": "그냥 지나간다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "그릇을 받아 들고 불가로 갔다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "repay_asked_target",
+              "set": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "내 몫을 덜어 준다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "당신이 굶는다",
+        "out": {
+          "text": "당신 그릇에서 반을 덜어 그 그릇에 부었다. 그 사람이 처음으로 돌아봤다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "repay_asked_target",
+              "set": 1
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "n": 2,
+              "who": "you"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "n": -2,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -3,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": -1
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ],
+    "once": 0,
+    "target": "most:grudge",
+    "targetIf": "grudge>=3 & !flag:repay_asked_target"
+  },
+  {
+    "id": "share_back",
+    "kind": "trial",
+    "when": "day>=2 & phase==ration",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "밤에 제 그릇을 남에게 밀어 주던 사람이다. 오늘도 제 그릇을 옆으로 밀어 둔다.",
+    "choices": [
+      {
+        "label": "모른 척한다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "그릇은 옆으로 밀린 채였다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "share_seen_target",
+              "set": 0
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "내 몫을 덜어 준다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "당신이 굶는다",
+        "out": {
+          "text": "당신 그릇에서 반을 덜어 그 그릇에 부었다. 그 사람이 고개를 숙였다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "share_seen_target",
+              "set": 0
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "n": 2,
+              "who": "you"
+            },
+            {
+              "verb": "number",
+              "id": "hunger",
+              "n": -3,
+              "who": "target"
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      }
+    ],
+    "once": 0,
+    "target": "randomSleeper",
+    "targetIf": "flag:share_seen_target"
   },
   {
     "id": "d1_gicheol_arrive",
@@ -1432,6 +1591,75 @@
     ]
   },
   {
+    "id": "crate_lid",
+    "kind": "trial",
+    "when": "map==station & inspect:crate_food & trace:crate_food==closed & (phase==trace | phase==day | phase==evening)",
+    "grade": "normal",
+    "explicit": 0,
+    "image": "",
+    "text": "창고 상자 뚜껑을 들었다. 배식 때만 여는 상자다.",
+    "choices": [
+      {
+        "label": "뚜껑을 닫는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "",
+        "out": {
+          "text": "뚜껑을 도로 닫았다.",
+          "effects": [],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "봉지 하나를 꺼낸다",
+        "check": null,
+        "cost": {
+          "food": 1
+        },
+        "req": {},
+        "taboo": "steal_crate",
+        "warn": "누가 볼 수 있다",
+        "out": {
+          "text": "봉지 하나를 소매에 넣었다. 뚜껑 닫는 소리가 컸다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "hunger",
+              "n": -3,
+              "who": "you"
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": 2,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 1
+            },
+            {
+              "verb": "trace",
+              "id": "crate_food",
+              "state": "open"
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            }
+          ],
+          "ledger": "",
+          "target": "randomSleeper"
+        }
+      }
+    ],
+    "once": 0
+  },
+  {
     "id": "d2_key",
     "kind": "fixed",
     "when": "day==2 & phase==trace & alive:soonrye",
@@ -1716,16 +1944,16 @@
           "ledger": ""
         },
         "fail": {
-          "text": "틈으로 파이프 끝이 들어왔다. 손등이 터졌다. 웃음소리가 멀어졌다.",
+          "text": "말이 끊겼다. 틈으로 손 하나가 들어왔다.",
           "effects": [
-            {
-              "verb": "injure",
-              "who": "you",
-              "n": 1
-            },
             {
               "verb": "flag",
               "id": "patrol_knows",
+              "set": 1
+            },
+            {
+              "verb": "flag",
+              "id": "shutter_arm",
               "set": 1
             }
           ],
@@ -1824,6 +2052,136 @@
             }
           ],
           "ledger": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "d2_shutter_arm",
+    "kind": "trial",
+    "when": "day==2 & phase==night & flag:shutter_arm",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "틈으로 들어온 손이 당신 손목을 잡았다. 너머에서 당긴다. 셔터 날이 팔꿈치까지 왔다.",
+    "choices": [
+      {
+        "label": "통조림을 내밀어 바꾼다",
+        "check": null,
+        "cost": {
+          "food": 2
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "식량이 준다",
+        "out": {
+          "text": "통조림이 넘어가자 손이 풀렸다. 손목에 손톱자국이 남았다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "shutter_arm",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "옆 사람 팔을 내민다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "give_other",
+        "warn": "그 사람이 대신 끌린다",
+        "out": {
+          "text": "잠든 팔을 틈에 밀었다. 비명이 셔터를 울렸다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "shutter_arm",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "target",
+              "n": 2
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": 4,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": -1
+            }
+          ],
+          "ledger": "",
+          "target": "randomSleeper"
+        }
+      },
+      {
+        "label": "팔을 비틀어 뺀다",
+        "check": {
+          "skill": "str",
+          "base": 80
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "못 빼면 끝이다",
+        "ok": {
+          "text": "팔꿈치 살이 셔터 날에 남았다. 팔은 돌아왔다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "shutter_arm",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 2
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "셔터 밑으로 어깨까지 끌려갔다. 너머에서 웃었다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "shutter_arm",
+              "set": 0
+            },
+            {
+              "verb": "kill",
+              "who": "you"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
         }
       }
     ]
@@ -2377,7 +2735,7 @@
   {
     "id": "trial_d4_gicheol",
     "kind": "trial",
-    "when": "day==4 & phase==day & flag:met_dohyeon & alive:gicheol",
+    "when": "day==4 & phase==day & alive:gicheol & flag:met_gicheol",
     "grade": "normal",
     "explicit": 0,
     "image": "",
@@ -2389,10 +2747,16 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "부품이 빈다",
         "out": {
-          "text": "고개를 끄덕였다. 기철이 헤드램프를 껐다.",
-          "effects": [],
+          "text": "고개를 끄덕였다. 기철이 헤드램프를 껐다. 그날 밤 부품 상자가 가벼워졌다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "parts",
+              "n": -2
+            }
+          ],
           "ledger": ""
         }
       },
@@ -2402,7 +2766,7 @@
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
+        "warn": "헤드램프가 당신을 따라온다",
         "out": {
           "text": "상자는 역무실에 있었다. 셋이 모자랐다. 기철이 당신을 안 봤다.",
           "effects": [
@@ -2420,6 +2784,11 @@
               "verb": "axis",
               "id": "hand",
               "n": 1
+            },
+            {
+              "verb": "flag",
+              "id": "gicheol_counted",
+              "set": 1
             }
           ],
           "ledger": ""
@@ -2462,18 +2831,150 @@
             {
               "verb": "injure",
               "who": "you",
-              "n": 2
+              "n": 1
             },
             {
-              "verb": "trace",
-              "id": "pipe",
-              "state": "blood"
+              "verb": "flag",
+              "id": "gicheol_counted",
+              "set": 1
             }
           ],
           "ledger": ""
         }
       }
     ]
+  },
+  {
+    "id": "d4_spanner",
+    "kind": "trial",
+    "when": "day==4 & phase==night & flag:gicheol_counted & alive:gicheol",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "기철이 머리맡에 서 있다. 헤드램프가 꺼져 있다. 손에 스패너가 있다. \"셌지.\"",
+    "choices": [
+      {
+        "label": "그릇 하나로 입을 막는다",
+        "check": null,
+        "cost": {
+          "food": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "식량이 준다",
+        "out": {
+          "text": "기철이 그릇을 받아 들고 돌아섰다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "gicheol_counted",
+              "set": 0
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -2,
+              "who": "gicheol"
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "다른 사람이 셌다고 한다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "give_other",
+        "warn": "그 사람이 맞는다",
+        "out": {
+          "text": "헤드램프가 켜지고 다른 담요로 갔다. 둔한 소리가 두 번 났다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "gicheol_counted",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "target",
+              "n": 2
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": 4,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "스패너를 막는다",
+        "check": {
+          "skill": "str",
+          "base": 80
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "못 막으면 끝이다",
+        "ok": {
+          "text": "팔뚝으로 받았다. 뼈가 울렸다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "gicheol_counted",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "두 번째가 관자놀이로 왔다. 베개에 피가 번졌다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "gicheol_counted",
+              "set": 0
+            },
+            {
+              "verb": "kill",
+              "who": "you"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      }
+    ],
+    "target": "randomSleeper",
+    "targetIf": "self!=gicheol"
   },
   {
     "id": "d4_dohyeon_key",
@@ -2816,6 +3317,11 @@
               "verb": "number",
               "id": "food",
               "n": 4
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 1
             }
           ],
           "ledger": ""
@@ -2961,6 +3467,11 @@
               "verb": "number",
               "id": "food",
               "n": 4
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 1
             }
           ],
           "ledger": ""
@@ -3106,6 +3617,11 @@
               "verb": "number",
               "id": "food",
               "n": 4
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 1
             }
           ],
           "ledger": ""
@@ -3184,7 +3700,9 @@
       {
         "label": "창고를 버리고 뺀다",
         "check": null,
-        "cost": {},
+        "cost": {
+          "food": 1
+        },
         "req": {},
         "taboo": "",
         "warn": "식량이 준다",
@@ -3212,12 +3730,15 @@
       },
       {
         "label": "모두 매달려 퍼낸다",
-        "check": null,
+        "check": {
+          "skill": "str",
+          "base": 75
+        },
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "",
-        "out": {
+        "warn": "쓸려 가면 끝이다",
+        "ok": {
           "text": "밤새 양동이를 날랐다. 손잡이가 피로 미끌거렸다. 물은 내려갔다.",
           "effects": [
             {
@@ -3233,6 +3754,68 @@
             }
           ],
           "ledger": ""
+        },
+        "fail": {
+          "text": "발이 물살에 들렸다. 배수구 쪽으로 끌려갔다.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      },
+      {
+        "label": "남의 담요로 물길을 막는다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "take_blanket",
+        "warn": "그 사람이 밤새 젖는다",
+        "out": {
+          "text": "담요를 말아 물길에 박았다. 주인은 젖은 채 떨었다. 물은 내려갔다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "flood",
+              "n": -3
+            },
+            {
+              "verb": "injure",
+              "who": "target",
+              "n": 1
+            },
+            {
+              "verb": "number",
+              "id": "fear",
+              "n": 2,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": 3,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 2
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            }
+          ],
+          "ledger": "",
+          "target": "randomSleeper"
         }
       }
     ]
@@ -3303,6 +3886,11 @@
               "verb": "axis",
               "id": "hand",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 2
             }
           ],
           "ledger": {
@@ -3491,12 +4079,12 @@
         "label": "동하와 덤빈다",
         "check": {
           "skill": "str",
-          "base": 35
+          "base": 50
         },
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "넷 대 둘이다",
+        "warn": "넷이다. 지면 끝이다",
         "ok": {
           "text": "동하가 앞의 남자를 넘어뜨렸다. 횃불이 바닥에 굴렀다. 넷이 셔터 밑으로 물러났다.",
           "effects": [
@@ -3529,18 +4117,11 @@
           "ledger": ""
         },
         "fail": {
-          "text": "개머리판이 동하의 이를 부쉈다. 당신은 횃불로 얼굴을 맞았다. 창고는 비었다.",
+          "text": "횃불이 얼굴로 왔다. 바닥이 가까워졌다.",
           "effects": [
             {
-              "verb": "injure",
-              "who": "you",
-              "n": 2
-            },
-            {
-              "verb": "number",
-              "id": "fear",
-              "who": "dongha",
-              "n": 2
+              "verb": "kill",
+              "who": "you"
             },
             {
               "verb": "trace",
@@ -3558,7 +4139,12 @@
               "set": 1
             }
           ],
-          "ledger": ""
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
         }
       },
       {
@@ -3605,6 +4191,17 @@
               "verb": "axis",
               "id": "hand",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 2
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": 3,
+              "who": "gicheol"
             }
           ],
           "ledger": ""
@@ -3654,12 +4251,12 @@
         "label": "맞선다",
         "check": {
           "skill": "str",
-          "base": 30
+          "base": 45
         },
         "cost": {},
         "req": {},
         "taboo": "",
-        "warn": "넷이다. 크게 다친다",
+        "warn": "넷이다. 지면 끝이다",
         "ok": {
           "text": "횃불 하나를 쳐 냈다. 넷이 셔터 밑으로 물러났다. 팔에 화상이 남았다.",
           "effects": [
@@ -3682,12 +4279,11 @@
           "ledger": ""
         },
         "fail": {
-          "text": "개머리판이 얼굴로 왔다. 이가 나갔다. 창고는 비었다.",
+          "text": "횃불이 얼굴로 왔다. 바닥이 가까워졌다.",
           "effects": [
             {
-              "verb": "injure",
-              "who": "you",
-              "n": 2
+              "verb": "kill",
+              "who": "you"
             },
             {
               "verb": "trace",
@@ -3703,14 +4299,14 @@
               "verb": "flag",
               "id": "eunji_sold",
               "set": 1
-            },
-            {
-              "verb": "axis",
-              "id": "hand",
-              "n": 1
             }
           ],
-          "ledger": ""
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
         }
       },
       {
@@ -3747,6 +4343,11 @@
               "verb": "axis",
               "id": "hand",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 2
             }
           ],
           "ledger": ""
@@ -4321,6 +4922,11 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
             }
           ],
           "ledger": ""
@@ -4408,6 +5014,11 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
             }
           ],
           "ledger": ""
@@ -4970,6 +5581,11 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 1
             }
           ],
           "ledger": ""
@@ -5182,11 +5798,6 @@
               "id": "hunger",
               "n": -4,
               "who": "you"
-            },
-            {
-              "verb": "axis",
-              "id": "share",
-              "n": -1
             }
           ],
           "ledger": ""
@@ -5241,6 +5852,11 @@
               "id": "grudge",
               "n": 4,
               "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 2
             }
           ],
           "ledger": ""
@@ -5291,6 +5907,11 @@
               "verb": "axis",
               "id": "hand",
               "n": 1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
             }
           ],
           "ledger": ""
@@ -5313,6 +5934,11 @@
               "verb": "injure",
               "who": "you",
               "n": 1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
             }
           ],
           "ledger": ""
@@ -5745,6 +6371,11 @@
               "verb": "axis",
               "id": "hand",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 2
             }
           ],
           "ledger": ""
@@ -6375,6 +7006,166 @@
     ]
   },
   {
+    "id": "d10_hold",
+    "kind": "trial",
+    "when": "day==10 & phase==day & karma>=9",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "떠날 채비를 하는데 누가 당신 소매를 잡았다. 밤마다 당신 쪽을 등지고 눕던 사람이다. 손을 놓지 않는다.",
+    "choices": [
+      {
+        "label": "가진 것을 내준다",
+        "check": null,
+        "cost": {
+          "food": 2,
+          "water": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "식량 둘과 물 하나가 나간다",
+        "out": {
+          "text": "봉지를 받아 들고 손을 놓았다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": -2
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -3,
+              "who": "all"
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "끌려가며 버틴다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "크게 다친다",
+        "out": {
+          "text": "선로 끝까지 끌려가 맞았다. 그래도 걸어 나왔다.",
+          "effects": [
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 2
+            }
+          ],
+          "ledger": ""
+        },
+        "swap": [
+          {
+            "when": "karma>=14 & !flag:you_leg",
+            "warn": "크게 다친다. 다리를 잃는다",
+            "out": {
+              "text": "선로 끝까지 끌려가 맞았다. 무릎이 반대로 꺾였다. 그래도 기어 나왔다.",
+              "effects": [
+                {
+                  "verb": "permanent",
+                  "who": "you",
+                  "loss": "leg"
+                },
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 2
+                }
+              ],
+              "ledger": ""
+            }
+          }
+        ]
+      },
+      {
+        "label": "손가락을 내준다",
+        "check": null,
+        "cost": {},
+        "req": {
+          "notPermanent": "finger"
+        },
+        "taboo": "",
+        "warn": "손가락을 잃는다",
+        "out": {
+          "text": "돌 위에 손을 올렸다. 그가 내리쳤다. 돌 위에 손가락이 굴렀다.",
+          "effects": [
+            {
+              "verb": "permanent",
+              "who": "you",
+              "loss": "finger"
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -3,
+              "who": "target"
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "뿌리치고 걷는다",
+        "check": {
+          "skill": "str",
+          "base": 65
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "주저앉으면 끝이다",
+        "ok": {
+          "text": "소매가 찢어졌다. 선로가 당신을 받았다.",
+          "effects": [
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "무릎이 꺾였다. 아무도 당신을 일으키지 않았다.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        },
+        "swap": [
+          {
+            "when": "karma>=14",
+            "check": {
+              "skill": "str",
+              "base": 50
+            }
+          }
+        ]
+      }
+    ],
+    "target": "most:grudge",
+    "targetIf": "grudge>=3"
+  },
+  {
     "id": "d10_train",
     "kind": "ending",
     "when": "day==10 & phase==day & flag:passage_open",
@@ -6559,6 +7350,16 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
+            },
+            {
+              "verb": "flag",
+              "id": "took_bottle_target",
+              "set": 1
             }
           ],
           "ledger": ""
@@ -6604,6 +7405,130 @@
         }
       }
     ]
+  },
+  {
+    "id": "d10_grab",
+    "kind": "trial",
+    "when": "day==10 & phase==day & !flag:passage_open",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "몇 걸음 못 가서 발목이 잡혔다. 물병을 빼앗긴 사람이다. 손톱이 살에 박힌다.",
+    "choices": [
+      {
+        "label": "물병을 돌려준다",
+        "check": null,
+        "cost": {
+          "water": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "물이 준다",
+        "out": {
+          "text": "물병을 내밀었다. 손이 풀렸다.",
+          "effects": [
+            {
+              "verb": "number",
+              "id": "thirst",
+              "n": -3,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -2,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "끌려 넘어진다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "다리를 잃는다",
+        "out": {
+          "text": "선로에 얼굴부터 넘어졌다. 발목이 반대로 꺾였다. 그 사람은 물병을 들고 앞서갔다.",
+          "effects": [
+            {
+              "verb": "permanent",
+              "who": "you",
+              "loss": "leg"
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "swap": [
+          {
+            "when": "flag:you_leg",
+            "warn": "크게 다친다",
+            "out": {
+              "text": "선로에 얼굴부터 넘어졌다. 이가 하나 나갔다. 그 사람은 물병을 들고 앞서갔다.",
+              "effects": [
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 2
+                }
+              ],
+              "ledger": ""
+            }
+          }
+        ]
+      },
+      {
+        "label": "발을 빼낸다",
+        "check": {
+          "skill": "str",
+          "base": 60
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "넘어지면 끝이다",
+        "ok": {
+          "text": "발목 살이 손톱에 벗겨졌다. 걸었다.",
+          "effects": [
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "선로에 엎어졌다. 그 사람이 등을 밟고 지나갔다. 아무도 일으키지 않았다.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      }
+    ],
+    "target": "randomSleeper",
+    "targetIf": "flag:took_bottle_target"
   },
   {
     "id": "d10_walk",
@@ -7674,6 +8599,11 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 1
             }
           ],
           "ledger": ""
@@ -7901,6 +8831,11 @@
               "id": "grudge",
               "who": "eunji",
               "n": 4
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
             }
           ],
           "ledger": ""
@@ -8120,15 +9055,15 @@
               "n": -1
             },
             {
-              "verb": "axis",
-              "id": "hand",
-              "n": 1
-            },
-            {
               "verb": "number",
               "id": "grudge",
               "who": "eunji",
               "n": 6
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 4
             }
           ],
           "ledger": {
@@ -8990,6 +9925,11 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
             }
           ],
           "ledger": "",
@@ -9035,10 +9975,125 @@
               "verb": "axis",
               "id": "share",
               "n": 1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": -1
             }
           ],
           "ledger": ""
         }
+      },
+      {
+        "label": "맞고 버틴다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "크게 다친다",
+        "out": {
+          "text": "목을 비틀어 빠져나왔다. 그림자가 갈비뼈를 걷어찼다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 2
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -1,
+              "who": "all"
+            }
+          ],
+          "ledger": ""
+        },
+        "swap": [
+          {
+            "when": "karma>=8 & fired:dawn_strike>=1 & !flag:you_ear",
+            "warn": "귀를 잃는다. 새벽에 또 온다",
+            "out": {
+              "text": "그림자가 귀를 걷어찼다. 한쪽 귀가 먹었다. 그림자는 제 담요에 앉아 이쪽을 봤다.",
+              "effects": [
+                {
+                  "verb": "permanent",
+                  "who": "you",
+                  "loss": "ear"
+                },
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 2
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": -1,
+                  "who": "all"
+                }
+              ],
+              "ledger": ""
+            }
+          },
+          {
+            "when": "karma>=8",
+            "warn": "크게 다친다. 새벽에 또 온다",
+            "out": {
+              "text": "목을 비틀어 빠져나왔다. 그림자가 갈비뼈를 걷어찼다. 그림자는 제 담요에 앉아 이쪽을 봤다.",
+              "effects": [
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 2
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": -1,
+                  "who": "all"
+                }
+              ],
+              "ledger": ""
+            }
+          },
+          {
+            "when": "fired:dawn_strike>=1 & !flag:you_ear",
+            "warn": "귀를 잃는다",
+            "out": {
+              "text": "목을 비틀어 빠져나왔다. 그림자가 귀를 걷어찼다. 한쪽 귀가 먹었다.",
+              "effects": [
+                {
+                  "verb": "flag",
+                  "id": "dawn_strike",
+                  "set": 0
+                },
+                {
+                  "verb": "permanent",
+                  "who": "you",
+                  "loss": "ear"
+                },
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 2
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": -1,
+                  "who": "all"
+                }
+              ],
+              "ledger": ""
+            }
+          }
+        ]
       },
       {
         "label": "밀쳐 낸다",
@@ -9197,7 +10252,6 @@
         "warn": "그 사람이 대신 당한다",
         "out": {
           "text": "손가락으로 옆 담요를 가리켰다. 목에서 손이 풀렸다. 옆에서 숨 막히는 소리가 났다.",
-          "target": "any",
           "effects": [
             {
               "verb": "flag",
@@ -9230,12 +10284,514 @@
               "verb": "axis",
               "id": "share",
               "n": -1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
+            }
+          ],
+          "ledger": ""
+        },
+        "swap": [
+          {
+            "when": "karma>=8",
+            "check": {
+              "skill": "talk",
+              "base": 50
+            },
+            "warn": "아무도 안 돌아서면 끝이다",
+            "ok": {
+              "text": "손가락으로 옆 담요를 가리켰다. 목에서 손이 풀렸다. 옆에서 숨 막히는 소리가 났다.",
+              "effects": [
+                {
+                  "verb": "flag",
+                  "id": "dawn_strike",
+                  "set": 0
+                },
+                {
+                  "verb": "injure",
+                  "who": "target",
+                  "n": 2
+                },
+                {
+                  "verb": "number",
+                  "id": "fear",
+                  "n": 3,
+                  "who": "target"
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": 3,
+                  "who": "target"
+                },
+                {
+                  "verb": "axis",
+                  "id": "hand",
+                  "n": -1
+                },
+                {
+                  "verb": "axis",
+                  "id": "share",
+                  "n": -1
+                },
+                {
+                  "verb": "number",
+                  "id": "karma",
+                  "n": 3
+                }
+              ],
+              "ledger": ""
+            },
+            "fail": {
+              "text": "손가락이 허공을 가리켰다. 아무도 돌아보지 않았다. 손이 다시 목을 눌렀다.",
+              "effects": [
+                {
+                  "verb": "kill",
+                  "who": "you"
+                }
+              ],
+              "ledger": {
+                "who": "you",
+                "status": "dead",
+                "day": "{day}",
+                "cause": ""
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "target": "randomSleeper",
+    "targetOptional": 1
+  },
+  {
+    "id": "dawn_mob",
+    "kind": "trial",
+    "when": "phase==trace & flag:dawn_mob",
+    "grade": "normal",
+    "explicit": 1,
+    "image": "",
+    "text": "새벽에 눈을 떴다. 담요들이 당신을 둘러서 있다. 아무도 말하지 않는다. 누가 당신 봉지를 들고 있다.",
+    "choices": [
+      {
+        "label": "가진 것을 다 내놓는다",
+        "check": null,
+        "cost": {
+          "food": 1,
+          "water": 1
+        },
+        "req": {},
+        "taboo": "",
+        "warn": "식량과 물이 다 나간다",
+        "out": {
+          "text": "봉지와 물병이 손에서 손으로 갔다. 창고 상자까지 비었다. 담요들이 하나씩 돌아갔다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_mob",
+              "set": 0
+            },
+            {
+              "verb": "number",
+              "id": "food",
+              "n": -16
+            },
+            {
+              "verb": "number",
+              "id": "water",
+              "n": -16
+            },
+            {
+              "verb": "trace",
+              "id": "crate_food",
+              "state": "empty"
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -3,
+              "who": "all"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": -2
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": 1
             }
           ],
           "ledger": ""
         }
+      },
+      {
+        "label": "맞고 버틴다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "크게 다친다",
+        "out": {
+          "text": "발길질이 멎을 때까지 웅크렸다. 봉지는 그들이 가져갔다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_mob",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 2
+            },
+            {
+              "verb": "number",
+              "id": "food",
+              "n": -2
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -1,
+              "who": "all"
+            }
+          ],
+          "ledger": ""
+        },
+        "swap": [
+          {
+            "when": "karma>=8 & fired:dawn_mob>=1 & !flag:you_leg",
+            "warn": "다리를 잃는다. 새벽에 또 온다",
+            "out": {
+              "text": "발길질이 무릎으로 왔다. 무릎이 반대로 꺾였다. 담요들은 눕지 않고 앉아 있었다.",
+              "effects": [
+                {
+                  "verb": "permanent",
+                  "who": "you",
+                  "loss": "leg"
+                },
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 2
+                },
+                {
+                  "verb": "number",
+                  "id": "food",
+                  "n": -2
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": -1,
+                  "who": "all"
+                }
+              ],
+              "ledger": ""
+            }
+          },
+          {
+            "when": "karma>=8",
+            "warn": "크게 다친다. 새벽에 또 온다",
+            "out": {
+              "text": "발길질이 멎을 때까지 웅크렸다. 봉지는 그들이 가져갔다. 담요들은 눕지 않고 앉아 있었다.",
+              "effects": [
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 2
+                },
+                {
+                  "verb": "number",
+                  "id": "food",
+                  "n": -2
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": -1,
+                  "who": "all"
+                }
+              ],
+              "ledger": ""
+            }
+          },
+          {
+            "when": "fired:dawn_mob>=1 & !flag:you_leg",
+            "warn": "다리를 잃는다",
+            "out": {
+              "text": "발길질이 무릎으로 왔다. 무릎이 반대로 꺾였다. 봉지는 그들이 가져갔다.",
+              "effects": [
+                {
+                  "verb": "flag",
+                  "id": "dawn_mob",
+                  "set": 0
+                },
+                {
+                  "verb": "permanent",
+                  "who": "you",
+                  "loss": "leg"
+                },
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 2
+                },
+                {
+                  "verb": "number",
+                  "id": "food",
+                  "n": -2
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": -1,
+                  "who": "all"
+                }
+              ],
+              "ledger": ""
+            }
+          }
+        ]
+      },
+      {
+        "label": "손가락 하나로 갚는다",
+        "check": null,
+        "cost": {},
+        "req": {
+          "notPermanent": "finger"
+        },
+        "taboo": "",
+        "warn": "손가락을 잃는다",
+        "out": {
+          "text": "누가 당신 손을 판자에 눌렀다. 칼이 한 번 내려왔다. 판자에 손가락 한 마디가 남았다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_mob",
+              "set": 0
+            },
+            {
+              "verb": "permanent",
+              "who": "you",
+              "loss": "finger"
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -2,
+              "who": "all"
+            }
+          ],
+          "ledger": ""
+        }
+      },
+      {
+        "label": "다른 사람을 가리킨다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "give_other",
+        "warn": "그 사람이 대신 맞는다",
+        "out": {
+          "text": "손끝을 따라 담요들이 돌아섰다. 그 사람이 웅크린 채 맞았다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_mob",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "target",
+              "n": 2
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": 3,
+              "who": "target"
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
+            },
+            {
+              "verb": "axis",
+              "id": "share",
+              "n": -1
+            },
+            {
+              "verb": "axis",
+              "id": "hand",
+              "n": -1
+            }
+          ],
+          "ledger": ""
+        },
+        "swap": [
+          {
+            "when": "karma>=8",
+            "check": {
+              "skill": "talk",
+              "base": 50
+            },
+            "warn": "아무도 안 돌아서면 끝이다",
+            "ok": {
+              "text": "손끝을 따라 담요들이 돌아섰다. 그 사람이 웅크린 채 맞았다.",
+              "effects": [
+                {
+                  "verb": "flag",
+                  "id": "dawn_mob",
+                  "set": 0
+                },
+                {
+                  "verb": "injure",
+                  "who": "target",
+                  "n": 2
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": 3,
+                  "who": "target"
+                },
+                {
+                  "verb": "number",
+                  "id": "karma",
+                  "n": 3
+                },
+                {
+                  "verb": "axis",
+                  "id": "share",
+                  "n": -1
+                },
+                {
+                  "verb": "axis",
+                  "id": "hand",
+                  "n": -1
+                }
+              ],
+              "ledger": ""
+            },
+            "fail": {
+              "text": "손끝을 따라 아무도 돌아서지 않았다. 발길질이 다시 당신에게 왔다.",
+              "effects": [
+                {
+                  "verb": "kill",
+                  "who": "you"
+                }
+              ],
+              "ledger": {
+                "who": "you",
+                "status": "dead",
+                "day": "{day}",
+                "cause": ""
+              }
+            }
+          }
+        ]
+      },
+      {
+        "label": "밀치고 달아난다",
+        "check": {
+          "skill": "obs",
+          "base": 40
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "넘어지면 끝이다",
+        "ok": {
+          "text": "선로 쪽으로 굴렀다. 무릎이 깨졌다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_mob",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "발목이 잡혔다. 담요가 얼굴을 덮었다. 발길질이 멎지 않았다.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
+      },
+      {
+        "label": "무릎을 꿇고 빈다",
+        "check": {
+          "skill": "talk",
+          "base": 35
+        },
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "안 들으면 끝이다",
+        "ok": {
+          "text": "누가 먼저 돌아섰다. 다들 따라갔다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "dawn_mob",
+              "set": 0
+            },
+            {
+              "verb": "number",
+              "id": "grudge",
+              "n": -1,
+              "who": "all"
+            }
+          ],
+          "ledger": ""
+        },
+        "fail": {
+          "text": "아무도 대답하지 않았다. 화로가 멀어졌다.",
+          "effects": [
+            {
+              "verb": "kill",
+              "who": "you"
+            }
+          ],
+          "ledger": {
+            "who": "you",
+            "status": "dead",
+            "day": "{day}",
+            "cause": ""
+          }
+        }
       }
-    ]
+    ],
+    "once": 0,
+    "target": "randomSleeper",
+    "targetIf": "grudge<2",
+    "targetOptional": 1
   },
   {
     "id": "dawn_dongha",
@@ -9751,6 +11307,92 @@
         }
       },
       {
+        "label": "손등을 깨물며 버틴다",
+        "check": null,
+        "cost": {},
+        "req": {},
+        "taboo": "",
+        "warn": "다친다",
+        "out": {
+          "text": "피 맛이 날 때까지 깨물었다. 이름은 새벽에 그쳤다.",
+          "effects": [
+            {
+              "verb": "flag",
+              "id": "named_you",
+              "set": 0
+            },
+            {
+              "verb": "injure",
+              "who": "you",
+              "n": 1
+            }
+          ],
+          "ledger": ""
+        },
+        "swap": [
+          {
+            "when": "karma>=8 & fired:called_up>=1 & !flag:you_finger",
+            "warn": "손가락을 잃는다. 이름이 또 온다",
+            "out": {
+              "text": "손가락 한 마디를 물어뜯었다. 이름은 새벽까지 그치지 않았다.",
+              "effects": [
+                {
+                  "verb": "permanent",
+                  "who": "you",
+                  "loss": "finger"
+                },
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 1
+                }
+              ],
+              "ledger": ""
+            }
+          },
+          {
+            "when": "karma>=8",
+            "warn": "다친다. 이름이 또 온다",
+            "out": {
+              "text": "피 맛이 날 때까지 깨물었다. 이름은 새벽까지 그치지 않았다.",
+              "effects": [
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 1
+                }
+              ],
+              "ledger": ""
+            }
+          },
+          {
+            "when": "fired:called_up>=1 & !flag:you_finger",
+            "warn": "손가락을 잃는다",
+            "out": {
+              "text": "손가락 한 마디를 물어뜯었다. 이름은 새벽에 그쳤다.",
+              "effects": [
+                {
+                  "verb": "flag",
+                  "id": "named_you",
+                  "set": 0
+                },
+                {
+                  "verb": "permanent",
+                  "who": "you",
+                  "loss": "finger"
+                },
+                {
+                  "verb": "injure",
+                  "who": "you",
+                  "n": 1
+                }
+              ],
+              "ledger": ""
+            }
+          }
+        ]
+      },
+      {
         "label": "다른 이름을 댄다",
         "check": null,
         "cost": {},
@@ -9792,10 +11434,85 @@
               "verb": "flag",
               "id": "stood_stairs_target",
               "set": 1
+            },
+            {
+              "verb": "number",
+              "id": "karma",
+              "n": 3
             }
           ],
           "ledger": ""
-        }
+        },
+        "swap": [
+          {
+            "when": "karma>=8",
+            "check": {
+              "skill": "talk",
+              "base": 50
+            },
+            "warn": "그 사람이 되받으면 끝이다",
+            "ok": {
+              "text": "잠든 사람의 이름을 댔다. 위의 목소리가 멈췄다. 그 사람이 담요째 떨었다.",
+              "effects": [
+                {
+                  "verb": "flag",
+                  "id": "named_you",
+                  "set": 0
+                },
+                {
+                  "verb": "number",
+                  "id": "fear",
+                  "n": 3,
+                  "who": "target"
+                },
+                {
+                  "verb": "number",
+                  "id": "grudge",
+                  "n": 2,
+                  "who": "target"
+                },
+                {
+                  "verb": "axis",
+                  "id": "name",
+                  "n": 1
+                },
+                {
+                  "verb": "number",
+                  "id": "counted",
+                  "n": 1,
+                  "who": "target"
+                },
+                {
+                  "verb": "flag",
+                  "id": "stood_stairs_target",
+                  "set": 1
+                },
+                {
+                  "verb": "number",
+                  "id": "karma",
+                  "n": 3
+                }
+              ],
+              "ledger": ""
+            },
+            "fail": {
+              "text": "그 사람이 깨어 당신 이름을 되받아 댔다. 계단이 따뜻해졌다. 신발이 저절로 벗겨졌다.",
+              "effects": [
+                {
+                  "verb": "kill",
+                  "who": "you",
+                  "how": "ascended"
+                }
+              ],
+              "ledger": {
+                "who": "you",
+                "status": "ascended",
+                "day": "{day}",
+                "cause": ""
+              }
+            }
+          }
+        ]
       },
       {
         "label": "대답한다",
@@ -9823,7 +11540,8 @@
         }
       }
     ],
-    "target": "any"
+    "target": "any",
+    "targetOptional": 1
   },
   {
     "id": "rail_killed",

@@ -48,9 +48,10 @@
     if (lines && p.n[id] !== before) lines.push({ kind: 'number', id, who, from: before, to: p.n[id] });
   }
 
-  function setTrace(s, db, objId, st, day, by) {
+  // late = 1 → 못 본 밤의 일(nightEvents.missed)이 바꾼 흔적 (E3, 10-24 A4). 조사 글은 '<줄id>_late' 가 있으면 그것.
+  function setTrace(s, db, objId, st, day, by, late) {
     if (!db.objects[objId] || !db.objects[objId].states.includes(st)) return false;
-    s.traces[objId] = { st, day, by: by || null, seen: false };
+    s.traces[objId] = { st, day, by: by || null, seen: false, late: late ? 1 : 0 };
     return true;
   }
 
@@ -91,7 +92,19 @@
     return s;
   }
 
-  const API = { apply, setNumber, setTrace, kill, permanent, resolveWho, resolveWhos, fillRole, PERM_SKILL, WHO_WORDS, list };
+  // 당신 부상의 출처 기록 (10-24 사인 집계 — '부상을 만든 선택' 기준, 검토 지적 17). lines 의 당신 injury 증가를 src 와 함께 s.hurt 에 남긴다.
+  //   src: 'ev:<사건>/<선택 label>' · 'night:<밤 사건 id>' · 'neglect:<밤 사건 id>' · 'holds:<물건>'. 화면은 안 본다(봇·통계용). 최근 HURT_MAX 개만
+  const HURT_MAX = 60;
+  function noteHurt(s, lines, src) {
+    if (!Array.isArray(lines)) return;
+    for (const l of lines) if (l && l.kind === 'number' && l.id === 'injury' && l.who === 'you' && l.to > (l.from || 0)) {
+      if (!Array.isArray(s.hurt)) s.hurt = [];
+      s.hurt.push({ day: s.day, src, n: l.to - (l.from || 0) });
+      if (s.hurt.length > HURT_MAX) s.hurt.splice(0, s.hurt.length - HURT_MAX);
+    }
+  }
+
+  const API = { apply, setNumber, setTrace, kill, permanent, resolveWho, resolveWhos, fillRole, noteHurt, HURT_MAX, PERM_SKILL, WHO_WORDS, list };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).effects = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

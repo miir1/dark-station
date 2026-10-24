@@ -18,10 +18,14 @@
   //  · injure 의 n 은 ±1~3 (음수 = 부상 회복)
   //  · objects 의 holds(수납 내용, P1-11) 안 effects 도 같은 두 꼴을 받는다. holds 의 빈 text·state·effects 는 없는 것으로
   //  · 같은 수치 id · injure · kill · permanent 가 두 번 이상 나오면 값이 목록이 된다(순서 유지, 전부 적용) — 마지막 것만 남던 문제(10-22)
+  //  · (10-24) nightEvents 의 missed·caught({effects, trace}) 안 effects 도 두 꼴 · public·side 빈 칸은 없는 것 · events 의 targetIf·targetOptional 빈 칸은 없는 것
+  //    선택지 swap(객체 또는 목록) 안의 결과 effects 도 두 꼴 — swap 변형의 빈 값 칸은 '그 칸을 비운다'는 뜻이라 지우지 않는다
+  //  · (10-24 A1·A4) who:'you' 는 {who:'you', n} 그대로 둔다 — 밤 사건·방치 판정(missed·caught)에서 맨숫자는 행위자(주민)의 것이라,
+  //    '당신 +1' 이 행위자에게 가던 오류(share_bowl.caught)를 막는다. 선택 결과에서는 행위자가 당신이라 결과가 같다. who 없음·self = 맨숫자(행위자)
   function effectsToObject(arr, where) {
     if (!Array.isArray(arr)) return arr;
     const o = {};
-    const setWho = (who, n) => (who && who !== 'you' && who !== 'self' ? { who, n } : n);
+    const setWho = (who, n) => (who && who !== 'self' ? { who, n } : n);
     const add = (key, val) => { if (!Object.prototype.hasOwnProperty.call(o, key)) o[key] = val; else if (Array.isArray(o[key])) o[key].push(val); else o[key] = [o[key], val]; };
     for (const e of arr) {
       if (!e || typeof e !== 'object') throw new TableError([{ text: `${where}: effects 배열 원소가 객체가 아님` }]);
@@ -39,17 +43,36 @@
     return o;
   }
   const blank = (v) => v == null || v === '' || v === '-' || (typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length === 0);
+  // 선택지 한 개의 빈 칸 지우기 + 결과 effects 배열 → 객체.
+  // variant = swap 변형: 적힌 칸은 빈 값이어도 '그 칸을 비운다'는 뜻이라 지우지 않는다(엔진 swapChoice 가 합친 뒤 빈 칸을 지운다). 결과 effects 만 바꾼다
+  function normChoice(c, where, variant) {
+    if (!variant) for (const key of ['check', 'cost', 'req', 'taboo', 'warn', 'hint']) if (blank(c[key])) delete c[key];
+    for (const key of ['out', 'ok', 'fail']) { const o = c[key]; if (!o || typeof o !== 'object') continue; if (blank(o.ledger)) delete o.ledger; if (blank(o.image)) delete o.image; if (blank(o.target)) delete o.target; if (o.effects !== undefined) { if (blank(o.effects)) delete o.effects; else o.effects = effectsToObject(o.effects, `${where}.${key}`); } }
+  }
+  // 밤 사건의 방치 판정 칸 missed·caught = { effects, trace } (10-24 A4 E1) — effects 는 두 꼴, 빈 칸은 없는 것
+  function normJudge(n, key, where) {
+    const v = n[key];
+    if (blank(v) || typeof v !== 'object' || Array.isArray(v)) { if (blank(v)) delete n[key]; return; }
+    if (v.effects !== undefined) { if (blank(v.effects) || (Array.isArray(v.effects) && !v.effects.length)) delete v.effects; else v.effects = effectsToObject(v.effects, `${where}.${key}`); }
+    if (blank(v.trace)) delete v.trace;
+    if (blank(v)) delete n[key];
+  }
   function normalizeTables(raw) {
     const t = JSON.parse(JSON.stringify(raw));
-    if (Array.isArray(t.events)) t.events.forEach((ev) => { if (ev && typeof ev === 'object') for (const key of ['target', 'endStatus', 'board']) if (blank(ev[key])) delete ev[key]; });
+    if (Array.isArray(t.events)) t.events.forEach((ev) => { if (ev && typeof ev === 'object') for (const key of ['target', 'endStatus', 'board', 'targetIf', 'targetOptional']) if (blank(ev[key])) delete ev[key]; });
     if (Array.isArray(t.events)) t.events.forEach((ev, i) => (ev && Array.isArray(ev.choices) ? ev.choices : []).forEach((c, k) => {
       if (!c || typeof c !== 'object') return;
-      for (const key of ['check', 'cost', 'req', 'taboo', 'warn', 'hint']) if (blank(c[key])) delete c[key];
-      for (const key of ['out', 'ok', 'fail']) { const o = c[key]; if (!o || typeof o !== 'object') continue; if (blank(o.ledger)) delete o.ledger; if (blank(o.image)) delete o.image; if (blank(o.target)) delete o.target; if (o.effects !== undefined) { if (blank(o.effects)) delete o.effects; else o.effects = effectsToObject(o.effects, `events[${i}] ${ev.id} choices[${k}].${key}`); } }
+      normChoice(c, `events[${i}] ${ev.id} choices[${k}]`);
+      // (10-24 A1) swap = 조건이 맞을 때 바뀌는 선택지 — 객체 하나 또는 목록(앞에서부터 처음 맞는 것). 빈 칸은 없는 것
+      if (blank(c.swap) || (Array.isArray(c.swap) && !c.swap.length)) delete c.swap;
+      else (Array.isArray(c.swap) ? c.swap : [c.swap]).forEach((v, j) => { if (v && typeof v === 'object' && !Array.isArray(v)) normChoice(v, `events[${i}] ${ev.id} choices[${k}].swap[${j}]`, true); });
     }));
     // (P1-11 엔진 몫) 물건의 수납 내용 holds = { text, effects, state } — effects 는 사건 결과와 같은 두 꼴(배열이면 객체 꼴로). 빈 holds 는 없는 것
     if (Array.isArray(t.objects)) t.objects.forEach((o, i) => { if (!o || typeof o !== 'object') return; if (blank(o.holds)) { delete o.holds; return; } const h = o.holds; if (!h || typeof h !== 'object' || Array.isArray(h)) return; if (blank(h.text)) delete h.text; if (blank(h.state)) delete h.state; if (h.effects !== undefined) { if (blank(h.effects)) delete h.effects; else h.effects = effectsToObject(h.effects, `objects[${i}] ${o.id} holds`); } });
-    if (Array.isArray(t.nightEvents)) t.nightEvents.forEach((n, i) => { if (!n || typeof n !== 'object') return; if (blank(n.target)) n.target = '-'; if (blank(n.actor)) n.actor = '-'; if (n.effects !== undefined) { if (blank(n.effects)) delete n.effects; else n.effects = effectsToObject(n.effects, `nightEvents[${i}] ${n.id}`); } if (blank(n.rumor) || blank(n.rumor.line)) delete n.rumor; if (blank(n.trace)) delete n.trace; });
+    if (Array.isArray(t.nightEvents)) t.nightEvents.forEach((n, i) => { if (!n || typeof n !== 'object') return; if (blank(n.target)) n.target = '-'; if (blank(n.actor)) n.actor = '-'; if (n.effects !== undefined) { if (blank(n.effects)) delete n.effects; else n.effects = effectsToObject(n.effects, `nightEvents[${i}] ${n.id}`); } if (blank(n.rumor) || blank(n.rumor.line)) delete n.rumor; if (blank(n.trace)) delete n.trace;
+      for (const key of ['missed', 'caught']) normJudge(n, key, `nightEvents[${i}] ${n.id}`);
+      for (const key of ['public', 'side']) if (blank(n[key])) delete n[key]; });
+    if (Array.isArray(t.people)) t.people.forEach((p) => { if (p && typeof p === 'object' && p.addressCold === null) delete p.addressCold; });   // addressCold '' = 부르지 않는다(빈 글을 지우지 않는다)
     if (t.identity && typeof t.identity === 'object' && !Array.isArray(t.identity)) { const { axes, candidates } = t.identity; t.identity = { axes, candidates: Array.isArray(candidates) ? candidates.map((c) => { if (c && typeof c === 'object' && c.id === undefined && c.candidate !== undefined) { c = Object.assign({ id: c.candidate }, c); delete c.candidate; } return c; }) : candidates }; }
     return t;
   }

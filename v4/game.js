@@ -66,6 +66,23 @@
   const lookName = (id) => { const r = db.lines['look_' + id]; return r && r[0] ? r[0].text : ''; };
   function testified(id) { const rows = db.lines['testify_' + id]; if (!rows || !rows.length) return true; const h = state.heard || {}; return rows.some((r, i) => h[`testify_${id}#${i}`] != null); }
   function nameOf(id) { const p = person(id); if (!p) return ''; if (id === 'you') return p.name; return !testified(id) && lookName(id) ? lookName(id) : p.name; }
+  // 글 속 사람 이름을 화면 이름으로 (물건 조사 글·수첩 사실 줄·사인 칸 — 표가 진짜 이름으로 적어 둔 것): 증언 전인 사람의 이름(성까지 '박기철' · 이름만 '기철')을
+  //   생김새의 끝 낱말로 바꾸고 조사를 맞춘다 — '기철의 베개다' → '남자의 베개다' · '순례가 밤마다 긋는다' → '할머니가 밤마다 긋는다'. '한 마리' 같은 셈말은 건드리지 않는다
+  const PJOSA = { 이가: '이/가', 이: '이/가', 가: '이/가', 이는: '은/는', 은: '은/는', 는: '은/는', 이를: '을/를', 을: '을/를', 를: '을/를', 과: '과/와', 와: '과/와' };
+  const reEsc = (t) => String(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const lookNoun = (id) => { const w = lookName(id).trim().split(/\s+/); return w[w.length - 1] || '누군가'; };
+  function maskPeople(text) {
+    let t = String(text == null ? '' : text);
+    if (!state || !db || !t) return t;
+    for (const id of db.peopleOrder) {
+      const p = person(id);
+      if (id === 'you' || !p || !p.name || testified(id) || !lookName(id)) continue;
+      const given = p.name.length >= 3 ? p.name.slice(1) : p.name, noun = lookNoun(id);
+      const re = new RegExp(`(?<!(?:한|두|세|네|몇|여러|열|[0-9])\\s?)(?:${reEsc(p.name)}|${reEsc(given)})(이가|이는|이를|이|가|은|는|을|를|과|와)?`, 'g');
+      t = t.replace(re, (m, j) => (j ? B.fill(`{who:${PJOSA[j]}}`, noun) : noun));
+    }
+    return t;
+  }
   // 들은 줄을 엔진 heard 에 남긴다 ('<줄id>#<행번호>' → 오늘). hearLog = 화면 기억(검수·캡처용: 언제 무엇을 들었나)
   const hearLog = [];
   function hearLine(id, row, how) {
@@ -194,6 +211,7 @@
 
   // 지도 위 사람: [{id, name, x, y, face, pose, injury, mark, react, bubble, light, beam, talkable, stoke}]
   const faceTo = (x, y) => { const dx = scene.px - x, dy = scene.py - y; return Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy < 0 ? 'up' : 'down'); };
+  const faceFire = (x, y) => { const f = scene.map && scene.map.fire; if (!f || f[0] < 0) return 'down'; const dx = f[0] - x, dy = f[1] - y; return Math.abs(dx) >= Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy < 0 ? 'up' : 'down'); };
   function peopleOnMap() {
     const out = [];
     if (!scene.map) return out;
@@ -226,7 +244,8 @@
       else pos = (SPOTS[ph] || SPOTS.day)[id];
       if (!pos) continue;
       const near3 = Math.abs(scene.px - pos[0]) + Math.abs(scene.py - pos[1]) <= 3;
-      const face = near3 ? faceTo(pos[0], pos[1]) : pose === 'crouch' ? 'right' : 'down';
+      // 3칸 안이면 당신을 본다 · 쪼그린 순례는 불을 · 저녁 화로 둘레에 앉은 사람은 화로를 본다(사람마다 앉기 그림 4방향, P1-2) · 그 밖은 아래
+      const face = near3 ? faceTo(pos[0], pos[1]) : pose === 'crouch' ? 'right' : ph === 'evening' ? faceFire(pos[0], pos[1]) : 'down';
       out.push({ id, name: nameOf(id), x: pos[0], y: pos[1], face, pose, injury: p.n.injury || 0, mark, react: signOf(id), talkable: ph !== 'night' && ph !== 'aftermath', bubble: bubbleOf(id), stoke: pose === 'crouch' && !near3 });
     }
     return out;
@@ -241,11 +260,11 @@
     const parts = String(o.name).split(' ');
     return parts.length > 1 ? parts.slice(1).join(' ') : o.name;
   }
-  // 글 속 물건 이름을 화면 이름으로 (수첩 사실 줄 — 엔진이 표의 이름으로 적어 둔 것): '기철 베개' → 증언 전이면 '베개'
+  // 글 속 물건 이름을 화면 이름으로 (수첩 사실 줄 — 엔진이 표의 이름으로 적어 둔 것): '기철 베개' → 증언 전이면 '베개'. 남은 사람 이름은 maskPeople 로
   function maskNames(text) {
     let t = String(text || '');
     for (const id of Object.keys(db.objects)) { const o = db.objects[id]; if (ownerOf(id) && o.name && t.includes(o.name)) t = t.split(o.name).join(objName(id)); }
-    return t;
+    return maskPeople(t);
   }
   // 지도 위 물건: 표의 자리 + 흔적 상태 → 덧그림
   function objectsOnMap() {
@@ -270,6 +289,10 @@
     return out;
   }
   const objectsAt = (x, y) => objectsOnMap().filter((o) => !o.hidden && o.x === x && o.y === y);
+  // 지도 맨 윗줄 벽에 걸려 머리 위로 다 못 올린 수납(터널 벽감 상자 — render.js wallClear 가 아님): 바로 아래 칸에 서면 상자가 머리에 얹힌 것처럼 보인다(검증) →
+  //   비스듬히 아래 옆 칸에서 위를 보고도 조사된다(target) · 걸어갈 때는 옆 칸을 먼저 고른다(walkTo). 바로 아래에서도 여전히 조사되고, 열 때는 쪼그려 앉는다
+  const lowWall = (o) => !!o && tileAt(o.x, o.y) === '#' && !(RENDER.wallClear && RENDER.wallClear(scene, o));
+  const lowWallAt = (x, y) => objectsAt(x, y).filter(lowWall);
   const rubbleBlocks = (x, y) => scene.map.id === 'tunnel' && x === 17 && traceSt('rubble') !== 'crossed';
   // 막힌 열(17열)의 나머지 칸에도 잔해를 그린다 — 보이지 않는 벽이 없게 (잔해 물건이 있는 칸은 물건이 그린다)
   function rubbleCells() {
@@ -374,16 +397,21 @@
       return true;
     }
     if (thing || blocked(tx, ty)) {
+      // 덜 올라간 벽걸이(lowWall)는 비스듬히 아래 옆 칸에서 위를 보고 조사하는 자리를 먼저 고른다 (바로 아래 칸은 +3칸 값 — 상자가 머리에 얹혀 보이지 않게)
+      const low = lowWallAt(tx, ty).length > 0;
+      const spots = [[0, 1, 'up', low ? 3 : 0], [0, -1, 'down', 0], [1, 0, 'left', 0], [-1, 0, 'right', 0]].concat(low ? [[-1, 1, 'up', 0], [1, 1, 'up', 0]] : []);
       let best = null;
-      for (const [dx, dy, face] of [[0, 1, 'up'], [0, -1, 'down'], [1, 0, 'left'], [-1, 0, 'right']]) {
+      for (const [dx, dy, face, extra] of spots) {
         const ax = tx + dx, ay = ty + dy;
-        if (ax === scene.px && ay === scene.py) { best = { path: [], face }; break; }
+        if (dy === 1 && dx !== 0 && objectsAt(ax, ay - 1).length) continue;          // 옆 칸 바로 위에 다른 물건이 있으면 그 물건이 먼저 잡힌다 — 그 옆 칸은 쓰지 않는다
+        const cost0 = extra + (dy === 1 && dx !== 0 && objectsAt(ax, ay).length ? 1 : 0);
+        if (ax === scene.px && ay === scene.py) { const c = { path: [], face, cost: cost0 }; if (!best || c.cost < best.cost) best = c; continue; }
         if (blocked(ax, ay)) continue;
         const p = pathTo(scene.px, scene.py, ax, ay, true) || pathTo(scene.px, scene.py, ax, ay);
-        if (p && (!best || p.length < best.path.length)) best = { path: p, face };
+        if (p && (!best || p.length + cost0 < best.cost)) best = { path: p, face, cost: p.length + cost0 };
       }
       if (!best) { UI.toast('갈 수 없는 곳이다.', 900); return false; }
-      scene.auto = best; return true;
+      scene.auto = { path: best.path, face: best.face }; return true;
     }
     const p = pathTo(scene.px, scene.py, tx, ty, true) || pathTo(scene.px, scene.py, tx, ty);
     if (!p) { UI.toast('갈 수 없는 곳이다.', 900); return false; }
@@ -471,6 +499,7 @@
     const p = peopleOnMap().find((q) => q.x === fx && q.y === fy && q.talkable);
     if (p) return { x: fx, y: fy, kind: 'npc', id: p.id, label: '말 걸기', verb: '말 걸기', name: p.name || '누군가' };
     let os = objectsAt(fx, fy);
+    if (!os.length && scene.face === 'up') for (const dx of [-1, 1]) { const ws = lowWallAt(scene.px + dx, scene.py - 1); if (ws.length) { os = ws; break; } }   // 비스듬히 위 벽걸이 (덜 올라간 것)
     if (!os.length) os = objectsAt(scene.px, scene.py);
     if (os.length) {
       const fire = os.find((q) => q.id === 'fire');
@@ -544,9 +573,36 @@
   const BLINK_MS = 900;
   const blinkRes = (ks) => { const t = performance.now(); for (const k of ks) blinkAt[k] = t; hud(); };
   // 첫 만남 사건 → 그 사람 (대사창 이름표 = nameOf: 증언 전에는 생김새)
-  // 찾은 물건 아이콘 (v4 icons/<이름>, P0-A3): 그 선택의 결과가 당신 손에 쥐여 주는 물건 → 결과 글 얼굴 칸. '<사건 id>#<선택 번호>'. 그림이 없으면 연 수납의 자원 아이콘으로
+  // 찾은 물건 아이콘 (v4 icons/<이름> 11장, P0-A3): 그 선택의 결과가 당신 손에 쥐여 주는 물건 → 결과 글 얼굴 칸(40px 을 2배 = 80).
+  //   ① FOUND 표 '<사건 id>#<선택 번호>' (판정이 실패한 결과에는 안 쓴다) → ② 결과 글에 그 물건 낱말이 있고 그 물건을 실제로 얻었을 때(새로 선 깃발·늘어난 자원)
+  //   → ③ 연 수납에서 늘어난 자원 아이콘(v3 icons/food·water…). 그림이 없으면 다음 단계로 — 그림이 하나도 없으면 얼굴 칸 없이 글만
   const FOUND = { 'pro_bag#0': 'cable', 'pro_notebook#0': 'notebook', 'd0_gicheol_notebook#0': 'notebook', 'd1_gicheol_arrive#0': 'notebook', 'pro_lever#0': 'bottle',
-    'pro_gicheol#1': 'crackers', 'pro_gicheol#2': 'glove', 'd2_key#0': 'key', 'd2_key_vest#0': 'key', 'trial_d8_key#0': 'key', 'trial_d8_key_b#0': 'key', 'trip_b2_drowned#1': 'key' };
+    'pro_gicheol#1': 'crackers', 'tunnel_box#0': 'crackers', 'pro_gicheol#2': 'glove', 'd2_key#0': 'key', 'd2_key_vest#0': 'key', 'trial_d8_key#0': 'key', 'trial_d8_key_b#0': 'key',
+    'trip_b2_drowned#1': 'key', 'trip_a1_phone#0': 'phonecard' };
+  // [글 낱말, 아이콘, 얻었나(새 깃발 목록, 늘어난 자원 목록)] — 글에서 먼저 나온 물건이 이긴다
+  const myKey = (f) => f === 'key_you' || /(^|_)key$/.test(f) || /^has_\w*key/.test(f);
+  const FOUND_WORDS = [
+    [/전화카드|카드를/, 'phonecard', (fl) => fl.some((f) => /card/.test(f))],
+    [/밧줄/, 'rope', (fl) => fl.some((f) => /rope/.test(f))],
+    [/성냥/, 'matches', (fl, rs) => fl.some((f) => /match/.test(f)) || rs.includes('fuel')],
+    [/퓨즈/, 'fuse', (fl, rs) => fl.some((f) => /fuse/.test(f)) || rs.includes('parts')],
+    [/무전기/, 'radio', (fl) => fl.some((f) => /radio/.test(f))],
+    [/장갑/, 'glove', (fl) => fl.some((f) => /glove/.test(f))],
+    [/케이블|전선/, 'cable', (fl, rs) => fl.some((f) => /rope|cable/.test(f)) || rs.includes('parts')],
+    [/열쇠/, 'key', (fl) => fl.some(myKey)],
+    [/수첩/, 'notebook', (fl) => fl.includes('notebook')],
+    [/건빵/, 'crackers', (fl, rs) => rs.includes('food')],
+    [/생수|물병/, 'bottle', (fl, rs) => rs.includes('water')],
+  ];
+  function foundIcon(evId, i, r, newFlags, gained) {
+    const branch = r.roll ? (r.roll.success ? 'ok' : 'fail') : 'out';
+    const fx = FOUND[evId + '#' + i];
+    if (fx && branch !== 'fail' && ART.iconSrc(fx)) return fx;
+    const text = String(r.text || '');
+    const hits = FOUND_WORDS.map(([re, icon, got]) => { const m = re.exec(text); return m && got(newFlags, gained) && ART.iconSrc(icon) ? { icon, at: m.index } : null; }).filter(Boolean);
+    hits.sort((a, b) => a.at - b.at);
+    return hits.length ? hits[0].icon : '';
+  }
   const foundLog = [];
   const MEET_EV = { pro_platform: 'soonrye', pro_gicheol: 'gicheol', pro_mari: 'mari', d0_mari_fire: 'mari', d1_shutter_knock: 'eunji', d0_gicheol_notebook: 'gicheol', d1_gicheol_arrive: 'gicheol', d1_gicheol_arrive_b: 'gicheol' };
   async function showEvent() {
@@ -573,7 +629,7 @@
       const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(c.label)}${c.warn ? ` — <span class="warnt">${esc(c.warn)}</span>` : ''}</p>${boardWho}`, { kind: 'confirm2', sel: 1, options: [{ label: '그렇게 한다', value: true }, { label: '다시 고른다', value: false }] });   // 커서는 '다시 고른다'에서 시작
       if (sure) break;
     }
-    const trBefore = traceStates(), worldBefore = Object.assign({}, state.world);
+    const trBefore = traceStates(), worldBefore = Object.assign({}, state.world), flagsBefore = Object.assign({}, state.flags);
     if (!act({ type: 'choose', i })) return;
     const r = state.lastResult || {};
     // 수납 열기 3박자 (P0-S6): 이 지도의 물건이 닫힘 → 열림·빔으로 바뀌었으면 ① 열린 그림으로 즉시 바뀌고(지도가 상태를 그린다)
@@ -582,9 +638,13 @@
     const gained = RES_ORDER.filter((k) => k !== 'fuel' && (state.world[k] || 0) > (worldBefore[k] || 0));
     if (gained.length) blinkRes(gained);
     // 앞 칸의 바닥 가구(벽에 걸지 않은 것 — 창고 상자·가방)를 열었으면 여는 동안 쪼그려 앉는다: 서 있으면 머리(칸 위로 14px)가 열린 그림 가운데를 가린다.
-    //   벽에 거는 것(구급함·레버함·벽감 상자, 물건 칸이 '#')은 render.js 가 벽면 높이로 올려 그려서 서서 연다
+    //   벽에 거는 것(구급함·레버함, 물건 칸이 '#')은 render.js 가 벽면 높이로 올려 그려서 서서 연다 — 지도 맨 윗줄이라 덜 올라간 것(터널 벽감 상자)은 쪼그려 앉는다
     const [fx0, fy0] = front();
-    const floorOpen = opened.some((oid) => scene.map.objects.some((mo) => mo.id === oid && mo.x === fx0 && mo.y === fy0) && tileAt(fx0, fy0) !== '#');
+    const floorOpen = opened.some((oid) => {
+      if (!scene.map.objects.some((mo) => mo.id === oid && mo.x === fx0 && mo.y === fy0)) return false;
+      const ob = objectsOnMap().find((q) => q.id === oid && q.x === fx0 && q.y === fy0);
+      return !(ob && RENDER.wallClear && RENDER.wallClear(scene, ob));
+    });
     if (opened.length && !black) {
       if (!r.image) UI.cgClear();                                         // 그림 층을 걷어 지도에서 열리는 것을 보인다
       shake = { ids: opened, until: performance.now() + OPEN_SHAKE_MS };
@@ -597,11 +657,13 @@
       if (src) UI.cg(src); else missing.add(r.image + '@' + v.id + ':out');
     }
     if (r.roll) await UI.line(`판정 ${r.roll.chance}% — ${r.roll.success ? '됐다.' : '안 됐다.'}`, { black });
-    // 결과 글 얼굴 칸 = 찾은 물건 아이콘(40px 을 2배 = 80): 사건이 손에 쥐여 준 물건(FOUND — 케이블·수첩·건빵·장갑·열쇠…)이 먼저, 없으면 연 수납에서 늘어난 자원
-    const fid = FOUND[v.id + '#' + i] || FOUND[v.id];
+    // 결과 글 얼굴 칸 = 찾은 물건 아이콘(40px 을 2배 = 80): 사건이 손에 쥐여 준 물건(foundIcon — 케이블·수첩·건빵·생수·장갑·열쇠·전화카드…)이 먼저, 없으면 연 수납에서 늘어난 자원
+    const newFlags = Object.keys(state.flags).filter((f) => state.flags[f] === true && flagsBefore[f] !== true);
+    const gainedAll = RES_ORDER.filter((k) => (state.world[k] || 0) > (worldBefore[k] || 0));
+    const fid = foundIcon(v.id, i, r, newFlags, gainedAll);
     const resIcon = opened.length && gained.length ? RES_ICON[gained.slice().sort((a, b) => (state.world[b] - worldBefore[b]) - (state.world[a] - worldBefore[a]))[0]] : '';
     const found = (fid && ART.iconSrc(fid)) || (resIcon && ART.iconSrc(resIcon)) || '';
-    if (found) foundLog.push({ event: v.id, choice: i, icon: fid && ART.iconSrc(fid) ? fid : resIcon, day: state.day });
+    if (found) foundLog.push({ event: v.id, choice: i, icon: fid || resIcon, day: state.day, text: r.text || '' });
     if (r.text) await UI.lines(r.text, found ? { black, tag: v.id + ':out', face: found, faceCls: 'icon' } : { black, tag: v.id + ':out' });
     scene.crouch = false;
     if (['pro_notebook', 'd1_gicheol_arrive', 'd0_gicheol_notebook'].includes(v.id)) UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
@@ -737,7 +799,7 @@
     const lid = o.inspectLine && o.inspectLine[st];
     const text = lid ? lineOf(lid) : '';
     const shownName = objName(id);                                              // 주인 증언 전이면 주인 이름을 뗀 낱말 ('담요')
-    await UI.lines(text || `${shownName}이다.`);
+    await UI.lines(text ? maskNames(text) : `${shownName}이다.`);                     // 조사 글의 사람 이름도 증언 전이면 생김새로 ('기철의 베개다' → '남자의 베개다')
     // 젖은·썩은 붕대: 그 사람이 다쳤으면 그 자리에서 새로 감을 수 있다
     const bm = /^bandage_(\w+)$/.exec(id);
     if (bm && person(bm[1]) && met(bm[1]) && (person(bm[1]).n.injury || 0) > 0 && phaseAllows('treat')) {
@@ -751,7 +813,8 @@
     if (fact && phase && phase.actions.includes('writeLedger') && !state.ledger.written.some((w) => w.object === id && w.day === state.day)) {
       const t = state.traces[id] || {};
       const txt = String(fact).replace(/\{day\}/g, t.day).replace(/\{by\}/g, t.by && person(t.by) ? nameOf(t.by) : '').split(o.name).join(shownName);
-      const w = await UI.open(`<p class="who">수첩</p><p>${esc(txt)}</p>`, { kind: 'write', options: [{ label: '수첩에 적는다', value: true }, { label: '둔다', value: false }], cancel: true, cancelValue: false });
+      const txtShown = maskPeople(txt);
+      const w = await UI.open(`<p class="who">수첩</p><p>${esc(txtShown)}</p>`, { kind: 'write', options: [{ label: '수첩에 적는다', value: true }, { label: '둔다', value: false }], cancel: true, cancelValue: false });
       if (w && act({ type: 'writeFact', object: id })) UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
     }
   }
@@ -866,7 +929,7 @@
   // 명부 행 = 엔진 값 그대로(ended.ledger: 결과의 ledger 칸 · 결말의 endStatus·board 가 정한 status). 데이터가 d10_walk endStatus:walked · d10_train '챙긴 운임으로 탄다' ledger boarded 를 채워서 화면의 임시 변환(walked_out·you_boarded 깃발)은 지웠다
   const ledgerRows = () => (state.ended && state.ended.ledger) || E.ledger.rows(state, db);
   const rowDay = (r) => (r.day != null && r.day !== '' && (r.status === 'dead' || r.status === 'ascended') ? `D${r.day}` : '');
-  const rowCause = (r) => (r.status === 'dead' || r.status === 'ascended' ? (r.cause ? esc(r.cause) : '<span class="blank">___</span>') : '');
+  const rowCause = (r) => (r.status === 'dead' || r.status === 'ascended' ? (r.cause ? esc(maskNames(r.cause)) : '<span class="blank">___</span>') : '');   // 사인 글 속 이름도 이름표대로
   // 명부 행 이름 = 화면 이름표(nameOf): 증언(진짜 이름)을 듣기 전에는 생김새 — 엔진 행의 name(진짜 이름)을 그대로 쓰지 않는다 (같은 창 머리말과 같게)
   const rowName = (r) => (r.id && person(r.id) ? nameOf(r.id) : r.name);
   // 명부 한 장 (무대 층): 탄 사람 옆에 구멍, 죽은 줄에 날짜와 줄긋기, 올라간 줄은 옅게, 사인 빈칸은 ___ , 당신 줄은 맨 위
@@ -986,7 +1049,7 @@
     const base = p.status === 'ascended' ? '올라갔다' : '밤에 갔다';
     const facts = state.ledger.written.filter((w) => w && w.text && w.text.includes(p.name)).slice(-2).map((w) => w.text);
     const short = (t) => (t.length > 22 ? t.slice(0, 22) + '…' : t);
-    const opts = [{ label: base, value: base }].concat(facts.map((t) => ({ label: short(t), value: t }))).concat([{ label: '비워 둔다', value: '__blank' }, { label: '아직', value: null }]);
+    const opts = [{ label: base, value: base }].concat(facts.map((t) => ({ label: short(maskNames(t)), value: t }))).concat([{ label: '비워 둔다', value: '__blank' }, { label: '아직', value: null }]);
     const c = await UI.open(`<p class="who">${esc(nm)} — 사인 칸</p><p class="mini">적지 않는 것도 적는 것이다. 한 번 적으면 고칠 수 없다.</p>`, { kind: 'cause', cancel: true, cancelValue: null, options: opts, cls: 'wide' });
     if (c == null) return;
     const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(nm)} — ${c === '__blank' ? '___' : esc(c)}</p>`, { kind: 'confirm2', sel: 1, options: [{ label: '그렇게 적는다', value: true }, { label: '다시 고른다', value: false }] });
@@ -1165,7 +1228,9 @@
   async function autoRun(target) {
     const wantDeath = target === 'death';
     let holding = false, boardTried = false;
-    const report = (why) => { console.log(`[ds4 auto] ${target} ${why} D${state.day} ${state.phase}${state.ended ? ' ended=' + state.ended.why : ''} you=${person('you').status} food=${state.world.food} | ${autoLog.slice(-16).join(' / ')}`); if (missing.size) console.log('[ds4 missing] ' + Array.from(missing).join(' ')); };
+    // reached=1 = 캡처 지점에 닿았다(그 창을 붙잡았거나, 그 지도·단계에 섰다). shot.py 는 이 표시가 있어야 ok 로 친다 — 게임이 안 떴거나 지점에 못 닿은 캡처를 성공으로 세지 않게 (검증 #8)
+    const report = (why, reached) => { console.log(`[ds4 auto] ${target} ${why} reached=${reached ? 1 : 0} D${state.day} ${state.phase} map=${scene.map ? scene.map.id : '-'} open=${UI.openKind() || '-'}${state.ended ? ' ended=' + state.ended.why : ''} you=${person('you').status} food=${state.world.food} | ${autoLog.slice(-16).join(' / ')}`); if (missing.size) console.log('[ds4 missing] ' + Array.from(missing).join(' ')); };
+    const onMap = (id) => !!(scene.map && scene.map.id === id);
     const pend = (...ids) => !!(state.pending && ids.includes(state.pending.id));
     const HOLD = {
       night3: (k) => k === 'line' && state.day === 3 && state.phase === 'night' && pend('trial_d3_count'),
@@ -1218,7 +1283,7 @@
       return best;
     }
     bot = (kind, info) => {
-      if (HOLD && HOLD(kind, info)) { holding = true; UI.setBot(null); report('hold'); return 'hold'; }
+      if (HOLD && HOLD(kind, info)) { holding = true; UI.setBot(null); report('hold', true); return 'hold'; }
       if (kind === 'line') return undefined;
       if (kind === 'event') {                                         // 열차 결말 캡처: 먼저 태울 사람 창을 한 번 연다 (명부에 '탔다'가 보이게)
         const bi = info.options.findIndex((o) => o.value === 'board');
@@ -1253,7 +1318,7 @@
         // 열차 결말: 시뮬 판은 물이 0 이라 '탄다'(식량·물 1)가 잠긴다 → 캡처용 지름길로 운임 깃발을 세워 '챙긴 운임으로 탄다'를 연다 (기록에 남긴다)
         if (target === 'train' && !flagOn('fare_hoard') && ((state.world.food || 0) < 1 || (state.world.water || 0) < 1)) { act({ type: 'setFlag', flag: 'fare_hoard', quiet: true }); autoLog.push('[지름길 fare_hoard]'); }
         await pendingFlow();
-        if (!holding) { UI.setBot(null); report('end (저장에서 시작)'); }
+        if (!holding) { UI.setBot(null); report('end (저장에서 시작)', false); }
         return;
       }
       autoLog.push('[저장을 못 읽었다 — 처음부터]');
@@ -1261,12 +1326,12 @@
     const seed = Number(B.params.get('seed')) || 7;
     await newGame(seed);
     await idle();
-    if (target === 'car') { UI.setBot(null); report('stop'); return; }
-    if (target === 'open') { await use('medkit'); await idle(); UI.setBot(null); report('stop'); return; }
+    if (target === 'car') { UI.setBot(null); report('stop', onMap('car') && !UI.isOpen()); return; }
+    if (target === 'open') { await use('medkit'); await idle(); UI.setBot(null); report('stop', holding); return; }
     await use('lever'); await use('notebook_dash'); await goto(21, 3); await idle();
-    if (target === 'tunnel') { await goto(12, 2); scene.face = 'right'; UI.setBot(null); report('stop'); return; }
+    if (target === 'tunnel') { await goto(12, 2); scene.face = 'right'; UI.setBot(null); report('stop', onMap('tunnel') && scene.px === 12 && scene.py === 2); return; }
     await use('gicheol'); await goto(29, 2); await idle();
-    if (target === 'arrive') { UI.setBot(null); report('stop'); return; }
+    if (target === 'arrive') { UI.setBot(null); report('stop', onMap('station')); return; }
     await use('soonrye');                                                    // 승강장: 순례에게 걸어가 말을 건다 → pro_platform (P0-S5)
     await use('speaker'); await use('blanket_mari');
     const did = {};
@@ -1277,11 +1342,11 @@
       if (holding || state.ended) break;
       const ph = state.phase, d = state.day;
       if (once('day' + d)) autoLog.push('[D' + d + ' food' + state.world.food + ' water' + state.world.water + ' hunger' + person('you').n.hunger + ']');
-      if (target === 'morning3' && d === 3 && ph === 'trace') { await use('notebook_you'); await goto(13, 12); scene.face = 'up'; UI.setBot(null); report('stop'); return; }
+      if (target === 'morning3' && d === 3 && ph === 'trace') { await use('notebook_you'); await goto(13, 12); scene.face = 'up'; UI.setBot(null); report('stop', onMap('station') && state.day === 3 && state.phase === 'trace'); return; }
       // 밤 잠자리: 밤 고정 사건이 다 지나간 뒤 지도 — 잠든 사람이 잠자리 위에 누워 있다 (D2 밤)
-      if (target === 'beds' && d === 2 && ph === 'night') { await goto(16, 10); scene.face = 'right'; UI.setBot(null); report('stop'); return; }
-      if (target === 'eve3' && d === 3 && ph === 'evening') { const [fx, fy] = fireStandCell('station'); if (scene.px !== fx || scene.py !== fy) await goto(fx, fy); scene.face = 'up'; UI.setBot(null); report('stop'); return; }
-      if (target === 'night8' && d === 8 && ph === 'night') { await goto(17, 12); scene.face = 'up'; UI.setBot(null); report('stop (D8 밤 고정 사건이 걸리지 않았다)'); return; }
+      if (target === 'beds' && d === 2 && ph === 'night') { await goto(16, 10); scene.face = 'right'; UI.setBot(null); report('stop', onMap('station') && state.day === 2 && state.phase === 'night'); return; }
+      if (target === 'eve3' && d === 3 && ph === 'evening') { const [fx, fy] = fireStandCell('station'); if (scene.px !== fx || scene.py !== fy) await goto(fx, fy); scene.face = 'up'; UI.setBot(null); report('stop', onMap('station') && state.day === 3 && state.phase === 'evening'); return; }
+      if (target === 'night8' && d === 8 && ph === 'night') { await goto(17, 12); scene.face = 'up'; UI.setBot(null); report('stop (D8 밤 고정 사건이 걸리지 않았다)', false); return; }
       // 열차 결말: D9 저녁까지 통로가 안 열렸으면 캡처용 지름길(setFlag)로 연다 — 기록에 남긴다
       if (target === 'train' && d === 9 && ph === 'evening' && once('shortcut')) {
         for (const f of ['passage_open', 'fare_hoard']) if (!flagOn(f)) { act({ type: 'setFlag', flag: f, quiet: true }); autoLog.push(`[지름길 ${f}]`); }
@@ -1289,7 +1354,7 @@
       if ((ph === 'day' || ph === 'evening') && once('treat' + ph + d)) await selfTreat();
       // D1 낮: 셔터 두드리는 소리 쪽으로 가서 셔터 틈을 조사한다 → d1_shutter_knock (P0-S5)
       if (ph === 'day' && d === 1 && !flagOn('met_eunji') && once('shutter')) {
-        if (target === 'shutter1') { await goto(2, 7); scene.face = 'up'; await until(() => bubbleOf('shutter'), 200); UI.setBot(null); report('stop'); return; }
+        if (target === 'shutter1') { await goto(2, 7); scene.face = 'up'; const heard = await until(() => bubbleOf('shutter'), 200); UI.setBot(null); report('stop', !!heard); return; }
         await use('shutter_gap'); continue;
       }
       if (ph === 'trace' && d > 0 && once('trace' + d)) { await use('notebook_you'); continue; }
@@ -1302,12 +1367,12 @@
       if (ph === 'evening' && d > 0 && once('talk' + d)) { const p = peopleOnMap().find((q) => q.talkable); if (p) { await use(p.id); continue; } }
       await use('fire');
     }
-    if (!holding) { UI.setBot(null); report('end'); }
+    if (!holding) { UI.setBot(null); report('end', false); }
   }
 
   // ── 시작 ──
   window.__ds4 = { get state() { return state; }, get db() { return db; }, get scene() { return scene; }, dispatch: act, walkTo, pick: UI.pick, interact, frame, flow, use, goto, idle, autoRun, autoLog,
-    hearLog, talkLog, cellLog, openLog, foundLog, bark, nameOf, met, peopleOnMap, objectsOnMap, target, talkTo, objective,
+    hearLog, talkLog, cellLog, openLog, foundLog, bark, nameOf, met, peopleOnMap, objectsOnMap, target, talkTo, objective, hoverName, maskPeople, foundIcon,
     missing: () => Array.from(missing), setBot: (fn) => { bot = fn; UI.setBot(fn); }, store: () => store, E, UI };
   (async () => {
     try {

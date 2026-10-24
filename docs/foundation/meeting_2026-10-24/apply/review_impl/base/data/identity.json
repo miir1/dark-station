@@ -1,0 +1,134 @@
+{
+  "axes": [
+    "share",
+    "hand",
+    "name"
+  ],
+  "thresholds": {
+    "share": 2,
+    "hand": 1,
+    "name": 1
+  },
+  "note": "|값| < 문턱이면 그 축은 음극으로 본다. rule은 share/hand/name 세 축만 쓴다(세계 수치 금지).",
+  "candidates": [
+    {
+      "id": "driver",
+      "rule": "share>=2 & hand>=1 & name>=1",
+      "priority": 5,
+      "fallback": 0,
+      "reveal": [
+        "reveal_driver",
+        "end_seat_shoe"
+      ],
+      "dreams": [
+        "dream_cab",
+        "dream_cab2",
+        "dream_cab3"
+      ],
+      "callName": "기사 양반",
+      "ledgerReader": "conductor"
+    },
+    {
+      "id": "conductor",
+      "rule": "share>=2 & hand>=1 & name<1",
+      "priority": 5,
+      "fallback": 0,
+      "reveal": [
+        "reveal_conductor",
+        "end_two_books"
+      ],
+      "dreams": [
+        "dream_door",
+        "dream_door2",
+        "dream_door3"
+      ],
+      "callName": "차장님",
+      "ledgerReader": "you"
+    },
+    {
+      "id": "inspector",
+      "rule": "share>=2 & hand<1 & name>=1",
+      "priority": 5,
+      "fallback": 0,
+      "reveal": [
+        "reveal_inspector",
+        "end_punch_hand"
+      ],
+      "dreams": [
+        "dream_punch",
+        "dream_gate2",
+        "dream_gate3"
+      ],
+      "callName": "적는 사람",
+      "ledgerReader": "you"
+    },
+    {
+      "id": "passenger",
+      "rule": "share>=2 & hand<1 & name<1 | share<2 & hand<1 & name<1",
+      "priority": 1,
+      "fallback": 1,
+      "reveal": [
+        "reveal_passenger",
+        "end_empty_cab"
+      ],
+      "dreams": [
+        "dream_seat",
+        "dream_seat2",
+        "dream_seat3"
+      ],
+      "callName": "손님",
+      "ledgerReader": "conductor"
+    },
+    {
+      "id": "counted",
+      "rule": "share<2 & hand>=1 & name>=1",
+      "priority": 9,
+      "fallback": 0,
+      "reveal": [
+        "reveal_counted",
+        "end_shoes_stairs"
+      ],
+      "dreams": [
+        "dream_stairs",
+        "dream_stairs2",
+        "dream_stairs3"
+      ],
+      "callName": "",
+      "ledgerReader": "resident"
+    },
+    {
+      "id": "platform_one",
+      "rule": "share<2 & hand>=1 & name<1",
+      "priority": 6,
+      "fallback": 0,
+      "reveal": [
+        "reveal_platform",
+        "end_train_passes"
+      ],
+      "dreams": [
+        "dream_platform",
+        "dream_platform2",
+        "dream_platform3"
+      ],
+      "callName": "거기",
+      "ledgerReader": "resident"
+    },
+    {
+      "id": "counting_child",
+      "rule": "share<2 & hand<1 & name>=1",
+      "priority": 7,
+      "fallback": 0,
+      "reveal": [
+        "reveal_child",
+        "end_voice_above"
+      ],
+      "dreams": [
+        "dream_count",
+        "dream_count2",
+        "dream_count3"
+      ],
+      "callName": "",
+      "ledgerReader": "resident"
+    }
+  ]
+}

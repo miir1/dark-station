@@ -1,0 +1,919 @@
+{
+ "blocks": [
+  1,
+  5
+ ],
+ "aggs": {
+  "balanced": {
+   "n": 4,
+   "deathRate": 50,
+   "warnedRate": 100,
+   "warnTextRate": 100,
+   "unwarned": 0,
+   "deaths": 2,
+   "starveDeaths": 0,
+   "byCause": {
+    "d10_walk_weak": 2
+   },
+   "allDead": 0,
+   "nights": 15.75,
+   "malice": 5.5,
+   "hymn": 5,
+   "discovery": 87.3,
+   "unknownOk": 75,
+   "hymnDiscovery": 95,
+   "explicit": 10,
+   "decisions": 18.38,
+   "blank": 62.5,
+   "identity": {
+    "platform_one": 75,
+    "passenger": 25
+   },
+   "days": 10,
+   "trips": 4.75,
+   "train": 0,
+   "survived": 50,
+   "clock": 15.75,
+   "starveShare": 0,
+   "forced": 0,
+   "forcedRate": 0,
+   "forcedTraced": 0,
+   "byForced": {},
+   "deadlyPick": 0,
+   "hunger": 7.2,
+   "d3Reached": 100,
+   "d3Together": 0,
+   "aliveD4": 100,
+   "deadByD5": 0,
+   "byDay": {
+    "10": 2
+   },
+   "dayEvent": {},
+   "byRoot": {
+    "d9_inspection": 1,
+    "starve_you": 1
+   },
+   "topCause": {
+    "k": "d10_walk_weak",
+    "share": 100
+   },
+   "topRoot": {
+    "k": "d9_inspection",
+    "share": 50
+   },
+   "karma": 0,
+   "neglect": 0,
+   "neglectRows": 0,
+   "home9": 3,
+   "home9N": 4,
+   "res7": 4,
+   "res7N": 4,
+   "daysLived": 10,
+   "crisis": {
+    "d5_flood": {
+     "reached": 4,
+     "costOpen": 0,
+     "rate": 0
+    }
+   },
+   "swappedDeaths": 0
+  },
+  "lazy": {
+   "n": 4,
+   "deathRate": 100,
+   "warnedRate": 100,
+   "warnTextRate": 100,
+   "unwarned": 0,
+   "deaths": 4,
+   "starveDeaths": 0,
+   "byCause": {
+    "d10_walk_weak": 3,
+    "fever_night": 1
+   },
+   "allDead": 0,
+   "nights": 14.75,
+   "malice": 5.75,
+   "hymn": 5.25,
+   "discovery": 52.5,
+   "unknownOk": 100,
+   "hymnDiscovery": 71.4,
+   "explicit": 9,
+   "decisions": 15.54,
+   "blank": 100,
+   "identity": {
+    "platform_one": 75,
+    "passenger": 25
+   },
+   "days": 9.5,
+   "trips": 4.75,
+   "train": 0,
+   "survived": 0,
+   "clock": 14,
+   "starveShare": 0,
+   "forced": 0,
+   "forcedRate": 0,
+   "forcedTraced": 0,
+   "byForced": {},
+   "deadlyPick": 0,
+   "hunger": 7.22,
+   "d3Reached": 100,
+   "d3Together": 0,
+   "aliveD4": 100,
+   "deadByD5": 0,
+   "byDay": {
+    "8": 1,
+    "10": 3
+   },
+   "dayEvent": {},
+   "byRoot": {
+    "starve_you": 4
+   },
+   "topCause": {
+    "k": "d10_walk_weak",
+    "share": 75
+   },
+   "topRoot": {
+    "k": "starve_you",
+    "share": 100
+   },
+   "karma": 0,
+   "neglect": 0,
+   "neglectRows": 0,
+   "home9": 2.67,
+   "home9N": 3,
+   "res7": 3.25,
+   "res7N": 4,
+   "daysLived": 9.5,
+   "crisis": {
+    "d5_flood": {
+     "reached": 4,
+     "costOpen": 0,
+     "rate": 0
+    }
+   },
+   "swappedDeaths": 0
+  }
+ },
+ "byBlock": [
+  {
+   "balanced": {
+    "n": 2,
+    "deathRate": 50,
+    "warnedRate": 100,
+    "warnTextRate": 100,
+    "unwarned": 0,
+    "deaths": 1,
+    "starveDeaths": 0,
+    "byCause": {
+     "d10_walk_weak": 1
+    },
+    "allDead": 0,
+    "nights": 16.5,
+    "malice": 7,
+    "hymn": 5,
+    "discovery": 90.9,
+    "unknownOk": 50,
+    "hymnDiscovery": 100,
+    "explicit": 11,
+    "decisions": 18.7,
+    "blank": 85.7,
+    "identity": {
+     "platform_one": 100
+    },
+    "days": 10,
+    "trips": 4,
+    "train": 0,
+    "survived": 50,
+    "clock": 15,
+    "starveShare": 0,
+    "forced": 0,
+    "forcedRate": 0,
+    "forcedTraced": 0,
+    "byForced": {},
+    "deadlyPick": 0,
+    "hunger": 7.1,
+    "d3Reached": 100,
+    "d3Together": 0,
+    "aliveD4": 100,
+    "deadByD5": 0,
+    "byDay": {
+     "10": 1
+    },
+    "dayEvent": {},
+    "byRoot": {
+     "d9_inspection": 1
+    },
+    "topCause": {
+     "k": "d10_walk_weak",
+     "share": 100
+    },
+    "topRoot": {
+     "k": "d9_inspection",
+     "share": 100
+    },
+    "karma": 0,
+    "neglect": 0,
+    "neglectRows": 0,
+    "home9": 4,
+    "home9N": 2,
+    "res7": 3,
+    "res7N": 2,
+    "daysLived": 10,
+    "crisis": {
+     "d5_flood": {
+      "reached": 2,
+      "costOpen": 0,
+      "rate": 0
+     }
+    },
+    "swappedDeaths": 0
+   },
+   "lazy": {
+    "n": 2,
+    "deathRate": 100,
+    "warnedRate": 100,
+    "warnTextRate": 100,
+    "unwarned": 0,
+    "deaths": 2,
+    "starveDeaths": 0,
+    "byCause": {
+     "d10_walk_weak": 2
+    },
+    "allDead": 0,
+    "nights": 15.5,
+    "malice": 6.5,
+    "hymn": 5,
+    "discovery": 54.8,
+    "unknownOk": 100,
+    "hymnDiscovery": 80,
+    "explicit": 9.5,
+    "decisions": 14.95,
+    "blank": 100,
+    "identity": {
+     "platform_one": 100
+    },
+    "days": 10,
+    "trips": 4,
+    "train": 0,
+    "survived": 0,
+    "clock": 15,
+    "starveShare": 0,
+    "forced": 0,
+    "forcedRate": 0,
+    "forcedTraced": 0,
+    "byForced": {},
+    "deadlyPick": 0,
+    "hunger": 7,
+    "d3Reached": 100,
+    "d3Together": 0,
+    "aliveD4": 100,
+    "deadByD5": 0,
+    "byDay": {
+     "10": 2
+    },
+    "dayEvent": {},
+    "byRoot": {
+     "starve_you": 2
+    },
+    "topCause": {
+     "k": "d10_walk_weak",
+     "share": 100
+    },
+    "topRoot": {
+     "k": "starve_you",
+     "share": 100
+    },
+    "karma": 0,
+    "neglect": 0,
+    "neglectRows": 0,
+    "home9": 3,
+    "home9N": 2,
+    "res7": 1,
+    "res7N": 2,
+    "daysLived": 10,
+    "crisis": {
+     "d5_flood": {
+      "reached": 2,
+      "costOpen": 0,
+      "rate": 0
+     }
+    },
+    "swappedDeaths": 0
+   }
+  },
+  {
+   "balanced": {
+    "n": 2,
+    "deathRate": 50,
+    "warnedRate": 100,
+    "warnTextRate": 100,
+    "unwarned": 0,
+    "deaths": 1,
+    "starveDeaths": 0,
+    "byCause": {
+     "d10_walk_weak": 1
+    },
+    "allDead": 0,
+    "nights": 15,
+    "malice": 4,
+    "hymn": 5,
+    "discovery": 83.3,
+    "unknownOk": 100,
+    "hymnDiscovery": 90,
+    "explicit": 9,
+    "decisions": 18.05,
+    "blank": 44.4,
+    "identity": {
+     "passenger": 50,
+     "platform_one": 50
+    },
+    "days": 10,
+    "trips": 5.5,
+    "train": 0,
+    "survived": 50,
+    "clock": 16.5,
+    "starveShare": 0,
+    "forced": 0,
+    "forcedRate": 0,
+    "forcedTraced": 0,
+    "byForced": {},
+    "deadlyPick": 0,
+    "hunger": 7.3,
+    "d3Reached": 100,
+    "d3Together": 0,
+    "aliveD4": 100,
+    "deadByD5": 0,
+    "byDay": {
+     "10": 1
+    },
+    "dayEvent": {},
+    "byRoot": {
+     "starve_you": 1
+    },
+    "topCause": {
+     "k": "d10_walk_weak",
+     "share": 100
+    },
+    "topRoot": {
+     "k": "starve_you",
+     "share": 100
+    },
+    "karma": 0,
+    "neglect": 0,
+    "neglectRows": 0,
+    "home9": 2,
+    "home9N": 2,
+    "res7": 5,
+    "res7N": 2,
+    "daysLived": 10,
+    "crisis": {
+     "d5_flood": {
+      "reached": 2,
+      "costOpen": 0,
+      "rate": 0
+     }
+    },
+    "swappedDeaths": 0
+   },
+   "lazy": {
+    "n": 2,
+    "deathRate": 100,
+    "warnedRate": 100,
+    "warnTextRate": 100,
+    "unwarned": 0,
+    "deaths": 2,
+    "starveDeaths": 0,
+    "byCause": {
+     "d10_walk_weak": 1,
+     "fever_night": 1
+    },
+    "allDead": 0,
+    "nights": 14,
+    "malice": 5,
+    "hymn": 5.5,
+    "discovery": 50,
+    "unknownOk": 100,
+    "hymnDiscovery": 63.6,
+    "explicit": 8.5,
+    "decisions": 16.13,
+    "blank": 100,
+    "identity": {
+     "platform_one": 50,
+     "passenger": 50
+    },
+    "days": 9,
+    "trips": 5.5,
+    "train": 0,
+    "survived": 0,
+    "clock": 13,
+    "starveShare": 0,
+    "forced": 0,
+    "forcedRate": 0,
+    "forcedTraced": 0,
+    "byForced": {},
+    "deadlyPick": 0,
+    "hunger": 7.44,
+    "d3Reached": 100,
+    "d3Together": 0,
+    "aliveD4": 100,
+    "deadByD5": 0,
+    "byDay": {
+     "8": 1,
+     "10": 1
+    },
+    "dayEvent": {},
+    "byRoot": {
+     "starve_you": 2
+    },
+    "topCause": {
+     "k": "d10_walk_weak",
+     "share": 50
+    },
+    "topRoot": {
+     "k": "starve_you",
+     "share": 100
+    },
+    "karma": 0,
+    "neglect": 0,
+    "neglectRows": 0,
+    "home9": 2,
+    "home9N": 1,
+    "res7": 5.5,
+    "res7N": 2,
+    "daysLived": 9,
+    "crisis": {
+     "d5_flood": {
+      "reached": 2,
+      "costOpen": 0,
+      "rate": 0
+     }
+    },
+    "swappedDeaths": 0
+   }
+  }
+ ],
+ "gate": [
+  {
+   "k": "당신 사망(올라감 포함)",
+   "want": "≥ 50%",
+   "got": [
+    "50%",
+    "50%"
+   ],
+   "mark": "△",
+   "okAll": true,
+   "near": true
+  },
+  {
+   "k": "사망 중 경고 있던 선택 (실질: 강제 사망은 경고 없음)",
+   "want": "100%",
+   "got": [
+    "100% (형식 기준 100%)",
+    "100% (형식 기준 100%)"
+   ],
+   "mark": "△",
+   "okAll": true,
+   "near": true
+  },
+  {
+   "k": "강제 사망 (전 정책 합산)",
+   "want": "0 판 (10-24 바꿈: ≤20% → 0)",
+   "got": [
+    "0 판 (0%, 0/3)",
+    "0 판 (0%, 0/3)"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "  강제 사망 중 앞선 자유 경고 선택 없음 (전 정책)",
+   "want": "0 판",
+   "got": [
+    "0 판",
+    "0 판"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "조심형 봇 사망 (balanced·lazy 합산)",
+   "want": "측정",
+   "got": [
+    "75% (3/4), 그중 강제 0%",
+    "75% (3/4), 그중 강제 0%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "  봇 버릇 점검: 조심형이 평범한 대안(안 죽고·금기 아니고·죽음 글 없음)을 두고 죽음 글 선택지로 죽음",
+   "want": "0 판",
+   "got": [
+    "0 판 (전 정책 0)",
+    "0 판 (전 정책 0)"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "전멸",
+   "want": "≤ 25%",
+   "got": [
+    "0%",
+    "0%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "밤 사건 수 / 판 (주민 사건만 — 시계·방치 판정 줄 뺌)",
+   "want": "≥ 6",
+   "got": [
+    "16.5 (방치 판정 줄 0)",
+    "15 (방치 판정 줄 0)"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "  그중 malice / hymn",
+   "want": "≥ 2 / ≥ 1",
+   "got": [
+    "7 / 5",
+    "4 / 5"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "발견율 (보통)",
+   "want": "측정만 (10-24 A4: 하한 폐기)",
+   "got": [
+    "90.9%",
+    "83.3%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "발견율 (게으름)",
+   "want": "측정만 (10-24 A4: 하한 폐기)",
+   "got": [
+    "54.8%",
+    "50%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "끝까지 모르는 사건 ≥1 (게으름)",
+   "want": "100% 판",
+   "got": [
+    "100%",
+    "100%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "찬가 발견율 (부지런)",
+   "want": "≥ 70%",
+   "got": [
+    "100%",
+    "90%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "찬가 발견율 (게으름)",
+   "want": "측정만 (10-24 A4: 하한 폐기)",
+   "got": [
+    "80%",
+    "63.6%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "정체 — 성향 봇 평균, 각 후보 (A3)",
+   "want": "각 ≥ 3%",
+   "got": [
+    "platform_one 100 · driver 0 · conductor 0 · inspector 0 · passenger 0 · counted 0 · counting_child 0 (1종)",
+    "passenger 50 · platform_one 50 · driver 0 · conductor 0 · inspector 0 · counted 0 · counting_child 0 (1종)"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "정체 — 성향 봇 평균, 가장 큰 후보 (A3)",
+   "want": "≤ 40%",
+   "got": [
+    "platform_one 100%",
+    "passenger 50%"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "정체 — 사람 흉내 평균, 각 후보 (A3)",
+   "want": "각 ≥ 3%",
+   "got": [
+    "-",
+    "-"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "정체 — 사람 흉내 평균, 가장 큰 후보 (A3)",
+   "want": "측정 (디렉터 확인: 승객이 가장 흔한 결말)",
+   "got": [
+    "-",
+    "-"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "정체 분포 (옛 방식: 정책 전체 평균, 각 후보)",
+   "want": "측정 (옛 합격선 ≥ 7.1%)",
+   "got": [
+    "platform_one 100%",
+    "passenger 50% · platform_one 50%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "  옛 방식: 7후보 중 ≥7% 인 후보 수",
+   "want": "측정 (옛 합격선 ≥ 5)",
+   "got": [
+    "1 후보",
+    "2 후보"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "explicit 사건 / 판",
+   "want": "≥ 7",
+   "got": [
+    "11",
+    "9"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "하루 결정 수",
+   "want": "≥ 5",
+   "got": [
+    "18.7",
+    "18.05"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "명부 사인 빈칸 비율",
+   "want": "측정만",
+   "got": [
+    "85.7%",
+    "44.4%"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "모험 봇 열흘 생존",
+   "want": "≥ 25% (10-24 바꿈 ≥40 → 25, 디렉터 확인)",
+   "got": [
+    "-",
+    "-"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "모험 봇 사망 중 굶주림",
+   "want": "< 50%",
+   "got": [
+    "-",
+    "-"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "열차 결말 도달 (모험 / 균형)",
+   "want": "> 0%",
+   "got": [
+    "0%",
+    "0%"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A2 D5까지 당신 사망 (균형)",
+   "want": "≥ 10%",
+   "got": [
+    "0%",
+    "0%"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A2 균형 사망 중 한 사건 비중 (사인 사건)",
+   "want": "≤ 40%",
+   "got": [
+    "d10_walk_weak 100%",
+    "d10_walk_weak 100%"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A2 균형 사망 중 한 사건 비중 (원인 사건 = 부상 출처)",
+   "want": "≤ 40%",
+   "got": [
+    "d9_inspection 100%",
+    "starve_you 100%"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A2 D2~D6 날마다 그날 사건으로 죽은 판 (정책 합산, 깔때기 사건 뺌)",
+   "want": "날마다 > 0",
+   "got": [
+    "D2 0 · D3 0 · D4 0 · D5 0 · D6 0",
+    "D2 0 · D3 0 · D4 0 · D5 0 · D6 0"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A1 이른 안전: 이기적 D1~D4 생존 − 균형",
+   "want": "≥ +5%p",
+   "got": [
+    "-",
+    "-"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A1 이기심의 값: 열흘 생존 − 균형 (이기적 4종 각각 — 버릇 없는·끝까지 금기 포함)",
+   "want": "< 0 (모든 정책)",
+   "got": [
+    "-",
+    "-"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A1 이기적 4종 사인 쏠림 (한 사건 비중)",
+   "want": "≤ 60%",
+   "got": [
+    "-",
+    "-"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "  카르마 (판 끝 평균: 균형 / 이기적 4종)",
+   "want": "측정",
+   "got": [
+    "0 / -",
+    "0 / -"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "A4 게으름의 값 — 생존 (보통−게으름 주 지표 / 부지런−게으름)",
+   "want": "≥ +5%p",
+   "got": [
+    "보통−게으름 +50 / 부지런−게으름 -%p",
+    "보통−게으름 +50 / 부지런−게으름 -%p"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A4 게으름의 값 — D9 아침 주민 수 차",
+   "want": "> 0",
+   "got": [
+    "보통−게으름 +1 / 부지런−게으름 -",
+    "보통−게으름 0 / 부지런−게으름 -"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "A4 게으름의 값 — D7 아침 식량+물+약 차",
+   "want": "≥ +0.2",
+   "got": [
+    "보통−게으름 +2 / 부지런−게으름 -",
+    "보통−게으름 -0.5 / 부지런−게으름 -"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "  못 본 일(missed 적용) / 판 (게으름 / 보통 / 부지런)",
+   "want": "측정",
+   "got": [
+    "0 / 0 / 0",
+    "0 / 0 / 0"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "  위기 때 값 길(비용 있는 선택)이 열린 비율 (균형)",
+   "want": "측정 (디렉터 확인)",
+   "got": [
+    "d2_shutter_arm - · d4_spanner - · d5_flood 0% (0/2)",
+    "d2_shutter_arm - · d4_spanner - · d5_flood 0% (0/2)"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "헌신 봇 생존",
+   "want": "측정 (> 0%)",
+   "got": [
+    "-",
+    "-"
+   ],
+   "mark": "✗",
+   "okAll": false,
+   "near": false
+  },
+  {
+   "k": "사망 원인 중 굶주림 (전 정책 합산)",
+   "want": "< 50%",
+   "got": [
+    "0% (0/3)",
+    "0% (0/3)"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  },
+  {
+   "k": "경고 없는 사망 (전 정책 합산, 강제 사망 포함)",
+   "want": "0 판",
+   "got": [
+    "0 판 (그중 강제 0)",
+    "0 판 (그중 강제 0)"
+   ],
+   "mark": "✓",
+   "okAll": true,
+   "near": false
+  }
+ ]
+}

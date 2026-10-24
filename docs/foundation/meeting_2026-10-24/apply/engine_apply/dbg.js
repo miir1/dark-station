@@ -1,0 +1,18 @@
+const { rawTables, T, E } = require('C:/dev/dark_station/v4/test/helpers.js');
+const N = require('C:/dev/dark_station/v4/engine/night.js');
+const t = rawTables();
+t.numbers.push({ id: 'grudge', name: '원한', owner: 'person', min: 0, max: 10, start: 0, perDay: 0, visible: 'never' });
+t.lines.push({ id: 'insp_crate_open_late', speaker: 'narrator', grade: 'normal', text: '뚜껑이 어제처럼 열려 있다.' }, { id: 'toast_late', speaker: 'ui', grade: 'toast', text: '어제 못 본 자리가 그대로다.' });
+t.nightEvents[0].missed = { trace: { crate_food: 'open' } };
+const db = T.load(t);
+const s = E.newGame(db, 1);
+E.dispatch(s, { type: 'choose', i: 1 }, db);
+const toPhase = (s, db, day, phase) => { let g = 0; while (!(s.day === day && s.phase === phase) && !s.ended && g++ < 80) { if (s.pending) E.dispatch(s, { type: 'choose', i: 0 }, db); else E.dispatch(s, { type: 'next' }, db); } };
+toPhase(s, db, 1, 'night');
+console.log('at', s.day, s.phase, s.ended);
+s.nightLog.push({ day: 0, id: 'r1_steal_food', kind: 'malice', role: 'steal', actor: 'gicheol', target: null, traces: [], rumor: false, lines: [], discovered: false });
+N.applyNeglect(s, db);
+console.log(s.traces.crate_food);
+toPhase(s, db, 2, 'trace');
+console.log('at', s.day, s.phase, s.traces.crate_food, s.ended);
+console.log(E.dispatch(s, { type: 'inspect', object: 'stairs' }, db), s.notice, s.noticeDay);

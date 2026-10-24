@@ -93,7 +93,7 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 #box .opt small.cost { color: #c9b48a; }
 #box .opt small.lock { color: var(--bad); }
 #box .ledger { font-size: 8px; line-height: 1.6; }
-#box .ledger .row { display: grid; grid-template-columns: 56px 1fr; gap: 4px; }
+#box .ledger .row { display: grid; grid-template-columns: 96px 1fr; gap: 4px; }   /* 이름 칸: 증언 전 이름표(생김새, '청소원 조끼의 할머니')가 한 줄에 들어가게 */
 #box .ledger .row .blank { color: var(--dim); }
 #box .list { font-size: 8px; max-height: 96px; overflow: hidden; }
 #box .list p, #box.opts .body .list p { margin: 0 0 1px; }   /* 수첩 목록 일곱 줄이 96px 안에 (본문 p 의 3px 여백을 이긴다) */
@@ -125,7 +125,8 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
   border: 1px solid #3a342b; box-shadow: 0 0 0 1px #000, 0 0 24px rgba(0,0,0,.8), inset 0 0 30px rgba(60,40,20,.35); }
 #cg .page::before { content: ''; position: absolute; left: 14px; top: 0; bottom: 0; width: 1px; background: rgba(150,40,30,.35); }
 #cg .page .lhead { margin: 0 0 4px; text-align: center; letter-spacing: .4em; font-size: 8px; color: #5a4a36; }
-#cg .page .lrow { display: grid; grid-template-columns: 12px 64px 46px 30px 1fr; align-items: center; height: 18px; white-space: nowrap; }
+#cg .page .lrow { display: grid; grid-template-columns: 12px 92px 46px 30px 1fr; align-items: center; height: 18px; white-space: nowrap; }   /* 이름 칸 92: 생김새 이름표가 상태 칸을 덮지 않게 */
+#cg .page .lrow .nm { overflow: hidden; text-overflow: clip; }
 #cg .page .lrow .hole { width: 7px; height: 7px; border-radius: 50%; }
 #cg .page .lrow.boarded .hole { background: #0b0a09; box-shadow: 0 0 0 1px rgba(90,70,50,.6), inset 1px 1px 1px rgba(255,255,255,.08); }
 #cg .page .lrow.dead .nm, #cg .page .lrow.dead .st { text-decoration: line-through; text-decoration-color: #6a1d14; text-decoration-thickness: 1px; }

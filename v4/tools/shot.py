@@ -3,7 +3,9 @@
 #        python v4/tools/shot.py car         (하나만)      python v4/tools/shot.py ending --seed=3   (시드 바꿔서)
 # 캡처 전에 v4/tools/manifest.py 로 그림 목록(v4/img/manifest.json)을 새로 만든다 — 새 그림이 자동으로 잡힌다.
 # shots.json: ok + why(실패 까닭) + tries + console_errors(오류·uncaught) + auto(봇이 남긴 [ds4 …] 줄: 도달한 날·고른 선택·그림 없는 장면)
-#   ok = PNG 가 생겼고 + 봇 기록([ds4 auto]) 줄이 있고 + PNG 에서 잰 배율(png_scale)이 2 이고 + 시작 오류가 없다. 실패한 지점은 한 번 더 찍는다. 하나라도 실패면 끝 코드 1.
+#   ok = PNG 가 생겼고 + 게임이 떠서 그 지점에 닿았고(봇 기록 '[ds4 auto] <지점> … reached=1' — 게임 안에서 state·지도·단계·붙잡은 창을 보고 찍는다)
+#        + PNG 에서 잰 배율(png_scale)이 2 이고 + 시작 오류가 없다. 실패한 지점은 한 번 더 찍는다. 하나라도 실패면 끝 코드 1.
+#   --profile=<폴더> : 헤드리스 브라우저 프로필 폴더 (기본 v4/shots/.profile). 회의 검증 때는 회의 폴더 아래를 준다.
 # 브라우저 쪽 자동 진행은 game.js 의 autoRun(?auto=) 이 맡는다. 화면 갱신은 requestAnimationFrame + 보조 타이머(100ms 넘게 rAF 가 없으면 대신 한 번)라 숨은 창·헤드리스에서도 돈다.
 import os, re, sys, subprocess, threading, time, http.server, socketserver, functools, shutil, json, urllib.request
 
@@ -22,6 +24,7 @@ STALE = ['04_day5']                              # 이름이 바뀐 옛 캡처 �
 #   train: 열차 결말(d10_train)은 통로가 열리고 주민이 살아 있어야 걸린다 — 캡처 봇(시드 7)은 D10 전에 주민이 다 죽어 all_dead 로 끝난다
 FIXTURE = {'train': 'd10_train'}
 FIXTURES = {}
+PROFILE = None                                   # --profile=<폴더> (없으면 v4/shots/.profile)
 
 
 def find_browser():
@@ -102,7 +105,7 @@ def png_scale(out):
         return None
 
 
-def judge(out, lines):
+def judge(out, lines, key=None):
     """캡처가 진짜 게임 화면인가: PNG 가 있고, 봇 기록([ds4 auto] 줄)이 있고, 그림의 배율이 2 이고, 시작 실패·엔진 순서 오류가 없다.
     PNG 만 보면 게임이 시작조차 안 된 검은 화면(배율 1, 빈 패널)도 성공으로 잡힌다 (2026-10-24 검증 #8)."""
     why = []
@@ -110,7 +113,10 @@ def judge(out, lines):
         return ['PNG 없음'], None
     auto = [ln for ln in lines if 'CONSOLE' in ln and '[ds4 auto]' in ln]
     if not auto:
-        why.append('봇 기록([ds4 auto]) 없음 - 게임이 끝까지 돌지 않았다')
+        why.append('봇 기록([ds4 auto]) 없음 - 게임이 시작되지 않았거나 끝까지 돌지 않았다')
+    elif key is not None and not any(re.search(r'\[ds4 auto\] ' + re.escape(key) + r' .*reached=1', ln) for ln in auto):
+        last = auto[-1][auto[-1].index('[ds4 auto]'):].split('", source')[0][:140]
+        why.append('지점에 닿지 못했다 (reached=1 없음): ' + last)
     k = png_scale(out)
     if k is not None and k < EXPECT_K - 0.1:
         why.append(f'그림 배율 {k} (기대 {EXPECT_K}) - 화면이 1배이거나 비었다')
@@ -130,7 +136,7 @@ def shot(browser, key, name, log, seed=None):
         url = f'http://127.0.0.1:{PORT}/v4/index.html?fast=1&auto={key}&shot={int(time.time())}{attempt}' + (f'&seed={seed}' if seed else '')
         if key in FIXTURE:
             url += f'&state=/__fixture/{FIXTURE[key]}.json' if FIXTURE[key] in FIXTURES else ''
-        prof = os.path.join(OUT, '.profile')
+        prof = PROFILE or os.path.join(OUT, '.profile')
         args = [browser, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
                 f'--user-data-dir={prof}', '--window-size=1280,720', f'--virtual-time-budget={BUDGET.get(key, 60000)}',
                 '--enable-logging=stderr', '--v=0', f'--screenshot={out}', url]
@@ -138,7 +144,7 @@ def shot(browser, key, name, log, seed=None):
         lines = [decode(b) for b in (r.stderr or b'').splitlines()]
         errs = [ln for ln in lines if 'CONSOLE' in ln and ('error' in ln.lower() or 'uncaught' in ln.lower())]
         auto = [ln[ln.index('[ds4'):].split('", source')[0] for ln in lines if 'CONSOLE' in ln and '[ds4' in ln]
-        why, k = judge(out, lines)
+        why, k = judge(out, lines, key)
         tries.append({'attempt': attempt + 1, 'ok': not why, 'why': why, 'png_scale': k, 'console_errors': len(errs)})
         if not why:
             break
@@ -155,6 +161,10 @@ def main():
         pass
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     seed = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--seed=')), None)
+    global PROFILE
+    prof = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--profile=')), None)
+    if prof:
+        PROFILE = os.path.abspath(os.path.join(ROOT, prof)) if not os.path.isabs(prof) else prof
     only = set(args)
     sys.path.insert(0, os.path.dirname(__file__))
     import manifest

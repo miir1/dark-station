@@ -852,7 +852,8 @@
     "states": [
       "full",
       "empty",
-      "meat"
+      "meat",
+      "pushed"
     ],
     "overlay": {
       "empty": "bowl_empty_ov",
@@ -861,7 +862,8 @@
     "inspectLine": {
       "full": "insp_bowl_full",
       "empty": "insp_bowl_empty",
-      "meat": "insp_bowl_meat"
+      "meat": "insp_bowl_meat",
+      "pushed": "insp_bowl_pushed"
     },
     "ledgerFact": {
       "empty": "D{day}. 내 그릇 빔.",

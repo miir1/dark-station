@@ -1,0 +1,989 @@
+{
+ "1_names_d0": {
+  "secret": [
+   "김순례",
+   "순례",
+   "윤서하",
+   "서하",
+   "박기철",
+   "기철",
+   "최은지",
+   "은지",
+   "한동하",
+   "동하",
+   "정마리",
+   "마리"
+  ],
+  "owned": [
+   {
+    "id": "blanket_soonrye",
+    "owner": "soonrye",
+    "met": false,
+    "name": "담요",
+    "hover": "담요",
+    "x": 16,
+    "y": 9,
+    "stand": [
+     16,
+     10,
+     "up"
+    ],
+    "hint": "Space 조사 — 담요"
+   },
+   {
+    "id": "blanket_seoha",
+    "owner": "seoha",
+    "met": false,
+    "name": "담요",
+    "hover": "담요",
+    "x": 18,
+    "y": 9,
+    "stand": [
+     18,
+     10,
+     "up"
+    ],
+    "hint": "Space 조사 — 담요"
+   },
+   {
+    "id": "blanket_gicheol",
+    "owner": "gicheol",
+    "met": true,
+    "name": "담요",
+    "hover": "담요",
+    "x": 20,
+    "y": 9,
+    "stand": [
+     20,
+     10,
+     "up"
+    ],
+    "hint": "Space 조사 — 담요"
+   },
+   {
+    "id": "blanket_eunji",
+    "owner": "eunji",
+    "met": false,
+    "name": "담요",
+    "hover": "담요",
+    "x": 16,
+    "y": 11,
+    "stand": [
+     16,
+     12,
+     "up"
+    ],
+    "hint": "Space 조사 — 담요"
+   },
+   {
+    "id": "blanket_dongha",
+    "owner": "dongha",
+    "met": false,
+    "name": "담요",
+    "hover": "담요",
+    "x": 18,
+    "y": 11,
+    "stand": [
+     18,
+     12,
+     "up"
+    ],
+    "hint": "Space 조사 — 담요"
+   },
+   {
+    "id": "blanket_mari",
+    "owner": "mari",
+    "met": false,
+    "name": "담요",
+    "hover": "담요의 여자",
+    "x": 20,
+    "y": 11,
+    "stand": [
+     20,
+     12,
+     "up"
+    ],
+    "hint": "Space 말 걸기 — 담요의 여자"
+   },
+   {
+    "id": "pillow_gicheol",
+    "owner": "gicheol",
+    "met": true,
+    "name": "베개",
+    "hover": "베개",
+    "x": 21,
+    "y": 9,
+    "stand": [
+     21,
+     10,
+     "up"
+    ],
+    "hint": "Space 조사 — 베개"
+   },
+   {
+    "id": "bottle_soonrye",
+    "owner": "soonrye",
+    "met": false,
+    "name": "물통",
+    "hover": "물통 · 붕대",
+    "x": 15,
+    "y": 9,
+    "stand": [
+     15,
+     10,
+     "up"
+    ],
+    "hint": "Space 조사 — 물통 · 붕대"
+   },
+   {
+    "id": "bottle_seoha",
+    "owner": "seoha",
+    "met": false,
+    "name": "물통",
+    "hover": "물통 · 붕대",
+    "x": 17,
+    "y": 9,
+    "stand": null
+   },
+   {
+    "id": "bottle_gicheol",
+    "owner": "gicheol",
+    "met": true,
+    "name": "물통",
+    "hover": "물통 · 붕대",
+    "x": 19,
+    "y": 9,
+    "stand": [
+     19,
+     8,
+     "down"
+    ],
+    "hint": "Space 조사 — 물통 · 붕대"
+   },
+   {
+    "id": "bottle_mari",
+    "owner": "mari",
+    "met": false,
+    "name": "물통",
+    "hover": "가위 · 물통 · 붕대",
+    "x": 19,
+    "y": 11,
+    "stand": [
+     19,
+     12,
+     "up"
+    ],
+    "hint": "Space 조사 — 가위 · 물통 · 붕대"
+   },
+   {
+    "id": "bowl_gicheol",
+    "owner": "gicheol",
+    "met": true,
+    "name": "그릇",
+    "hover": "그릇",
+    "x": 15,
+    "y": 10,
+    "stand": [
+     15,
+     11,
+     "up"
+    ],
+    "hint": "Space 조사 — 그릇"
+   },
+   {
+    "id": "bandage_soonrye",
+    "owner": "soonrye",
+    "met": false,
+    "name": "붕대",
+    "hover": "물통 · 붕대",
+    "x": 15,
+    "y": 9,
+    "stand": [
+     15,
+     10,
+     "up"
+    ],
+    "hint": "Space 조사 — 물통 · 붕대"
+   },
+   {
+    "id": "bandage_seoha",
+    "owner": "seoha",
+    "met": false,
+    "name": "붕대",
+    "hover": "물통 · 붕대",
+    "x": 17,
+    "y": 9,
+    "stand": null
+   },
+   {
+    "id": "bandage_gicheol",
+    "owner": "gicheol",
+    "met": true,
+    "name": "붕대",
+    "hover": "물통 · 붕대",
+    "x": 19,
+    "y": 9,
+    "stand": [
+     19,
+     8,
+     "down"
+    ],
+    "hint": "Space 조사 — 물통 · 붕대"
+   },
+   {
+    "id": "bandage_mari",
+    "owner": "mari",
+    "met": false,
+    "name": "붕대",
+    "hover": "가위 · 물통 · 붕대",
+    "x": 19,
+    "y": 11,
+    "stand": [
+     19,
+     12,
+     "up"
+    ],
+    "hint": "Space 조사 — 가위 · 물통 · 붕대"
+   }
+  ],
+  "leaks": []
+ },
+ "1_hover_mari_bottle": "가위 · 물통 · 붕대 (클릭하면 간다)",
+ "1_inspect_texts": {
+  "texts": {
+   "pillow_gicheol": [
+    "헤드램프 남자의 베개다.",
+    "접은 옷이다."
+   ],
+   "bottle_seoha": [],
+   "stairs_line": [
+    "분필로 그은 줄이다.",
+    "발자국이 줄 앞에서 끊긴다."
+   ],
+   "chalk_wall": [
+    "분필 벽이다.",
+    "아직 아무것도 없다."
+   ]
+  },
+  "leaks": []
+ },
+ "3_mari": {
+  "before": {
+   "met": false,
+   "at": [
+    20,
+    11,
+    "sitting",
+    "down"
+   ],
+   "hint": "Space 말 걸기 — 담요의 여자"
+  },
+  "after_meet": {
+   "met": true,
+   "at": [
+    20,
+    11,
+    "sitting",
+    "down"
+   ],
+   "hint": "Space 말 걸기 — 담요의 여자"
+  },
+  "after_walk_away": {
+   "met": true,
+   "at": [
+    20,
+    11,
+    "sitting",
+    "down"
+   ],
+   "hint": ""
+  },
+  "stayed": true
+ },
+ "4_goal_d0": {
+  "day": "승강장을 둘러본다 · 화로를 조사하면 저녁",
+  "evening": {
+   "phase": "evening",
+   "goal": "저녁 — 한 사람과 이야기할 수 있다 · 화로를 조사하면 밤이다."
+  },
+  "night": {
+   "phase": "night",
+   "goal": "밤 — 화로를 조사하면 잠든다"
+  }
+ },
+ "9_fire_states": {
+  "lit": {
+   "overlay": null,
+   "drumPx": 272,
+   "coveredByOverlay": 0,
+   "coveredPct": 0
+  },
+  "low": {
+   "overlay": "fire_low_ov",
+   "drumPx": 272,
+   "coveredByOverlay": 0,
+   "coveredPct": 0
+  },
+  "wet": {
+   "overlay": "fire_wet_ov",
+   "drumPx": 272,
+   "coveredByOverlay": 0,
+   "coveredPct": 0
+  },
+  "kept": {
+   "overlay": "footprints",
+   "drumPx": 272,
+   "coveredByOverlay": 0,
+   "coveredPct": 0
+  }
+ },
+ "6_crates": {
+  "parts": [
+   20,
+   18
+  ],
+  "crate": [
+   24,
+   20
+  ],
+  "same": false,
+  "parts_is_toolbox": true,
+  "parts_hidden_is_open_toolbox": true
+ },
+ "2_death_ledger_d0": {
+  "reached": "death_ledger",
+  "you": "dead",
+  "day": 0,
+  "head": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.",
+  "rows": [
+   "당신갔다 · D0 ___",
+   "청소원 조끼의 할머니남았다 ",
+   "헤드램프의 남자남았다 "
+  ],
+  "text": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.당신갔다 · D0 ___청소원 조끼의 할머니남았다 헤드램프의 남자남았다 1덮는다",
+  "secret": [
+   "김순례",
+   "순례",
+   "윤서하",
+   "서하",
+   "박기철",
+   "기철",
+   "최은지",
+   "은지",
+   "한동하",
+   "동하",
+   "정마리",
+   "마리"
+  ],
+  "leaks": [],
+  "ok": true
+ },
+ "7_found_table": {
+  "rows": [
+   {
+    "key": "pro_lever#0:out",
+    "icon": "bottle",
+    "text": "문이 쉭 하고 열렸다. 찬 공기가 밀려들었다. 생수 두 병을 챙겼다."
+   },
+   {
+    "key": "pro_bag#0:out",
+    "icon": "cable",
+    "text": "케이블 뭉치가 들어 있었다. 사원증 사진이 웃고 있었다."
+   },
+   {
+    "key": "pro_notebook#0:out",
+    "icon": "notebook",
+    "text": "수첩을 주머니에 넣었다. 연필도 있었다."
+   },
+   {
+    "key": "pro_gicheol#1:out",
+    "icon": "crackers",
+    "text": "생수와 건빵이 있었다. 옆의 안전화는 그대로 두었다. 남자가 고개를 돌렸"
+   },
+   {
+    "key": "pro_gicheol#2:out",
+    "icon": "glove",
+    "text": "돌에 손등이 찢겼다. 남자가 말없이 장갑 한 짝을 건넸다."
+   },
+   {
+    "key": "tunnel_box#0:out",
+    "icon": "crackers",
+    "text": "생수와 건빵을 챙겼다. 남자가 말없이 앞서 잔해를 넘었다. \"…위는 보지"
+   },
+   {
+    "key": "d0_gicheol_notebook#0:out",
+    "icon": "notebook",
+    "text": "당신 이름이 첫 줄이었다."
+   },
+   {
+    "key": "d1_gicheol_arrive#0:out",
+    "icon": "notebook",
+    "text": "어디서 났는지는 말하지 않았다. 드럼통 반대편에 앉았다."
+   },
+   {
+    "key": "d2_key#0:out",
+    "icon": "key",
+    "text": "열쇠가 차가웠다."
+   },
+   {
+    "key": "d2_key_vest#0:out",
+    "icon": "key",
+    "text": "열쇠가 차가웠다."
+   },
+   {
+    "key": "trial_d8_key#0:out",
+    "icon": "key",
+    "text": "열쇠를 목에 걸었다. 누가 그걸 봤다."
+   },
+   {
+    "key": "trial_d8_key_b#0:out",
+    "icon": "key",
+    "text": "열쇠를 목에 걸었다. 누가 그걸 봤다."
+   },
+   {
+    "key": "trip_a1_phone#0:out",
+    "icon": "phonecard",
+    "text": "카드를 주머니에 넣었다. 순례 아들이 남주에 있다고 했다. 부스 안에서 "
+   },
+   {
+    "key": "trip_b2_drowned#1:ok",
+    "icon": "key",
+    "text": "파이프로 맨 앞 것의 머리를 깼다. 나머지가 흩어졌다. 종이 묶음과 밸브"
+   }
+  ],
+  "used": {
+   "bottle": 1,
+   "cable": 1,
+   "notebook": 3,
+   "crackers": 2,
+   "glove": 1,
+   "key": 5,
+   "phonecard": 1
+  },
+  "icons": [
+   "bottle",
+   "cable",
+   "crackers",
+   "fuse",
+   "glove",
+   "key",
+   "matches",
+   "notebook",
+   "phonecard",
+   "radio",
+   "rope"
+  ],
+  "unused": [
+   "fuse",
+   "matches",
+   "radio",
+   "rope"
+  ]
+ },
+ "7_found_flow": {
+  "faces": [
+   {
+    "tag": "pro_bag:out",
+    "face": "icons/cable.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_bag:out",
+    "face": "icons/cable.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_notebook:out",
+    "face": "icons/notebook.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_notebook:out",
+    "face": "icons/notebook.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_medkit:out",
+    "face": "icons/meds.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_medkit:out",
+    "face": "icons/meds.png",
+    "cls": "icon"
+   },
+   {
+    "tag": "pro_lever:out",
+    "face": "icons/bottle.png",
+    "cls": "icon"
+   }
+  ],
+  "lever_face": "icons/bottle.png",
+  "foundLog": [
+   {
+    "event": "pro_bag",
+    "choice": 0,
+    "icon": "cable",
+    "day": 0,
+    "text": "케이블 뭉치가 들어 있었다. 사원증 사진이 웃고 있었다."
+   },
+   {
+    "event": "pro_notebook",
+    "choice": 0,
+    "icon": "notebook",
+    "day": 0,
+    "text": "수첩을 주머니에 넣었다. 연필도 있었다."
+   },
+   {
+    "event": "pro_medkit",
+    "choice": 0,
+    "icon": "meds",
+    "day": 0,
+    "text": "붕대와 소독약, 진통제 한 줄. 손이 떨려 두 번 떨어뜨렸다."
+   },
+   {
+    "event": "pro_lever",
+    "choice": 0,
+    "icon": "bottle",
+    "day": 0,
+    "text": "문이 쉭 하고 열렸다. 찬 공기가 밀려들었다. 생수 두 병을 챙겼다."
+   }
+  ]
+ },
+ "8_occlusion": [
+  {
+   "map": "car",
+   "id": "medkit",
+   "stand": [
+    19,
+    2
+   ],
+   "face": "up",
+   "closedVisiblePct": 100,
+   "openChangeVisiblePct": 100,
+   "onWall": true
+  },
+  {
+   "map": "car",
+   "id": "lever",
+   "stand": [
+    20,
+    2
+   ],
+   "face": "up",
+   "closedVisiblePct": 100,
+   "openChangeVisiblePct": 100,
+   "onWall": true
+  },
+  {
+   "map": "tunnel",
+   "id": "shelter_box",
+   "stand": [
+    14,
+    1
+   ],
+   "face": "up",
+   "closedVisiblePct": 95,
+   "openChangeVisiblePct": 98,
+   "onWall": true,
+   "openChangeVisiblePct_crouch": 100,
+   "closedVisiblePct_crouch": 100
+  },
+  {
+   "map": "station",
+   "id": "crate_food",
+   "stand": [
+    8,
+    3
+   ],
+   "face": "up",
+   "closedVisiblePct": 57,
+   "openChangeVisiblePct": 61,
+   "onWall": false,
+   "openChangeVisiblePct_crouch": 100,
+   "closedVisiblePct_crouch": 99
+  },
+  {
+   "map": "car",
+   "id": "bag",
+   "stand": [
+    10,
+    3
+   ],
+   "face": "down",
+   "closedVisiblePct": 100,
+   "openChangeVisiblePct": 100,
+   "onWall": false,
+   "openChangeVisiblePct_crouch": 100,
+   "closedVisiblePct_crouch": 100
+  }
+ ],
+ "8_tunnel_side": {
+  "walk_end": [
+   13,
+   1
+  ],
+  "face": "up",
+  "target": "shelter_box:열기:대피 공간 비상 상자",
+  "hint": "Space 열기 — 대피 공간 비상 상자",
+  "opened": "open",
+  "crouch": false
+ },
+ "10_pose_art": {
+  "you": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  },
+  "soonrye": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  },
+  "seoha": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  },
+  "gicheol": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  },
+  "eunji": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  },
+  "dongha": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  },
+  "mari": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  },
+  "eunchae": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  },
+  "dohyeon": {
+   "sitOwn": true,
+   "sitW": 32,
+   "sitH": 32,
+   "sleepOwn": true,
+   "sleepW": 32
+  }
+ },
+ "10_evening_people": [
+  [
+   "soonrye",
+   14,
+   10,
+   "sitting",
+   "left"
+  ],
+  [
+   "seoha",
+   14,
+   12,
+   "sitting",
+   "down"
+  ],
+  [
+   "gicheol",
+   12,
+   12,
+   "sitting",
+   "down"
+  ],
+  [
+   "eunji",
+   11,
+   10,
+   "sitting",
+   "right"
+  ],
+  [
+   "dongha",
+   10,
+   10,
+   "sitting",
+   "right"
+  ],
+  [
+   "mari",
+   16,
+   10,
+   "sitting",
+   "left"
+  ]
+ ],
+ "11_tags": {
+  "14,11": {
+   "you": [
+    14,
+    11
+   ],
+   "below": "seoha",
+   "youBox": {
+    "x0": 454,
+    "x1": 473,
+    "y0": 338,
+    "y1": 384
+   },
+   "tags": [
+    {
+     "who": "soonrye",
+     "kind": "mark",
+     "x0": 468,
+     "y0": 321,
+     "onYou": false
+    },
+    {
+     "who": "eunji",
+     "kind": "mark",
+     "x0": 372,
+     "y0": 318,
+     "onYou": false
+    },
+    {
+     "who": "dongha",
+     "kind": "mouth",
+     "x0": 340,
+     "y0": 317,
+     "onYou": false
+    },
+    {
+     "who": "dongha",
+     "kind": "mark",
+     "x0": 352,
+     "y0": 317,
+     "onYou": false
+    },
+    {
+     "who": "mari",
+     "kind": "mark",
+     "x0": 532,
+     "y0": 319,
+     "onYou": false
+    },
+    {
+     "who": "seoha",
+     "kind": "mouth",
+     "x0": 468,
+     "y0": 384,
+     "onYou": false
+    },
+    {
+     "who": "seoha",
+     "kind": "mark",
+     "x0": 480,
+     "y0": 384,
+     "onYou": false
+    },
+    {
+     "who": "gicheol",
+     "kind": "mark",
+     "x0": 404,
+     "y0": 382,
+     "onYou": false
+    }
+   ],
+   "tags_on_you": 0
+  },
+  "12,11": {
+   "you": [
+    12,
+    11
+   ],
+   "below": "gicheol",
+   "youBox": {
+    "x0": 390,
+    "x1": 409,
+    "y0": 338,
+    "y1": 384
+   },
+   "tags": [
+    {
+     "who": "soonrye",
+     "kind": "mark",
+     "x0": 468,
+     "y0": 321,
+     "onYou": false
+    },
+    {
+     "who": "eunji",
+     "kind": "mark",
+     "x0": 372,
+     "y0": 318,
+     "onYou": false
+    },
+    {
+     "who": "dongha",
+     "kind": "mouth",
+     "x0": 340,
+     "y0": 317,
+     "onYou": false
+    },
+    {
+     "who": "dongha",
+     "kind": "mark",
+     "x0": 352,
+     "y0": 317,
+     "onYou": false
+    },
+    {
+     "who": "mari",
+     "kind": "mark",
+     "x0": 532,
+     "y0": 319,
+     "onYou": false
+    },
+    {
+     "who": "seoha",
+     "kind": "mouth",
+     "x0": 468,
+     "y0": 384,
+     "onYou": false
+    },
+    {
+     "who": "seoha",
+     "kind": "mark",
+     "x0": 480,
+     "y0": 384,
+     "onYou": false
+    },
+    {
+     "who": "gicheol",
+     "kind": "mark",
+     "x0": 411,
+     "y0": 382,
+     "onYou": false
+    }
+   ],
+   "tags_on_you": 0
+  }
+ },
+ "10_night_people": [
+  [
+   "soonrye",
+   16,
+   9,
+   "lying"
+  ],
+  [
+   "gicheol",
+   20,
+   9,
+   "lying"
+  ],
+  [
+   "eunji",
+   16,
+   11,
+   "lying"
+  ],
+  [
+   "dongha",
+   18,
+   11,
+   "lying"
+  ],
+  [
+   "mari",
+   20,
+   11,
+   "lying"
+  ]
+ ],
+ "10_fallback": {
+  "sit_sleep_loaded": 0,
+  "pose": {
+   "you": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   },
+   "soonrye": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   },
+   "seoha": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   },
+   "gicheol": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   },
+   "eunji": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   },
+   "dongha": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   },
+   "mari": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   },
+   "eunchae": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   },
+   "dohyeon": {
+    "sitOwn": false,
+    "sitW": null,
+    "sitH": null,
+    "sleepOwn": false,
+    "sleepW": 32
+   }
+  },
+  "errors": []
+ },
+ "console_errors": []
+}

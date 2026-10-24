@@ -76,12 +76,19 @@
   //   사위었다(low)는 덧그림 없이 작은 불꽃·옅은 연기·좁아진 빛으로만 (옛 'ash' 덧그림은 사람 모양 재라 드럼통을 통째로 덮었다)
   const FIRE_UNDER = [0, 6];
   const FIRE_SKIP_OV = { fire_low_ov: true };
-  // 벽에 거는 수납(구급함·레버함·벽감 상자 — 물건 칸이 벽 '#')은 벽면 높이로 올려 그린다: 바로 아래 칸에 선 사람의 머리(칸 위로 14px)에 가리지 않게.
-  //   지도 위 끝(0행)은 지도 밖으로 나가지 않을 만큼만 올린다
-  const WALL_LIFT = 14;
+  // 벽에 거는 수납(구급함·레버함·벽감 상자 — 물건 칸이 벽 '#')은 벽면 높이로 올려 그린다: 바로 아래 칸에 선 사람의 머리(칸 위로 14px)에 가리지 않게,
+  //   머리와 4px 띄운다(붙어 있으면 빨간 구급함이 모자·두건처럼 보였다 — 검증). 지도 위 끝(0행)은 지도 밖으로 나가지 않을 만큼만 올린다 →
+  //   덜 올라간 것(터널 벽감 상자)은 game.js 가 여는 동안 쪼그려 앉힌다(wallClear)
+  const WALL_LIFT = 18;
   function wallLift(sc, o, im) {
     if (!im || tileAt(sc, o.x, o.y) !== '#') return 0;
     return Math.max(0, Math.min(WALL_LIFT, o.y * T + T - im.height));
+  }
+  // 벽걸이가 머리 위로 다 올라갔나 (벽 칸이 아니면 false = 바닥 가구)
+  function wallClear(sc, o) {
+    if (!o || tileAt(sc, o.x, o.y) !== '#') return false;
+    const L = lookOf(o);                                                          // 올려 그리는 것은 v4 그림일 때만 (대체 그림은 칸 바닥에 그대로 → 쪼그려 앉는다)
+    return !!L.v4 && wallLift(sc, o, L.im) >= WALL_LIFT;
   }
   // 누가 손댄 물건은 제자리에서 비켜 그린다 (베개가 밀렸다, 수첩이 옮겨졌다)
   const MOVED = { pillow_gicheol: { moved: [9, -3], blood: [9, -3] }, notebook_you: { moved: [-8, 5] } };
@@ -224,6 +231,24 @@
     }
   }
 
+  // ── 젖은 화로 (props/drum_open: 몸통 8~23열, 아가리 = 맨 윗줄): 불꽃 없이 흰 김 두 줄기가 아가리에서 엇갈려 오르고,
+  //   통 옆으로 물줄기 세 가닥이 흘러내리며 한 방울이 떨어진다. 웅덩이(덧그림)는 통 밑 바닥에 따로 깔린다 ──
+  function drawSteam(ctx, X, mouth, now) {
+    for (let i = 0; i < 2; i++) {
+      const ph = (now / 1400 + i * 0.5) % 1;
+      for (let k = 0; k < 5; k++) {
+        const q = (ph + k * 0.2) % 1;                                             // 이 김 점이 오른 몫 (0 아가리 → 1 13px 위)
+        const x = X + 13 + i * 5 + Math.round(Math.sin(now / 300 + k * 1.3 + i * 2) * (1 + q * 2));
+        const y = mouth - 1 - Math.round(q * 14), w = q > 0.35 ? 2 : 1;
+        ctx.fillStyle = `rgba(220,220,214,${(0.7 * (1 - q * 0.85)).toFixed(3)})`; ctx.fillRect(x, y, w, w);
+      }
+    }
+    ctx.fillStyle = 'rgba(110,150,165,0.55)';
+    for (const [dx, len] of [[9, 7], [12, 4], [20, 9]]) ctx.fillRect(X + dx, mouth + 1, 1, len);
+    ctx.fillStyle = 'rgba(190,215,225,0.75)';
+    ctx.fillRect(X + 20, mouth + 1 + (Math.floor(now / 90) % 14), 1, 1);
+  }
+
   // ── 걷기 4박자: 걸은 거리 16px 마다 왼발 → 섬 → 오른발 → 섬. 이어 걸으면 칸 경계에서 섬으로 돌아가지 않고, 멈추면 섬 (주민이 걸을 때도 이것) ──
   const WALK_BEAT = [1, 0, 2, 0];
   const walkFrame = (dist, moving) => (moving ? WALK_BEAT[Math.floor(Math.max(0, dist) / 16) % 4] : 0);
@@ -239,10 +264,10 @@
     const X = Math.round(x * T), Y = Math.round(y * T);
     if (pose === 'lying') {                                                      // 밤: 잠자리(같은 칸의 bed 소품) 위에 머리 + 담요를 겹친다 — 바닥에 쓰러진 몸으로 안 보이게
       const sl = ART.sleeper && ART.sleeper(id, hurt);
-      if (sl) {
+      if (sl) {                                                                  // 사람마다 잠 그림(sleep/<id>)이 먼저, 없으면 만든 것 (art.js)
         ctx.drawImage(sl, X, Y);
         if (fx.sleepBreath) ctx.drawImage(sl, 10, 13, 12, 14, X + 10, Y + 12, 12, 14);   // 담요 가운데가 1px 솟는다
-        return Y + 1;
+        return Y + ART.opaqueTop(sl);
       }
       const im = ART.pose('lie', id, hurt);
       if (im) { ctx.drawImage(im, X + Math.round((T - im.width) / 2), Y + T - im.height - 3); return Y + T - im.height - 3 + ART.opaqueTop(im); }
@@ -257,7 +282,9 @@
       ctx.drawImage(img, 0, 0, img.width, img.height - 12, X0, top, img.width, img.height - 12);
       return top + ART.headTop(sid0, 0, dir || 'down');
     }
-    if (pose === 'sitting') {
+    if (pose === 'sitting') {                                                    // 사람마다 앉기 그림(sit/<id>, 4방향) → 공용 실루엣 물들이기 → 걷기 그림 아래를 접는다
+      const own = ART.sitPose && ART.sitPose(id, dir || 'down', hurt);
+      if (own) { const top = Y + T - own.height; ctx.drawImage(own, X + Math.round((T - own.width) / 2), top); return top + ART.opaqueTop(own); }
       const im = ART.pose('sit', id, hurt);
       if (im) { const top = Y + T - im.height; ctx.drawImage(im, X + Math.round((T - im.width) / 2), top); return top + ART.opaqueTop(im); }
       const img = ART.person(ART.spriteId(id), 0, hurt, dir || 'down');
@@ -440,13 +467,17 @@
           if (file && file.startsWith('v4p:')) { const im = ART.v4prop(file.slice(4)); if (im) ctx.drawImage(im, X + Math.round((T - im.width) / 2) + sh[0], Y + T - 3 - im.height + sh[1]); }   // 셔터 앞 깡통 등: v4 작은 그림
           else if (file) { let im = ART.trace(file, o.stateName); if (HAND.test(o.id) && !L.v4) im = ART.half(im); ctx.drawImage(im, X + Math.round((T - im.width) / 2) + mx0 + sh[0], Y + T - im.height + my0 + sh[1]); }
         }
-        if (o.id === 'fire' && (o.state === 'lit' || o.state === 'low')) {
-          if (drumOpen) drawFlame(ctx, X + 11, top + ART.opaqueTop(drumOpen) + 3, now, o.state === 'low');
-          if (drumOpen && o.state === 'low') {                                    // 사위었다: 아가리 위로 옅은 연기 한 줄기 (불꽃이 작고 빛이 좁아진 것과 함께)
-            const sy = top + ART.opaqueTop(drumOpen) - 8;
+        // 화로 상태는 드럼통 '위'의 불꽃·연기·물기로 보인다 (덧그림이 드럼통을 덮지 않는다): 탄다(lit)·누가 지켰다(kept, 발자국은 밑에) = 불꽃 ·
+        //   사위었다(low) = 작은 불꽃 + 옅은 연기 한 줄기 · 젖었다(wet) = 불꽃 없이 흰 김 두 줄기 + 아가리에서 흘러내린 물줄기 (웅덩이는 밑에)
+        if (o.id === 'fire' && drumOpen) {
+          const mouth = top + ART.opaqueTop(drumOpen);
+          if (o.state === 'lit' || o.state === 'low' || o.state === 'kept') drawFlame(ctx, X + 11, mouth + 3, now, o.state === 'low');
+          if (o.state === 'low') {
+            const sy = mouth - 8;
             ctx.fillStyle = `rgba(150,150,145,${(0.18 + 0.08 * Math.sin(tick / 7)).toFixed(3)})`; ctx.fillRect(X + 15, sy - ((tick >> 3) % 4), 2, 2); ctx.fillRect(X + 17, sy - 4 - ((tick >> 3) % 5), 1, 1);
           }
-        } else if (o.id === 'fire') { ctx.fillStyle = `rgba(150,150,145,${0.25 + 0.1 * Math.sin(tick / 7)})`; ctx.fillRect(X + 13, Y - 6 - ((tick >> 3) % 4), 3, 3); ctx.fillRect(X + 17, Y - 10 - ((tick >> 3) % 5), 2, 2); }
+          if (o.state === 'wet') drawSteam(ctx, X, mouth, now);
+        } else if (o.id === 'fire' && o.state !== 'lit' && o.state !== 'kept') { ctx.fillStyle = `rgba(150,150,145,${0.25 + 0.1 * Math.sin(tick / 7)})`; ctx.fillRect(X + 13, Y - 6 - ((tick >> 3) % 4), 3, 3); ctx.fillRect(X + 17, Y - 10 - ((tick >> 3) % 5), 2, 2); }
         if (o.id === 'notebook_dash' && o.state === 'there') {                   // 계기판 위 수첩이 은은히 빛난다 (작은 수첩 둘레 1px)
           ctx.fillStyle = `rgba(255,240,200,${(0.35 + 0.25 * Math.sin(tick / 9)).toFixed(3)})`;
           if (L.v4) { const im = L.im; const nx = X + Math.round((T - im.width) / 2) - 1, ny = Y + T - 3 - im.height - 1; ctx.fillRect(nx, ny, im.width + 2, 1); ctx.fillRect(nx, ny + im.height + 1, im.width + 2, 1); ctx.fillRect(nx, ny, 1, im.height + 2); ctx.fillRect(nx + im.width + 1, ny, 1, im.height + 2); }
@@ -518,5 +549,5 @@
     syncBubbles(bubbles, ox, oy);
   }
 
-  window.RENDER = { draw, tileAt, propFor, artFor, OVERLAY, PROP, V4P, HAND, MOVED, walkFrame, setScale, clearBubbles, BREATH_AT_NIGHT, LIGHT_P1, last: null };
+  window.RENDER = { draw, tileAt, propFor, artFor, wallClear, OVERLAY, PROP, V4P, HAND, MOVED, walkFrame, setScale, clearBubbles, BREATH_AT_NIGHT, LIGHT_P1, last: null };
 })();

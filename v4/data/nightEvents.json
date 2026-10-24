@@ -27,7 +27,33 @@
         "n": -3
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "food",
+          "n": 1
+        }
+      ]
+    },
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "food",
+          "n": -1
+        },
+        {
+          "verb": "flag",
+          "id": "unseen_thief_actor",
+          "set": 1
+        }
+      ],
+      "trace": {
+        "crate_food": "open"
+      }
+    }
   },
   {
     "id": "steal_water",
@@ -59,7 +85,35 @@
         "n": 2
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "thirst",
+          "n": -2,
+          "who": "target"
+        }
+      ]
+    },
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "thirst",
+          "n": 3,
+          "who": "target"
+        },
+        {
+          "verb": "number",
+          "id": "water",
+          "n": -1
+        }
+      ],
+      "trace": {
+        "bottle_target": "empty"
+      }
+    }
   },
   {
     "id": "poke_fire",
@@ -108,7 +162,33 @@
         "set": 1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "flag",
+          "id": "stood_stairs_actor",
+          "set": 0
+        }
+      ]
+    },
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "fog",
+          "n": 1
+        },
+        {
+          "verb": "flag",
+          "id": "unseen_stairs_actor",
+          "set": 1
+        }
+      ],
+      "trace": {
+        "stairs_ash": "deep"
+      }
+    }
   },
   {
     "id": "ascend",
@@ -139,7 +219,8 @@
         "who": "bondOfActor"
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "public": 1
   },
   {
     "id": "wound_rots",
@@ -163,7 +244,31 @@
         "n": 1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "injure",
+          "who": "actor",
+          "n": -1
+        }
+      ],
+      "trace": {
+        "bandage_actor": "clean"
+      }
+    },
+    "missed": {
+      "effects": [
+        {
+          "verb": "injure",
+          "who": "actor",
+          "n": 2
+        }
+      ],
+      "trace": {
+        "bandage_actor": "rot"
+      }
+    }
   },
   {
     "id": "share_bowl",
@@ -196,7 +301,29 @@
         "n": -3
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "flag",
+          "id": "share_seen_actor",
+          "set": 1
+        }
+      ]
+    },
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "hunger",
+          "n": 4,
+          "who": "actor"
+        }
+      ],
+      "trace": {
+        "bowl_actor": "empty"
+      }
+    }
   },
   {
     "id": "protect_hurt",
@@ -247,7 +374,20 @@
         "set": 1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "grudge",
+          "n": 1,
+          "who": "actor"
+        }
+      ],
+      "trace": {
+        "notebook_you": "moved"
+      }
+    }
   },
   {
     "id": "outside_contact",
@@ -331,7 +471,19 @@
         "n": 1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "missed": {
+      "effects": [
+        {
+          "verb": "injure",
+          "who": "target",
+          "n": 1
+        }
+      ],
+      "trace": {
+        "bandage_target": "wet"
+      }
+    }
   },
   {
     "id": "soonrye_water",
@@ -364,7 +516,25 @@
         "n": -4
       }
     ],
-    "oncePerRun": 1
+    "oncePerRun": 1,
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "thirst",
+          "n": 2,
+          "who": "soonrye"
+        },
+        {
+          "verb": "injure",
+          "who": "soonrye",
+          "n": 1
+        }
+      ],
+      "trace": {
+        "bottle_soonrye": "empty"
+      }
+    }
   },
   {
     "id": "gicheol_parts",
@@ -448,7 +618,8 @@
         "set": 1
       }
     ],
-    "oncePerRun": 1
+    "oncePerRun": 1,
+    "public": 1
   },
   {
     "id": "seoha_blames_dongha",
@@ -575,7 +746,33 @@
         "set": 1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "food",
+          "n": 1
+        }
+      ]
+    },
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "food",
+          "n": -1
+        },
+        {
+          "verb": "flag",
+          "id": "unseen_thief_actor",
+          "set": 1
+        }
+      ],
+      "trace": {
+        "crate_food": "open"
+      }
+    }
   },
   {
     "id": "give_seat",
@@ -702,7 +899,8 @@
         "n": 3
       }
     ],
-    "oncePerRun": 1
+    "oncePerRun": 1,
+    "public": 1
   },
   {
     "id": "dongha_kills",
@@ -767,7 +965,20 @@
         "n": -2
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "hunger",
+          "n": 2,
+          "who": "dongha"
+        }
+      ],
+      "trace": {
+        "bowl_dongha": "empty"
+      }
+    }
   },
   {
     "id": "eunchae_brings",
@@ -880,7 +1091,8 @@
         "set": 1
       }
     ],
-    "oncePerRun": 1
+    "oncePerRun": 1,
+    "public": 1
   },
   {
     "id": "fog_rise",
@@ -998,7 +1210,8 @@
         "how": "dead"
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "public": 1
   },
   {
     "id": "passage_rest",
@@ -1044,7 +1257,40 @@
         "n": 2,
         "who": "actor"
       }
-    ]
+    ],
+    "caught": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "grudge",
+          "n": -1,
+          "who": "actor"
+        },
+        {
+          "verb": "flag",
+          "id": "unseen_grudge_actor",
+          "set": 0
+        }
+      ]
+    },
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "grudge",
+          "n": 5,
+          "who": "actor"
+        },
+        {
+          "verb": "flag",
+          "id": "unseen_grudge_actor",
+          "set": 1
+        }
+      ],
+      "trace": {
+        "blanket_actor": "rolled"
+      }
+    }
   },
   {
     "id": "eye_you",
@@ -1074,7 +1320,40 @@
         "n": 1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "grudge",
+          "n": -1,
+          "who": "actor"
+        },
+        {
+          "verb": "flag",
+          "id": "unseen_grudge_actor",
+          "set": 0
+        }
+      ]
+    },
+    "missed": {
+      "effects": [
+        {
+          "verb": "number",
+          "id": "grudge",
+          "n": 5,
+          "who": "actor"
+        },
+        {
+          "verb": "flag",
+          "id": "unseen_grudge_actor",
+          "set": 1
+        }
+      ],
+      "trace": {
+        "blanket_actor": "rolled"
+      }
+    }
   },
   {
     "id": "steal_you",
@@ -1105,7 +1384,8 @@
         "n": -1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "public": 1
   },
   {
     "id": "soonrye_names_you",
@@ -1159,7 +1439,8 @@
         "id": "dawn_strike",
         "set": 1
       }
-    ]
+    ],
+    "public": 1
   },
   {
     "id": "dongha_pipe_you",
@@ -1189,7 +1470,8 @@
         "set": 1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "public": 1
   },
   {
     "id": "dongha_end_you",
@@ -1214,6 +1496,309 @@
         "set": 1
       }
     ],
-    "oncePerRun": 0
+    "oncePerRun": 0,
+    "public": 1
+  },
+  {
+    "id": "take_back_you",
+    "role": "grudge",
+    "actor": "grudge>=4",
+    "target": "you",
+    "cond": "karma>=3 & day>=4",
+    "weight": 7,
+    "kind": "malice",
+    "trace": {
+      "bowl_you": "empty",
+      "crate_food": "open"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "food",
+        "n": -2
+      },
+      {
+        "verb": "number",
+        "id": "grudge",
+        "n": -2,
+        "who": "actor"
+      }
+    ],
+    "oncePerRun": 0,
+    "public": 1,
+    "side": 1
+  },
+  {
+    "id": "inform_you",
+    "role": "inform",
+    "actor": "grudge>=4",
+    "target": "you",
+    "cond": "karma>=5 & day>=5 & fog>=2 & !flag:named_you",
+    "weight": 5,
+    "kind": "malice",
+    "trace": {
+      "shoes_stairs": "one"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "named_you",
+        "set": 1
+      },
+      {
+        "verb": "number",
+        "id": "counted",
+        "n": 1,
+        "who": "target"
+      },
+      {
+        "verb": "number",
+        "id": "grudge",
+        "n": -1,
+        "who": "actor"
+      }
+    ],
+    "oncePerRun": 0,
+    "side": 1
+  },
+  {
+    "id": "mob_you",
+    "role": "kill",
+    "actor": "grudge>=2",
+    "target": "you",
+    "cond": "karma>=5 & day>=5 & !flag:dawn_mob",
+    "weight": 6,
+    "kind": "malice",
+    "trace": {
+      "notebook_you": "moved"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "dawn_mob",
+        "set": 1
+      }
+    ],
+    "oncePerRun": 0,
+    "public": 1,
+    "side": 1
+  },
+  {
+    "id": "grudge_names_you",
+    "role": "inform",
+    "actor": "grudge>=2",
+    "target": "you",
+    "cond": "karma>=8 & fog>=3 & !flag:named_you",
+    "weight": 8,
+    "kind": "malice",
+    "trace": {
+      "shoes_stairs": "one"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "named_you",
+        "set": 1
+      },
+      {
+        "verb": "number",
+        "id": "counted",
+        "n": 1,
+        "who": "target"
+      }
+    ],
+    "oncePerRun": 0,
+    "side": 1
+  },
+  {
+    "id": "grudge_strike_late",
+    "role": "kill",
+    "actor": "grudge>=5 & self!=dongha",
+    "target": "you",
+    "cond": "karma>=5 & day>=5 & !flag:dawn_strike & !flag:dawn_dongha & !flag:dawn_dongha2",
+    "weight": 5,
+    "kind": "malice",
+    "trace": {
+      "blanket_actor": "rolled",
+      "notebook_you": "moved"
+    },
+    "rumor": {
+      "witness": "",
+      "line": "rum_over_you"
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "dawn_strike",
+        "set": 1
+      }
+    ],
+    "oncePerRun": 0,
+    "public": 1,
+    "side": 1
+  },
+  {
+    "id": "cold_bowl",
+    "role": "grudge",
+    "actor": "grudge>=3",
+    "target": "",
+    "cond": "day>=2 & trace:bowl_you==full",
+    "weight": 3,
+    "kind": "neutral",
+    "trace": {
+      "bowl_you": "pushed"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [],
+    "oncePerRun": 0,
+    "side": 1
+  },
+  {
+    "id": "steal_food_again",
+    "role": "steal",
+    "actor": "flag:unseen_thief_actor",
+    "target": "",
+    "cond": "food>=1",
+    "weight": 10,
+    "kind": "malice",
+    "trace": {
+      "crate_food": "open"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "food",
+        "n": -2
+      }
+    ],
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "flag",
+          "id": "unseen_thief_actor",
+          "set": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "steal_meds_again",
+    "role": "steal",
+    "actor": "flag:unseen_thief_actor",
+    "target": "",
+    "cond": "meds>=1",
+    "weight": 10,
+    "kind": "malice",
+    "trace": {
+      "crate_food": "open"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "number",
+        "id": "meds",
+        "n": -1
+      }
+    ],
+    "oncePerRun": 0,
+    "caught": {
+      "effects": [
+        {
+          "verb": "flag",
+          "id": "unseen_thief_actor",
+          "set": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "grudge_boils",
+    "role": "kill",
+    "actor": "flag:unseen_grudge_actor & grudge>=2 & self!=dongha",
+    "target": "you",
+    "cond": "day>=3 & !flag:dawn_strike & !flag:dawn_dongha & !flag:dawn_dongha2",
+    "weight": 10,
+    "kind": "malice",
+    "trace": {
+      "blanket_actor": "rolled",
+      "notebook_you": "moved"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "dawn_strike",
+        "set": 1
+      },
+      {
+        "verb": "flag",
+        "id": "unseen_grudge_actor",
+        "set": 0
+      }
+    ],
+    "oncePerRun": 0,
+    "public": 1
+  },
+  {
+    "id": "ascend_unseen",
+    "role": "ascend",
+    "actor": "flag:unseen_stairs_actor",
+    "target": "",
+    "cond": "fog>=3",
+    "weight": 10,
+    "kind": "neutral",
+    "trace": {
+      "shoes_stairs": "pair",
+      "blanket_actor": "empty"
+    },
+    "rumor": {
+      "witness": "",
+      "line": ""
+    },
+    "effects": [
+      {
+        "verb": "kill",
+        "who": "actor",
+        "how": "ascended"
+      },
+      {
+        "verb": "number",
+        "id": "fear",
+        "n": 3,
+        "who": "bondOfActor"
+      }
+    ],
+    "oncePerRun": 0,
+    "public": 1
   }
 ]

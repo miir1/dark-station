@@ -1,0 +1,38 @@
+[
+  {
+    "id": "d0_notebook", "kind": "trial", "when": "day==0&phase==day", "grade": "normal", "explicit": 0,
+    "text": "운전실 바닥에 수첩이 있다. 첫 줄은 당신 이름이다.",
+    "choices": [
+      { "label": "적는다", "out": { "text": "연필 소리가 났다.", "effects": { "axis": { "name": 1 }, "flag": { "notebook": true } } } },
+      { "label": "덮는다", "out": { "text": "수첩을 주머니에 넣었다.", "effects": { "axis": { "name": -1 } } } }
+    ]
+  },
+  {
+    "id": "d1_bowls", "kind": "trial", "when": "day==1&phase==ration", "grade": "normal", "explicit": 0,
+    "text": "그릇 일곱, 식량 다섯. 누구 그릇을 비우나.",
+    "choices": [
+      { "label": "내 그릇을 비운다", "out": { "text": "배에서 소리가 났다.", "effects": { "axis": { "share": 1 }, "hunger": 2 } } },
+      { "label": "순례 그릇을 비운다", "out": { "text": "순례는 아무 말이 없었다.", "effects": { "axis": { "share": -1 } } } },
+      { "label": "순례를 돕는다", "check": { "skill": "talk", "base": 60 },
+        "ok": { "text": "순례가 반을 서하에게 줬다.", "effects": { "axis": { "hand": 1 } } },
+        "fail": { "text": "순례가 손을 뿌리쳤다.", "effects": { "axis": { "hand": 1 }, "injure": { "who": "you", "n": 1 } } } }
+    ]
+  },
+  {
+    "id": "d2_shutter", "kind": "fixed", "when": "day==2&phase==night", "grade": "fixed", "explicit": 1, "image": "scene_shutter",
+    "text": "셔터가 울렸다. 바깥에서 여럿이 두드린다. 순례가 고개를 저었다.",
+    "choices": [
+      { "label": "연다", "hint": "낮에 여럿의 발소리가 났다", "out": { "text": "셔터 밑으로 손이 들어왔다.", "effects": { "kill": { "who": "you" } } } },
+      { "label": "둔다", "out": { "text": "두드림은 새벽에 멎었다.", "effects": { "axis": { "hand": -1 } } } },
+      { "label": "열쇠를 내준다", "cost": { "meds": 1 }, "out": { "text": "약병 하나가 사라졌다.", "effects": { "axis": { "share": 1 } } } }
+    ]
+  },
+  {
+    "id": "trip_a1_stall", "kind": "trip", "when": "day>=1", "grade": "normal", "explicit": 0,
+    "text": "가판대 밑에 상자가 있다.",
+    "choices": [
+      { "label": "연다", "out": { "text": "통조림 둘.", "effects": { "food": 2 } } },
+      { "label": "지나간다", "out": { "text": "" } }
+    ]
+  }
+]

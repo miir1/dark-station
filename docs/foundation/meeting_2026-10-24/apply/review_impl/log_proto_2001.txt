@@ -1,0 +1,1 @@
+done balanced:200 selfish:200 devoted:200 silent:200 caller:200 lazy:200 diligent:200 risky:200 steward:200

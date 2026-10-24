@@ -12,6 +12,9 @@
 #   python v4/tools/screen_check.py fallback                새 그림(v4 walk·props·portraits80·cg_s)을 숨기고 — 대체 규칙으로 깨지지 않는가
 #   python v4/tools/screen_check.py meet                    (P0-S5) 터널 4·2·1칸 말풍선·헤드램프 / 도착 때 창 없음 / 순례 6·4·2칸 / 이름표 / D0 저녁 증언 / D1 배식 / 셔터 / 3번 말 걸기
 #   python v4/tools/screen_check.py props                   (P0-S6) 물건 크기 비교판 / 머리맡 묶음 / 한 칸 전부 조사 / 구급함·가방·벽감 상자 열기(3박자 흔들림·아이콘) / 전동차
+#   python v4/tools/screen_check.py apply [--n=9]           (2026-10-24 검증 남은 화면 몫 12건) 이름 새기·사망 명부·마리 자리·목표 줄·연타 보호·공구함·찾은 물건 아이콘·벽걸이 가림·
+#                                                           화로 상태·사람마다 앉기/잠·꼬리표 비킴 — 결과는 screen_apply_*.png · screen_apply.json
+#   공통 --out=<폴더> : 결과와 헤드리스 프로필(.profile, 끝나면 지움)을 그 폴더에 (기본 after_shots)
 #   (아무것도 안 주면 전부)
 # 결과: docs/foundation/meeting_2026-10-24/after_shots/screen_*.png|json|txt
 import os, sys, json, time, base64, io, asyncio, subprocess, tempfile, threading, functools, http.server, socketserver, shutil, urllib.request
@@ -659,7 +662,7 @@ NOART_JS = r"""
   const of = window.fetch.bind(window);
   window.fetch = (u, o) => of(u, o).then((r) => {
     if (!/img\/manifest\.json/.test(String(u)) || /v3\//.test(String(u))) return r;
-    return r.json().then((list) => new Response(JSON.stringify(list.filter((n) => !/^(walk|props|portraits80|portraits80_hurt|cg_s|icons|tiles)\//.test(n))), { headers: { 'Content-Type': 'application/json' } }));
+    return r.json().then((list) => new Response(JSON.stringify(list.filter((n) => !/^(walk|props|portraits80|portraits80_hurt|cg_s|icons|tiles|sit|sleep)\//.test(n))), { headers: { 'Content-Type': 'application/json' } }));
   });
 })();
 """
@@ -1064,8 +1067,8 @@ RC_OCC_JS = r"""
   }
   const withState = (o, s) => { const d = db.objects[o.id]; return Object.assign({}, o, { state: s, stateName: s, overlay: d.overlay && d.overlay[s] ? d.overlay[s] : null, hidden: false }); };
   const mask = (a, b) => { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (a.data[i] !== b.data[i] || a.data[i + 1] !== b.data[i + 1] || a.data[i + 2] !== b.data[i + 2]) n++; return n; };
-  // [map, id, 닫힘, 열림, 여는 칸, 방향, 바닥 가구(여는 동안 쪼그려 앉나)]
-  const CASES = [['car', 'medkit', 'closed', 'open', [19, 2], 'up', false], ['car', 'lever', 'up', 'pulled', [20, 2], 'up', false], ['tunnel', 'shelter_box', 'closed', 'open', [14, 1], 'up', false],
+  // [map, id, 닫힘, 열림, 여는 칸, 방향, 여는 동안 쪼그려 앉나(바닥 가구 · 맨 윗줄이라 덜 올라간 벽감 상자)]
+  const CASES = [['car', 'medkit', 'closed', 'open', [19, 2], 'up', false], ['car', 'lever', 'up', 'pulled', [20, 2], 'up', false], ['tunnel', 'shelter_box', 'closed', 'open', [14, 1], 'up', true],
     ['station', 'crate_food', 'closed', 'open', [8, 3], 'up', true], ['car', 'bag', 'closed', 'open', [10, 3], 'down', true]];
   const out = [];
   for (const [mapId, id, cs, os, [sx, sy], face, floor] of CASES) {
@@ -1274,6 +1277,278 @@ async def task_recheck(c, opts):
         json.dump(res, fp, ensure_ascii=False, indent=1)
 
 
+# ── 2026-10-24 검증 남은 화면 몫 12건 (apply) ─────────────────────────────────────────────
+# 결과: screen_apply.json + screen_apply_*.png (--out 폴더). 항목 번호는 화면 담당 일감 목록 순서.
+
+async def app_shot(c, path):
+    """게임 틀 전체(#app: 지도 + 오른쪽 패널의 목표 줄·안내줄)를 찍는다."""
+    r = await c.ev("(() => { const b = document.getElementById('app').getBoundingClientRect(); return { x: b.left, y: b.top, w: b.width, h: b.height }; })()", False)
+    return await c.shot(path, {'x': r['x'], 'y': r['y'], 'width': r['w'], 'height': r['h']})
+
+
+# 증언 전인 사람의 진짜 이름(성까지 · 이름만) — 화면 글에 나오면 새는 것
+AP_SECRET_JS = r"""(() => { const st = __ds4.state, db = __ds4.db;
+  const told = (id) => { const rows = db.lines['testify_' + id] || []; return !rows.length || rows.some((r, i) => st.heard && st.heard['testify_' + id + '#' + i] != null); };
+  const out = []; for (const id of db.peopleOrder) { if (id === 'you' || told(id) || !(db.lines['look_' + id] || []).length) continue; const n = st.people[id].name; out.push(n); if (n.length >= 3) out.push(n.slice(1)); }
+  return out; })()"""
+
+# 주인 있는 물건(안 만난·증언 전 사람의 것)마다: 이름·마우스 글·서서 조사할 칸
+AP_OWNED_JS = r"""(() => { const D = __ds4, sc = D.scene, ppl = D.peopleOnMap(), objs = D.objectsOnMap();
+  const solidAt = (x, y) => objs.some((o) => !o.hidden && o.solid && o.x === x && o.y === y) || ppl.some((p) => p.x === x && p.y === y) || '#tRhDCk'.includes((sc.rows[y] || '')[x] || '#');
+  const out = [];
+  for (const o of objs) {
+    const m = /_(soonrye|seoha|gicheol|eunji|dongha|mari)$/.exec(o.id); if (!m || o.hidden) continue;
+    let stand = null; for (const [dx, dy, face] of [[0, 1, 'up'], [-1, 0, 'right'], [1, 0, 'left'], [0, -1, 'down']]) { const x = o.x + dx, y = o.y + dy; if (!solidAt(x, y)) { stand = [x, y, face]; break; } }
+    out.push({ id: o.id, owner: m[1], met: D.met(m[1]), name: o.name, hover: D.hoverName(o.x, o.y), x: o.x, y: o.y, stand });
+  }
+  return out; })()"""
+
+AP_TAGS_JS = """(() => { const L = RENDER.last || {}; const yb = L.youBox; const hit = (t) => yb && t.x0 < yb.x1 + 1 && t.x0 + 11 > yb.x0 && t.y0 < yb.y1 && t.y0 + 11 > yb.y0;
+  const below = __ds4.peopleOnMap().find((p) => p.x === __ds4.scene.px && p.y === __ds4.scene.py + 1);
+  return { you: [__ds4.scene.px, __ds4.scene.py], below: below ? below.id : null, youBox: yb, tags: (L.tags || []).map((t) => ({ who: t.who, kind: t.kind, x0: t.x0, y0: t.y0, onYou: t.who !== 'you' && !!hit(t) })) }; })()"""
+
+# 찾은 물건 아이콘 표: 모든 사건 × 선택 × 결과(out·ok·fail)에 대해, 그 결과가 세우는 깃발·늘리는 자원으로 foundIcon 을 돌린다
+AP_FOUND_TABLE_JS = r"""(() => { const D = __ds4, db = D.db, out = [], used = {};
+  for (const ev of Object.values(db.events)) (ev.choices || []).forEach((c, i) => {
+    for (const br of ['out', 'ok', 'fail']) {
+      const o = c[br]; if (!o) continue;
+      const eff = Array.isArray(o.effects) ? o.effects : [];
+      const flags = eff.filter((e) => e.verb === 'flag' && (e.set === 1 || e.set === true)).map((e) => e.id);
+      const res = eff.filter((e) => e.verb === 'number' && ['food', 'water', 'fuel', 'meds', 'parts'].includes(e.id) && (e.n || 0) > 0 && (e.who == null || e.who === 'you')).map((e) => e.id);
+      const r = { text: o.text || '', roll: br === 'out' ? null : { success: br === 'ok' } };
+      const icon = D.foundIcon(ev.id, i, r, flags, res);
+      if (icon) { out.push({ key: ev.id + '#' + i + ':' + br, icon, text: (o.text || '').slice(0, 40) }); used[icon] = (used[icon] || 0) + 1; }
+    }
+  });
+  const all = Object.keys(ART.IMG).filter((k) => /^v4\/icons\//.test(k)).map((k) => k.slice(9));
+  return { rows: out, used, icons: all, unused: all.filter((k) => !used[k]) }; })()"""
+
+AP_POSE_JS = r"""(() => { const ids = ['you', 'soonrye', 'seoha', 'gicheol', 'eunji', 'dongha', 'mari', 'eunchae', 'dohyeon']; const out = {};
+  for (const id of ids) { const k = ART.spriteId(id); const s = ART.sitPose(id, 'down', 0), sl = ART.sleeper(id, 0);
+    out[id] = { sitOwn: !!ART.IMG['v4/sit/' + k], sitW: s ? s.width : null, sitH: s ? s.height : null, sleepOwn: !!ART.IMG['v4/sleep/' + k], sleepW: sl ? sl.width : null }; }
+  return out; })()"""
+
+
+async def ap_place_read(c, x, y, face):
+    await place(c, x, y, face)
+    await asyncio.sleep(0.25)
+    return await c.ev("document.getElementById('hint').textContent", False)
+
+
+async def ap_hover(c, x, y):
+    """마우스를 그 칸 위로 (실제 mousemove) → 안내줄 글."""
+    r = await c.ev("""(() => { const b = document.getElementById('cv').getBoundingClientRect(); const cm = __ds4.scene.cam; return { x: b.left, y: b.top, k: b.width / 480, ox: cm.ox, oy: cm.oy }; })()""", False)
+    mx = r['x'] + (x * T + 16 + r['ox']) * r['k']
+    my = r['y'] + (y * T + 16 + r['oy']) * r['k']
+    await c.send('Input.dispatchMouseEvent', {'type': 'mouseMoved', 'x': mx, 'y': my})
+    await asyncio.sleep(0.25)
+    return await c.ev("document.getElementById('hint').textContent", False)
+
+
+async def ap_inspect(c, oid):
+    """그 물건까지 걸어가 조사 → 나온 글들 (PASS_BOT 이 window.__seen 에 모은다)."""
+    await c.ev("window.__seen = []; 1", False)
+    await c.ev(f"__ds4.use('{oid}')", True)
+    await drive_lines(c, 20)
+    return [x['text'] for x in (await c.ev('window.__seen', False) or [])]
+
+
+async def ap_zoom(c, path, x0, y0, x1, y1, k):
+    im = await canvas(c)
+    cm = await cam(c)
+    zoom(im, (max(0, x0 * T + cm['ox']), max(0, y0 * T + cm['oy']), min(480, x1 * T + cm['ox']), min(320, y1 * T + cm['oy'])), k, out(path))
+
+
+async def task_apply(c, opts):
+    res = {}
+    leak = lambda texts, secret: sorted({n for t in texts for n in secret if n and n in str(t)})
+    # ── 1·3·4 D0 승강장: 안 만난 사람 물건 이름 / 조사 글 / 마리 자리 / 목표 줄 ──
+    await goto_point(c, 'arrive', "__ds4.scene.map.id === 'station'")
+    await c.ev(PASS_BOT, False)
+    await normal_speed(c)
+    secret = await c.ev(AP_SECRET_JS, False)
+    owned = await c.ev(AP_OWNED_JS, False)
+    for o in owned:
+        if o['stand']:
+            sx, sy, face = o['stand']
+            o['hint'] = await ap_place_read(c, sx, sy, face)
+    res['1_names_d0'] = {'secret': secret, 'owned': owned, 'leaks': leak([o['name'] for o in owned] + [o['hover'] for o in owned] + [o.get('hint', '') for o in owned], secret)}
+    await ap_place_read(c, 21, 10, 'up')                             # 안내줄 캡처: 기철 베개 앞
+    await app_shot(c, out('screen_apply_01_hint_pillow.png'))
+    res['1_hover_mari_bottle'] = await ap_hover(c, 19, 11)            # 마우스를 마리 물통 위에
+    await app_shot(c, out('screen_apply_01_hover_mari_bottle.png'))
+    await c.send('Input.dispatchMouseEvent', {'type': 'mouseMoved', 'x': 2, 'y': 2})
+    await c.ev("document.getElementById('cv').dispatchEvent(new MouseEvent('mouseleave')); 1", False)
+    insp = {}
+    for oid in ('pillow_gicheol', 'bottle_seoha', 'stairs_line', 'chalk_wall'):
+        insp[oid] = await ap_inspect(c, oid)
+    res['1_inspect_texts'] = {'texts': insp, 'leaks': leak([t for v in insp.values() for t in v], secret)}
+    print('1 names leaks', res['1_names_d0']['leaks'], '| inspect leaks', res['1_inspect_texts']['leaks'], '| hover', res['1_hover_mari_bottle'])
+    # ── 3 마리: 만나기 전 담요(20,11)에 앉아 있다 → 말 걸기(pro_mari) → 그 자리 그대로 (D0 낮 내내) ──
+    await place(c, 20, 12, 'up')
+    await asyncio.sleep(0.3)
+    MARI = "(() => { const m = __ds4.peopleOnMap().find((p) => p.id === 'mari'); return { met: __ds4.met('mari'), at: m ? [m.x, m.y, m.pose, m.face] : null, hint: document.getElementById('hint').textContent }; })()"
+    before = await c.ev(MARI, False)
+    await clip_cells(c, out('screen_apply_03_mari_before.png'), 17, 8, 23, 13)
+    await c.ev("__ds4.interact(); 1", False)
+    await drive_lines(c, 20)
+    await asyncio.sleep(0.4)
+    after = await c.ev(MARI, False)
+    await clip_cells(c, out('screen_apply_03_mari_after.png'), 17, 8, 23, 13)
+    await place(c, 5, 10, 'right')                                  # 멀리 갔다 와도 그대로
+    await asyncio.sleep(0.5)
+    away = await c.ev(MARI, False)
+    res['3_mari'] = {'before': before, 'after_meet': after, 'after_walk_away': away, 'stayed': bool(before['at'] and after['at'] and away['at'] and before['at'][:2] == after['at'][:2] == away['at'][:2])}
+    print('3 mari', res['3_mari'])
+    # ── 4 목표 줄: D0 낮 → (순례를 만나고) 화로 → 저녁 → 화로 → 밤 (실제 흐름에서 패널 글) ──
+    goals = {'day': await c.ev("document.getElementById('goal').textContent", False)}
+    await c.ev(PASS_BOT.replace("  if (k === 'write') return 1;", "  if (k === 'write') return 1; if (k === 'fire') return 0;"), False)   # 화로 창 = '앉는다'·'잠자리로'
+    await c.ev("__ds4.flow(() => __ds4.talkTo('soonrye'))", True)
+    await drive_lines(c, 20)
+    await c.ev("__ds4.use('fire')", True)
+    await drive_lines(c, 40)
+    await until(c, "__ds4.state.phase === 'evening' && !__ds4.UI.isOpen()", 30)
+    await asyncio.sleep(0.3)
+    goals['evening'] = {'phase': await c.ev('__ds4.state.phase', False), 'goal': await c.ev("document.getElementById('goal').textContent", False)}
+    await app_shot(c, out('screen_apply_04_goal_d0_evening.png'))
+    await c.ev("__ds4.use('fire')", True)
+    await drive_lines(c, 40)
+    await until(c, "__ds4.state.phase === 'night' && !__ds4.UI.isOpen()", 30)
+    await asyncio.sleep(0.3)
+    goals['night'] = {'phase': await c.ev('__ds4.state.phase', False), 'goal': await c.ev("document.getElementById('goal').textContent", False)}
+    await app_shot(c, out('screen_apply_04_goal_d0_night.png'))
+    res['4_goal_d0'] = goals
+    print('4 goals', goals)
+    # ── 9 화로 상태 (덧그림이 드럼통을 덮나 + 드럼통 위 불꽃·연기·김) ──
+    f = await c.ev(RC_FIRE_JS, False)
+    res['9_fire_states'] = f['states']
+    sts = list(f['imgs'].keys())
+    K = 4
+    board = Image.new('RGB', (len(sts) * (96 * K + 8), 96 * K + 24), (20, 20, 20))
+    d = ImageDraw.Draw(board)
+    for i, s_ in enumerate(sts):
+        im = Image.open(io.BytesIO(base64.b64decode(f['imgs'][s_].split(',')[1]))).convert('RGB').resize((96 * K, 96 * K), Image.NEAREST)
+        board.paste(im, (i * (96 * K + 8), 24))
+        d.text((i * (96 * K + 8) + 4, 4), f"fire:{s_} overlay over drum {f['states'][s_]['coveredPct']}%", fill=(240, 220, 160))
+    board.save(out('screen_apply_09_fire_states.png'))
+    print('9 fire', json.dumps(f['states'], ensure_ascii=False))
+    # ── 6 공구함 ≠ 창고 상자 ──
+    res['6_crates'] = await c.ev("""(() => { const R = RENDER; const a = R.artFor({ id: 'parts_crate', state: 'storage' }), b = R.artFor({ id: 'crate_food', state: 'closed' }), h = R.artFor({ id: 'parts_crate', state: 'hidden' });
+      const px = (im) => (im && im.getContext ? im.toDataURL() : '');
+      return { parts: [a.width, a.height], crate: [b.width, b.height], same: px(a) === px(b), parts_is_toolbox: a === ART.v4prop('toolbox'), parts_hidden_is_open_toolbox: h === ART.v4prop('toolbox_open') }; })()""", False)
+    await place(c, 9, 3, 'up')
+    await asyncio.sleep(0.4)
+    await ap_zoom(c, 'screen_apply_06_toolbox_vs_crate.png', 6, 0, 12, 4, 4)
+    print('6 crates', res['6_crates'])
+    # ── 2 D0 계단에서 죽는다 (순례를 만나고, 증언 전) → 사망 명부: 이름표(생김새)로, 진짜 이름 없음 ──
+    await goto_point(c, 'arrive', "__ds4.scene.map.id === 'station'")
+    await c.ev(PASS_BOT, False)
+    await c.ev("__ds4.flow(() => __ds4.talkTo('soonrye'))", True)
+    await drive_lines(c, 20)
+    secret2 = await c.ev(AP_SECRET_JS, False)
+    await c.ev(r"""(() => { __ds4.setBot((k, info) => { if (k === 'event') { const i = info.options.findIndex((o) => /오른다/.test(o.label)); return i >= 0 ? i : undefined; } if (k === 'confirm2') return 0; if (k === 'death_ledger') return 'hold'; return undefined; }); return 1; })()""", False)
+    await c.ev("__ds4.use('stairs_ash'); 1", False)
+    ok = await until(c, "__ds4.UI.openKind() === 'death_ledger'", 40)
+    await asyncio.sleep(0.5)
+    dl = await c.ev("""(() => { const box = document.getElementById('box'); return { reached: __ds4.UI.openKind(), you: __ds4.state.people.you.status, day: __ds4.state.day,
+      head: ((box && box.querySelector('.who')) || {}).textContent || '', rows: [...(box ? box.querySelectorAll('.ledger .row') : [])].map((r) => r.textContent), text: box ? box.textContent : '' }; })()""", False)
+    dl['secret'] = secret2
+    dl['leaks'] = leak([dl['text']], secret2)
+    dl['ok'] = bool(ok)
+    res['2_death_ledger_d0'] = dl
+    await stage_shot(c, out('screen_apply_02_death_ledger_d0.png'))
+    print('2 death ledger', json.dumps(dl, ensure_ascii=False)[:500])
+    # ── 7 찾은 물건 아이콘: 표 전체 + 전동차(가방·수첩·구급함·레버) 실제 흐름 ──
+    await goto_point(c, 'car')
+    res['7_found_table'] = await c.ev(AP_FOUND_TABLE_JS, False)
+    FACES = r"""if (k === 'line' && info.opts && /:out$/.test(info.opts.tag || '')) window.__faces.push({ tag: info.opts.tag, face: (info.opts.face || '').split('/').slice(-2).join('/'), cls: info.opts.faceCls || '' });"""
+    await c.ev("(() => { window.__faces = []; __ds4.setBot((k, info) => { " + FACES + " return undefined; }); return 1; })()", False)
+    for oid in ('bag', 'notebook_dash', 'medkit'):
+        await c.ev(f"__ds4.use('{oid}')", True)
+        await drive_lines(c, 20)
+    await c.ev("(() => { __ds4.setBot((k, info) => { " + FACES + " if (k === 'line' && info.opts && info.opts.tag === 'pro_lever:out') return 'hold'; return undefined; }); return 1; })()", False)
+    await c.ev("__ds4.use('lever'); 1", False)
+    await until(c, "__ds4.UI.openKind() === 'line' && /icons\\/bottle/.test((document.querySelector('#box img.face') || {}).src || '')", 20)
+    await asyncio.sleep(0.4)
+    await stage_shot(c, out('screen_apply_07_found_bottle_lever.png'))
+    lever_face = await c.ev("(document.querySelector('#box img.face') || {}).src || ''", False)
+    res['7_found_flow'] = {'faces': await c.ev('window.__faces', False), 'lever_face': '/'.join(lever_face.split('/')[-2:]), 'foundLog': await c.ev('__ds4.foundLog', False)}
+    print('7 found used', res['7_found_table']['used'], 'unused', res['7_found_table']['unused'], '| flow', [x['face'] for x in res['7_found_flow']['faces']], res['7_found_flow']['lever_face'])
+    # ── 8 벽걸이 수납: 여는 칸에 선 당신이 가구를 가리나 (닫힘·열림 변화가 보이는 몫) + 캡처 ──
+    await c.ev("__ds4.setBot(null); __ds4.UI.key('ok'); 1", False)
+    await drive_lines(c, 10)
+    res['8_occlusion'] = await c.ev(RC_OCC_JS, False)
+    for r in res['8_occlusion']:
+        print('8 occ', json.dumps(r, ensure_ascii=False))
+    await normal_speed(c)
+    await place(c, 19, 2, 'up')
+    await asyncio.sleep(0.4)
+    await ap_zoom(c, 'screen_apply_08_car_medkit_lever_open_wall.png', 17, 0, 22, 4, 4)
+    await goto_point(c, 'tunnel', "__ds4.scene.map.id === 'tunnel'")
+    await normal_speed(c)
+    await place(c, 14, 1, 'up')
+    await asyncio.sleep(0.4)
+    await ap_zoom(c, 'screen_apply_08_tunnel_shelter_box_wall.png', 11, 0, 18, 3, 4)
+    # 터널 벽감 상자(맨 윗줄이라 덜 올라간 벽걸이): 클릭해 걸어가면 옆 칸에서 위를 보고 조사 → 여는 결과 동안 상자가 몸에 안 가린다
+    await place(c, 10, 2, 'right')
+    plan = await c.ev("(() => { __ds4.walkTo(14, 0); const a = __ds4.scene.auto; const end = a && a.path.length ? a.path[a.path.length - 1] : [__ds4.scene.px, __ds4.scene.py]; __ds4.scene.auto = null; return { end, face: a ? a.face : null }; })()", False)
+    await place(c, plan['end'][0], plan['end'][1], plan['face'] or 'up')
+    await asyncio.sleep(0.3)
+    side = {'walk_end': plan['end'], 'face': plan['face'], 'target': await c.ev("(() => { const t = __ds4.target(); return t ? t.id + ':' + t.verb + ':' + t.name : null; })()", False),
+            'hint': await c.ev("document.getElementById('hint').textContent", False)}
+    await ap_zoom(c, 'screen_apply_08_tunnel_shelter_side_closed.png', 11, 0, 18, 3, 4)
+    await c.ev("(() => { __ds4.setBot((k, info) => { if (k === 'event') return 0; if (k === 'line' && info.opts && info.opts.tag === 'tunnel_box:out') return 'hold'; return undefined; }); return 1; })()", False)
+    await c.ev("__ds4.interact(); 1", False)
+    await until(c, "__ds4.UI.openKind() === 'line' && __ds4.state.traces.shelter_box && __ds4.state.traces.shelter_box.st === 'open'", 20)
+    await asyncio.sleep(0.5)
+    side['opened'] = await c.ev("(__ds4.state.traces.shelter_box || {}).st || ''", False)
+    side['crouch'] = await c.ev("!!__ds4.scene.crouch", False)
+    await ap_zoom(c, 'screen_apply_08_tunnel_shelter_side_open.png', 11, 0, 18, 3, 4)
+    res['8_tunnel_side'] = side
+    print('8 tunnel side', side)
+    await c.ev("__ds4.setBot(null); 1", False)
+    # ── 10·11 저녁 화로 둘레 (D3 저녁): 사람마다 앉기 그림 4방향 · 화로를 본다 / 앉은 사람 바로 위 칸에 선 당신 — 꼬리표 ──
+    await goto_point(c, 'eve3', "__ds4.state.day === 3 && __ds4.state.phase === 'evening'")
+    await normal_speed(c)
+    res['10_pose_art'] = await c.ev(AP_POSE_JS, False)
+    await place(c, 13, 13, 'up')
+    await asyncio.sleep(0.4)
+    res['10_evening_people'] = await c.ev("__ds4.peopleOnMap().map((p) => [p.id, p.x, p.y, p.pose, p.face])", False)
+    await ap_zoom(c, 'screen_apply_10_evening_sitting.png', 9, 8, 18, 14, 3)
+    tagres = {}
+    for (x, y) in ((14, 11), (12, 11)):
+        await place(c, x, y, 'up')
+        await asyncio.sleep(0.35)
+        tg = await c.ev(AP_TAGS_JS, False)
+        tg['tags_on_you'] = sum(1 for t in tg['tags'] if t['onYou'])
+        tagres[f'{x},{y}'] = tg
+        await ap_zoom(c, f'screen_apply_11_tags_you_{x}_{y}.png', 9, 8, 18, 14, 3)
+    res['11_tags'] = tagres
+    print('11 tags', {k: (v['below'], v['tags_on_you']) for k, v in tagres.items()})
+    await goto_point(c, 'beds', "__ds4.state.day === 2 && __ds4.state.phase === 'night'")
+    await normal_speed(c)
+    res['10_night_people'] = await c.ev("__ds4.peopleOnMap().map((p) => [p.id, p.x, p.y, p.pose])", False)
+    await ap_zoom(c, 'screen_apply_10_night_sleepers.png', 14, 8, 23, 12, 4)
+    # 대체: sit·sleep(그리고 다른 새 그림)이 없을 때도 깨지지 않는가
+    ident = (await c.send('Page.addScriptToEvaluateOnNewDocument', {'source': NOART_JS}))['identifier']
+    try:
+        await goto_point(c, 'eve3', "__ds4.state.day === 3 && __ds4.state.phase === 'evening'")
+        await normal_speed(c)
+        await place(c, 13, 13, 'up')
+        await asyncio.sleep(0.4)
+        res['10_fallback'] = {'sit_sleep_loaded': await c.ev("Object.keys(ART.IMG).filter((k) => /^v4\\/(sit|sleep)\\//.test(k)).length", False), 'pose': await c.ev(AP_POSE_JS, False), 'errors': c.errors()}
+        await ap_zoom(c, 'screen_apply_10_fallback_evening.png', 9, 8, 18, 14, 3)
+    finally:
+        await c.send('Page.removeScriptToEvaluateOnNewDocument', {'identifier': ident})
+    print('10 pose', json.dumps(res['10_pose_art'], ensure_ascii=False)[:300], '| fallback loaded', res['10_fallback']['sit_sleep_loaded'])
+    res['console_errors'] = c.errors()
+    with open(out('screen_apply.json'), 'w', encoding='utf-8') as fp:
+        json.dump(res, fp, ensure_ascii=False, indent=1)
+    # ── 5 연타 보호 (Space 연타 · 누른 채 · ↑ 를 누른 채 연타) → screen_space_guard.json (--n=0 이면 건너뛴다) ──
+    if opts.get('n', '9') != '0':
+        await task_space(c, {'n': opts.get('n', '9')})
+
+
 def load_fixtures(ids):
     r = subprocess.run(['node', os.path.join(ROOT, 'v4', 'tools', 'fixture.js'), ','.join(ids), '300'], capture_output=True, timeout=900, cwd=ROOT)
     try:
@@ -1284,10 +1559,12 @@ def load_fixtures(ids):
 
 
 async def amain(tasks, opts):
-    if 'space' in tasks or 'dialog' in tasks or 'recheck' in tasks:
+    if 'space' in tasks or 'dialog' in tasks or 'recheck' in tasks or ('apply' in tasks and opts.get('n', '9') != '0'):   # apply --n=0 = 연타 검사를 건너뛴다
         load_fixtures(SPACE_EVENTS)
     httpd = serve()
-    prof = tempfile.mkdtemp(prefix='ds_screen_')
+    prof = os.path.join(OUTD, '.profile')            # 헤드리스 프로필 = 결과 폴더 아래 (.profile 은 git 제외 · 끝나면 지운다) — 프로젝트 밖에 만들지 않는다
+    shutil.rmtree(prof, ignore_errors=True)
+    os.makedirs(prof, exist_ok=True)
     proc = subprocess.Popen([browser(), '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
                              f'--user-data-dir={prof}', '--window-size=1280,720', f'--remote-debugging-port={DBG}', 'about:blank'],
                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -1326,6 +1603,9 @@ def main():
         pass
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     opts = dict(a[2:].split('=', 1) for a in sys.argv[1:] if a.startswith('--') and '=' in a)
+    if opts.get('out'):                                  # --out=<폴더> : 결과(캡처·json)와 헤드리스 프로필을 그 폴더에 (프로젝트 기준 상대 경로)
+        global OUTD
+        OUTD = opts['out'] if os.path.isabs(opts['out']) else os.path.join(ROOT, opts['out'])
     tasks = args or ['timing', 'walk', 'heads', 'stills', 'dialog', 'screens', 'space', 'fallback', 'meet', 'props']
     asyncio.run(amain(tasks, opts))
 

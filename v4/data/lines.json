@@ -2792,5 +2792,95 @@
     "text": "오늘 밤엔 대답하지 마.",
     "rumor": 0,
     "truth": 1
+  },
+  {
+    "id": "toast_late",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "어제 못 본 자리가 그대로다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_crate_open_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "뚜껑이 어제처럼 열려 있다. 봉지가 더 비었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bottle_empty_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "물통 주둥이가 말라 갈라졌다. 이틀째 빈 채다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_rot_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "붕대가 검게 말라붙었다. 어제부터 아무도 안 풀었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_wet_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "붕대가 어제부터 피에 젖은 채다. 아무도 갈지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_blanket_rolled_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "담요가 당신 쪽을 등지고 말려 있다. 어제도 그랬다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_notebook_moved_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "연필이 어제처럼 옆에 있다. 펼친 장이 또 바뀌었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_deep_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "재가 한 칸 더 내려왔다. 계단 위 신발 자국이 그대로다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bowl_empty_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 그릇이다. 손잡이가 옆 그릇 쪽으로 돌려져 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bowl_pushed",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "당신 그릇이 줄 끝으로 밀려나 있다.",
+    "rumor": 0,
+    "truth": 1
   }
 ]

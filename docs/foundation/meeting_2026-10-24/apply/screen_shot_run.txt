@@ -1,0 +1,31 @@
+manifest 211
+fixture d10_train=OK
+OK   01_car (console errors 0)
+    [ds4 auto] car stop reached=1 D0 day map=car open=- you=home food=6 | D0 day pro_cold \u2192 \ub208\uc744 \ub72c\ub2e4
+OK   02_morning3 (console errors 0)
+    [ds4 auto] morning3 stop reached=1 D3 trace map=station open=- you=home food=0 | D1 ration trial_d1_bowls \u2192 \ub611\uac19\uc774 \uc870\uae08\uc529 / D1 day d1_shutter_knock \u2192 \ub450\ub4dc\ub824 \ub2f5\ud55c\ub2e4 / D1 day trip_b1_debris \u2192 \uc9c0\ub098\uac04\ub2e4 / D1 evening d1_names_
+OK   03_night3 (console errors 0)
+    [ds4 auto] night3 hold reached=1 D3 night map=station open=line you=home food=0 | D1 day d1_shutter_knock \u2192 \ub450\ub4dc\ub824 \ub2f5\ud55c\ub2e4 / D1 day trip_b1_debris \u2192 \uc9c0\ub098\uac04\ub2e4 / D1 evening d1_names_quiet \u2192 \uc801\ub294\ub2e4 / D1 night d1_night_storage \u2192 \ubd
+OK   04_night5 (console errors 0)
+    [ds4 auto] night5 hold reached=1 D5 night map=station open=line you=home food=2 | D3 trace d3_soonrye_opens \u2192 \ubcf8\ub2e4 / D3 trace d3_bottle \u2192 \ub0b4 \ubb3c\uc744 \uc21c\ub840\uc5d0\uac8c / [D3 food0 water4 hunger2] / D3 day trip_b1_gate \u2192 \ubb3c\uc5d0 \ub4e4\uc5b4\uac00 \ub04c\uc5
+OK   05_night8 (console errors 0)
+    [ds4 auto] night8 hold reached=1 D8 night map=station open=event you=home food=1 | D6 evening d6_dohyeon_back \u2192 \ud544\uc694 \uc5c6\ub2e4 \ud55c\ub2e4 / D6 evening d6_vent_voice \u2192 \ub4e3\ub294\ub2e4 / D6 night d6_shutter \u2192 \uc544\ubb34\uac83\ub3c4 \ud558\uc9c0 \uc54a\ub294\ub2e4 / [\u
+    [ds4 missing] d5_lullaby@d5_lullaby trip_a2_bones@trip_a2_bones
+OK   06_ending (console errors 0)
+    [ds4 auto] ending hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=1 | D7 day trip_g_crates \u2192 \ub4a4\uc9c4\ub2e4 / D7 day trip_b2_lockers \u2192 \ube44\ud2c0\uc5b4 \uc5f0\ub2e4 / D7 evening d7_broadcast \u2192 \uc218\ucca9\uc5d0 \ubc1b\uc544 \uc801\ub294\ub2
+    [ds4 missing] d5_lullaby@d5_lullaby
+OK   07_death (console errors 0)
+    [ds4 auto] death hold reached=1 D3 ended map=station open=death_ledger ended=you_gone you=ascended food=0 | [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls \u2192 \ub0a8\uc758 \uadf8\ub987\uc744 \ube44\uc6b4\ub2e4 / D1 day d1_shutter_knock \u2192 \uc5f0\ub2e4 / D1 evening d1_names \u2192 \uc80
+OK   08_evening5 (console errors 0)
+    [ds4 auto] evening5 hold reached=1 D5 evening map=station open=line you=home food=2 | D3 trace d3_soonrye_opens \u2192 \ubcf8\ub2e4 / D3 trace d3_bottle \u2192 \ub0b4 \ubb3c\uc744 \uc21c\ub840\uc5d0\uac8c / [D3 food0 water4 hunger2] / D3 day trip_b1_gate \u2192 \ubb3c\uc5d0 \ub4e4\uc5b4\uac00 \ub04c
+OK   09_reveal (console errors 0)
+    [ds4 auto] reveal hold reached=1 D10 ended map=station open=line ended=d10_walk_other you=walked food=1 | D7 day trip_g_crates \u2192 \ub4a4\uc9c4\ub2e4 / D7 day trip_b2_lockers \u2192 \ube44\ud2c0\uc5b4 \uc5f0\ub2e4 / D7 evening d7_broadcast \u2192 \uc218\ucca9\uc5d0 \ubc1b\uc544 \uc801\ub294\ub2e4
+    [ds4 missing] d5_lullaby@d5_lullaby
+OK   10_called3 (console errors 0)
+    [ds4 auto] called3 hold reached=1 D3 night map=station open=event you=home food=0 | D1 day trip_b1_debris \u2192 \uc9c0\ub098\uac04\ub2e4 / D1 evening d1_names_quiet \u2192 \uc801\ub294\ub2e4 / D1 night d1_night_storage \u2192 \ubd88\uac00\uc5d0 \uc788\ub294\ub2e4 / D2 trace d2_key \u2192 \ubc1b\ub2
+OK   11_train (console errors 0)
+    [ds4 auto] train hold reached=1 D10 ended map=station open=ending ended=d10_train you=boarded food=3 | [\uc800\uc7a5\uc5d0\uc11c \uc2dc\uc791 D10 day d10_train seed154] / D10 day d10_train \u2192 \ud0c4\ub2e4
+OK   12_beds (console errors 0)
+    [ds4 auto] beds stop reached=1 D2 night map=station open=- you=home food=0 | [D0 food9 water11 hunger3] / D0 evening d0_ledger \u2192 \ub9d0\uc5c6\uc774 \uc801\ub294\ub2e4 / [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls \u2192 \ub611\uac19\uc774 \uc870\uae08\uc529 / D1 day d1_shutter_knock \
+shots 12/12 ok ¡¤ console errors 0
+exit=0

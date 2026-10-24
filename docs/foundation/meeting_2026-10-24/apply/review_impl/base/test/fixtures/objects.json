@@ -1,0 +1,13 @@
+[
+  { "id": "crate_food", "name": "창고 상자", "states": ["closed", "open", "empty"], "overlay": { "open": "crate_open_ov" },
+    "inspectLine": { "open": "insp_crate_open" }, "ledgerFact": { "open": "D{day} 밤. 창고 상자 열림." }, "solid": 1, "light": 0, "resetOn": "inspect", "map": "station" },
+  { "id": "bowl_soonrye", "name": "순례 물통", "states": ["full", "empty"], "overlay": { "empty": "bowl_empty_ov" },
+    "inspectLine": { "empty": "insp_bowl_empty", "full": "insp_bowl_full" }, "ledgerFact": { "empty": "D{day} 밤. 순례 물통 빔." }, "resetOn": "inspect", "map": "station" },
+  { "id": "bowl_seoha", "name": "서하 물통", "states": ["full", "empty"], "overlay": { "empty": "bowl_empty_ov" },
+    "inspectLine": { "empty": "insp_bowl_empty", "full": "insp_bowl_full" }, "ledgerFact": { "empty": "D{day} 밤. 서하 물통 빔." }, "resetOn": "inspect", "map": "station" },
+  { "id": "bowl_gicheol", "name": "기철 물통", "states": ["full", "empty"], "inspectLine": { "empty": "insp_bowl_empty" }, "resetOn": "inspect", "map": "station" },
+  { "id": "bowl_mari", "name": "마리 물통", "states": ["full", "empty"], "inspectLine": { "empty": "insp_bowl_empty" }, "resetOn": "inspect", "map": "station" },
+  { "id": "pillow_gicheol", "name": "기철 베개", "states": ["normal", "blood"], "overlay": { "blood": "pillow_blood_ov" },
+    "inspectLine": { "blood": "insp_pillow_blood" }, "ledgerFact": { "blood": "D{day} 밤. 베개 자리 옮겨짐." }, "resetOn": "never", "map": "station" },
+  { "id": "stairs", "name": "출구 계단", "states": ["normal"], "inspectLine": { "normal": "insp_stairs" }, "solid": 1, "light": 2, "resetOn": "never", "map": "station" }
+]

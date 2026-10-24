@@ -105,7 +105,7 @@ if (require.main === module && mode === 'measure') {
   const root = path.resolve(opt('root', path.join(__dirname, '..')));
   const n = +opt('n', 200);
   const blocks = opt('blocks', '1,1001,2001').split(',').map((x) => Math.max(1, Math.floor(+x))).filter(Number.isFinite);
-  const only = (args.slice(1).find((a) => /^[a-z,]+$/.test(a)) || '').split(',').filter(Boolean);   // 첫 낱말(measure)은 빼고
+  const only = (args.slice(1).find((a) => /^[a-z][a-z0-9_,]*$/.test(a)) || '').split(',').filter(Boolean);   // 첫 낱말(measure)은 빼고
   const res = measure(root, n, blocks, only, opt('label', ''));
   res.label = opt('label', '');
   const json = opt('json', '');

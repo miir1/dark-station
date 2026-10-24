@@ -1,0 +1,73 @@
+## 1. 이기적 봇: bodyAverse 있음(명세) vs 없음 — 열흘 생존 %, 균형 대비
+블록1: 균형 45.5 | 이기(명세) 42.0 (karma 12.1) | 이기(bodyAverse 없음) 97.0 (karma 14.7, 사인 fever_night 6) · 버틴다 고른 판 187
+블록2: 균형 45.5 | 이기(명세) 36.0 (karma 12.6) | 이기(bodyAverse 없음) 98.5 (karma 15.3, 사인 fever_night 3) · 버틴다 고른 판 187
+블록3: 균형 43.5 | 이기(명세) 36.5 (karma 12.7) | 이기(bodyAverse 없음) 95.0 (karma 15.1, 사인 fever_night 10) · 버틴다 고른 판 189
+블록4: 균형 41.5 | 이기(명세) 35.0 (karma 11.6) | 이기(bodyAverse 없음) 97.5 (karma 14.3, 사인 fever_night 5) · 버틴다 고른 판 183
+
+## 2. d4_spanner 대상이 기철 자신인 판 (다른 사람이 셌다고 한다 의 대상)
+d4_spanner 걸린 횟수 3001, 대상=기철 504 (16.8%) · 금기 고름 0, 그중 기철을 가리킴 0
+dawn_mob 걸린 횟수 787
+
+## 3. 사망 원인 비중 (정책별, 4블록 합산, 상위 4) · 부상 경로(fever_night+injury_untreated) · D10 사인
+balanced  사망 56.0% | fever_night 44.9 · d10_walk_weak 24.3 · d5_flood 17.2 · d2_shutter_arm 7.6 | 부상경로 44.9 (그중 앞서 '버틴다' 201) | 가장 많이 죽는 날 D10 24.3%
+selfish   사망 62.6% | called_up 83.0 · d10_hold 17.0 | 부상경로 0.0 (그중 앞서 '버틴다' 0) | 가장 많이 죽는 날 D7 30.9%
+devoted   사망 78.1% | fever_night 48.6 · d4_spanner 17.6 · d5_flood 15.0 · d10_walk_weak 10.9 | 부상경로 48.6 (그중 앞서 '버틴다' 253) | 가장 많이 죽는 날 D4 23.0%
+silent    사망 53.5% | fever_night 44.9 · d10_walk_weak 25.2 · d5_flood 14.0 · d2_shutter_arm 9.3 | 부상경로 44.9 (그중 앞서 '버틴다' 192) | 가장 많이 죽는 날 D10 25.2%
+caller    사망 63.1% | fever_night 39.6 · d10_walk_weak 21.6 · d5_flood 19.2 · d4_spanner 10.7 | 부상경로 39.6 (그중 앞서 '버틴다' 200) | 가장 많이 죽는 날 D10 21.6%
+lazy      사망 59.4% | fever_night 46.5 · d10_walk_weak 26.1 · d5_flood 12.8 · d2_shutter_arm 7.4 | 부상경로 46.5 (그중 앞서 '버틴다' 221) | 가장 많이 죽는 날 D10 26.1%
+diligent  사망 54.4% | fever_night 40.5 · d10_walk_weak 28.3 · d5_flood 14.3 · d2_shutter_arm 10.1 | 부상경로 40.5 (그중 앞서 '버틴다' 176) | 가장 많이 죽는 날 D10 28.3%
+risky     사망 71.4% | fever_night 28.2 · d5_flood 21.5 · dawn_strike 10.5 · d4_spanner 10.3 | 부상경로 28.2 (그중 앞서 '버틴다' 85) | 가장 많이 죽는 날 D5 26.6%
+steward   사망 55.4% | fever_night 49.2 · d10_walk_weak 26.0 · d5_flood 14.7 · d2_shutter_arm 7.9 | 부상경로 49.2 (그중 앞서 '버틴다' 218) | 가장 많이 죽는 날 D10 26.4%
+
+## 3b. 같은 표 — 지금 데이터(base)
+balanced  사망 48.4% | fever_night 43.2 · d10_walk_weak 32.3 · called_up 22.5 · dawn_strike 2.1
+selfish   사망 1.6% | called_up 84.6 · fever_night 15.4
+devoted   사망 62.6% | fever_night 68.3 · d10_walk_weak 16.6 · called_up 13.8 · dawn_strike 1.4
+silent    사망 48.9% | d10_walk_weak 36.6 · fever_night 35.5 · called_up 26.9 · dawn_strike 1.0
+caller    사망 49.6% | fever_night 48.9 · d10_walk_weak 28.0 · called_up 20.9 · dawn_strike 2.3
+lazy      사망 46.5% | fever_night 45.4 · d10_walk_weak 28.5 · called_up 24.2 · dawn_strike 1.9
+diligent  사망 45.5% | fever_night 48.1 · d10_walk_weak 28.0 · called_up 21.7 · dawn_strike 2.2
+risky     사망 50.1% | fever_night 53.9 · dawn_strike 25.7 · d10_walk_weak 20.4
+steward   사망 43.3% | fever_night 56.1 · d10_walk_weak 43.9
+
+## 4. A4 판별 값: 블록별 부지런−게으름 · 보통(균형)−게으름 (생존%p · home9 · res7) + 합산 표준오차
+블록1: 부지런−게으름 생존 7.0 · home9 0.32 · res7 0.58 | 보통−게으름 생존 4.5 · home9 -0.02 · res7 0.75
+블록2: 부지런−게으름 생존 7.5 · home9 0.11 · res7 0.24 | 보통−게으름 생존 5.5 · home9 0.02 · res7 -0.01
+블록3: 부지런−게으름 생존 5.5 · home9 0.24 · res7 0.51 | 보통−게으름 생존 3.5 · home9 0.25 · res7 0.24
+블록4: 부지런−게으름 생존 0.0 · home9 0.12 · res7 0.11 | 보통−게으름 생존 0.0 · home9 0.11 · res7 -0.14
+합산 800판: 부지런 45.6 − 게으름 40.6 = 5.0%p (표준오차 ±2.5%p)
+같은 값 지금 데이터: 1.0%p
+
+## 5. 밤 사건 수 집계(stats.measure) 가 방치 줄을 세는가: 균형 판당 nights(통계) vs 진짜 밤 사건 · 방치 줄
+proto: stats nights 19.95 · 진짜 12.77 · 방치 줄 7.19 · malice(통계) 9.39
+base: stats nights 14.58 · 진짜 14.58 · 방치 줄 0.00 · malice(통계) 5.68
+
+## 6. 정체 분포 (봇 9종 평균 / 성향 봇 6종 평균) — base vs proto (B1·B2 없음)
+base 9종: platform_one 41.2 · passenger 19.4 · conductor 10.1 · inspector 10.1 · counted 8.7 · driver 7.7 · counting_child 2.9
+proto 9종: platform_one 36.7 · passenger 22.4 · inspector 10.8 · driver 10.3 · conductor 8.8 · counted 7.3 · counting_child 3.7
+base 6종: platform_one 25.6 · passenger 22.6 · inspector 15.1 · driver 11.3 · counted 11.0 · conductor 10.1 · counting_child 4.3
+proto 6종: passenger 24.0 · platform_one 22.6 · inspector 16.1 · driver 15.4 · counted 9.6 · conductor 8.4 · counting_child 3.9
+
+## 7. 새 위기 사건: 도달·선택 (균형 봇, 4블록) — 판정 굴린 비율과 그때 식량
+d2_shutter_arm: 290회 — 팔을 비틀어 뺀다 262 · 통조림을 내밀어 바꾼다 28
+d4_spanner: 374회 — 스패너를 막는다 202 · 그릇 하나로 입을 막는다 172
+d5_flood: 735회 — 창고를 버리고 뺀다 292 · 모두 매달려 퍼낸다 443
+dawn_mob: 58회 — 맞고 버틴다 29 · 손가락 하나로 갚는다 29
+d10_hold: 0회 — 
+called_up: 605회 — 불을 키우고 밤을 샌다 298 · 손등을 깨물며 버틴다 307
+dawn_strike: 155회 — 맞고 버틴다 81 · 그릇 둘을 내민다 74
+
+## 7b. 이기적 봇(명세) 같은 표
+d2_shutter_arm: 280회 — 옆 사람 팔을 내민다 280
+d4_spanner: 0회 — 
+d5_flood: 800회 — 창고를 버리고 뺀다 800
+dawn_mob: 362회 — 다른 사람을 가리킨다 362
+d10_hold: 297회 — 뿌리치고 걷는다 297
+called_up: 1858회 — 귀를 막는다 1638 · 불을 키우고 밤을 샌다 220
+dawn_strike: 506회 — 옆 담요를 가리킨다 506
+
+## 7c. 이기적 봇(bodyAverse 없음) 같은 표
+dawn_mob: 531회 — 다른 사람을 가리킨다 531
+d10_hold: 694회 — 끌려가며 버틴다 342 · 손가락을 내준다 352
+called_up: 2344회 — 손등을 깨물며 버틴다 2124 · 불을 키우고 밤을 샌다 220
+dawn_strike: 574회 — 옆 담요를 가리킨다 574

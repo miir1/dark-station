@@ -53,7 +53,7 @@ test('요청2·5·18 결과 그림은 lastResult.image · ended.cause.image 로,
   assert.ok(E.dispatch(s, { type: 'choose', i: 0 }, db).ok);
   assert.strictEqual(s.lastResult.image, 'death_counted');
   assert.strictEqual(s.ended.why, 'end_x');
-  assert.deepStrictEqual(s.ended.cause, { event: 'end_x', choice: '운임 없이 탄다', warned: true, forced: false, free: { event: 'end_x', choice: '운임 없이 탄다', day: 0 }, image: 'death_counted', night: false });
+  assert.deepStrictEqual(s.ended.cause, { event: 'end_x', choice: '운임 없이 탄다', warned: true, forced: false, free: { event: 'end_x', choice: '운임 없이 탄다', day: 0 }, image: 'death_counted', night: false, warn: '차장이 당신을 센다', swapped: false });
   assert.strictEqual(s.people.you.status, 'ascended');
 });
 
@@ -236,7 +236,7 @@ test('요청12 view.people[].signs: 문턱은 밤 사건표의 행위자 조건 
   });
   s.people.gicheol.n.fear = 9; s.people.you.n.fear = 9; s.people.mari.n.hunger = 7; s.flags.stood_soonrye = true; s.flags.ate_flesh_seoha = true;
   const sg = Object.fromEntries(E.view(s, db).people.map((p) => [p.id, p.signs]));
-  assert.deepStrictEqual(sg.gicheol, { sleepless: true, starving: false, ateFlesh: false });
+  assert.deepStrictEqual(sg.gicheol, { sleepless: true, starving: false, ateFlesh: false, cold: false });
   assert.strictEqual(sg.soonrye.sleepless, true, '계단에 섰던 사람');
   assert.strictEqual(sg.mari.starving, true, 'steal 행 actor hunger>=7');
   assert.strictEqual(sg.seoha.ateFlesh, true);
@@ -321,7 +321,7 @@ test('요청9 밤 사건으로 당신이 죽으면 사인은 그 밤 사건 (전
   while (s.day === 0 && !s.ended) { if (s.pending) E.dispatch(s, { type: 'choose', i: 0 }, db); else E.dispatch(s, { type: 'next' }, db); }
   assert.strictEqual(s.ended.why, 'you_gone');
   const { free, ...rest } = s.ended.cause;
-  assert.deepStrictEqual(rest, { event: 'n_take_you', choice: null, warned: false, forced: false, image: '', night: true });
+  assert.deepStrictEqual(rest, { event: 'n_take_you', choice: null, warned: false, forced: false, image: '', night: true, warn: '', swapped: false });
   assert.ok(free === null || typeof free.event === 'string', '앞선 자유 경고 선택(있으면)도 함께 남는다');
 });
 

@@ -1,0 +1,183 @@
+{
+ "pro_stairs": {
+  "runs": 9,
+  "deaths": 0,
+  "choices_made": 0,
+  "modes": "mash/hold/arrowhold 번갈아",
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   },
+   "hold": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   },
+   "arrowhold": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   }
+  },
+  "samples": [
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "pro_stairs",
+    "died": false,
+    "mode": "mash"
+   },
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "pro_stairs",
+    "died": false,
+    "mode": "hold"
+   },
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "pro_stairs",
+    "died": false,
+    "mode": "arrowhold"
+   }
+  ],
+  "control_down_then_space": {
+   "open": "line",
+   "cursor": null,
+   "you": "home"
+  }
+ },
+ "d3_called_you": {
+  "runs": 9,
+  "deaths": 0,
+  "choices_made": 0,
+  "modes": "mash/hold/arrowhold 번갈아",
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   },
+   "hold": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   },
+   "arrowhold": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   }
+  },
+  "samples": [
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "d3_called_you",
+    "died": false,
+    "mode": "mash"
+   },
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "d3_called_you",
+    "died": false,
+    "mode": "hold"
+   },
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "d3_called_you",
+    "died": false,
+    "mode": "arrowhold"
+   }
+  ],
+  "control_down_then_space": {
+   "open": "line",
+   "cursor": null,
+   "you": "home"
+  }
+ },
+ "trial_d3_count": {
+  "runs": 9,
+  "deaths": 0,
+  "choices_made": 0,
+  "modes": "mash/hold/arrowhold 번갈아",
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   },
+   "hold": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   },
+   "arrowhold": {
+    "runs": 3,
+    "deaths": 0,
+    "choices_made": 0
+   }
+  },
+  "samples": [
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "trial_d3_count",
+    "died": false,
+    "mode": "mash"
+   },
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "trial_d3_count",
+    "died": false,
+    "mode": "hold"
+   },
+   {
+    "chosen": 0,
+    "last": "",
+    "you": "home",
+    "ended": false,
+    "open": "event",
+    "pending": "trial_d3_count",
+    "died": false,
+    "mode": "arrowhold"
+   }
+  ],
+  "control_down_then_space": {
+   "open": "line",
+   "cursor": null,
+   "you": "home"
+  }
+ },
+ "console_errors": []
+}

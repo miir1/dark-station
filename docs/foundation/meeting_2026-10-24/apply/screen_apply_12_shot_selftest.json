@@ -1,0 +1,38 @@
+{
+ "runs": [
+  {
+   "shot": "x_unreached",
+   "ok": false,
+   "why": [
+    "봇 기록([ds4 auto]) 없음 - 게임이 시작되지 않았거나 끝까지 돌지 않았다"
+   ],
+   "png_scale": 2.0
+  },
+  {
+   "shot": "x_nogame",
+   "ok": false,
+   "why": [
+    "PNG 없음"
+   ],
+   "png_scale": null
+  },
+  {
+   "shot": "x_car",
+   "ok": true,
+   "why": [],
+   "png_scale": 2.0
+  }
+ ],
+ "judge_unit": {
+  "reached0": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] night8 stop (D8 밤 고정 사건이 걸리지 않았다) reached=0 D8 night map=station open=- you=home food=2 | x"
+  ],
+  "reached1": [],
+  "end": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] night8 end reached=0 D10 ended ..."
+  ],
+  "other_key_reached": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] night8 hold reached=1 D8 night map=station open=event you=home food=2 | x"
+  ]
+ }
+}

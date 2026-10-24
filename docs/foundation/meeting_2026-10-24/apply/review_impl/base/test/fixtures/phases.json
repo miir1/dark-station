@@ -1,0 +1,9 @@
+[
+  { "id": "trace", "order": 1, "actions": ["inspect", "hear", "writeFact", "writeCause"], "skipIf": "day==0", "timeBudgetSec": 90 },
+  { "id": "ration", "order": 2, "actions": ["setBowl"], "skipIf": "day==0", "timeBudgetSec": 60 },
+  { "id": "seat", "order": 3, "actions": ["assign"], "skipIf": "day==0", "timeBudgetSec": 30 },
+  { "id": "day", "order": 4, "actions": ["inspect", "treat", "board"], "timeBudgetSec": 240 },
+  { "id": "evening", "order": 5, "actions": ["talk", "hear", "writeCause"], "timeBudgetSec": 60 },
+  { "id": "night", "order": 6, "actions": [], "hook": "rollNight", "timeBudgetSec": 90 },
+  { "id": "aftermath", "order": 7, "actions": ["writeCause"], "timeBudgetSec": 30 }
+]

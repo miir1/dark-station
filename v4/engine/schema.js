@@ -8,6 +8,9 @@
   const EFFECT_VERBS = ['flag', 'trace', 'axis', 'injure', 'kill', 'permanent'];   // 그 밖의 키는 numbers id 여야 한다
   const PERMANENT = ['finger', 'leg', 'ear'];
   const EVENT_TARGETS = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper', 'mostInjured', 'bond'];   // 사건 대상 낱말 (자리 정보가 없어 앞의 넷은 무작위, bond = 당신의 bond)
+  const MOST_TARGET = /^most:([a-z0-9_]{1,24})$/;   // (10-24 A1) most:<사람 수치> = 그 수치가 가장 큰 주민(0보다 클 때, 같으면 무작위) — 예 most:grudge
+  const REQ_KEYS = ['flag', 'permanent', 'notPermanent', 'cond', 'why', 'target'];   // 선택지 req 의 칸 (10-24: cond = 조건식 · why = 잠금 이유 글 · target = 사건 대상이 있어야 열림)
+  const SWAP_KEYS = ['when', 'label', 'check', 'cost', 'req', 'taboo', 'warn', 'hint', 'out', 'ok', 'fail'];   // (10-24 A1) 선택지 swap 변형의 칸
   const FORBIDDEN_NIGHT_NAMES = /^(you|pos|player|map|x|y|where|at)(_|$)|^(inspect|talk|choice|chose):/;   // 밤 사건 조건에 당신 위치·선택(조사·말 걸기) 금지
 
   // 열 정의: type(id|str|int|num|bool|enum|list|obj|cond|any), req(필수), enum, min, max, of(목록 원소 검사 함수 이름)
@@ -26,7 +29,9 @@
       id: { type: 'id', req: true }, kind: { type: 'enum', req: true, enum: ['trip', 'trial', 'fixed', 'ending'] }, when: { type: 'cond' },
       grade: { type: 'enum', req: true, enum: ['normal', 'fixed'] }, explicit: { type: 'bool01' }, text: { type: 'str', req: true },
       image: { type: 'str' }, choices: { type: 'list', req: true, minLen: 1 }, once: { type: 'bool01' },
-      target: { type: 'str' },                                // 사건의 대상(사람 id 또는 any·randomSleeper·mostInjured 등). 걸릴 때 정해지고, 결과의 who:'target' 이 된다
+      target: { type: 'str' },                                // 사건의 대상(사람 id 또는 any·randomSleeper·mostInjured·most:<수치> 등). 걸릴 때 정해지고, 결과의 who:'target' 이 된다
+      targetIf: { type: 'cond' },                             // (10-24) 대상 후보가 맞아야 하는 조건식 — 그 사람 수치(grudge·injury…)·self(그 사람 id)·flag:x_target. 예 "self!=gicheol" · "grudge>=3"
+      targetOptional: { type: 'bool01' },                     // (10-24) 1 = 대상을 못 정해도 사건은 걸린다. 대상이 필요한 선택지(결과가 who:'target' 을 쓰거나 req.target)만 잠긴다(req.why 또는 '댈 이름이 없다')
       board: { type: 'bool01' },                              // kind ending 전용: 1 = 이 결말이 걸려 있는 동안 board 동작으로 태울 사람을 고른다
       endStatus: { type: 'enum', enum: ['stayed', 'walked'] }, // kind ending 전용: 결말 뒤 역에 남은 산 사람의 명부 status (기본 stayed)
     } },
@@ -36,6 +41,7 @@
       callsGod: { type: 'str', maxLen: 6 }, addressYou: { type: 'obj' }, outside: { type: 'bool01' },
       metFlag: { type: 'id' },        // 만남 깃발(id 꼴 또는 빈칸). 비었으면 처음부터 아는 사람. 있으면 그 깃발이 서기 전까지 '안 만난 사람'(배식·무작위 대상·명부에서 빠진다)
       startAway: { type: 'bool01' },  // 1 = 처음엔 역 밖(status away). metFlag 깃발이 서면 역에 온다(home). 밤 사건·배식·새 날 수치에서 빠진다
+      addressCold: { type: 'str', maxLen: 6 },   // (10-24 A1 E5) 원한이 높을 때(numbers sign_cold_call, 기본 5) 당신을 부르는 말. 빈 글 "" = 부르지 않는다. 칸이 없으면 늘 addressYou
     } },
     maps: { key: 'id', cols: {
       id: { type: 'id', req: true }, displayName: { type: 'str', req: true }, rows: { type: 'list', req: true, minLen: 1 },
@@ -51,6 +57,9 @@
       id: { type: 'id', req: true }, role: { type: 'str', req: true }, actor: { type: 'str' }, target: { type: 'str' },   // actor 는 role:clock 이 아니면 필수(아래 검사)
       cond: { type: 'cond' }, weight: { type: 'int', req: true, min: 1, max: 10 }, kind: { type: 'enum', req: true, enum: ['malice', 'hymn', 'neutral'] },
       trace: { type: 'obj' }, rumor: { type: 'obj' }, effects: { type: 'obj' }, oncePerRun: { type: 'bool01' }, text: { type: 'str' },
+      missed: { type: 'obj' }, caught: { type: 'obj' },   // (10-24 A4 E1) 방치 판정: 다음 밤 굴림 첫머리에 못 봤으면 missed, 봤으면 caught = { effects, trace } 를 같은 행위자·대상으로
+      public: { type: 'bool01' },                          // (10-24 A4) 1 = 누구나 아는 밤 — 굴릴 때 바로 발견(kill 효과가 있는 행은 안 적어도 그렇다)
+      side: { type: 'bool01' },                            // (10-24) 1 = 곁가지 행: 한 밤 상한(max_per_night)·행위자 한 번 규칙 밖에서 따로 굴린다(weight/10 확률, 한 밤에 한 번) — 신호용 흔적 행이 다른 사건 자리를 뺏지 않게
     } },
     objects: { key: 'id', cols: {
       id: { type: 'id', req: true }, name: { type: 'str', req: true }, states: { type: 'list', req: true, minLen: 1, maxLen: 4, ofId: true },
@@ -175,8 +184,74 @@
   const REASON_WORDS = /때문에|왜냐하면/;                   // 문장 규칙(plan P0-D1): 이유를 대는 낱말은 쓰지 않는다
   const SOFT_FLOOR_BAN = ['#', '='];                       // 단단하지 않은 물건(바닥에 놓인 것)을 둘 수 없는 칸: 벽 · 승강장 끝선
 
+  // ── 선택지 본문 검사 (기본 선택지와 swap 을 합친 선택지가 같이 쓴다) ──
+  function checkChoiceBody(c, ctx, e2) {
+    if (typeof c.label !== 'string' || !c.label) e2('label 필요');
+    else if (Array.from(c.label).length > 18) e2(`label 18자 초과 ("${c.label}")`);
+    if (c.check) {
+      if (!isObj(c.check) || !['obs', 'str', 'tech', 'talk'].includes(c.check.skill) || !isInt(c.check.base) || c.check.base < 0 || c.check.base > 100) e2('check: {skill: obs/str/tech/talk, base: 0~100}');
+      if (!isObj(c.ok) || !isObj(c.fail)) e2('check가 있으면 ok·fail 둘 다 필요');
+    } else if (!isObj(c.out)) e2('out 필요');
+    for (const o of [c.out, c.ok, c.fail].filter(Boolean)) {
+      if (o.effects) checkEffects(o.effects, ctx, (m) => e2(m)); if (o.text != null && typeof o.text !== 'string') e2('결과 text는 글');
+      if (o.image != null && typeof o.image !== 'string') e2('결과 image는 그림 id 글');
+      if (o.ledger != null) checkLedger(o.ledger, ctx, (m) => e2(m));
+      if (o.target != null && !validTarget(o.target, ctx)) e2(`target: 사람 id 또는 ${EVENT_TARGETS.join('·')}·most:<사람 수치> ("${o.target}")`);
+    }
+    if (c.req != null) {
+      if (!isObj(c.req)) e2(`req: {${REQ_KEYS.join(', ')}} 꼴`);
+      else {
+        for (const k of Object.keys(c.req)) if (!REQ_KEYS.includes(k)) e2(`req.${k}: req 칸은 ${REQ_KEYS.join('·')}`);
+        if (c.req.flag && !ID.test(c.req.flag)) e2('req.flag id 꼴 아님');
+        if (c.req.permanent && !PERMANENT.includes(c.req.permanent)) e2('req.permanent 종류');
+        if (c.req.notPermanent && !PERMANENT.includes(c.req.notPermanent)) e2('req.notPermanent 종류');
+        if (c.req.cond != null && c.req.cond !== '') { if (typeof c.req.cond !== 'string') e2('req.cond: 조건식은 글'); else { try { C.parse(c.req.cond); } catch (e) { e2(`req.cond: ${e.message}`); } } }
+        if (c.req.why != null && (typeof c.req.why !== 'string' || Array.from(c.req.why).length > 24)) e2('req.why: 잠금 이유는 글 24자 이내');
+        if (c.req.target != null && ![0, 1, true, false].includes(c.req.target)) e2('req.target: 0/1');
+      }
+    }
+    if (c.cost && isObj(c.cost)) for (const k of Object.keys(c.cost)) if (!ctx.numbers[k]) e2(`cost.${k}: numbers에 없음`);
+  }
+  // 사건·결과 대상: 사람 id · 대상 낱말 · most:<사람 수치>
+  function validTarget(v, ctx) {
+    if (typeof v !== 'string') return false;
+    if (ctx.people[v] || EVENT_TARGETS.includes(v)) return true;
+    const m = MOST_TARGET.exec(v);
+    return !!(m && ctx.numbers[m[1]] && ctx.numbers[m[1]].owner === 'person');
+  }
+  // ── swap (10-24 A1): 조건(when)이 맞으면 그 변형의 칸이 기본 선택지의 칸을 덮는다. engine.js 가 같은 함수를 쓴다 ──
+  //  · 변형에 적힌 칸은 빈 값이어도 덮는다(빈 값 = 그 칸을 비움: warn:'' → 경고 없음, cost:{} → 비용 없음, taboo:'' → 금기 아님)
+  //  · 변형에 out 이 있고 check 가 없으면 판정이 사라진다(check·ok·fail 지움). 변형에 check 가 있으면 out 이 사라진다(ok·fail 은 변형 것, 없으면 기본 것)
+  const blankV = (v) => v == null || v === '' || v === '-' || (isObj(v) && !Object.keys(v).length);
+  const hasK = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+  function mergeSwap(base, v) {
+    const m = Object.assign({}, base); delete m.swap;
+    for (const k of Object.keys(v)) if (k !== 'when') m[k] = v[k];
+    if (hasK(v, 'out') && !hasK(v, 'check')) { delete m.check; delete m.ok; delete m.fail; }
+    if (hasK(v, 'check')) { if (blankV(v.check)) { delete m.ok; delete m.fail; } else delete m.out; }
+    for (const k of ['check', 'cost', 'req', 'taboo', 'warn', 'hint', 'out', 'ok', 'fail']) if (blankV(m[k])) delete m[k];
+    return m;
+  }
+  const swapsOf = (c) => (!isObj(c) || c.swap == null ? [] : (Array.isArray(c.swap) ? c.swap : [c.swap]).filter(isObj));
+  const variantsOf = (c) => [c].concat(swapsOf(c).map((v) => mergeSwap(c, v)));
+  // 선택지가 사건 대상(who:'target'·흔적/깃발의 _target·명부 줄 who target)을 쓰는가 — 결과에 제 target 열이 있으면 그 결과는 사건 대상을 안 쓴다
+  function usesTarget(c) {
+    for (const o of [c.out, c.ok, c.fail]) {
+      if (!isObj(o) || (typeof o.target === 'string' && o.target)) continue;
+      const e = o.effects;
+      if (isObj(e)) for (const [k, v] of Object.entries(e)) {
+        if ((k === 'trace' || k === 'flag') && isObj(v)) { if (Object.keys(v).some((x) => /\{target\}|_target$/.test(x))) return true; continue; }
+        if (k === 'axis') continue;
+        for (const x of Array.isArray(v) ? v : [v]) if (isObj(x) && x.who === 'target') return true;
+      }
+      for (const L of o.ledger == null ? [] : Array.isArray(o.ledger) ? o.ledger : [o.ledger]) if (isObj(L) && L.who === 'target') return true;
+    }
+    return false;
+  }
+  const needsTarget = (c) => !!(isObj(c) && ((isObj(c.req) && (c.req.target === 1 || c.req.target === true)) || usesTarget(c)));
+
   // 검사 = { errors, warnings }. errors 가 하나라도 있으면 표를 읽지 않는다(load 가 던진다). warnings 는 읽되 알린다.
-  //   warnings[].kind: firstDeath(1번 자리 죽음) · reasonWord(이유 낱말) · owner(주인 없는 물건이 남의 머리맡 묶음에) · holdsRefill(다시 차는 수납, P1-11)
+  //   warnings[].kind: firstDeath(1번 자리 죽음) · reasonWord(이유 낱말) · owner(주인 없는 물건이 남의 머리맡 묶음에) · holdsRefill(다시 차는 수납, P1-11) · noExit(강제 사망 길, E4 10-24)
   function validate(tables) { return check(tables).errors; }
   function warnings(tables) { return check(tables).warnings; }
   function check(tables) {
@@ -233,32 +308,34 @@
       ev.choices.forEach((c, k) => {
         const e2 = (m) => err(`choices[${k}]: ${m}`);
         if (!isObj(c)) { e2('선택지가 객체가 아님'); return; }
-        if (typeof c.label !== 'string' || !c.label) e2('label 필요');
-        else if (Array.from(c.label).length > 18) e2(`label 18자 초과 ("${c.label}")`);
+        checkChoiceBody(c, ctx, e2);
         if (!c.cost && !c.req) free++;
-        if (c.check) {
-          if (!isObj(c.check) || !['obs', 'str', 'tech', 'talk'].includes(c.check.skill) || !isInt(c.check.base) || c.check.base < 0 || c.check.base > 100) e2('check: {skill: obs/str/tech/talk, base: 0~100}');
-          if (!isObj(c.ok) || !isObj(c.fail)) e2('check가 있으면 ok·fail 둘 다 필요');
-        } else if (!isObj(c.out)) e2('out 필요');
-        for (const o of [c.out, c.ok, c.fail].filter(Boolean)) {
-          if (o.effects) checkEffects(o.effects, ctx, (m) => e2(m)); if (o.text != null && typeof o.text !== 'string') e2('결과 text는 글');
-          if (o.image != null && typeof o.image !== 'string') e2('결과 image는 그림 id 글');
-          if (o.ledger != null) checkLedger(o.ledger, ctx, (m) => e2(m));
-          if (o.target != null && !(typeof o.target === 'string' && (ctx.people[o.target] || EVENT_TARGETS.includes(o.target)))) e2(`target: 사람 id 또는 ${EVENT_TARGETS.join('·')} ("${o.target}")`);
+        // (10-24 A1) swap: 조건이 맞으면 바뀌는 선택지. 객체 하나 또는 목록(앞에서부터 처음 맞는 것). 합친 선택지도 같은 검사를 받는다
+        if (c.swap !== undefined) {
+          const list = Array.isArray(c.swap) ? c.swap : [c.swap];
+          if (!list.length) e2('swap: 빈 목록');
+          list.forEach((v, j) => {
+            const e3 = (m) => e2(`swap[${j}]: ${m}`);
+            if (!isObj(v)) { e3('{when, …선택지 칸} 꼴이어야 함'); return; }
+            for (const key of Object.keys(v)) if (!SWAP_KEYS.includes(key)) e3(`${key}: swap 에 쓸 수 있는 칸은 ${SWAP_KEYS.join('·')}`);
+            if (typeof v.when !== 'string' || !v.when.trim()) e3('when: 조건식이 있어야 한다');
+            else { try { C.parse(v.when); } catch (e) { e3(`when: ${e.message}`); } }
+            checkChoiceBody(mergeSwap(c, v), ctx, e3);
+          });
         }
-        if (c.req && isObj(c.req)) { if (c.req.flag && !ID.test(c.req.flag)) e2('req.flag id 꼴 아님'); if (c.req.permanent && !PERMANENT.includes(c.req.permanent)) e2('req.permanent 종류'); }
-        if (c.cost && isObj(c.cost)) for (const k of Object.keys(c.cost)) if (!ctx.numbers[k]) e2(`cost.${k}: numbers에 없음`);
       });
       if (!free) err('항상 고를 수 있는 선택지(cost·req 없음)가 하나도 없음 — 막다른 길');
-      if (ev.target != null && !(typeof ev.target === 'string' && (ctx.people[ev.target] || EVENT_TARGETS.includes(ev.target)))) err(`target: 사람 id 또는 ${EVENT_TARGETS.join('·')} ("${ev.target}")`);
+      if (ev.target != null && !validTarget(ev.target, ctx)) err(`target: 사람 id 또는 ${EVENT_TARGETS.join('·')}·most:<사람 수치> ("${ev.target}")`);
+      if (ev.targetIf != null && ev.target == null) err('targetIf: target 열과 같이 쓴다');
+      if (ev.targetOptional && ev.target == null) err('targetOptional: target 열과 같이 쓴다');
       if ((ev.board || ev.endStatus) && ev.kind !== 'ending') err('board·endStatus 는 kind ending 사건에만');
       if (ev.image && ev.image !== '-' && typeof ev.image !== 'string') err('image는 그림 id 글');
     });
     // 사건·밤 사건 결과가 세우는 깃발 전부 (metFlag 가 영영 안 서는 오타를 잡는다)
     const setFlags = new Set();
     const addFlags = (eff) => { if (isObj(eff) && isObj(eff.flag)) for (const [f, on] of Object.entries(eff.flag)) if (on) setFlags.add(f); };
-    tables.events.forEach((ev) => (Array.isArray(ev.choices) ? ev.choices : []).forEach((c) => { if (isObj(c)) for (const o of [c.out, c.ok, c.fail]) if (isObj(o)) addFlags(o.effects); }));
-    tables.nightEvents.forEach((n) => addFlags(n.effects));
+    tables.events.forEach((ev) => (Array.isArray(ev.choices) ? ev.choices : []).forEach((c) => { if (isObj(c)) for (const x of variantsOf(c)) for (const o of [x.out, x.ok, x.fail]) if (isObj(o)) addFlags(o.effects); }));
+    tables.nightEvents.forEach((n) => { addFlags(n.effects); for (const key of ['missed', 'caught']) if (isObj(n[key])) addFlags(n[key].effects); });
     tables.people.forEach((p, i) => {
       const err = (m) => push('people', i, p.id, m);
       const metFlag = typeof p.metFlag === 'string' && p.metFlag !== '-' ? p.metFlag : '';
@@ -286,6 +363,16 @@
       if (n.trace) for (const [o, st] of Object.entries(n.trace)) checkTrace(o, st, ctx, (m) => err('trace.' + m));
       if (n.rumor) { if (!isObj(n.rumor) || typeof n.rumor.line !== 'string') err('rumor: {witness, line}'); else if (!ctx.lines[n.rumor.line]) err(`rumor.line: lines에 없음 "${n.rumor.line}"`); }
       if (n.effects) checkEffects(n.effects, ctx, err);
+      for (const key of ['missed', 'caught']) {   // (10-24 A4 E1) { effects, trace } — 검사는 밤 사건 effects·trace 와 같다
+        const v = n[key]; if (v === undefined) continue;
+        const e2 = (m) => err(`${key}.${m}`);
+        if (!isObj(v)) { e2('{effects, trace} 꼴이어야 함'); continue; }
+        for (const k of Object.keys(v)) if (k !== 'effects' && k !== 'trace') e2(`${k}: missed·caught 는 effects·trace 만 쓴다`);
+        if (v.effects !== undefined) checkEffects(v.effects, ctx, e2);
+        if (v.trace !== undefined) { if (!isObj(v.trace)) e2('trace: {물건:상태}'); else for (const [o, st] of Object.entries(v.trace)) checkTrace(o, st, ctx, (m) => e2('trace.' + m)); }
+      }
+      if ((n.missed || n.caught) && n.role === 'clock') err('missed·caught: 세계 시계(role clock)는 방치 판정이 없다 — 행위자가 있는 행에만');
+      if (n.side && n.role === 'clock') err('side: 세계 시계 행은 이미 상한 밖이다');
     });
     tables.objects.forEach((o, i) => {
       const err = (m) => push('objects', i, o.id, m);
@@ -338,17 +425,29 @@
     //              다른 사람이 죽을 수 있는데 뒤에 아무도 안 죽는 선택지가 있다. (모든 선택지가 같은 사람을 죽이는 장면 — d8_pillow 등 — 은 자리를 바꿔도 같아 빼고 센다)
     tables.events.forEach((ev, i) => {
       if (!Array.isArray(ev.choices) || ev.choices.length < 2 || !isObj(ev.choices[0])) return;
-      const c0 = ev.choices[0], k0 = killWhos(c0);
-      const why = c0.taboo ? `금기("${c0.taboo}")가 있다`
+      const c0 = ev.choices[0], v0 = variantsOf(c0), k0 = [].concat(...v0.map(killWhos));   // swap 변형이 죽일 수 있어도 1번 자리 죽음이다
+      const tab0 = v0.find((x) => x.taboo);
+      const why = tab0 ? `금기("${tab0.taboo}")가 있다`
         : k0.some((w) => ME_WHO.includes(w)) ? '당신이 죽을 수 있다'
           : k0.length && ev.choices.slice(1).some((c) => isObj(c) && !killWhos(c).length) ? `${k0.join('·')} 이(가) 죽을 수 있는데 아무도 안 죽는 선택지가 뒤에 있다` : '';
       if (why) warn('events', i, ev.id, 'firstDeath', `choices[0] "${c0.label}": 1번 자리에 ${why} — 죽는 선택·금기는 1번에 두지 않는다`);
+    });
+    //  noExit (E4, 10-24 A1): 당신을 죽일 수 있는 선택(swap 변형 포함)이 있는 사건에, 비용·req 없고 당신을 죽이지 않는(변형까지) 선택지가 하나도 없다 — 강제 사망 길.
+    //          금기도 출구로 센다. targetOptional 사건에서 대상이 필요한 선택지는 대상이 없으면 잠기므로 출구가 아니다.
+    //          경고로 둔다(브라우저 로더가 틀린 행을 빼고 읽지 않게) — 지금 표에 0건인지는 테스트(karma.test.js)가 막는다.
+    const killsMe = (c) => killWhos(c).some((w) => ME_WHO.includes(w));
+    tables.events.forEach((ev, i) => {
+      if (!Array.isArray(ev.choices)) return;
+      const cs = ev.choices.filter(isObj);
+      if (!cs.some((c) => variantsOf(c).some(killsMe))) return;
+      const exit = cs.some((c) => variantsOf(c).every((x) => !x.cost && !x.req && !killsMe(x)) && !(ev.targetOptional && variantsOf(c).some(needsTarget)));
+      if (!exit) warn('events', i, ev.id, 'noExit', '당신이 죽을 수 있는 사건인데 늘 고를 수 있고(비용·req 없음) 당신을 죽이지 않는 선택지가 없다 — 강제 사망 길. 죽지 않는 몸값(버틴다 등)·금기 출구를 하나 둔다');
     });
     //  reasonWord: 화면 글에 '때문에·왜냐하면' (문장 규칙 — 이유는 말하지 않는다)
     const reason = (table, i, id, col, v) => { if (typeof v === 'string' && REASON_WORDS.test(v)) warn(table, i, id, 'reasonWord', `${col}: '${REASON_WORDS.exec(v)[0]}' — 이유를 대는 낱말은 쓰지 않는다 ("${v.slice(0, 30)}…")`); };
     tables.events.forEach((ev, i) => {
       reason('events', i, ev.id, 'text', ev.text);
-      (Array.isArray(ev.choices) ? ev.choices : []).forEach((c, k) => { if (!isObj(c)) return; for (const col of ['label', 'warn', 'hint']) reason('events', i, ev.id, `choices[${k}].${col}`, c[col]); for (const r of ['out', 'ok', 'fail']) if (isObj(c[r])) reason('events', i, ev.id, `choices[${k}].${r}.text`, c[r].text); });
+      (Array.isArray(ev.choices) ? ev.choices : []).forEach((c0, k) => { if (!isObj(c0)) return; variantsOf(c0).forEach((c, j) => { const at = j ? `choices[${k}].swap[${j - 1}]` : `choices[${k}]`; for (const col of ['label', 'warn', 'hint']) reason('events', i, ev.id, `${at}.${col}`, c[col]); if (isObj(c.req)) reason('events', i, ev.id, `${at}.req.why`, c.req.why); for (const r of ['out', 'ok', 'fail']) if (isObj(c[r])) reason('events', i, ev.id, `${at}.${r}.text`, c[r].text); }); });
     });
     tables.lines.forEach((l, i) => reason('lines', i, l.id, 'text', l.text));
     tables.nightEvents.forEach((n, i) => reason('nightEvents', i, n.id, 'text', n.text));
@@ -361,7 +460,7 @@
     return done();
   }
 
-  const API = { TABLES: T, IDENTITY_COLS, TABLE_NAMES, EFFECT_VERBS, PERMANENT, EVENT_TARGETS, WHO_WORDS, LEDGER_STATUS, validate, warnings, check, holdsOpenState, ownerOf: (tables, id) => ownerOf({ objects: Object.fromEntries((tables.objects || []).map((o) => [o.id, o])), people: Object.fromEntries((tables.people || []).map((p) => [p.id, p])) }, id) };
+  const API = { TABLES: T, IDENTITY_COLS, TABLE_NAMES, EFFECT_VERBS, PERMANENT, EVENT_TARGETS, MOST_TARGET, REQ_KEYS, SWAP_KEYS, WHO_WORDS, LEDGER_STATUS, validate, warnings, check, holdsOpenState, mergeSwap, swapsOf, variantsOf, usesTarget, needsTarget, ownerOf: (tables, id) => ownerOf({ objects: Object.fromEntries((tables.objects || []).map((o) => [o.id, o])), people: Object.fromEntries((tables.people || []).map((p) => [p.id, p])) }, id) };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else (root.DS4 = root.DS4 || {}).schema = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

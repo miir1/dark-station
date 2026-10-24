@@ -1,0 +1,356 @@
+[
+  {
+    "id": "soonrye",
+    "name": "김순례",
+    "age": 68,
+    "bio": "전 역사 청소원",
+    "skills": {
+      "obs": 2,
+      "str": 1,
+      "tech": 1,
+      "talk": 2
+    },
+    "needs": {
+      "hunger": 3,
+      "thirst": 2,
+      "fear": 4,
+      "bond": "seoha"
+    },
+    "secretFlag": "believes_plus_one",
+    "malice": {
+      "cond": "fog>=6 & fear>=7",
+      "event": "inform_up"
+    },
+    "hymn": {
+      "cond": "water<=1",
+      "event": "soonrye_water"
+    },
+    "callsGod": "저 위",
+    "addressYou": {
+      "driver": "기사 양반",
+      "conductor": "차장님",
+      "inspector": "적는 사람",
+      "passenger": "손님",
+      "counted": "",
+      "platform_one": "거기",
+      "counting_child": "",
+      "default": "자네"
+    },
+    "outside": 0,
+    "metFlag": "met_soonrye",
+    "startAway": 0
+  },
+  {
+    "id": "seoha",
+    "name": "윤서하",
+    "age": 17,
+    "bio": "고등학생",
+    "skills": {
+      "obs": 3,
+      "str": 1,
+      "tech": 2,
+      "talk": 1
+    },
+    "needs": {
+      "hunger": 4,
+      "thirst": 4,
+      "fear": 6,
+      "bond": "soonrye"
+    },
+    "secretFlag": "saw_mother_climb",
+    "malice": {
+      "cond": "hunger>=7 & food<=3",
+      "event": "steal_food_seoha"
+    },
+    "hymn": {
+      "cond": "fog>=5",
+      "event": "shout_own_name"
+    },
+    "callsGod": "부르는 거",
+    "addressYou": {
+      "driver": "기사님",
+      "conductor": "차장님",
+      "inspector": "저기요",
+      "passenger": "저기요",
+      "counted": "",
+      "platform_one": "거기요",
+      "counting_child": "",
+      "default": "저기요"
+    },
+    "outside": 0,
+    "metFlag": "met_seoha",
+    "startAway": 0
+  },
+  {
+    "id": "gicheol",
+    "name": "박기철",
+    "age": 45,
+    "bio": "지하철 정비사",
+    "skills": {
+      "obs": 1,
+      "str": 2,
+      "tech": 3,
+      "talk": 1
+    },
+    "needs": {
+      "hunger": 3,
+      "thirst": 3,
+      "fear": 3,
+      "bond": "seoha"
+    },
+    "secretFlag": "left_coworker",
+    "malice": {
+      "cond": "parts<3 & day>=4",
+      "event": "gicheol_parts"
+    },
+    "hymn": {
+      "cond": "day>=8 & (food<=3 | water<=3)",
+      "event": "give_seat"
+    },
+    "callsGod": "세는 것",
+    "addressYou": {
+      "driver": "기사",
+      "conductor": "당신",
+      "inspector": "당신",
+      "passenger": "당신",
+      "counted": "",
+      "platform_one": "당신",
+      "counting_child": "",
+      "default": "당신"
+    },
+    "outside": 0,
+    "metFlag": "met_gicheol",
+    "startAway": 1
+  },
+  {
+    "id": "eunji",
+    "name": "최은지",
+    "age": 24,
+    "bio": "묵현시장 상인",
+    "skills": {
+      "obs": 2,
+      "str": 1,
+      "tech": 1,
+      "talk": 3
+    },
+    "needs": {
+      "hunger": 4,
+      "thirst": 3,
+      "fear": 5,
+      "bond": "dongha"
+    },
+    "secretFlag": "talked_to_outside",
+    "malice": {
+      "cond": "day>=5 & fear>=6",
+      "event": "sell_station"
+    },
+    "hymn": {
+      "cond": "day>=6 & fear>=8",
+      "event": "eunji_goes_instead"
+    },
+    "callsGod": "눈",
+    "addressYou": {
+      "driver": "기사",
+      "conductor": "차장",
+      "inspector": "적는 놈",
+      "passenger": "너",
+      "counted": "",
+      "platform_one": "너",
+      "counting_child": "",
+      "default": "너"
+    },
+    "outside": 0,
+    "metFlag": "met_eunji",
+    "startAway": 1
+  },
+  {
+    "id": "dongha",
+    "name": "한동하",
+    "age": 19,
+    "bio": "묵현시장 짐꾼",
+    "skills": {
+      "obs": 1,
+      "str": 3,
+      "tech": 1,
+      "talk": 1
+    },
+    "needs": {
+      "hunger": 5,
+      "thirst": 4,
+      "fear": 4,
+      "bond": "eunji"
+    },
+    "secretFlag": "borrowed_name",
+    "malice": {
+      "cond": "fear>=9",
+      "event": "dongha_kills"
+    },
+    "hymn": {
+      "cond": "day>=2",
+      "event": "dongha_carries"
+    },
+    "callsGod": "그거",
+    "addressYou": {
+      "driver": "형",
+      "conductor": "형",
+      "inspector": "형",
+      "passenger": "형",
+      "counted": "",
+      "platform_one": "저기",
+      "counting_child": "",
+      "default": "형"
+    },
+    "outside": 0,
+    "metFlag": "met_eunji",
+    "startAway": 1
+  },
+  {
+    "id": "mari",
+    "name": "정마리",
+    "age": 52,
+    "bio": "퇴근길 간호사",
+    "skills": {
+      "obs": 2,
+      "str": 1,
+      "tech": 2,
+      "talk": 2
+    },
+    "needs": {
+      "hunger": 3,
+      "thirst": 3,
+      "fear": 5,
+      "bond": "gicheol"
+    },
+    "secretFlag": "walked_out_ward",
+    "malice": {
+      "cond": "meds==0",
+      "event": "mari_pillow"
+    },
+    "hymn": {
+      "cond": "day>=5",
+      "event": "mari_names"
+    },
+    "callsGod": "부르는 것",
+    "addressYou": {
+      "driver": "기사님",
+      "conductor": "차장님",
+      "inspector": "씨",
+      "passenger": "씨",
+      "counted": "",
+      "platform_one": "씨",
+      "counting_child": "",
+      "default": "씨"
+    },
+    "outside": 0,
+    "metFlag": "met_mari",
+    "startAway": 0
+  },
+  {
+    "id": "eunchae",
+    "name": "문은채",
+    "age": 0,
+    "bio": "약사",
+    "skills": {
+      "obs": 2,
+      "str": 1,
+      "tech": 2,
+      "talk": 3
+    },
+    "needs": {
+      "hunger": 5,
+      "thirst": 4,
+      "fear": 6,
+      "bond": ""
+    },
+    "secretFlag": "hospital_is_patrol",
+    "malice": {
+      "cond": "day>=6",
+      "event": "eunchae_brings"
+    },
+    "hymn": {
+      "cond": "day>=8",
+      "event": "eunchae_drops_meds"
+    },
+    "callsGod": "그분",
+    "addressYou": {
+      "driver": "역 분",
+      "conductor": "역 분",
+      "inspector": "역 분",
+      "passenger": "역 분",
+      "counted": "",
+      "platform_one": "역 분",
+      "counting_child": "",
+      "default": "역 분"
+    },
+    "outside": 1,
+    "metFlag": "",
+    "startAway": 0
+  },
+  {
+    "id": "dohyeon",
+    "name": "권도현",
+    "age": 0,
+    "bio": "배수 정비공",
+    "skills": {
+      "obs": 1,
+      "str": 2,
+      "tech": 3,
+      "talk": 1
+    },
+    "needs": {
+      "hunger": 4,
+      "thirst": 0,
+      "fear": 2,
+      "bond": ""
+    },
+    "secretFlag": "called_by_water",
+    "malice": {
+      "cond": "parts<3",
+      "event": "dohyeon_price"
+    },
+    "hymn": {
+      "cond": "flood>=6",
+      "event": "dohyeon_valve"
+    },
+    "callsGod": "물소리",
+    "addressYou": {
+      "driver": "너",
+      "conductor": "너",
+      "inspector": "너",
+      "passenger": "너",
+      "counted": "",
+      "platform_one": "너",
+      "counting_child": "",
+      "default": "너"
+    },
+    "outside": 1,
+    "metFlag": "",
+    "startAway": 0
+  },
+  {
+    "id": "you",
+    "name": "당신",
+    "age": 0,
+    "bio": "",
+    "skills": {
+      "obs": 1,
+      "str": 1,
+      "tech": 1,
+      "talk": 1
+    },
+    "needs": {
+      "hunger": 3,
+      "thirst": 3,
+      "fear": 0,
+      "bond": ""
+    },
+    "secretFlag": "",
+    "malice": null,
+    "hymn": null,
+    "callsGod": "",
+    "addressYou": {},
+    "outside": 0,
+    "metFlag": "",
+    "startAway": 0
+  }
+]

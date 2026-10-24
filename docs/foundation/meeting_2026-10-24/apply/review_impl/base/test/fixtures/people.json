@@ -1,0 +1,13 @@
+[
+  { "id": "you", "name": "당신", "skills": { "obs": 1, "str": 1, "tech": 1, "talk": 1 }, "needs": { "hunger": 0, "thirst": 0, "fear": 0, "bond": "-" } },
+  { "id": "soonrye", "name": "김순례", "age": 68, "bio": "전 역사 청소원", "skills": { "obs": 2, "str": 1, "tech": 1, "talk": 2 },
+    "needs": { "hunger": 3, "thirst": 2, "fear": 4, "bond": "seoha" }, "secretFlag": "believes_plus_one", "callsGod": "저 위",
+    "addressYou": { "driver": "기사 양반", "passenger": "손님", "inspector": "적는 사람" } },
+  { "id": "seoha", "name": "윤서하", "age": 17, "bio": "고등학생", "skills": { "obs": 3, "str": 1, "tech": 2, "talk": 1 },
+    "needs": { "hunger": 4, "thirst": 5, "fear": 6, "bond": "soonrye" }, "secretFlag": "has_battery", "callsGod": "눈" },
+  { "id": "gicheol", "name": "박기철", "age": 45, "bio": "정비사", "skills": { "obs": 1, "str": 2, "tech": 3, "talk": 1 },
+    "needs": { "hunger": 6, "thirst": 3, "fear": 3, "bond": "-" }, "callsGod": "세는 것" },
+  { "id": "mari", "name": "정마리", "age": 52, "bio": "간호사", "skills": { "obs": 2, "str": 1, "tech": 2, "talk": 2 },
+    "needs": { "hunger": 2, "thirst": 2, "fear": 5, "bond": "gicheol" }, "callsGod": "부르는 것" },
+  { "id": "eunchae", "name": "문은채", "bio": "약사", "skills": { "obs": 2, "str": 1, "tech": 2, "talk": 2 }, "outside": 1 }
+]

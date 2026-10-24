@@ -1,5 +1,6 @@
 // 어두운 역 v4 — 그림. 새 그림(img/, 목록 = img/manifest.json)을 먼저 보고, 없으면 프로토타입 자산(../v3/img, 읽기만), 그래도 없으면 자리표시.
-// 타일 32, 사람 32×48(걷기 묶음 3열×4행 — v4/img/walk 가 있으면 그것, 칸 크기는 시트에서 계산), 소품 32×32, 자세 앉기 32×32·눕기 48×24,
+// 타일 32, 사람 32×48(걷기 묶음 3열×4행 — v4/img/walk 가 있으면 그것, 칸 크기는 시트에서 계산), 소품 32×32,
+// 사람마다 앉기 v4/img/sit/<id> 32×128(4방향)·잠 v4/img/sleep/<id> 32×32 (없으면 공용 자세 앉기 32×32 물들이기·만든 잠자리 담요),
 // 반응 아이콘(꼬리표 안 ≤9px), 초상 80(v4 portraits80, 없으면 v3 96 — 귀 패치), 장면 384×216(선택 창에서는 v4 cg_s 256×144).
 // 목록은 python v4/tools/manifest.py 가 만든다 (그림을 넣고 그것만 다시 돌리면 화면이 잡는다. 없는 파일을 찔러 보지 않으므로 콘솔 404 가 없다).
 (function () {
@@ -208,11 +209,29 @@
       return c;
     });
   }
+  // 사람마다 앉기 (P1-2, tools/people_poses.py): v4 sit/<id> = 32×32 칸 4줄(아래·왼·오른·위 = DIR_ROW). 자기 윗몸 + 무릎 세운 다리.
+  //   없으면 null → 화면은 공용 실루엣(poses/sit) 물들이기 → 걷기 그림 아래를 접어 쓴다
+  function sitPose(id, dir, hurt) {
+    const k = spriteId(id), im = IMG['v4/sit/' + k];
+    if (!im) return null;
+    const cw = im.width, ch = Math.floor(im.height / 4);
+    if (cw < 8 || ch < 8) return null;
+    const row = DIR_ROW[dir] || 0;
+    return once('sit:' + k + ':' + row + ':' + (hurt || 0), () => {
+      const c = blank(cw, ch); const g = c.getContext('2d');
+      g.drawImage(im, 0, row * ch, cw, ch, 0, 0, cw, ch);
+      bloodOver(g, k, hurt, cw, ch);
+      return c;
+    });
+  }
   // 잠든 사람 32×32: 잠자리 그림(props/bed, 위에서 본 깔개 — 위쪽이 베개) 위에 겹쳐 그린다.
+  // v4 sleep/<id>(P1-2: 자기 머리 + 몸 굴곡이 있는 자기 담요 + 표식 하나)가 먼저. 없으면 아래에서 만든다:
   // 머리 = 그 사람 걷기 그림(아래 보기)의 머리를 그대로 잘라 베개 자리에, 몸 = 옷 색 담요가 턱 밑부터 덮는다.
   // 옆으로 누운 실루엣(poses/lie)을 잠자리 옆에 두면 바닥에 쓰러진 시체처럼 보여서 바꿨다.
   function sleeper(id, hurt) {
     const k = spriteId(id);
+    const own = IMG['v4/sleep/' + k];
+    if (own) return once('sleep4:' + k + ':' + (hurt || 0), () => { const c = toCanvas(own); bloodOver(c.getContext('2d'), k, hurt, c.width, c.height); return c; });
     return once('sleep:' + k + ':' + (hurt || 0), () => {
       const c = blank(T, T); const g = c.getContext('2d');
       g.imageSmoothingEnabled = false;
@@ -359,5 +378,5 @@
     return smallMap.get(full) || '';
   }
 
-  window.ART = { T, PH, ready, has, src, tile, hasTile, prop, hasProp, trace, hasTrace, person, headTop, opaqueTop, opaqueBox, pose, sleeper, react, reactIcon, v4prop, half, opened, spriteId, portraitSrc, cgSrc, cgSmall, cgKey, deathSrc, identSrc, iconSrc, placeholder, hashColor, IMG };
+  window.ART = { T, PH, ready, has, src, tile, hasTile, prop, hasProp, trace, hasTrace, person, headTop, opaqueTop, opaqueBox, pose, sitPose, sleeper, react, reactIcon, v4prop, half, opened, spriteId, portraitSrc, cgSrc, cgSmall, cgKey, deathSrc, identSrc, iconSrc, placeholder, hashColor, IMG };
 })();

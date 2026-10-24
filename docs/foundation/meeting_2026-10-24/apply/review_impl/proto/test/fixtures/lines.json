@@ -1,0 +1,20 @@
+[
+  { "id": "saw_shadow", "speaker": "narrator", "grade": "normal", "text": "{who:이/가} 밤에 창고 쪽으로 갔어.", "rumor": 1 },
+  { "id": "bowl_rumor", "speaker": "narrator", "grade": "normal", "text": "할머니가 밤에 물을 부었어.", "rumor": 1 },
+  { "id": "swung_pipe", "speaker": "narrator", "grade": "normal", "text": "{who:이/가} 잠결에 휘둘렀어.", "rumor": 1 },
+  { "id": "insp_crate_open", "speaker": "narrator", "grade": "normal", "text": "상자 뚜껑이 열려 있다. 봉지 하나가 없다." },
+  { "id": "insp_bowl_empty", "speaker": "narrator", "grade": "normal", "text": "물통이 비어 있다. 바닥이 말라 있다." },
+  { "id": "insp_bowl_full", "speaker": "narrator", "grade": "normal", "text": "물통이 가득하다." },
+  { "id": "insp_pillow_blood", "speaker": "narrator", "grade": "normal", "text": "베개 자리가 옮겨져 있다. 피가 묻었다." },
+  { "id": "insp_stairs", "speaker": "narrator", "grade": "normal", "text": "계단 한가운데 재가 멈춰 있다." },
+  { "id": "reveal_driver", "speaker": "narrator", "grade": "fixed", "text": "운전석에 구두 한 짝이 있었다." },
+  { "id": "reveal_conductor", "speaker": "narrator", "grade": "fixed", "text": "차장이 수첩을 바꿔 들었다." },
+  { "id": "reveal_inspector", "speaker": "narrator", "grade": "fixed", "text": "펀치가 당신 손에 있었다." },
+  { "id": "reveal_passenger", "speaker": "narrator", "grade": "fixed", "text": "차장이 당신에게 님을 붙였다." },
+  { "id": "reveal_counted", "speaker": "narrator", "grade": "fixed", "text": "차장이 당신 이름을 읽지 않았다." },
+  { "id": "reveal_platform", "speaker": "narrator", "grade": "fixed", "text": "열차가 당신을 보지 못하고 지나갔다." },
+  { "id": "reveal_child", "speaker": "narrator", "grade": "fixed", "text": "계단 위에서 당신 목소리가 셌다." },
+  { "id": "cab_window", "speaker": "narrator", "context": "identity==driver", "grade": "normal", "text": "유리창에 모자 쓴 사람이 비친다." },
+  { "id": "cab_window", "speaker": "narrator", "grade": "normal", "text": "유리창에 아무도 없다." },
+  { "id": "toast_saved", "speaker": "ui", "grade": "toast", "text": "저장이 깨져 직전 아침으로 돌아갔다." }
+]

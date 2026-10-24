@@ -1,0 +1,80 @@
+## docs/foundation/meeting_2026-10-24/apply/review_impl/base_1.json
+balanced  surv 49.0 | D1-4 alive 100.0 | dead<=D5 0.0 | days 9.20 | top fever_night 40.2 | forced 0 unwarned 0 | resD9 3.31 | resrcD7 4.09 | disc 67.5 | neglect 0.00 | karmaD10 0.0
+selfish   surv 98.5 | D1-4 alive 100.0 | dead<=D5 0.0 | days 9.97 | top called_up 100.0 | forced 0 unwarned 0 | resD9 2.62 | resrcD7 5.67 | disc 64.1 | neglect 0.00 | karmaD10 0.0
+devoted   surv 39.0 | D1-4 alive 96.0 | dead<=D5 7.5 | days 8.27 | top fever_night 68.0 | forced 0 unwarned 0 | resD9 3.62 | resrcD7 2.62 | disc 67.2 | neglect 0.00 | karmaD10 0.0
+silent    surv 52.0 | D1-4 alive 100.0 | dead<=D5 1.0 | days 9.09 | top d10_walk_weak 38.5 | forced 0 unwarned 0 | resD9 3.63 | resrcD7 4.11 | disc 66.2 | neglect 0.00 | karmaD10 0.0
+caller    surv 49.0 | D1-4 alive 100.0 | dead<=D5 1.0 | days 8.92 | top fever_night 48.0 | forced 0 unwarned 0 | resD9 3.47 | resrcD7 4.17 | disc 66.8 | neglect 0.00 | karmaD10 0.0
+lazy      surv 55.0 | D1-4 alive 100.0 | dead<=D5 1.5 | days 9.02 | top fever_night 42.2 | forced 0 unwarned 0 | resD9 3.40 | resrcD7 4.02 | disc 33.7 | neglect 0.00 | karmaD10 0.0
+diligent  surv 58.0 | D1-4 alive 100.0 | dead<=D5 1.0 | days 9.15 | top fever_night 47.6 | forced 0 unwarned 0 | resD9 3.14 | resrcD7 4.17 | disc 98.6 | neglect 0.00 | karmaD10 0.0
+risky     surv 48.5 | D1-4 alive 94.5 | dead<=D5 8.0 | days 8.60 | top fever_night 55.3 | forced 0 unwarned 0 | resD9 3.78 | resrcD7 11.72 | disc 68.4 | neglect 0.00 | karmaD10 0.0
+steward   surv 59.0 | D1-4 alive 100.0 | dead<=D5 3.0 | days 9.29 | top fever_night 52.4 | forced 0 unwarned 0 | resD9 2.65 | resrcD7 2.08 | disc 64.4 | neglect 0.00 | karmaD10 0.0
+## docs/foundation/meeting_2026-10-24/apply/review_impl/base_1001.json
+balanced  surv 52.0 | D1-4 alive 100.0 | dead<=D5 1.0 | days 9.01 | top fever_night 47.9 | forced 0 unwarned 0 | resD9 3.34 | resrcD7 3.98 | disc 67.3 | neglect 0.00 | karmaD10 0.0
+selfish   surv 97.5 | D1-4 alive 100.0 | dead<=D5 0.0 | days 9.95 | top called_up 80.0 | forced 0 unwarned 0 | resD9 2.70 | resrcD7 5.58 | disc 65.0 | neglect 0.00 | karmaD10 0.0
+devoted   surv 41.0 | D1-4 alive 97.0 | dead<=D5 6.5 | days 8.38 | top fever_night 64.4 | forced 0 unwarned 0 | resD9 3.79 | resrcD7 2.38 | disc 68.4 | neglect 0.00 | karmaD10 0.0
+silent    surv 51.0 | D1-4 alive 100.0 | dead<=D5 0.5 | days 9.03 | top fever_night 43.9 | forced 0 unwarned 0 | resD9 3.38 | resrcD7 4.12 | disc 66.4 | neglect 0.00 | karmaD10 0.0
+caller    surv 49.0 | D1-4 alive 100.0 | dead<=D5 1.5 | days 8.98 | top fever_night 46.1 | forced 0 unwarned 0 | resD9 3.46 | resrcD7 4.12 | disc 66.1 | neglect 0.00 | karmaD10 0.0
+lazy      surv 52.5 | D1-4 alive 100.0 | dead<=D5 0.5 | days 8.98 | top fever_night 47.4 | forced 0 unwarned 0 | resD9 3.46 | resrcD7 3.77 | disc 34.1 | neglect 0.00 | karmaD10 0.0
+diligent  surv 53.0 | D1-4 alive 100.0 | dead<=D5 1.0 | days 8.99 | top fever_night 55.3 | forced 0 unwarned 0 | resD9 3.48 | resrcD7 4.05 | disc 98.6 | neglect 0.00 | karmaD10 0.0
+risky     surv 52.0 | D1-4 alive 94.0 | dead<=D5 12.0 | days 8.44 | top fever_night 53.1 | forced 0 unwarned 0 | resD9 3.83 | resrcD7 10.66 | disc 68.8 | neglect 0.00 | karmaD10 0.0
+steward   surv 55.5 | D1-4 alive 100.0 | dead<=D5 1.5 | days 9.16 | top fever_night 59.6 | forced 0 unwarned 0 | resD9 2.84 | resrcD7 1.96 | disc 65.9 | neglect 0.00 | karmaD10 0.0
+## docs/foundation/meeting_2026-10-24/apply/review_impl/base_2001.json
+balanced  surv 46.0 | D1-4 alive 100.0 | dead<=D5 1.5 | days 8.91 | top fever_night 42.6 | forced 0 unwarned 0 | resD9 3.20 | resrcD7 4.40 | disc 68.3 | neglect 0.00 | karmaD10 0.0
+selfish   surv 98.0 | D1-4 alive 100.0 | dead<=D5 0.0 | days 9.97 | top called_up 75.0 | forced 0 unwarned 0 | resD9 2.72 | resrcD7 5.67 | disc 64.6 | neglect 0.00 | karmaD10 0.0
+devoted   surv 31.5 | D1-4 alive 98.0 | dead<=D5 4.5 | days 8.12 | top fever_night 67.9 | forced 0 unwarned 0 | resD9 3.67 | resrcD7 2.53 | disc 67.0 | neglect 0.00 | karmaD10 0.0
+silent    surv 50.0 | D1-4 alive 100.0 | dead<=D5 0.5 | days 9.07 | top d10_walk_weak 44.0 | forced 0 unwarned 0 | resD9 3.46 | resrcD7 3.71 | disc 66.8 | neglect 0.00 | karmaD10 0.0
+caller    surv 52.0 | D1-4 alive 100.0 | dead<=D5 0.5 | days 9.12 | top fever_night 54.2 | forced 0 unwarned 0 | resD9 3.42 | resrcD7 3.62 | disc 65.9 | neglect 0.00 | karmaD10 0.0
+lazy      surv 53.5 | D1-4 alive 100.0 | dead<=D5 0.5 | days 9.16 | top fever_night 43.0 | forced 0 unwarned 0 | resD9 3.38 | resrcD7 4.47 | disc 33.0 | neglect 0.00 | karmaD10 0.0
+diligent  surv 56.5 | D1-4 alive 100.0 | dead<=D5 1.5 | days 9.09 | top fever_night 50.6 | forced 0 unwarned 0 | resD9 3.38 | resrcD7 4.42 | disc 98.3 | neglect 0.00 | karmaD10 0.0
+risky     surv 52.5 | D1-4 alive 98.0 | dead<=D5 7.5 | days 8.77 | top fever_night 49.5 | forced 0 unwarned 0 | resD9 3.73 | resrcD7 11.39 | disc 68.1 | neglect 0.00 | karmaD10 0.0
+steward   surv 49.5 | D1-4 alive 100.0 | dead<=D5 2.5 | days 9.11 | top fever_night 54.5 | forced 0 unwarned 0 | resD9 2.85 | resrcD7 2.04 | disc 65.0 | neglect 0.00 | karmaD10 0.0
+## docs/foundation/meeting_2026-10-24/apply/review_impl/base_3001.json
+balanced  surv 59.5 | D1-4 alive 100.0 | dead<=D5 0.5 | days 9.19 | top fever_night 42.0 | forced 0 unwarned 0 | resD9 3.47 | resrcD7 4.02 | disc 68.7 | neglect 0.00 | karmaD10 0.0
+selfish   surv 99.5 | D1-4 alive 100.0 | dead<=D5 0.0 | days 9.99 | top called_up 100.0 | forced 0 unwarned 0 | resD9 2.52 | resrcD7 5.82 | disc 65.0 | neglect 0.00 | karmaD10 0.0
+devoted   surv 38.0 | D1-4 alive 98.0 | dead<=D5 6.0 | days 8.28 | top fever_night 72.6 | forced 0 unwarned 0 | resD9 3.86 | resrcD7 2.08 | disc 67.4 | neglect 0.00 | karmaD10 0.0
+silent    surv 51.5 | D1-4 alive 100.0 | dead<=D5 0.5 | days 9.07 | top d10_walk_weak 34.0 | forced 0 unwarned 0 | resD9 3.49 | resrcD7 3.66 | disc 66.9 | neglect 0.00 | karmaD10 0.0
+caller    surv 51.5 | D1-4 alive 100.0 | dead<=D5 0.5 | days 9.02 | top fever_night 47.4 | forced 0 unwarned 0 | resD9 3.50 | resrcD7 3.69 | disc 66.9 | neglect 0.00 | karmaD10 0.0
+lazy      surv 53.0 | D1-4 alive 100.0 | dead<=D5 1.5 | days 9.04 | top fever_night 48.9 | forced 0 unwarned 0 | resD9 3.38 | resrcD7 3.97 | disc 33.7 | neglect 0.00 | karmaD10 0.0
+diligent  surv 50.5 | D1-4 alive 100.0 | dead<=D5 0.0 | days 9.04 | top fever_night 39.4 | forced 0 unwarned 0 | resD9 3.43 | resrcD7 4.03 | disc 99.1 | neglect 0.00 | karmaD10 0.0
+risky     surv 46.5 | D1-4 alive 96.0 | dead<=D5 11.5 | days 8.37 | top fever_night 57.0 | forced 0 unwarned 0 | resD9 3.64 | resrcD7 11.51 | disc 69.2 | neglect 0.00 | karmaD10 0.0
+steward   surv 63.0 | D1-4 alive 100.0 | dead<=D5 2.5 | days 9.32 | top fever_night 58.1 | forced 0 unwarned 0 | resD9 2.67 | resrcD7 1.97 | disc 64.7 | neglect 0.00 | karmaD10 0.0
+## docs/foundation/meeting_2026-10-24/apply/review_impl/proto_1.json
+balanced  surv 45.5 | D1-4 alive 91.0 | dead<=D5 18.0 | days 8.19 | top fever_night 45.0 | forced 0 unwarned 0 | resD9 3.38 | resrcD7 3.82 | disc 80.6 | neglect 2.21 | karmaD10 2.7
+selfish   surv 42.0 | D1-4 alive 100.0 | dead<=D5 0.5 | days 8.49 | top called_up 86.2 | forced 0 unwarned 0 | resD9 3.47 | resrcD7 4.87 | disc 83.7 | neglect 1.93 | karmaD10 10.4
+devoted   surv 20.5 | D1-4 alive 77.5 | dead<=D5 36.5 | days 6.61 | top fever_night 47.8 | forced 0 unwarned 0 | resD9 4.00 | resrcD7 1.92 | disc 79.2 | neglect 1.76 | karmaD10 0.0
+silent    surv 51.5 | D1-4 alive 89.5 | dead<=D5 16.0 | days 8.25 | top fever_night 50.5 | forced 0 unwarned 0 | resD9 3.73 | resrcD7 3.33 | disc 81.2 | neglect 2.19 | karmaD10 2.6
+caller    surv 40.0 | D1-4 alive 86.0 | dead<=D5 26.0 | days 7.62 | top fever_night 42.5 | forced 0 unwarned 0 | resD9 3.64 | resrcD7 3.33 | disc 79.3 | neglect 2.13 | karmaD10 2.0
+lazy      surv 41.0 | D1-4 alive 87.5 | dead<=D5 20.5 | days 7.95 | top fever_night 46.6 | forced 0 unwarned 0 | resD9 3.40 | resrcD7 3.08 | disc 51.4 | neglect 4.54 | karmaD10 2.5
+diligent  surv 48.0 | D1-4 alive 91.5 | dead<=D5 16.0 | days 8.48 | top fever_night 40.4 | forced 0 unwarned 0 | resD9 3.72 | resrcD7 3.66 | disc 99.5 | neglect 0.06 | karmaD10 2.5
+risky     surv 29.0 | D1-4 alive 80.5 | dead<=D5 39.5 | days 6.82 | top fever_night 32.4 | forced 0 unwarned 0 | resD9 3.75 | resrcD7 9.55 | disc 78.3 | neglect 1.68 | karmaD10 4.4
+steward   surv 41.0 | D1-4 alive 94.5 | dead<=D5 18.5 | days 8.15 | top fever_night 43.2 | forced 0 unwarned 0 | resD9 3.29 | resrcD7 1.75 | disc 81.6 | neglect 2.25 | karmaD10 2.4
+## docs/foundation/meeting_2026-10-24/apply/review_impl/proto_1001.json
+balanced  surv 45.5 | D1-4 alive 91.0 | dead<=D5 24.0 | days 7.90 | top fever_night 39.4 | forced 0 unwarned 0 | resD9 3.55 | resrcD7 3.38 | disc 81.2 | neglect 1.96 | karmaD10 2.3
+selfish   surv 36.0 | D1-4 alive 100.0 | dead<=D5 0.0 | days 8.49 | top called_up 80.5 | forced 0 unwarned 0 | resD9 3.98 | resrcD7 5.10 | disc 82.4 | neglect 2.02 | karmaD10 11.2
+devoted   surv 18.5 | D1-4 alive 73.5 | dead<=D5 42.5 | days 6.38 | top fever_night 46.6 | forced 0 unwarned 0 | resD9 3.97 | resrcD7 2.03 | disc 78.6 | neglect 1.58 | karmaD10 0.0
+silent    surv 48.0 | D1-4 alive 91.0 | dead<=D5 21.5 | days 8.12 | top fever_night 40.4 | forced 0 unwarned 0 | resD9 3.62 | resrcD7 3.54 | disc 81.5 | neglect 2.04 | karmaD10 2.3
+caller    surv 39.0 | D1-4 alive 88.0 | dead<=D5 28.5 | days 7.64 | top fever_night 40.2 | forced 0 unwarned 0 | resD9 3.77 | resrcD7 3.92 | disc 78.5 | neglect 2.06 | karmaD10 2.1
+lazy      surv 40.0 | D1-4 alive 90.5 | dead<=D5 19.0 | days 8.06 | top fever_night 44.2 | forced 0 unwarned 0 | resD9 3.53 | resrcD7 3.39 | disc 51.9 | neglect 4.55 | karmaD10 2.3
+diligent  surv 47.5 | D1-4 alive 93.0 | dead<=D5 18.0 | days 8.27 | top fever_night 44.8 | forced 0 unwarned 0 | resD9 3.63 | resrcD7 3.64 | disc 99.7 | neglect 0.04 | karmaD10 2.6
+risky     surv 28.0 | D1-4 alive 80.5 | dead<=D5 40.5 | days 6.76 | top d5_flood 27.1 | forced 0 unwarned 0 | resD9 3.73 | resrcD7 9.84 | disc 77.2 | neglect 1.72 | karmaD10 4.3
+steward   surv 46.5 | D1-4 alive 92.5 | dead<=D5 20.0 | days 8.00 | top fever_night 53.3 | forced 0 unwarned 0 | resD9 3.41 | resrcD7 1.76 | disc 80.7 | neglect 2.20 | karmaD10 2.3
+## docs/foundation/meeting_2026-10-24/apply/review_impl/proto_2001.json
+balanced  surv 43.5 | D1-4 alive 92.0 | dead<=D5 19.5 | days 8.18 | top fever_night 43.4 | forced 0 unwarned 0 | resD9 3.67 | resrcD7 3.56 | disc 80.0 | neglect 2.29 | karmaD10 2.5
+selfish   surv 36.5 | D1-4 alive 100.0 | dead<=D5 0.0 | days 8.52 | top called_up 81.9 | forced 0 unwarned 0 | resD9 3.58 | resrcD7 4.98 | disc 82.9 | neglect 2.01 | karmaD10 11.0
+devoted   surv 24.5 | D1-4 alive 79.5 | dead<=D5 38.5 | days 6.76 | top fever_night 49.0 | forced 0 unwarned 0 | resD9 4.02 | resrcD7 1.92 | disc 77.3 | neglect 2.01 | karmaD10 0.0
+silent    surv 46.5 | D1-4 alive 93.5 | dead<=D5 14.5 | days 8.33 | top fever_night 44.9 | forced 0 unwarned 0 | resD9 3.67 | resrcD7 3.30 | disc 80.6 | neglect 2.24 | karmaD10 2.2
+caller    surv 30.5 | D1-4 alive 86.0 | dead<=D5 26.5 | days 7.57 | top fever_night 38.1 | forced 0 unwarned 0 | resD9 3.56 | resrcD7 3.57 | disc 80.3 | neglect 1.97 | karmaD10 2.3
+lazy      surv 40.0 | D1-4 alive 91.5 | dead<=D5 18.5 | days 8.13 | top fever_night 45.0 | forced 0 unwarned 0 | resD9 3.43 | resrcD7 3.33 | disc 52.7 | neglect 4.62 | karmaD10 2.5
+diligent  surv 45.5 | D1-4 alive 89.0 | dead<=D5 19.0 | days 8.15 | top fever_night 43.1 | forced 0 unwarned 0 | resD9 3.67 | resrcD7 3.84 | disc 99.6 | neglect 0.04 | karmaD10 2.5
+risky     surv 27.5 | D1-4 alive 82.5 | dead<=D5 34.0 | days 6.85 | top fever_night 33.8 | forced 0 unwarned 0 | resD9 3.63 | resrcD7 9.67 | disc 78.6 | neglect 1.67 | karmaD10 4.6
+steward   surv 46.0 | D1-4 alive 96.0 | dead<=D5 13.0 | days 8.60 | top fever_night 51.9 | forced 0 unwarned 0 | resD9 3.38 | resrcD7 1.75 | disc 80.0 | neglect 2.54 | karmaD10 2.6
+## docs/foundation/meeting_2026-10-24/apply/review_impl/proto_3001.json
+balanced  surv 41.5 | D1-4 alive 93.5 | dead<=D5 16.0 | days 8.24 | top fever_night 51.3 | forced 0 unwarned 0 | resD9 3.65 | resrcD7 3.26 | disc 81.2 | neglect 2.15 | karmaD10 2.5
+selfish   surv 35.0 | D1-4 alive 100.0 | dead<=D5 0.0 | days 8.49 | top called_up 83.8 | forced 0 unwarned 0 | resD9 3.67 | resrcD7 4.68 | disc 83.2 | neglect 1.93 | karmaD10 10.4
+devoted   surv 24.0 | D1-4 alive 78.0 | dead<=D5 36.0 | days 6.75 | top fever_night 51.3 | forced 0 unwarned 0 | resD9 4.04 | resrcD7 1.80 | disc 78.9 | neglect 1.86 | karmaD10 0.0
+silent    surv 40.0 | D1-4 alive 90.0 | dead<=D5 18.5 | days 7.97 | top fever_night 44.2 | forced 0 unwarned 0 | resD9 3.67 | resrcD7 3.29 | disc 80.2 | neglect 2.19 | karmaD10 2.2
+caller    surv 38.0 | D1-4 alive 87.0 | dead<=D5 24.5 | days 7.70 | top fever_night 37.9 | forced 0 unwarned 0 | resD9 3.60 | resrcD7 3.73 | disc 79.3 | neglect 2.17 | karmaD10 2.3
+lazy      surv 41.5 | D1-4 alive 92.5 | dead<=D5 16.5 | days 8.21 | top fever_night 50.4 | forced 0 unwarned 0 | resD9 3.54 | resrcD7 3.41 | disc 52.4 | neglect 4.73 | karmaD10 2.5
+diligent  surv 41.5 | D1-4 alive 87.5 | dead<=D5 25.0 | days 7.85 | top fever_night 34.2 | forced 0 unwarned 0 | resD9 3.66 | resrcD7 3.52 | disc 99.6 | neglect 0.04 | karmaD10 2.4
+risky     surv 30.0 | D1-4 alive 81.5 | dead<=D5 37.0 | days 6.92 | top fever_night 26.4 | forced 0 unwarned 0 | resD9 3.54 | resrcD7 8.60 | disc 79.2 | neglect 1.77 | karmaD10 4.3
+steward   surv 45.0 | D1-4 alive 95.5 | dead<=D5 15.5 | days 8.36 | top fever_night 49.1 | forced 0 unwarned 0 | resD9 3.42 | resrcD7 1.67 | disc 81.1 | neglect 2.25 | karmaD10 2.3

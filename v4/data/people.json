@@ -38,7 +38,8 @@
     },
     "outside": 0,
     "metFlag": "met_soonrye",
-    "startAway": 0
+    "startAway": 0,
+    "addressCold": "이봐"
   },
   {
     "id": "seoha",
@@ -79,7 +80,8 @@
     },
     "outside": 0,
     "metFlag": "met_seoha",
-    "startAway": 0
+    "startAway": 0,
+    "addressCold": ""
   },
   {
     "id": "gicheol",
@@ -120,7 +122,8 @@
     },
     "outside": 0,
     "metFlag": "met_gicheol",
-    "startAway": 1
+    "startAway": 1,
+    "addressCold": "어이"
   },
   {
     "id": "eunji",
@@ -161,7 +164,8 @@
     },
     "outside": 0,
     "metFlag": "met_eunji",
-    "startAway": 1
+    "startAway": 1,
+    "addressCold": "야"
   },
   {
     "id": "dongha",
@@ -202,7 +206,8 @@
     },
     "outside": 0,
     "metFlag": "met_eunji",
-    "startAway": 1
+    "startAway": 1,
+    "addressCold": "당신"
   },
   {
     "id": "mari",
@@ -243,7 +248,8 @@
     },
     "outside": 0,
     "metFlag": "met_mari",
-    "startAway": 0
+    "startAway": 0,
+    "addressCold": ""
   },
   {
     "id": "eunchae",
