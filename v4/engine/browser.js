@@ -22,17 +22,24 @@
       if (!r.ok) throw new Error(`표 파일을 읽지 못했다: ${k} (${f})`);
       out[k] = await r.json();
     }
+    dropped.length = 0;
     try { return D4.tables.load(out); }
     catch (e) {
-      // 표가 고쳐지는 중이면(검증 실패) 틀린 행만 빼고 다시 읽는다 — 화면은 돌아가고, 콘솔에 경고로 남긴다. 엔진·표 담당에게 그대로 넘길 것.
+      // 표가 고쳐지는 중이면(검증 실패) 틀린 행만 빼고 다시 읽는다 — 화면은 돌아간다. 엔진·표 담당에게 그대로 넘길 것.
+      // (2026-10-24 검토 지적 13) 빠진 행이 눈에 보이게: 콘솔 오류(error — shot.py 가 캡처 실패로 친다) + dropped 목록(game.js 가 첫 화면 토스트로 알린다)
       if (!e.errors) throw e;
       const bad = {};
       for (const err of e.errors) { const m = /^(\w+)\[(\d+)\]/.exec(err.text || ''); if (!m) throw e; (bad[m[1]] = bad[m[1]] || new Set()).add(Number(m[2])); }
-      for (const [table, idx] of Object.entries(bad)) { if (!Array.isArray(out[table])) throw e; out[table] = out[table].filter((row, i) => !idx.has(i)); }
-      console.warn('[ds4] 표 검증 실패 행을 빼고 읽었다:\n' + e.errors.map((x) => '  ' + x.text).join('\n'));
+      for (const [table, idx] of Object.entries(bad)) {
+        if (!Array.isArray(out[table])) throw e;
+        out[table].forEach((row, i) => { if (idx.has(i)) dropped.push({ table, i, id: row && row.id ? row.id : '' }); });
+        out[table] = out[table].filter((row, i) => !idx.has(i));
+      }
+      console.error('[ds4] 표 검증 실패 행을 빼고 읽었다:\n' + e.errors.map((x) => '  ' + x.text).join('\n'));
       return D4.tables.load(out);
     }
   }
+  const dropped = [];                                // 마지막 loadTables 가 빼고 읽은 행 [{table, i, id}]
 
   // 대사표: 같은 id 의 여러 행 중 context 가 맞는 것. 여러 개면 마지막(더 구체적인 행이 뒤에 온다는 약속). pickRow 로 고르는 규칙을 바꿀 수 있다.
   function pickLine(db, id, ctx, pickRow) {
@@ -93,5 +100,5 @@
     });
   }
 
-  D4.browser = { params, fast, loadTables, pickLine, lineCtx, setDb, fill, talkPick, condWords };
+  D4.browser = { params, fast, loadTables, pickLine, lineCtx, setDb, fill, talkPick, condWords, dropped };
 })(typeof globalThis !== 'undefined' ? globalThis : this);

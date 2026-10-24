@@ -1,0 +1,1122 @@
+{
+ "D_share": {
+  "crate_food": {
+   "at": [
+    8,
+    2
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    1,
+    11
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "stairs_ash": {
+   "at": [
+    2,
+    2
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    2,
+    3
+   ],
+   "inspected": true,
+   "log": [
+    "stairs_ash"
+   ],
+   "pending": null
+  },
+  "shoes_stairs": {
+   "at": [
+    3,
+    2
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    3,
+    2
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "notebook_you": {
+   "at": [
+    12,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    11,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "notebook_you"
+   ],
+   "pending": null
+  },
+  "pipe": {
+   "at": [
+    14,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    14,
+    10
+   ],
+   "inspected": true,
+   "log": [
+    "pipe"
+   ],
+   "pending": null
+  },
+  "bottle_soonrye": {
+   "at": [
+    15,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    10
+   ],
+   "inspected": true,
+   "log": [
+    "bottle_soonrye",
+    "bandage_soonrye"
+   ],
+   "pending": null
+  },
+  "bottle_seoha": {
+   "at": [
+    17,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    1,
+    11
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "bottle_gicheol": {
+   "at": [
+    19,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    8
+   ],
+   "inspected": true,
+   "log": [
+    "bottle_gicheol",
+    "bandage_gicheol"
+   ],
+   "pending": null
+  },
+  "bottle_eunji": {
+   "at": [
+    15,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    14,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "bottle_eunji",
+    "bandage_eunji"
+   ],
+   "pending": null
+  },
+  "bottle_dongha": {
+   "at": [
+    17,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    17,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "bottle_dongha",
+    "bandage_dongha"
+   ],
+   "pending": null
+  },
+  "bottle_mari": {
+   "at": [
+    19,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "scissors",
+    "bottle_mari",
+    "bandage_mari"
+   ],
+   "pending": null
+  },
+  "bandage_soonrye": {
+   "at": [
+    15,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    10
+   ],
+   "inspected": true,
+   "log": [
+    "bottle_soonrye",
+    "bandage_soonrye"
+   ],
+   "pending": null
+  },
+  "bandage_seoha": {
+   "at": [
+    17,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    1,
+    11
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "bandage_gicheol": {
+   "error": "load 기다리다 지쳤다: __ds4.state && __ds4.scene.map && !__ds4.UI.bot"
+  },
+  "bandage_eunji": {
+   "at": [
+    15,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    14,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "bottle_eunji",
+    "bandage_eunji"
+   ],
+   "pending": null
+  },
+  "bandage_dongha": {
+   "at": [
+    17,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    17,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "bottle_dongha",
+    "bandage_dongha"
+   ],
+   "pending": null
+  },
+  "bandage_mari": {
+   "at": [
+    19,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "scissors",
+    "bottle_mari",
+    "bandage_mari"
+   ],
+   "pending": null
+  },
+  "blanket_soonrye": {
+   "at": [
+    16,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    16,
+    10
+   ],
+   "inspected": true,
+   "log": [
+    "blanket_soonrye"
+   ],
+   "pending": null
+  },
+  "blanket_seoha": {
+   "at": [
+    18,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    9
+   ],
+   "inspected": true,
+   "log": [
+    "blanket_seoha"
+   ],
+   "pending": null
+  },
+  "blanket_gicheol": {
+   "at": [
+    20,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    20,
+    8
+   ],
+   "inspected": true,
+   "log": [
+    "blanket_gicheol"
+   ],
+   "pending": null
+  },
+  "blanket_eunji": {
+   "at": [
+    16,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "blanket_eunji"
+   ],
+   "pending": null
+  },
+  "blanket_dongha": {
+   "at": [
+    18,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    18,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "blanket_dongha"
+   ],
+   "pending": null
+  },
+  "blanket_mari": {
+   "at": [
+    20,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    20,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "blanket_mari"
+   ],
+   "pending": null
+  },
+  "bowl_soonrye": {
+   "at": [
+    12,
+    10
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    12,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "bowl_soonrye"
+   ],
+   "pending": null
+  },
+  "bowl_seoha": {
+   "at": [
+    14,
+    10
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    14,
+    10
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "bowl_gicheol": {
+   "at": [
+    15,
+    10
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "bowl_gicheol"
+   ],
+   "pending": null
+  },
+  "bowl_eunji": {
+   "at": [
+    11,
+    10
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    11,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "bowl_eunji"
+   ],
+   "pending": null
+  },
+  "bowl_dongha": {
+   "at": [
+    14,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    13,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "bowl_dongha"
+   ],
+   "pending": null
+  },
+  "bowl_mari": {
+   "at": [
+    10,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    9,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "bowl_mari"
+   ],
+   "pending": null
+  }
+ },
+ "A_water": {
+  "crate_food": {
+   "at": [
+    8,
+    2
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    1,
+    11
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "stairs_ash": {
+   "at": [
+    2,
+    2
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    2,
+    3
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "stairs_ash"
+   ],
+   "pending": null
+  },
+  "shoes_stairs": {
+   "at": [
+    3,
+    2
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    3,
+    2
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "notebook_you": {
+   "at": [
+    12,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    11,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "notebook_you"
+   ],
+   "pending": null
+  },
+  "pipe": {
+   "at": [
+    14,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    14,
+    10
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "pipe"
+   ],
+   "pending": null
+  },
+  "bottle_soonrye": {
+   "at": [
+    15,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    10
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bottle_soonrye",
+    "bandage_soonrye"
+   ],
+   "pending": null
+  },
+  "bottle_seoha": {
+   "at": [
+    17,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    1,
+    11
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "bottle_gicheol": {
+   "at": [
+    19,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    8
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bottle_gicheol",
+    "bandage_gicheol"
+   ],
+   "pending": null
+  },
+  "bottle_eunji": {
+   "at": [
+    15,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    14,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bottle_eunji",
+    "bandage_eunji"
+   ],
+   "pending": null
+  },
+  "bottle_dongha": {
+   "at": [
+    17,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    17,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bottle_dongha",
+    "bandage_dongha"
+   ],
+   "pending": null
+  },
+  "bottle_mari": {
+   "at": [
+    19,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "scissors",
+    "bottle_mari",
+    "bandage_mari"
+   ],
+   "pending": null
+  },
+  "bandage_soonrye": {
+   "at": [
+    15,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    10
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bottle_soonrye",
+    "bandage_soonrye"
+   ],
+   "pending": null
+  },
+  "bandage_seoha": {
+   "at": [
+    17,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    1,
+    11
+   ],
+   "inspected": false,
+   "log": [],
+   "pending": null
+  },
+  "bandage_gicheol": {
+   "at": [
+    19,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    8
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bottle_gicheol",
+    "bandage_gicheol"
+   ],
+   "pending": null
+  },
+  "bandage_eunji": {
+   "at": [
+    15,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    14,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bottle_eunji",
+    "bandage_eunji"
+   ],
+   "pending": null
+  },
+  "bandage_dongha": {
+   "at": [
+    17,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    17,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bottle_dongha",
+    "bandage_dongha"
+   ],
+   "pending": null
+  },
+  "bandage_mari": {
+   "at": [
+    19,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "scissors",
+    "bottle_mari",
+    "bandage_mari"
+   ],
+   "pending": null
+  },
+  "blanket_soonrye": {
+   "at": [
+    16,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    9
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "blanket_soonrye"
+   ],
+   "pending": null
+  },
+  "blanket_seoha": {
+   "at": [
+    18,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    19,
+    9
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "blanket_seoha"
+   ],
+   "pending": null
+  },
+  "blanket_gicheol": {
+   "at": [
+    20,
+    9
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    20,
+    8
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "blanket_gicheol"
+   ],
+   "pending": null
+  },
+  "blanket_eunji": {
+   "at": [
+    16,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "blanket_eunji"
+   ],
+   "pending": null
+  },
+  "blanket_dongha": {
+   "at": [
+    18,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    18,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "blanket_dongha"
+   ],
+   "pending": null
+  },
+  "blanket_mari": {
+   "at": [
+    20,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    20,
+    12
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "blanket_mari"
+   ],
+   "pending": null
+  },
+  "bowl_soonrye": {
+   "at": [
+    12,
+    10
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    12,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bowl_soonrye"
+   ],
+   "pending": null
+  },
+  "bowl_seoha": {
+   "at": [
+    14,
+    10
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    14,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bowl_seoha"
+   ],
+   "pending": null
+  },
+  "bowl_gicheol": {
+   "at": [
+    15,
+    10
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    15,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bowl_gicheol"
+   ],
+   "pending": null
+  },
+  "bowl_eunji": {
+   "at": [
+    11,
+    10
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    11,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bowl_eunji"
+   ],
+   "pending": null
+  },
+  "bowl_dongha": {
+   "at": [
+    14,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    13,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bowl_dongha"
+   ],
+   "pending": null
+  },
+  "bowl_mari": {
+   "at": [
+    10,
+    11
+   ],
+   "from": [
+    1,
+    11
+   ],
+   "to": [
+    9,
+    11
+   ],
+   "inspected": true,
+   "log": [
+    "toast:toast_late",
+    "bowl_mari"
+   ],
+   "pending": null
+  }
+ }
+}

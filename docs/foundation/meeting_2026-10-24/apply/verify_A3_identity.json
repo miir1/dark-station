@@ -1,0 +1,2238 @@
+{
+ "blocks": [
+  5001,
+  7001
+ ],
+ "N": 200,
+ "variants": [
+  "now",
+  "revertB1B2"
+ ],
+ "seconds": 530,
+ "table": {
+  "now": {
+   "perPolicy": {
+    "balanced": {
+     "n": 400,
+     "noId": 0,
+     "dead": 157,
+     "mismatch": 0,
+     "dist": {
+      "driver": 1,
+      "conductor": 33.3,
+      "inspector": 0.3,
+      "passenger": 32.3,
+      "counted": 0.3,
+      "platform_one": 30,
+      "counting_child": 3
+     },
+     "axAvg": {
+      "share": 1.73,
+      "hand": 1.44,
+      "name": -1.14
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 1,
+      "conductor": 33.3,
+      "inspector": 0.3,
+      "passenger": 32.3,
+      "counted": 0.3,
+      "platform_one": 30,
+      "counting_child": 3
+     },
+     "alive": 184,
+     "distAlive": {
+      "driver": 2.2,
+      "conductor": 39.7,
+      "inspector": 0.5,
+      "passenger": 26.1,
+      "counted": 0.5,
+      "platform_one": 31,
+      "counting_child": 0
+     }
+    },
+    "selfish": {
+     "n": 400,
+     "noId": 0,
+     "dead": 63,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 99.5,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0.5
+     },
+     "axAvg": {
+      "share": -4.12,
+      "hand": -4.01,
+      "name": -1.34
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 99.5,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0.5
+     },
+     "alive": 170,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 98.8,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 1.2
+     }
+    },
+    "devoted": {
+     "n": 400,
+     "noId": 0,
+     "dead": 276,
+     "mismatch": 0,
+     "dist": {
+      "driver": 70.3,
+      "conductor": 29.8,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "axAvg": {
+      "share": 5.28,
+      "hand": 6.44,
+      "name": 0.85
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 70.3,
+      "conductor": 29.8,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "alive": 90,
+     "distAlive": {
+      "driver": 37.8,
+      "conductor": 62.2,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     }
+    },
+    "silent": {
+     "n": 400,
+     "noId": 0,
+     "dead": 143,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 42.3,
+      "inspector": 0,
+      "passenger": 33,
+      "counted": 0,
+      "platform_one": 24.8,
+      "counting_child": 0
+     },
+     "axAvg": {
+      "share": 1.74,
+      "hand": 1.42,
+      "name": -3.22
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 42.3,
+      "inspector": 0,
+      "passenger": 33,
+      "counted": 0,
+      "platform_one": 24.8,
+      "counting_child": 0
+     },
+     "alive": 185,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 43.2,
+      "inspector": 0,
+      "passenger": 33,
+      "counted": 0,
+      "platform_one": 23.8,
+      "counting_child": 0
+     }
+    },
+    "caller": {
+     "n": 400,
+     "noId": 0,
+     "dead": 191,
+     "mismatch": 0,
+     "dist": {
+      "driver": 56,
+      "conductor": 0,
+      "inspector": 33.3,
+      "passenger": 0,
+      "counted": 7.8,
+      "platform_one": 0,
+      "counting_child": 3
+     },
+     "axAvg": {
+      "share": 2.8,
+      "hand": 1.35,
+      "name": 4.47
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 56,
+      "conductor": 0,
+      "inspector": 33.3,
+      "passenger": 0,
+      "counted": 7.8,
+      "platform_one": 0,
+      "counting_child": 3
+     },
+     "alive": 154,
+     "distAlive": {
+      "driver": 57.8,
+      "conductor": 0,
+      "inspector": 29.9,
+      "passenger": 0,
+      "counted": 7.8,
+      "platform_one": 0,
+      "counting_child": 4.5
+     }
+    },
+    "steward": {
+     "n": 400,
+     "noId": 0,
+     "dead": 143,
+     "mismatch": 0,
+     "dist": {
+      "driver": 2.8,
+      "conductor": 0,
+      "inspector": 97.3,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "axAvg": {
+      "share": 6,
+      "hand": -2.62,
+      "name": 4.44
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 2.8,
+      "conductor": 0,
+      "inspector": 97.3,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "alive": 195,
+     "distAlive": {
+      "driver": 1,
+      "conductor": 0,
+      "inspector": 99,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     }
+    },
+    "counter": {
+     "n": 400,
+     "noId": 0,
+     "dead": 220,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "axAvg": {
+      "share": -2.96,
+      "hand": 6.66,
+      "name": 4.07
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "alive": 138,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     }
+    },
+    "child": {
+     "n": 400,
+     "noId": 0,
+     "dead": 150,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     },
+     "axAvg": {
+      "share": -4.49,
+      "hand": -5.14,
+      "name": 4.28
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     },
+     "alive": 250,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     }
+    },
+    "h_random": {
+     "n": 400,
+     "noId": 0,
+     "dead": 342,
+     "mismatch": 0,
+     "dist": {
+      "driver": 5.8,
+      "conductor": 2.3,
+      "inspector": 3.8,
+      "passenger": 38.3,
+      "counted": 14,
+      "platform_one": 23.3,
+      "counting_child": 12.8
+     },
+     "axAvg": {
+      "share": -0.09,
+      "hand": 0.82,
+      "name": 0.71
+     },
+     "proStairsDead": 200,
+     "distNoPrologue": {
+      "driver": 11.5,
+      "conductor": 4.5,
+      "inspector": 7.5,
+      "passenger": 9,
+      "counted": 28,
+      "platform_one": 14,
+      "counting_child": 25.5
+     },
+     "alive": 4,
+     "distAlive": {
+      "driver": 25,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 75,
+      "counting_child": 0
+     }
+    },
+    "h_wary": {
+     "n": 400,
+     "noId": 0,
+     "dead": 230,
+     "mismatch": 0,
+     "dist": {
+      "driver": 1.5,
+      "conductor": 1.8,
+      "inspector": 0.5,
+      "passenger": 39,
+      "counted": 17,
+      "platform_one": 36,
+      "counting_child": 4.3
+     },
+     "axAvg": {
+      "share": -1.53,
+      "hand": 1.57,
+      "name": 0.26
+     },
+     "proStairsDead": 200,
+     "distNoPrologue": {
+      "driver": 3,
+      "conductor": 3.5,
+      "inspector": 1,
+      "passenger": 10.5,
+      "counted": 34,
+      "platform_one": 39.5,
+      "counting_child": 8.5
+     },
+     "alive": 170,
+     "distAlive": {
+      "driver": 2.4,
+      "conductor": 3.5,
+      "inspector": 1.2,
+      "passenger": 10.6,
+      "counted": 32.4,
+      "platform_one": 42.9,
+      "counting_child": 7.1
+     }
+    },
+    "h_cautious": {
+     "n": 400,
+     "noId": 0,
+     "dead": 0,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 4.3,
+      "inspector": 0,
+      "passenger": 82,
+      "counted": 0,
+      "platform_one": 13.5,
+      "counting_child": 0.3
+     },
+     "axAvg": {
+      "share": 0.59,
+      "hand": -1.14,
+      "name": -1.48
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 4.3,
+      "inspector": 0,
+      "passenger": 82,
+      "counted": 0,
+      "platform_one": 13.5,
+      "counting_child": 0.3
+     },
+     "alive": 400,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 4.3,
+      "inspector": 0,
+      "passenger": 82,
+      "counted": 0,
+      "platform_one": 13.5,
+      "counting_child": 0.3
+     }
+    },
+    "h_cautious2": {
+     "n": 400,
+     "noId": 0,
+     "dead": 118,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0.8,
+      "conductor": 19.5,
+      "inspector": 0,
+      "passenger": 36,
+      "counted": 1.8,
+      "platform_one": 41.8,
+      "counting_child": 0.3
+     },
+     "axAvg": {
+      "share": 0.88,
+      "hand": 1.25,
+      "name": -1.26
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0.8,
+      "conductor": 19.5,
+      "inspector": 0,
+      "passenger": 36,
+      "counted": 1.8,
+      "platform_one": 41.8,
+      "counting_child": 0.3
+     },
+     "alive": 239,
+     "distAlive": {
+      "driver": 0.8,
+      "conductor": 16.7,
+      "inspector": 0,
+      "passenger": 33.1,
+      "counted": 2.5,
+      "platform_one": 46.9,
+      "counting_child": 0
+     }
+    },
+    "h_mixed": {
+     "n": 400,
+     "noId": 0,
+     "dead": 79,
+     "mismatch": 0,
+     "dist": {
+      "driver": 1.5,
+      "conductor": 3.8,
+      "inspector": 1.5,
+      "passenger": 45.8,
+      "counted": 8.3,
+      "platform_one": 31.3,
+      "counting_child": 8
+     },
+     "axAvg": {
+      "share": -1.06,
+      "hand": 0.47,
+      "name": -0.52
+     },
+     "proStairsDead": 68,
+     "distNoPrologue": {
+      "driver": 1.8,
+      "conductor": 4.5,
+      "inspector": 1.8,
+      "passenger": 38,
+      "counted": 9.9,
+      "platform_one": 34.3,
+      "counting_child": 9.6
+     },
+     "alive": 321,
+     "distAlive": {
+      "driver": 1.6,
+      "conductor": 4,
+      "inspector": 1.6,
+      "passenger": 38.6,
+      "counted": 10,
+      "platform_one": 34.6,
+      "counting_child": 9.7
+     }
+    },
+    "h_first": {
+     "n": 400,
+     "noId": 0,
+     "dead": 0,
+     "mismatch": 0,
+     "dist": {
+      "driver": 46.5,
+      "conductor": 0,
+      "inspector": 0.5,
+      "passenger": 0.3,
+      "counted": 51.5,
+      "platform_one": 0,
+      "counting_child": 1.3
+     },
+     "axAvg": {
+      "share": 1.19,
+      "hand": 4.37,
+      "name": 1.23
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 46.5,
+      "conductor": 0,
+      "inspector": 0.5,
+      "passenger": 0.3,
+      "counted": 51.5,
+      "platform_one": 0,
+      "counting_child": 1.3
+     },
+     "alive": 400,
+     "distAlive": {
+      "driver": 46.5,
+      "conductor": 0,
+      "inspector": 0.5,
+      "passenger": 0.3,
+      "counted": 51.5,
+      "platform_one": 0,
+      "counting_child": 1.3
+     }
+    },
+    "risky": {
+     "n": 400,
+     "noId": 0,
+     "dead": 241,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0.8,
+      "conductor": 9.3,
+      "inspector": 0,
+      "passenger": 17.5,
+      "counted": 2.5,
+      "platform_one": 68.3,
+      "counting_child": 1.8
+     },
+     "axAvg": {
+      "share": 0.27,
+      "hand": 3.05,
+      "name": -0.85
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0.8,
+      "conductor": 9.3,
+      "inspector": 0,
+      "passenger": 17.5,
+      "counted": 2.5,
+      "platform_one": 68.3,
+      "counting_child": 1.8
+     },
+     "alive": 102,
+     "distAlive": {
+      "driver": 2.9,
+      "conductor": 17.6,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 5.9,
+      "platform_one": 73.5,
+      "counting_child": 0
+     }
+    },
+    "lazy": {
+     "n": 400,
+     "noId": 0,
+     "dead": 174,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0.8,
+      "conductor": 42.5,
+      "inspector": 0,
+      "passenger": 29.3,
+      "counted": 0.5,
+      "platform_one": 24,
+      "counting_child": 3
+     },
+     "axAvg": {
+      "share": 1.92,
+      "hand": 1.58,
+      "name": -1.12
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0.8,
+      "conductor": 42.5,
+      "inspector": 0,
+      "passenger": 29.3,
+      "counted": 0.5,
+      "platform_one": 24,
+      "counting_child": 3
+     },
+     "alive": 162,
+     "distAlive": {
+      "driver": 1.9,
+      "conductor": 42,
+      "inspector": 0,
+      "passenger": 27.2,
+      "counted": 0.6,
+      "platform_one": 28.4,
+      "counting_child": 0
+     }
+    },
+    "diligent": {
+     "n": 400,
+     "noId": 0,
+     "dead": 169,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0.8,
+      "conductor": 28.5,
+      "inspector": 0,
+      "passenger": 37.5,
+      "counted": 0.3,
+      "platform_one": 29.8,
+      "counting_child": 3.3
+     },
+     "axAvg": {
+      "share": 1.56,
+      "hand": 1.06,
+      "name": -1.09
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0.8,
+      "conductor": 28.5,
+      "inspector": 0,
+      "passenger": 37.5,
+      "counted": 0.3,
+      "platform_one": 29.8,
+      "counting_child": 3.3
+     },
+     "alive": 173,
+     "distAlive": {
+      "driver": 1.2,
+      "conductor": 25.4,
+      "inspector": 0,
+      "passenger": 44.5,
+      "counted": 0.6,
+      "platform_one": 28.3,
+      "counting_child": 0
+     }
+    }
+   },
+   "perBlock": {
+    "5001": {
+     "balanced": {
+      "driver": 1.5,
+      "conductor": 35.5,
+      "inspector": 0.5,
+      "passenger": 33,
+      "counted": 0,
+      "platform_one": 27.5,
+      "counting_child": 2
+     },
+     "selfish": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 99.5,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0.5
+     },
+     "devoted": {
+      "driver": 70.5,
+      "conductor": 29.5,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "silent": {
+      "driver": 0,
+      "conductor": 44,
+      "inspector": 0,
+      "passenger": 28,
+      "counted": 0,
+      "platform_one": 28,
+      "counting_child": 0
+     },
+     "caller": {
+      "driver": 56,
+      "conductor": 0,
+      "inspector": 34,
+      "passenger": 0,
+      "counted": 8,
+      "platform_one": 0,
+      "counting_child": 2
+     },
+     "steward": {
+      "driver": 3,
+      "conductor": 0,
+      "inspector": 97,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "counter": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "child": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     },
+     "h_random": {
+      "driver": 5,
+      "conductor": 2,
+      "inspector": 5.5,
+      "passenger": 40.5,
+      "counted": 15,
+      "platform_one": 21,
+      "counting_child": 11
+     },
+     "h_wary": {
+      "driver": 2,
+      "conductor": 2,
+      "inspector": 0.5,
+      "passenger": 41.5,
+      "counted": 14.5,
+      "platform_one": 36,
+      "counting_child": 3.5
+     },
+     "h_cautious": {
+      "driver": 0,
+      "conductor": 2.5,
+      "inspector": 0,
+      "passenger": 83.5,
+      "counted": 0,
+      "platform_one": 13.5,
+      "counting_child": 0.5
+     },
+     "h_cautious2": {
+      "driver": 1,
+      "conductor": 23,
+      "inspector": 0,
+      "passenger": 38,
+      "counted": 1.5,
+      "platform_one": 36.5,
+      "counting_child": 0
+     },
+     "h_mixed": {
+      "driver": 1.5,
+      "conductor": 3,
+      "inspector": 2,
+      "passenger": 47,
+      "counted": 10.5,
+      "platform_one": 28.5,
+      "counting_child": 7.5
+     },
+     "h_first": {
+      "driver": 43.5,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0.5,
+      "counted": 55,
+      "platform_one": 0,
+      "counting_child": 1
+     },
+     "risky": {
+      "driver": 0.5,
+      "conductor": 9.5,
+      "inspector": 0,
+      "passenger": 17,
+      "counted": 2.5,
+      "platform_one": 68.5,
+      "counting_child": 2
+     },
+     "lazy": {
+      "driver": 1,
+      "conductor": 44.5,
+      "inspector": 0,
+      "passenger": 28,
+      "counted": 1,
+      "platform_one": 23.5,
+      "counting_child": 2
+     },
+     "diligent": {
+      "driver": 1,
+      "conductor": 30,
+      "inspector": 0,
+      "passenger": 40.5,
+      "counted": 0,
+      "platform_one": 27,
+      "counting_child": 1.5
+     }
+    },
+    "7001": {
+     "balanced": {
+      "driver": 0.5,
+      "conductor": 31,
+      "inspector": 0,
+      "passenger": 31.5,
+      "counted": 0.5,
+      "platform_one": 32.5,
+      "counting_child": 4
+     },
+     "selfish": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 99.5,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0.5
+     },
+     "devoted": {
+      "driver": 70,
+      "conductor": 30,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "silent": {
+      "driver": 0,
+      "conductor": 40.5,
+      "inspector": 0,
+      "passenger": 38,
+      "counted": 0,
+      "platform_one": 21.5,
+      "counting_child": 0
+     },
+     "caller": {
+      "driver": 56,
+      "conductor": 0,
+      "inspector": 32.5,
+      "passenger": 0,
+      "counted": 7.5,
+      "platform_one": 0,
+      "counting_child": 4
+     },
+     "steward": {
+      "driver": 2.5,
+      "conductor": 0,
+      "inspector": 97.5,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "counter": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "child": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     },
+     "h_random": {
+      "driver": 6.5,
+      "conductor": 2.5,
+      "inspector": 2,
+      "passenger": 36,
+      "counted": 13,
+      "platform_one": 25.5,
+      "counting_child": 14.5
+     },
+     "h_wary": {
+      "driver": 1,
+      "conductor": 1.5,
+      "inspector": 0.5,
+      "passenger": 36.5,
+      "counted": 19.5,
+      "platform_one": 36,
+      "counting_child": 5
+     },
+     "h_cautious": {
+      "driver": 0,
+      "conductor": 6,
+      "inspector": 0,
+      "passenger": 80.5,
+      "counted": 0,
+      "platform_one": 13.5,
+      "counting_child": 0
+     },
+     "h_cautious2": {
+      "driver": 0.5,
+      "conductor": 16,
+      "inspector": 0,
+      "passenger": 34,
+      "counted": 2,
+      "platform_one": 47,
+      "counting_child": 0.5
+     },
+     "h_mixed": {
+      "driver": 1.5,
+      "conductor": 4.5,
+      "inspector": 1,
+      "passenger": 44.5,
+      "counted": 6,
+      "platform_one": 34,
+      "counting_child": 8.5
+     },
+     "h_first": {
+      "driver": 49.5,
+      "conductor": 0,
+      "inspector": 1,
+      "passenger": 0,
+      "counted": 48,
+      "platform_one": 0,
+      "counting_child": 1.5
+     },
+     "risky": {
+      "driver": 1,
+      "conductor": 9,
+      "inspector": 0,
+      "passenger": 18,
+      "counted": 2.5,
+      "platform_one": 68,
+      "counting_child": 1.5
+     },
+     "lazy": {
+      "driver": 0.5,
+      "conductor": 40.5,
+      "inspector": 0,
+      "passenger": 30.5,
+      "counted": 0,
+      "platform_one": 24.5,
+      "counting_child": 4
+     },
+     "diligent": {
+      "driver": 0.5,
+      "conductor": 27,
+      "inspector": 0,
+      "passenger": 34.5,
+      "counted": 0.5,
+      "platform_one": 32.5,
+      "counting_child": 5
+     }
+    }
+   },
+   "groups": {
+    "P8": {
+     "driver": 16.3,
+     "conductor": 13.2,
+     "inspector": 16.4,
+     "passenger": 20.6,
+     "counted": 13.5,
+     "platform_one": 6.9,
+     "counting_child": 13.3
+    },
+    "P6": {
+     "driver": 21.7,
+     "conductor": 17.6,
+     "inspector": 21.8,
+     "passenger": 27.5,
+     "counted": 1.4,
+     "platform_one": 9.1,
+     "counting_child": 1.1
+    },
+    "H5": {
+     "driver": 1.9,
+     "conductor": 6.3,
+     "inspector": 1.2,
+     "passenger": 48.2,
+     "counted": 8.2,
+     "platform_one": 29.2,
+     "counting_child": 5.1
+    },
+    "H6": {
+     "driver": 9.4,
+     "conductor": 5.3,
+     "inspector": 1.1,
+     "passenger": 40.2,
+     "counted": 15.4,
+     "platform_one": 24.3,
+     "counting_child": 4.5
+    },
+    "ALL": {
+     "driver": 11.1,
+     "conductor": 12.8,
+     "inspector": 8.1,
+     "passenger": 28.9,
+     "counted": 12,
+     "platform_one": 19,
+     "counting_child": 8.3
+    },
+    "H5_noPrologue": {
+     "driver": 3.4,
+     "conductor": 7.3,
+     "inspector": 2.1,
+     "passenger": 35.1,
+     "counted": 14.7,
+     "platform_one": 28.6,
+     "counting_child": 8.8
+    },
+    "H5_aliveOnly": {
+     "driver": 6,
+     "conductor": 5.7,
+     "inspector": 0.6,
+     "passenger": 32.9,
+     "counted": 9,
+     "platform_one": 42.6,
+     "counting_child": 3.4
+    },
+    "P8_aliveOnly": {
+     "driver": 12.4,
+     "conductor": 18.1,
+     "inspector": 16.2,
+     "passenger": 19.7,
+     "counted": 13.5,
+     "platform_one": 6.9,
+     "counting_child": 13.2
+    }
+   },
+   "groupsPerBlock": {
+    "5001": {
+     "P8": {
+      "driver": 16.4,
+      "conductor": 13.6,
+      "inspector": 16.4,
+      "passenger": 20.1,
+      "counted": 13.5,
+      "platform_one": 6.9,
+      "counting_child": 13.1
+     },
+     "H5": {
+      "driver": 1.9,
+      "conductor": 6.5,
+      "inspector": 1.6,
+      "passenger": 50.1,
+      "counted": 8.3,
+      "platform_one": 27.1,
+      "counting_child": 4.5
+     }
+    },
+    "7001": {
+     "P8": {
+      "driver": 16.1,
+      "conductor": 12.7,
+      "inspector": 16.3,
+      "passenger": 21.1,
+      "counted": 13.5,
+      "platform_one": 6.8,
+      "counting_child": 13.6
+     },
+     "H5": {
+      "driver": 1.9,
+      "conductor": 6.1,
+      "inspector": 0.7,
+      "passenger": 46.3,
+      "counted": 8.1,
+      "platform_one": 31.2,
+      "counting_child": 5.7
+     }
+    }
+   }
+  },
+  "revertB1B2": {
+   "perPolicy": {
+    "balanced": {
+     "n": 400,
+     "noId": 0,
+     "dead": 157,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0.5,
+      "conductor": 12,
+      "inspector": 0,
+      "passenger": 27.3,
+      "counted": 0.8,
+      "platform_one": 56.3,
+      "counting_child": 3.3
+     },
+     "axAvg": {
+      "share": 0.2,
+      "hand": 1.69,
+      "name": -1.14
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0.5,
+      "conductor": 12,
+      "inspector": 0,
+      "passenger": 27.3,
+      "counted": 0.8,
+      "platform_one": 56.3,
+      "counting_child": 3.3
+     },
+     "alive": 184,
+     "distAlive": {
+      "driver": 1.1,
+      "conductor": 11.4,
+      "inspector": 0,
+      "passenger": 22.8,
+      "counted": 1.6,
+      "platform_one": 62.5,
+      "counting_child": 0.5
+     }
+    },
+    "selfish": {
+     "n": 400,
+     "noId": 0,
+     "dead": 49,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 98,
+      "counted": 0,
+      "platform_one": 0.3,
+      "counting_child": 1.8
+     },
+     "axAvg": {
+      "share": -4.59,
+      "hand": -4.32,
+      "name": -1.36
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 98,
+      "counted": 0,
+      "platform_one": 0.3,
+      "counting_child": 1.8
+     },
+     "alive": 192,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 97.4,
+      "counted": 0,
+      "platform_one": 0.5,
+      "counting_child": 2.1
+     }
+    },
+    "devoted": {
+     "n": 400,
+     "noId": 0,
+     "dead": 276,
+     "mismatch": 0,
+     "dist": {
+      "driver": 67.5,
+      "conductor": 28,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 2.8,
+      "platform_one": 1.8,
+      "counting_child": 0
+     },
+     "axAvg": {
+      "share": 3.94,
+      "hand": 6.44,
+      "name": 0.85
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 67.5,
+      "conductor": 28,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 2.8,
+      "platform_one": 1.8,
+      "counting_child": 0
+     },
+     "alive": 90,
+     "distAlive": {
+      "driver": 37.8,
+      "conductor": 61.1,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 1.1,
+      "counting_child": 0
+     }
+    },
+    "silent": {
+     "n": 400,
+     "noId": 0,
+     "dead": 143,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 14.3,
+      "inspector": 0,
+      "passenger": 28.5,
+      "counted": 0,
+      "platform_one": 57.3,
+      "counting_child": 0
+     },
+     "axAvg": {
+      "share": 0.15,
+      "hand": 1.67,
+      "name": -3.22
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 14.3,
+      "inspector": 0,
+      "passenger": 28.5,
+      "counted": 0,
+      "platform_one": 57.3,
+      "counting_child": 0
+     },
+     "alive": 185,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 7.6,
+      "inspector": 0,
+      "passenger": 27.6,
+      "counted": 0,
+      "platform_one": 64.9,
+      "counting_child": 0
+     }
+    },
+    "caller": {
+     "n": 400,
+     "noId": 0,
+     "dead": 191,
+     "mismatch": 0,
+     "dist": {
+      "driver": 30,
+      "conductor": 0,
+      "inspector": 19.5,
+      "passenger": 0,
+      "counted": 38,
+      "platform_one": 0,
+      "counting_child": 12.5
+     },
+     "axAvg": {
+      "share": 1.39,
+      "hand": 1.59,
+      "name": 4.47
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 30,
+      "conductor": 0,
+      "inspector": 19.5,
+      "passenger": 0,
+      "counted": 38,
+      "platform_one": 0,
+      "counting_child": 12.5
+     },
+     "alive": 154,
+     "distAlive": {
+      "driver": 19.5,
+      "conductor": 0,
+      "inspector": 10.4,
+      "passenger": 0,
+      "counted": 50.6,
+      "platform_one": 0,
+      "counting_child": 19.5
+     }
+    },
+    "steward": {
+     "n": 400,
+     "noId": 0,
+     "dead": 143,
+     "mismatch": 0,
+     "dist": {
+      "driver": 2.8,
+      "conductor": 0,
+      "inspector": 90.8,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 6.5
+     },
+     "axAvg": {
+      "share": 3.99,
+      "hand": -2.62,
+      "name": 4.44
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 2.8,
+      "conductor": 0,
+      "inspector": 90.8,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 6.5
+     },
+     "alive": 195,
+     "distAlive": {
+      "driver": 1,
+      "conductor": 0,
+      "inspector": 88.7,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 10.3
+     }
+    },
+    "counter": {
+     "n": 400,
+     "noId": 0,
+     "dead": 220,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "axAvg": {
+      "share": -2.96,
+      "hand": 6.86,
+      "name": 4.07
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "alive": 138,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     }
+    },
+    "child": {
+     "n": 400,
+     "noId": 0,
+     "dead": 129,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     },
+     "axAvg": {
+      "share": -4.52,
+      "hand": -5.35,
+      "name": 4.41
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     },
+     "alive": 271,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     }
+    },
+    "h_random": {
+     "n": 400,
+     "noId": 0,
+     "dead": 342,
+     "mismatch": 0,
+     "dist": {
+      "driver": 5.5,
+      "conductor": 2,
+      "inspector": 3.5,
+      "passenger": 38,
+      "counted": 14.8,
+      "platform_one": 23.8,
+      "counting_child": 12.5
+     },
+     "axAvg": {
+      "share": -0.16,
+      "hand": 0.84,
+      "name": 0.71
+     },
+     "proStairsDead": 200,
+     "distNoPrologue": {
+      "driver": 11,
+      "conductor": 4,
+      "inspector": 7,
+      "passenger": 8.5,
+      "counted": 29.5,
+      "platform_one": 15,
+      "counting_child": 25
+     },
+     "alive": 4,
+     "distAlive": {
+      "driver": 25,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 75,
+      "counting_child": 0
+     }
+    },
+    "h_wary": {
+     "n": 400,
+     "noId": 0,
+     "dead": 230,
+     "mismatch": 0,
+     "dist": {
+      "driver": 1,
+      "conductor": 1,
+      "inspector": 0.3,
+      "passenger": 38.3,
+      "counted": 17.8,
+      "platform_one": 37.5,
+      "counting_child": 4.3
+     },
+     "axAvg": {
+      "share": -1.98,
+      "hand": 1.64,
+      "name": 0.26
+     },
+     "proStairsDead": 200,
+     "distNoPrologue": {
+      "driver": 2,
+      "conductor": 2,
+      "inspector": 0.5,
+      "passenger": 9,
+      "counted": 35.5,
+      "platform_one": 42.5,
+      "counting_child": 8.5
+     },
+     "alive": 170,
+     "distAlive": {
+      "driver": 1.2,
+      "conductor": 1.8,
+      "inspector": 0.6,
+      "passenger": 9.4,
+      "counted": 34.1,
+      "platform_one": 45.9,
+      "counting_child": 7.1
+     }
+    },
+    "h_cautious": {
+     "n": 400,
+     "noId": 0,
+     "dead": 0,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 0.5,
+      "inspector": 0,
+      "passenger": 82,
+      "counted": 0,
+      "platform_one": 17.3,
+      "counting_child": 0.3
+     },
+     "axAvg": {
+      "share": -1.6,
+      "hand": -1.14,
+      "name": -1.48
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 0.5,
+      "inspector": 0,
+      "passenger": 82,
+      "counted": 0,
+      "platform_one": 17.3,
+      "counting_child": 0.3
+     },
+     "alive": 400,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 0.5,
+      "inspector": 0,
+      "passenger": 82,
+      "counted": 0,
+      "platform_one": 17.3,
+      "counting_child": 0.3
+     }
+    },
+    "h_cautious2": {
+     "n": 400,
+     "noId": 0,
+     "dead": 118,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 5.5,
+      "inspector": 0,
+      "passenger": 34.5,
+      "counted": 2.5,
+      "platform_one": 57.3,
+      "counting_child": 0.3
+     },
+     "axAvg": {
+      "share": -0.97,
+      "hand": 1.33,
+      "name": -1.26
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 5.5,
+      "inspector": 0,
+      "passenger": 34.5,
+      "counted": 2.5,
+      "platform_one": 57.3,
+      "counting_child": 0.3
+     },
+     "alive": 239,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 1.7,
+      "inspector": 0,
+      "passenger": 32.6,
+      "counted": 3.3,
+      "platform_one": 62.3,
+      "counting_child": 0
+     }
+    },
+    "h_mixed": {
+     "n": 400,
+     "noId": 0,
+     "dead": 79,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0.5,
+      "conductor": 1.3,
+      "inspector": 0.5,
+      "passenger": 45.3,
+      "counted": 10,
+      "platform_one": 34.3,
+      "counting_child": 8.3
+     },
+     "axAvg": {
+      "share": -2.33,
+      "hand": 0.51,
+      "name": -0.52
+     },
+     "proStairsDead": 68,
+     "distNoPrologue": {
+      "driver": 0.6,
+      "conductor": 1.5,
+      "inspector": 0.6,
+      "passenger": 37.3,
+      "counted": 12,
+      "platform_one": 38,
+      "counting_child": 9.9
+     },
+     "alive": 321,
+     "distAlive": {
+      "driver": 0.3,
+      "conductor": 0.9,
+      "inspector": 0.3,
+      "passenger": 38,
+      "counted": 12.1,
+      "platform_one": 38.3,
+      "counting_child": 10
+     }
+    },
+    "h_first": {
+     "n": 400,
+     "noId": 0,
+     "dead": 0,
+     "mismatch": 0,
+     "dist": {
+      "driver": 9.8,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0.3,
+      "counted": 88.3,
+      "platform_one": 0,
+      "counting_child": 1.8
+     },
+     "axAvg": {
+      "share": -0.85,
+      "hand": 4.37,
+      "name": 1.23
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 9.8,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0.3,
+      "counted": 88.3,
+      "platform_one": 0,
+      "counting_child": 1.8
+     },
+     "alive": 400,
+     "distAlive": {
+      "driver": 9.8,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0.3,
+      "counted": 88.3,
+      "platform_one": 0,
+      "counting_child": 1.8
+     }
+    },
+    "risky": {
+     "n": 400,
+     "noId": 0,
+     "dead": 241,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0.5,
+      "conductor": 3.3,
+      "inspector": 0,
+      "passenger": 16.3,
+      "counted": 2.8,
+      "platform_one": 75.5,
+      "counting_child": 1.8
+     },
+     "axAvg": {
+      "share": -0.44,
+      "hand": 3.31,
+      "name": -0.85
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0.5,
+      "conductor": 3.3,
+      "inspector": 0,
+      "passenger": 16.3,
+      "counted": 2.8,
+      "platform_one": 75.5,
+      "counting_child": 1.8
+     },
+     "alive": 102,
+     "distAlive": {
+      "driver": 2,
+      "conductor": 6.9,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 6.9,
+      "platform_one": 84.3,
+      "counting_child": 0
+     }
+    },
+    "lazy": {
+     "n": 400,
+     "noId": 0,
+     "dead": 174,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0.3,
+      "conductor": 17.5,
+      "inspector": 0,
+      "passenger": 23,
+      "counted": 1,
+      "platform_one": 55.3,
+      "counting_child": 3
+     },
+     "axAvg": {
+      "share": 0.4,
+      "hand": 1.8,
+      "name": -1.12
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0.3,
+      "conductor": 17.5,
+      "inspector": 0,
+      "passenger": 23,
+      "counted": 1,
+      "platform_one": 55.3,
+      "counting_child": 3
+     },
+     "alive": 162,
+     "distAlive": {
+      "driver": 0.6,
+      "conductor": 13,
+      "inspector": 0,
+      "passenger": 19.1,
+      "counted": 1.9,
+      "platform_one": 65.4,
+      "counting_child": 0
+     }
+    },
+    "diligent": {
+     "n": 400,
+     "noId": 0,
+     "dead": 169,
+     "mismatch": 0,
+     "dist": {
+      "driver": 0,
+      "conductor": 11.8,
+      "inspector": 0,
+      "passenger": 33,
+      "counted": 1,
+      "platform_one": 51,
+      "counting_child": 3.3
+     },
+     "axAvg": {
+      "share": 0.08,
+      "hand": 1.3,
+      "name": -1.09
+     },
+     "proStairsDead": 0,
+     "distNoPrologue": {
+      "driver": 0,
+      "conductor": 11.8,
+      "inspector": 0,
+      "passenger": 33,
+      "counted": 1,
+      "platform_one": 51,
+      "counting_child": 3.3
+     },
+     "alive": 173,
+     "distAlive": {
+      "driver": 0,
+      "conductor": 6.4,
+      "inspector": 0,
+      "passenger": 40.5,
+      "counted": 1.7,
+      "platform_one": 51.4,
+      "counting_child": 0
+     }
+    }
+   },
+   "perBlock": {
+    "5001": {
+     "balanced": {
+      "driver": 0.5,
+      "conductor": 12,
+      "inspector": 0,
+      "passenger": 27.5,
+      "counted": 1,
+      "platform_one": 56.5,
+      "counting_child": 2.5
+     },
+     "selfish": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 98,
+      "counted": 0,
+      "platform_one": 0.5,
+      "counting_child": 1.5
+     },
+     "devoted": {
+      "driver": 67,
+      "conductor": 28,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 3.5,
+      "platform_one": 1.5,
+      "counting_child": 0
+     },
+     "silent": {
+      "driver": 0,
+      "conductor": 14,
+      "inspector": 0,
+      "passenger": 25.5,
+      "counted": 0,
+      "platform_one": 60.5,
+      "counting_child": 0
+     },
+     "caller": {
+      "driver": 30,
+      "conductor": 0,
+      "inspector": 21,
+      "passenger": 0,
+      "counted": 38,
+      "platform_one": 0,
+      "counting_child": 11
+     },
+     "steward": {
+      "driver": 3,
+      "conductor": 0,
+      "inspector": 90.5,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 6.5
+     },
+     "counter": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "child": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     },
+     "h_random": {
+      "driver": 5,
+      "conductor": 1.5,
+      "inspector": 5,
+      "passenger": 40.5,
+      "counted": 15.5,
+      "platform_one": 21.5,
+      "counting_child": 11
+     },
+     "h_wary": {
+      "driver": 1.5,
+      "conductor": 1,
+      "inspector": 0,
+      "passenger": 41,
+      "counted": 15.5,
+      "platform_one": 37.5,
+      "counting_child": 3.5
+     },
+     "h_cautious": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 83.5,
+      "counted": 0,
+      "platform_one": 16,
+      "counting_child": 0.5
+     },
+     "h_cautious2": {
+      "driver": 0,
+      "conductor": 6.5,
+      "inspector": 0,
+      "passenger": 36,
+      "counted": 2.5,
+      "platform_one": 55,
+      "counting_child": 0
+     },
+     "h_mixed": {
+      "driver": 0.5,
+      "conductor": 0.5,
+      "inspector": 0,
+      "passenger": 46,
+      "counted": 12,
+      "platform_one": 32,
+      "counting_child": 9
+     },
+     "h_first": {
+      "driver": 10,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0.5,
+      "counted": 88.5,
+      "platform_one": 0,
+      "counting_child": 1
+     },
+     "risky": {
+      "driver": 0.5,
+      "conductor": 3.5,
+      "inspector": 0,
+      "passenger": 16,
+      "counted": 2.5,
+      "platform_one": 75.5,
+      "counting_child": 2
+     },
+     "lazy": {
+      "driver": 0.5,
+      "conductor": 19,
+      "inspector": 0,
+      "passenger": 22.5,
+      "counted": 1.5,
+      "platform_one": 54.5,
+      "counting_child": 2
+     },
+     "diligent": {
+      "driver": 0,
+      "conductor": 11,
+      "inspector": 0,
+      "passenger": 36,
+      "counted": 1,
+      "platform_one": 50.5,
+      "counting_child": 1.5
+     }
+    },
+    "7001": {
+     "balanced": {
+      "driver": 0.5,
+      "conductor": 12,
+      "inspector": 0,
+      "passenger": 27,
+      "counted": 0.5,
+      "platform_one": 56,
+      "counting_child": 4
+     },
+     "selfish": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 98,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 2
+     },
+     "devoted": {
+      "driver": 68,
+      "conductor": 28,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 2,
+      "platform_one": 2,
+      "counting_child": 0
+     },
+     "silent": {
+      "driver": 0,
+      "conductor": 14.5,
+      "inspector": 0,
+      "passenger": 31.5,
+      "counted": 0,
+      "platform_one": 54,
+      "counting_child": 0
+     },
+     "caller": {
+      "driver": 30,
+      "conductor": 0,
+      "inspector": 18,
+      "passenger": 0,
+      "counted": 38,
+      "platform_one": 0,
+      "counting_child": 14
+     },
+     "steward": {
+      "driver": 2.5,
+      "conductor": 0,
+      "inspector": 91,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 6.5
+     },
+     "counter": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 100,
+      "platform_one": 0,
+      "counting_child": 0
+     },
+     "child": {
+      "driver": 0,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 0,
+      "platform_one": 0,
+      "counting_child": 100
+     },
+     "h_random": {
+      "driver": 6,
+      "conductor": 2.5,
+      "inspector": 2,
+      "passenger": 35.5,
+      "counted": 14,
+      "platform_one": 26,
+      "counting_child": 14
+     },
+     "h_wary": {
+      "driver": 0.5,
+      "conductor": 1,
+      "inspector": 0.5,
+      "passenger": 35.5,
+      "counted": 20,
+      "platform_one": 37.5,
+      "counting_child": 5
+     },
+     "h_cautious": {
+      "driver": 0,
+      "conductor": 1,
+      "inspector": 0,
+      "passenger": 80.5,
+      "counted": 0,
+      "platform_one": 18.5,
+      "counting_child": 0
+     },
+     "h_cautious2": {
+      "driver": 0,
+      "conductor": 4.5,
+      "inspector": 0,
+      "passenger": 33,
+      "counted": 2.5,
+      "platform_one": 59.5,
+      "counting_child": 0.5
+     },
+     "h_mixed": {
+      "driver": 0.5,
+      "conductor": 2,
+      "inspector": 1,
+      "passenger": 44.5,
+      "counted": 8,
+      "platform_one": 36.5,
+      "counting_child": 7.5
+     },
+     "h_first": {
+      "driver": 9.5,
+      "conductor": 0,
+      "inspector": 0,
+      "passenger": 0,
+      "counted": 88,
+      "platform_one": 0,
+      "counting_child": 2.5
+     },
+     "risky": {
+      "driver": 0.5,
+      "conductor": 3,
+      "inspector": 0,
+      "passenger": 16.5,
+      "counted": 3,
+      "platform_one": 75.5,
+      "counting_child": 1.5
+     },
+     "lazy": {
+      "driver": 0,
+      "conductor": 16,
+      "inspector": 0,
+      "passenger": 23.5,
+      "counted": 0.5,
+      "platform_one": 56,
+      "counting_child": 4
+     },
+     "diligent": {
+      "driver": 0,
+      "conductor": 12.5,
+      "inspector": 0,
+      "passenger": 30,
+      "counted": 1,
+      "platform_one": 51.5,
+      "counting_child": 5
+     }
+    }
+   },
+   "groups": {
+    "P8": {
+     "driver": 12.6,
+     "conductor": 6.8,
+     "inspector": 13.8,
+     "passenger": 19.2,
+     "counted": 17.7,
+     "platform_one": 14.5,
+     "counting_child": 15.5
+    },
+    "P6": {
+     "driver": 16.8,
+     "conductor": 9.1,
+     "inspector": 18.4,
+     "passenger": 25.6,
+     "counted": 6.9,
+     "platform_one": 19.3,
+     "counting_child": 4
+    },
+    "H5": {
+     "driver": 1.4,
+     "conductor": 2.1,
+     "inspector": 0.9,
+     "passenger": 47.6,
+     "counted": 9,
+     "platform_one": 34,
+     "counting_child": 5.1
+    },
+    "H6": {
+     "driver": 2.8,
+     "conductor": 1.7,
+     "inspector": 0.7,
+     "passenger": 39.7,
+     "counted": 22.2,
+     "platform_one": 28.4,
+     "counting_child": 4.6
+    },
+    "ALL": {
+     "driver": 7,
+     "conductor": 5.7,
+     "inspector": 6.7,
+     "passenger": 27.3,
+     "counted": 16.5,
+     "platform_one": 27.5,
+     "counting_child": 9.4
+    },
+    "H5_noPrologue": {
+     "driver": 2.7,
+     "conductor": 2.7,
+     "inspector": 1.6,
+     "passenger": 34.3,
+     "counted": 15.9,
+     "platform_one": 34,
+     "counting_child": 8.8
+    },
+    "H5_aliveOnly": {
+     "driver": 5.3,
+     "conductor": 1,
+     "inspector": 0.2,
+     "passenger": 32.4,
+     "counted": 9.9,
+     "platform_one": 47.8,
+     "counting_child": 3.5
+    },
+    "P8_aliveOnly": {
+     "driver": 7.4,
+     "conductor": 10,
+     "inspector": 12.4,
+     "passenger": 18.5,
+     "counted": 19,
+     "platform_one": 16.1,
+     "counting_child": 16.6
+    }
+   },
+   "groupsPerBlock": {
+    "5001": {
+     "P8": {
+      "driver": 12.6,
+      "conductor": 6.8,
+      "inspector": 13.9,
+      "passenger": 18.9,
+      "counted": 17.8,
+      "platform_one": 14.9,
+      "counting_child": 15.2
+     },
+     "H5": {
+      "driver": 1.4,
+      "conductor": 1.9,
+      "inspector": 1,
+      "passenger": 49.4,
+      "counted": 9.1,
+      "platform_one": 32.4,
+      "counting_child": 4.8
+     }
+    },
+    "7001": {
+     "P8": {
+      "driver": 12.6,
+      "conductor": 6.8,
+      "inspector": 13.6,
+      "passenger": 19.6,
+      "counted": 17.6,
+      "platform_one": 14,
+      "counting_child": 15.8
+     },
+     "H5": {
+      "driver": 1.4,
+      "conductor": 2.2,
+      "inspector": 0.7,
+      "passenger": 45.8,
+      "counted": 8.9,
+      "platform_one": 35.6,
+      "counting_child": 5.4
+     }
+    }
+   }
+  }
+ }
+}

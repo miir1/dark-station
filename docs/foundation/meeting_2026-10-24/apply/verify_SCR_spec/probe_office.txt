@@ -1,0 +1,1 @@
+office {"office_before": "open", "door_obj": {"x": 15, "y": 2, "solid": true, "state": "open"}, "walk_crate_food": {"r": false, "auto": false, "toast": "갈 수 없는 곳이다."}, "pos_after_crate_food": [17, 2], "walk_parts_crate": {"r": false, "auto": false, "toast": "갈 수 없는 곳이다."}, "pos_after_parts_crate": [17, 2], "walk_door_cell": {"r": true, "auto": true}, "pos_after_door": [16, 2]}

@@ -1,0 +1,35 @@
+[
+ {
+  "shot": "zz_timeout",
+  "ok": false,
+  "why": [
+   "시간 초과 (3초) - 컴퓨터가 바쁘다",
+   "PNG 없음"
+  ],
+  "png_scale": null,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "시간 초과 (3초) - 컴퓨터가 바쁘다",
+     "PNG 없음"
+    ],
+    "png_scale": null,
+    "console_errors": 0
+   },
+   {
+    "attempt": 2,
+    "ok": false,
+    "why": [
+     "시간 초과 (3초) - 컴퓨터가 바쁘다",
+     "PNG 없음"
+    ],
+    "png_scale": null,
+    "console_errors": 0
+   }
+  ],
+  "console_errors": [],
+  "auto": []
+ }
+]

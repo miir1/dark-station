@@ -1,0 +1,1060 @@
+{
+ "addr_now": {
+  "soonrye": {
+   "call": "손님",
+   "rows": [
+    [
+     "soonrye_meet",
+     "soonrye",
+     "손님, 앉든지 둘러보든지 해. 계단만 빼고."
+    ],
+    [
+     "soonrye_rule_train",
+     "soonrye",
+     "손님, 저 소리가 열흘이래. 스피커 말이야. 사람은 자네가 세."
+    ],
+    [
+     "soonrye_d1_dark",
+     "soonrye",
+     "손님, 밤엔 창고 가지 마. 어두워. 쥐가 사람 가리지 않아."
+    ],
+    [
+     "soonrye_d2",
+     "soonrye",
+     "손님, 역무실 열쇠야. 삼십 년 걸레만 넣어 뒀지. 자네가 열어. 밥은 문 틈으로 넣어."
+    ],
+    [
+     "soonrye_rule_answer",
+     "soonrye",
+     "손님, 어젯밤에 저 위에서 뭔가 셌어. 오늘 밤엔 대답하지 마. 누가 불러도."
+    ],
+    [
+     "soonrye_d3_after",
+     "soonrye",
+     "손님, 재가 한 칸 내려왔어. 불빛 때문인지는 몰라. 나는 그렇게 생각해."
+    ],
+    [
+     "soonrye_sit",
+     "soonrye",
+     "손님, 아들이 남주에 있어. 그날 아침에 전화를 못 받았지. 일할 땐 안 받아. 삼십 년을 그랬어."
+    ],
+    [
+     "soonrye_stairs",
+     "soonrye",
+     "손님, 잠이 안 왔어."
+    ]
+   ]
+  },
+  "seoha": {
+   "call": "저기요",
+   "rows": [
+    [
+     "seoha_meet",
+     "seoha",
+     "저기요, …밖에서 걸어온 사람은 처음이에요."
+    ],
+    [
+     "seoha_sit",
+     "seoha",
+     "저기요, 밤마다 휴대폰을 켜 봐요. 배터리는 아직 있어요. 그냥 안 켜는 거예요."
+    ],
+    [
+     "seoha_card",
+     "seoha",
+     "저기요, …순례 할머니, 아들이 남주랬죠."
+    ],
+    [
+     "seoha_called",
+     "seoha",
+     "저기요, 부르는 거, 엄마 목소리로 와요. 엄마도 계단으로 올라갔어요."
+    ]
+   ]
+  },
+  "gicheol": {
+   "call": "당신",
+   "rows": [
+    [
+     "gicheol_meet",
+     "gicheol",
+     "당신, …역이오. 불은 저 할머니 거요."
+    ],
+    [
+     "gicheol_arrive",
+     "gicheol",
+     "당신 거요. 이름이 있소."
+    ],
+    [
+     "gicheol_rule_rail",
+     "gicheol",
+     "당신, 선로가 잠겼소. 통로를 이어야 열차가 서오."
+    ],
+    [
+     "gicheol_rule_count",
+     "gicheol",
+     "당신, 세는 것이 밤마다 머릿수를 세오. 숨죽이면 지나가오."
+    ],
+    [
+     "gicheol_d2",
+     "gicheol",
+     "당신, 시장 쪽은 셔터가 많소. 수문 쪽은 물이 많소. 둘 중 하나요."
+    ],
+    [
+     "gicheol_d4",
+     "gicheol",
+     "당신, 통로는 이틀이면 되오. 부품은 넉넉하오."
+    ],
+    [
+     "gicheol_sit",
+     "gicheol",
+     "당신, 딸이 둘이오. 큰애가 올해 대학 갔소. 불빛 쪽으로 오지 마시오. 얼굴은 됐소."
+    ],
+    [
+     "gicheol_wire",
+     "gicheol",
+     "당신, 선이 살아 있소. 만지면 죽소."
+    ],
+    [
+     "gicheol_d9",
+     "gicheol",
+     "당신, 자리가 모자라면 누가 남소? 나는 딸이 둘이오. 미안하단 말은 안 하겠소."
+    ],
+    [
+     "gicheol_counted",
+     "gicheol",
+     "당신, 세는 것이 어젯밤엔 하나 더 셌소. 나는 귀를 막았소."
+    ]
+   ]
+  },
+  "eunji": {
+   "call": "너",
+   "rows": [
+    [
+     "eunji_meet",
+     "eunji",
+     "너, 문 열어 줘서 고맙단 말은 안 해."
+    ],
+    [
+     "eunji_sit",
+     "eunji",
+     "너, 엄마 가게 간판을 아직 가지고 있어. 두 손으로 둘은 못 잡아."
+    ],
+    [
+     "eunji_why",
+     "eunji",
+     "너, 셔터 너머가 더 커. 작은 쪽이 먹혀. 그게 다야."
+    ],
+    [
+     "eunji_d7",
+     "eunji",
+     "너, 운임이 빵이랬지. 그럼 빵 가진 사람이 타는 거야. 간단해."
+    ],
+    [
+     "eunji_eye",
+     "eunji",
+     "너, 눈이 위에만 있는 줄 알아? 셔터 너머에도 있어."
+    ]
+   ]
+  },
+  "dongha": {
+   "call": "형",
+   "rows": [
+    [
+     "dongha_meet",
+     "dongha",
+     "형, …고마워요."
+    ],
+    [
+     "dongha_sit",
+     "dongha",
+     "형, 은지 누나가 저를 거둬 줬어요. 갚아야죠. 형이 그랬어요. 이름은 빌려도 된다고."
+    ],
+    [
+     "dongha_it",
+     "dongha",
+     "형, 그거가 제 진짜 이름을 알아요. 아무한테도 안 알려 줬는데요."
+    ]
+   ]
+  },
+  "mari": {
+   "call": "",
+   "rows": [
+    [
+     "mari_meet",
+     "mari",
+     "다치면 바로 말해요. 여기선 곪으면 끝이에요."
+    ],
+    [
+     "mari_d1",
+     "mari",
+     "여기선 곪으면 끝이에요. 다치면 바로 말해요."
+    ],
+    [
+     "mari_sit",
+     "mari",
+     "환자 이름을 매일 밤 하나씩 떠올려요. 걷지도 못하던 사람들이 걸어 나갔어요. 저는 서 있었고요."
+    ],
+    [
+     "mari_calls",
+     "mari",
+     "부르는 것은 다친 사람부터 불러요. 그래서 제가 먼저 이름을 불러 줘요."
+    ]
+   ]
+  },
+  "eunchae": {
+   "call": "역 분",
+   "rows": [
+    [
+     "eunchae_meet",
+     "eunchae",
+     "역 분, 혼자 어머니를 돌보고 있어요. 뒷문은 열 수 있는데… 낯선 사람한테는."
+    ],
+    [
+     "eunchae_lord",
+     "eunchae",
+     "역 분, 그분이 다 보세요. 약도 원래 그분 거예요."
+    ]
+   ]
+  },
+  "dohyeon": {
+   "call": "너",
+   "rows": [
+    [
+     "dohyeon_meet",
+     "dohyeon",
+     "너, 권도현. 이틀 뒤에 보답하지. 물속이 조용해. 바깥보다."
+    ],
+    [
+     "dohyeon_water",
+     "dohyeon",
+     "너, 물소리가 이름을 불러. 대답만 안 하면 돼."
+    ]
+   ]
+  }
+ },
+ "addr_cold": {
+  "soonrye": {
+   "call": "이봐",
+   "rows": [
+    [
+     "soonrye_meet",
+     "soonrye",
+     "이봐, 앉든지 둘러보든지 해. 계단만 빼고."
+    ],
+    [
+     "soonrye_rule_train",
+     "soonrye",
+     "이봐, 저 소리가 열흘이래. 스피커 말이야. 사람은 자네가 세."
+    ],
+    [
+     "soonrye_d1_dark",
+     "soonrye",
+     "이봐, 밤엔 창고 가지 마. 어두워. 쥐가 사람 가리지 않아."
+    ],
+    [
+     "soonrye_d2",
+     "soonrye",
+     "이봐, 역무실 열쇠야. 삼십 년 걸레만 넣어 뒀지. 자네가 열어. 밥은 문 틈으로 넣어."
+    ],
+    [
+     "soonrye_rule_answer",
+     "soonrye",
+     "이봐, 어젯밤에 저 위에서 뭔가 셌어. 오늘 밤엔 대답하지 마. 누가 불러도."
+    ],
+    [
+     "soonrye_d3_after",
+     "soonrye",
+     "이봐, 재가 한 칸 내려왔어. 불빛 때문인지는 몰라. 나는 그렇게 생각해."
+    ],
+    [
+     "soonrye_sit",
+     "soonrye",
+     "이봐, 아들이 남주에 있어. 그날 아침에 전화를 못 받았지. 일할 땐 안 받아. 삼십 년을 그랬어."
+    ],
+    [
+     "soonrye_stairs",
+     "soonrye",
+     "이봐, 잠이 안 왔어."
+    ]
+   ]
+  },
+  "seoha": {
+   "call": "",
+   "rows": [
+    [
+     "seoha_meet",
+     "seoha",
+     "…밖에서 걸어온 사람은 처음이에요."
+    ],
+    [
+     "seoha_sit",
+     "seoha",
+     "밤마다 휴대폰을 켜 봐요. 배터리는 아직 있어요. 그냥 안 켜는 거예요."
+    ],
+    [
+     "seoha_card",
+     "seoha",
+     "…순례 할머니, 아들이 남주랬죠."
+    ],
+    [
+     "seoha_called",
+     "seoha",
+     "부르는 거, 엄마 목소리로 와요. 엄마도 계단으로 올라갔어요."
+    ]
+   ]
+  },
+  "gicheol": {
+   "call": "어이",
+   "rows": [
+    [
+     "gicheol_meet",
+     "gicheol",
+     "어이, …역이오. 불은 저 할머니 거요."
+    ],
+    [
+     "gicheol_arrive",
+     "gicheol",
+     "어이, 당신 거요. 이름이 있소."
+    ],
+    [
+     "gicheol_rule_rail",
+     "gicheol",
+     "어이, 선로가 잠겼소. 통로를 이어야 열차가 서오."
+    ],
+    [
+     "gicheol_rule_count",
+     "gicheol",
+     "어이, 세는 것이 밤마다 머릿수를 세오. 숨죽이면 지나가오."
+    ],
+    [
+     "gicheol_d2",
+     "gicheol",
+     "어이, 시장 쪽은 셔터가 많소. 수문 쪽은 물이 많소. 둘 중 하나요."
+    ],
+    [
+     "gicheol_d4",
+     "gicheol",
+     "어이, 통로는 이틀이면 되오. 부품은 넉넉하오."
+    ],
+    [
+     "gicheol_sit",
+     "gicheol",
+     "어이, 딸이 둘이오. 큰애가 올해 대학 갔소. 불빛 쪽으로 오지 마시오. 얼굴은 됐소."
+    ],
+    [
+     "gicheol_wire",
+     "gicheol",
+     "어이, 선이 살아 있소. 만지면 죽소."
+    ],
+    [
+     "gicheol_d9",
+     "gicheol",
+     "어이, 자리가 모자라면 누가 남소? 나는 딸이 둘이오. 미안하단 말은 안 하겠소."
+    ],
+    [
+     "gicheol_counted",
+     "gicheol",
+     "어이, 세는 것이 어젯밤엔 하나 더 셌소. 나는 귀를 막았소."
+    ]
+   ]
+  },
+  "eunji": {
+   "call": "야",
+   "rows": [
+    [
+     "eunji_meet",
+     "eunji",
+     "야, 문 열어 줘서 고맙단 말은 안 해."
+    ],
+    [
+     "eunji_sit",
+     "eunji",
+     "야, 엄마 가게 간판을 아직 가지고 있어. 두 손으로 둘은 못 잡아."
+    ],
+    [
+     "eunji_why",
+     "eunji",
+     "야, 셔터 너머가 더 커. 작은 쪽이 먹혀. 그게 다야."
+    ],
+    [
+     "eunji_d7",
+     "eunji",
+     "야, 운임이 빵이랬지. 그럼 빵 가진 사람이 타는 거야. 간단해."
+    ],
+    [
+     "eunji_eye",
+     "eunji",
+     "야, 눈이 위에만 있는 줄 알아? 셔터 너머에도 있어."
+    ]
+   ]
+  },
+  "dongha": {
+   "call": "당신",
+   "rows": [
+    [
+     "dongha_meet",
+     "dongha",
+     "당신, …고마워요."
+    ],
+    [
+     "dongha_sit",
+     "dongha",
+     "당신, 은지 누나가 저를 거둬 줬어요. 갚아야죠. 형이 그랬어요. 이름은 빌려도 된다고."
+    ],
+    [
+     "dongha_it",
+     "dongha",
+     "당신, 그거가 제 진짜 이름을 알아요. 아무한테도 안 알려 줬는데요."
+    ]
+   ]
+  },
+  "mari": {
+   "call": "",
+   "rows": [
+    [
+     "mari_meet",
+     "mari",
+     "다치면 바로 말해요. 여기선 곪으면 끝이에요."
+    ],
+    [
+     "mari_d1",
+     "mari",
+     "여기선 곪으면 끝이에요. 다치면 바로 말해요."
+    ],
+    [
+     "mari_sit",
+     "mari",
+     "환자 이름을 매일 밤 하나씩 떠올려요. 걷지도 못하던 사람들이 걸어 나갔어요. 저는 서 있었고요."
+    ],
+    [
+     "mari_calls",
+     "mari",
+     "부르는 것은 다친 사람부터 불러요. 그래서 제가 먼저 이름을 불러 줘요."
+    ]
+   ]
+  },
+  "eunchae": {
+   "call": "역 분",
+   "rows": [
+    [
+     "eunchae_meet",
+     "eunchae",
+     "역 분, 혼자 어머니를 돌보고 있어요. 뒷문은 열 수 있는데… 낯선 사람한테는."
+    ],
+    [
+     "eunchae_lord",
+     "eunchae",
+     "역 분, 그분이 다 보세요. 약도 원래 그분 거예요."
+    ]
+   ]
+  },
+  "dohyeon": {
+   "call": "너",
+   "rows": [
+    [
+     "dohyeon_meet",
+     "dohyeon",
+     "너, 권도현. 이틀 뒤에 보답하지. 물속이 조용해. 바깥보다."
+    ],
+    [
+     "dohyeon_water",
+     "dohyeon",
+     "너, 물소리가 이름을 불러. 대답만 안 하면 돼."
+    ]
+   ]
+  }
+ },
+ "late_before": [
+  "blanket_gicheol",
+  "bowl_eunji"
+ ],
+ "late_inspect": {
+  "bowl": [
+   "빈 그릇이다.",
+   "손잡이가 옆 그릇 쪽으로 돌려져 있다."
+  ],
+  "blanket": [
+   "담요가 당신 쪽을 등지고 말려 있다.",
+   "어제도 그랬다."
+  ],
+  "log": [
+   {
+    "id": "notebook_you",
+    "st": "inplace",
+    "lid": "insp_notebook",
+    "day": 1,
+    "notice": ""
+   },
+   {
+    "id": "notebook_you",
+    "st": "inplace",
+    "lid": "insp_notebook",
+    "day": 2,
+    "notice": ""
+   },
+   {
+    "id": "notebook_you",
+    "st": "inplace",
+    "lid": "insp_notebook",
+    "day": 3,
+    "notice": ""
+   },
+   {
+    "toast": "toast_late",
+    "text": "어제 못 본 자리가 그대로다.",
+    "day": 3
+   },
+   {
+    "id": "bowl_eunji",
+    "st": "empty",
+    "lid": "insp_bowl_empty_late",
+    "day": 3,
+    "notice": "toast_late"
+   },
+   {
+    "id": "blanket_gicheol",
+    "st": "rolled",
+    "lid": "insp_blanket_rolled_late",
+    "day": 3,
+    "notice": ""
+   }
+  ],
+  "late_after": [],
+  "dust_after": []
+ },
+ "resume_repay_bowl": {
+  "title_opts": [
+   "1계속 (D3)",
+   "2새로 시작",
+   "3저장 코드 불러오기",
+   "4전체화면"
+  ],
+  "reached_ration_window": false,
+  "kinds": [],
+  "seen": [],
+  "error": "{\"exceptionId\": 1, \"text\": \"Uncaught\", \"lineNumber\": 0, \"columnNumber\": 20, \"scriptId\": \"73\", \"stackTrace\": {\"callFrames\": [{\"functionName\": \"\", \"scriptId\": \"73\", \"url\": \"\", \"lineNumber\": 0, \"columnNumber\": 20}]}, \"exception\": {\"type\": \"object\", \"subtype\": \"error\", \"className\": \"TypeError\", \"descrip",
+  "console_errors": []
+ },
+ "resume_share_back": {
+  "title_opts": [
+   "1계속 (D4)",
+   "2새로 시작",
+   "3저장 코드 불러오기",
+   "4전체화면"
+  ],
+  "reached_ration_window": false,
+  "kinds": [],
+  "seen": [],
+  "error": "{\"exceptionId\": 2, \"text\": \"Uncaught\", \"lineNumber\": 0, \"columnNumber\": 20, \"scriptId\": \"73\", \"stackTrace\": {\"callFrames\": [{\"functionName\": \"\", \"scriptId\": \"73\", \"url\": \"\", \"lineNumber\": 0, \"columnNumber\": 20}]}, \"exception\": {\"type\": \"object\", \"subtype\": \"error\", \"className\": \"TypeError\", \"descrip",
+  "console_errors": []
+ },
+ "events_rerun": {
+  "dawn_mob": {
+   "line": {
+    "open": "line",
+    "day": 7,
+    "phase": "trace",
+    "pending": "dawn_mob",
+    "target": "mari",
+    "who": "",
+    "face": "",
+    "text": "새벽에 눈을 떴다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": false,
+    "choices": [
+     {
+      "label": "가진 것을 다 내놓는다",
+      "locked": false,
+      "reason": "",
+      "warn": "식량과 물이 다 나간다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "맞고 버틴다",
+      "locked": false,
+      "reason": "",
+      "warn": "크게 다친다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "손가락 하나로 갚는다",
+      "locked": false,
+      "reason": "",
+      "warn": "손가락을 잃는다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "다른 사람을 가리킨다",
+      "locked": false,
+      "reason": "",
+      "warn": "그 사람이 대신 맞는다",
+      "taboo": true,
+      "chance": null
+     },
+     {
+      "label": "밀치고 달아난다",
+      "locked": false,
+      "reason": "",
+      "warn": "넘어지면 끝이다",
+      "taboo": false,
+      "chance": 45
+     },
+     {
+      "label": "무릎을 꿇고 빈다",
+      "locked": false,
+      "reason": "",
+      "warn": "안 들으면 끝이다",
+      "taboo": false,
+      "chance": 40
+     }
+    ]
+   },
+   "box": {
+    "open": "event",
+    "day": 7,
+    "phase": "trace",
+    "pending": "dawn_mob",
+    "target": "mari",
+    "who": "",
+    "face": "",
+    "text": "새벽에 눈을 떴다. 담요들이 당신을 둘러서 있다. 아무도 말하지 않는다. 누가 당신 봉지를 들고 있다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1가진 것을 다 내놓는다식량 −1 · 물 −1식량과 물이 다 나간다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2맞고 버틴다크게 다친다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3손가락 하나로 갚는다손가락을 잃는다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "4다른 사람을 가리킨다그 사람이 대신 맞는다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "5밀치고 달아난다45%넘어지면 끝이다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "6무릎을 꿇고 빈다40%안 들으면 끝이다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": false,
+    "choices": [
+     {
+      "label": "가진 것을 다 내놓는다",
+      "locked": false,
+      "reason": "",
+      "warn": "식량과 물이 다 나간다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "맞고 버틴다",
+      "locked": false,
+      "reason": "",
+      "warn": "크게 다친다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "손가락 하나로 갚는다",
+      "locked": false,
+      "reason": "",
+      "warn": "손가락을 잃는다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "다른 사람을 가리킨다",
+      "locked": false,
+      "reason": "",
+      "warn": "그 사람이 대신 맞는다",
+      "taboo": true,
+      "chance": null
+     },
+     {
+      "label": "밀치고 달아난다",
+      "locked": false,
+      "reason": "",
+      "warn": "넘어지면 끝이다",
+      "taboo": false,
+      "chance": 45
+     },
+     {
+      "label": "무릎을 꿇고 빈다",
+      "locked": false,
+      "reason": "",
+      "warn": "안 들으면 끝이다",
+      "taboo": false,
+      "chance": 40
+     }
+    ]
+   },
+   "picked": "가진 것을 다 내놓는다",
+   "after": {
+    "day": 7,
+    "phase": "trace",
+    "pending": null,
+    "ended": null,
+    "you": "home",
+    "open": "",
+    "last": {
+     "event": "rail_killed",
+     "choice": "같이 묻는다",
+     "text": "선로 끝에 묻었다. 동하가 흙을 오래 다졌다."
+    },
+    "seen": [
+     "봉지와 물병이 손에서 손으로 갔다.",
+     "창고 상자까지 비었다.",
+     "담요들이 하나씩 돌아갔다.",
+     "선로에 낯선 남자가 누워 있다.",
+     "눈을 뜬 채다.",
+     "관자놀이가 꺼졌고 피가 레일을 탄다.",
+     "동하가 파이프를 쥐고 서 있다.",
+     "선로 끝에 묻었다.",
+     "동하가 흙을 오래 다졌다."
+    ]
+   },
+   "console_errors": []
+  },
+  "d10_grab": {
+   "line": {
+    "open": "line",
+    "day": 10,
+    "phase": "day",
+    "pending": "d10_grab",
+    "target": "seoha",
+    "who": "담요 속 여학생",
+    "face": "portraits80/seoha.png",
+    "text": "몇 걸음 못 가서 발목이 잡혔다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": false,
+    "choices": [
+     {
+      "label": "물병을 돌려준다",
+      "locked": false,
+      "reason": "",
+      "warn": "물이 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "끌려 넘어진다",
+      "locked": false,
+      "reason": "",
+      "warn": "크게 다친다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "발을 빼낸다",
+      "locked": false,
+      "reason": "",
+      "warn": "넘어지면 끝이다",
+      "taboo": false,
+      "chance": 60
+     }
+    ]
+   },
+   "box": {
+    "open": "event",
+    "day": 10,
+    "phase": "day",
+    "pending": "d10_grab",
+    "target": "seoha",
+    "who": "담요 속 여학생",
+    "face": "",
+    "text": "담요 속 여학생몇 걸음 못 가서 발목이 잡혔다. 물병을 빼앗긴 사람이다. 손톱이 살에 박힌다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1물병을 돌려준다물 −1물이 준다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2끌려 넘어진다크게 다친다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3발을 빼낸다60%넘어지면 끝이다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": false,
+    "choices": [
+     {
+      "label": "물병을 돌려준다",
+      "locked": false,
+      "reason": "",
+      "warn": "물이 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "끌려 넘어진다",
+      "locked": false,
+      "reason": "",
+      "warn": "크게 다친다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "발을 빼낸다",
+      "locked": false,
+      "reason": "",
+      "warn": "넘어지면 끝이다",
+      "taboo": false,
+      "chance": 60
+     }
+    ]
+   },
+   "picked": "물병을 돌려준다",
+   "after": {
+    "day": 10,
+    "phase": "ended",
+    "pending": null,
+    "ended": "d10_walk_other",
+    "you": "walked",
+    "open": "ending",
+    "last": {
+     "event": "d10_walk_other",
+     "choice": "걷는다",
+     "text": "그 사람이 대답했다. 신발을 벗었다. 아무도 붙잡지 않았다."
+    },
+    "seen": [
+     "물병을 내밀었다.",
+     "손이 풀렸다.",
+     "열차는 서지 않았다.",
+     "선로를 따라 걷는다, 고가 구간까지 한 역 반.",
+     "둘씩 붙어 걷는다.",
+     "환기구 아래서 이름 하나가 불렸다.",
+     "옆에서 걷던 사람이 멈춰 섰다.",
+     "그 사람이 대답했다.",
+     "신발을 벗었다.",
+     "아무도 붙잡지 않았다."
+    ]
+   },
+   "console_errors": []
+  },
+  "repay_bowl": {
+   "line": {
+    "open": "line",
+    "day": 3,
+    "phase": "ration",
+    "pending": "repay_bowl",
+    "target": "eunji",
+    "who": "셔터의 여자",
+    "face": "portraits80_hurt/eunji.png",
+    "text": "줄 끝에 누가 빈 그릇을 들고 서 있다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": false,
+    "choices": [
+     {
+      "label": "그냥 지나간다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "내 몫을 덜어 준다",
+      "locked": false,
+      "reason": "",
+      "warn": "당신이 굶는다",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "box": {
+    "open": "event",
+    "day": 3,
+    "phase": "ration",
+    "pending": "repay_bowl",
+    "target": "eunji",
+    "who": "셔터의 여자",
+    "face": "",
+    "text": "셔터의 여자줄 끝에 누가 빈 그릇을 들고 서 있다. 당신 쪽을 등지고 있다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1그냥 지나간다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2내 몫을 덜어 준다당신이 굶는다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": false,
+    "choices": [
+     {
+      "label": "그냥 지나간다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "내 몫을 덜어 준다",
+      "locked": false,
+      "reason": "",
+      "warn": "당신이 굶는다",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "picked": "그냥 지나간다",
+   "after": {
+    "day": 3,
+    "phase": "day",
+    "pending": null,
+    "ended": null,
+    "you": "home",
+    "open": "",
+    "last": {
+     "event": "repay_bowl",
+     "choice": "그냥 지나간다",
+     "text": "그릇을 받아 들고 불가로 갔다."
+    },
+    "seen": [
+     "그릇을 받아 들고 불가로 갔다.",
+     "사람들이 제 자리로 흩어진다."
+    ]
+   },
+   "console_errors": []
+  }
+ },
+ "6_noart_night": {
+  "view": [
+   {
+    "id": "soonrye",
+    "cold": true,
+    "address": "이봐"
+   },
+   {
+    "id": "seoha",
+    "cold": false,
+    "address": "저기요"
+   },
+   {
+    "id": "gicheol",
+    "cold": true,
+    "address": "당신"
+   },
+   {
+    "id": "eunji",
+    "cold": false,
+    "address": "너"
+   },
+   {
+    "id": "dongha",
+    "cold": false,
+    "address": "형"
+   },
+   {
+    "id": "mari",
+    "cold": true,
+    "address": "씨"
+   }
+  ],
+  "map": [
+   [
+    "soonrye",
+    16,
+    9,
+    "lying",
+    "down",
+    true
+   ],
+   [
+    "gicheol",
+    20,
+    9,
+    "lying",
+    "down",
+    true
+   ],
+   [
+    "eunji",
+    16,
+    11,
+    "lying",
+    "up",
+    false
+   ],
+   [
+    "dongha",
+    18,
+    11,
+    "lying",
+    "left",
+    false
+   ],
+   [
+    "mari",
+    20,
+    11,
+    "lying",
+    "down",
+    true
+   ]
+  ],
+  "late": [
+   "blanket_gicheol"
+  ]
+ },
+ "6_noart_errors": [],
+ "7_dropped": {
+  "dropped": [
+   {
+    "table": "events",
+    "i": 128,
+    "id": "zz_bad_row"
+   }
+  ],
+  "toast": "표 1줄을 읽지 못해 빼고 시작했다 — 표 담당에게 알릴 것",
+  "console": [
+   "error: [ds4] 표 검증 실패 행을 빼고 읽었다:\n  events[128] zz_bad_row: grade: 필수 열이 비었음\n  events[128] zz_bad_row: choices: 최소 1개"
+  ],
+  "events_has_bad": false
+ }
+}

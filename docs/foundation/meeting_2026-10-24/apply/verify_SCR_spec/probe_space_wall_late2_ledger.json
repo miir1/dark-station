@@ -1,0 +1,2473 @@
+{
+ "space": [
+  {
+   "ev": "pro_stairs",
+   "mode": "hold_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "돌아선다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "구두를 가지러 오른다",
+     "warn": "할머니: 계단 줄 위로는 가지 마",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "pro_stairs",
+   "mode": "hold_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "돌아선다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "구두를 가지러 오른다",
+     "warn": "할머니: 계단 줄 위로는 가지 마",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "pro_stairs",
+   "mode": "hold_s+mash_enter",
+   "before": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "돌아선다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "구두를 가지러 오른다",
+     "warn": "할머니: 계단 줄 위로는 가지 마",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "pro_stairs",
+   "mode": "hold_space+hold_up",
+   "before": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "돌아선다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "구두를 가지러 오른다",
+     "warn": "할머니: 계단 줄 위로는 가지 마",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "pro_stairs",
+   "mode": "tap_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "돌아선다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "구두를 가지러 오른다",
+     "warn": "할머니: 계단 줄 위로는 가지 마",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 1,
+    "newest": "구두를 가지러 오른다",
+    "lastEv": "pro_stairs",
+    "lastChoice": "구두를 가지러 오른다",
+    "lastI": 1,
+    "open": "title",
+    "you": "dead",
+    "ended": "you_gone",
+    "pending": null,
+    "sel": "새로 시작"
+   },
+   "picked": "구두를 가지러 오른다",
+   "picked_info": {
+    "label": "구두를 가지러 오른다",
+    "warn": "할머니: 계단 줄 위로는 가지 마",
+    "taboo": true,
+    "chance": null,
+    "kill": false,
+    "idx": 1
+   },
+   "died": true,
+   "errors": []
+  },
+  {
+   "ev": "pro_stairs",
+   "mode": "tap_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "뚜껑을 닫는다",
+    "lastEv": "crate_lid",
+    "lastChoice": "뚜껑을 닫는다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_stairs",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "돌아선다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "구두를 가지러 오른다",
+     "warn": "할머니: 계단 줄 위로는 가지 마",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 1,
+    "newest": "돌아선다",
+    "lastEv": "pro_stairs",
+    "lastChoice": "돌아선다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "돌아선다",
+   "picked_info": {
+    "label": "돌아선다",
+    "warn": "",
+    "taboo": false,
+    "chance": null,
+    "kill": false,
+    "idx": 0
+   },
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d3_called_you",
+   "mode": "hold_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "대답하지 않는다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d3_called_you",
+   "mode": "hold_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "대답하지 않는다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d3_called_you",
+   "mode": "hold_s+mash_enter",
+   "before": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "대답하지 않는다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d3_called_you",
+   "mode": "hold_space+hold_up",
+   "before": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "대답하지 않는다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d3_called_you",
+   "mode": "tap_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "대답하지 않는다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "눈을 뜬다",
+    "lastEv": "pro_cold",
+    "lastChoice": "눈을 뜬다",
+    "lastI": 0,
+    "open": "",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d3_called_you",
+   "mode": "tap_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "함께 센다",
+    "lastEv": "trial_d3_count",
+    "lastChoice": "함께 센다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d3_called_you",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "대답하지 않는다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 1,
+    "newest": "대답하지 않는다",
+    "lastEv": "d3_called_you",
+    "lastChoice": "대답하지 않는다",
+    "lastI": 0,
+    "open": "",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "대답하지 않는다",
+   "picked_info": {
+    "label": "대답하지 않는다",
+    "warn": "",
+    "taboo": false,
+    "chance": null,
+    "kill": false,
+    "idx": 0
+   },
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "called_up",
+   "mode": "hold_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "위에 대고 빈다",
+    "lastEv": "fever_night",
+    "lastChoice": "위에 대고 빈다",
+    "lastI": 5,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "called_up",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "불을 키우고 밤을 샌다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "귀를 막는다",
+     "warn": "잠결에 대답하면 끝이다",
+     "taboo": false,
+     "chance": 75,
+     "kill": false
+    },
+    {
+     "label": "손등을 깨물며 버틴다",
+     "warn": "다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 이름을 댄다",
+     "warn": "그 사람이 불린다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "위에 대고 빈다",
+    "lastEv": "fever_night",
+    "lastChoice": "위에 대고 빈다",
+    "lastI": 5,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "called_up",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "called_up",
+   "mode": "hold_up+mash_space",
+   "error": "SystemExit(\"기다리다 지쳤다: __ds4.state && __ds4.UI.openKind() === 'line' && !__ds4.UI.bot\")",
+   "errors": []
+  },
+  {
+   "ev": "called_up",
+   "mode": "hold_s+mash_enter",
+   "before": {
+    "fired": 0,
+    "newest": "위에 대고 빈다",
+    "lastEv": "fever_night",
+    "lastChoice": "위에 대고 빈다",
+    "lastI": 5,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "called_up",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "불을 키우고 밤을 샌다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "귀를 막는다",
+     "warn": "잠결에 대답하면 끝이다",
+     "taboo": false,
+     "chance": 75,
+     "kill": false
+    },
+    {
+     "label": "손등을 깨물며 버틴다",
+     "warn": "다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 이름을 댄다",
+     "warn": "그 사람이 불린다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "위에 대고 빈다",
+    "lastEv": "fever_night",
+    "lastChoice": "위에 대고 빈다",
+    "lastI": 5,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "called_up",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "called_up",
+   "mode": "hold_space+hold_up",
+   "before": {
+    "fired": 0,
+    "newest": "위에 대고 빈다",
+    "lastEv": "fever_night",
+    "lastChoice": "위에 대고 빈다",
+    "lastI": 5,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "called_up",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "불을 키우고 밤을 샌다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "귀를 막는다",
+     "warn": "잠결에 대답하면 끝이다",
+     "taboo": false,
+     "chance": 75,
+     "kill": false
+    },
+    {
+     "label": "손등을 깨물며 버틴다",
+     "warn": "다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 이름을 댄다",
+     "warn": "그 사람이 불린다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "위에 대고 빈다",
+    "lastEv": "fever_night",
+    "lastChoice": "위에 대고 빈다",
+    "lastI": 5,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "called_up",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "called_up",
+   "mode": "tap_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "위에 대고 빈다",
+    "lastEv": "fever_night",
+    "lastChoice": "위에 대고 빈다",
+    "lastI": 5,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "called_up",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "불을 키우고 밤을 샌다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "귀를 막는다",
+     "warn": "잠결에 대답하면 끝이다",
+     "taboo": false,
+     "chance": 75,
+     "kill": false
+    },
+    {
+     "label": "손등을 깨물며 버틴다",
+     "warn": "다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 이름을 댄다",
+     "warn": "그 사람이 불린다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "",
+    "lastEv": "",
+    "lastChoice": "",
+    "lastI": -1,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "pro_cold",
+    "sel": "눈을 뜬다"
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "called_up",
+   "mode": "tap_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "위에 대고 빈다",
+    "lastEv": "fever_night",
+    "lastChoice": "위에 대고 빈다",
+    "lastI": 5,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "called_up",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "불을 키우고 밤을 샌다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "귀를 막는다",
+     "warn": "잠결에 대답하면 끝이다",
+     "taboo": false,
+     "chance": 75,
+     "kill": false
+    },
+    {
+     "label": "손등을 깨물며 버틴다",
+     "warn": "다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 이름을 댄다",
+     "warn": "그 사람이 불린다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "대답한다",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 1,
+    "newest": "불을 키우고 밤을 샌다",
+    "lastEv": "called_up",
+    "lastChoice": "불을 키우고 밤을 샌다",
+    "lastI": 0,
+    "open": "",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "불을 키우고 밤을 샌다",
+   "picked_info": {
+    "label": "불을 키우고 밤을 샌다",
+    "warn": "",
+    "taboo": false,
+    "chance": null,
+    "kill": false,
+    "idx": 0
+   },
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_mob",
+   "mode": "hold_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 다 내놓는다",
+     "warn": "식량과 물이 다 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락 하나로 갚는다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 사람을 가리킨다",
+     "warn": "그 사람이 대신 맞는다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀치고 달아난다",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "무릎을 꿇고 빈다",
+     "warn": "안 들으면 끝이다",
+     "taboo": false,
+     "chance": 40,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_mob",
+   "mode": "hold_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 다 내놓는다",
+     "warn": "식량과 물이 다 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락 하나로 갚는다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 사람을 가리킨다",
+     "warn": "그 사람이 대신 맞는다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀치고 달아난다",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "무릎을 꿇고 빈다",
+     "warn": "안 들으면 끝이다",
+     "taboo": false,
+     "chance": 40,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_mob",
+   "mode": "hold_s+mash_enter",
+   "before": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 다 내놓는다",
+     "warn": "식량과 물이 다 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락 하나로 갚는다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 사람을 가리킨다",
+     "warn": "그 사람이 대신 맞는다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀치고 달아난다",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "무릎을 꿇고 빈다",
+     "warn": "안 들으면 끝이다",
+     "taboo": false,
+     "chance": 40,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_mob",
+   "mode": "hold_space+hold_up",
+   "before": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 다 내놓는다",
+     "warn": "식량과 물이 다 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락 하나로 갚는다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 사람을 가리킨다",
+     "warn": "그 사람이 대신 맞는다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀치고 달아난다",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "무릎을 꿇고 빈다",
+     "warn": "안 들으면 끝이다",
+     "taboo": false,
+     "chance": 40,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_mob",
+   "mode": "tap_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 다 내놓는다",
+     "warn": "식량과 물이 다 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락 하나로 갚는다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 사람을 가리킨다",
+     "warn": "그 사람이 대신 맞는다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀치고 달아난다",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "무릎을 꿇고 빈다",
+     "warn": "안 들으면 끝이다",
+     "taboo": false,
+     "chance": 40,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "눈을 뜬다",
+    "lastEv": "pro_cold",
+    "lastChoice": "눈을 뜬다",
+    "lastI": 0,
+    "open": "",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_mob",
+   "mode": "tap_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "굶으며 버틴다",
+    "lastEv": "flood_sick_end",
+    "lastChoice": "굶으며 버틴다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_mob",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 다 내놓는다",
+     "warn": "식량과 물이 다 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락 하나로 갚는다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "다른 사람을 가리킨다",
+     "warn": "그 사람이 대신 맞는다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀치고 달아난다",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "무릎을 꿇고 빈다",
+     "warn": "안 들으면 끝이다",
+     "taboo": false,
+     "chance": 40,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 1,
+    "newest": "같이 묻는다",
+    "lastEv": "rail_killed",
+    "lastChoice": "같이 묻는다",
+    "lastI": 0,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "같이 묻는다",
+   "picked_info": {
+    "label": "같이 묻는다",
+    "ev": "rail_killed"
+   },
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d10_hold",
+   "mode": "hold_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 내준다",
+     "warn": "식량 둘과 물 하나가 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "끌려가며 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락을 내준다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "뿌리치고 걷는다",
+     "warn": "주저앉으면 끝이다",
+     "taboo": false,
+     "chance": 65,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d10_hold",
+   "mode": "hold_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 내준다",
+     "warn": "식량 둘과 물 하나가 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "끌려가며 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락을 내준다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "뿌리치고 걷는다",
+     "warn": "주저앉으면 끝이다",
+     "taboo": false,
+     "chance": 65,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d10_hold",
+   "mode": "hold_s+mash_enter",
+   "before": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 내준다",
+     "warn": "식량 둘과 물 하나가 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "끌려가며 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락을 내준다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "뿌리치고 걷는다",
+     "warn": "주저앉으면 끝이다",
+     "taboo": false,
+     "chance": 65,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d10_hold",
+   "mode": "hold_space+hold_up",
+   "before": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 내준다",
+     "warn": "식량 둘과 물 하나가 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "끌려가며 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락을 내준다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "뿌리치고 걷는다",
+     "warn": "주저앉으면 끝이다",
+     "taboo": false,
+     "chance": 65,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d10_hold",
+   "mode": "tap_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 내준다",
+     "warn": "식량 둘과 물 하나가 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "끌려가며 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락을 내준다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "뿌리치고 걷는다",
+     "warn": "주저앉으면 끝이다",
+     "taboo": false,
+     "chance": 65,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "눈을 뜬다",
+    "lastEv": "pro_cold",
+    "lastChoice": "눈을 뜬다",
+    "lastI": 0,
+    "open": "",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "d10_hold",
+   "mode": "tap_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "맞고 버틴다",
+    "lastEv": "dawn_mob",
+    "lastChoice": "맞고 버틴다",
+    "lastI": 1,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_hold",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "가진 것을 내준다",
+     "warn": "식량 둘과 물 하나가 나간다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "끌려가며 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "손가락을 내준다",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "뿌리치고 걷는다",
+     "warn": "주저앉으면 끝이다",
+     "taboo": false,
+     "chance": 65,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 1,
+    "newest": "끌려가며 버틴다",
+    "lastEv": "d10_hold",
+    "lastChoice": "끌려가며 버틴다",
+    "lastI": 1,
+    "open": "confirm2",
+    "you": "home",
+    "ended": null,
+    "pending": "d10_walk_weak",
+    "sel": "다시 고른다"
+   },
+   "picked": "끌려가며 버틴다",
+   "picked_info": {
+    "label": "끌려가며 버틴다",
+    "warn": "크게 다친다",
+    "taboo": false,
+    "chance": null,
+    "kill": false,
+    "idx": 1
+   },
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_strike",
+   "mode": "hold_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "그릇 둘을 내민다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀쳐 낸다",
+     "warn": "못 밀치면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "소리친다",
+     "warn": "아무도 안 깨면 끝이다",
+     "taboo": false,
+     "chance": 55,
+     "kill": false
+    },
+    {
+     "label": "축 늘어진다",
+     "warn": "안 놓으면 끝이다",
+     "taboo": false,
+     "chance": 70,
+     "kill": false
+    },
+    {
+     "label": "옆 담요를 가리킨다",
+     "warn": "그 사람이 대신 당한다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_strike",
+   "mode": "hold_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "그릇 둘을 내민다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀쳐 낸다",
+     "warn": "못 밀치면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "소리친다",
+     "warn": "아무도 안 깨면 끝이다",
+     "taboo": false,
+     "chance": 55,
+     "kill": false
+    },
+    {
+     "label": "축 늘어진다",
+     "warn": "안 놓으면 끝이다",
+     "taboo": false,
+     "chance": 70,
+     "kill": false
+    },
+    {
+     "label": "옆 담요를 가리킨다",
+     "warn": "그 사람이 대신 당한다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_strike",
+   "mode": "hold_s+mash_enter",
+   "before": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "그릇 둘을 내민다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀쳐 낸다",
+     "warn": "못 밀치면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "소리친다",
+     "warn": "아무도 안 깨면 끝이다",
+     "taboo": false,
+     "chance": 55,
+     "kill": false
+    },
+    {
+     "label": "축 늘어진다",
+     "warn": "안 놓으면 끝이다",
+     "taboo": false,
+     "chance": 70,
+     "kill": false
+    },
+    {
+     "label": "옆 담요를 가리킨다",
+     "warn": "그 사람이 대신 당한다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "event",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_strike",
+   "mode": "hold_space+hold_up",
+   "before": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "그릇 둘을 내민다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀쳐 낸다",
+     "warn": "못 밀치면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "소리친다",
+     "warn": "아무도 안 깨면 끝이다",
+     "taboo": false,
+     "chance": 55,
+     "kill": false
+    },
+    {
+     "label": "축 늘어진다",
+     "warn": "안 놓으면 끝이다",
+     "taboo": false,
+     "chance": 70,
+     "kill": false
+    },
+    {
+     "label": "옆 담요를 가리킨다",
+     "warn": "그 사람이 대신 당한다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "picked": "",
+   "picked_info": null,
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_strike",
+   "mode": "tap_up+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "그릇 둘을 내민다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀쳐 낸다",
+     "warn": "못 밀치면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "소리친다",
+     "warn": "아무도 안 깨면 끝이다",
+     "taboo": false,
+     "chance": 55,
+     "kill": false
+    },
+    {
+     "label": "축 늘어진다",
+     "warn": "안 놓으면 끝이다",
+     "taboo": false,
+     "chance": 70,
+     "kill": false
+    },
+    {
+     "label": "옆 담요를 가리킨다",
+     "warn": "그 사람이 대신 당한다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 1,
+    "newest": "옆 담요를 가리킨다",
+    "lastEv": "dawn_strike",
+    "lastChoice": "옆 담요를 가리킨다",
+    "lastI": 5,
+    "open": "",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "옆 담요를 가리킨다",
+   "picked_info": {
+    "label": "옆 담요를 가리킨다",
+    "warn": "그 사람이 대신 당한다",
+    "taboo": true,
+    "chance": null,
+    "kill": false,
+    "idx": 5
+   },
+   "died": false,
+   "errors": []
+  },
+  {
+   "ev": "dawn_strike",
+   "mode": "tap_down+mash_space",
+   "before": {
+    "fired": 0,
+    "newest": "약국 안쪽을 뒤진다",
+    "lastEv": "wound_critical",
+    "lastChoice": "약국 안쪽을 뒤진다",
+    "lastI": 2,
+    "open": "line",
+    "you": "home",
+    "ended": null,
+    "pending": "dawn_strike",
+    "sel": ""
+   },
+   "choices": [
+    {
+     "label": "그릇 둘을 내민다",
+     "warn": "",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "맞고 버틴다",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null,
+     "kill": false
+    },
+    {
+     "label": "밀쳐 낸다",
+     "warn": "못 밀치면 끝이다",
+     "taboo": false,
+     "chance": 45,
+     "kill": false
+    },
+    {
+     "label": "소리친다",
+     "warn": "아무도 안 깨면 끝이다",
+     "taboo": false,
+     "chance": 55,
+     "kill": false
+    },
+    {
+     "label": "축 늘어진다",
+     "warn": "안 놓으면 끝이다",
+     "taboo": false,
+     "chance": 70,
+     "kill": false
+    },
+    {
+     "label": "옆 담요를 가리킨다",
+     "warn": "그 사람이 대신 당한다",
+     "taboo": true,
+     "chance": null,
+     "kill": false
+    }
+   ],
+   "after": {
+    "fired": 1,
+    "newest": "그릇 둘을 내민다",
+    "lastEv": "dawn_strike",
+    "lastChoice": "그릇 둘을 내민다",
+    "lastI": 0,
+    "open": "",
+    "you": "home",
+    "ended": null,
+    "pending": null,
+    "sel": ""
+   },
+   "picked": "그릇 둘을 내민다",
+   "picked_info": {
+    "label": "그릇 둘을 내민다",
+    "warn": "",
+    "taboo": false,
+    "chance": null,
+    "kill": false,
+    "idx": 0
+   },
+   "died": false,
+   "errors": []
+  }
+ ],
+ "wall": {
+  "medkit": {
+   "closed": {
+    "obj": "medkit",
+    "state": "closed",
+    "storagePx": 196,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": 4,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     19,
+     2,
+     "up"
+    ]
+   },
+   "during_result": {
+    "obj": "medkit",
+    "state": "open",
+    "storagePx": 264,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": 4,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     19,
+     2,
+     "up"
+    ]
+   },
+   "after": {
+    "obj": "medkit",
+    "state": "open",
+    "storagePx": 264,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": 4,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     19,
+     2,
+     "up"
+    ]
+   }
+  },
+  "lever": {
+   "closed": {
+    "obj": "lever",
+    "state": "up",
+    "storagePx": 303,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": 4,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     20,
+     2,
+     "up"
+    ]
+   },
+   "during_result": {
+    "obj": "lever",
+    "state": "pulled",
+    "storagePx": 399,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": 4,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     20,
+     2,
+     "up"
+    ]
+   },
+   "after": {
+    "obj": "lever",
+    "state": "pulled",
+    "storagePx": 399,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": 4,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     20,
+     2,
+     "up"
+    ]
+   }
+  },
+  "shelter_box": {
+   "closed_14_1": {
+    "obj": "shelter_box",
+    "state": "closed",
+    "storagePx": 384,
+    "coveredPx": 18,
+    "visiblePct": 95.3,
+    "gapPx": -3,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     14,
+     1,
+     "up"
+    ]
+   },
+   "hint_14_1": "Space 열기 — 대피 공간 비상 상자",
+   "closed_13_1": {
+    "obj": "shelter_box",
+    "state": "closed",
+    "storagePx": 384,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": -3,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     13,
+     1,
+     "up"
+    ]
+   },
+   "hint_13_1": "Space 열기 — 대피 공간 비상 상자",
+   "closed_15_1": {
+    "obj": "shelter_box",
+    "state": "closed",
+    "storagePx": 384,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": -3,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     15,
+     1,
+     "up"
+    ]
+   },
+   "hint_15_1": "Space 열기 — 대피 공간 비상 상자",
+   "during_14_1": {
+    "obj": "shelter_box",
+    "state": "open",
+    "storagePx": 413,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": 9,
+    "youDrawnBefore": false,
+    "crouch": true,
+    "you": [
+     14,
+     1,
+     "up"
+    ]
+   },
+   "after_14_1": {
+    "obj": "shelter_box",
+    "state": "open",
+    "storagePx": 413,
+    "coveredPx": 18,
+    "visiblePct": 95.6,
+    "gapPx": -3,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     14,
+     1,
+     "up"
+    ]
+   },
+   "during_13_1": {
+    "obj": "shelter_box",
+    "state": "open",
+    "storagePx": 413,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": -3,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     13,
+     1,
+     "up"
+    ]
+   },
+   "after_13_1": {
+    "obj": "shelter_box",
+    "state": "open",
+    "storagePx": 413,
+    "coveredPx": 0,
+    "visiblePct": 100,
+    "gapPx": -3,
+    "youDrawnBefore": false,
+    "crouch": false,
+    "you": [
+     13,
+     1,
+     "up"
+    ]
+   }
+  }
+ }
+}

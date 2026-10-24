@@ -1,0 +1,35 @@
+{
+ "judge": {
+  "other_key": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] night5 hold reached=1 D5 night"
+  ],
+  "reached0": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] night3 end reached=0 D3 night"
+  ],
+  "prefix_called3_vs_called3l": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] called3l hold reached=1 D3 night"
+  ],
+  "ok_line": [],
+  "dropped_rows": [
+   "시작 오류: [1:2:INFO:CONSOLE(9)] \"[ds4] 표 검증 실패 행을 빼고 읽었다:\", source: x"
+  ]
+ },
+ "runs": [
+  {
+   "shot": "neg_night3_short",
+   "ok": false,
+   "why": [
+    "봇 기록([ds4 auto]) 없음 - 게임이 시작되지 않았거나 끝까지 돌지 않았다"
+   ],
+   "auto": []
+  },
+  {
+   "shot": "neg_nosuch",
+   "ok": false,
+   "why": [
+    "봇 기록([ds4 auto]) 없음 - 게임이 시작되지 않았거나 끝까지 돌지 않았다"
+   ],
+   "auto": []
+  }
+ ]
+}

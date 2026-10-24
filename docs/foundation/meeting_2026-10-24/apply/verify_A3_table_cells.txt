@@ -1,0 +1,17 @@
+axis combos 6859 | overlap 0 | no rule (fallback) 0
+  share/hand/name +++ -> driver
+  share/hand/name ++- -> conductor
+  share/hand/name +-+ -> inspector
+  share/hand/name +-- -> passenger
+  share/hand/name -++ -> counted
+  share/hand/name -+- -> platform_one
+  share/hand/name --+ -> counting_child
+  share/hand/name --- -> passenger
+candidates driver(p5,fb0) conductor(p5,fb0) inspector(p5,fb0) passenger(p1,fb1) counted(p9,fb0) platform_one(p6,fb0) counting_child(p7,fb0)
+  driver: reveal 2 dreams 3 missing lines 0 callName 기사 양반 rule "share>=2 & hand>=1 & name>=1"
+  conductor: reveal 2 dreams 3 missing lines 0 callName 차장님 rule "share>=2 & hand>=1 & name<1"
+  inspector: reveal 2 dreams 3 missing lines 0 callName 적는 사람 rule "share>=2 & hand<1 & name>=1"
+  passenger: reveal 2 dreams 3 missing lines 0 callName 손님 rule "share>=2 & hand<1 & name<1 | share<2 & hand<1 & name<1"
+  counted: reveal 2 dreams 3 missing lines 0 callName  rule "share<2 & hand>=1 & name>=1"
+  platform_one: reveal 2 dreams 3 missing lines 0 callName 거기 rule "share<2 & hand>=1 & name<1"
+  counting_child: reveal 2 dreams 3 missing lines 0 callName  rule "share<2 & hand<1 & name>=1"

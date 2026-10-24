@@ -1,0 +1,151 @@
+{
+ "mornings": 6658,
+ "missedRows": 1720,
+ "missedWithTrace": 1720,
+ "traceSlots": 1720,
+ "stillLate": 1203,
+ "overwritten": 517,
+ "overwrittenBy": {
+  "steal_water→steal_water [bottle_*]": 7,
+  "steal_food_seoha→steal_food_seoha [crate_food]": 15,
+  "steal_food→steal_food_again [crate_food]": 3,
+  "read_notebook→read_notebook [notebook_*]": 151,
+  "read_notebook→grudge_strike_you [notebook_*]": 4,
+  "hungry_blames_you→grudge_strike_you [blanket_*]": 11,
+  "share_bowl→share_bowl [bowl_*]": 26,
+  "hungry_blames_you→starve_resident [blanket_*]": 28,
+  "hungry_blames_you→grudge_boils [blanket_*]": 22,
+  "steal_food_seoha→seoha_blames_dongha [crate_food]": 14,
+  "stand_stairs→fog_rise [stairs_ash]": 39,
+  "steal_food_seoha→steal_meds_again [crate_food]": 9,
+  "hungry_blames_you→hungry_blames_you [blanket_*]": 14,
+  "read_notebook→grudge_strike_you+mob_you [notebook_*]": 2,
+  "stand_stairs→fog_rise_dark [stairs_ash]": 32,
+  "stand_stairs→inform_up [stairs_ash]": 5,
+  "read_notebook→mob_you [notebook_*]": 13,
+  "steal_food_seoha→take_back_you [crate_food]": 6,
+  "steal_food→steal_food+take_back_you [crate_food]": 1,
+  "read_notebook→grudge_boils [notebook_*]": 7,
+  "steal_food→steal_meds_again [crate_food]": 5,
+  "hungry_blames_you→eye_you [blanket_*]": 17,
+  "stand_stairs→inform_up+fog_rise_dark [stairs_ash]": 2,
+  "steal_food_seoha→steal_food [crate_food]": 4,
+  "hungry_blames_you→protect_hurt [blanket_*]": 3,
+  "hungry_blames_you→grudge_strike_late [blanket_*]": 10,
+  "steal_food→take_back_you [crate_food]": 10,
+  "hungry_blames_you→hungry_blames_you+grudge_strike_late [blanket_*]": 1,
+  "read_notebook→mob_you+grudge_strike_late [notebook_*]": 5,
+  "steal_food_seoha→steal_food+take_back_you [crate_food]": 1,
+  "hungry_blames_you→eye_you+grudge_strike_late [blanket_*]": 2,
+  "steal_food→steal_food_seoha [crate_food]": 8,
+  "hungry_blames_you→poke_fire [blanket_*]": 2,
+  "steal_food_seoha→steal_food_again [crate_food]": 4,
+  "eye_you→hungry_blames_you [blanket_*]": 2,
+  "steal_food→steal_food [crate_food]": 2,
+  "eye_you→grudge_strike_late [blanket_*]": 1,
+  "stand_stairs→inform_up+fog_rise [stairs_ash]": 3,
+  "read_notebook→read_notebook+mob_you+grudge_strike_late [notebook_*]": 1,
+  "read_notebook→read_notebook+mob_you [notebook_*]": 6,
+  "steal_food→seoha_blames_dongha [crate_food]": 4,
+  "swing_pipe→wound_rots [bandage_*]": 1,
+  "hungry_blames_you→mari_names [blanket_*]": 2,
+  "steal_food_seoha→steal_food_again+take_back_you [crate_food]": 2,
+  "eye_you→starve_resident [blanket_*]": 2,
+  "eye_you→grudge_boils [blanket_*]": 1,
+  "eye_you→grudge_strike_you [blanket_*]": 1,
+  "read_notebook→grudge_strike_late [notebook_*]": 2,
+  "share_bowl→steal_food_seoha [bowl_*]": 1,
+  "read_notebook→read_notebook+grudge_strike_late [notebook_*]": 1,
+  "steal_food→steal_food_again+take_back_you [crate_food]": 1,
+  "steal_water→give_seat [bottle_*]": 1
+ },
+ "byEvent": {
+  "read_notebook": {
+   "rows": 731,
+   "slots": 731,
+   "late": 539,
+   "over": 192,
+   "noTrace": 0
+  },
+  "steal_water": {
+   "rows": 154,
+   "slots": 154,
+   "late": 146,
+   "over": 8,
+   "noTrace": 0
+  },
+  "steal_food_seoha": {
+   "rows": 142,
+   "slots": 142,
+   "late": 87,
+   "over": 55,
+   "noTrace": 0
+  },
+  "steal_food": {
+   "rows": 103,
+   "slots": 103,
+   "late": 69,
+   "over": 34,
+   "noTrace": 0
+  },
+  "hungry_blames_you": {
+   "rows": 259,
+   "slots": 259,
+   "late": 147,
+   "over": 112,
+   "noTrace": 0
+  },
+  "share_bowl": {
+   "rows": 134,
+   "slots": 134,
+   "late": 107,
+   "over": 27,
+   "noTrace": 0
+  },
+  "stand_stairs": {
+   "rows": 146,
+   "slots": 146,
+   "late": 65,
+   "over": 81,
+   "noTrace": 0
+  },
+  "eye_you": {
+   "rows": 26,
+   "slots": 26,
+   "late": 19,
+   "over": 7,
+   "noTrace": 0
+  },
+  "swing_pipe": {
+   "rows": 12,
+   "slots": 12,
+   "late": 11,
+   "over": 1,
+   "noTrace": 0
+  },
+  "wound_rots": {
+   "rows": 9,
+   "slots": 9,
+   "late": 9,
+   "over": 0,
+   "noTrace": 0
+  },
+  "soonrye_water": {
+   "rows": 3,
+   "slots": 3,
+   "late": 3,
+   "over": 0,
+   "noTrace": 0
+  },
+  "dongha_carries": {
+   "rows": 1,
+   "slots": 1,
+   "late": 1,
+   "over": 0,
+   "noTrace": 0
+  }
+ },
+ "morningsWithLate": 1143,
+ "morningsAfterMissed": 1592,
+ "morningsAfterMissedNoLate": 449
+}

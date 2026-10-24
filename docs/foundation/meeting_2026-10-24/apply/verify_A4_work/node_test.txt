@@ -1,0 +1,725 @@
+TAP version 13
+# Subtest: 비교·논리·깃발·빈칸
+ok 1 - 비교·논리·깃발·빈칸
+  ---
+  duration_ms: 1.7928
+  ...
+# Subtest: 잘못된 식은 어디가 틀렸는지 말하며 던진다
+ok 2 - 잘못된 식은 어디가 틀렸는지 말하며 던진다
+  ---
+  duration_ms: 0.5655
+  ...
+# Subtest: names: 식에 나온 이름 전부
+ok 3 - names: 식에 나온 이름 전부
+  ---
+  duration_ms: 1.4671
+  ...
+# Subtest: ① 접두 토큰: inspect: trace:x==v talk: alive: 와 map== region== floor== needs.x
+ok 4 - ① 접두 토큰: inspect: trace:x==v talk: alive: 와 map== region== floor== needs.x
+  ---
+  duration_ms: 2.5541
+  ...
+# Subtest: ① 사건은 조사·말 걸기 직후에 when 의 inspect:/talk: 로 걸린다
+ok 5 - ① 사건은 조사·말 걸기 직후에 when 의 inspect:/talk: 로 걸린다
+  ---
+  duration_ms: 15.2046
+  ...
+# Subtest: ② effects 배열 꼴은 로더가 객체 꼴로 바꾼다 (number/flag/trace/axis/injure/kill/permanent, who 포함)
+ok 6 - ② effects 배열 꼴은 로더가 객체 꼴로 바꾼다 (number/flag/trace/axis/injure/kill/permanent, who 포함)
+  ---
+  duration_ms: 8.8753
+  ...
+# Subtest: ③ 정체 규칙에 축 밖 이름(fog·flag)이 오면 오류
+ok 7 - ③ 정체 규칙에 축 밖 이름(fog·flag)이 오면 오류
+  ---
+  duration_ms: 3.968
+  ...
+# Subtest: 밤 사건 조건에 inspect:/talk: (당신의 조작) 이 오면 오류
+ok 8 - 밤 사건 조건에 inspect:/talk: (당신의 조작) 이 오면 오류
+  ---
+  duration_ms: 3.4514
+  ...
+# Subtest: 밤 사건 조건 어휘: needs.x · 수치_사람 · alive: · trace: · mostInjured 대상
+ok 9 - 밤 사건 조건 어휘: needs.x · 수치_사람 · alive: · trace: · mostInjured 대상
+  ---
+  duration_ms: 13.1736
+  ...
+# Subtest: 로더는 nightEvents.json 과 night_events.json 둘 다 읽는다
+ok 10 - 로더는 nightEvents.json 과 night_events.json 둘 다 읽는다
+  ---
+  duration_ms: 25.456
+  ...
+# Subtest: 추가 약속: injure 음수(회복) · addressYou.default · 빈 글 비교 · rumor.line 빈칸
+ok 11 - 추가 약속: injure 음수(회복) · addressYou.default · 빈 글 비교 · rumor.line 빈칸
+  ---
+  duration_ms: 15.9209
+  ...
+# Subtest: people.metFlag(id 꼴 또는 빈칸)·startAway(0/1) 칸: 받는 값과 오류
+ok 12 - people.metFlag(id 꼴 또는 빈칸)·startAway(0/1) 칸: 받는 값과 오류
+  ---
+  duration_ms: 14.6641
+  ...
+# Subtest: 결정성: 같은 시드·같은 선택 = 같은 상태, 다른 시드 = 다른 상태
+ok 13 - 결정성: 같은 시드·같은 선택 = 같은 상태, 다른 시드 = 다른 상태
+  ---
+  duration_ms: 23.5964
+  ...
+# Subtest: 단계 진행: phases 표 순서대로, skipIf 로 D0 은 trace·ration·seat 를 건너뛴다
+ok 14 - 단계 진행: phases 표 순서대로, skipIf 로 D0 은 trace·ration·seat 를 건너뛴다
+  ---
+  duration_ms: 2.7093
+  ...
+# Subtest: 단계가 허용하지 않는 동작은 거절한다 (표의 actions 열)
+ok 15 - 단계가 허용하지 않는 동작은 거절한다 (표의 actions 열)
+  ---
+  duration_ms: 0.5505
+  ...
+# Subtest: 선택: 비용·조건으로 잠긴 선택지는 고를 수 없고, 판정 % 는 화면과 같다
+ok 16 - 선택: 비용·조건으로 잠긴 선택지는 고를 수 없고, 판정 % 는 화면과 같다
+  ---
+  duration_ms: 2.0147
+  ...
+# Subtest: 당신 사망: 경고가 보이는 선택으로 죽으면 그 자리에서 끝, 명부는 주민이 읽는다
+ok 17 - 당신 사망: 경고가 보이는 선택으로 죽으면 그 자리에서 끝, 명부는 주민이 읽는다
+  ---
+  duration_ms: 2.5824
+  ...
+# Subtest: 밤 사건은 당신 위치와 무관하다: pos 만 다른 두 상태 → 같은 흔적·소문·기록
+ok 18 - 밤 사건은 당신 위치와 무관하다: pos 만 다른 두 상태 → 같은 흔적·소문·기록
+  ---
+  duration_ms: 7.1384
+  ...
+# Subtest: 밤 사건 결과는 흔적과 소문으로만 남고, 조사·들음이 발견으로 집계된다
+ok 19 - 밤 사건 결과는 흔적과 소문으로만 남고, 조사·들음이 발견으로 집계된다
+  ---
+  duration_ms: 1.2455
+  ...
+# Subtest: oncePerRun 밤 사건은 한 판에 한 번만
+ok 20 - oncePerRun 밤 사건은 한 판에 한 번만
+  ---
+  duration_ms: 3.3494
+  ...
+# Subtest: 명부: 죽은 사람의 사인 칸은 빈칸(___)일 수 있고, 적으면 그 줄이 나온다
+ok 21 - 명부: 죽은 사람의 사인 칸은 빈칸(___)일 수 있고, 적으면 그 줄이 나온다
+  ---
+  duration_ms: 1.485
+  ...
+# Subtest: 수첩 사실 줄: 조사한 흔적만 적을 수 있고 {day} 가 채워진다
+ok 22 - 수첩 사실 줄: 조사한 흔적만 적을 수 있고 {day} 가 채워진다
+  ---
+  duration_ms: 1.6115
+  ...
+# Subtest: 정체는 축 값이 정한다: 결말에 후보 id 가 붙고 화면 view 에는 축이 없다
+ok 23 - 정체는 축 값이 정한다: 결말에 후보 id 가 붙고 화면 view 에는 축이 없다
+  ---
+  duration_ms: 6.2481
+  ...
+# Subtest: fast 훅: setFast(true) 면 지연 상수가 전부 0, 끄면 원래 값
+ok 24 - fast 훅: setFast(true) 면 지연 상수가 전부 0, 끄면 원래 값
+  ---
+  duration_ms: 0.2034
+  ...
+# Subtest: 상태는 함수 없는 순수 JSON 이다
+ok 25 - 상태는 함수 없는 순수 JSON 이다
+  ---
+  duration_ms: 5.3348
+  ...
+# Subtest: holds 표 검사: 바른 꼴은 통과(배열 effects → 객체) · 상태 하나·없는 state·첫 상태로 여는 state·모르는 키·kill/permanent 는 오류 · 다시 차는 수납은 경고
+ok 26 - holds 표 검사: 바른 꼴은 통과(배열 effects → 객체) · 상태 하나·없는 state·첫 상태로 여는 state·모르는 키·kill/permanent 는 오류 · 다시 차는 수납은 경고
+  ---
+  duration_ms: 67.082
+  ...
+# Subtest: 수납 열기: 닫힌 채 조사 → 내용 적용 → 열린 상태(본 것) · s.found·view.found · 다시 조사하면 아무것도 없음
+ok 27 - 수납 열기: 닫힌 채 조사 → 내용 적용 → 열린 상태(본 것) · s.found·view.found · 다시 조사하면 아무것도 없음
+  ---
+  duration_ms: 10.5823
+  ...
+# Subtest: 수납 열기는 사건 뒤: 조사 전에 걸린 사건이 있으면 열지 않는다 · 그 조사에 걸린 사건이 먼저
+ok 28 - 수납 열기는 사건 뒤: 조사 전에 걸린 사건이 있으면 열지 않는다 · 그 조사에 걸린 사건이 먼저
+  ---
+  duration_ms: 4.5993
+  ...
+# Subtest: 원정 중 조사: inspect: 원정 사건은 도착 때가 아니라 그 물건을 조사할 때 걸린다 · 거절해도 다시 조사해 위험 없이 꺼내지 못한다
+ok 29 - 원정 중 조사: inspect: 원정 사건은 도착 때가 아니라 그 물건을 조사할 때 걸린다 · 거절해도 다시 조사해 위험 없이 꺼내지 못한다
+  ---
+  duration_ms: 8.4399
+  ...
+# Subtest: 원정 도착 사건 고르기는 그대로: inspect: 가 없는 원정 사건만, 같은 시드면 같은 사건
+ok 30 - 원정 도착 사건 고르기는 그대로: inspect: 가 없는 원정 사건만, 같은 시드면 같은 사건
+  ---
+  duration_ms: 45.2776
+  ...
+# Subtest: 저장: 연 수납·found 가 왕복하고 · 깨진 found·옛 저장(found 없음)은 null
+ok 31 - 저장: 연 수납·found 가 왕복하고 · 깨진 found·옛 저장(found 없음)은 null
+  ---
+  duration_ms: 6.3229
+  ...
+# Subtest: 봇 원정 지도 뒤지기: 그 층 지도의 닫힌 수납·inspect: 원정 사건 물건을 지도 순서대로 조사한다
+ok 32 - 봇 원정 지도 뒤지기: 그 층 지도의 닫힌 수납·inspect: 원정 사건 물건을 지도 순서대로 조사한다
+  ---
+  duration_ms: 29.5592
+  ...
+# Subtest: 봇의 원정 지도 이름(TRIP_MAPS)이 화면 game.js 의 TRIP_MAPS 와 같다
+ok 33 - 봇의 원정 지도 이름(TRIP_MAPS)이 화면 game.js 의 TRIP_MAPS 와 같다
+  ---
+  duration_ms: 49.695
+  ...
+# Subtest: 8칸 결정표: 세 축 부호 조합마다 후보가 나온다
+ok 34 - 8칸 결정표: 세 축 부호 조합마다 후보가 나온다
+  ---
+  duration_ms: 6.9502
+  ...
+# Subtest: priority 9 덮어쓰기: 센 자 규칙이 다른 후보와 겹치면 센 자가 이긴다
+ok 35 - priority 9 덮어쓰기: 센 자 규칙이 다른 후보와 겹치면 센 자가 이긴다
+  ---
+  duration_ms: 0.2639
+  ...
+# Subtest: 같은 priority 가 겹치면 표 순서가 앞선 후보
+ok 36 - 같은 priority 가 겹치면 표 순서가 앞선 후보
+  ---
+  duration_ms: 0.2077
+  ...
+# Subtest: 후보 4개짜리 표도, 7개짜리 표도 같은 함수로 돈다 (축 수도 바뀔 수 있다)
+ok 37 - 후보 4개짜리 표도, 7개짜리 표도 같은 함수로 돈다 (축 수도 바뀔 수 있다)
+  ---
+  duration_ms: 5.6712
+  ...
+# Subtest: fallback: 아무 규칙도 안 맞으면 fallback 후보
+ok 38 - fallback: 아무 규칙도 안 맞으면 fallback 후보
+  ---
+  duration_ms: 0.1754
+  ...
+# Subtest: nudge 는 −9~+9 로 잘린다
+ok 39 - nudge 는 −9~+9 로 잘린다
+  ---
+  duration_ms: 0.2235
+  ...
+# Subtest: 정체 분포 측정 틀: 정책 N 개로 돌려 각 후보 비율을 센다 (합격선 = (100/후보수)/2 %)
+ok 40 - 정체 분포 측정 틀: 정책 N 개로 돌려 각 후보 비율을 센다 (합격선 = (100/후보수)/2 %)
+  ---
+  duration_ms: 154.6542
+  ...
+# Subtest: E1 밤 사건 missed·caught·public·side 칸: 받고, 안쪽 effects·trace 를 검사한다 · 배열 effects 는 객체 꼴로
+ok 41 - E1 밤 사건 missed·caught·public·side 칸: 받고, 안쪽 effects·trace 를 검사한다 · 배열 effects 는 객체 꼴로
+  ---
+  duration_ms: 36.4943
+  ...
+# Subtest: E1·E5 인물표 addressCold 칸(빈 글 = 부르지 않음, 6자 이내) · 사건 targetIf·targetOptional·most:<사람 수치> · req 칸 검사
+ok 42 - E1·E5 인물표 addressCold 칸(빈 글 = 부르지 않음, 6자 이내) · 사건 targetIf·targetOptional·most:<사람 수치> · req 칸 검사
+  ---
+  duration_ms: 30.5181
+  ...
+# Subtest: who:"you" 는 로더가 {who:"you", n} 로 남긴다 — 밤 사건·방치 판정에서 당신 몫이 행위자에게 가지 않는다 (검토 지적 15, share_bowl.caught)
+ok 43 - who:"you" 는 로더가 {who:"you", n} 로 남긴다 — 밤 사건·방치 판정에서 당신 몫이 행위자에게 가지 않는다 (검토 지적 15, share_bowl.caught)
+  ---
+  duration_ms: 5.0829
+  ...
+# Subtest: E2 방치 판정: 전날 밤 사건을 못 봤으면 missed, 봤으면 caught — 행위자·대상 그대로, 판정 줄은 role neglect, stats.neglect 는 missed 만
+ok 44 - E2 방치 판정: 전날 밤 사건을 못 봤으면 missed, 봤으면 caught — 행위자·대상 그대로, 판정 줄은 role neglect, stats.neglect 는 missed 만
+  ---
+  duration_ms: 5.3158
+  ...
+# Subtest: E2 방치 판정: 행위자·대상이 역에 없으면 건너뛴다 · 이틀 전 줄은 판정 없이 judged · rollNight 첫머리에서 돈다
+ok 45 - E2 방치 판정: 행위자·대상이 역에 없으면 건너뛴다 · 이틀 전 줄은 판정 없이 judged · rollNight 첫머리에서 돈다
+  ---
+  duration_ms: 5.9075
+  ...
+# Subtest: E2 누구나 아는 밤: public:1 또는 kill 효과가 있는 행은 굴릴 때 바로 발견
+ok 46 - E2 누구나 아는 밤: public:1 또는 kill 효과가 있는 행은 굴릴 때 바로 발견
+  ---
+  duration_ms: 4.7278
+  ...
+# Subtest: 곁가지 행 side:1 — 한 밤 상한·행위자 한 번 규칙 밖(weight 10 = 늘), 주민 사건 자리를 뺏지 않는다 (검토 지적 20)
+ok 47 - 곁가지 행 side:1 — 한 밤 상한·행위자 한 번 규칙 밖(weight 10 = 늘), 주민 사건 자리를 뺏지 않는다 (검토 지적 20)
+  ---
+  duration_ms: 43.2239
+  ...
+# Subtest: E3 late 흔적: 조사 글은 <줄id>_late, 그날 첫 조사 때 toast_late 한 번 (줄이 있을 때) · 저장 왕복·옛 저장은 late 0
+ok 48 - E3 late 흔적: 조사 글은 <줄id>_late, 그날 첫 조사 때 toast_late 한 번 (줄이 있을 때) · 저장 왕복·옛 저장은 late 0
+  ---
+  duration_ms: 8.476
+  ...
+# Subtest: E4 noExit 경고: 당신이 죽을 수 있는 사건에 늘 열린·안 죽는 선택지(금기 포함)가 없으면 경고 — swap 변형·targetOptional 까지 본다
+ok 49 - E4 noExit 경고: 당신이 죽을 수 있는 사건에 늘 열린·안 죽는 선택지(금기 포함)가 없으면 경고 — swap 변형·targetOptional 까지 본다
+  ---
+  duration_ms: 10.2509
+  ...
+# Subtest: E4 지금 표(v4/data)에 noExit 경고 0건 · 오류 0건
+ok 50 - E4 지금 표(v4/data)에 noExit 경고 0건 · 오류 0건
+  ---
+  duration_ms: 29.915
+  ...
+# Subtest: E5 신호: signs.cold = 원한 ≥3 (sign_cold 로 바꿈) · 호칭 = 원한 ≥5 면 addressCold("" = 부르지 않음), 아니면 지금 호칭
+ok 51 - E5 신호: signs.cold = 원한 ≥3 (sign_cold 로 바꿈) · 호칭 = 원한 ≥5 면 addressCold("" = 부르지 않음), 아니면 지금 호칭
+  ---
+  duration_ms: 4.2657
+  ...
+# Subtest: E5 잠금 이유 = req.why · req.cond (조건식) · 이유가 없으면 지금 글
+ok 52 - E5 잠금 이유 = req.why · req.cond (조건식) · 이유가 없으면 지금 글
+  ---
+  duration_ms: 2.8214
+  ...
+# Subtest: signs.starving: 깃발만 보는 행위자 조건(새 도둑 행 flag:unseen_thief_actor)은 굶주림 문턱이 아니다 (검토 지적 23) — sleepless 의 깃발 조건은 그대로
+ok 53 - signs.starving: 깃발만 보는 행위자 조건(새 도둑 행 flag:unseen_thief_actor)은 굶주림 문턱이 아니다 (검토 지적 23) — sleepless 의 깃발 조건은 그대로
+  ---
+  duration_ms: 4.5193
+  ...
+# Subtest: swap: 조건이 맞으면 선택지가 바뀐다 — 카르마 8 이상이면 금기가 판정(talk 50, 실패 죽음)이 되고 경고 글도 바뀐다
+ok 54 - swap: 조건이 맞으면 선택지가 바뀐다 — 카르마 8 이상이면 금기가 판정(talk 50, 실패 죽음)이 되고 경고 글도 바뀐다
+  ---
+  duration_ms: 5.4444
+  ...
+# Subtest: swap 표 검사: when 필수 · 모르는 칸 · 합친 선택지도 검사(check 만 있고 ok·fail 없음) · 빈 값 칸은 비운다
+ok 55 - swap 표 검사: when 필수 · 모르는 칸 · 합친 선택지도 검사(check 만 있고 ok·fail 없음) · 빈 값 칸은 비운다
+  ---
+  duration_ms: 10.8387
+  ...
+# Subtest: targetOptional: 대상이 없어도 사건은 걸리고, 대상이 필요한 선택지만 잠긴다(req.why 또는 "댈 이름이 없다") · req.target
+ok 56 - targetOptional: 대상이 없어도 사건은 걸리고, 대상이 필요한 선택지만 잠긴다(req.why 또는 "댈 이름이 없다") · req.target
+  ---
+  duration_ms: 6.6688
+  ...
+# Subtest: targetIf · most:<사람 수치>: 사건 대상에서 특정 사람을 뺀다(self!=gicheol) · 원한이 가장 큰 사람(0이면 없음, 같으면 무작위) (검토 지적 6·14)
+ok 57 - targetIf · most:<사람 수치>: 사건 대상에서 특정 사람을 뺀다(self!=gicheol) · 원한이 가장 큰 사람(0이면 없음, 같으면 무작위) (검토 지적 6·14)
+  ---
+  duration_ms: 15.3112
+  ...
+# Subtest: fired:<사건> 조건 — 그 사건을 고른 횟수 (swap·req.cond 의 "되풀이할수록")
+ok 58 - fired:<사건> 조건 — 그 사건을 고른 횟수 (swap·req.cond 의 "되풀이할수록")
+  ---
+  duration_ms: 4.2338
+  ...
+# Subtest: 부상 출처 s.hurt 와 원인 사건: 깔때기 사건(when 이 당신 부상을 봄)으로 죽으면 원인 = 그 자리까지 다치게 한 사건
+ok 59 - 부상 출처 s.hurt 와 원인 사건: 깔때기 사건(when 이 당신 부상을 봄)으로 죽으면 원인 = 그 자리까지 다치게 한 사건
+  ---
+  duration_ms: 4.9196
+  ...
+# Subtest: 봇: 정책 묶음(GROUPS)은 모두 POLICIES 에 있고, 조심형에서 사람 흉내·금기 좋아함은 빠진다 · 10·11번째 성향 봇
+ok 60 - 봇: 정책 묶음(GROUPS)은 모두 POLICIES 에 있고, 조심형에서 사람 흉내·금기 좋아함은 빠진다 · 10·11번째 성향 봇
+  ---
+  duration_ms: 0.2307
+  ...
+# Subtest: 봇 점수: bodyAverse(다친다·잃는다·상한다 −3) · tabooBonus(남을 내미는 금기 −3 → +3)
+ok 61 - 봇 점수: bodyAverse(다친다·잃는다·상한다 −3) · tabooBonus(남을 내미는 금기 −3 → +3)
+  ---
+  duration_ms: 0.3666
+  ...
+# Subtest: 봇 동점: 둘 다 경고인 갈림에서 0.2점 안쪽이면 무작위 — 판정 % 몇 점 차로 늘 같은 쪽을 받지 않는다 (A3 분석 §5)
+ok 62 - 봇 동점: 둘 다 경고인 갈림에서 0.2점 안쪽이면 무작위 — 판정 % 몇 점 차로 늘 같은 쪽을 받지 않는다 (A3 분석 §5)
+  ---
+  duration_ms: 1.253
+  ...
+# Subtest: 봇 한 판: 모든 정책이 끝까지 돌고 trace 에 home9·res7·crisis 가 남는다
+ok 63 - 봇 한 판: 모든 정책이 끝까지 돌고 trace 에 home9·res7·crisis 가 남는다
+  ---
+  duration_ms: 2564.2954
+  ...
+# Subtest: 합격선 새 줄: A1 이기심(이른 안전 +5%p·열흘 생존 < 균형 4종·사인 쏠림 ≤60%) · A2(D5 ≥10%·한 사건 ≤40%·D2~D6) · A4(보통·부지런 − 게으름) · 정체 묶음
+ok 64 - 합격선 새 줄: A1 이기심(이른 안전 +5%p·열흘 생존 < 균형 4종·사인 쏠림 ≤60%) · A2(D5 ≥10%·한 사건 ≤40%·D2~D6) · A4(보통·부지런 − 게으름) · 정체 묶음
+  ---
+  duration_ms: 2.0566
+  ...
+# Subtest: run.js: 밑줄 정책 이름·여러 일꾼으로 끝까지 돈다 (보고서 표에 날별 사망·A1·A2·A4 지표·정체 묶음)
+ok 65 - run.js: 밑줄 정책 이름·여러 일꾼으로 끝까지 돈다 (보고서 표에 날별 사망·A1·A2·A4 지표·정체 묶음)
+  ---
+  duration_ms: 712.2113
+  ...
+# Subtest: 브라우저 갈래: 엔진 파일을 index.html 순서대로 (module 없이) 읽어도 표를 싣고 한 판이 돈다 — engine.js 가 DS4.schema 를 쓴다
+ok 66 - 브라우저 갈래: 엔진 파일을 index.html 순서대로 (module 없이) 읽어도 표를 싣고 한 판이 돈다 — engine.js 가 DS4.schema 를 쓴다
+  ---
+  duration_ms: 112.7805
+  ...
+# Subtest: noteHurt: 당신 부상 증가만, 최근 HURT_MAX 개
+ok 67 - noteHurt: 당신 부상 증가만, 최근 HURT_MAX 개
+  ---
+  duration_ms: 0.1891
+  ...
+# Subtest: E1-1 은지·동하: D1 셔터 전에는 away · 배식 0 · 밤 행위자·대상이 아니다 → 셔터를 열면 같이 역에 온다
+ok 68 - E1-1 은지·동하: D1 셔터 전에는 away · 배식 0 · 밤 행위자·대상이 아니다 → 셔터를 열면 같이 역에 온다
+  ---
+  duration_ms: 101.5135
+  ...
+# Subtest: E1-2 서하: 만나기 전에는 home 이지만 배식·무작위 대상·mostInjured·동행에서 빠진다 → 만나면 들어간다
+ok 69 - E1-2 서하: 만나기 전에는 home 이지만 배식·무작위 대상·mostInjured·동행에서 빠진다 → 만나면 들어간다
+  ---
+  duration_ms: 36.7804
+  ...
+# Subtest: E1-3 alive: 아직 안 온 사람(away)·안 만난 사람도 살아 있음 — alive:x 사건이 만나기 전에도 걸린다 (사건·밤 시계)
+ok 70 - E1-3 alive: 아직 안 온 사람(away)·안 만난 사람도 살아 있음 — alive:x 사건이 만나기 전에도 걸린다 (사건·밤 시계)
+  ---
+  duration_ms: 4.4173
+  ...
+# Subtest: E1-4 away 는 저장을 불러온 뒤에도 유지된다 · 온 뒤의 home·온 날도 · 옛 저장(heard 없음)은 빈 기록
+ok 71 - E1-4 away 는 저장을 불러온 뒤에도 유지된다 · 온 뒤의 home·온 날도 · 옛 저장(heard 없음)은 빈 기록
+  ---
+  duration_ms: 6.6308
+  ...
+# Subtest: E1-5 heard: {type:heard, key:"<줄id>\#<행번호>"} → heard[key] = 그날 · 어느 단계에서나 · 없는 줄·행은 거절
+ok 72 - E1-5 heard: {type:heard, key:"<줄id>\#<행번호>"} → heard[key] = 그날 · 어느 단계에서나 · 없는 줄·행은 거절
+  ---
+  duration_ms: 4.1322
+  ...
+# Subtest: E1 말 걸기: 역 밖(away)에서 마주친 사람에게도 말을 건다(터널의 기철) — 만남 깃발이 서면 역에 온다
+ok 73 - E1 말 걸기: 역 밖(away)에서 마주친 사람에게도 말을 건다(터널의 기철) — 만남 깃발이 서면 역에 온다
+  ---
+  duration_ms: 2.914
+  ...
+# Subtest: E1 명부: 아직 안 온 사람·안 만난 사람은 명부에 없다(모르는 이름은 못 적는다)
+ok 74 - E1 명부: 아직 안 온 사람·안 만난 사람은 명부에 없다(모르는 이름은 못 적는다)
+  ---
+  duration_ms: 4.325
+  ...
+# Subtest: E1 실데이터 + 계획 값(plan P0-D1 people 칸): 봇이 끝까지 돈다 · 은지·동하는 D2 아침까지 온다 · 배식은 만난 사람만
+ok 75 - E1 실데이터 + 계획 값(plan P0-D1 people 칸): 봇이 끝까지 돈다 · 은지·동하는 D2 아침까지 온다 · 배식은 만난 사람만
+  ---
+  duration_ms: 4162.8385
+  ...
+# Subtest: 요청1 치료: treat_meds 만큼 약을 쓰고 부상에 treat_injury, treated 깃발 · 약 없음·두 번·다친 데 없음·표에 규칙 없음은 거절
+ok 76 - 요청1 치료: treat_meds 만큼 약을 쓰고 부상에 treat_injury, treated 깃발 · 약 없음·두 번·다친 데 없음·표에 규칙 없음은 거절
+  ---
+  duration_ms: 20.8427
+  ...
+# Subtest: 요청2·5·18 결과 그림은 lastResult.image · ended.cause.image 로, 결말 사건 안에서 죽어도 cause 가 남는다
+ok 77 - 요청2·5·18 결과 그림은 lastResult.image · ended.cause.image 로, 결말 사건 안에서 죽어도 cause 가 남는다
+  ---
+  duration_ms: 5.5398
+  ...
+# Subtest: 요청5 once:0 사건도 s.fired 에 세고, 같은 단계에서는 되풀이하지 않는다
+ok 78 - 요청5 once:0 사건도 s.fired 에 세고, 같은 단계에서는 되풀이하지 않는다
+  ---
+  duration_ms: 5.8793
+  ...
+# Subtest: 요청3 같은 수치·injure·kill·permanent 를 한 결과에 두 번 쓰면 목록이 되고 전부 적용된다
+ok 79 - 요청3 같은 수치·injure·kill·permanent 를 한 결과에 두 번 쓰면 목록이 되고 전부 적용된다
+  ---
+  duration_ms: 8.4814
+  ...
+# Subtest: 요청3 실제 표: 로더가 효과를 하나도 잃지 않는다 (배열 원소 수 = 정규화 뒤 적용 단위 수)
+ok 80 - 요청3 실제 표: 로더가 효과를 하나도 잃지 않는다 (배열 원소 수 = 정규화 뒤 적용 단위 수)
+  ---
+  duration_ms: 7.1018
+  ...
+# Subtest: 요청4·16 who 낱말: all(역에 있는 사람 전부) · bondOfActor · 모르는 who 는 표 검사 오류
+ok 81 - 요청4·16 who 낱말: all(역에 있는 사람 전부) · bondOfActor · 모르는 who 는 표 검사 오류
+  ---
+  duration_ms: 9.407
+  ...
+# Subtest: 요청4·20 원정: trip_party 만큼 동행(위독 제외, 나이 무관), companion·party 효과, 낮에 한 번·1층→2층 순서
+ok 82 - 요청4·20 원정: trip_party 만큼 동행(위독 제외, 나이 무관), companion·party 효과, 낮에 한 번·1층→2층 순서
+  ---
+  duration_ms: 28.2675
+  ...
+# Subtest: 요청6 거짓 소문(truth 0)은 들어도 발견이 아니다, 참 소문만
+ok 83 - 요청6 거짓 소문(truth 0)은 들어도 발견이 아니다, 참 소문만
+  ---
+  duration_ms: 13.7833
+  ...
+# Subtest: 요청7 배식: 받은 그릇 full, 못 받은 그릇 empty (둘 다 본 것) — 밤에 바뀌면 구별된다
+ok 84 - 요청7 배식: 받은 그릇 full, 못 받은 그릇 empty (둘 다 본 것) — 밤에 바뀌면 구별된다
+  ---
+  duration_ms: 4.5546
+  ...
+# Subtest: 요청11 사건 연쇄: 고른 뒤 같은 단계의 다음 사건이 걸린다 (함께 센다 → 이름이 불린다)
+ok 85 - 요청11 사건 연쇄: 고른 뒤 같은 단계의 다음 사건이 걸린다 (함께 센다 → 이름이 불린다)
+  ---
+  duration_ms: 3.7718
+  ...
+# Subtest: 요청19 move 는 그 지도에 걸린 사건을 깨운다
+ok 86 - 요청19 move 는 그 지도에 걸린 사건을 깨운다
+  ---
+  duration_ms: 2.4276
+  ...
+# Subtest: 요청12 view.people[].signs: 문턱은 밤 사건표의 행위자 조건 (fear·ascend → 안 잔다, steal·starve → 굶주림)
+ok 87 - 요청12 view.people[].signs: 문턱은 밤 사건표의 행위자 조건 (fear·ascend → 안 잔다, steal·starve → 굶주림)
+  ---
+  duration_ms: 2.737
+  ...
+# Subtest: 요청13·15 결말: ledger status boarded → 당신이 탔다 · board:1 결말이 걸리면 태울 사람을 고른다 · endStatus walked
+ok 88 - 요청13·15 결말: ledger status boarded → 당신이 탔다 · board:1 결말이 걸리면 태울 사람을 고른다 · endStatus walked
+  ---
+  duration_ms: 10.8984
+  ...
+# Subtest: 요청14 결과의 명부 줄: text 없는 기록은 쌓지 않고, text 는 사실 줄, cause "물건:상태" 는 그 ledgerFact 줄
+ok 89 - 요청14 결과의 명부 줄: text 없는 기록은 쌓지 않고, text 는 사실 줄, cause "물건:상태" 는 그 ledgerFact 줄
+  ---
+  duration_ms: 6.0178
+  ...
+# Subtest: 요청17 readerId: 당신이 죽으면 살아 있는 주민 중 가장 나이 많은 사람(people.age)이 수첩을 줍는다
+ok 90 - 요청17 readerId: 당신이 죽으면 살아 있는 주민 중 가장 나이 많은 사람(people.age)이 수첩을 줍는다
+  ---
+  duration_ms: 1.7664
+  ...
+# Subtest: 요청9 밤 사건으로 당신이 죽으면 사인은 그 밤 사건 (전의 상관없는 선택이 아니다)
+ok 91 - 요청9 밤 사건으로 당신이 죽으면 사인은 그 밤 사건 (전의 상관없는 선택이 아니다)
+  ---
+  duration_ms: 2.9177
+  ...
+# Subtest: 요청10 바깥 사람(outside)은 이름으로 지목된 밤 사건의 행위자가 될 수 있고, 죽을 수도 있다
+ok 92 - 요청10 바깥 사람(outside)은 이름으로 지목된 밤 사건의 행위자가 될 수 있고, 죽을 수도 있다
+  ---
+  duration_ms: 2.4941
+  ...
+# Subtest: 위독: 밤 굴림 직전에 이미 위독이던 사람만 아침에 죽는다 — 밤 사건으로 막 위독이 되면 하루를 받는다
+ok 93 - 위독: 밤 굴림 직전에 이미 위독이던 사람만 아침에 죽는다 — 밤 사건으로 막 위독이 되면 하루를 받는다
+  ---
+  duration_ms: 6.8052
+  ...
+# Subtest: 사건 target 열: 걸릴 때 대상을 정한다(무작위는 역의 주민, 나이 무관), 결과의 who:target 과 명부가 같은 사람
+ok 94 - 사건 target 열: 걸릴 때 대상을 정한다(무작위는 역의 주민, 나이 무관), 결과의 who:target 과 명부가 같은 사람
+  ---
+  duration_ms: 79.6525
+  ...
+# Subtest: 새 상태 칸(fired·phaseSeen·critical·trip.floors/party)은 저장 왕복과 옛 저장 정규화를 견딘다
+ok 95 - 새 상태 칸(fired·phaseSeen·critical·trip.floors/party)은 저장 왕복과 옛 저장 정규화를 견딘다
+  ---
+  duration_ms: 5.352
+  ...
+# Subtest: 저장 왕복: 중간에 저장하고 이어 가도 결과가 같다 (난수 포함)
+ok 96 - 저장 왕복: 중간에 저장하고 이어 가도 결과가 같다 (난수 포함)
+  ---
+  duration_ms: 16.6789
+  ...
+# Subtest: 저장 키: ds4.save / ds4.save.prev / ds4.save.broken
+ok 97 - 저장 키: ds4.save / ds4.save.prev / ds4.save.broken
+  ---
+  duration_ms: 0.9227
+  ...
+# Subtest: 첫 실행: 저장이 없으면 fresh, 복구도 깨짐도 아니다
+ok 98 - 첫 실행: 저장이 없으면 fresh, 복구도 깨짐도 아니다
+  ---
+  duration_ms: 0.2214
+  ...
+# Subtest: 복구: 현재 저장이 깨지면 직전 아침 사본으로 돌아가고 한 줄 안내가 붙는다
+ok 99 - 복구: 현재 저장이 깨지면 직전 아침 사본으로 돌아가고 한 줄 안내가 붙는다
+  ---
+  duration_ms: 2.062
+  ...
+# Subtest: 복구: 구조가 어긋난 저장(모르는 단계)도 깨진 것으로 본다
+ok 100 - 복구: 구조가 어긋난 저장(모르는 단계)도 깨진 것으로 본다
+  ---
+  duration_ms: 1.0366
+  ...
+# Subtest: 둘 다 깨지면: 새 게임 + 깨진 원본을 ds4.save.broken 에 보관
+ok 101 - 둘 다 깨지면: 새 게임 + 깨진 원본을 ds4.save.broken 에 보관
+  ---
+  duration_ms: 0.5929
+  ...
+# Subtest: 마이그레이션: v 가 없는 옛 저장은 체인을 거쳐 현재 버전으로 올라온다
+ok 102 - 마이그레이션: v 가 없는 옛 저장은 체인을 거쳐 현재 버전으로 올라온다
+  ---
+  duration_ms: 0.9826
+  ...
+# Subtest: 저장 코드 내보내기/불러오기
+ok 103 - 저장 코드 내보내기/불러오기
+  ---
+  duration_ms: 4.23
+  ...
+# Subtest: 저장 실패(용량 등)는 예외 없이 false
+ok 104 - 저장 실패(용량 등)는 예외 없이 false
+  ---
+  duration_ms: 0.8139
+  ...
+# Subtest: 픽스처 아홉 장은 오류 없이 읽힌다
+ok 105 - 픽스처 아홉 장은 오류 없이 읽힌다
+  ---
+  duration_ms: 16.5627
+  ...
+# Subtest: 표가 하나라도 빠지면 어느 표인지 말한다
+ok 106 - 표가 하나라도 빠지면 어느 표인지 말한다
+  ---
+  duration_ms: 3.5786
+  ...
+# Subtest: 값 범위 위반: 표 이름·행 번호·id·열 이름이 오류 글에 있다
+ok 107 - 값 범위 위반: 표 이름·행 번호·id·열 이름이 오류 글에 있다
+  ---
+  duration_ms: 6.8964
+  ...
+# Subtest: 열 이름 위반: 스키마에 없는 열·필수 열 누락·id 꼴
+ok 108 - 열 이름 위반: 스키마에 없는 열·필수 열 누락·id 꼴
+  ---
+  duration_ms: 1.844
+  ...
+# Subtest: 참조 위반: 없는 물건·없는 상태·없는 수치·없는 대사
+ok 109 - 참조 위반: 없는 물건·없는 상태·없는 수치·없는 대사
+  ---
+  duration_ms: 2.4762
+  ...
+# Subtest: 막다른 길: 항상 고를 수 있는 선택지가 없으면 오류
+ok 110 - 막다른 길: 항상 고를 수 있는 선택지가 없으면 오류
+  ---
+  duration_ms: 5.3139
+  ...
+# Subtest: 조건식 오류는 어느 행인지 말한다
+ok 111 - 조건식 오류는 어느 행인지 말한다
+  ---
+  duration_ms: 14.2336
+  ...
+# Subtest: 밤 사건 조건에 당신 위치·선택이 들어가면 오류
+ok 112 - 밤 사건 조건에 당신 위치·선택이 들어가면 오류
+  ---
+  duration_ms: 4.3249
+  ...
+# Subtest: 정체 결정표: 후보 수 4~7, fallback 정확히 1
+ok 113 - 정체 결정표: 후보 수 4~7, fallback 정확히 1
+  ---
+  duration_ms: 8.2315
+  ...
+# Subtest: 배치: 한 칸에 단단한 물건이 둘이면 오류
+ok 114 - 배치: 한 칸에 단단한 물건이 둘이면 오류
+  ---
+  duration_ms: 5.7577
+  ...
+# Subtest: 배치: 단단하지 않은 물건이 한 칸에 여럿이면 같은 주인(id 끝 _<사람>)만 — 다른 주인·주인 없는 둘은 오류
+ok 115 - 배치: 단단하지 않은 물건이 한 칸에 여럿이면 같은 주인(id 끝 _<사람>)만 — 다른 주인·주인 없는 둘은 오류
+  ---
+  duration_ms: 7.3705
+  ...
+# Subtest: 배치: 주인 없는 물건이 한 사람 묶음에 끼면 경고(오류 아님), owner 칸을 적으면 사라지고 틀린 owner 는 오류
+ok 116 - 배치: 주인 없는 물건이 한 사람 묶음에 끼면 경고(오류 아님), owner 칸을 적으면 사라지고 틀린 owner 는 오류
+  ---
+  duration_ms: 9.3333
+  ...
+# Subtest: 배치: 단단하지 않은 물건이 벽(\#)·끝선(=) 칸에 있으면 오류, 지도 밖이면 오류 · 단단한 물건은 벽에 둘 수 있다(벽걸이)
+ok 117 - 배치: 단단하지 않은 물건이 벽(\#)·끝선(=) 칸에 있으면 오류, 지도 밖이면 오류 · 단단한 물건은 벽에 둘 수 있다(벽걸이)
+  ---
+  duration_ms: 14.1964
+  ...
+# Subtest: 경고: 선택지 [0]에 당신 죽음·금기·(아무도 안 죽는 길을 두고) 남의 죽음 → firstDeath, 모든 길이 같은 죽음이면 경고 없음
+ok 118 - 경고: 선택지 [0]에 당신 죽음·금기·(아무도 안 죽는 길을 두고) 남의 죽음 → firstDeath, 모든 길이 같은 죽음이면 경고 없음
+  ---
+  duration_ms: 6.6816
+  ...
+# Subtest: 경고: 글에 '때문에·왜냐하면' → reasonWord (사건 본문·선택 결과·대사·밤 사건)
+ok 119 - 경고: 글에 '때문에·왜냐하면' → reasonWord (사건 본문·선택 결과·대사·밤 사건)
+  ---
+  duration_ms: 3.7716
+  ...
+# Subtest: 실제 표(v4/data): 배치 오류 0 · 1번 자리 죽음 경고 0 · 이유 낱말 경고 0 (남은 경고는 목록으로 보인다)
+ok 120 - 실제 표(v4/data): 배치 오류 0 · 1번 자리 죽음 경고 0 · 이유 낱말 경고 0 (남은 경고는 목록으로 보인다)
+  ---
+  duration_ms: 56.2807
+  ...
+# Subtest: 지도: 줄 길이가 다르면 오류, displayName 만 바꾸면 통과
+ok 121 - 지도: 줄 길이가 다르면 오류, displayName 만 바꾸면 통과
+  ---
+  duration_ms: 12.4031
+  ...
+# Subtest: 봇 아침 조사는 칸 단위: 게으름(1칸)이 바뀐 흔적이 있는 머리맡 묶음 칸을 고르면 그 칸 물건 전부를 본다
+ok 122 - 봇 아침 조사는 칸 단위: 게으름(1칸)이 바뀐 흔적이 있는 머리맡 묶음 칸을 고르면 그 칸 물건 전부를 본다
+  ---
+  duration_ms: 6.149
+  ...
+# Subtest: 봇 아침 조사는 칸 단위: 보통(2칸)은 두 칸만, 칸마다 그 칸 물건 전부 · 부지런은 모든 칸
+ok 123 - 봇 아침 조사는 칸 단위: 보통(2칸)은 두 칸만, 칸마다 그 칸 물건 전부 · 부지런은 모든 칸
+  ---
+  duration_ms: 28.3368
+  ...
+# Subtest: 재측정 집계: 아침 굶주림 표본·D3 셈 선택이 trace 에 남고 stats 가 평균·'함께 센다' 비율을 낸다
+ok 124 - 재측정 집계: 아침 굶주림 표본·D3 셈 선택이 trace 에 남고 stats 가 평균·'함께 센다' 비율을 낸다
+  ---
+  duration_ms: 793.6157
+  ...
+# Subtest: spots.js 꼴: 단계 = phases 표의 id, 사람 = people 표의 id, 자리 = 정수 [x,y] · TALL 은 objects 표의 단단한 물건
+ok 125 - spots.js 꼴: 단계 = phases 표의 id, 사람 = people 표의 id, 자리 = 정수 [x,y] · TALL 은 objects 표의 단단한 물건
+  ---
+  duration_ms: 1.0772
+  ...
+# Subtest: 지도 7장의 start 칸: 지도 안 · 지나갈 수 있는 바닥 · 단단한 물건 없음 · 윗칸에 키 큰 단단한 물건 없음
+ok 126 - 지도 7장의 start 칸: 지도 안 · 지나갈 수 있는 바닥 · 단단한 물건 없음 · 윗칸에 키 큰 단단한 물건 없음
+  ---
+  duration_ms: 0.7425
+  ...
+# Subtest: fireStand 칸(화로 + FIRE_STAND)과 승강장 start: 단계마다 같은 칸·윗칸·아랫칸에 다른 사람이 없다
+ok 127 - fireStand 칸(화로 + FIRE_STAND)과 승강장 start: 단계마다 같은 칸·윗칸·아랫칸에 다른 사람이 없다
+  ---
+  duration_ms: 0.4651
+  ...
+# Subtest: 단계별 SPOTS 칸(승강장): 지나갈 수 있는 바닥 · 윗칸에 키 큰 단단한 물건 없음 · 같은 단계 다른 사람이 같은 칸·윗칸에 없음
+ok 128 - 단계별 SPOTS 칸(승강장): 지나갈 수 있는 바닥 · 윗칸에 키 큰 단단한 물건 없음 · 같은 단계 다른 사람이 같은 칸·윗칸에 없음
+  ---
+  duration_ms: 0.7276
+  ...
+# Subtest: 검사가 잡는다: 게시판 아래 · 위아래로 붙은 두 사람 · 화로 앞(13,11) · 좌석 타일 위 (만든 자리로 확인)
+ok 129 - 검사가 잡는다: 게시판 아래 · 위아래로 붙은 두 사람 · 화로 앞(13,11) · 좌석 타일 위 (만든 자리로 확인)
+  ---
+  duration_ms: 0.3159
+  ...
+# Subtest: 위독: 밤 단계의 고정 사건으로 막 위독이 된 사람은 다음 아침에 죽지 않는다(하루를 받는다), 그다음 아침엔 죽는다
+ok 130 - 위독: 밤 단계의 고정 사건으로 막 위독이 된 사람은 다음 아침에 죽지 않는다(하루를 받는다), 그다음 아침엔 죽는다
+  ---
+  duration_ms: 20.8174
+  ...
+# Subtest: 위독: 치료 단계를 떠날 때 이미 위독이었으면 그 아침에 죽고, 그날 치료했으면 산다
+ok 131 - 위독: 치료 단계를 떠날 때 이미 위독이었으면 그 아침에 죽고, 그날 치료했으면 산다
+  ---
+  duration_ms: 12.8619
+  ...
+# Subtest: 위독: 치료 단계가 없는 표면 밤 굴림 직전에 명단을 찍는다(옛 규칙)
+ok 132 - 위독: 치료 단계가 없는 표면 밤 굴림 직전에 명단을 찍는다(옛 규칙)
+  ---
+  duration_ms: 4.767
+  ...
+# Subtest: 미성년 처리 없음: 서하(17)도 밤 악의의 무작위·조건 역할·mostInjured 대상이 된다
+ok 133 - 미성년 처리 없음: 서하(17)도 밤 악의의 무작위·조건 역할·mostInjured 대상이 된다
+  ---
+  duration_ms: 151.2607
+  ...
+# Subtest: 미성년 처리 없음: 밤 사건의 부상·영구 손상(bondOfActor·이름 지목)이 서하에게도 닿는다
+ok 134 - 미성년 처리 없음: 밤 사건의 부상·영구 손상(bondOfActor·이름 지목)이 서하에게도 닿는다
+  ---
+  duration_ms: 2.3645
+  ...
+# Subtest: 미성년 처리 없음: 낮 사건의 무작위 대상에 서하도 든다
+ok 135 - 미성년 처리 없음: 낮 사건의 무작위 대상에 서하도 든다
+  ---
+  duration_ms: 67.9416
+  ...
+# Subtest: 봇 점수: 죽음을 바로 말하는 경고(판정 없음)는 조심형·모험 모두 대안이 있으면 고르지 않는다
+ok 136 - 봇 점수: 죽음을 바로 말하는 경고(판정 없음)는 조심형·모험 모두 대안이 있으면 고르지 않는다
+  ---
+  duration_ms: 0.8762
+  ...
+# Subtest: 봇 점수: 모험은 판정 없는 경고에 가점이 없고, 아플 때 약(비용이 약뿐·원정·거래 아님)은 비용 감점 없이 먼저 고른다
+ok 137 - 봇 점수: 모험은 판정 없는 경고에 가점이 없고, 아플 때 약(비용이 약뿐·원정·거래 아님)은 비용 감점 없이 먼저 고른다
+  ---
+  duration_ms: 0.2524
+  ...
+# Subtest: 봇 점수(10-23): 모든 선택지에 경고가 붙어도 조심형은 45% 죽는 주사위보다 무릎 꿇기·손가락을 고른다 · 모험은 동점이면 확정 사망을 고르지 않는다
+ok 138 - 봇 점수(10-23): 모든 선택지에 경고가 붙어도 조심형은 45% 죽는 주사위보다 무릎 꿇기·손가락을 고른다 · 모험은 동점이면 확정 사망을 고르지 않는다
+  ---
+  duration_ms: 0.6073
+  ...
+# Subtest: 봇 정책(10-23): 9번째 steward(몫+·손−·이름+)는 조심형이고, 정체 후보 inspector 에 닿는다
+ok 139 - 봇 정책(10-23): 9번째 steward(몫+·손−·이름+)는 조심형이고, 정체 후보 inspector 에 닿는다
+  ---
+  duration_ms: 1553.6146
+  ...
+# Subtest: 봇 치료(10-23): 저녁에 위독한 주민을 치료한다 — 중립은 약 1을 남기고, 헌신은 다 쓰고, 이기적은 안 한다
+ok 140 - 봇 치료(10-23): 저녁에 위독한 주민을 치료한다 — 중립은 약 1을 남기고, 헌신은 다 쓰고, 이기적은 안 한다
+  ---
+  duration_ms: 7.6745
+  ...
+# Subtest: 사인 기록: 선택지 하나뿐인 죽음은 강제 — warned 거짓, 갈림길은 그 전 자유 경고 선택
+ok 141 - 사인 기록: 선택지 하나뿐인 죽음은 강제 — warned 거짓, 갈림길은 그 전 자유 경고 선택
+  ---
+  duration_ms: 2.8009
+  ...
+# Subtest: 사인 기록: 다른 길이 모두 잠긴 주사위(약 0)는 강제, 약이 있으면 자유 선택 — 저장 왕복에도 lastFree 가 남는다
+ok 142 - 사인 기록: 다른 길이 모두 잠긴 주사위(약 0)는 강제, 약이 있으면 자유 선택 — 저장 왕복에도 lastFree 가 남는다
+  ---
+  duration_ms: 6.9126
+  ...
+# Subtest: 합격선: 블록 판정 합치기와 ±5%p 경계
+ok 143 - 합격선: 블록 판정 합치기와 ±5%p 경계
+  ---
+  duration_ms: 1.7005
+  ...
+1..143
+# tests 143
+# suites 0
+# pass 143
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4609.4668

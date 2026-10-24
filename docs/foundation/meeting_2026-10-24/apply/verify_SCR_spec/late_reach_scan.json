@@ -1,0 +1,108 @@
+{
+ "office": [
+  "crate_food",
+  "parts_crate"
+ ],
+ "mornings": 1691,
+ "lateMornings": 260,
+ "lateObjs": 278,
+ "lockedOffice": 0,
+ "byObj": {
+  "notebook_you": {
+   "n": 91,
+   "lockedOffice": 0
+  },
+  "bottle_gicheol": {
+   "n": 9,
+   "lockedOffice": 0
+  },
+  "bowl_gicheol": {
+   "n": 6,
+   "lockedOffice": 0
+  },
+  "stairs_ash": {
+   "n": 8,
+   "lockedOffice": 0
+  },
+  "bottle_seoha": {
+   "n": 4,
+   "lockedOffice": 0
+  },
+  "crate_food": {
+   "n": 36,
+   "lockedOffice": 0
+  },
+  "bowl_eunji": {
+   "n": 5,
+   "lockedOffice": 0
+  },
+  "blanket_soonrye": {
+   "n": 15,
+   "lockedOffice": 0
+  },
+  "bowl_soonrye": {
+   "n": 10,
+   "lockedOffice": 0
+  },
+  "bowl_dongha": {
+   "n": 3,
+   "lockedOffice": 0
+  },
+  "bowl_mari": {
+   "n": 11,
+   "lockedOffice": 0
+  },
+  "blanket_eunji": {
+   "n": 9,
+   "lockedOffice": 0
+  },
+  "blanket_dongha": {
+   "n": 7,
+   "lockedOffice": 0
+  },
+  "bottle_dongha": {
+   "n": 2,
+   "lockedOffice": 0
+  },
+  "blanket_mari": {
+   "n": 14,
+   "lockedOffice": 0
+  },
+  "bottle_soonrye": {
+   "n": 5,
+   "lockedOffice": 0
+  },
+  "bottle_eunji": {
+   "n": 8,
+   "lockedOffice": 0
+  },
+  "blanket_gicheol": {
+   "n": 12,
+   "lockedOffice": 0
+  },
+  "blanket_seoha": {
+   "n": 13,
+   "lockedOffice": 0
+  },
+  "bandage_gicheol": {
+   "n": 1,
+   "lockedOffice": 0
+  },
+  "bowl_seoha": {
+   "n": 5,
+   "lockedOffice": 0
+  },
+  "bottle_mari": {
+   "n": 2,
+   "lockedOffice": 0
+  },
+  "bandage_mari": {
+   "n": 1,
+   "lockedOffice": 0
+  },
+  "bandage_soonrye": {
+   "n": 1,
+   "lockedOffice": 0
+  }
+ }
+}

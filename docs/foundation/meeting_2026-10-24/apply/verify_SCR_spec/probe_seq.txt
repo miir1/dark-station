@@ -1,0 +1,53 @@
+space pro_stairs hold_down+mash_space | picked: - | info None | died False | open event  | 
+space pro_stairs hold_up+mash_space | picked: - | info None | died False | open event  | 
+space pro_stairs hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space pro_stairs hold_space+hold_up | picked: - | info None | died False | open line  | 
+space pro_stairs tap_up+mash_space | picked: 구두를 가지러 오른다 | info {'label': '구두를 가지러 오른다', 'warn': '할머니: 계단 줄 위로는 가지 마', 'taboo': True, 'chance': None, 'kill': False, 'idx': 1} | died True | open title 새로 시작 | 
+space pro_stairs tap_down+mash_space | picked: 돌아선다 | info {'label': '돌아선다', 'warn': '', 'taboo': False, 'chance': None, 'kill': False, 'idx': 0} | died False | open line  | 
+space d3_called_you hold_down+mash_space | picked: - | info None | died False | open event  | 
+space d3_called_you hold_up+mash_space | picked: - | info None | died False | open event  | 
+space d3_called_you hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space d3_called_you hold_space+hold_up | picked: - | info None | died False | open line  | 
+space d3_called_you tap_up+mash_space | picked: - | info None | died False | open   | 
+space d3_called_you tap_down+mash_space | picked: 대답하지 않는다 | info {'label': '대답하지 않는다', 'warn': '', 'taboo': False, 'chance': None, 'kill': False, 'idx': 0} | died False | open   | 
+space called_up hold_down+mash_space | picked: - | info None | died False | open event  | 
+space called_up hold_up+mash_space | picked: - | info None | died None | open None None | SystemExit("기다리다 지쳤다: __ds4.state && __ds4.UI.openKind() === 'line' && !__ds4.UI.bot")
+space called_up hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space called_up hold_space+hold_up | picked: - | info None | died False | open line  | 
+space called_up tap_up+mash_space | picked: - | info None | died False | open event 눈을 뜬다 | 
+space called_up tap_down+mash_space | picked: 불을 키우고 밤을 샌다 | info {'label': '불을 키우고 밤을 샌다', 'warn': '', 'taboo': False, 'chance': None, 'kill': False, 'idx': 0} | died False | open   | 
+space dawn_mob hold_down+mash_space | picked: - | info None | died False | open event  | 
+space dawn_mob hold_up+mash_space | picked: - | info None | died False | open event  | 
+space dawn_mob hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space dawn_mob hold_space+hold_up | picked: - | info None | died False | open line  | 
+space dawn_mob tap_up+mash_space | picked: - | info None | died False | open   | 
+space dawn_mob tap_down+mash_space | picked: 같이 묻는다 | info {'label': '같이 묻는다', 'ev': 'rail_killed'} | died False | open line  | 
+space d10_hold hold_down+mash_space | picked: - | info None | died False | open event  | 
+space d10_hold hold_up+mash_space | picked: - | info None | died False | open event  | 
+space d10_hold hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space d10_hold hold_space+hold_up | picked: - | info None | died False | open line  | 
+space d10_hold tap_up+mash_space | picked: - | info None | died False | open   | 
+space d10_hold tap_down+mash_space | picked: 끌려가며 버틴다 | info {'label': '끌려가며 버틴다', 'warn': '크게 다친다', 'taboo': False, 'chance': None, 'kill': False, 'idx': 1} | died False | open confirm2 다시 고른다 | 
+space dawn_strike hold_down+mash_space | picked: - | info None | died False | open event  | 
+space dawn_strike hold_up+mash_space | picked: - | info None | died False | open event  | 
+space dawn_strike hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space dawn_strike hold_space+hold_up | picked: - | info None | died False | open line  | 
+space dawn_strike tap_up+mash_space | picked: 옆 담요를 가리킨다 | info {'label': '옆 담요를 가리킨다', 'warn': '그 사람이 대신 당한다', 'taboo': True, 'chance': None, 'kill': False, 'idx': 5} | died False | open   | 
+space dawn_strike tap_down+mash_space | picked: 그릇 둘을 내민다 | info {'label': '그릇 둘을 내민다', 'warn': '', 'taboo': False, 'chance': None, 'kill': False, 'idx': 0} | died False | open   | 
+wall medkit {"closed": {"obj": "medkit", "state": "closed", "storagePx": 196, "coveredPx": 0, "visiblePct": 100, "gapPx": 4, "youDrawnBefore": false, "crouch": false, "you": [19, 2, "up"]}, "during_result": {"obj": "medkit", "state": "open", "storagePx": 264, "coveredPx": 0, "visiblePct": 100, "gapPx": 4, "youDrawnBefore": false, "crouch": false, "you": [19, 2, "up"]}, "after": {"obj": "medkit", "state": "open", "storagePx": 264, "coveredPx": 0, "visiblePct": 100, "gapPx": 4, "youDrawnBefore": false, "crouch": false, "you": [19, 2, "up"]}}
+wall lever {"closed": {"obj": "lever", "state": "up", "storagePx": 303, "coveredPx": 0, "visiblePct": 100, "gapPx": 4, "youDrawnBefore": false, "crouch": false, "you": [20, 2, "up"]}, "during_result": {"obj": "lever", "state": "pulled", "storagePx": 399, "coveredPx": 0, "visiblePct": 100, "gapPx": 4, "youDrawnBefore": false, "crouch": false, "you": [20, 2, "up"]}, "after": {"obj": "lever", "state": "pulled", "storagePx": 399, "coveredPx": 0, "visiblePct": 100, "gapPx": 4, "youDrawnBefore": false, "crouch": false, "you": [20, 2, "up"]}}
+wall shelter {"closed_14_1": {"obj": "shelter_box", "state": "closed", "storagePx": 384, "coveredPx": 18, "visiblePct": 95.3, "gapPx": -3, "youDrawnBefore": false, "crouch": false, "you": [14, 1, "up"]}, "hint_14_1": "Space 열기 — 대피 공간 비상 상자", "closed_13_1": {"obj": "shelter_box", "state": "closed", "storagePx": 384, "coveredPx": 0, "visiblePct": 100, "gapPx": -3, "youDrawnBefore": false, "crouch": false, "you": [13, 1, "up"]}, "hint_13_1": "Space 열기 — 대피 공간 비상 상자", "closed_15_1": {"obj": "shelter_box", "state": "closed", "storagePx": 384, "coveredPx": 0, "visiblePct": 100, "gapPx": -3, "youDrawnBefore": false, "crouch": false, "you": [15, 1, "up"]}, "hint_15_1": "Space 열기 — 대피 공간 비상 상자", "during_14_1": {"obj": "shelter_box", "state": "open", "storagePx": 413, "coveredPx": 0, "visiblePct": 100, "gapPx": 9, "youDrawnBefore": false, "crouch": true, "you": [14, 1, "up"]}, "after_14_1": {"obj": "shelter_box", "state": "open", "storagePx": 413, "coveredPx": 18, "visiblePct": 95.6, "gapPx": -3, "youDrawnBefore": false, "crouch": false, "you": [14, 1, "up"]}, "during_13_1": {"obj": "shelter_box", "state": "open", "storagePx": 413, "coveredPx": 0, "visiblePct": 100, "gapPx": -3, "youDrawnBefore": false, "crouch": false, "you": [13, 1, "up"]}, "after_13_1": {"obj": "shelter_box", "state": "open", "storagePx": 413, "coveredPx": 0, "visiblePct": 100, "gapPx": -3, "youDrawnBefore": false, "crouch": false, "you": [13, 1, "up"]}}
+late2 seed 3 | end None None 
+   D 1 eng [] map [] dust0 [] noticeDay None
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+   D 2 eng [] map [] dust0 [] noticeDay None
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+   D 3 eng [] map [] dust0 [] noticeDay None
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+   D 4 eng [] map [] dust0 [] noticeDay None
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+   D 5 eng [['crate_food', 'open'], ['bowl_eunji', 'empty']] map [['crate_food', False], ['bowl_eunji', False]] dust0 ['crate_food', 'bowl_eunji'] noticeDay None
+      inspect blanket_soonrye | toasts ['어제 못 본 자리가 그대로다.'] | lid ['insp_blanket'] | dust after ['crate_food', 'bowl_eunji']
+      inspect crate_food | toasts ['갈 수 없는 곳이다.'] | lid [] | dust after ['crate_food', 'bowl_eunji']
+      inspect bowl_eunji | toasts [] | lid ['insp_bowl_empty_late'] | dust after ['crate_food']
+      inspect crate_food | toasts ['갈 수 없는 곳이다.'] | lid [] | dust after ['crate_food']

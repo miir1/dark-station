@@ -1,0 +1,4776 @@
+{
+ "B_grudge": {
+  "name": "B_grudge",
+  "morning0": {
+   "day": 5,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 1,
+    "meds": 0
+   },
+   "lateTraces": [
+    {
+     "id": "notebook_you",
+     "st": "moved",
+     "day": 4,
+     "seen": false
+    },
+    {
+     "id": "bottle_soonrye",
+     "st": "empty",
+     "day": 2,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "notebook_you",
+     "x": 12,
+     "y": 11,
+     "name": "당신 수첩"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "read_notebook~missed",
+     "actor": "eunji",
+     "target": "you",
+     "traces": [
+      "notebook_you"
+     ]
+    }
+   ],
+   "night": [
+    "steal_meds_again",
+    "hungry_blames_you",
+    "fog_rise",
+    "flood_rise",
+    "flood_surge"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 10
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 6
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 9
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 10,
+     "thirst": 9
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 7,
+     "thirst": 6
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 2,
+     "hunger": 10,
+     "thirst": 9
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_thief_seoha"
+   ]
+  },
+  "lines_during_day": [
+   {
+    "day": 5,
+    "phase": "seat",
+    "text": "사람들이 제 자리로 흩어진다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "김순례.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "그날 아침 하늘이 한 번 깜빡였어.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "그 뒤로 계단 위가 저래.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "첫 줄에 벌써 자네 이름이네.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "누가 적었어?",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "…윤서하요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "창으로 계단을 봤어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "신발이 하루에 한 켤레씩 늘어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "박기철이오.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "선로에 신발만 줄지어 있었소.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "사람은 없었소.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "최은지.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "하늘 봤어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "바로 눈 감았어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "그래서 여기 있어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "…한동하요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "시장 지붕에서 누가 이름이 불렸어요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "대답한 사람은 위로 갔어요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "정마리요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "병동에서 누가 환자 이름을 불렀어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "대답한 사람들이 계단으로 올라갔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "안 내려왔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "선로에 사람이 걸려 있었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "얼굴이 물에 불어 있었고 한쪽 신발이 없었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "마리가 손목을 잡았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "\"하루는 안 됐어요.\"",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "누가 빈 깡통을 발로 밀었고, 마리가 가운에서 칼을 꺼냈다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "밤새 드럼통 쪽을 보지 않았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "당신 배에서 소리가 났다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "순례가 제 몫을 서하 앞에 놓았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "역이 한 번 크게 기울었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "물이 거꾸로 빨려 들어갔다가 숨을 내쉬듯 쏟아졌다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "선로의 물이 승강장을 넘었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "판정 80% — 됐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "밤새 양동이를 날랐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "손잡이가 피로 미끌거렸다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "물은 내려갔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "배수로 쪽에서 자장가가 들린다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "누군가의 어머니 목소리다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "한 사람이 일어나 맨발로 물가를 향해 걷는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "눈을 뜬 채 자고 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "판정 55% — 됐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "허리를 붙잡고 뒤로 넘어졌다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "발목에 손자국 멍이 남았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "사흘째 빈 그릇이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "손이 떨려 연필을 못 쥔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "눈앞이 어둡다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "판정 45% — 됐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "레일 틈에서 통조림 하나를 찾았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "쥐가 뜯다 만 것이었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "혼자 다 먹었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "aftermath",
+    "text": "밤이 지난다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "땔감 −1 밤에 무슨 소리가 났다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "흔적이 남았을 것이다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "안개가 계단 한 칸을 더 내려왔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "재를 손가락으로 문지르니 따뜻했다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "밤마다 한 칸이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "녹인 쇠로 계단 아래 줄을 그었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "안개가 그 앞에서 머뭇거렸다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "화로가 밤새 꺼지지 않았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "재 위에 둘이 앉았던 자국이 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "빈 그릇 하나가 불 옆에 엎어져 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "아무도 자기가 했다고 말하지 않는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "손바닥이 오랜만에 따뜻했다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "담요 둘이 붙어 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "다친 사람 옆에서 누가 밤새 붙어 잤다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "먼저 일어난 사람이 제 담요를 소리 없이 갠다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "담요 개는 소리가 그쳤다.",
+    "name": "",
+    "black": false
+   }
+  ],
+  "events_during_day": [
+   {
+    "day": 5,
+    "phase": "night",
+    "id": "d5_rail_body",
+    "pick": "받지 않는다"
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "id": "d5_flood",
+    "pick": "모두 매달려 퍼낸다"
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "id": "d5_lullaby",
+    "pick": "붙잡는다"
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "id": "starve_you",
+    "pick": "선로 밑을 뒤진다"
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "id": "d6_morning",
+    "pick": "쇠줄을 긋는다"
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "id": "hymn_fire_kept",
+    "pick": "불을 쬔다"
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "id": "hymn_paired",
+    "pick": "모른 척한다"
+   }
+  ],
+  "morning1": {
+   "day": 6,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 1,
+    "meds": 0
+   },
+   "lateTraces": [
+    {
+     "id": "bottle_soonrye",
+     "st": "empty",
+     "day": 2,
+     "seen": false
+    },
+    {
+     "id": "blanket_mari",
+     "st": "rolled",
+     "day": 5,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "blanket_mari",
+     "x": 20,
+     "y": 11,
+     "name": "마리 담요"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "hungry_blames_you~missed",
+     "actor": "mari",
+     "target": "you",
+     "traces": [
+      "blanket_mari"
+     ]
+    }
+   ],
+   "night": [
+    "read_notebook",
+    "dongha_carries",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 8
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 8
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 7,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_thief_seoha",
+    "unseen_grudge_mari"
+   ]
+  },
+  "inspect_box": {
+   "open": "line",
+   "day": 6,
+   "phase": "trace",
+   "pending": null,
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "담요가 당신 쪽을 등지고 말려 있다.",
+   "toast": "어제 못 본 자리가 그대로다.",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": []
+  },
+  "inspect_lines": [
+   "담요가 당신 쪽을 등지고 말려 있다."
+  ],
+  "inspect_log": [
+   {
+    "toast": "toast_late",
+    "text": "어제 못 본 자리가 그대로다.",
+    "day": 6
+   },
+   {
+    "id": "blanket_mari",
+    "st": "rolled",
+    "lid": "insp_blanket_rolled_late",
+    "day": 6,
+    "notice": "toast_late"
+   }
+  ],
+  "after_inspect": {
+   "day": 6,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 1,
+    "meds": 0
+   },
+   "lateTraces": [
+    {
+     "id": "bottle_soonrye",
+     "st": "empty",
+     "day": 2,
+     "seen": false
+    },
+    {
+     "id": "blanket_mari",
+     "st": "rolled",
+     "day": 5,
+     "seen": true
+    }
+   ],
+   "dust": [],
+   "neglect": [
+    {
+     "id": "hungry_blames_you~missed",
+     "actor": "mari",
+     "target": "you",
+     "traces": [
+      "blanket_mari"
+     ]
+    }
+   ],
+   "night": [
+    "read_notebook",
+    "dongha_carries",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": "toast_late",
+   "noticeDay": 6,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 8
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 8
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 7,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_thief_seoha",
+    "unseen_grudge_mari"
+   ]
+  },
+  "console_errors": []
+ },
+ "C_boils": {
+  "name": "C_boils",
+  "morning0": {
+   "day": 7,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 1,
+    "water": 0,
+    "meds": 2
+   },
+   "lateTraces": [
+    {
+     "id": "bottle_eunji",
+     "st": "empty",
+     "day": 4,
+     "seen": false
+    },
+    {
+     "id": "bottle_dongha",
+     "st": "empty",
+     "day": 3,
+     "seen": false
+    }
+   ],
+   "dust": [],
+   "neglect": [
+    {
+     "id": "read_notebook~missed",
+     "actor": "seoha",
+     "target": "you",
+     "traces": [
+      "notebook_you"
+     ]
+    }
+   ],
+   "night": [
+    "hungry_blames_you",
+    "steal_food",
+    "take_back_you",
+    "inform_you",
+    "grudge_strike_late",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 6,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "gicheol",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 4
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 8,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "stayed",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_grudge_soonrye"
+   ]
+  },
+  "lines_during_day": [
+   {
+    "day": 7,
+    "phase": "ration",
+    "text": "줄 끝에 누가 빈 그릇을 들고 서 있다.",
+    "name": "셔터의 여자",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "ration",
+    "text": "당신 쪽을 등지고 있다.",
+    "name": "셔터의 여자",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "ration",
+    "text": "그릇을 받아 들고 불가로 갔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "seat",
+    "text": "사람들이 제 자리로 흩어진다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "…윤서하요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "창으로 계단을 봤어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "신발이 하루에 한 켤레씩 늘어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "최은지.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "하늘 봤어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "바로 눈 감았어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "그래서 여기 있어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "정마리요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "병동에서 누가 환자 이름을 불렀어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "대답한 사람들이 계단으로 올라갔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "안 내려왔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "자정, 스피커가 혼자 켜졌다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "녹음이 아니다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "목소리가 이름을 하나씩 읽고, 맨 처음에 당신을 읽는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "\"열차는 명부의 이름만 태웁니다, 운임은 빵과 물과 소리 내어 한 약속, 사흘 뒤 정오.\"",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "숨을 쉬지 않는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "다 쓰고 보니 빈칸에 누가 이미 같은 글씨로 써 두었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "손등이 이틀째 검고 냄새가 난다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "붕대 밑에서 열이 뛴다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "약을 쓰면 다른 사람이 쓸 약이 준다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "고름을 짜내고 붕대를 감았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "다친 사람 하나가 그걸 봤다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "자정.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "계단 위에서 이름 하나가 내려온다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "당신 이름이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "누가 담요 속에서 숨을 죽인다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "판정 75% — 됐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "밤새 귀를 막았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "아침에 손바닥에 재가 묻어 있었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "aftermath",
+    "text": "밤이 지난다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "정마리가 밤에 갔다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "식량 −1 · 땔감 −1 밤에 무슨 소리가 났다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "흔적이 남았을 것이다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "창고 열쇠를 누가 갖나.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "어젯밤 봉지가 또 비었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "순례의 열쇠 꾸러미가 화로 옆에 놓여 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "열쇠를 목에 걸었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "누가 그걸 봤다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "숨이 막혀 깼다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "누가 당신 가슴 위에 올라앉아 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "두 손이 목을 누른다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "얼굴은 어둠 속이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "그림자가 귀를 걷어찼다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "한쪽 귀가 먹었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "그림자는 제 담요에 앉아 이쪽을 봤다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "새벽에 눈을 떴다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "담요들이 당신을 둘러서 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "아무도 말하지 않는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "누가 당신 봉지를 들고 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "발길질이 멎을 때까지 웅크렸다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "봉지는 그들이 가져갔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "담요들은 눕지 않고 앉아 있었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "붕대 밑이 검게 부었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "고름 냄새가 난다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "열이 머리까지 올랐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "오늘을 넘기면 끝이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "붕대를 새로 감았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "열이 조금 내렸다.",
+    "name": "",
+    "black": false
+   }
+  ],
+  "events_during_day": [
+   {
+    "day": 7,
+    "phase": "ration",
+    "id": "repay_bowl",
+    "pick": "그냥 지나간다"
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "id": "d7_broadcast",
+    "pick": "수첩에 받아 적는다"
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "id": "d7_rot",
+    "pick": "약을 쓴다"
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "id": "called_up",
+    "pick": "귀를 막는다"
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "id": "trial_d8_key_b",
+    "pick": "내가 갖는다"
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "id": "dawn_strike",
+    "pick": "맞고 버틴다"
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "id": "dawn_mob",
+    "pick": "맞고 버틴다"
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "id": "wound_critical",
+    "pick": "약을 쓴다"
+   }
+  ],
+  "morning1": {
+   "day": 8,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 0,
+    "meds": 0
+   },
+   "lateTraces": [
+    {
+     "id": "crate_food",
+     "st": "open",
+     "day": 7,
+     "seen": false
+    },
+    {
+     "id": "bottle_eunji",
+     "st": "empty",
+     "day": 4,
+     "seen": false
+    },
+    {
+     "id": "bottle_dongha",
+     "st": "empty",
+     "day": 3,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "crate_food",
+     "x": 8,
+     "y": 2,
+     "name": "창고 상자"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "hungry_blames_you~missed",
+     "actor": "eunji",
+     "target": "you",
+     "traces": [
+      "blanket_eunji"
+     ]
+    },
+    {
+     "id": "steal_food~missed",
+     "actor": "seoha",
+     "target": null,
+     "traces": [
+      "crate_food"
+     ]
+    }
+   ],
+   "night": [
+    "hungry_blames_you",
+    "starve_resident",
+    "inform_you",
+    "mob_you",
+    "grudge_strike_late",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 6,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "gicheol",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 4
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 7,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "stayed",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "mari",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_grudge_soonrye",
+    "unseen_grudge_eunji",
+    "unseen_thief_seoha",
+    "dawn_mob",
+    "dawn_strike"
+   ]
+  },
+  "shot_errors": [
+   "zoom: height and width must be > 0"
+  ],
+  "inspect_box": {
+   "open": "",
+   "day": 8,
+   "phase": "trace",
+   "pending": null,
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": []
+  },
+  "inspect_lines": [],
+  "inspect_log": [],
+  "after_inspect": {
+   "day": 8,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 0,
+    "meds": 0
+   },
+   "lateTraces": [
+    {
+     "id": "crate_food",
+     "st": "open",
+     "day": 7,
+     "seen": false
+    },
+    {
+     "id": "bottle_eunji",
+     "st": "empty",
+     "day": 4,
+     "seen": false
+    },
+    {
+     "id": "bottle_dongha",
+     "st": "empty",
+     "day": 3,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "crate_food",
+     "x": 8,
+     "y": 2,
+     "name": "창고 상자"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "hungry_blames_you~missed",
+     "actor": "eunji",
+     "target": "you",
+     "traces": [
+      "blanket_eunji"
+     ]
+    },
+    {
+     "id": "steal_food~missed",
+     "actor": "seoha",
+     "target": null,
+     "traces": [
+      "crate_food"
+     ]
+    }
+   ],
+   "night": [
+    "hungry_blames_you",
+    "starve_resident",
+    "inform_you",
+    "mob_you",
+    "grudge_strike_late",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 6,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "gicheol",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 4
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 7,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "stayed",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "mari",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_grudge_soonrye",
+    "unseen_grudge_eunji",
+    "unseen_thief_seoha",
+    "dawn_mob",
+    "dawn_strike"
+   ]
+  },
+  "console_errors": []
+ },
+ "D_share": {
+  "name": "D_share",
+  "morning0": {
+   "day": 2,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 1,
+    "water": 2,
+    "meds": 2
+   },
+   "lateTraces": [],
+   "dust": [],
+   "neglect": [],
+   "night": [
+    "share_bowl",
+    "fog_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 2
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 8
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 7,
+     "thirst": 3
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 3
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 3
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": []
+  },
+  "lines_during_day": [
+   {
+    "day": 2,
+    "phase": "seat",
+    "text": "사람들이 제 자리로 흩어진다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "김순례.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "그날 아침 하늘이 한 번 깜빡였어.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "그 뒤로 계단 위가 저래.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "첫 줄에 벌써 자네 이름이네.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "누가 적었어?",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "박기철이오.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "선로에 신발만 줄지어 있었소.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "사람은 없었소.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "최은지.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "하늘 봤어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "바로 눈 감았어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "그래서 여기 있어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "…한동하요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "시장 지붕에서 누가 이름이 불렸어요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "대답한 사람은 위로 갔어요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "정마리요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "병동에서 누가 환자 이름을 불렀어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "대답한 사람들이 계단으로 올라갔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "안 내려왔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "순례가 제 건빵 반쪽을 들고 역무실 쪽으로 간다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "돌아왔을 때 손이 비어 있었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "순례는 그날 저녁 아무것도 먹지 않았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "evening",
+    "text": "순례는 불가에 앉아 손만 쬐었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "셔터 너머에서 다시 두드린다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "발소리가 여럿이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "다른 사람들은 자는 척한다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "판정 65% — 됐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "셔터 틈으로 말을 주고받았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "통조림 둘이 밀려 들어왔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "너머가 역을 안다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "계단 위에서 작게 센다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "\"하나, 둘…\"",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "순례의 손바닥이 당신 입을 덮는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "걸레 냄새가 난다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "셈이 역 사람 수에서 멈췄다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "한참 뒤 멀어졌다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "text": "순례가 손을 뗐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 2,
+    "phase": "aftermath",
+    "text": "밤이 지난다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 3,
+    "phase": "trace",
+    "text": "식량 −1 · 땔감 −1 밤에 무슨 소리가 났다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 3,
+    "phase": "trace",
+    "text": "흔적이 남았을 것이다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 3,
+    "phase": "trace",
+    "text": "순례가 역무실 문을 열었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "trace",
+    "text": "\"어젯밤 소리에 애가 문을 긁었어.\"",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "trace",
+    "text": "여학생이 담요를 끌고 나왔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "trace",
+    "text": "여학생은 당신을 보지 않았다.",
+    "name": "",
+    "black": false
+   }
+  ],
+  "events_during_day": [
+   {
+    "day": 2,
+    "phase": "evening",
+    "id": "d2_soonrye_bread",
+    "pick": "본다"
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "id": "d2_night_shutter",
+    "pick": "틈으로 말을 건다"
+   },
+   {
+    "day": 2,
+    "phase": "night",
+    "id": "d2_night_count",
+    "pick": "숨을 참는다"
+   },
+   {
+    "day": 3,
+    "phase": "trace",
+    "id": "d3_soonrye_opens",
+    "pick": "본다"
+   }
+  ],
+  "morning1": {
+   "day": 3,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 1,
+    "water": 1,
+    "meds": 2
+   },
+   "lateTraces": [
+    {
+     "id": "bowl_gicheol",
+     "st": "empty",
+     "day": 2,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "bowl_gicheol",
+     "x": 15,
+     "y": 10,
+     "name": "기철 그릇"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "share_bowl~missed",
+     "actor": "gicheol",
+     "target": "seoha",
+     "traces": [
+      "bowl_gicheol"
+     ]
+    }
+   ],
+   "night": [
+    "steal_food",
+    "steal_water",
+    "fog_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 4
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 7
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 5
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 7
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 7,
+     "thirst": 6
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 5
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": []
+  },
+  "inspect_box": {
+   "open": "line",
+   "day": 3,
+   "phase": "trace",
+   "pending": null,
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "빈 그릇이다.",
+   "toast": "어제 못 본 자리가 그대로다.",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": []
+  },
+  "inspect_lines": [
+   "빈 그릇이다."
+  ],
+  "inspect_log": [
+   {
+    "toast": "toast_late",
+    "text": "어제 못 본 자리가 그대로다.",
+    "day": 3
+   },
+   {
+    "id": "bowl_gicheol",
+    "st": "empty",
+    "lid": "insp_bowl_empty_late",
+    "day": 3,
+    "notice": "toast_late"
+   }
+  ],
+  "after_inspect": {
+   "day": 3,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 1,
+    "water": 1,
+    "meds": 2
+   },
+   "lateTraces": [
+    {
+     "id": "bowl_gicheol",
+     "st": "empty",
+     "day": 2,
+     "seen": true
+    }
+   ],
+   "dust": [],
+   "neglect": [
+    {
+     "id": "share_bowl~missed",
+     "actor": "gicheol",
+     "target": "seoha",
+     "traces": [
+      "bowl_gicheol"
+     ]
+    }
+   ],
+   "night": [
+    "steal_food",
+    "steal_water",
+    "fog_rise"
+   ],
+   "notice": "toast_late",
+   "noticeDay": 3,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 4
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 7
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 5
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 7
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 7,
+     "thirst": 6
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 5
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": []
+  },
+  "console_errors": []
+ },
+ "E_food": {
+  "name": "E_food",
+  "morning0": {
+   "day": 3,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 1,
+    "water": 0,
+    "meds": 2
+   },
+   "lateTraces": [
+    {
+     "id": "bottle_soonrye",
+     "st": "empty",
+     "day": 2,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "bottle_soonrye",
+     "x": 15,
+     "y": 9,
+     "name": "물통"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "soonrye_water~missed",
+     "actor": "soonrye",
+     "target": "seoha",
+     "traces": [
+      "bottle_soonrye"
+     ]
+    }
+   ],
+   "night": [
+    "steal_food",
+    "fog_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 6
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 5
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 2,
+     "thirst": 2
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 3,
+     "thirst": 2
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 5
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": []
+  },
+  "lines_during_day": [
+   {
+    "day": 3,
+    "phase": "seat",
+    "text": "사람들이 제 자리로 흩어진다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "김순례.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "그날 아침 하늘이 한 번 깜빡였어.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "그 뒤로 계단 위가 저래.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "첫 줄에 벌써 자네 이름이네.",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "누가 적었어?",
+    "name": "김순례",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "…윤서하요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "창으로 계단을 봤어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "신발이 하루에 한 켤레씩 늘어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "박기철이오.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "선로에 신발만 줄지어 있었소.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "사람은 없었소.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "최은지.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "하늘 봤어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "바로 눈 감았어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "그래서 여기 있어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "…한동하요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "시장 지붕에서 누가 이름이 불렸어요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "대답한 사람은 위로 갔어요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "정마리요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "병동에서 누가 환자 이름을 불렀어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "대답한 사람들이 계단으로 올라갔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "evening",
+    "text": "안 내려왔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "night",
+    "text": "밤새 출구 계단 위에서 누군가 숫자를 센다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "night",
+    "text": "역에 있는 사람 수에서 멈추지 않는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "night",
+    "text": "하나 더 센다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "night",
+    "text": "그리고 처음부터 다시 센다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "night",
+    "text": "순례가 담요 속에서 입을 틀어막는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "night",
+    "text": "세는 소리가 승강장 바로 위까지 왔다가 멀어졌다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "night",
+    "text": "아무도 숨을 쉬지 않았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 3,
+    "phase": "aftermath",
+    "text": "밤이 지난다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "식량 −1 · 땔감 −1 밤에 무슨 소리가 났다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "흔적이 남았을 것이다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "수첩 뒷장이 비어 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "어젯밤 일을 어떻게 적나.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "사실이 아니라 짐작이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "뒷장에 한 줄을 적었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "당신 글씨였다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "화로가 밤새 꺼지지 않았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "재 위에 둘이 앉았던 자국이 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "빈 그릇 하나가 불 옆에 엎어져 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "아무도 자기가 했다고 말하지 않는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "text": "손바닥이 오랜만에 따뜻했다.",
+    "name": "",
+    "black": false
+   }
+  ],
+  "events_during_day": [
+   {
+    "day": 3,
+    "phase": "night",
+    "id": "trial_d3_count",
+    "pick": "숨을 죽인다"
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "id": "d3_guess",
+    "pick": "불빛 때문인 것 같다"
+   },
+   {
+    "day": 4,
+    "phase": "trace",
+    "id": "hymn_fire_kept",
+    "pick": "불을 쬔다"
+   }
+  ],
+  "morning1": {
+   "day": 4,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 0,
+    "meds": 2
+   },
+   "lateTraces": [
+    {
+     "id": "crate_food",
+     "st": "open",
+     "day": 3,
+     "seen": false
+    },
+    {
+     "id": "bottle_soonrye",
+     "st": "empty",
+     "day": 2,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "crate_food",
+     "x": 8,
+     "y": 2,
+     "name": "창고 상자"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "steal_food~missed",
+     "actor": "seoha",
+     "target": null,
+     "traces": [
+      "crate_food"
+     ]
+    }
+   ],
+   "night": [
+    "share_bowl",
+    "mari_names",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 8
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 7,
+     "thirst": 8
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 7
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 4
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 7
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_thief_seoha"
+   ]
+  },
+  "shot_errors": [
+   "zoom: height and width must be > 0"
+  ],
+  "inspect_box": {
+   "open": "",
+   "day": 4,
+   "phase": "trace",
+   "pending": null,
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": []
+  },
+  "inspect_lines": [],
+  "inspect_log": [],
+  "after_inspect": {
+   "day": 4,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 0,
+    "meds": 2
+   },
+   "lateTraces": [
+    {
+     "id": "crate_food",
+     "st": "open",
+     "day": 3,
+     "seen": false
+    },
+    {
+     "id": "bottle_soonrye",
+     "st": "empty",
+     "day": 2,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "crate_food",
+     "x": 8,
+     "y": 2,
+     "name": "창고 상자"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "steal_food~missed",
+     "actor": "seoha",
+     "target": null,
+     "traces": [
+      "crate_food"
+     ]
+    }
+   ],
+   "night": [
+    "share_bowl",
+    "mari_names",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 6,
+     "thirst": 8
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 7,
+     "thirst": 8
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 7
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 4
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 8,
+     "thirst": 7
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_thief_seoha"
+   ]
+  },
+  "console_errors": []
+ },
+ "A_water": {
+  "name": "A_water",
+  "morning0": {
+   "day": 5,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 1,
+    "water": 1,
+    "meds": 1
+   },
+   "lateTraces": [
+    {
+     "id": "notebook_you",
+     "st": "moved",
+     "day": 4,
+     "seen": false
+    },
+    {
+     "id": "bowl_soonrye",
+     "st": "empty",
+     "day": 4,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "notebook_you",
+     "x": 12,
+     "y": 11,
+     "name": "당신 수첩"
+    },
+    {
+     "id": "bowl_soonrye",
+     "x": 12,
+     "y": 10,
+     "name": "그릇"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "read_notebook~missed",
+     "actor": "mari",
+     "target": "you",
+     "traces": [
+      "notebook_you"
+     ]
+    },
+    {
+     "id": "share_bowl~missed",
+     "actor": "soonrye",
+     "target": "seoha",
+     "traces": [
+      "bowl_soonrye"
+     ]
+    }
+   ],
+   "night": [
+    "steal_water",
+    "starve_resident",
+    "fog_rise",
+    "flood_rise",
+    "flood_surge"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 9
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 9
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 7,
+     "thirst": 6
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 6,
+     "thirst": 6
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": []
+  },
+  "lines_during_day": [
+   {
+    "day": 5,
+    "phase": "seat",
+    "text": "사람들이 제 자리로 흩어진다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "…윤서하요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "창으로 계단을 봤어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "신발이 하루에 한 켤레씩 늘어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "박기철이오.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "선로에 신발만 줄지어 있었소.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "사람은 없었소.",
+    "name": "박기철",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "최은지.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "하늘 봤어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "바로 눈 감았어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "그래서 여기 있어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "…한동하요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "시장 지붕에서 누가 이름이 불렸어요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "대답한 사람은 위로 갔어요.",
+    "name": "한동하",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "정마리요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "병동에서 누가 환자 이름을 불렀어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "대답한 사람들이 계단으로 올라갔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "evening",
+    "text": "안 내려왔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "선로에 사람이 걸려 있었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "얼굴이 물에 불어 있었고 한쪽 신발이 없었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "마리가 손목을 잡았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "\"하루는 안 됐어요.\"",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "누가 빈 깡통을 발로 밀었고, 마리가 가운에서 칼을 꺼냈다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "밤새 드럼통 쪽을 보지 않았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "당신 배에서 소리가 났다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "새벽에 누가 건빵 반쪽을 당신 무릎에 놓고 갔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "역이 한 번 크게 기울었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "물이 거꾸로 빨려 들어갔다가 숨을 내쉬듯 쏟아졌다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "선로의 물이 승강장을 넘었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "판정 80% — 됐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "밤새 양동이를 날랐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "손잡이가 피로 미끌거렸다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "물은 내려갔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "배수로 쪽에서 자장가가 들린다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "누군가의 어머니 목소리다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "한 사람이 일어나 맨발로 물가를 향해 걷는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "눈을 뜬 채 자고 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "판정 55% — 안 됐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "물속에서 무엇이 발목을 당겼다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "겨우 뺐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "text": "다리 살이 불어 하얗게 벗겨져 있었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 5,
+    "phase": "aftermath",
+    "text": "밤이 지난다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "땔감 −1 밤에 무슨 소리가 났다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "흔적이 남았을 것이다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "안개가 계단 한 칸을 더 내려왔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "재를 손가락으로 문지르니 따뜻했다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "밤마다 한 칸이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "녹인 쇠로 계단 아래 줄을 그었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "text": "안개가 그 앞에서 머뭇거렸다.",
+    "name": "",
+    "black": false
+   }
+  ],
+  "events_during_day": [
+   {
+    "day": 5,
+    "phase": "night",
+    "id": "d5_rail_body_c",
+    "pick": "받지 않는다"
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "id": "d5_flood",
+    "pick": "모두 매달려 퍼낸다"
+   },
+   {
+    "day": 5,
+    "phase": "night",
+    "id": "d5_lullaby",
+    "pick": "붙잡는다"
+   },
+   {
+    "day": 6,
+    "phase": "trace",
+    "id": "d6_morning",
+    "pick": "쇠줄을 긋는다"
+   }
+  ],
+  "morning1": {
+   "day": 6,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 0,
+    "meds": 1
+   },
+   "lateTraces": [
+    {
+     "id": "bottle_gicheol",
+     "st": "empty",
+     "day": 5,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "bottle_gicheol",
+     "x": 19,
+     "y": 9,
+     "name": "기철 물통"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "steal_water~missed",
+     "actor": "seoha",
+     "target": "gicheol",
+     "traces": [
+      "bottle_gicheol"
+     ]
+    }
+   ],
+   "night": [
+    "read_notebook",
+    "share_bowl",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 8
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 8,
+     "thirst": 8
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": []
+  },
+  "inspect_box": {
+   "open": "line",
+   "day": 6,
+   "phase": "trace",
+   "pending": null,
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "물통 주둥이가 말라 갈라졌다.",
+   "toast": "어제 못 본 자리가 그대로다.",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": []
+  },
+  "inspect_lines": [
+   "물통 주둥이가 말라 갈라졌다."
+  ],
+  "inspect_log": [
+   {
+    "toast": "toast_late",
+    "text": "어제 못 본 자리가 그대로다.",
+    "day": 6
+   },
+   {
+    "id": "bottle_gicheol",
+    "st": "empty",
+    "lid": "insp_bottle_empty_late",
+    "day": 6,
+    "notice": "toast_late"
+   },
+   {
+    "id": "bandage_gicheol",
+    "st": "clean",
+    "lid": "insp_bandage_clean",
+    "day": 6,
+    "notice": ""
+   }
+  ],
+  "after_inspect": {
+   "day": 6,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 0,
+    "meds": 1
+   },
+   "lateTraces": [
+    {
+     "id": "bottle_gicheol",
+     "st": "empty",
+     "day": 5,
+     "seen": true
+    }
+   ],
+   "dust": [],
+   "neglect": [
+    {
+     "id": "steal_water~missed",
+     "actor": "seoha",
+     "target": "gicheol",
+     "traces": [
+      "bottle_gicheol"
+     ]
+    }
+   ],
+   "night": [
+    "read_notebook",
+    "share_bowl",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": 6,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "gicheol",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 8
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 8,
+     "thirst": 8
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": []
+  },
+  "console_errors": []
+ },
+ "C_boils_blanket_eunji": {
+  "name": "C_boils",
+  "morning0": {
+   "day": 7,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 1,
+    "water": 0,
+    "meds": 2
+   },
+   "lateTraces": [
+    {
+     "id": "bottle_eunji",
+     "st": "empty",
+     "day": 4,
+     "seen": false
+    },
+    {
+     "id": "bottle_dongha",
+     "st": "empty",
+     "day": 3,
+     "seen": false
+    }
+   ],
+   "dust": [],
+   "neglect": [
+    {
+     "id": "read_notebook~missed",
+     "actor": "seoha",
+     "target": "you",
+     "traces": [
+      "notebook_you"
+     ]
+    }
+   ],
+   "night": [
+    "hungry_blames_you",
+    "steal_food",
+    "take_back_you",
+    "inform_you",
+    "grudge_strike_late",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 6,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "gicheol",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 4
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 8,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "stayed",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "mari",
+     "status": "home",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_grudge_soonrye"
+   ]
+  },
+  "lines_during_day": [
+   {
+    "day": 7,
+    "phase": "ration",
+    "text": "줄 끝에 누가 빈 그릇을 들고 서 있다.",
+    "name": "셔터의 여자",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "ration",
+    "text": "당신 쪽을 등지고 있다.",
+    "name": "셔터의 여자",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "ration",
+    "text": "그릇을 받아 들고 불가로 갔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "seat",
+    "text": "사람들이 제 자리로 흩어진다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "…윤서하요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "창으로 계단을 봤어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "신발이 하루에 한 켤레씩 늘어요.",
+    "name": "윤서하",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "최은지.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "하늘 봤어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "바로 눈 감았어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "그래서 여기 있어.",
+    "name": "최은지",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "정마리요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "병동에서 누가 환자 이름을 불렀어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "대답한 사람들이 계단으로 올라갔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "안 내려왔어요.",
+    "name": "정마리",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "자정, 스피커가 혼자 켜졌다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "녹음이 아니다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "목소리가 이름을 하나씩 읽고, 맨 처음에 당신을 읽는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "\"열차는 명부의 이름만 태웁니다, 운임은 빵과 물과 소리 내어 한 약속, 사흘 뒤 정오.\"",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "숨을 쉬지 않는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "text": "다 쓰고 보니 빈칸에 누가 이미 같은 글씨로 써 두었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "손등이 이틀째 검고 냄새가 난다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "붕대 밑에서 열이 뛴다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "약을 쓰면 다른 사람이 쓸 약이 준다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "고름을 짜내고 붕대를 감았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "다친 사람 하나가 그걸 봤다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "자정.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "계단 위에서 이름 하나가 내려온다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "당신 이름이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "누가 담요 속에서 숨을 죽인다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "판정 75% — 됐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "밤새 귀를 막았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "text": "아침에 손바닥에 재가 묻어 있었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 7,
+    "phase": "aftermath",
+    "text": "밤이 지난다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "정마리가 밤에 갔다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "식량 −1 · 땔감 −1 밤에 무슨 소리가 났다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "흔적이 남았을 것이다.",
+    "name": "",
+    "black": true
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "창고 열쇠를 누가 갖나.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "어젯밤 봉지가 또 비었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "순례의 열쇠 꾸러미가 화로 옆에 놓여 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "열쇠를 목에 걸었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "누가 그걸 봤다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "숨이 막혀 깼다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "누가 당신 가슴 위에 올라앉아 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "두 손이 목을 누른다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "얼굴은 어둠 속이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "그림자가 귀를 걷어찼다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "한쪽 귀가 먹었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "그림자는 제 담요에 앉아 이쪽을 봤다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "새벽에 눈을 떴다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "담요들이 당신을 둘러서 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "아무도 말하지 않는다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "누가 당신 봉지를 들고 있다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "발길질이 멎을 때까지 웅크렸다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "봉지는 그들이 가져갔다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "담요들은 눕지 않고 앉아 있었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "붕대 밑이 검게 부었다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "고름 냄새가 난다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "열이 머리까지 올랐다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "오늘을 넘기면 끝이다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "붕대를 새로 감았다.",
+    "name": "",
+    "black": false
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "text": "열이 조금 내렸다.",
+    "name": "",
+    "black": false
+   }
+  ],
+  "events_during_day": [
+   {
+    "day": 7,
+    "phase": "ration",
+    "id": "repay_bowl",
+    "pick": "그냥 지나간다"
+   },
+   {
+    "day": 7,
+    "phase": "evening",
+    "id": "d7_broadcast",
+    "pick": "수첩에 받아 적는다"
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "id": "d7_rot",
+    "pick": "약을 쓴다"
+   },
+   {
+    "day": 7,
+    "phase": "night",
+    "id": "called_up",
+    "pick": "귀를 막는다"
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "id": "trial_d8_key_b",
+    "pick": "내가 갖는다"
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "id": "dawn_strike",
+    "pick": "맞고 버틴다"
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "id": "dawn_mob",
+    "pick": "맞고 버틴다"
+   },
+   {
+    "day": 8,
+    "phase": "trace",
+    "id": "wound_critical",
+    "pick": "약을 쓴다"
+   }
+  ],
+  "morning1": {
+   "day": 8,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 0,
+    "meds": 0
+   },
+   "lateTraces": [
+    {
+     "id": "crate_food",
+     "st": "open",
+     "day": 7,
+     "seen": false
+    },
+    {
+     "id": "bottle_eunji",
+     "st": "empty",
+     "day": 4,
+     "seen": false
+    },
+    {
+     "id": "bottle_dongha",
+     "st": "empty",
+     "day": 3,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "crate_food",
+     "x": 8,
+     "y": 2,
+     "name": "창고 상자"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "hungry_blames_you~missed",
+     "actor": "eunji",
+     "target": "you",
+     "traces": [
+      "blanket_eunji"
+     ]
+    },
+    {
+     "id": "steal_food~missed",
+     "actor": "seoha",
+     "target": null,
+     "traces": [
+      "crate_food"
+     ]
+    }
+   ],
+   "night": [
+    "hungry_blames_you",
+    "starve_resident",
+    "inform_you",
+    "mob_you",
+    "grudge_strike_late",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": null,
+   "noticeDay": null,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 6,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "gicheol",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 4
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 7,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "stayed",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "mari",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_grudge_soonrye",
+    "unseen_grudge_eunji",
+    "unseen_thief_seoha",
+    "dawn_mob",
+    "dawn_strike"
+   ]
+  },
+  "shot_errors": [
+   "zoom: height and width must be > 0"
+  ],
+  "inspect_box": {
+   "open": "line",
+   "day": 8,
+   "phase": "trace",
+   "pending": null,
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "담요가 둘둘 말린 채 화로 옆에 있다.",
+   "toast": "어제 못 본 자리가 그대로다.",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": []
+  },
+  "inspect_lines": [
+   "담요가 둘둘 말린 채 화로 옆에 있다."
+  ],
+  "inspect_log": [
+   {
+    "toast": "toast_late",
+    "text": "어제 못 본 자리가 그대로다.",
+    "day": 8
+   },
+   {
+    "id": "blanket_eunji",
+    "st": "rolled",
+    "lid": "insp_blanket_rolled",
+    "day": 8,
+    "notice": "toast_late"
+   }
+  ],
+  "after_inspect": {
+   "day": 8,
+   "phase": "trace",
+   "ended": null,
+   "pending": null,
+   "open": "",
+   "world": {
+    "food": 0,
+    "water": 0,
+    "meds": 0
+   },
+   "lateTraces": [
+    {
+     "id": "crate_food",
+     "st": "open",
+     "day": 7,
+     "seen": false
+    },
+    {
+     "id": "bottle_eunji",
+     "st": "empty",
+     "day": 4,
+     "seen": false
+    },
+    {
+     "id": "bottle_dongha",
+     "st": "empty",
+     "day": 3,
+     "seen": false
+    }
+   ],
+   "dust": [
+    {
+     "id": "crate_food",
+     "x": 8,
+     "y": 2,
+     "name": "창고 상자"
+    }
+   ],
+   "neglect": [
+    {
+     "id": "hungry_blames_you~missed",
+     "actor": "eunji",
+     "target": "you",
+     "traces": [
+      "blanket_eunji"
+     ]
+    },
+    {
+     "id": "steal_food~missed",
+     "actor": "seoha",
+     "target": null,
+     "traces": [
+      "crate_food"
+     ]
+    }
+   ],
+   "night": [
+    "hungry_blames_you",
+    "starve_resident",
+    "inform_you",
+    "mob_you",
+    "grudge_strike_late",
+    "fog_rise",
+    "flood_rise"
+   ],
+   "notice": "toast_late",
+   "noticeDay": 8,
+   "people": [
+    {
+     "id": "soonrye",
+     "status": "dead",
+     "grudge": 6,
+     "hunger": 10,
+     "thirst": 6
+    },
+    {
+     "id": "seoha",
+     "status": "home",
+     "grudge": 1,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "gicheol",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 4
+    },
+    {
+     "id": "eunji",
+     "status": "home",
+     "grudge": 7,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "dongha",
+     "status": "stayed",
+     "grudge": 0,
+     "hunger": 9,
+     "thirst": 10
+    },
+    {
+     "id": "mari",
+     "status": "dead",
+     "grudge": 0,
+     "hunger": 10,
+     "thirst": 10
+    },
+    {
+     "id": "eunchae",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 5,
+     "thirst": 4
+    },
+    {
+     "id": "dohyeon",
+     "status": "outside",
+     "grudge": 0,
+     "hunger": 4,
+     "thirst": 0
+    }
+   ],
+   "flags": [
+    "unseen_grudge_soonrye",
+    "unseen_grudge_eunji",
+    "unseen_thief_seoha",
+    "dawn_mob",
+    "dawn_strike"
+   ]
+  },
+  "console_errors": []
+ }
+}

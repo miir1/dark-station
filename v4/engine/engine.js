@@ -329,7 +329,10 @@
   //   → ③ 둘 다 없고 물건에 수납 내용(holds)이 있고 닫혀(states[0]) 있고 사건이 쥐고 있지 않으면(claimedByEvent) '닫힘→얻음→열림'.
   //   조사 전에 걸린 사건이 있었으면 ②③ 은 하지 않는다.
   // (10-24 A4 E3) 그날 아침에 '못 본 밤'이 바꾼 흔적(late)이 하나라도 있으면, 그날 첫 조사 때 s.notice = 'toast_late'(대사표에 그 줄이 있을 때) 한 번.
-  const lateToday = (s) => Object.values(s.traces).some((t) => t && t.late && t.day === s.day - 1);
+  // 지금 '늦은 흔적'인가 = late 이고 어젯밤 굴림에서 생긴 것(day == 오늘−1). 며칠 지난 late 는 늦은 흔적이 아니다 — 조사 글·토스트·view 가 같은 규칙을 쓴다
+  //   (10-24 검증 A4-6: 조사 글만 날을 안 봐서, 며칠 지난 흔적에도 '이틀째 빈 채다'·'어제부터'가 나왔다. 화면 먼지 game.js lateOf 도 같은 규칙 + 아직 안 봄)
+  const lateNow = (s, t) => !!(t && t.late && t.day === s.day - 1);
+  const lateToday = (s) => Object.values(s.traces).some((t) => lateNow(s, t));
   function inspect(s, db, objId) {
     if (!db.objects[objId]) return false;
     const t = s.traces[objId];
@@ -601,20 +604,20 @@
       world: Object.fromEntries(db.numbersList.filter((d) => d.owner === 'world' && d.visible !== 'never').map((d) => [d.id, s.world[d.id]])),
       people: db.peopleOrder.map((id) => { const p = s.people[id]; return { id, name: p.name, status: p.status, met: known(s, db, id) ? 1 : 0, injury: p.n.injury || 0, permanent: Object.keys(p.permanent), signs: sg[id] || null, address: p.status === 'home' ? address(s, db, id) : null }; }),
       trip: s.trip ? { region: s.trip.region, floor: s.trip.floor, floors: (s.trip.floors || []).slice(), party: (s.trip.party || []).slice() } : null,
-      traces: Object.entries(s.traces).map(([id, t]) => ({ id, state: t.st, seen: t.seen, late: t.late ? 1 : 0 })),
+      traces: Object.entries(s.traces).map(([id, t]) => ({ id, state: t.st, seen: t.seen, late: lateNow(s, t) ? 1 : 0 })),   // late = 지금 늦은 흔적(어젯밤 것)만
       rumors: s.rumors.filter((r) => !r.heard).length,
       found: s.found ? { object: s.found.object, state: s.found.state, day: s.found.day, text: s.found.text || '', lines: (s.found.lines || []).slice() } : null,
       event: eventView(s, db),
       notice: s.notice || null,                  // (10-24 E3) 방금 조사에 붙은 토스트 줄 id ('toast_late') 또는 null
     };
   }
-  // (10-24 E3) 조사 글 줄 id: 물건 inspectLine[지금 상태], 그 흔적이 late(못 본 밤이 바꿈)이고 '<줄id>_late' 줄이 대사표에 있으면 그것. 없으면 null
+  // (10-24 E3) 조사 글 줄 id: 물건 inspectLine[지금 상태], 그 흔적이 지금 늦은 흔적(lateNow — 어젯밤 못 본 일이 바꿈)이고 '<줄id>_late' 줄이 대사표에 있으면 그것. 없으면 null
   function inspectLineId(s, db, objId) {
     const o = db.objects[objId], t = s.traces[objId];
     if (!o || !t || !o.inspectLine) return null;
     const id = o.inspectLine[t.st];
     if (!id) return null;
-    return t.late && db.lines[id + '_late'] ? id + '_late' : id;
+    return lateNow(s, t) && db.lines[id + '_late'] ? id + '_late' : id;
   }
   // (10-24 E5) 그 주민이 지금 당신을 부르는 말: 원한 ≥ sign_cold_call(기본 5)이고 people.addressCold 칸이 있으면 그것('' = 부르지 않는다).
   //   아니면 정체가 기운 때(축 하나라도 0 이 아님) addressYou[기운 후보], 그다음 addressYou.default. 칸이 없으면 null
@@ -640,7 +643,7 @@
         for (const [k, v] of Object.entries(e)) { const d = db.numbers[k]; if (d && d.owner === 'world' && d.visible === 'always') for (const x of FX.list(v)) gain += typeof x === 'number' ? x : (x && x.n) || 0; } }
       return Object.assign(choiceState(s, db, ev, c0), { i, axis, killYou: kill, killOther, check: !!c.check, gain, swapped: c !== c0 }); });   // gain = 화면에 보이는 자원 변화 합(봇의 '자원 + 가장 큰 label') · swapped = swap 변형이 맞았다
   }
-  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, effChoice, eventTarget, inspectLineId, address, rationOf, rand: R.rand, killsYou, known, heardKey, closedHolds, openStateOf, inspectGated, NO_TARGET_WHY, SIGN_COLD_CALL_DEFAULT,
+  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, effChoice, eventTarget, inspectLineId, lateNow, address, rationOf, rand: R.rand, killsYou, known, heardKey, closedHolds, openStateOf, inspectGated, NO_TARGET_WHY, SIGN_COLD_CALL_DEFAULT,
     identity: (s, db) => ID.identity(s.axes, db.identity), signs: (s, db) => NIGHT.signs(s, db), readerId: (s, db) => LEDGER.readerId(s, db), ledger: LEDGER, night: NIGHT, cond: C };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).engine = API;

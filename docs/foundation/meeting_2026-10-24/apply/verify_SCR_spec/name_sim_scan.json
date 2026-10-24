@@ -1,0 +1,48 @@
+{
+ "checks": 94031,
+ "policies": [
+  "balanced",
+  "risky",
+  "diligent",
+  "lazy",
+  "selfish",
+  "devoted"
+ ],
+ "seeds": 40,
+ "distinct": 3,
+ "rows": [
+  {
+   "where": "event_text",
+   "ev": "trade_shutter",
+   "id": "eunji",
+   "why": "met-today-before-evening",
+   "n": "은지",
+   "count": 40,
+   "day": 2,
+   "phase": "day",
+   "text": "은지가 셔터 틈에 입을 대고 말한다. 너머에서 답이 온다. 은지: \"저쪽이 통조림을 내. 뭘 줄래.\""
+  },
+  {
+   "where": "choice",
+   "ev": "trade_shutter",
+   "id": "dongha",
+   "why": "met-today-before-evening",
+   "n": "동하",
+   "count": 40,
+   "day": 2,
+   "phase": "day",
+   "text": "동하를 하루 보낸다"
+  },
+  {
+   "where": "result_text",
+   "ev": "trade_shutter",
+   "id": "dongha",
+   "why": "met-today-before-evening",
+   "n": "동하",
+   "count": 40,
+   "day": 2,
+   "phase": "day",
+   "text": "동하가 셔터 밑으로 기어갔다. 저녁에 통조림 여섯과 함께 돌아왔다. 손톱이 둘 없었다."
+  }
+ ]
+}

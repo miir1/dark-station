@@ -1,0 +1,35 @@
+tap pro_stairs ArrowUp160+space80 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowUp160+space150 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowUp250+space80 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowUp250+space150 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowUp400+space80 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowUp400+space150 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowUp600+space80 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowUp600+space150 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowDown160+space80 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowDown160+space150 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowDown250+space80 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowDown250+space150 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowDown400+space80 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowDown400+space150 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowDown600+space80 0 | picked 돌아선다 | died False | 
+tap pro_stairs ArrowDown600+space150 0 | picked 돌아선다 | died False | 
+tap d3_called_you ArrowUp160+space80 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowUp160+space150 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowUp250+space80 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowUp250+space150 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowUp400+space80 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowUp400+space150 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowUp600+space80 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowUp600+space150 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowDown160+space80 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowDown160+space150 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowDown250+space80 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowDown250+space150 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowDown400+space80 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowDown400+space150 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowDown600+space80 0 | picked 대답하지 않는다 | died False | 
+tap d3_called_you ArrowDown600+space150 0 | picked 대답하지 않는다 | died False | 
+tapmore {'runs': 32, 'died': 0, 'picked': 32, 'errors': 0}
+deliberate pro_stairs {"ev": "pro_stairs", "first_arrow": ["event", "돌아선다", "출구 계단 한가운데 안개가 벽처럼 멈춰 있다. 양복 입", "home"], "on_taboo": ["event", "구두를 가지러 오른다할머니: 계단 줄 위로는 가지 마", "출구 계단 한가운데 안개가 벽처럼 멈춰 있다. 양복 입", "home"], "after_space": ["confirm2", "다시 고른다", "되돌릴 수 없다구두를 가지러 오른다 — 할머니: 계단 ", "home"], "confirm_cursor": ["confirm2", "그렇게 한다", "되돌릴 수 없다구두를 가지러 오른다 — 할머니: 계단 ", "home"], "end": ["line", "", "", "dead"], "died": true, "errors": []}
+deliberate d3_called_you {"ev": "d3_called_you", "first_arrow": ["event", "대답하지 않는다", "셈이 끝났다. 위에서 이름 하나가 불렸다. 당신 이름이", "home"], "on_taboo": ["event", "대답한다대답한 사람은 올라간다", "셈이 끝났다. 위에서 이름 하나가 불렸다. 당신 이름이", "home"], "after_space": ["confirm2", "다시 고른다", "되돌릴 수 없다대답한다 — 대답한 사람은 올라간다", "home"], "confirm_cursor": ["confirm2", "그렇게 한다", "되돌릴 수 없다대답한다 — 대답한 사람은 올라간다", "home"], "end": ["line", "", "", "ascended"], "died": true, "errors": []}

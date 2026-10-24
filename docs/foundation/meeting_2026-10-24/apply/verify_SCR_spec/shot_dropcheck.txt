@@ -1,0 +1,13 @@
+FAIL neg_dropped_car (console errors 0) - 시작 오류: [208:36068:1024/180037.519:INFO:CONSOLE:38] "[ds4] 표 검증 실패 행을 빼고 읽었다:
+    [ds4] \ud45c \uac80\uc99d \uc2e4\ud328 \ud589\uc744 \ube7c\uace0 \uc77d\uc5c8\ub2e4:
+    [ds4 auto] car stop reached=1 D0 day map=car open=- you=home food=6 | D0 day pro_cold \u2192 \ub208\uc744 \ub72c\ub2e4
+[
+ {
+  "shot": "neg_dropped_car",
+  "ok": false,
+  "why": [
+   "시작 오류: [208:36068:1024/180037.519:INFO:CONSOLE:38] \"[ds4] 표 검증 실패 행을 빼고 읽었다:"
+  ],
+  "console_errors": []
+ }
+]

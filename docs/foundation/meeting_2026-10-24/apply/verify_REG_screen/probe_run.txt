@@ -1,0 +1,6 @@
+fixture {'repay_bowl': True, 'share_back': True, 'dawn_mob': True, 'd10_grab': True}
+spec dawn_mob | who   | opts 6 overflow False | locks [] | picked 가진 것을 다 내놓는다 | after trace None None | err None []
+spec d10_grab | who 담요 속 여학생 portraits80/seoha.png | opts 3 overflow False | locks [] | picked 물병을 돌려준다 | after ended None d10_walk_other | err None []
+spec repay_bowl | who 셔터의 여자 portraits80_hurt/eunji.png | opts 2 overflow False | locks [] | picked 그냥 지나간다 | after day None None | err None []
+probe done
+exit=0

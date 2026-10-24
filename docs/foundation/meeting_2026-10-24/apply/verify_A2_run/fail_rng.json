@@ -1,0 +1,27 @@
+{
+ "d2_shutter_arm": {
+  "choice": 2,
+  "label": "팔을 비틀어 뺀다",
+  "failRng": 3903854683
+ },
+ "d4_spanner": {
+  "choice": 2,
+  "label": "스패너를 막는다",
+  "failRng": 985241008
+ },
+ "d5_flood": {
+  "choice": 1,
+  "label": "모두 매달려 퍼낸다",
+  "failRng": 473687672
+ },
+ "d6_shutter": {
+  "choice": 1,
+  "label": "동하와 덤빈다",
+  "failRng": 466071777
+ },
+ "d6_shutter_b": {
+  "choice": 1,
+  "label": "맞선다",
+  "failRng": 466071784
+ }
+}

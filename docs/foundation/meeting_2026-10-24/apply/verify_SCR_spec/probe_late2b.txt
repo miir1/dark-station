@@ -1,0 +1,17 @@
+late2 seed 3 | end 7 trace 
+   D 1 eng [] map [] dust0 [] noticeDay None office locked met_seoha False key False
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+   D 2 eng [] map [] dust0 [] noticeDay None office locked met_seoha False key True
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+   D 3 eng [] map [] dust0 [] noticeDay None office open met_seoha True key True
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+   D 4 eng [] map [] dust0 [] noticeDay None office open met_seoha True key True
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+   D 5 eng [['crate_food', 'open'], ['bowl_eunji', 'empty']] map [['crate_food', False], ['bowl_eunji', False]] dust0 ['crate_food', 'bowl_eunji'] noticeDay None office open met_seoha True key True
+      inspect blanket_soonrye | toasts ['어제 못 본 자리가 그대로다.'] | lid ['insp_blanket'] | dust after ['crate_food', 'bowl_eunji']
+      inspect crate_food | toasts ['갈 수 없는 곳이다.'] | lid [] | dust after ['crate_food', 'bowl_eunji']
+      inspect bowl_eunji | toasts [] | lid ['insp_bowl_empty_late'] | dust after ['crate_food']
+      inspect crate_food | toasts ['갈 수 없는 곳이다.'] | lid [] | dust after ['crate_food']
+   D 6 eng [] map [] dust0 [] noticeDay 5 office open met_seoha True key True
+      inspect blanket_soonrye | toasts [] | lid ['insp_blanket'] | dust after []
+exit=0

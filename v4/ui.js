@@ -22,8 +22,16 @@
   const DIR_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd', 'W', 'A', 'S', 'D'];
   const dirDown = new Set(); // 지금 눌려 있는 방향키
   let dirArmed = true;     // 선택 창이 열린 뒤 방향키를 다 뗐는가
+  // 두드림 보호 (2026-10-24 검증 #4): 방향키를 '누른 채'가 아니라 '두드리며' 걸어와 Space 를 연타하면 — 커서 없는 창의 ↑ 가 맨 아래(금기·죽음)에 커서를 놓고,
+  //   확인창의 다음 ↑ 가 '그렇게 한다'로 옮겨 1.4초 안에 죽었다. 이제
+  //   ① 커서 없는 창의 첫 방향키는 (어느 쪽이든) 경고 없는 첫 선택지에 커서를 놓는다 (경고 없는 것이 없으면 첫 열린 선택지)
+  //   ② 위험한 선택지(경고·금기, 확인창의 '그렇게 한다' = danger)는 커서가 그 자리에 STEADY_MS 이상 머물렀고 + 결정 키를 그 전 누름에서 STEADY_MS 이상 쉬었다가
+  //      새로 눌렀을 때만 Space·Enter 로 고른다 — 두드리는 방향키는 커서를 계속 옮기고, 연타하는 Space 는 쉼이 없어서 넘어가지 않는다. 번호 키·마우스는 그대로 바로 고른다
+  const STEADY_MS = 300;
+  let okAt = 0, okPrevAt = 0; // 결정 키를 누른 시각(이번·그 전) — 자동 반복은 빼고
   // 캡처 단계에서 먼저 듣는다: 반복 입력은 게임 쪽 처리기(game.js)까지 가지 않는다 (방향키 반복은 그대로 — 걷기·커서)
   document.addEventListener('keydown', (e) => {
+    if (OK_KEYS.includes(e.key) && !e.repeat) { okPrevAt = okAt; okAt = Date.now(); }
     if (OK_KEYS.includes(e.key)) okDown.add(e.key);
     if (DIR_KEYS.includes(e.key)) dirDown.add(e.key);
     if (e.target && e.target.tagName === 'INPUT') return;                      // 저장 코드 칸에서는 글자를 눌러 쓸 수 있게
@@ -137,7 +145,7 @@
     const warned = options.some((x) => x.warn || x.taboo || /class="warn"/.test(String(x.sub || '')));
     const sel = Number.isInteger(o.sel) && options[o.sel] && !options[o.sel].disabled ? o.sel : warned ? -1 : Math.max(0, firstOpen());
     return new Promise((resolve) => {
-      cur = { resolve, options, sel, cancel: !!o.cancel, cancelValue: o.cancelValue === undefined ? null : o.cancelValue, kind: o.kind || 'menu' };
+      cur = { resolve, options, sel, selAt: Date.now(), cancel: !!o.cancel, cancelValue: o.cancelValue === undefined ? null : o.cancelValue, kind: o.kind || 'menu' };
       paint();
       // 봇(캡처·플레이스루): 고른 번호, 아니면 취소 가능한 창은 취소, 아니면 '첫 번째 열린 선택지'를 명시해서 고른다 (커서 자리에 기대지 않는다)
       if (bot) setTimeout(() => { if (!cur) return; const i = bot(cur.kind, { options: cur.options.map((x) => Object.assign({}, x, { sub: undefined })) }); if (i === 'hold') return; if (Number.isInteger(i) && cur.options[i] && !cur.options[i].disabled) choose(i, true); else if (cur.cancel) close(cur.cancelValue); else { const f = cur.options.findIndex((x) => !x.disabled); if (f >= 0) choose(f, true); } }, 0);
@@ -159,6 +167,8 @@
     if (!force && Date.now() - openedAt < BLOCK_MS) return;
     close(op.value === undefined ? i : op.value);
   }
+  // 위험한 선택지: 경고·금기가 붙었거나(부제의 경고 글 포함) 부른 쪽이 danger 로 표시한 것(되돌릴 수 없는 확인창의 '그렇게 한다')
+  const danger = (x) => !!(x && (x.danger || x.warn || x.taboo || /class="warn"/.test(String(x.sub || ''))));
   function key(k) {
     if (lineCur) { if (k === 'ok' || k === 'back') lineCur.next(); return true; }
     if (!cur) return false;
@@ -166,18 +176,31 @@
     const n = cur.options.length;
     if (k === 'up' || k === 'down') {
       if (!dirArmed) return true;                                               // 창이 열릴 때 눌려 있던 방향키 — 한 번 뗀 다음부터
-      if (cur.sel < 0) {                                                        // 커서 없이 열린 창: 첫 방향키가 커서를 놓는다 (↓ 맨 위 열린 것 · ↑ 맨 아래 열린 것)
-        const order = Array.from({ length: n }, (_, j) => (k === 'up' ? n - 1 - j : j));
-        const i = order.find((j) => !cur.options[j].disabled);
-        if (i != null) { cur.sel = i; paint(); }
+      if (cur.sel < 0) {                                                        // 커서 없이 열린 창: 첫 방향키(어느 쪽이든)가 경고 없는 첫 선택지에 커서를 놓는다 (①)
+        const open = Array.from({ length: n }, (_, j) => j).filter((j) => !cur.options[j].disabled);
+        const i = open.find((j) => !danger(cur.options[j]));
+        const at = i != null ? i : open[0];
+        if (at != null) { cur.sel = at; cur.selAt = Date.now(); paint(); }
         return true;
       }
       let i = cur.sel;
       for (let step = 0; step < n; step++) { i = (i + (k === 'up' ? -1 : 1) + n) % n; if (!cur.options[i].disabled) break; }
+      if (i !== cur.sel) cur.selAt = Date.now();
       cur.sel = i; paint();
-    } else if (k === 'ok') { if (armed && cur.sel >= 0) choose(cur.sel); }      // 결정 키를 한 번 뗀 다음부터
+    } else if (k === 'ok') {                                                    // 결정 키를 한 번 뗀 다음부터
+      if (!armed || cur.sel < 0) return true;
+      const now = Date.now();
+      if (danger(cur.options[cur.sel]) && (now - cur.selAt < STEADY_MS || okAt - okPrevAt < STEADY_MS)) { steadyHint(); return true; }   // ② 머물지 않았거나 연타 중
+      choose(cur.sel);
+    }
     else if (k === 'back' && cur.cancel) close(cur.cancelValue);
     return true;
+  }
+  // 위험한 선택지에서 결정 키를 받지 않았을 때: 커서 줄이 한 번 깜빡여 '아직'을 보인다 (글 없이)
+  function steadyHint() {
+    const b = $('box').querySelector('.opt.sel');
+    if (!b) return;
+    b.classList.remove('steady'); void b.offsetWidth; b.classList.add('steady');
   }
   const pick = (i) => { if (cur && cur.options[i]) choose(i); else if (lineCur) lineCur.next(); };
   document.addEventListener('click', (e) => {

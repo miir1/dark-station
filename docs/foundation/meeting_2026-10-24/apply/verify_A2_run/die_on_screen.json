@@ -1,0 +1,340 @@
+[
+ {
+  "case": "d2_shutter_arm_die",
+  "lines_before": [
+   "틈으",
+   "틈으로 들어온 손이 당신 손목을 잡았다.",
+   "너머에서 당긴다.",
+   "셔터 날이 팔꿈치까지 왔다."
+  ],
+  "lines_after": [
+   {
+    "text": "판정 85% — 안 됐다.",
+    "cg": false
+   },
+   {
+    "text": "셔터 밑으로 어깨까지 끌려갔다.",
+    "cg": false
+   },
+   {
+    "text": "너머에서 웃었다.",
+    "cg": false
+   },
+   {
+    "text": "당신은 일어나지 않았다.",
+    "cg": true
+   }
+  ],
+  "shots": [
+   "verify_A2_d2_shutter_arm_die_1box.png",
+   "verify_A2_d2_shutter_arm_die_2cursor.png",
+   "verify_A2_d2_shutter_arm_die_3line1.png",
+   "verify_A2_d2_shutter_arm_die_3line2.png",
+   "verify_A2_d2_shutter_arm_die_3line3.png",
+   "verify_A2_d2_shutter_arm_die_3line4.png",
+   "verify_A2_d2_shutter_arm_die_4end.png"
+  ],
+  "box": {
+   "open": "event",
+   "day": 2,
+   "phase": "night",
+   "pending": "d2_shutter_arm",
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "틈으로 들어온 손이 당신 손목을 잡았다. 너머에서 당긴다. 셔터 날이 팔꿈치까지 왔다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1통조림을 내밀어 바꾼다식량 −2식량이 준다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2옆 사람 팔을 내민다그 사람이 대신 끌린다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3팔을 비틀어 뺀다85%못 빼면 끝이다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "통조림을 내밀어 바꾼다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "옆 사람 팔을 내민다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 대신 끌린다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "팔을 비틀어 뺀다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 빼면 끝이다",
+     "taboo": false,
+     "chance": 85
+    }
+   ]
+  },
+  "cursor": 2,
+  "kinds": [
+   "line",
+   "line",
+   "line",
+   "line",
+   "death_ledger"
+  ],
+  "end_box": {
+   "open": "death_ledger",
+   "day": 2,
+   "phase": "ended",
+   "pending": null,
+   "target": null,
+   "who": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.",
+   "face": "",
+   "text": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.당신갔다 · D2 ___청소원 조끼의 할머니남았다 헤드램프의 남자남았다 셔터의 여자남았다 큰 청년남았다 담요의 여자남았다 ",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1덮는다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": true,
+   "choices": []
+  },
+  "state": {
+   "day": 2,
+   "phase": "ended",
+   "you": "dead",
+   "ended": {
+    "why": "you_gone",
+    "cause": {
+     "event": "d2_shutter_arm",
+     "choice": "팔을 비틀어 뺀다",
+     "warned": true,
+     "forced": false,
+     "free": {
+      "event": "d2_shutter_arm",
+      "choice": "팔을 비틀어 뺀다",
+      "day": 2
+     },
+     "image": "",
+     "night": false,
+     "warn": "못 빼면 끝이다",
+     "swapped": false
+    }
+   },
+   "last": {
+    "event": "d2_shutter_arm",
+    "choice": "팔을 비틀어 뺀다",
+    "roll": {
+     "chance": 85,
+     "success": false
+    },
+    "warned": true,
+    "forced": false
+   }
+  },
+  "cg_src": "img/cg/death_beaten.png",
+  "page_text_has_karma_word": false,
+  "console_errors": []
+ },
+ {
+  "case": "d4_spanner_die",
+  "lines_before": [
+   "기철이 머리",
+   "기철이 머리맡에 서 있다.",
+   "헤드램프가 꺼져 있다.",
+   "손에 스패너가 있다.",
+   "\"셌지.\""
+  ],
+  "lines_after": [
+   {
+    "text": "판정 80% — 안 됐다.",
+    "cg": false
+   },
+   {
+    "text": "두 번째가 관자놀이로 왔다.",
+    "cg": false
+   },
+   {
+    "text": "베개에 피가 번졌다.",
+    "cg": false
+   },
+   {
+    "text": "당신은 일어나지 않았다.",
+    "cg": true
+   }
+  ],
+  "shots": [
+   "verify_A2_d4_spanner_die_1box.png",
+   "verify_A2_d4_spanner_die_2cursor.png",
+   "verify_A2_d4_spanner_die_3line1.png",
+   "verify_A2_d4_spanner_die_3line2.png",
+   "verify_A2_d4_spanner_die_3line3.png",
+   "verify_A2_d4_spanner_die_3line4.png",
+   "verify_A2_d4_spanner_die_4end.png"
+  ],
+  "box": {
+   "open": "event",
+   "day": 4,
+   "phase": "night",
+   "pending": "d4_spanner",
+   "target": "dongha",
+   "who": "헤드램프의 남자",
+   "face": "",
+   "text": "헤드램프의 남자기철이 머리맡에 서 있다. 헤드램프가 꺼져 있다. 손에 스패너가 있다. \"셌지.\"",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1그릇 하나로 입을 막는다식량 −1식량이 준다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2다른 사람이 셌다고 한다그 사람이 맞는다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3스패너를 막는다80%못 막으면 끝이다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "그릇 하나로 입을 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "다른 사람이 셌다고 한다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 맞는다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "스패너를 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 막으면 끝이다",
+     "taboo": false,
+     "chance": 80
+    }
+   ]
+  },
+  "cursor": 2,
+  "kinds": [
+   "line",
+   "line",
+   "line",
+   "line",
+   "death_ledger"
+  ],
+  "end_box": {
+   "open": "death_ledger",
+   "day": 4,
+   "phase": "ended",
+   "pending": null,
+   "target": null,
+   "who": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.",
+   "face": "",
+   "text": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.당신갔다 · D4 ___청소원 조끼의 할머니남았다 담요 속 여학생남았다 헤드램프의 남자남았다 셔터의 여자남았다 큰 청년남았다 담요의 여자남았다 ",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1덮는다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": true,
+   "choices": []
+  },
+  "state": {
+   "day": 4,
+   "phase": "ended",
+   "you": "dead",
+   "ended": {
+    "why": "you_gone",
+    "cause": {
+     "event": "d4_spanner",
+     "choice": "스패너를 막는다",
+     "warned": true,
+     "forced": false,
+     "free": {
+      "event": "d4_spanner",
+      "choice": "스패너를 막는다",
+      "day": 4
+     },
+     "image": "",
+     "night": false,
+     "warn": "못 막으면 끝이다",
+     "swapped": false
+    }
+   },
+   "last": {
+    "event": "d4_spanner",
+    "choice": "스패너를 막는다",
+    "roll": {
+     "chance": 80,
+     "success": false
+    },
+    "warned": true,
+    "forced": false
+   }
+  },
+  "cg_src": "img/cg/death_beaten.png",
+  "page_text_has_karma_word": false,
+  "console_errors": []
+ },
+ {
+  "case": "d5_flood_die",
+  "error": "기다리다 지쳤다: __ds4.state && __ds4.UI.openKind()",
+  "console_errors": []
+ },
+ {
+  "case": "d6_shutter_die",
+  "error": "기다리다 지쳤다: __ds4.state && __ds4.UI.openKind()",
+  "console_errors": [
+   "EXCEPTION: TypeError: Cannot read properties of undefined (reading 'schema')\n    at http://127.0.0.1:18791/v4/engine/tables.js:6:56\n    at http://127.0.0.1:18791/v4/engine/tables.js:129:3"
+  ]
+ },
+ {
+  "case": "d2_shutter_arm_food0",
+  "error": "기다리다 지쳤다: __ds4.state && __ds4.UI.openKind()",
+  "console_errors": [
+   "error: TypeError: Failed to fetch\n    at Object.loadTables (http://127.0.0.1:18791/v4/engine/browser.js?v=5:21:42)\n    at async http://127.0.0.1:18791/v4/game.js?v=13:1440:12"
+  ]
+ }
+]

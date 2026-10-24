@@ -1,0 +1,32 @@
+manifest 211
+fixture d10_train=OK [fixture] 164 games, 17.8s, good enough; found d10_train; missing -
+OK   01_car (console errors 0)
+    [ds4 auto] car stop reached=1 D0 day map=car open=- you=home food=6 | D0 day pro_cold \u2192 \ub208\uc744 \ub72c\ub2e4
+OK   02_morning3 (console errors 0)
+    [ds4 auto] morning3 stop reached=1 D3 trace map=station open=- you=home food=2 | D1 ration trial_d1_bowls \u2192 \ub611\uac19\uc774 \uc870\uae08\uc529 / D1 day d1_shutter_knock \u2192 \ub450\ub4dc\ub824 \ub2f5\ud55c\ub2e4 / D1 day trip_b1_debris \u2192 \uc9c0\ub098\uac04\ub2e4 / D1 evening d1_names_
+OK   03_night3 (console errors 0)
+    [ds4 auto] night3 hold reached=1 D3 night map=station open=line you=home food=1 | D1 day trip_b1_debris \u2192 \uc9c0\ub098\uac04\ub2e4 / D1 evening d1_names_quiet \u2192 \uc801\ub294\ub2e4 / D1 night d1_night_storage \u2192 \ubd88\uac00\uc5d0 \uc788\ub294\ub2e4 / D2 trace d2_key \u2192 \ubc1b\ub294
+OK   04_night5 (console errors 0)
+    [ds4 auto] night5 hold reached=1 D5 night map=station open=line you=home food=0 | D3 ration share_back \u2192 \ubaa8\ub978 \ucc99\ud55c\ub2e4 / D3 day trip_g_crates \u2192 \ub4a4\uc9c4\ub2e4 / D3 night trial_d3_count \u2192 \uc228\uc744 \uc8fd\uc778\ub2e4 / D4 trace d3_guess \u2192 \ubd88\ube5b \ub5
+    [ds4 missing] @dawn_strike
+OK   05_night8 (console errors 0)
+    [ds4 auto] night8 hold reached=1 D8 night map=station open=event you=home food=0 | D6 night d6_shutter \u2192 \uc544\ubb34\uac83\ub3c4 \ud558\uc9c0 \uc54a\ub294\ub2e4 / [\uafc8 D6] / [D7 food0 water2 hunger4] / D7 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D7 day d7_fingers \u2
+    [ds4 missing] @dawn_strike trip_a2_bones@trip_a2_bones @dawn_mob
+OK   06_ending (console errors 0)
+    [ds4 auto] ending hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D9 trace d9_hoard \u2192 \ucc3d\uace0\uc5d0 \ub3cc\ub824\ub193\ub294\ub2e4 / D9 trace wound_critical \u2192 \uc57d\uad6d \uc548\ucabd\uc744 \ub4a4\uc9c4\ub2e4 / D9 trace dawn_mob \u2192 \ub9de
+    [ds4 missing] @dawn_strike @d6_shutter_b @dawn_mob wound_critical@wound_critical @d10_hold @d10_grab
+OK   07_death (console errors 0)
+    [ds4 auto] death hold reached=1 D3 ended map=station open=death_ledger ended=you_gone you=ascended food=0 | D1 ration trial_d1_bowls \u2192 \ub0a8\uc758 \uadf8\ub987\uc744 \ube44\uc6b4\ub2e4 / D1 day d1_shutter_knock \u2192 \uc5f0\ub2e4 / D1 evening d1_names \u2192 \uc801\ub294\ub2e4 / D1 night d1_n
+OK   08_evening5 (console errors 0)
+    [ds4 auto] evening5 hold reached=1 D5 evening map=station open=line you=home food=0 | D3 ration share_back \u2192 \ubaa8\ub978 \ucc99\ud55c\ub2e4 / D3 day trip_g_crates \u2192 \ub4a4\uc9c4\ub2e4 / D3 night trial_d3_count \u2192 \uc228\uc744 \uc8fd\uc778\ub2e4 / D4 trace d3_guess \u2192 \ubd88\ube5b 
+    [ds4 missing] @dawn_strike
+OK   09_reveal (console errors 0)
+    [ds4 auto] reveal hold reached=1 D10 ended map=station open=line ended=d10_walk_other you=walked food=0 | D9 trace d9_hoard \u2192 \ucc3d\uace0\uc5d0 \ub3cc\ub824\ub193\ub294\ub2e4 / D9 trace wound_critical \u2192 \uc57d\uad6d \uc548\ucabd\uc744 \ub4a4\uc9c4\ub2e4 / D9 trace dawn_mob \u2192 \ub9de\u
+    [ds4 missing] @dawn_strike @d6_shutter_b @dawn_mob wound_critical@wound_critical @d10_hold @d10_grab
+OK   10_called3 (console errors 0)
+    [ds4 auto] called3 hold reached=1 D3 night map=station open=event you=home food=1 | D1 evening d1_names_quiet \u2192 \uc801\ub294\ub2e4 / D1 night d1_night_storage \u2192 \ubd88\uac00\uc5d0 \uc788\ub294\ub2e4 / D2 trace d2_key \u2192 \ubc1b\ub294\ub2e4 / D2 trace d2_soonrye_shutter \u2192 \ubcf8\ub2
+OK   11_train (console errors 0)
+    [ds4 auto] train hold reached=1 D10 ended map=station open=ending ended=d10_train you=boarded food=4 | [\uc800\uc7a5\uc5d0\uc11c \uc2dc\uc791 D10 day d10_train seed164] / D10 day d10_train \u2192 \ud0c4\ub2e4
+OK   12_beds (console errors 0)
+    [ds4 auto] beds stop reached=1 D2 night map=station open=- you=home food=2 | [D0 food9 water11 hunger3] / D0 evening d0_ledger \u2192 \ub9d0\uc5c6\uc774 \uc801\ub294\ub2e4 / [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls \u2192 \ub611\uac19\uc774 \uc870\uae08\uc529 / D1 day d1_shutter_knock \
+shots 12/12 ok ¡¤ console errors 0

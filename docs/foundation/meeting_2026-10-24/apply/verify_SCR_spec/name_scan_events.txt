@@ -1,0 +1,155 @@
+154
+TEXT | d0_ledger |  | soonrye | 화로에서 수첩을 편다. 방금 들은 이름을 한 줄씩 적는다. 순례가 묻는다. "자네가 적어? 그럼 자네가 데려가는 거야." | day==0 & phase==evening & flag:notebook
+RESULT:out | d0_ledger |  | soonrye | 순례가 고개를 끄덕였다. 장작 하나를 더 넣었다. 당신 글씨였다. | day==0 & phase==evening & flag:notebook
+RESULT:out | d0_ledger |  | soonrye | 이름이 한 줄씩 찼다. 당신 글씨였다. 순례는 더 묻지 않았다. | day==0 & phase==evening & flag:notebook
+TEXT | d0_ledger_b |  | soonrye | 적을 데가 없다. 순례가 손가락으로 이름을 센다. "적을 게 없으면 외워. 내일은 자네가 적어." | day==0 & phase==evening & !flag:notebook & !flag:met_gicheol
+RESULT:out | d0_ledger_b |  | soonrye | 순례가 고개를 끄덕였다. 장작 하나를 더 넣었다. | day==0 & phase==evening & !flag:notebook & !flag:met_gicheol
+RESULT:out | d0_ledger_b |  | soonrye | 이름을 속으로 한 번씩 외웠다. 순례는 더 묻지 않았다. | day==0 & phase==evening & !flag:notebook & !flag:met_gicheol
+RESULT:out | d1_shutter_knock |  | soonrye | 두드림이 그쳤다. 순례가 셔터를 오래 봤다. | day==1 & phase==day & !flag:met_eunji & inspect:shutter_gap
+TEXT | d1_rats |  | soonrye | 계단 밑에서 쥐가 양복 남자의 남은 발을 먹고 있다. 순례가 돌을 던졌다. 쥐는 비키지 않았다. 재는 먹지 않는다. | day==1 & inspect:stairs_ash & alive:soonrye
+TEXT | d1_names |  | soonrye | 새 이름을 적는다. 순례가 계단 쪽을 본다. "누가 이름을 부르거든 대답하지 마. 올라가면 안 와." | day==1 & phase==evening & flag:met_eunji
+RESULT:out | d1_names |  | dongha | 이름을 하나씩 불렀다. 동하만 한 번 더 늦었다. | day==1 & phase==evening & flag:met_eunji
+TEXT | d1_names_quiet |  | soonrye | 새 이름을 적는다. 순례가 계단 쪽을 본다. "누가 이름을 부르거든 대답하지 마. 올라가면 안 와." | day==1 & phase==evening & !flag:met_eunji
+TEXT | d1_night_storage |  | soonrye | 불가 밖이 어둡다. 창고 쪽에서 갉는 소리가 난다. 순례: "밤엔 창고 가지 마. 쥐가 사람 가리지 않아." | day==1 & phase==night
+CHOICE | d1_night_storage |  | soonrye | 창고를 보러 간다 / 순례: 가지 마 /  | day==1 & phase==night
+TEXT | d2_key |  | soonrye | 순례가 조끼에서 열쇠 꾸러미를 꺼낸다. "역무실 열쇠야. 자네가 열어. 밥은 문 틈으로 넣어." | day==2 & phase==trace & alive:soonrye
+TEXT | d2_key_vest |  | soonrye | 순례의 조끼가 담요 위에 개켜져 있다. 주머니에서 열쇠 꾸러미가 짤랑거린다. 역무실 열쇠다. | day==2 & phase==trace & !alive:soonrye & !flag:has_office_key
+TEXT | d3_soonrye_opens |  | soonrye | 순례가 역무실 문을 열었다. "어젯밤 소리에 애가 문을 긁었어." 여학생이 담요를 끌고 나왔다. | day==3 & phase==trace & !flag:met_seoha & alive:soonrye & alive:seoha
+TEXT | d2_soonrye_shutter |  | soonrye | 순례가 셔터를 반 뼘 올렸다. 여자와 큰 청년이 기어 들어왔다. "시장 사람 둘." | day==2 & phase==trace & !flag:met_eunji & alive:soonrye
+TEXT | d2_night_count |  | soonrye | 계단 위에서 작게 센다. "하나, 둘…" 순례의 손바닥이 당신 입을 덮는다. 걸레 냄새가 난다. | day==2 & phase==night & alive:soonrye & flag:met_soonrye
+RESULT:out | d2_night_count |  | soonrye | 셈이 역 사람 수에서 멈췄다. 한참 뒤 멀어졌다. 순례가 손을 뗐다. | day==2 & phase==night & alive:soonrye & flag:met_soonrye
+CHOICE | d2_night_count |  | soonrye | 손을 밀어낸다 / 순례의 손이 떨린다 /  | day==2 & phase==night & alive:soonrye & flag:met_soonrye
+TEXT | d3_bottle |  | soonrye,gicheol | 여학생 물통이 차 있다. 순례 물통은 비었다. 순례의 입술이 터져 있다. 기철이 눈을 피한다. 계단 재가 한 칸 내려왔다 —  | day>=3 & phase==trace & flag:met_seoha & trace:bottle_seoha==full & trace:bottle
+CHOICE | d3_bottle |  | soonrye | 내 물을 순례에게 /  /  | day>=3 & phase==trace & flag:met_seoha & trace:bottle_seoha=
+RESULT:out | d3_bottle |  | soonrye | 순례가 받았다. "됐어." 그래도 마셨다. | day>=3 & phase==trace & flag:met_seoha & trace:bottle_seoha=
+CHOICE | d3_bottle |  | gicheol | 기철 몫을 깎는다 /  /  | day>=3 & phase==trace & flag:met_seoha & trace:bottle_seoha=
+RESULT:out | d3_bottle |  | soonrye,gicheol | 기철 물통을 순례 앞에 놓았다. 기철은 반박하지 않았다. 하루 종일 당신을 안 봤다. | day>=3 & phase==trace & flag:met_seoha & trace:bottle_seoha=
+RESULT:out | d3_bottle |  | soonrye | 순례는 아침 내내 앉아 있었다. | day>=3 & phase==trace & flag:met_seoha & trace:bottle_seoha=
+TEXT | trial_d3_count |  | soonrye | 밤새 출구 계단 위에서 누군가 숫자를 센다. 역에 있는 사람 수에서 멈추지 않는다. 하나 더 센다. 그리고 처음부터 다시 센다 | day==3 & phase==night & alive:soonrye & alive:seoha
+RESULT:out | trial_d3_count |  | soonrye,seoha | 이쪽 소리와 저쪽 소리가 겹쳤다. 순례가 신발을 벗었다. 서하가 허리를 안았고, 순례의 손끝이 재가 되어 서하 뺨에 묻었다. | day==3 & phase==night & alive:soonrye & alive:seoha
+TEXT | trial_d3_count_c |  | soonrye | 밤새 출구 계단 위에서 누군가 숫자를 센다. 역에 있는 사람 수에서 멈추지 않는다. 하나 더 센다. 그리고 처음부터 다시 센다 | day==3 & phase==night & alive:soonrye & !alive:seoha
+RESULT:out | trial_d3_count_c |  | soonrye | 이쪽 소리와 저쪽 소리가 겹쳤다. 순례가 신발을 벗었다. 당신이 허리를 안았고, 순례의 손끝이 재가 되어 당신 손등에 묻었다. | day==3 & phase==night & alive:soonrye & !alive:seoha
+TEXT | trial_d4_gicheol |  | gicheol | 기철: "통로는 이틀이면 되오. 부품은 넉넉하오." 헤드램프가 당신 얼굴에서 비켜나지 않는다. 창고의 부품 상자는 보이지 않는 | day==4 & phase==day & alive:gicheol & flag:met_gicheol
+RESULT:out | trial_d4_gicheol |  | gicheol | 고개를 끄덕였다. 기철이 헤드램프를 껐다. 그날 밤 부품 상자가 가벼워졌다. | day==4 & phase==day & alive:gicheol & flag:met_gicheol
+RESULT:out | trial_d4_gicheol |  | gicheol | 상자는 역무실에 있었다. 셋이 모자랐다. 기철이 당신을 안 봤다. | day==4 & phase==day & alive:gicheol & flag:met_gicheol
+RESULT:ok | trial_d4_gicheol |  | gicheol | 기철이 상자를 내놓았다. "딸애들 몫이었소." 그뿐이었다. | day==4 & phase==day & alive:gicheol & flag:met_gicheol
+RESULT:fail | trial_d4_gicheol |  | gicheol | 스패너가 먼저 왔다. 이가 나갔다. 기철은 상자 위에 앉아 있었다. | day==4 & phase==day & alive:gicheol & flag:met_gicheol
+TEXT | d4_spanner |  | gicheol | 기철이 머리맡에 서 있다. 헤드램프가 꺼져 있다. 손에 스패너가 있다. "셌지." | day==4 & phase==night & flag:gicheol_counted & alive:gicheol
+RESULT:out | d4_spanner |  | gicheol | 기철이 그릇을 받아 들고 돌아섰다. | day==4 & phase==night & flag:gicheol_counted & alive:gicheol
+TEXT | d4_dohyeon_key |  | dohyeon | 도현이 바지가 젖은 채 역에 와 있다. "이 열쇠로 통로를 열 수 있어. 낡아서 같이 고쳐야 해." 통로가 없으면 열차는 서지 | day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_gone
+RESULT:out | d4_dohyeon_key |  | dohyeon | "이을게요." 도현이 연장을 풀었다. 흥얼거렸다. 아무도 못 알아들었다. | day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_g
+RESULT:out | d4_dohyeon_key |  | dohyeon | 도현은 이틀 뒤에 오겠다고 했다. 계단을 오르며 흥얼거렸다. | day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_g
+RESULT:out | d4_dohyeon_key |  | dohyeon | 도현이 열쇠를 도로 넣었다. 터덜터덜 올라갔다. | day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_g
+TEXT | d6_dohyeon_back |  | dohyeon | 도현이 다시 왔다. 바지가 젖어 있다. "기다렸지. 부품 셋이면 오늘부터 잇지." | day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage
+RESULT:out | d6_dohyeon_back |  | dohyeon | "이을게요." 도현이 연장을 풀었다. 흥얼거렸다. | day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_
+RESULT:out | d6_dohyeon_back |  | dohyeon | 도현이 계단을 올랐다. 물이 한 뼘 더 찼다. | day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_
+RESULT:out | d6_dohyeon_back |  | dohyeon | 도현이 열쇠를 도로 넣었다. 다시 오지 않았다. | day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_
+TEXT | d6_dohyeon_price |  | dohyeon | 도현이 다시 왔다. 바지가 젖어 있다. "값이 올랐어. 부품 다섯." | day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage
+RESULT:out | d6_dohyeon_price |  | dohyeon | "이을게요." 도현이 연장을 풀었다. 흥얼거렸다. | day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_
+RESULT:out | d6_dohyeon_price |  | dohyeon | 도현이 계단을 올랐다. 물이 한 뼘 더 찼다. | day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_
+RESULT:out | d6_dohyeon_price |  | dohyeon | 도현이 열쇠를 도로 넣었다. 다시 오지 않았다. | day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_
+TEXT | d5_rail_body |  | mari | 선로에 사람이 걸려 있었다. 얼굴이 물에 불어 있었고 한쪽 신발이 없었다. 마리가 손목을 잡았다. "하루는 안 됐어요." 누가 | day==5 & phase==night & alive:mari & alive:soonrye & alive:seoha
+RESULT:out | d5_rail_body |  | soonrye,seoha | 밤새 드럼통 쪽을 보지 않았다. 당신 배에서 소리가 났다. 순례가 제 몫을 서하 앞에 놓았다. | day==5 & phase==night & alive:mari & alive:soonrye & alive:s
+CHOICE | d5_rail_body |  | mari | 칼을 빼앗는다 / 마리가 칼을 쥐고 있다 /  | day==5 & phase==night & alive:mari & alive:soonrye & alive:s
+RESULT:fail | d5_rail_body |  | mari | 칼날이 손등을 지나갔다. 마리는 사과하지 않았다. 아침에 선로가 비어 있었다. | day==5 & phase==night & alive:mari & alive:soonrye & alive:s
+TEXT | d5_rail_body_c |  | mari | 선로에 사람이 걸려 있었다. 얼굴이 물에 불어 있었고 한쪽 신발이 없었다. 마리가 손목을 잡았다. "하루는 안 됐어요." 누가 | day==5 & phase==night & alive:mari & !(alive:soonrye & alive:seoha)
+CHOICE | d5_rail_body_c |  | mari | 칼을 빼앗는다 / 마리가 칼을 쥐고 있다 /  | day==5 & phase==night & alive:mari & !(alive:soonrye & alive
+RESULT:fail | d5_rail_body_c |  | mari | 칼날이 손등을 지나갔다. 마리는 사과하지 않았다. 아침에 선로가 비어 있었다. | day==5 & phase==night & alive:mari & !(alive:soonrye & alive
+TEXT | d6_vent_voice |  | dongha | 환기구에서 목소리가 내려온다. 동하를 부르는데 동하가 아는 이름이 아니다. 동하가 반 박자 늦게 고개를 든다. 입을 다문다. | day==6 & phase==evening & alive:dongha
+RESULT:out | d6_vent_voice |  | dongha | 동하가 제 손으로 입을 막았다. 손가락 사이로 숨이 샜다. | day==6 & phase==evening & alive:dongha
+CHOICE | d6_vent_voice |  | dongha | 동하의 입을 막아 준다 /  /  | day==6 & phase==evening & alive:dongha
+RESULT:out | d6_vent_voice |  | dongha | 당신 손바닥 밑에서 동하가 무언가 대답하려 했다. 놓지 않았다. | day==6 & phase==evening & alive:dongha
+TEXT | d6_shutter |  | gicheol | 셔터가 반쯤 올라가 있었다. 기철이 그 밑에 엎드려 있었다. 왼손 손가락 셋이 반대로 꺾여 있었다. 횃불 든 남자가 기철의 머 | day==6 & phase==night & flag:met_eunji & alive:gicheol & alive:dongha
+RESULT:out | d6_shutter |  | dongha | 남자가 발을 뗐다. 동하가 소리쳤다, "내가 말했어요, 창고, 내가." 기둥 뒤에 숨은 사람은 끝까지 나오지 않았다. | day==6 & phase==night & flag:met_eunji & alive:gicheol & ali
+CHOICE | d6_shutter |  | dongha | 동하와 덤빈다 / 넷이다. 지면 끝이다 /  | day==6 & phase==night & flag:met_eunji & alive:gicheol & ali
+RESULT:ok | d6_shutter |  | dongha | 동하가 앞의 남자를 넘어뜨렸다. 횃불이 바닥에 굴렀다. 넷이 셔터 밑으로 물러났다. | day==6 & phase==night & flag:met_eunji & alive:gicheol & ali
+CHOICE | d6_shutter |  | gicheol | 아무것도 하지 않는다 / 기철이 밟힌다. 창고가 빈다 /  | day==6 & phase==night & flag:met_eunji & alive:gicheol & ali
+RESULT:out | d6_shutter |  | gicheol | 남자가 발을 비볐다. 기철의 입이 열리지 않았다. 창고는 비고, 기철은 아침에도 그 자리였다. | day==6 & phase==night & flag:met_eunji & alive:gicheol & ali
+TEXT | d7_fingers |  | gicheol,mari | 기철의 왼손이 검다. 마리가 가위를 꺼낸다. "안 자르면 팔까지 가요." 기철이 헤드램프를 끈다. | day==7 & phase==day & flag:gicheol_fingers & alive:gicheol & alive:mari
+RESULT:out | d7_fingers |  | gicheol,mari | 마리가 검은 손가락 셋을 잘랐다. 셋째에서 가위가 미끄러졌다. 기철은 소리를 내지 않았다. | day==7 & phase==day & flag:gicheol_fingers & alive:gicheol &
+RESULT:out | d7_fingers |  | mari | 가위 소리가 세 번 났다. 마리가 손가락을 불에 넣었다. | day==7 & phase==day & flag:gicheol_fingers & alive:gicheol &
+TEXT | d7_fingers_self |  | gicheol | 기철의 왼손이 검다. 가위가 당신 앞에 놓여 있다. "안 자르면 팔까지 가오." 기철이 헤드램프를 끈다. | day==7 & phase==day & flag:gicheol_fingers & alive:gicheol & !alive:mari
+RESULT:ok | d7_fingers_self |  | gicheol | 검은 손가락 셋을 잘랐다. 셋째에서 가위가 미끄러졌다. 기철은 소리를 내지 않았다. | day==7 & phase==day & flag:gicheol_fingers & alive:gicheol &
+RESULT:fail | d7_fingers_self |  | gicheol | 셋째에서 가위가 뼈에 걸렸다. 피가 멎지 않았다. 기철이 제 손으로 끝냈다. | day==7 & phase==day & flag:gicheol_fingers & alive:gicheol &
+RESULT:out | d7_fingers_self |  | gicheol | 가위 소리가 세 번 났다. 기철이 제 손가락을 불에 넣었다. | day==7 & phase==day & flag:gicheol_fingers & alive:gicheol &
+TEXT | d7_fingers_dead |  | gicheol | 기철의 담요를 걷었다. 왼손 손가락 셋이 반대로 꺾인 채 검게 굳어 있다. 헤드램프는 아직 켜져 있었다. | day==7 & phase==day & flag:gicheol_fingers & !alive:gicheol
+TEXT | trial_d8_key |  | soonrye | 창고 열쇠를 누가 갖나. 어젯밤 봉지가 또 비었다. 순례: "내가 갖지. 삼십 년 가졌어." | day==8 & phase==trace & alive:soonrye
+CHOICE | trial_d8_key |  | soonrye | 순례에게 /  /  | day==8 & phase==trace & alive:soonrye
+RESULT:out | trial_d8_key |  | soonrye | 순례가 조끼 안주머니에 넣었다. | day==8 & phase==trace & alive:soonrye
+CHOICE | trial_d8_key |  | soonrye | 운임을 따로 챙긴다 / 순례가 본다 /  | day==8 & phase==trace & alive:soonrye
+RESULT:out | trial_d8_key |  | soonrye | 빵과 물병 하나를 수첩 뒤에 숨겼다. 순례가 열쇠를 쥔 채 그걸 봤다. | day==8 & phase==trace & alive:soonrye
+TEXT | trial_d8_key_b |  | soonrye | 창고 열쇠를 누가 갖나. 어젯밤 봉지가 또 비었다. 순례의 열쇠 꾸러미가 화로 옆에 놓여 있다. | day==8 & phase==trace & !alive:soonrye
+TEXT | hymn_names |  | mari | 마리가 다친 사람 담요 옆에서 일어난다. 입술이 아직 움직인다. 밤새 이름을 불러 준 것이다. | day>=8 & phase==trace & trace:blanket_mari==paired & alive:mari
+CHOICE | hymn_names |  | mari | 마리를 눕힌다 /  /  | day>=8 & phase==trace & trace:blanket_mari==paired & alive:m
+RESULT:out | hymn_names |  | mari | 마리는 눕자마자 잠들었다. 입술은 계속 움직였다. | day>=8 & phase==trace & trace:blanket_mari==paired & alive:m
+RESULT:out | hymn_names |  | mari | 마리가 멈춘 데서부터 이름을 불렀다. 다친 사람이 눈을 떴다. | day>=8 & phase==trace & trace:blanket_mari==paired & alive:m
+TEXT | d8_pillow |  | gicheol,mari | 새벽에 눈을 떴다. 기철의 담요 위에 마리가 앉아 있었다. 베개를 두 손으로 누르고 있었다. 기철의 발이 두 번 움직이고 멈췄 | day==8 & phase==night & injury_gicheol>=2 & meds==0 & alive:gicheol & alive:mari
+RESULT:out | d8_pillow |  | gicheol,mari | 마리는 베개를 치우지 않았다. "약이 없었어요." 기철의 눈을 감기고 이름을 불렀다. | day==8 & phase==night & injury_gicheol>=2 & meds==0 & alive:
+RESULT:out | d8_pillow |  | mari | 아침에 마리가 말했다. "밤에 갔어요." 누가 당신을 오래 봤다. | day==8 & phase==night & injury_gicheol>=2 & meds==0 & alive:
+RESULT:out | d8_pillow |  | mari | 연필 소리가 났다. 마리가 고개를 들었다. 당신이 쓴 줄은 지워지지 않는다. | day==8 & phase==night & injury_gicheol>=2 & meds==0 & alive:
+TEXT | d9_stairs |  | soonrye | 아침에 계단을 봤다. 재가 한 칸도 안 내려와 있었다. 계단 아래 순례의 신발이 가지런했다. 순례는 담요 속에 있었고 발이 검 | day==9 & phase==trace & fog>=4 & alive:soonrye
+RESULT:out | d9_stairs |  | soonrye | 순례가 당신 그릇에 제 물을 부었다. 당신은 받았다. 아무도 보지 않았다. | day==9 & phase==trace & fog>=4 & alive:soonrye
+RESULT:out | d9_stairs |  | soonrye | 순례가 고개를 저었다. 그리고 끄덕였다. | day==9 & phase==trace & fog>=4 & alive:soonrye
+TEXT | d9_hoard |  | eunji | 은지의 담요 밑이 불룩하다. 건빵 봉지 셋이 끈으로 묶여 있다. 운임이다. 은지가 눈을 피하지 않는다. | day==9 & phase==trace & flag:fare_known & alive:eunji
+CHOICE | d9_hoard |  | eunji | 창고에 돌려놓는다 / 은지가 잊지 않는다 /  | day==9 & phase==trace & flag:fare_known & alive:eunji
+RESULT:ok | d9_hoard |  | eunji | 봉지를 창고에 넣었다. 은지는 말리지 않았다. 다만 오래 봤다. | day==9 & phase==trace & flag:fare_known & alive:eunji
+RESULT:fail | d9_hoard |  | eunji | 은지가 봉지를 끌어안았다. "내 거야." 저녁까지 당신을 봤다. | day==9 & phase==trace & flag:fare_known & alive:eunji
+RESULT:out | d9_hoard |  | eunji | 봉지 하나를 받아 수첩 뒤에 숨겼다. 은지가 웃지 않았다. | day==9 & phase==trace & flag:fare_known & alive:eunji
+RESULT:out | d9_inspection |  | seoha | 펀치가 손등을 뚫었다, 지킨 수만큼. 어긴 줄에서는 살이 찢겼다. 서하는 자고 있었다. | day==9 & phase==evening & alive:seoha
+TEXT | trip_a1_backroom |  | eunchae | 약국 뒷방 문이 반쯤 열려 있다. 은채는 계산대에 있다. 안에서 냄새가 난다. | day>=2 & region==A & floor==1 & flag:met_eunchae & !flag:saw_backroom
+RESULT:out | trip_a1_backroom |  | eunchae | 은채의 어머니는 침대에 있었다. 이불 밑이 움직였다, 구더기였다. 은채가 문을 닫았다. "주무세요." | day>=2 & region==A & floor==1 & flag:met_eunchae & !flag:saw
+RESULT:out | trip_a1_backroom |  | eunchae | 은채가 문을 닫았다. "주무세요." | day>=2 & region==A & floor==1 & flag:met_eunchae & !flag:saw
+RESULT:out | trip_a1_phone |  | soonrye | 카드를 주머니에 넣었다. 순례 아들이 남주에 있다고 했다. 부스 안에서 수화기가 혼자 흔들렸다. | day>=2 & region==A & floor==1 & trace:phonebooth==card
+RESULT:ok | trip_b1_gate |  | dohyeon | 남자는 권도현이라 했다. "이틀 뒤에 보답하지." 바지를 안 짰다. | day>=2 & region==B & floor==1 & !flag:met_dohyeon & !flag:sk
+RESULT:out | trip_b1_gate |  | dohyeon | 배수관에 밧줄을 걸어 끌어냈다. "권도현. 이틀 뒤에 보답하지." | day>=2 & region==B & floor==1 & !flag:met_dohyeon & !flag:sk
+TEXT | trip_a2_bones |  | eunji | 뼈 무더기 뒤에서 무엇이 일어선다. 사람 모양이다. 손가락이 너무 많다. 부서진 것을 줍는다. 은지의 간판이 그 발밑에 있다. | day>=4 & region==A & floor==2 & trace:bone_pile==normal
+TEXT | trip_b2_drowned |  | gicheol | 저수조 물이 일어선다. 물에 불은 사람들이 서로 팔을 끼고 있다. 입이 열리고 물이 쏟아진다. 맨 앞 것이 기철의 것과 같은  | day>=6 & region==B & floor==2
+TEXT | d10_walk |  | dongha | 열차는 서지 않았다. 선로를 따라 걷는다, 고가 구간까지 한 역 반. 둘씩 붙어 걷는다. 환기구 아래서 동하의 이름이 불렸다. | day==10 & phase==day & !flag:passage_open & alive:dongha
+CHOICE | d10_walk |  | dongha | 동하를 붙잡는다 / 잡은 손이 재가 된다 /  | day==10 & phase==day & !flag:passage_open & alive:dongha
+RESULT:ok | d10_walk |  | dongha | 동하가 대답하기 전에 입을 막았다. 손바닥이 뜨거웠다. 걸었다. | day==10 & phase==day & !flag:passage_open & alive:dongha
+RESULT:fail | d10_walk |  | dongha | 동하가 대답했다. 신발을 벗었다. 당신 손끝이 재가 됐다. | day==10 & phase==day & !flag:passage_open & alive:dongha
+RESULT:out | d10_walk |  | dongha | "여기요." 동하가 당신을 봤다. 당신은 신발을 벗었다. | day==10 & phase==day & !flag:passage_open & alive:dongha
+RESULT:out | d10_walk |  | dongha | 동하가 대답했다. 신발을 벗었다. 아무도 붙잡지 않았다. | day==10 & phase==day & !flag:passage_open & alive:dongha
+TEXT | passage_day1 |  | dohyeon | 무너진 통로. 도현이 연장을 풀어 놓았다. "일손 둘이면 오늘 반, 내일 반." 당신 손도 세고 있다. | day>=5 & phase==day & flag:passage_work & !flag:passage_half & !flag:passage_wai
+RESULT:out | passage_day1 |  | dohyeon | 도현이 연장을 도로 쌌다. 통로 바닥에 물이 한 뼘 더 찼다. | day>=5 & phase==day & flag:passage_work & !flag:passage_half
+TEXT | passage_alone |  | gicheol,dohyeon | 무너진 통로. 도현은 없다. 기철: "부품 다섯이면 우리끼리도 되오. 사람이 다치오." | day>=6 & phase==day & (!flag:met_dohyeon | flag:dohyeon_gone | flag:dohyeon_refu
+RESULT:out | passage_alone |  | gicheol | 기철이 헤드램프를 껐다. | day>=6 & phase==day & (!flag:met_dohyeon | flag:dohyeon_gone
+TEXT | passage_alone_b |  | dohyeon | 무너진 통로. 도현은 없다. 돌무더기가 사람 키만 하다. 부품 다섯이면 우리끼리도 될 것 같다. | day>=6 & phase==day & (!flag:met_dohyeon | flag:dohyeon_gone | flag:dohyeon_refu
+TEXT | d2_rat_blanket |  | soonrye | 역무실 문틈으로 나온 담요 속에서 쥐가 새끼를 낳았다. 순례가 걸레로 눌렀다. 소리가 여섯 번 났다. 문 안에서 누가 담요를  | day==2 & phase==trace & alive:soonrye & alive:seoha
+RESULT:out | d2_rat_blanket |  | soonrye | 순례가 걸레를 선로에 버렸다. 문 안은 다시 조용했다. | day==2 & phase==trace & alive:soonrye & alive:seoha
+TEXT | d2_soonrye_bread |  | soonrye | 순례가 제 건빵 반쪽을 들고 역무실 쪽으로 간다. 돌아왔을 때 손이 비어 있었다. 순례는 그날 저녁 아무것도 먹지 않았다. | day==2 & phase==evening & alive:soonrye
+RESULT:out | d2_soonrye_bread |  | soonrye | 건빵 하나를 순례 손에 쥐여 주었다. 순례가 그걸 들고 다시 갔다. | day==2 & phase==evening & alive:soonrye
+RESULT:out | d2_soonrye_bread |  | soonrye | 순례는 불가에 앉아 손만 쬐었다. | day==2 & phase==evening & alive:soonrye
+TEXT | d4_shoes_home |  | gicheol | 기철이 안전화 셋을 화로 옆에 말린다. 한 짝 안에 발이 남아 있다. 기철이 그걸 꺼내 불에 넣었다. 냄새가 났다. | day==4 & phase==evening & alive:gicheol
+RESULT:out | d4_shoes_home |  | gicheol | 기철: "신발은 쓸모가 있소." | day==4 & phase==evening & alive:gicheol
+RESULT:out | d4_shoes_home |  | gicheol | 불에서 꺼냈다. 승강장 끝에 묻었다. 기철이 보지 않았다. | day==4 & phase==evening & alive:gicheol
+TEXT | trade_shutter |  | eunji | 은지가 셔터 틈에 입을 대고 말한다. 너머에서 답이 온다. 은지: "저쪽이 통조림을 내. 뭘 줄래." | day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap & alive:eunji & alive
+RESULT:out | trade_shutter |  | eunji | 통조림 넷과 물 둘. 은지: "약은 비싸." | day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap &
+CHOICE | trade_shutter |  | dongha | 동하를 하루 보낸다 / 돌아올지는 저쪽이 정한다 /  | day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap &
+RESULT:out | trade_shutter |  | dongha | 동하가 셔터 밑으로 기어갔다. 저녁에 통조림 여섯과 함께 돌아왔다. 손톱이 둘 없었다. | day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap &
+RESULT:out | trade_shutter |  | eunji | 은지가 입을 뗐다. 너머가 조용해졌다. | day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap &
+TEXT | trade_shutter_b |  | eunji | 은지가 셔터 틈에 입을 대고 말한다. 너머에서 답이 온다. 은지: "저쪽이 통조림을 내. 뭘 줄래." | day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap & alive:eunji & !aliv
+RESULT:out | trade_shutter_b |  | eunji | 통조림 넷과 물 둘. 은지: "약은 비싸." | day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap &
+RESULT:out | trade_shutter_b |  | eunji | 은지가 입을 뗐다. 너머가 조용해졌다. | day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap &
+TEXT | patrol_pact |  | dongha | 셔터가 한 뼘 올라가 있다. 너머의 남자: "짐꾼 하나를 보내. 열흘치 통조림을 주지." 남자의 눈이 동하에게 멈춰 있다. | day>=6 & phase==day & flag:patrol_knows & !flag:pact_done & alive:dongha
+CHOICE | patrol_pact |  | dongha | 동하를 보낸다 / 돌아오지 않는다 /  | day>=6 & phase==day & flag:patrol_knows & !flag:pact_done & 
+RESULT:out | patrol_pact |  | dongha | 통조림 열이 들어왔다. 동하는 뒤돌아보지 않았다. | day>=6 & phase==day & flag:patrol_knows & !flag:pact_done & 
+TEXT | dawn_dongha |  | dongha | 새벽에 깨니 머리가 젖어 있다. 피다. 동하가 파이프를 쥐고 화로 건너에 앉아 있다. 눈을 떼지 않는다. | phase==trace & flag:dawn_dongha & alive:dongha
+CHOICE | dawn_dongha |  | dongha | 동하 그릇을 채운다 /  /  | phase==trace & flag:dawn_dongha & alive:dongha
+RESULT:out | dawn_dongha |  | dongha | 동하가 그릇을 받았다. 파이프는 내려놓지 않았다. | phase==trace & flag:dawn_dongha & alive:dongha
+RESULT:ok | dawn_dongha |  | dongha | 손목을 비틀었다. 파이프가 선로로 떨어졌다. 동하가 울었다. | phase==trace & flag:dawn_dongha & alive:dongha
+RESULT:fail | dawn_dongha |  | dongha | 파이프가 한 번 더 왔다. 귀가 울리고 멎지 않았다. 동하가 파이프를 끌고 물러났다. | phase==trace & flag:dawn_dongha & alive:dongha
+CHOICE | dawn_dongha |  | dongha | "동하야." 하고 부른다 /  /  | phase==trace & flag:dawn_dongha & alive:dongha
+RESULT:ok | dawn_dongha |  | dongha | 동하가 반 박자 늦게 고개를 들었다. 파이프가 내려갔다. | phase==trace & flag:dawn_dongha & alive:dongha
+TEXT | dawn_dongha2 |  | dongha | 눈을 뜨니 동하가 머리맡에 서 있다. 파이프 끝이 당신 이마 위에 멈춰 있다. 아직 다친 데가 욱신거린다. | phase==trace & flag:dawn_dongha2 & alive:dongha
+RESULT:out | dawn_dongha2 |  | dongha | 동하가 그릇을 받아 들고 한참 서 있었다. 파이프가 내려갔다. | phase==trace & flag:dawn_dongha2 & alive:dongha
+RESULT:ok | dawn_dongha2 |  | dongha | 팔로 받았다. 뼈가 울렸다. 동하가 뒷걸음질 쳤다. | phase==trace & flag:dawn_dongha2 & alive:dongha
+CHOICE | dawn_dongha2 |  | dongha | "동하야." 하고 부른다 / 못 들으면 끝이다 /  | phase==trace & flag:dawn_dongha2 & alive:dongha
+RESULT:ok | dawn_dongha2 |  | dongha | "…네." 동하가 반 박자 늦게 대답했다. 파이프를 떨어뜨렸다. | phase==trace & flag:dawn_dongha2 & alive:dongha
+RESULT:fail | dawn_dongha2 |  | dongha | 동하는 대답하지 않았다. 파이프가 내려왔다. | phase==trace & flag:dawn_dongha2 & alive:dongha
+RESULT:out | dawn_dongha2 |  | dongha | 손바닥으로 받았다. 손가락 둘이 반대로 꺾였다. 동하가 파이프를 놓았다. | phase==trace & flag:dawn_dongha2 & alive:dongha
+RESULT:out | dawn_dongha2 |  | dongha | 무릎을 꿇었다. 동하가 오래 내려다봤다. 아침 그릇은 동하가 가져갔다. | phase==trace & flag:dawn_dongha2 & alive:dongha
+TEXT | rail_killed |  | dongha | 선로에 낯선 남자가 누워 있다. 눈을 뜬 채다. 관자놀이가 꺼졌고 피가 레일을 탄다. 동하가 파이프를 쥐고 서 있다. | phase==trace & flag:dongha_killed & alive:dongha
+RESULT:out | rail_killed |  | dongha | 선로 끝에 묻었다. 동하가 흙을 오래 다졌다. | phase==trace & flag:dongha_killed & alive:dongha
+RESULT:out | rail_killed |  | dongha | 적었다. 동하가 그걸 봤다. 아무 말도 안 했다. | phase==trace & flag:dongha_killed & alive:dongha
+RESULT:out | rail_killed |  | dongha | 동하가 파이프를 내려놓았다. 아무도 묻지 않았다. | phase==trace & flag:dongha_killed & alive:dongha

@@ -34,7 +34,7 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] morning3 stop reached=1 D3 trace map=station open=- you=home food=0 | D1 ration trial_d1_bowls → 똑같이 조금씩 / D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 둔다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2]"
+   "[ds4 auto] morning3 stop reached=1 D3 trace map=station open=- you=home food=2 | D1 ration trial_d1_bowls → 똑같이 조금씩 / D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 틈으로 말을 건다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food2 water4 hunger2]"
   ]
  },
  {
@@ -53,7 +53,7 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] night3 hold reached=1 D3 night map=station open=line you=home food=0 | D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 둔다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다"
+   "[ds4 auto] night3 hold reached=1 D3 night map=station open=line you=home food=1 | D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 틈으로 말을 건다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food2 water4 hunger2] / D3 ration share_back → 모른 척한다 / D3 day trip_g_crates → 뒤진다"
   ]
  },
  {
@@ -72,7 +72,8 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] night5 hold reached=1 D5 night map=station open=line you=home food=2 | D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다 / D3 night trial_d3_count → 숨을 죽인다 / D4 trace d3_guess → 불빛 때문인 것 같다 / [D4 food0 water4 hunger4] / D4 day trial_d4_gicheol → 믿는다 / D4 day trip_a1_stall → 좌판을 눈여겨본다 / D4 day trip_a2_bodybag → 가져간다 / D4 evening d4_dohyeon_key → 기다려 달라 한다 / D4 evening d4_shoes_home → 본다 / [꿈 D4] / [D5 food6 water4 hunger6] / D5 day trip_b1_valve → 둔다 / D5 day trip_b2_lockers → 비틀어 연다"
+   "[ds4 auto] night5 hold reached=1 D5 night map=station open=line you=home food=0 | D3 ration share_back → 모른 척한다 / D3 day trip_g_crates → 뒤진다 / D3 night trial_d3_count → 숨을 죽인다 / D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fire_kept → 불을 쬔다 / [D4 food1 water2 hunger2] / D4 day trial_d4_gicheol → 믿는다 / D4 day trip_a1_stall → 좌판을 눈여겨본다 / D4 day trip_g_rats → 맞선다 / D4 evening d4_shoes_home → 본다 / [꿈 D4] / D5 trace dawn_strike → 옆 담요를 가리킨다 / [D5 food0 water1 hunger2] / D5 ration repay_bowl → 그냥 지나간다 / D5 day trip_b1_gate → 물에 들어가 끌어낸다 / D5 day trip_b2_pumproom → 입구 웅덩이만",
+   "[ds4 missing] @dawn_strike"
   ]
  },
  {
@@ -91,8 +92,8 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] night8 hold reached=1 D8 night map=station open=event you=home food=1 | D6 evening d6_dohyeon_back → 필요 없다 한다 / D6 evening d6_vent_voice → 듣는다 / D6 night d6_shutter → 아무것도 하지 않는다 / [꿈 D6] / D7 trace hymn_fire_kept → 불을 쬔다 / D7 trace hymn_paired → 모른 척한다 / [D7 food0 water1 hunger4] / D7 day d7_fingers → 손을 잡아 준다 / D7 day passage_alone → 두고 걷기로 한다 / D7 day trip_g_crates → 뒤진다 / D7 day trip_b2_lockers → 비틀어 연다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 내가 갖는다 / [D8 food3 water2 hunger6] / D8 day trip_a1_vending → 줍는다 / D8 day trip_a2_bones → 물러난다",
-   "[ds4 missing] d5_lullaby@d5_lullaby trip_a2_bones@trip_a2_bones"
+   "[ds4 auto] night8 hold reached=1 D8 night map=station open=event you=home food=0 | D6 night d6_shutter → 아무것도 하지 않는다 / [꿈 D6] / [D7 food0 water2 hunger4] / D7 ration repay_bowl → 그냥 지나간다 / D7 day d7_fingers → 손을 잡아 준다 / D7 day trip_g_crates → 뒤진다 / D7 day trip_b2_lockers → 비틀어 연다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 내가 갖는다 / D8 trace hymn_names → 마리를 눕힌다 / D8 trace dawn_strike → 그릇 둘을 내민다 / D8 trace dawn_mob → 다른 사람을 가리킨다 / [D8 food1 water3 hunger6] / D8 ration repay_bowl → 그냥 지나간다 / D8 day trip_a1_pharmacy → 약 하나를 밀어 넣는다 / D8 day trip_g_rats → 맞선다",
+   "[ds4 missing] @dawn_strike trip_a2_bones@trip_a2_bones @dawn_mob"
   ]
  },
  {
@@ -111,8 +112,8 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] ending hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=1 | D7 day trip_g_crates → 뒤진다 / D7 day trip_b2_lockers → 비틀어 연다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food3 water2 hunger6] / D8 day trip_a1_stall → 좌판을 눈여겨본다 / D8 day trip_g_rats → 맞선다 / [꿈 D8] / D9 trace d9_stairs → 묻는다 / D9 trace d9_hoard → 창고에 돌려놓는다 / [D9 food1 water0 hunger4] / D9 day trip_b1_workers → 신발을 챙긴다 / D9 day trip_b2_drowned → 물러난다 / D9 evening d9_inspection → 고개를 돌린다 / [D10 food1 water0 hunger6] / D10 day d10_walk_other → 걷는다",
-   "[ds4 missing] d5_lullaby@d5_lullaby"
+   "[ds4 auto] ending hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D9 trace d9_hoard → 창고에 돌려놓는다 / D9 trace wound_critical → 약국 안쪽을 뒤진다 / D9 trace dawn_mob → 맞고 버틴다 / [D9 food1 water0 hunger10] / D9 ration repay_bowl → 그냥 지나간다 / D9 evening d9_inspection → 고개를 돌린다 / D9 night starve_you → 선로 밑을 뒤진다 / D9 night called_up → 손등을 깨물며 버틴다 / D10 trace wound_critical → 약국 안쪽을 뒤진다 / D10 trace dawn_mob → 맞고 버틴다 / [D10 food0 water0 hunger10] / D10 ration repay_bowl → 그냥 지나간다 / D10 day d10_hold → 끌려가며 버틴다 / D10 day d10_walk_weak → 옆 사람 물병을 비운다 / D10 day d10_grab → 끌려 넘어진다 / D10 day d10_walk_other → 걷는다",
+   "[ds4 missing] @dawn_strike @d6_shutter_b @dawn_mob wound_critical@wound_critical @d10_hold @d10_grab"
   ]
  },
  {
@@ -131,7 +132,7 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] death hold reached=1 D3 ended map=station open=death_ledger ended=you_gone you=ascended food=0 | [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls → 남의 그릇을 비운다 / D1 day d1_shutter_knock → 연다 / D1 evening d1_names → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_rat_blanket → 본다 / [D2 food4 water8 hunger7] / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 혼자 연다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food4 water4 hunger9] / D3 night trial_d3_count → 함께 센다 / D3 night d3_called_you → 대답한다"
+   "[ds4 auto] death hold reached=1 D3 ended map=station open=death_ledger ended=you_gone you=ascended food=0 | D1 ration trial_d1_bowls → 남의 그릇을 비운다 / D1 day d1_shutter_knock → 연다 / D1 evening d1_names → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_rat_blanket → 본다 / [D2 food4 water8 hunger5] / D2 ration repay_bowl → 그냥 지나간다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 혼자 연다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / [D3 food4 water4 hunger7] / D3 ration repay_bowl → 그냥 지나간다 / D3 night trial_d3_count → 함께 센다 / D3 night d3_called_you → 대답한다"
   ]
  },
  {
@@ -150,7 +151,8 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] evening5 hold reached=1 D5 evening map=station open=line you=home food=2 | D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다 / D3 night trial_d3_count → 숨을 죽인다 / D4 trace d3_guess → 불빛 때문인 것 같다 / [D4 food0 water4 hunger4] / D4 day trial_d4_gicheol → 믿는다 / D4 day trip_a1_stall → 좌판을 눈여겨본다 / D4 day trip_a2_bodybag → 가져간다 / D4 evening d4_dohyeon_key → 기다려 달라 한다 / D4 evening d4_shoes_home → 본다 / [꿈 D4] / [D5 food6 water4 hunger6] / D5 day trip_b1_valve → 둔다 / D5 day trip_b2_lockers → 비틀어 연다"
+   "[ds4 auto] evening5 hold reached=1 D5 evening map=station open=line you=home food=0 | D3 ration share_back → 모른 척한다 / D3 day trip_g_crates → 뒤진다 / D3 night trial_d3_count → 숨을 죽인다 / D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fire_kept → 불을 쬔다 / [D4 food1 water2 hunger2] / D4 day trial_d4_gicheol → 믿는다 / D4 day trip_a1_stall → 좌판을 눈여겨본다 / D4 day trip_g_rats → 맞선다 / D4 evening d4_shoes_home → 본다 / [꿈 D4] / D5 trace dawn_strike → 옆 담요를 가리킨다 / [D5 food0 water1 hunger2] / D5 ration repay_bowl → 그냥 지나간다 / D5 day trip_b1_gate → 물에 들어가 끌어낸다 / D5 day trip_b2_pumproom → 입구 웅덩이만",
+   "[ds4 missing] @dawn_strike"
   ]
  },
  {
@@ -169,8 +171,8 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] reveal hold reached=1 D10 ended map=station open=line ended=d10_walk_other you=walked food=1 | D7 day trip_g_crates → 뒤진다 / D7 day trip_b2_lockers → 비틀어 연다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food3 water2 hunger6] / D8 day trip_a1_stall → 좌판을 눈여겨본다 / D8 day trip_g_rats → 맞선다 / [꿈 D8] / D9 trace d9_stairs → 묻는다 / D9 trace d9_hoard → 창고에 돌려놓는다 / [D9 food1 water0 hunger4] / D9 day trip_b1_workers → 신발을 챙긴다 / D9 day trip_b2_drowned → 물러난다 / D9 evening d9_inspection → 고개를 돌린다 / [D10 food1 water0 hunger6] / D10 day d10_walk_other → 걷는다",
-   "[ds4 missing] d5_lullaby@d5_lullaby"
+   "[ds4 auto] reveal hold reached=1 D10 ended map=station open=line ended=d10_walk_other you=walked food=0 | D9 trace d9_hoard → 창고에 돌려놓는다 / D9 trace wound_critical → 약국 안쪽을 뒤진다 / D9 trace dawn_mob → 맞고 버틴다 / [D9 food1 water0 hunger10] / D9 ration repay_bowl → 그냥 지나간다 / D9 evening d9_inspection → 고개를 돌린다 / D9 night starve_you → 선로 밑을 뒤진다 / D9 night called_up → 손등을 깨물며 버틴다 / D10 trace wound_critical → 약국 안쪽을 뒤진다 / D10 trace dawn_mob → 맞고 버틴다 / [D10 food0 water0 hunger10] / D10 ration repay_bowl → 그냥 지나간다 / D10 day d10_hold → 끌려가며 버틴다 / D10 day d10_walk_weak → 옆 사람 물병을 비운다 / D10 day d10_grab → 끌려 넘어진다 / D10 day d10_walk_other → 걷는다",
+   "[ds4 missing] @dawn_strike @d6_shutter_b @dawn_mob wound_critical@wound_critical @d10_hold @d10_grab"
   ]
  },
  {
@@ -189,7 +191,7 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] called3 hold reached=1 D3 night map=station open=event you=home food=0 | D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 둔다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food0 water4 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다 / D3 night trial_d3_count → 함께 센다"
+   "[ds4 auto] called3 hold reached=1 D3 night map=station open=event you=home food=1 | D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 틈으로 말을 건다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food2 water4 hunger2] / D3 ration share_back → 모른 척한다 / D3 day trip_g_crates → 뒤진다 / D3 night trial_d3_count → 함께 센다"
   ]
  },
  {
@@ -208,7 +210,7 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] train hold reached=1 D10 ended map=station open=ending ended=d10_train you=boarded food=3 | [저장에서 시작 D10 day d10_train seed154] / D10 day d10_train → 탄다"
+   "[ds4 auto] train hold reached=1 D10 ended map=station open=ending ended=d10_train you=boarded food=4 | [저장에서 시작 D10 day d10_train seed164] / D10 day d10_train → 탄다"
   ]
  },
  {
@@ -227,7 +229,7 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] beds stop reached=1 D2 night map=station open=- you=home food=0 | [D0 food9 water11 hunger3] / D0 evening d0_ledger → 말없이 적는다 / [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls → 똑같이 조금씩 / D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 둔다 / D2 night d2_night_count → 숨을 참는다"
+   "[ds4 auto] beds stop reached=1 D2 night map=station open=- you=home food=2 | [D0 food9 water11 hunger3] / D0 evening d0_ledger → 말없이 적는다 / [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls → 똑같이 조금씩 / D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 틈으로 말을 건다 / D2 night d2_night_count → 숨을 참는다"
   ]
  }
 ]

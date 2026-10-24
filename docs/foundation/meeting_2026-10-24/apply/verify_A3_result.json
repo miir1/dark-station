@@ -1,0 +1,25 @@
+{
+  "what": "A3 정체 분포 적대적 검증 (2026-10-24). 표·코드 수정 없음. 근거 파일은 같은 폴더의 verify_A3_*",
+  "verdict": "partial",
+  "reproduced": "node v4/sim/run.js 기본(20정책 x 200판 x 4블록) 다시 돌림 -> 정체 표·묶음 평균·합격선 줄이 보고값과 한 글자도 안 다름 (verify_A3_run_full.md)",
+  "decision_table_unchanged": {
+    "identity.json": "before_data 사본과 같음, git 849acb4(A3 결정 기록) 이후 작업 사본까지 차이 0",
+    "engine": "identity.js·cond.js 차이 0, engine.js 의 정체 판정 줄 그대로",
+    "cells": "축 -9~+9 전 조합 6859개 -> 8칸, 겹침 0, fallback 0, 후보 7, 승객만 2칸(+--, ---)",
+    "games": "새 시드 6800판에서 엔진 정체 = 유일하게 맞는 칸, 어긋남 0"
+  },
+  "two_cells": "starve_you '선로 밑을 뒤진다' 몫-1 지움, patrol_pact '동하를 보낸다' 손+1 지움 -- 표에 정확히 들어감. 메모리에서 되돌리면(시드 5001·7001) 균형 승강장 30 -> 56.3, 성향8 6.9 -> 14.5, 사람5 29.2 -> 34.0",
+  "tie_rule": "D5 자장가 균형 봇 '붙잡는다' 43 : '놓친다' 50 (분석 때 100:0)",
+  "platform_one": {
+    "성향 봇 8종": "7.8 (블록 7.1~8.0), 새 시드 6.9",
+    "사람 흉내 5종": "27.8 (블록 26.3~29.0), 새 시드 29.2 (27.1/31.2)",
+    "옛 방식 전체": "16.1",
+    "주의": "h_cautious2(분석의 '조심') 혼자서는 블록 6개 35.5~47.0 (분석 예상 32), 차장 15~23 (예상 30)"
+  },
+  "seven_candidates": {
+    "성향 봇 8종": "모두 6.9% 이상. 다만 counter·child·steward 가 한 후보씩 거의 100% 내도록 만든 봇이라 counted·counting_child 는 저절로 12.5% 근처. 그 둘을 빼면(6종) counted 1.4·counting_child 1.1",
+    "사람 흉내 5종": "inspector 1.4 (블록 1.1~1.6, 새 시드 1.6/0.7), driver 1.8 (1.1~2.6, 새 시드 1.9/1.9) -- 모든 블록 3% 밑"
+  },
+  "passenger_human": "사람 흉내 평균 49.9 (새 시드 48.2). h_random·h_wary 는 판의 50%가 D0 pro_stairs 에서 죽음(축 0 -> 승객). 프롤로그 사망을 빼면 승객 35.1, driver 3.4, inspector 2.1",
+  "files": ["verify_A3_run_full.md", "verify_A3_identity.json", "verify_A3_identity_stdout.txt", "verify_A3_table_cells.txt", "verify_A3_axis_census.txt", "verify_A3_lullaby_pick.txt"]
+}

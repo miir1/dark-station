@@ -1,0 +1,31 @@
+[
+ {
+  "shot": "zz_open",
+  "ok": true,
+  "why": [],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "봇 기록([ds4 auto]) 없음 - 게임이 시작되지 않았거나 끝까지 돌지 않았다",
+     "그림 배율 0.5 (기대 2) - 화면이 1배이거나 비었다"
+    ],
+    "png_scale": 0.5,
+    "console_errors": 1
+   },
+   {
+    "attempt": 2,
+    "ok": true,
+    "why": [],
+    "png_scale": 2.0,
+    "console_errors": 0
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] open hold reached=1 D0 day map=car open=line you=home food=6 | D0 day pro_cold → 눈을 뜬다 / D0 day pro_medkit → 뜯는다"
+  ]
+ }
+]

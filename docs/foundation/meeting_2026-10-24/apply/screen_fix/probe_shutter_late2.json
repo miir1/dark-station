@@ -1,0 +1,532 @@
+{
+ "shutter": [
+  {
+   "seed": 7,
+   "run": {
+    "log": [
+     "D0 day pro_lever -> 레버를 당긴다",
+     "D0 day pro_notebook -> 주머니에 넣는다",
+     "D0 day pro_gicheol -> 벽감 상자부터 연다",
+     "D0 day pro_platform -> 불가에 앉는다",
+     "D0 day pro_speaker -> 듣는다",
+     "D0 day pro_mari -> 손을 내민다",
+     "D0 evening d0_ledger -> 말없이 적는다",
+     "D1 ration trial_d1_bowls -> 똑같이 조금씩",
+     "D1 evening d1_names_quiet -> 적는다",
+     "D1 night d1_night_storage -> 불가에 있는다",
+     "D2 trace d2_key -> 받는다",
+     "D2 trace d2_soonrye_shutter -> 본다",
+     "D2 trace d2_rat_blanket -> 본다",
+     "D2 day trade_shutter -> 동하를 하루 보낸다",
+     "D2 evening d2_soonrye_bread -> 본다",
+     "D2 night d2_night_shutter -> 틈으로 말을 건다",
+     "D2 night d2_night_count -> 숨을 참는다",
+     "D3 trace d3_soonrye_opens -> 본다",
+     "D3 trace d3_bottle -> 내 물을 순례에게"
+    ],
+    "day": 3,
+    "phase": "trace",
+    "ended": null,
+    "you": "home"
+   },
+   "hits": [],
+   "evlog_d2": [
+    {
+     "d": 2,
+     "ph": "trace",
+     "p": "d2_key",
+     "tag": "",
+     "name": "",
+     "text": "땔감 −1 밤에 무슨 소리가 났다. 흔적이 남았을 것이다."
+    },
+    {
+     "d": 2,
+     "ph": "trace",
+     "p": "d2_key",
+     "tag": "d2_key",
+     "name": "",
+     "text": "순례가 조끼에서 열쇠 꾸러미를 꺼낸다. \"역무실 열쇠야. 자네가 열어. 밥은 문 틈으로 넣어.\""
+    },
+    {
+     "d": 2,
+     "ph": "trace",
+     "p": "d2_soonrye_shutter",
+     "tag": "d2_key:out",
+     "name": "",
+     "text": "열쇠가 차가웠다."
+    },
+    {
+     "d": 2,
+     "ph": "trace",
+     "p": "d2_soonrye_shutter",
+     "tag": "d2_soonrye_shutter",
+     "name": "",
+     "text": "순례가 셔터를 반 뼘 올렸다. 여자와 큰 청년이 기어 들어왔다. \"시장 사람 둘.\""
+    },
+    {
+     "d": 2,
+     "ph": "trace",
+     "p": "d2_rat_blanket",
+     "tag": "d2_soonrye_shutter:out",
+     "name": "",
+     "text": "여자가 당신을 훑었다. 청년은 고개만 꾸벅했다."
+    },
+    {
+     "d": 2,
+     "ph": "trace",
+     "p": "d2_rat_blanket",
+     "tag": "d2_rat_blanket",
+     "name": "",
+     "text": "역무실 문틈으로 나온 담요 속에서 쥐가 새끼를 낳았다. 순례가 걸레로 눌렀다. 소리가 여섯 번 났다. 문 안에서 누가 담요를 도로 끌어당겼다."
+    },
+    {
+     "d": 2,
+     "ph": "trace",
+     "p": "",
+     "tag": "d2_rat_blanket:out",
+     "name": "",
+     "text": "순례가 걸레를 선로에 버렸다. 문 안은 다시 조용했다."
+    },
+    {
+     "d": 2,
+     "ph": "trace",
+     "p": "",
+     "tag": "",
+     "name": "",
+     "text": "당신 수첩이다. 연필이 위에 있다."
+    },
+    {
+     "d": 2,
+     "ph": "day",
+     "p": "trade_shutter",
+     "tag": "trade_shutter",
+     "name": "",
+     "text": "여자가 셔터 틈에 입을 대고 말한다. 너머에서 답이 온다. 여자: \"저쪽이 통조림을 내. 뭘 줄래.\""
+    },
+    {
+     "d": 2,
+     "ph": "day",
+     "p": "",
+     "tag": "trade_shutter:out",
+     "name": "",
+     "text": "청년이 셔터 밑으로 기어갔다. 저녁에 통조림 여섯과 함께 돌아왔다. 손톱이 둘 없었다."
+    },
+    {
+     "d": 2,
+     "ph": "evening",
+     "p": "d2_soonrye_bread",
+     "tag": "testify_eunji",
+     "name": "최은지",
+     "text": "최은지. 하늘 봤어. 바로 눈 감았어. 그래서 여기 있어."
+    },
+    {
+     "d": 2,
+     "ph": "evening",
+     "p": "d2_soonrye_bread",
+     "tag": "testify_dongha",
+     "name": "한동하",
+     "text": "…한동하요. 시장 지붕에서 누가 이름이 불렸어요. 대답한 사람은 위로 갔어요."
+    },
+    {
+     "d": 2,
+     "ph": "evening",
+     "p": "d2_soonrye_bread",
+     "tag": "d2_soonrye_bread",
+     "name": "",
+     "text": "순례가 제 건빵 반쪽을 들고 역무실 쪽으로 간다. 돌아왔을 때 손이 비어 있었다. 순례는 그날 저녁 아무것도 먹지 않았다."
+    },
+    {
+     "d": 2,
+     "ph": "evening",
+     "p": "",
+     "tag": "d2_soonrye_bread:out",
+     "name": "",
+     "text": "순례는 불가에 앉아 손만 쬐었다."
+    },
+    {
+     "d": 2,
+     "ph": "night",
+     "p": "d2_night_shutter",
+     "tag": "d2_night_shutter",
+     "name": "",
+     "text": "셔터 너머에서 다시 두드린다. 발소리가 여럿이다. 다른 사람들은 자는 척한다."
+    },
+    {
+     "d": 2,
+     "ph": "night",
+     "p": "d2_night_count",
+     "tag": "d2_night_shutter:out",
+     "name": "",
+     "text": "셔터 틈으로 말을 주고받았다. 통조림 둘이 밀려 들어왔다. 너머가 역을 안다."
+    },
+    {
+     "d": 2,
+     "ph": "night",
+     "p": "d2_night_count",
+     "tag": "d2_night_count",
+     "name": "",
+     "text": "계단 위에서 작게 센다. \"하나, 둘…\" 순례의 손바닥이 당신 입을 덮는다. 걸레 냄새가 난다."
+    },
+    {
+     "d": 2,
+     "ph": "night",
+     "p": "",
+     "tag": "d2_night_count:out",
+     "name": "",
+     "text": "셈이 역 사람 수에서 멈췄다. 한참 뒤 멀어졌다. 순례가 손을 뗐다."
+    }
+   ]
+  }
+ ],
+ "late2": [
+  {
+   "seed": 3,
+   "run": {
+    "log": [
+     "D0 day pro_lever -> 레버를 당긴다",
+     "D0 day pro_notebook -> 주머니에 넣는다",
+     "D0 day pro_gicheol -> 벽감 상자부터 연다",
+     "D0 day pro_platform -> 불가에 앉는다",
+     "D0 day pro_speaker -> 듣는다",
+     "D0 day pro_mari -> 손을 내민다",
+     "D0 evening d0_ledger -> 말없이 적는다",
+     "D1 ration trial_d1_bowls -> 똑같이 조금씩",
+     "D1 day d1_shutter_knock -> 두드려 답한다",
+     "D1 evening d1_names_quiet -> 적는다",
+     "D1 night d1_night_storage -> 불가에 있는다",
+     "D2 trace d2_key -> 받는다",
+     "D2 trace d2_soonrye_shutter -> 본다",
+     "D2 trace d2_rat_blanket -> 본다",
+     "D2 evening d2_soonrye_bread -> 본다",
+     "D2 night d2_night_shutter -> 틈으로 말을 건다",
+     "D2 night d2_night_count -> 숨을 참는다",
+     "D3 trace d3_soonrye_opens -> 본다",
+     "D3 night trial_d3_count -> 숨을 죽인다",
+     "D4 trace d3_guess -> 불빛 때문인 것 같다",
+     "D4 day trial_d4_gicheol -> 믿는다",
+     "D4 evening d4_shoes_home -> 본다",
+     "D5 night d5_rail_body -> 받는다",
+     "D5 night d5_flood -> 남의 담요로 물길을 막는다",
+     "D5 night d5_lullaby -> 붙잡는다",
+     "D6 trace d6_morning -> 쇠줄을 긋는다",
+     "D6 ration repay_bowl -> 그냥 지나간다",
+     "D6 day passage_alone -> 두고 걷기로 한다",
+     "D6 day patrol_pact -> 동하를 보낸다",
+     "D6 night d6_shutter_b -> 열쇠를 내준다",
+     "D7 trace dawn_strike -> 그릇 둘을 내민다",
+     "D7 trace dawn_mob -> 다른 사람을 가리킨다"
+    ],
+    "day": 7,
+    "phase": "trace",
+    "ended": null,
+    "you": "home"
+   },
+   "late": [
+    {
+     "d": 1,
+     "eng": [],
+     "mapLate": [],
+     "dust0": [],
+     "noticeDay": null,
+     "office": "locked",
+     "metSeoha": false,
+     "key": false,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 1,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 2,
+     "eng": [],
+     "mapLate": [],
+     "dust0": [],
+     "noticeDay": null,
+     "office": "locked",
+     "metSeoha": false,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 2,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 3,
+     "eng": [
+      [
+       "crate_food",
+       "open"
+      ]
+     ],
+     "mapLate": [
+      [
+       "crate_food",
+       false
+      ]
+     ],
+     "dust0": [
+      "crate_food"
+     ],
+     "noticeDay": null,
+     "office": "open",
+     "metSeoha": true,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [
+        "어제 못 본 자리가 그대로다."
+       ],
+       "log": [
+        {
+         "toast": "toast_late",
+         "text": "어제 못 본 자리가 그대로다.",
+         "day": 3
+        },
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 3,
+         "notice": "toast_late"
+        }
+       ],
+       "dust": [
+        "crate_food"
+       ]
+      },
+      {
+       "oid": "crate_food",
+       "toasts": [],
+       "log": [
+        {
+         "id": "crate_food",
+         "st": "open",
+         "lid": "insp_crate_open_late",
+         "day": 3,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      },
+      {
+       "oid": "crate_food",
+       "toasts": [],
+       "log": [
+        {
+         "id": "crate_food",
+         "st": "open",
+         "lid": "insp_crate_open_late",
+         "day": 3,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 4,
+     "eng": [],
+     "mapLate": [],
+     "dust0": [],
+     "noticeDay": 3,
+     "office": "open",
+     "metSeoha": true,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 4,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 5,
+     "eng": [
+      [
+       "crate_food",
+       "open"
+      ]
+     ],
+     "mapLate": [
+      [
+       "crate_food",
+       false
+      ]
+     ],
+     "dust0": [
+      "crate_food"
+     ],
+     "noticeDay": 3,
+     "office": "open",
+     "metSeoha": true,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [
+        "어제 못 본 자리가 그대로다."
+       ],
+       "log": [
+        {
+         "toast": "toast_late",
+         "text": "어제 못 본 자리가 그대로다.",
+         "day": 5
+        },
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 5,
+         "notice": "toast_late"
+        }
+       ],
+       "dust": [
+        "crate_food"
+       ]
+      },
+      {
+       "oid": "crate_food",
+       "toasts": [],
+       "log": [
+        {
+         "id": "crate_food",
+         "st": "open",
+         "lid": "insp_crate_open_late",
+         "day": 5,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      },
+      {
+       "oid": "crate_food",
+       "toasts": [],
+       "log": [
+        {
+         "id": "crate_food",
+         "st": "open",
+         "lid": "insp_crate_open_late",
+         "day": 5,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 6,
+     "eng": [
+      [
+       "blanket_mari",
+       "empty"
+      ]
+     ],
+     "mapLate": [
+      [
+       "blanket_mari",
+       false
+      ]
+     ],
+     "dust0": [
+      "blanket_mari"
+     ],
+     "noticeDay": 5,
+     "office": "open",
+     "metSeoha": true,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [
+        "어제 못 본 자리가 그대로다."
+       ],
+       "log": [
+        {
+         "toast": "toast_late",
+         "text": "어제 못 본 자리가 그대로다.",
+         "day": 6
+        },
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 6,
+         "notice": "toast_late"
+        }
+       ],
+       "dust": [
+        "blanket_mari"
+       ]
+      },
+      {
+       "oid": "blanket_mari",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_mari",
+         "st": "empty",
+         "lid": "insp_blanket_empty",
+         "day": 6,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      },
+      {
+       "oid": "blanket_mari",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_mari",
+         "st": "empty",
+         "lid": "insp_blanket_empty",
+         "day": 6,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    }
+   ],
+   "errors": []
+  }
+ ]
+}

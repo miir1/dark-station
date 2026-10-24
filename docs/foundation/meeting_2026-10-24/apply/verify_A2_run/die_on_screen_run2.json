@@ -1,0 +1,392 @@
+[
+ {
+  "case": "d5_flood_die",
+  "lines_before": [
+   "역이 한 번 크",
+   "역이 한 번 크게 기울었다.",
+   "물이 거꾸로 빨려 들어갔다가 숨을 내쉬듯 쏟아졌다.",
+   "선로의 물이 승강장을 넘었다."
+  ],
+  "lines_after": [
+   {
+    "text": "판정 80% — 안 됐다.",
+    "cg": true
+   },
+   {
+    "text": "발이 물살에 들렸다.",
+    "cg": true
+   },
+   {
+    "text": "배수구 쪽으로 끌려갔다.",
+    "cg": true
+   },
+   {
+    "text": "당신은 떠오르지 않았다.",
+    "cg": true
+   }
+  ],
+  "shots": [
+   "verify_A2_d5_flood_die_1box.png",
+   "verify_A2_d5_flood_die_2cursor.png",
+   "verify_A2_d5_flood_die_3line1.png",
+   "verify_A2_d5_flood_die_3line2.png",
+   "verify_A2_d5_flood_die_3line3.png",
+   "verify_A2_d5_flood_die_3line4.png",
+   "verify_A2_d5_flood_die_4end.png"
+  ],
+  "box": {
+   "open": "event",
+   "day": 5,
+   "phase": "night",
+   "pending": "d5_flood",
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "역이 한 번 크게 기울었다. 물이 거꾸로 빨려 들어갔다가 숨을 내쉬듯 쏟아졌다. 선로의 물이 승강장을 넘었다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1창고를 버리고 뺀다식량 −1식량이 준다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2모두 매달려 퍼낸다80%쓸려 가면 끝이다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3남의 담요로 물길을 막는다그 사람이 밤새 젖는다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": true,
+   "choices": [
+    {
+     "label": "창고를 버리고 뺀다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "모두 매달려 퍼낸다",
+     "locked": false,
+     "reason": "",
+     "warn": "쓸려 가면 끝이다",
+     "taboo": false,
+     "chance": 80
+    },
+    {
+     "label": "남의 담요로 물길을 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 밤새 젖는다",
+     "taboo": true,
+     "chance": null
+    }
+   ]
+  },
+  "cursor": 1,
+  "kinds": [
+   "line",
+   "line",
+   "line",
+   "line",
+   "death_ledger"
+  ],
+  "end_box": {
+   "open": "death_ledger",
+   "day": 5,
+   "phase": "ended",
+   "pending": null,
+   "target": null,
+   "who": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.",
+   "face": "",
+   "text": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.당신갔다 · D5 ___청소원 조끼의 할머니남았다 담요 속 여학생남았다 헤드램프의 남자남았다 셔터의 여자남았다 큰 청년남았다 담요의 여자남았다 ",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1덮는다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": true,
+   "choices": []
+  },
+  "state": {
+   "day": 5,
+   "phase": "ended",
+   "you": "dead",
+   "ended": {
+    "why": "you_gone",
+    "cause": {
+     "event": "d5_flood",
+     "choice": "모두 매달려 퍼낸다",
+     "warned": true,
+     "forced": false,
+     "free": {
+      "event": "d5_flood",
+      "choice": "모두 매달려 퍼낸다",
+      "day": 5
+     },
+     "image": "",
+     "night": false,
+     "warn": "쓸려 가면 끝이다",
+     "swapped": false
+    }
+   },
+   "last": {
+    "event": "d5_flood",
+    "choice": "모두 매달려 퍼낸다",
+    "roll": {
+     "chance": 80,
+     "success": false
+    },
+    "warned": true,
+    "forced": false
+   }
+  },
+  "cg_src": "img/cg/death_drown.png",
+  "page_text_has_karma_word": false,
+  "console_errors": []
+ },
+ {
+  "case": "d6_shutter_die",
+  "lines_before": [
+   "셔",
+   "셔터가 반쯤 올라가 있었다.",
+   "기철이 그 밑에 엎드려 있었다.",
+   "왼손 손가락 셋이 반대로 꺾여 있었다.",
+   "횃불 든 남자가 기철의 머리를 밟고 있었다.",
+   "\"열쇠.\""
+  ],
+  "lines_after": [
+   {
+    "text": "판정 50% — 안 됐다.",
+    "cg": false
+   },
+   {
+    "text": "횃불이 얼굴로 왔다.",
+    "cg": false
+   },
+   {
+    "text": "바닥이 가까워졌다.",
+    "cg": false
+   },
+   {
+    "text": "당신은 일어나지 않았다.",
+    "cg": true
+   }
+  ],
+  "shots": [
+   "verify_A2_d6_shutter_die_1box.png",
+   "verify_A2_d6_shutter_die_2cursor.png",
+   "verify_A2_d6_shutter_die_3line1.png",
+   "verify_A2_d6_shutter_die_3line2.png",
+   "verify_A2_d6_shutter_die_3line3.png",
+   "verify_A2_d6_shutter_die_3line4.png",
+   "verify_A2_d6_shutter_die_4end.png"
+  ],
+  "box": {
+   "open": "event",
+   "day": 6,
+   "phase": "night",
+   "pending": "d6_shutter",
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "셔터가 반쯤 올라가 있었다. 기철이 그 밑에 엎드려 있었다. 왼손 손가락 셋이 반대로 꺾여 있었다. 횃불 든 남자가 기철의 머리를 밟고 있었다. \"열쇠.\"",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1열쇠를 내준다창고가 빈다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2동하와 덤빈다50%넷이다. 지면 끝이다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3아무것도 하지 않는다기철이 밟힌다. 창고가 빈다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": true,
+   "choices": [
+    {
+     "label": "열쇠를 내준다",
+     "locked": false,
+     "reason": "",
+     "warn": "창고가 빈다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "동하와 덤빈다",
+     "locked": false,
+     "reason": "",
+     "warn": "넷이다. 지면 끝이다",
+     "taboo": false,
+     "chance": 50
+    },
+    {
+     "label": "아무것도 하지 않는다",
+     "locked": false,
+     "reason": "",
+     "warn": "기철이 밟힌다. 창고가 빈다",
+     "taboo": false,
+     "chance": null
+    }
+   ]
+  },
+  "cursor": 1,
+  "kinds": [
+   "line",
+   "line",
+   "line",
+   "line",
+   "death_ledger"
+  ],
+  "end_box": {
+   "open": "death_ledger",
+   "day": 6,
+   "phase": "ended",
+   "pending": null,
+   "target": null,
+   "who": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.",
+   "face": "",
+   "text": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.당신갔다 · D6 ___청소원 조끼의 할머니남았다 담요 속 여학생남았다 헤드램프의 남자남았다 셔터의 여자남았다 큰 청년남았다 담요의 여자남았다 ",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1덮는다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": true,
+   "choices": []
+  },
+  "state": {
+   "day": 6,
+   "phase": "ended",
+   "you": "dead",
+   "ended": {
+    "why": "you_gone",
+    "cause": {
+     "event": "d6_shutter",
+     "choice": "동하와 덤빈다",
+     "warned": true,
+     "forced": false,
+     "free": {
+      "event": "d6_shutter",
+      "choice": "동하와 덤빈다",
+      "day": 6
+     },
+     "image": "",
+     "night": false,
+     "warn": "넷이다. 지면 끝이다",
+     "swapped": false
+    }
+   },
+   "last": {
+    "event": "d6_shutter",
+    "choice": "동하와 덤빈다",
+    "roll": {
+     "chance": 50,
+     "success": false
+    },
+    "warned": true,
+    "forced": false
+   }
+  },
+  "cg_src": "img/cg/death_beaten.png",
+  "page_text_has_karma_word": false,
+  "console_errors": []
+ },
+ {
+  "case": "d2_shutter_arm_food0",
+  "lines_before": [
+   "틈",
+   "틈으로 들어온 손이 당신 손목을 잡았다.",
+   "너머에서 당긴다.",
+   "셔터 날이 팔꿈치까지 왔다."
+  ],
+  "lines_after": [],
+  "shots": [
+   "verify_A2_d2_shutter_arm_food0_1box.png"
+  ],
+  "box": {
+   "open": "event",
+   "day": 2,
+   "phase": "night",
+   "pending": "d2_shutter_arm",
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "틈으로 들어온 손이 당신 손목을 잡았다. 너머에서 당긴다. 셔터 날이 팔꿈치까지 왔다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1통조림을 내밀어 바꾼다식량 −2식량이 준다식량이 모자라다",
+     "disabled": true,
+     "lock": "식량이 모자라다"
+    },
+    {
+     "text": "2옆 사람 팔을 내민다그 사람이 대신 끌린다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3팔을 비틀어 뺀다85%못 빼면 끝이다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "통조림을 내밀어 바꾼다",
+     "locked": true,
+     "reason": "식량이(가) 모자라다",
+     "warn": "식량이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "옆 사람 팔을 내민다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 대신 끌린다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "팔을 비틀어 뺀다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 빼면 끝이다",
+     "taboo": false,
+     "chance": 85
+    }
+   ]
+  }
+ }
+]

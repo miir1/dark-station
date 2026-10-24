@@ -1,0 +1,5 @@
+manifest 211
+fixture d10_train=OK [fixture] 164 games, 16.4s, good enough; found d10_train; missing -
+OK   11_train (console errors 0)
+    [ds4 auto] train hold reached=1 D10 ended map=station open=ending ended=d10_train you=boarded food=4 | [\uc800\uc7a5\uc5d0\uc11c \uc2dc\uc791 D10 day d10_train seed164] / D10 day d10_train \u2192 \ud0c4\ub2e4
+shots 12/12 ok ¡¤ console errors 0

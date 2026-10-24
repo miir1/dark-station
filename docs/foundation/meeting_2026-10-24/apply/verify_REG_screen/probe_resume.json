@@ -1,0 +1,194 @@
+{
+ "repay_bowl_continue": {
+  "open1_retries": 0,
+  "save": {
+   "ok": 1,
+   "day": 3,
+   "phase": "ration",
+   "pending": "repay_bowl",
+   "code": 19600
+  },
+  "open2_retries": 0,
+  "title_opts": [
+   "1계속 (D3)",
+   "2새로 시작",
+   "3저장 코드 불러오기",
+   "4전체화면"
+  ],
+  "setbot": {
+   "ok": 1
+  },
+  "pick": {
+   "ok": 1
+  },
+  "reached_ration_window": true,
+  "kinds": [
+   "line",
+   "line",
+   "event",
+   "line",
+   "ration"
+  ],
+  "seen": [
+   "줄 끝에 누가 빈 그릇을 들고 서 있다.",
+   "당신 쪽을 등지고 있다.",
+   "그릇을 받아 들고 불가로 갔다."
+  ],
+  "state": {
+   "day": 3,
+   "phase": "ration",
+   "pending": null,
+   "open": "ration",
+   "last": "repay_bowl"
+  },
+  "console_errors": []
+ },
+ "repay_bowl_import": {
+  "open1_retries": 0,
+  "save": {
+   "ok": 1,
+   "day": 3,
+   "phase": "ration",
+   "pending": "repay_bowl",
+   "code": 19600
+  },
+  "open2_retries": 0,
+  "title_opts": [
+   "1계속 (D3)",
+   "2새로 시작",
+   "3저장 코드 불러오기",
+   "4전체화면"
+  ],
+  "setbot": {
+   "ok": 1
+  },
+  "pick": {
+   "ok": 1
+  },
+  "fill": {
+   "err": "TypeError: Cannot set properties of null (setting 'value')\n    at <anonymous>:1:70\n    at <anonymous>:1:19743"
+  },
+  "pick2": {
+   "ok": 1
+  },
+  "reached_ration_window": true,
+  "kinds": [
+   "import",
+   "title",
+   "line",
+   "line",
+   "event",
+   "line",
+   "ration"
+  ],
+  "seen": [
+   "줄 끝에 누가 빈 그릇을 들고 서 있다.",
+   "당신 쪽을 등지고 있다.",
+   "그릇을 받아 들고 불가로 갔다."
+  ],
+  "state": {
+   "day": 3,
+   "phase": "ration",
+   "pending": null,
+   "open": "ration",
+   "last": "repay_bowl"
+  },
+  "console_errors": []
+ },
+ "share_back_continue": {
+  "open1_retries": 0,
+  "save": {
+   "ok": 1,
+   "day": 4,
+   "phase": "ration",
+   "pending": "share_back",
+   "code": 24276
+  },
+  "open2_retries": 0,
+  "title_opts": [
+   "1계속 (D4)",
+   "2새로 시작",
+   "3저장 코드 불러오기",
+   "4전체화면"
+  ],
+  "setbot": {
+   "ok": 1
+  },
+  "pick": {
+   "ok": 1
+  },
+  "reached_ration_window": true,
+  "kinds": [
+   "line",
+   "line",
+   "event",
+   "line",
+   "ration"
+  ],
+  "seen": [
+   "밤에 제 그릇을 남에게 밀어 주던 사람이다.",
+   "오늘도 제 그릇을 옆으로 밀어 둔다.",
+   "그릇은 옆으로 밀린 채였다."
+  ],
+  "state": {
+   "day": 4,
+   "phase": "ration",
+   "pending": null,
+   "open": "ration",
+   "last": "share_back"
+  },
+  "console_errors": []
+ },
+ "share_back_import": {
+  "open1_retries": 1,
+  "save": {
+   "ok": 1,
+   "day": 4,
+   "phase": "ration",
+   "pending": "share_back",
+   "code": 24276
+  },
+  "open2_retries": 0,
+  "title_opts": [
+   "1계속 (D4)",
+   "2새로 시작",
+   "3저장 코드 불러오기",
+   "4전체화면"
+  ],
+  "setbot": {
+   "ok": 1
+  },
+  "pick": {
+   "ok": 1
+  },
+  "fill": {
+   "err": "TypeError: Cannot set properties of null (setting 'value')\n    at <anonymous>:1:70\n    at <anonymous>:1:24419"
+  },
+  "pick2": {
+   "ok": 1
+  },
+  "reached_ration_window": true,
+  "kinds": [
+   "import",
+   "title",
+   "line",
+   "line",
+   "event",
+   "line",
+   "ration"
+  ],
+  "seen": [
+   "밤에 제 그릇을 남에게 밀어 주던 사람이다.",
+   "오늘도 제 그릇을 옆으로 밀어 둔다.",
+   "그릇은 옆으로 밀린 채였다."
+  ],
+  "state": {
+   "day": 4,
+   "phase": "ration",
+   "pending": null,
+   "open": "ration",
+   "last": "share_back"
+  },
+  "console_errors": []
+ }
+}

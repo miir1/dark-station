@@ -149,11 +149,12 @@ test('E3 late 흔적: 조사 글은 <줄id>_late, 그날 첫 조사 때 toast_la
   s.nightLog.push(logRow({ id: 'r1_steal_food', day: 0 }));
   N.applyNeglect(s, db);
   assert.strictEqual(s.traces.crate_food.late, 1);
-  assert.strictEqual(E.inspectLineId(s, db, 'crate_food'), 'insp_crate_open_late');
+  assert.strictEqual(E.inspectLineId(s, db, 'crate_food'), 'insp_crate_open', '같은 날(아직 밤) — 늦은 흔적은 어젯밤 것(day == 오늘−1)만 (10-24 검증 A4-6)');
   s.traces.bowl_soonrye.st = 'empty';
   assert.strictEqual(E.inspectLineId(s, db, 'bowl_soonrye'), 'insp_bowl_empty', 'late 아닌 흔적은 그대로');
-  s.world.food = 0;   // 그 밤에 도둑질(crate_food 를 다시 바꾸는 행)이 안 일어나게 — 새 흔적이면 late 는 0 이 된다
+  s.world.food = 0;   // 그 밤에 도둑질(crate_food 를 다시 바꾸는 행)이 안 일어나게 — 일어나도 late 는 남는다(아래 A4-4 테스트)
   toPhase(s, db, 2, 'trace');
+  assert.strictEqual(E.inspectLineId(s, db, 'crate_food'), 'insp_crate_open_late', '다음 아침 = 어젯밤 것');
   assert.ok(E.dispatch(s, { type: 'inspect', object: 'stairs' }, db).ok);
   assert.strictEqual(E.view(s, db).notice, 'toast_late');
   assert.ok(E.view(s, db).traces.find((x) => x.id === 'crate_food').late === 1);
@@ -165,6 +166,31 @@ test('E3 late 흔적: 조사 글은 <줄id>_late, 그날 첫 조사 때 toast_la
   const o2 = E.normalize(old, db);
   assert.ok(Object.values(o2.traces).every((tr) => tr.late === 0));
   assert.deepStrictEqual([o2.hurt, o2.notice, o2.stats.neglect], [[], null, 0]);
+});
+
+test('E3 late (10-24 검증 A4-4·A4-6): 같은 밤 뒤 사건(주민·세계 시계)이 그 물건을 다시 바꿔도 late 가 남는다 · 며칠 지난 late 는 늦은 흔적이 아니다', () => {
+  const { db, s } = setup((t) => {
+    t.lines.push({ id: 'insp_crate_open_late', speaker: 'narrator', grade: 'normal', text: '뚜껑이 어제처럼 열려 있다.' }, { id: 'toast_late', speaker: 'ui', grade: 'toast', text: '어제 못 본 자리가 그대로다.' });
+    t.nightEvents.length = 0;
+    t.nightEvents.push(night('n_miss', { role: 'steal', actor: 'gicheol', cond: 'day>=99', missed: { trace: { crate_food: 'empty', bowl_mari: 'empty' } } }));   // 판정만 (그 밤에 다시 안 일어남)
+    t.nightEvents.push(night('n_again', { role: 'steal', actor: 'soonrye', trace: { crate_food: 'open' } }));                                                    // 커져서 돌아온 그 밤에 같은 물건을 다시 바꾼다
+    t.nightEvents.push(night('n_clock', { role: 'clock', actor: '-', kind: 'neutral', trace: { bowl_mari: 'empty' } }));                                       // 세계 시계도 같은 물건
+  });
+  s.day = 1; s.world.max_per_night = 5;
+  s.nightLog.push(logRow({ id: 'n_miss', day: 0 }));
+  const got = N.rollNight(s, db).map((x) => x.id);
+  assert.ok(got.includes('n_again') && got.includes('n_clock'), got.join(','));
+  assert.deepStrictEqual([s.traces.crate_food.st, s.traces.crate_food.late, s.traces.bowl_mari.st, s.traces.bowl_mari.late], ['open', 1, 'empty', 1], '뒤 사건의 상태 + late 그대로');
+  assert.strictEqual(s.traces.bowl_soonrye.late, 0, 'missed 가 안 건드린 물건은 late 0');
+  s.day = 2;   // 다음 아침
+  assert.strictEqual(E.lateNow(s, s.traces.crate_food), true);
+  assert.strictEqual(E.inspectLineId(s, db, 'crate_food'), 'insp_crate_open_late');
+  assert.strictEqual(E.view(s, db).traces.find((x) => x.id === 'crate_food').late, 1);
+  s.day = 4;   // 이틀 뒤 — late 칸은 남아 있어도 늦은 흔적이 아니다
+  assert.strictEqual(s.traces.crate_food.late, 1);
+  assert.strictEqual(E.lateNow(s, s.traces.crate_food), false);
+  assert.strictEqual(E.inspectLineId(s, db, 'crate_food'), 'insp_crate_open', "며칠 지난 흔적에 '어제부터' 글을 쓰지 않는다");
+  assert.strictEqual(E.view(s, db).traces.find((x) => x.id === 'crate_food').late, 0);
 });
 
 // ── E4 noExit ──
@@ -323,9 +349,13 @@ test('부상 출처 s.hurt 와 원인 사건: 깔때기 사건(when 이 당신 �
 });
 
 // ── 봇 ──
-test('봇: 정책 묶음(GROUPS)은 모두 POLICIES 에 있고, 조심형에서 사람 흉내·금기 좋아함은 빠진다 · 10·11번째 성향 봇', () => {
+test('봇: 정책 묶음(GROUPS)은 모두 POLICIES 에 있고, 조심형에서 사람 흉내·금기 좋아함·몸 꺼림은 빠진다 · 10·11번째 성향 봇', () => {
   for (const g of Object.values(B.GROUPS)) for (const k of g) assert.ok(B.POLICIES[k], k);
-  assert.ok(!B.CAREFUL.some((k) => B.POLICIES[k].pick || B.POLICIES[k].tabooBonus || B.POLICIES[k].risky));
+  assert.ok(!B.CAREFUL.some((k) => B.POLICIES[k].pick || B.POLICIES[k].tabooBonus || B.POLICIES[k].risky || B.POLICIES[k].bodyAverse));
+  assert.ok(!B.CAREFUL.includes('selfish') && B.CAREFUL.includes('selfish_nb'), '(10-24 검증) 몸 꺼림 selfish 는 조심형이 아니다');
+  assert.deepStrictEqual(B.GROUPS.selfishPlain.slice().sort(), ['selfish_nb', 'selfish_rt0']);
+  assert.ok(B.GROUPS.selfishQuirk.every((k) => B.POLICIES[k].bodyAverse) && B.GROUPS.selfishPlain.every((k) => !B.POLICIES[k].bodyAverse));
+  assert.deepStrictEqual(B.GROUPS.a4, ['balanced', 'lazy', 'diligent']);
   assert.deepStrictEqual([B.POLICIES.counter.share, B.POLICIES.counter.hand, B.POLICIES.counter.name], [-1, 1, 1]);
   assert.deepStrictEqual([B.POLICIES.child.share, B.POLICIES.child.hand, B.POLICIES.child.name], [-1, -1, 1]);
   assert.strictEqual(B.POLICIES.selfish.bodyAverse, 3);
@@ -340,6 +370,21 @@ test('봇 점수: bodyAverse(다친다·잃는다·상한다 −3) · tabooBonus
   assert.strictEqual(sc('selfish_rt0', point) - sc('selfish_nb', point), 6);
   assert.ok(sc('selfish_rt0', point) > sc('selfish_rt0', hold), '끝까지 금기를 고른다');
   assert.ok(sc('selfish_nb', hold) > sc('selfish_nb', point), '버릇 없는 이기적 봇은 버틴다');
+});
+test('봇 점수 (10-24 검증 REG): 조심형은 평범한 대안이 열려 있으면 성향 가점으로 죽음 주사위를 사지 않는다 · 끝까지 금기 정책의 남을 내미는 금기는 그대로', () => {
+  // dawn_strike 꼴: '축 늘어진다'(손 −1, 85%, 실패 = 끝) vs '맞고 버틴다'(크게 다친다) vs '옆 담요를 가리킨다'(금기, 카르마 8 이상이면 talk 50 · 끝)
+  const limp = { label: '축 늘어진다', warn: '안 놓으면 끝이다', check: true, chance: 85, locked: false, axis: { hand: -1 } };
+  const hold = { label: '맞고 버틴다', warn: '크게 다친다', check: false, chance: null, locked: false, axis: {} };
+  const point = { label: '옆 담요를 가리킨다', warn: '아무도 안 돌아서면 끝이다', taboo: true, check: true, chance: 50, locked: false, axis: { hand: -1, share: -1 } };
+  const ms = [limp, hold, point];
+  const plainAlt = ms.some(B.isPlain);
+  assert.strictEqual(plainAlt, true, '맞고 버틴다 = 평범한 대안(죽음 글 아님·금기 아님)');
+  const sc = (pol, c, alt) => B.scoreChoice(c, B.POLICIES[pol], 'dawn_strike', { kind: 'trial', unwell: false, plainAlt: alt });
+  assert.ok(sc('selfish_nb', hold, true) > sc('selfish_nb', limp, true), '버릇 없는 이기적: 버틴다 > 축 늘어진다 (가점 +2 가 15% 죽음을 사지 못한다)');
+  assert.ok(sc('selfish_nb', limp, false) > sc('selfish_nb', limp, true), '평범한 대안이 없으면 가점은 그대로');
+  assert.ok(sc('selfish_rt0', point, true) > sc('selfish_rt0', hold, true), '끝까지 금기(selfish_rt0): 판정이 된 금기도 끝까지 고른다');
+  assert.strictEqual(sc('devoted', limp, true) - sc('devoted', limp, false), 0, '헌신(avoidDeadly < 1)은 그대로 — 축이 세게 끌면 죽음 주사위도 고른다');
+  assert.strictEqual(sc('balanced', limp, true), sc('balanced', limp, false), '균형(축 0)은 바뀌지 않는다');
 });
 test('봇 동점: 둘 다 경고인 갈림에서 0.2점 안쪽이면 무작위 — 판정 % 몇 점 차로 늘 같은 쪽을 받지 않는다 (A3 분석 §5)', () => {
   const metas = [{ i: 0, label: '붙잡는다', warn: '놓치면 다친다', check: true, chance: 55, locked: false, axis: {} }, { i: 1, label: '놓친다', warn: '아이가 떠내려간다', check: false, chance: null, locked: false, axis: {} }, { i: 2, label: '본다', locked: false, axis: {} }];
@@ -373,14 +418,25 @@ test('합격선 새 줄: A1 이기심(이른 안전 +5%p·열흘 생존 < 균형
   const ids = ['a', 'b'];
   const mk = (o) => Object.assign({}, base, o);
   const aggs = { balanced: mk({ identity: { a: 50, b: 50 } }), lazy: mk({ survived: 30, home9: 2.5, res7: 3.5 }), diligent: mk({ survived: 46, home9: 3.2, res7: 4.4 }),
-    selfish: mk({ aliveD4: 100, survived: 30, topCause: { k: 'called_up', share: 55 }, identity: { a: 10, b: 90 } }), selfish_nb: mk({ survived: 35 }), selfish_rt: mk({ survived: 20 }), selfish_rt0: mk({ survived: 25 }),
-    h_random: mk({ identity: { a: 30, b: 70 } }) };
+    selfish: mk({ aliveD4: 100, survived: 60, topCause: { k: 'called_up', share: 95 }, identity: { a: 10, b: 90 } }), selfish_nb: mk({ aliveD4: 100, survived: 35 }), selfish_rt: mk({ survived: 20 }), selfish_rt0: mk({ aliveD4: 100, survived: 25 }),
+    h_random: mk({ identity: { a: 30, b: 70 }, identityNP: { a: 60, b: 40 }, prologueDeaths: 100 }) };
   const g = S.gate(aggs, ids, ['balanced']);
   const row = (p) => g.rows.find((r) => r[0].startsWith(p));
-  assert.deepStrictEqual(row('A1 이른 안전').slice(3), [true, false], '+12%p = 통과·경계 밖');
-  assert.deepStrictEqual(S.gate(Object.assign({}, aggs, { selfish: Object.assign({}, aggs.selfish, { aliveD4: 96 }) }), ids, ['balanced']).rows.find((r) => r[0].startsWith('A1 이른 안전')).slice(3), [true, true], '+8%p = 통과지만 경계(31 §4 △)');
-  assert.deepStrictEqual(row('A1 이기심의 값').slice(3), [true, false], '−10~−25 = 통과');
-  assert.strictEqual(row('A1 이기적 4종 사인 쏠림')[3], true);
+  assert.deepStrictEqual(row('A1 이른 안전').slice(3), [true, false], '+12%p = 통과·경계 밖 (버릇 없는 이기적 각각)');
+  assert.deepStrictEqual(S.gate(Object.assign({}, aggs, { selfish_nb: Object.assign({}, aggs.selfish_nb, { aliveD4: 96 }) }), ids, ['balanced']).rows.find((r) => r[0].startsWith('A1 이른 안전')).slice(3), [true, true], '+8%p = 통과지만 경계(31 §4 △)');
+  assert.deepStrictEqual(row('A1 이기심의 값').slice(3), [true, false], '버릇 없는 이기적 −10·−20 = 통과 (몸 꺼림 selfish +15 는 참고 줄)');
+  assert.ok(row('A1 이기심의 값')[2].includes('selfish_nb') && !/(^|[^_])selfish [+-]/.test(row('A1 이기심의 값')[2]), row('A1 이기심의 값')[2]);
+  assert.ok(row('  참고: 몸 꺼림 버릇').slice(2, 4)[0].includes('selfish +15'), '몸 꺼림 정책은 측정 줄');
+  assert.strictEqual(row('A1 이기적 사인 쏠림')[3], true, '몸 꺼림 selfish 의 95% 쏠림은 판정에 안 든다');
+  assert.ok(row('정체 — 사람 흉내 평균, 가장 큰 후보')[2] === 'a 60%', '사람 흉내 정체 = 프롤로그 사망 판을 뺀 분포');
+  assert.ok(row('  참고: 사람 흉내 평균 (옛 방식')[2].includes('b 70') && row('  참고: 사람 흉내 평균 (옛 방식')[2].includes('h_random 50%'), row('  참고: 사람 흉내 평균 (옛 방식')[2]);
+  // 사인 쏠림: 사망률이 SIGN_MIN_RATE % 보다 낮은 정책은 판정 안 함 — 판정할 정책이 없으면 △(경계)
+  const few = S.gate(Object.assign({}, aggs, { selfish_nb: mk({ survived: 35, deaths: 3, deathRate: 1.5, topCause: { k: 'x', share: 100 } }), selfish_rt0: mk({ survived: 25, deaths: 5, deathRate: 2.5, topCause: { k: 'y', share: 100 } }) }), ids, ['balanced']).rows.find((r) => r[0].startsWith('A1 이기적 사인 쏠림'));
+  assert.deepStrictEqual(few.slice(3), [true, true], few[2]);
+  // A2 날마다: 조심형 합산 — 전 정책 합산이면 >0 이어도 조심형이 0 인 날이 있으면 미달 (10-24 검증 A2)
+  const a2 = S.gate(Object.assign({}, aggs, { balanced: mk({ dayEvent: { 2: 1, 4: 2, 5: 9 } }), h_random: mk({ dayEvent: { 2: 5, 3: 90, 4: 5, 5: 5, 6: 5 } }) }), ids, ['balanced']).rows;
+  assert.strictEqual(a2.find((r) => r[0].startsWith('A2 D2~D6'))[3], false, '균형(조심형)의 D3·D6 0 이 h_random 에 가려지지 않는다');
+  assert.ok(a2.find((r) => r[0].startsWith('  참고: 같은 값'))[2].includes('전 D2 12 · D3 96'));
   assert.deepStrictEqual(row('A2 D5까지').slice(3), [true, false]);
   assert.deepStrictEqual(row('A2 균형 사망 중 한 사건 비중 (사인').slice(3), [true, true], '35% = 통과지만 ±5 안');
   assert.strictEqual(row('A2 D2~D6')[3], true);

@@ -1,0 +1,120 @@
+{
+ "office2": {
+  "office": "open",
+  "door_obj": {
+   "x": 15,
+   "y": 2,
+   "solid": false,
+   "state": "open"
+  },
+  "busy_parts_crate": {
+   "open": "",
+   "moving": false,
+   "auto": false
+  },
+  "walk_parts_crate": {
+   "w": true,
+   "auto": true,
+   "toast": ""
+  },
+  "pos_parts_crate": [
+   9,
+   2,
+   "up"
+  ],
+  "target_parts_crate": "parts_crate:조사",
+  "busy_crate_food": {
+   "open": "",
+   "moving": false,
+   "auto": false
+  },
+  "walk_crate_food": {
+   "w": true,
+   "auto": true,
+   "toast": ""
+  },
+  "pos_crate_food": [
+   9,
+   2,
+   "left"
+  ],
+  "target_crate_food": "crate_food:조사",
+  "pos_door": [
+   15,
+   2
+  ],
+  "crate_log_walk": [
+   [
+    "line",
+    [],
+    "부품 상자다."
+   ],
+   [
+    "line",
+    [],
+    "통로를 잇는 데 든다."
+   ],
+   [
+    "line",
+    [],
+    "뚜껑이 열려 있다."
+   ],
+   [
+    "line",
+    [],
+    "봉지 하나가 비었다."
+   ],
+   [
+    "write",
+    [
+     "수첩에 적는다",
+     "둔다"
+    ],
+    ""
+   ]
+  ],
+  "crate_inspect": {
+   "pending": null,
+   "seen": true,
+   "log": [
+    {
+     "id": "crate_food",
+     "st": "open",
+     "lid": "insp_crate_open",
+     "day": 3,
+     "notice": ""
+    },
+    {
+     "id": "crate_food",
+     "st": "open",
+     "lid": "insp_crate_open",
+     "day": 3,
+     "notice": ""
+    }
+   ],
+   "bot": [
+    [
+     "line",
+     [],
+     "뚜껑이 열려 있다."
+    ],
+    [
+     "line",
+     [],
+     "봉지 하나가 비었다."
+    ],
+    [
+     "write",
+     [
+      "수첩에 적는다",
+      "둔다"
+     ],
+     ""
+    ]
+   ],
+   "open": ""
+  },
+  "errors": [],
+  "ok": true
+ }
+}

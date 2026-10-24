@@ -91,7 +91,8 @@
     return !!L.v4 && wallLift(sc, o, L.im) >= WALL_LIFT;
   }
   // 누가 손댄 물건은 제자리에서 비켜 그린다 (베개가 밀렸다, 수첩이 옮겨졌다)
-  const MOVED = { pillow_gicheol: { moved: [9, -3], blood: [9, -3] }, notebook_you: { moved: [-8, 5] } };
+  // 당신 그릇 pushed(2026-10-24 A1 §2-4 cold_bowl — '줄 끝으로 밀려나 있다'): 화로 뒤 제자리에서 오른쪽 귀퉁이로 밀려난다 (새 그림 0, 덧그림 없음)
+  const MOVED = { pillow_gicheol: { moved: [9, -3], blood: [9, -3] }, notebook_you: { moved: [-8, 5] }, bowl_you: { pushed: [12, -4] } };
   // 기본 상태인데도 늘 보이는 흔적 (물통은 찬 채로 보인다)
   const BASE_TRACE = { bottle: 'bottle_full' };
 
@@ -258,12 +259,14 @@
 
   function shadow(ctx, x, y) { ctx.fillStyle = 'rgba(0,0,0,0.42)'; ctx.beginPath(); ctx.ellipse(x * T + T / 2, y * T + T - 4, 11, 4, 0, 0, Math.PI * 2); ctx.fill(); }
   // 사람 하나. pose: null(서 있음) · 'sitting'(저녁 화로 둘레, 앉기 실루엣) · 'lying'(밤 잠자리, 눕기 실루엣).
-  // fx: { breath: 0|1 서 있는 윗몸 1px · sleepBreath: 0|1 담요 가운데 1px }. 돌려주는 값 = 그림에서 읽은 머리 꼭대기 y(반응 꼬리표·말풍선 자리)
+  // fx: { breath: 0|1 서 있는 윗몸 1px · sleepBreath: 0|1 담요 가운데 1px · cold: 등 돌림(고개 숙임 · 잠은 뒤통수) }. 돌려주는 값 = 그림에서 읽은 머리 꼭대기 y(반응 꼬리표·말풍선 자리)
+  // (2026-10-24 A1 §2-4) cold = 엔진 signs.cold(그 주민의 원한이 문턱 이상). 방향(당신을 등진다)은 game.js 가 정하고, 여기서는 고개를 숙이고(머리 2~3px 아래) 잠자리에서는 등을 보인다
+  const bow = (im, fx, d) => (fx.cold && ART.bowed ? ART.bowed(im, d) || im : im);
   function drawPerson(ctx, id, x, y, frame, hurt, dir, pose, fx) {
     hurt = Math.min(3, hurt || 0); fx = fx || {};
     const X = Math.round(x * T), Y = Math.round(y * T);
     if (pose === 'lying') {                                                      // 밤: 잠자리(같은 칸의 bed 소품) 위에 머리 + 담요를 겹친다 — 바닥에 쓰러진 몸으로 안 보이게
-      const sl = ART.sleeper && ART.sleeper(id, hurt);
+      const sl = (fx.cold && ART.sleeperBack && ART.sleeperBack(id, hurt)) || (ART.sleeper && ART.sleeper(id, hurt));
       if (sl) {                                                                  // 사람마다 잠 그림(sleep/<id>)이 먼저, 없으면 만든 것 (art.js)
         ctx.drawImage(sl, X, Y);
         if (fx.sleepBreath) ctx.drawImage(sl, 10, 13, 12, 14, X + 10, Y + 12, 12, 14);   // 담요 가운데가 1px 솟는다
@@ -283,25 +286,25 @@
       return top + ART.headTop(sid0, 0, dir || 'down');
     }
     if (pose === 'sitting') {                                                    // 사람마다 앉기 그림(sit/<id>, 4방향) → 공용 실루엣 물들이기 → 걷기 그림 아래를 접는다
-      const own = ART.sitPose && ART.sitPose(id, dir || 'down', hurt);
-      if (own) { const top = Y + T - own.height; ctx.drawImage(own, X + Math.round((T - own.width) / 2), top); return top + ART.opaqueTop(own); }
-      const im = ART.pose('sit', id, hurt);
-      if (im) { const top = Y + T - im.height; ctx.drawImage(im, X + Math.round((T - im.width) / 2), top); return top + ART.opaqueTop(im); }
-      const img = ART.person(ART.spriteId(id), 0, hurt, dir || 'down');
+      const own0 = ART.sitPose && ART.sitPose(id, dir || 'down', hurt);
+      if (own0) { const own = bow(own0, fx, 2); const top = Y + T - own.height; ctx.drawImage(own, X + Math.round((T - own.width) / 2), top); return top + ART.opaqueTop(own); }
+      const im0 = ART.pose('sit', id, hurt);
+      if (im0) { const im = bow(im0, fx, 2); const top = Y + T - im.height; ctx.drawImage(im, X + Math.round((T - im.width) / 2), top); return top + ART.opaqueTop(im); }
+      const img = bow(ART.person(ART.spriteId(id), 0, hurt, dir || 'down'), fx, 2);
       const top = Y + T - img.height + 12;
       ctx.drawImage(img, 0, 0, img.width, img.height - 12, X + Math.round((T - img.width) / 2), top, img.width, img.height - 12);
-      return top + ART.headTop(ART.spriteId(id), 0, dir || 'down');
+      return top + ART.opaqueTop(img);
     }
     const sid = ART.spriteId(id);
-    const img = ART.person(sid, frame, hurt, dir || 'down');
+    const img = bow(ART.person(sid, frame, hurt, dir || 'down'), fx, 3);
     const X0 = X + Math.round((T - img.width) / 2), Y0 = Y + T - img.height + (frame ? 1 : 0);   // 발 칸(왼발·오른발)은 1px 아래 = 걸음마다 몸이 출렁인다
-    const b = fx.breath ? 1 : 0;
+    const b = fx.breath && !fx.cold ? 1 : 0;                                     // 등 돌린 사람은 숨쉬기 1px 없이 웅크린 채
     if (b) {
       const cut = img.height - (PH - 28);                                        // 위 28줄(48 기준) = 윗몸
       ctx.drawImage(img, 0, cut, img.width, img.height - cut, X0, Y0 + cut, img.width, img.height - cut);
       ctx.drawImage(img, 0, 0, img.width, cut, X0, Y0 + b, img.width, cut);
     } else ctx.drawImage(img, X0, Y0);
-    return Y0 + b + ART.headTop(sid, frame, dir || 'down');
+    return Y0 + b + (fx.cold ? ART.opaqueTop(img) : ART.headTop(sid, frame, dir || 'down'));
   }
 
   // ── 반응 꼬리표: 1px 테두리 어두운 11×11 안에 눈(안 잠)·입(굶주림·먹은 흔적)·'…'(아직 이야기 안 함). 빛 덮개 뒤에 그려 늘 보인다 ──
@@ -323,6 +326,19 @@
     if (t.kind === 'eyes' && (tick + t.phase) % 48 < 5) { ctx.fillStyle = '#c9c0b0'; ctx.fillRect(ix, iy + (im.height >> 1), im.width, 1); return; }   // 깜빡 = 감은 눈 한 줄
     const bob = t.kind === 'mouth' && im.height < TAG - 2 ? ((tick + t.phase) >> 3) % 2 : 0;
     ctx.drawImage(im, ix, iy + bob);
+  }
+  // ── 먼지 (2026-10-24 A4 §4-1 '내가 안 봐서'가 보이게): 엔진 흔적 late(어젯밤 못 본 일이 바꾼 흔적)이고 아직 안 본 물건 위에
+  //   마른 먼지 일곱 점(1~2px)이 천천히 가라앉는다 (아무도 손대지 않은 자리). 수치·글자 없음, 새 그림 0. 조사하면(seen) 사라진다 ──
+  const DUST = [[-7, 0.0, 1], [-3, 0.37, 2], [2, 0.71, 1], [6, 0.18, 2], [0, 0.55, 1], [-5, 0.86, 1], [4, 0.45, 1]];   // [가로 자리, 시차, 크기]
+  function drawDust(ctx, d, now) {
+    const seed = phaseOf(d.id);
+    for (const [dx, off, w] of DUST) {
+      const ph = (now / 2600 + off + seed) % 1;                                  // 0 = 위(물건 위 14px) → 1 = 물건 윗단
+      const a = Math.min(1, Math.sin(Math.PI * ph) * 1.15);
+      if (a < 0.1) continue;
+      const x = Math.round(d.x + dx + Math.sin(now / 700 + off * 9) * 1.5), y = Math.round(d.y - 14 + ph * 14);
+      ctx.fillStyle = `rgba(232,224,206,${(a * 0.9).toFixed(3)})`; ctx.fillRect(x, y, w, 1);
+    }
   }
   const drawProp = (ctx, id, X, Y, label) => { const im = ART.prop(id, label); ctx.drawImage(im, X + Math.round((T - im.width) / 2), Y - (im.height - T)); return Y - (im.height - T); };
   const drawImg = (ctx, im, X, Y) => { ctx.drawImage(im, X + Math.round((T - im.width) / 2), Y + T - im.height); return Y + T - im.height; };
@@ -356,8 +372,8 @@
   }
   const clearBubbles = () => syncBubbles([], 0, 0);
 
-  // sc: { map, rows, w, h, px, py, face, moving:{dx,dy,t}|null, steps, walkDist }, people: [{id, x, y, face, pose, walkDist, moving, frame, injury, mark, react, bubble, light}]
-  // objs: [{id, x, y, name, solid, state, overlay, light, hidden, bubble}]
+  // sc: { map, rows, w, h, px, py, face, moving:{dx,dy,t}|null, steps, walkDist }, people: [{id, x, y, face, pose, walkDist, moving, frame, injury, mark, react, bubble, light, cold}]
+  // objs: [{id, x, y, name, solid, state, overlay, light, hidden, bubble, late}]
   // opts: { now(ms), target, doorOpen, officeOpen, youHurt, youReact, rubble:[[x,y]…] 잔해를 더 그릴 칸 }
   function draw(ctx, cv, sc, state, people, objs, tick, opts) {
     opts = opts || {};
@@ -413,7 +429,7 @@
       sctx = spriteCv.getContext('2d'); sctx.setTransform(1, 0, 0, 1, 0, 0); sctx.clearRect(0, 0, spriteCv.width, spriteCv.height); sctx.imageSmoothingEnabled = false; sctx.translate(ox, oy);
     }
 
-    const sprites = [], tags = [], bubbles = [];
+    const sprites = [], tags = [], bubbles = [], dust = [];
     const drumOpen = ART.v4prop('drum_open');                                    // 불을 지운 드럼통 그림이 있을 때만 코드 불꽃 (불이 둘이 되지 않게)
     // 물건마다 그릴 그림 (P0-S6): v4 소품(원래 크기) → 대체(손 물건 = 옛 그림 ½ · 연 수납 = 닫힌 그림 어둡게 + 틈) → 옛 소품
     const look = new Map();
@@ -456,7 +472,8 @@
           const im = ART.half(L.openSt ? ART.opened(ART.prop(pid)) : ART.prop(pid));
           top = Y + T - 3 - im.height; ctx.drawImage(im, X + Math.round((T - im.width) / 2) + mx0, top + my0);
         } else if (pid) {
-          if (L.openSt) { const im = ART.opened(ART.prop(pid)); top = drawImg(ctx, im, X + mx0, Y + my0); }
+          if (o.state === 'open' && tileAt(sc, o.x, o.y) === 'k') { /* 열린 문(역무실 문): 문 칸(k)이 어두운 출입구로 그린다 — 닫힌 문 그림을 다시 얹지 않는다. 이제 그 칸을 걸어 지나간다 (10-24 검증 #3·#6) */ }
+          else if (L.openSt) { const im = ART.opened(ART.prop(pid)); top = drawImg(ctx, im, X + mx0, Y + my0); }
           else top = drawProp(ctx, pid, X + mx0, Y + my0);
         } else if (o.id === 'shutter_gap') { ctx.fillStyle = 'rgba(80,70,60,0.5)'; ctx.fillRect(X + knock, Y + 20, T - knock, 12); }
         const base = Object.keys(BASE_TRACE).find((k) => o.id.startsWith(k + '_'));
@@ -484,6 +501,7 @@
           else ctx.fillRect(X + 12, Y + 18, 8, 6);
         }
         if (o.bubble) bubbles.push({ key: 'o:' + o.id, text: o.bubble, x: X + T / 2, y: top - 2 });
+        if (o.late) dust.push({ id: o.id, x: X + T / 2 + mx0, y: Math.min(top, Y + T - 10) });
       }]);
     }
     // 터널 잔해: 막힌 열의 나머지 칸에도 (보이지 않는 벽 없음)
@@ -497,6 +515,7 @@
           breath: !p.pose && !p.moving && !frame && lit(p.x, p.y) ? breathOf(now, p.id, 2400) : 0,
           sleepBreath: p.pose === 'lying' && (BREATH_AT_NIGHT || !night) ? breathOf(now, p.id, 3000) : 0,
           stoke: p.stoke ? ((now + phaseOf(p.id) * 1600) % 1600) < 320 : false,   // 장작을 넣는 손짓 (1.6초에 한 번)
+          cold: !!p.cold,                                                         // 등 돌림 (signs.cold) — 고개 숙임 · 잠은 뒤통수
         };
         const top = drawPerson(ctx, p.id, p.x, p.y, frame, p.injury, p.face, p.pose, fx);
         const cx = Math.round(p.x * T + T / 2);
@@ -542,8 +561,9 @@
     // 앞에 조사할 것이 있으면 ▾
     if (opts.target) { const tg = opts.target; ctx.fillStyle = '#d0a24a'; const bx = tg.x * T + 12, by = tg.y * T - 28 - ((tick >> 4) % 2) * 2; ctx.fillRect(bx, by, 8, 4); ctx.fillRect(bx + 2, by + 4, 4, 2); }
     lighting(ctx, sc, state, lights, tick, now, LIGHT_P1);                       // 밝기 안이면 사람·가구 위에는 덮개를 반만
+    for (const d of dust) drawDust(ctx, d, now);                                 // 못 본 밤이 바꾼 흔적(late) 위 먼지 — 빛 덮개 뒤 = 어두워도 보인다
     for (const t of tags) drawTag(ctx, t, tick);                                 // 빛 덮개 뒤 = 어두워도 보인다
-    RENDER.last = { tags, youBox };                                              // 검수용 (screen_check recheck: 꼬리표가 당신 몸에 겹치나)
+    RENDER.last = { tags, youBox, dust };                                              // 검수용 (screen_check recheck: 꼬리표가 당신 몸에 겹치나)
     ctx.restore();
     grain(ctx, cv, tick, { x: ox, y: oy, w: sc.w * T, h: sc.h * T });
     syncBubbles(bubbles, ox, oy);

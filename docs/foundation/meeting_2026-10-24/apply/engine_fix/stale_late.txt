@@ -1,0 +1,2 @@
+lazy {"inspects":29898,"lateLineNew":76,"lateLineOld":168,"staleOld":92,"staleNew":0,"staleDays":{"2":26,"3":58,"4":3,"5":3,"6":2}}
+balanced {"inspects":33652,"lateLineNew":44,"lateLineOld":58,"staleOld":14,"staleNew":0,"staleDays":{"2":8,"3":4,"4":2}}

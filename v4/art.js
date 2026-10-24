@@ -253,6 +253,49 @@
       return c;
     });
   }
+  // ── 등 돌린 사람 (2026-10-24 A1 §2-4 signs.cold — 새 그림 0, 있는 그림을 고쳐 쓴다) ──
+  // 고개 숙임: 사람 그림(서 있음·앉음)의 머리 줄을 drop px 내려 어깨 위에 얹는다. 머리 높이 = 몸 높이의 28%(최소 6줄). 같은 그림이면 캐시
+  function bowed(im, drop) {
+    if (!im) return null;
+    const d = Math.max(1, drop || 2);
+    if (!bowed.cache) bowed.cache = new WeakMap();
+    let m = bowed.cache.get(im); if (!m) { m = new Map(); bowed.cache.set(im, m); }
+    if (m.has(d)) return m.get(d);
+    const top = opaqueTop(im), head = Math.max(6, Math.round((im.height - top) * 0.28));
+    const c = blank(im.width, im.height), g = c.getContext('2d');
+    const body = im.height - top - head;
+    if (body > 0) g.drawImage(im, 0, top + head, im.width, body, 0, top + head, im.width, body);   // 몸은 제자리
+    g.drawImage(im, 0, top, im.width, head, 0, top + d, im.width, head);                            // 머리는 d px 아래로 (어깨를 덮는다)
+    m.set(d, c);
+    return c;
+  }
+  // 등지고 누움: 잠 그림의 얼굴(담요 위 머리 줄)을 그 사람 뒤통수(걷기 그림 '위' 칸의 머리)로 바꾼다. 담요는 그대로
+  //   담요 윗단 = 위에서부터 처음으로 불투명한 폭이 18px 이상인 줄
+  function sleeperBack(id, hurt) {
+    const k = spriteId(id);
+    return once('sleepback:' + k + ':' + (hurt || 0), () => {
+      const sl = sleeper(id, hurt);
+      if (!sl) return null;
+      let bt = -1, x0 = sl.width, x1 = -1;
+      const top0 = opaqueTop(sl);
+      try {
+        const dd = sl.getContext('2d').getImageData(0, 0, sl.width, sl.height).data;
+        for (let y = top0; y < sl.height && bt < 0; y++) {
+          let n = 0;
+          for (let x = 0; x < sl.width; x++) if (dd[(y * sl.width + x) * 4 + 3] > 40) n++;
+          if (n >= 18) bt = y;
+        }
+        for (let y = top0; y < (bt < 0 ? top0 : bt); y++) for (let x = 0; x < sl.width; x++) if (dd[(y * sl.width + x) * 4 + 3] > 40) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); }
+      } catch (e) { return sl; }
+      if (bt <= top0 || x1 < 0) return sl;                                      // 머리 줄을 못 찾으면 그대로
+      const up = person(k, 0, 0, 'up'), ht = opaqueTop(up), hh = bt - top0 + 3, cx = Math.round((x0 + x1 + 1) / 2);
+      const c = blank(sl.width, sl.height), g = c.getContext('2d');
+      g.imageSmoothingEnabled = false;
+      g.drawImage(up, Math.round((up.width - 16) / 2), ht, 16, hh, cx - 8, top0, 16, hh);   // 뒤통수 (아래 3줄은 담요가 덮는다)
+      g.drawImage(sl, 0, bt, sl.width, sl.height - bt, 0, bt, sl.width, sl.height - bt);     // 담요 (얼굴 줄은 빼고)
+      return c;
+    });
+  }
   // 머리 위 반응 아이콘 16×16: 'eyes'(안 잠) · 'mouth'(입이 움직인다). 없으면 null
   const react = (kind) => (IMG['v4/poses/' + kind] ? once('re:' + kind, () => toCanvas(IMG['v4/poses/' + kind])) : null);
   // 꼬리표(11×11) 안에 넣는 아이콘: 불투명한 곳만 잘라, 9px 를 넘으면 정확히 ½(2×2 칸에서 가장 진하고 밝은 점) — 새 7×5 그림(P0-A2)이 오면 원래 크기 그대로
@@ -378,5 +421,5 @@
     return smallMap.get(full) || '';
   }
 
-  window.ART = { T, PH, ready, has, src, tile, hasTile, prop, hasProp, trace, hasTrace, person, headTop, opaqueTop, opaqueBox, pose, sitPose, sleeper, react, reactIcon, v4prop, half, opened, spriteId, portraitSrc, cgSrc, cgSmall, cgKey, deathSrc, identSrc, iconSrc, placeholder, hashColor, IMG };
+  window.ART = { T, PH, ready, has, src, tile, hasTile, prop, hasProp, trace, hasTrace, person, headTop, opaqueTop, opaqueBox, pose, sitPose, sleeper, sleeperBack, bowed, react, reactIcon, v4prop, half, opened, spriteId, portraitSrc, cgSrc, cgSmall, cgKey, deathSrc, identSrc, iconSrc, placeholder, hashColor, IMG };
 })();

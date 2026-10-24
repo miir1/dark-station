@@ -1,0 +1,1425 @@
+   ÌéòÏù¥ÏßÄ Îã§Ïãú Ïó¥Í∏∞ 1/2: fail:Ïä§ÌÅ¨Î¶ΩÌä∏Í∞Ä ÏùΩÌûàÏßÄ ÏïäÏïòÎã§ (/v4/index.html?fast=1&auto=car&seed=7&sc=1792834993)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59091)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54905)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49891)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55035)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56749)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61701)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53883)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49953)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53364)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50524)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+Traceback (most recent call last):
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+   ÌéòÏù¥ÏßÄ Îã§Ïãú Ïó¥Í∏∞ 2/2: fail:Ïä§ÌÅ¨Î¶ΩÌä∏Í∞Ä ÏùΩÌûàÏßÄ ÏïäÏïòÎã§ (/v4/index.html?fast=1&auto=car&seed=7&sc=1792834993)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49925)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63360)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55684)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61443)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63199)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61168)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60965)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50375)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51498)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57496)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+--------------------------------------------------------------------------------
+
+Exception occurred during processing of request fromException occurred during processing of request from  ('127.0.0.1', 60960)('127.0.0.1', 59835)
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+   ÌéòÏù¥ÏßÄ Îã§Ïãú Ïó¥Í∏∞ 1/1: fail:Ïä§ÌÅ¨Î¶ΩÌä∏Í∞Ä ÏùΩÌûàÏßÄ ÏïäÏïòÎã§ (/v4/index.html?fast=1&auto=car&seed=7&sc=1792835003)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49602)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59851)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52718)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63918)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59487)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61412)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 65132)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\docs\foundation\meeting_2026-10-24\apply\screen_fix\tools_selftest.py", line 25, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\screen_check.py", line 58, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+   ÌéòÏù¥ÏßÄÍ∞Ä Îú®ÏßÄ ÏïäÏïòÎã§: fail:Ïä§ÌÅ¨Î¶ΩÌä∏Í∞Ä ÏùΩÌûàÏßÄ ÏïäÏïòÎã§ (/v4/index.html?fast=1&auto=car&seed=7&sc=1792835003)
+A {"A_flaky2": {"opened": true, "secs": 9.8, "left": 0, "db": true}, "A_dead": {"opened": false, "secs": 7.8}}
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57240)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\shot.py", line 68, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49445)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\shot.py", line 68, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53540)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\shot.py", line 68, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51623)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\shot.py", line 68, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63381)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\shot.py", line 68, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 62588)
+Traceback (most recent call last):
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\dev\dark_station\v4\tools\shot.py", line 68, in do_GET
+    super().do_GET()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\http\server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\gdjy0\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] «ˆ¿Á ø¨∞·¿∫ ªÁøÎ¿⁄¿« »£Ω∫∆Æ Ω√Ω∫≈€¿« º“«¡∆Æø˛æÓ¿« ¿««ÿ ¡ﬂ¥‹µ«æ˙Ω¿¥œ¥Ÿ
+----------------------------------------
+FAIL zz_timeout (console errors 0, try 2) - ÏãúÍ∞Ñ Ï¥àÍ≥º (3Ï¥à) - Ïª¥Ìì®ÌÑ∞Í∞Ä Î∞îÏÅòÎã§ / PNG ÏóÜÏùå
+B {"secs": 16.6, "entry": {"shot": "zz_timeout", "ok": false, "why": ["ÏãúÍ∞Ñ Ï¥àÍ≥º (3Ï¥à) - Ïª¥Ìì®ÌÑ∞Í∞Ä Î∞îÏÅòÎã§", "PNG ÏóÜÏùå"], "tries": [{"attempt": 1, "ok": false, "why": ["ÏãúÍ∞Ñ Ï¥àÍ≥º (3Ï¥à) - Ïª¥Ìì®ÌÑ∞Í∞Ä Î∞îÏÅòÎã§", "PNG ÏóÜÏùå"], "png_scale": null, "console_errors": 0}, {"attempt": 2, "ok": false, "why": ["ÏãúÍ∞Ñ Ï¥àÍ≥º (3Ï¥à) - Ïª¥Ìì®ÌÑ∞Í∞Ä Î∞îÏÅòÎã§", "PNG ÏóÜÏùå"], "png_scale": null, "console_errors": 0}]}}
+C {"C_fixture_timeout": {"note": "fixture.js ÏãúÍ∞Ñ Ï¥àÍ≥º (1Ï¥à)", "secs": 1.0}, "C_fixture_cap3": {"secs": 3.3, "stderr": "[fixture] 16 games, 3.0s, time cap 3s (best so far); found d10_train; missing -", "found": ["d10_train"]}}

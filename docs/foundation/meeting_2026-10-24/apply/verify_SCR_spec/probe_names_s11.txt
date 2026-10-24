@@ -1,0 +1,2 @@
+names seed 11 | end d10_walk_other 10 walked | texts 23815 | leak hits 0 unique 0 | errors 0
+exit=0

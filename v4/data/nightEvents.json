@@ -42,7 +42,7 @@
         {
           "verb": "number",
           "id": "food",
-          "n": -1
+          "n": -2
         },
         {
           "verb": "flag",
@@ -107,7 +107,7 @@
         {
           "verb": "number",
           "id": "water",
-          "n": -1
+          "n": -2
         }
       ],
       "trace": {
@@ -177,7 +177,7 @@
         {
           "verb": "number",
           "id": "fog",
-          "n": 1
+          "n": 2
         },
         {
           "verb": "flag",
@@ -380,7 +380,7 @@
         {
           "verb": "number",
           "id": "grudge",
-          "n": 1,
+          "n": 3,
           "who": "actor"
         }
       ],
@@ -761,7 +761,7 @@
         {
           "verb": "number",
           "id": "food",
-          "n": -1
+          "n": -2
         },
         {
           "verb": "flag",
@@ -1572,7 +1572,7 @@
   {
     "id": "mob_you",
     "role": "kill",
-    "actor": "grudge>=2",
+    "actor": "grudge>=3",
     "target": "you",
     "cond": "karma>=5 & day>=5 & !flag:dawn_mob",
     "weight": 6,
@@ -1598,7 +1598,7 @@
   {
     "id": "grudge_names_you",
     "role": "inform",
-    "actor": "grudge>=2",
+    "actor": "grudge>=3",
     "target": "you",
     "cond": "karma>=8 & fog>=3 & !flag:named_you",
     "weight": 8,
@@ -1654,12 +1654,39 @@
     "side": 1
   },
   {
+    "id": "grudge_strike_heavy",
+    "role": "kill",
+    "actor": "grudge>=3 & self!=dongha",
+    "target": "you",
+    "cond": "karma>=20 & !flag:dawn_strike & !flag:dawn_dongha & !flag:dawn_dongha2",
+    "weight": 6,
+    "kind": "malice",
+    "trace": {
+      "blanket_actor": "rolled",
+      "notebook_you": "moved"
+    },
+    "rumor": {
+      "witness": "",
+      "line": "rum_over_you"
+    },
+    "effects": [
+      {
+        "verb": "flag",
+        "id": "dawn_strike",
+        "set": 1
+      }
+    ],
+    "oncePerRun": 0,
+    "public": 1,
+    "side": 1
+  },
+  {
     "id": "cold_bowl",
     "role": "grudge",
     "actor": "grudge>=3",
     "target": "",
-    "cond": "day>=2 & trace:bowl_you==full",
-    "weight": 3,
+    "cond": "day>=2 & trace:bowl_you!=pushed",
+    "weight": 5,
     "kind": "neutral",
     "trace": {
       "bowl_you": "pushed"

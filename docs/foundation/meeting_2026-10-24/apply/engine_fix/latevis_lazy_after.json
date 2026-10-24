@@ -1,0 +1,98 @@
+{
+ "mornings": 6452,
+ "missedRows": 4691,
+ "missedWithTrace": 4691,
+ "traceSlots": 4691,
+ "stillLate": 4691,
+ "overwritten": 0,
+ "overwrittenBy": {},
+ "byEvent": {
+  "steal_food": {
+   "rows": 433,
+   "slots": 433,
+   "late": 433,
+   "over": 0,
+   "noTrace": 0
+  },
+  "hungry_blames_you": {
+   "rows": 824,
+   "slots": 824,
+   "late": 824,
+   "over": 0,
+   "noTrace": 0
+  },
+  "share_bowl": {
+   "rows": 1287,
+   "slots": 1287,
+   "late": 1287,
+   "over": 0,
+   "noTrace": 0
+  },
+  "read_notebook": {
+   "rows": 661,
+   "slots": 661,
+   "late": 661,
+   "over": 0,
+   "noTrace": 0
+  },
+  "steal_food_seoha": {
+   "rows": 482,
+   "slots": 482,
+   "late": 482,
+   "over": 0,
+   "noTrace": 0
+  },
+  "soonrye_water": {
+   "rows": 110,
+   "slots": 110,
+   "late": 110,
+   "over": 0,
+   "noTrace": 0
+  },
+  "steal_water": {
+   "rows": 491,
+   "slots": 491,
+   "late": 491,
+   "over": 0,
+   "noTrace": 0
+  },
+  "eye_you": {
+   "rows": 168,
+   "slots": 168,
+   "late": 168,
+   "over": 0,
+   "noTrace": 0
+  },
+  "stand_stairs": {
+   "rows": 187,
+   "slots": 187,
+   "late": 187,
+   "over": 0,
+   "noTrace": 0
+  },
+  "wound_rots": {
+   "rows": 30,
+   "slots": 30,
+   "late": 30,
+   "over": 0,
+   "noTrace": 0
+  },
+  "dongha_carries": {
+   "rows": 3,
+   "slots": 3,
+   "late": 3,
+   "over": 0,
+   "noTrace": 0
+  },
+  "swing_pipe": {
+   "rows": 15,
+   "slots": 15,
+   "late": 15,
+   "over": 0,
+   "noTrace": 0
+  }
+ },
+ "morningsWithLate": 3382,
+ "morningsAfterMissed": 3382,
+ "morningsAfterMissedNoLate": 0
+}

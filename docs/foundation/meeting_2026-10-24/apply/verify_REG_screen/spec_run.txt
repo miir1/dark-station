@@ -1,0 +1,21 @@
+fixture {'dawn_mob': True, 'd10_hold': True, 'd10_grab': True, 'repay_bowl': True, 'share_back': True, 'crate_lid': True, 'd2_shutter_arm': True, 'd4_spanner': True, 'called_up': True, 'dawn_strike': True}
+spec dawn_mob | who None None | opts 0 overflow None | locks [] | picked None | after None None None | err 기다리다 지쳤다: __ds4.state && __ds4.UI.openKind() === 'line' ['EXCEPTION: ReferenceError: ART is not defined\n    at http://127.0.0.1:18891/v4/render.js?v=9:5:13\n    at http://127.0.0.1:18891/v4/render.js?v=9:572:3', 'EXCEPTION: ReferenceError: UI is not defined\n    at http://127.0.0.1:18891/v4/game.js?v=13:7:15\n    at http://127.0.0.1:18891/v4/game.js?v=13:1460:3']
+spec d10_hold | who 셔터의 여자 portraits80/eunji.png | opts 4 overflow False | locks ['식량이 모자라다'] | picked 끌려가며 버틴다 | after ended None d10_walk_other | err None []
+spec d10_grab | who None None | opts 0 overflow None | locks [] | picked None | after None None None | err 기다리다 지쳤다: __ds4.state && __ds4.UI.openKind() === 'line' []
+spec repay_bowl | who None None | opts 0 overflow None | locks [] | picked None | after None None None | err 기다리다 지쳤다: __ds4.state && __ds4.UI.openKind() === 'line' []
+spec share_back | who 청소원 조끼의 할머니 portraits80/soonrye.png | opts 2 overflow False | locks [] | picked 모른 척한다 | after day None None | err None []
+spec crate_lid | who   | opts 2 overflow False | locks [] | picked 봉지 하나를 꺼낸다 | after trace None None | err None []
+spec d2_shutter_arm | who   | opts 3 overflow False | locks [] | picked 통조림을 내밀어 바꾼다 | after night None None | err None []
+spec d4_spanner | who 헤드램프의 남자 portraits80/gicheol.png | opts 3 overflow False | locks [] | picked 그릇 하나로 입을 막는다 | after ended None you_gone | err None []
+spec called_up | who   | opts 5 overflow False | locks [] | picked 불을 키우고 밤을 샌다 | after night None None | err None []
+spec dawn_strike | who   | opts 6 overflow False | locks [] | picked 맞고 버틴다 | after trace None None | err None []
+spec lock called_up_notarget [('4다른 이름을 댄다그 사람이 불린다댈 이름이 없다', '댈 이름이 없다')] None
+spec lock dawn_mob_notarget_finger [('3손가락 하나로 갚는다손가락을 잃는다손가락이 성치 않다', '손가락이 성치 않다'), ('4다른 사람을 가리킨다그 사람이 대신 맞는다댈 이름이 ', '댈 이름이 없다')] None
+spec 3 signs {"view": [{"id": "soonrye", "cold": false, "address": "손님"}, {"id": "seoha", "cold": false, "address": "저기요"}, {"id": "gicheol", "cold": true, "address": "어이"}, {"id": "eunji", "cold": true, "address": "너"}, {"id": "dongha", "cold": false, "address": "형"}, {"id": "mari", "cold": true, "address": ""}], "map": [["soonrye", 10, 10, null, "down", false], ["seoha", 16, 10, null, "down", false], ["gicheol", 20, 10, null, "right", true], ["eunji", 21, 11, null, "right", true], ["dongha", 23, 11, null, "down", false], ["mari", 22, 10, null, "right", true]], "late": ["crate_food", "blanket_gicheol", "b
+spec 3 late 빈 그릇이다. | toast 어제 못 본 자리가 그대로다. | {"bowl_you": ["당신 그릇이 줄 끝으로 밀려나 있다."], "blanket_gicheol": ["담요가 당신 쪽을 등지고 말려 있다.", "어제도 그랬다."], "bottle_soonrye": ["물통 주둥이가 말라 갈라졌다.", "이틀째 빈 채다.", "흰 붕대다.", "오늘 감았다."]}
+spec 3 talk {"gicheol": ["어이", ["어이, 할머니가 밤에 물을 부었어."]], "mari": ["", ["여자가 붕대를 다시 만다."]], "eunji": ["너", ["여자가 셔터 쪽을 본다."]], "soonrye": ["손님", ["손님, 재가 한 칸 내려왔어."]], "seoha": ["저기요", ["저기요, …밖에서 걸어온 사람은 처음이에요."]], "dongha": ["형", ["청년이 무릎을 끌어안는다."]]}
+spec 3 noise {'neglect': False, 'clock': False, 'steal': True} | josa ['손가락이 성치 않다', '다리가 성치 않다', '귀가 성치 않다', '약이 모자라다']
+spec 4 evening [['soonrye', 14, 10, 'sitting', 'up', True], ['seoha', 14, 12, 'sitting', 'down', False], ['gicheol', 12, 12, 'sitting', 'up', True], ['eunji', 11, 10, 'sitting', 'up', True], ['dongha', 10, 10, 'sitting', 'right', False], ['mari', 16, 10, 'sitting', 'left', False]]
+spec 5 night [['soonrye', 16, 9, 'lying', 'down', True], ['gicheol', 20, 9, 'lying', 'down', True], ['eunji', 16, 11, 'lying', 'up', True], ['dongha', 18, 11, 'lying', 'left', True], ['mari', 20, 11, 'lying', 'down', True]]
+��ٸ��� ���ƴ�: __ds4.state && __ds4.scene.map && !__ds4.UI.bot && !__ds4.UI.isOpen() && !__ds4.scene.auto && !__ds4.scene.moving && __ds4.state.day === 2 && __ds4.state.phase === 'night'
+exit=1

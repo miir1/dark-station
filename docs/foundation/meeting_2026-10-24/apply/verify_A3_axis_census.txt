@@ -1,0 +1,32 @@
+events before 120 now 128
+axis-bearing paths before 130 now 139
+
+[기존 사건의 축 효과가 바뀐 곳]
+  called_up#2:다른 이름을 댄다.out: name+1 → (없음)
+  called_up#3:다른 이름을 댄다.out: (없음) → name+1
+  called_up#3:다른 이름을 댄다.swap.ok: (없음) → name+1
+  d5_flood#2:남의 담요로 물길을 막는다.out: (없음) → share-1
+  d6_shutter_b#1:맞선다.fail: hand+1 → (없음)
+  dawn_strike#1:밀쳐 낸다.ok: hand+1 → (없음)
+  dawn_strike#2:밀쳐 낸다.ok: (없음) → hand+1
+  dawn_strike#2:소리친다.ok: name+1 → (없음)
+  dawn_strike#3:소리친다.ok: (없음) → name+1
+  dawn_strike#3:축 늘어진다.ok: hand-1 → (없음)
+  dawn_strike#4:옆 담요를 가리킨다.out: hand-1,share-1 → (없음)
+  dawn_strike#4:축 늘어진다.ok: (없음) → hand-1
+  dawn_strike#5:옆 담요를 가리킨다.out: (없음) → hand-1,share-1
+  dawn_strike#5:옆 담요를 가리킨다.swap.ok: (없음) → hand-1,share-1
+  patrol_pact#1:동하를 보낸다.out: hand+1,share-1 → share-1
+  starve_you#0:선로 밑을 뒤진다.ok: share-1 → (없음)
+
+[새 사건의 축 효과]
+  crate_lid#1:봉지 하나를 꺼낸다.out: (없음) → share-1
+  d2_shutter_arm#1:옆 사람 팔을 내민다.out: (없음) → hand-1,share-1
+  d4_spanner#1:다른 사람이 셌다고 한다.out: (없음) → hand-1,share-1
+  dawn_mob#0:가진 것을 다 내놓는다.out: (없음) → share+1
+  dawn_mob#3:다른 사람을 가리킨다.out: (없음) → hand-1,share-1
+  dawn_mob#3:다른 사람을 가리킨다.swap.ok: (없음) → hand-1,share-1
+  repay_bowl#1:내 몫을 덜어 준다.out: (없음) → share+1
+  share_back#1:내 몫을 덜어 준다.out: (없음) → share+1
+
+[사라진 사건의 축 효과]

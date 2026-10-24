@@ -1,0 +1,2196 @@
+{
+ "dawn_mob": {
+  "line": {
+   "open": "line",
+   "day": 7,
+   "phase": "trace",
+   "pending": "dawn_mob",
+   "target": "mari",
+   "who": "",
+   "face": "",
+   "text": "새벽에 눈을 떴다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "가진 것을 다 내놓는다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량과 물이 다 나간다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "맞고 버틴다",
+     "locked": false,
+     "reason": "",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "손가락 하나로 갚는다",
+     "locked": false,
+     "reason": "",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "다른 사람을 가리킨다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 대신 맞는다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "밀치고 달아난다",
+     "locked": false,
+     "reason": "",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 45
+    },
+    {
+     "label": "무릎을 꿇고 빈다",
+     "locked": false,
+     "reason": "",
+     "warn": "안 들으면 끝이다",
+     "taboo": false,
+     "chance": 40
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 7,
+   "phase": "trace",
+   "pending": "dawn_mob",
+   "target": "mari",
+   "who": "",
+   "face": "",
+   "text": "새벽에 눈을 떴다. 담요들이 당신을 둘러서 있다. 아무도 말하지 않는다. 누가 당신 봉지를 들고 있다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1가진 것을 다 내놓는다식량 −1 · 물 −1식량과 물이 다 나간다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2맞고 버틴다크게 다친다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3손가락 하나로 갚는다손가락을 잃는다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "4다른 사람을 가리킨다그 사람이 대신 맞는다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "5밀치고 달아난다45%넘어지면 끝이다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "6무릎을 꿇고 빈다40%안 들으면 끝이다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "가진 것을 다 내놓는다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량과 물이 다 나간다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "맞고 버틴다",
+     "locked": false,
+     "reason": "",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "손가락 하나로 갚는다",
+     "locked": false,
+     "reason": "",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "다른 사람을 가리킨다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 대신 맞는다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "밀치고 달아난다",
+     "locked": false,
+     "reason": "",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 45
+    },
+    {
+     "label": "무릎을 꿇고 빈다",
+     "locked": false,
+     "reason": "",
+     "warn": "안 들으면 끝이다",
+     "taboo": false,
+     "chance": 40
+    }
+   ]
+  },
+  "picked": "가진 것을 다 내놓는다",
+  "after": {
+   "day": 7,
+   "phase": "trace",
+   "pending": null,
+   "ended": null,
+   "you": "home",
+   "open": "",
+   "last": {
+    "event": "rail_killed",
+    "choice": "같이 묻는다",
+    "text": "선로 끝에 묻었다. 동하가 흙을 오래 다졌다."
+   },
+   "seen": [
+    "봉지와 물병이 손에서 손으로 갔다.",
+    "창고 상자까지 비었다.",
+    "담요들이 하나씩 돌아갔다.",
+    "선로에 낯선 남자가 누워 있다.",
+    "눈을 뜬 채다.",
+    "관자놀이가 꺼졌고 피가 레일을 탄다.",
+    "동하가 파이프를 쥐고 서 있다.",
+    "선로 끝에 묻었다.",
+    "동하가 흙을 오래 다졌다."
+   ]
+  },
+  "console_errors": []
+ },
+ "d10_hold": {
+  "line": {
+   "open": "line",
+   "day": 10,
+   "phase": "day",
+   "pending": "d10_hold",
+   "target": "eunji",
+   "who": "셔터의 여자",
+   "face": "portraits80/eunji.png",
+   "text": "떠날 채비를 하는데 누가 당신 소매를 잡았다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "가진 것을 내준다",
+     "locked": true,
+     "reason": "식량이(가) 모자라다",
+     "warn": "식량 둘과 물 하나가 나간다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "끌려가며 버틴다",
+     "locked": false,
+     "reason": "",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "손가락을 내준다",
+     "locked": false,
+     "reason": "",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "뿌리치고 걷는다",
+     "locked": false,
+     "reason": "",
+     "warn": "주저앉으면 끝이다",
+     "taboo": false,
+     "chance": 65
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 10,
+   "phase": "day",
+   "pending": "d10_hold",
+   "target": "eunji",
+   "who": "셔터의 여자",
+   "face": "",
+   "text": "셔터의 여자떠날 채비를 하는데 누가 당신 소매를 잡았다. 밤마다 당신 쪽을 등지고 눕던 사람이다. 손을 놓지 않는다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1가진 것을 내준다식량 −2 · 물 −1식량 둘과 물 하나가 나간다식량이 모자라다",
+     "disabled": true,
+     "lock": "식량이 모자라다"
+    },
+    {
+     "text": "2끌려가며 버틴다크게 다친다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3손가락을 내준다손가락을 잃는다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "4뿌리치고 걷는다65%주저앉으면 끝이다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "가진 것을 내준다",
+     "locked": true,
+     "reason": "식량이(가) 모자라다",
+     "warn": "식량 둘과 물 하나가 나간다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "끌려가며 버틴다",
+     "locked": false,
+     "reason": "",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "손가락을 내준다",
+     "locked": false,
+     "reason": "",
+     "warn": "손가락을 잃는다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "뿌리치고 걷는다",
+     "locked": false,
+     "reason": "",
+     "warn": "주저앉으면 끝이다",
+     "taboo": false,
+     "chance": 65
+    }
+   ]
+  },
+  "picked": "끌려가며 버틴다",
+  "after": {
+   "day": 10,
+   "phase": "ended",
+   "pending": null,
+   "ended": "d10_walk_other",
+   "you": "walked",
+   "open": "ending",
+   "last": {
+    "event": "d10_walk_other",
+    "choice": "걷는다",
+    "text": "그 사람이 대답했다. 신발을 벗었다. 아무도 붙잡지 않았다."
+   },
+   "seen": [
+    "선로 끝까지 끌려가 맞았다.",
+    "그래도 걸어 나왔다.",
+    "열차는 서지 않았다.",
+    "걸어서 나가야 한다.",
+    "일어서자 무릎이 꺾였다.",
+    "상처가 뛰고 배가 등에 붙었다.",
+    "옆 사람 물병을 빼앗아 비웠다.",
+    "그 사람은 말이 없었다.",
+    "한참 뒤에 처졌다.",
+    "담요 속 여학생: 몇 걸음 못 가서 발목이 잡혔다.",
+    "담요 속 여학생: 물병을 빼앗긴 사람이다.",
+    "담요 속 여학생: 손톱이 살에 박힌다.",
+    "물병을 내밀었다.",
+    "손이 풀렸다.",
+    "열차는 서지 않았다.",
+    "선로를 따라 걷는다, 고가 구간까지 한 역 반.",
+    "둘씩 붙어 걷는다.",
+    "환기구 아래서 이름 하나가 불렸다.",
+    "옆에서 걷던 사람이 멈춰 섰다.",
+    "그 사람이 대답했다.",
+    "신발을 벗었다.",
+    "아무도 붙잡지 않았다."
+   ]
+  },
+  "console_errors": []
+ },
+ "d10_grab": {
+  "line": {
+   "open": "line",
+   "day": 10,
+   "phase": "day",
+   "pending": "d10_grab",
+   "target": "seoha",
+   "who": "담요 속 여학생",
+   "face": "portraits80/seoha.png",
+   "text": "몇 걸음 못 가서 발목이 잡혔다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "물병을 돌려준다",
+     "locked": false,
+     "reason": "",
+     "warn": "물이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "끌려 넘어진다",
+     "locked": false,
+     "reason": "",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "발을 빼낸다",
+     "locked": false,
+     "reason": "",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 60
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 10,
+   "phase": "day",
+   "pending": "d10_grab",
+   "target": "seoha",
+   "who": "담요 속 여학생",
+   "face": "",
+   "text": "담요 속 여학생몇 걸음 못 가서 발목이 잡혔다. 물병을 빼앗긴 사람이다. 손톱이 살에 박힌다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1물병을 돌려준다물 −1물이 준다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2끌려 넘어진다크게 다친다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3발을 빼낸다60%넘어지면 끝이다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "물병을 돌려준다",
+     "locked": false,
+     "reason": "",
+     "warn": "물이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "끌려 넘어진다",
+     "locked": false,
+     "reason": "",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "발을 빼낸다",
+     "locked": false,
+     "reason": "",
+     "warn": "넘어지면 끝이다",
+     "taboo": false,
+     "chance": 60
+    }
+   ]
+  },
+  "picked": "물병을 돌려준다",
+  "after": {
+   "day": 10,
+   "phase": "ended",
+   "pending": null,
+   "ended": "d10_walk_other",
+   "you": "walked",
+   "open": "ending",
+   "last": {
+    "event": "d10_walk_other",
+    "choice": "걷는다",
+    "text": "그 사람이 대답했다. 신발을 벗었다. 아무도 붙잡지 않았다."
+   },
+   "seen": [
+    "물병을 내밀었다.",
+    "손이 풀렸다.",
+    "열차는 서지 않았다.",
+    "선로를 따라 걷는다, 고가 구간까지 한 역 반.",
+    "둘씩 붙어 걷는다.",
+    "환기구 아래서 이름 하나가 불렸다.",
+    "옆에서 걷던 사람이 멈춰 섰다.",
+    "그 사람이 대답했다.",
+    "신발을 벗었다.",
+    "아무도 붙잡지 않았다."
+   ]
+  },
+  "console_errors": []
+ },
+ "repay_bowl": {
+  "line": {
+   "open": "line",
+   "day": 3,
+   "phase": "ration",
+   "pending": "repay_bowl",
+   "target": "eunji",
+   "who": "셔터의 여자",
+   "face": "portraits80_hurt/eunji.png",
+   "text": "줄 끝에 누가 빈 그릇을 들고 서 있다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "그냥 지나간다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "내 몫을 덜어 준다",
+     "locked": false,
+     "reason": "",
+     "warn": "당신이 굶는다",
+     "taboo": false,
+     "chance": null
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 3,
+   "phase": "ration",
+   "pending": "repay_bowl",
+   "target": "eunji",
+   "who": "셔터의 여자",
+   "face": "",
+   "text": "셔터의 여자줄 끝에 누가 빈 그릇을 들고 서 있다. 당신 쪽을 등지고 있다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1그냥 지나간다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2내 몫을 덜어 준다당신이 굶는다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "그냥 지나간다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "내 몫을 덜어 준다",
+     "locked": false,
+     "reason": "",
+     "warn": "당신이 굶는다",
+     "taboo": false,
+     "chance": null
+    }
+   ]
+  },
+  "picked": "그냥 지나간다",
+  "after": {
+   "day": 3,
+   "phase": "day",
+   "pending": null,
+   "ended": null,
+   "you": "home",
+   "open": "",
+   "last": {
+    "event": "repay_bowl",
+    "choice": "그냥 지나간다",
+    "text": "그릇을 받아 들고 불가로 갔다."
+   },
+   "seen": [
+    "그릇을 받아 들고 불가로 갔다.",
+    "사람들이 제 자리로 흩어진다."
+   ]
+  },
+  "console_errors": []
+ },
+ "share_back": {
+  "line": {
+   "open": "line",
+   "day": 4,
+   "phase": "ration",
+   "pending": "share_back",
+   "target": "soonrye",
+   "who": "청소원 조끼의 할머니",
+   "face": "portraits80/soonrye.png",
+   "text": "밤에 제 그릇을 남에게 밀어 주던 사람이다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "모른 척한다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "내 몫을 덜어 준다",
+     "locked": false,
+     "reason": "",
+     "warn": "당신이 굶는다",
+     "taboo": false,
+     "chance": null
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 4,
+   "phase": "ration",
+   "pending": "share_back",
+   "target": "soonrye",
+   "who": "청소원 조끼의 할머니",
+   "face": "",
+   "text": "청소원 조끼의 할머니밤에 제 그릇을 남에게 밀어 주던 사람이다. 오늘도 제 그릇을 옆으로 밀어 둔다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1모른 척한다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2내 몫을 덜어 준다당신이 굶는다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "모른 척한다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "내 몫을 덜어 준다",
+     "locked": false,
+     "reason": "",
+     "warn": "당신이 굶는다",
+     "taboo": false,
+     "chance": null
+    }
+   ]
+  },
+  "picked": "모른 척한다",
+  "after": {
+   "day": 4,
+   "phase": "day",
+   "pending": null,
+   "ended": null,
+   "you": "home",
+   "open": "",
+   "last": {
+    "event": "trial_d4_gicheol",
+    "choice": "믿는다",
+    "text": "고개를 끄덕였다. 기철이 헤드램프를 껐다. 그날 밤 부품 상자가 가벼워졌다."
+   },
+   "seen": [
+    "그릇은 옆으로 밀린 채였다.",
+    "사람들이 제 자리로 흩어진다.",
+    "기철: \"통로는 이틀이면 되오. 부품은 넉넉하오.\"",
+    "헤드램프가 당신 얼굴에서 비켜나지 않는다.",
+    "창고의 부품 상자는 보이지 않는다.",
+    "고개를 끄덕였다.",
+    "기철이 헤드램프를 껐다.",
+    "그날 밤 부품 상자가 가벼워졌다."
+   ]
+  },
+  "console_errors": []
+ },
+ "crate_lid": {
+  "line": {
+   "open": "line",
+   "day": 3,
+   "phase": "trace",
+   "pending": "crate_lid",
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "창고 상자 뚜껑을 들었다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "뚜껑을 닫는다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "봉지 하나를 꺼낸다",
+     "locked": false,
+     "reason": "",
+     "warn": "누가 볼 수 있다",
+     "taboo": true,
+     "chance": null
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 3,
+   "phase": "trace",
+   "pending": "crate_lid",
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "창고 상자 뚜껑을 들었다. 배식 때만 여는 상자다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1뚜껑을 닫는다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2봉지 하나를 꺼낸다식량 −1누가 볼 수 있다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "뚜껑을 닫는다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "봉지 하나를 꺼낸다",
+     "locked": false,
+     "reason": "",
+     "warn": "누가 볼 수 있다",
+     "taboo": true,
+     "chance": null
+    }
+   ]
+  },
+  "picked": "봉지 하나를 꺼낸다",
+  "after": {
+   "day": 3,
+   "phase": "trace",
+   "pending": null,
+   "ended": null,
+   "you": "home",
+   "open": "",
+   "last": {
+    "event": "crate_lid",
+    "choice": "봉지 하나를 꺼낸다",
+    "text": "봉지 하나를 소매에 넣었다. 뚜껑 닫는 소리가 컸다."
+   },
+   "seen": [
+    "봉지 하나를 소매에 넣었다.",
+    "뚜껑 닫는 소리가 컸다."
+   ]
+  },
+  "console_errors": []
+ },
+ "d2_shutter_arm": {
+  "line": {
+   "open": "line",
+   "day": 2,
+   "phase": "night",
+   "pending": "d2_shutter_arm",
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "틈으로 들어온 손이 당신 손목을 잡았다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "통조림을 내밀어 바꾼다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "옆 사람 팔을 내민다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 대신 끌린다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "팔을 비틀어 뺀다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 빼면 끝이다",
+     "taboo": false,
+     "chance": 85
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 2,
+   "phase": "night",
+   "pending": "d2_shutter_arm",
+   "target": null,
+   "who": "",
+   "face": "",
+   "text": "틈으로 들어온 손이 당신 손목을 잡았다. 너머에서 당긴다. 셔터 날이 팔꿈치까지 왔다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1통조림을 내밀어 바꾼다식량 −2식량이 준다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2옆 사람 팔을 내민다그 사람이 대신 끌린다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3팔을 비틀어 뺀다85%못 빼면 끝이다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "통조림을 내밀어 바꾼다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "옆 사람 팔을 내민다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 대신 끌린다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "팔을 비틀어 뺀다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 빼면 끝이다",
+     "taboo": false,
+     "chance": 85
+    }
+   ]
+  },
+  "picked": "통조림을 내밀어 바꾼다",
+  "after": {
+   "day": 2,
+   "phase": "night",
+   "pending": null,
+   "ended": null,
+   "you": "home",
+   "open": "",
+   "last": {
+    "event": "d2_night_count",
+    "choice": "숨을 참는다",
+    "text": "셈이 역 사람 수에서 멈췄다. 한참 뒤 멀어졌다. 순례가 손을 뗐다."
+   },
+   "seen": [
+    "통조림이 넘어가자 손이 풀렸다.",
+    "손목에 손톱자국이 남았다.",
+    "계단 위에서 작게 센다.",
+    "\"하나, 둘…\"",
+    "순례의 손바닥이 당신 입을 덮는다.",
+    "걸레 냄새가 난다.",
+    "셈이 역 사람 수에서 멈췄다.",
+    "한참 뒤 멀어졌다.",
+    "순례가 손을 뗐다."
+   ]
+  },
+  "console_errors": []
+ },
+ "d4_spanner": {
+  "line": {
+   "open": "line",
+   "day": 4,
+   "phase": "night",
+   "pending": "d4_spanner",
+   "target": "dongha",
+   "who": "헤드램프의 남자",
+   "face": "portraits80/gicheol.png",
+   "text": "기철이 머리맡에 서 있다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "그릇 하나로 입을 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "다른 사람이 셌다고 한다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 맞는다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "스패너를 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 막으면 끝이다",
+     "taboo": false,
+     "chance": 80
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 4,
+   "phase": "night",
+   "pending": "d4_spanner",
+   "target": "dongha",
+   "who": "헤드램프의 남자",
+   "face": "",
+   "text": "헤드램프의 남자기철이 머리맡에 서 있다. 헤드램프가 꺼져 있다. 손에 스패너가 있다. \"셌지.\"",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1그릇 하나로 입을 막는다식량 −1식량이 준다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2다른 사람이 셌다고 한다그 사람이 맞는다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3스패너를 막는다80%못 막으면 끝이다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "그릇 하나로 입을 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "식량이 준다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "다른 사람이 셌다고 한다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 맞는다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "스패너를 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 막으면 끝이다",
+     "taboo": false,
+     "chance": 80
+    }
+   ]
+  },
+  "picked": "그릇 하나로 입을 막는다",
+  "after": {
+   "day": 4,
+   "phase": "ended",
+   "pending": null,
+   "ended": "you_gone",
+   "you": "dead",
+   "open": "death_ledger",
+   "last": {
+    "event": "fever_night",
+    "choice": "눈을 감는다",
+    "text": "아침에 담요가 차가웠다. 누가 붕대를 풀어 보고 다시 감았다."
+   },
+   "seen": [
+    "기철이 그릇을 받아 들고 돌아섰다.",
+    "열이 오른다.",
+    "숨이 짧다.",
+    "다들 잠들었다.",
+    "판정 40% — 안 됐다.",
+    "아침에 담요가 차가웠다.",
+    "누가 붕대를 풀어 보고 다시 감았다.",
+    "당신은 일어나지 않았다."
+   ]
+  },
+  "console_errors": []
+ },
+ "called_up": {
+  "line": {
+   "open": "line",
+   "day": 4,
+   "phase": "night",
+   "pending": "called_up",
+   "target": "dongha",
+   "who": "",
+   "face": "",
+   "text": "자정.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": true,
+   "choices": [
+    {
+     "label": "불을 키우고 밤을 샌다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "귀를 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "잠결에 대답하면 끝이다",
+     "taboo": false,
+     "chance": 75
+    },
+    {
+     "label": "손등을 깨물며 버틴다",
+     "locked": false,
+     "reason": "",
+     "warn": "다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "다른 이름을 댄다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 불린다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "대답한다",
+     "locked": false,
+     "reason": "",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 4,
+   "phase": "night",
+   "pending": "called_up",
+   "target": "dongha",
+   "who": "",
+   "face": "",
+   "text": "자정. 계단 위에서 이름 하나가 내려온다. 당신 이름이다. 누가 담요 속에서 숨을 죽인다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1불을 키우고 밤을 샌다땔감 −2",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2귀를 막는다75%잠결에 대답하면 끝이다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3손등을 깨물며 버틴다다친다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "4다른 이름을 댄다그 사람이 불린다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "5대답한다대답한 사람은 올라간다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": true,
+   "choices": [
+    {
+     "label": "불을 키우고 밤을 샌다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "귀를 막는다",
+     "locked": false,
+     "reason": "",
+     "warn": "잠결에 대답하면 끝이다",
+     "taboo": false,
+     "chance": 75
+    },
+    {
+     "label": "손등을 깨물며 버틴다",
+     "locked": false,
+     "reason": "",
+     "warn": "다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "다른 이름을 댄다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 불린다",
+     "taboo": true,
+     "chance": null
+    },
+    {
+     "label": "대답한다",
+     "locked": false,
+     "reason": "",
+     "warn": "대답한 사람은 올라간다",
+     "taboo": true,
+     "chance": null
+    }
+   ]
+  },
+  "picked": "불을 키우고 밤을 샌다",
+  "after": {
+   "day": 4,
+   "phase": "night",
+   "pending": null,
+   "ended": null,
+   "you": "home",
+   "open": "",
+   "last": {
+    "event": "called_up",
+    "choice": "불을 키우고 밤을 샌다",
+    "text": "장작 둘을 넣고 불 곁에서 밤을 샜다. 이름은 불빛 끝까지만 내려왔다."
+   },
+   "seen": [
+    "장작 둘을 넣고 불 곁에서 밤을 샜다.",
+    "이름은 불빛 끝까지만 내려왔다."
+   ]
+  },
+  "console_errors": []
+ },
+ "dawn_strike": {
+  "line": {
+   "open": "line",
+   "day": 6,
+   "phase": "trace",
+   "pending": "dawn_strike",
+   "target": "eunji",
+   "who": "",
+   "face": "",
+   "text": "숨이 막혀 깼다.",
+   "toast": "",
+   "opts": [],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "그릇 둘을 내민다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "맞고 버틴다",
+     "locked": false,
+     "reason": "",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "밀쳐 낸다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 밀치면 끝이다",
+     "taboo": false,
+     "chance": 45
+    },
+    {
+     "label": "소리친다",
+     "locked": false,
+     "reason": "",
+     "warn": "아무도 안 깨면 끝이다",
+     "taboo": false,
+     "chance": 55
+    },
+    {
+     "label": "축 늘어진다",
+     "locked": false,
+     "reason": "",
+     "warn": "안 놓으면 끝이다",
+     "taboo": false,
+     "chance": 70
+    },
+    {
+     "label": "옆 담요를 가리킨다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 대신 당한다",
+     "taboo": true,
+     "chance": null
+    }
+   ]
+  },
+  "box": {
+   "open": "event",
+   "day": 6,
+   "phase": "trace",
+   "pending": "dawn_strike",
+   "target": "eunji",
+   "who": "",
+   "face": "",
+   "text": "숨이 막혀 깼다. 누가 당신 가슴 위에 올라앉아 있다. 두 손이 목을 누른다. 얼굴은 어둠 속이다.",
+   "toast": "",
+   "opts": [
+    {
+     "text": "1그릇 둘을 내민다식량 −2",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "2맞고 버틴다크게 다친다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "3밀쳐 낸다45%못 밀치면 끝이다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "4소리친다55%아무도 안 깨면 끝이다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "5축 늘어진다70%안 놓으면 끝이다",
+     "disabled": false,
+     "lock": ""
+    },
+    {
+     "text": "6옆 담요를 가리킨다그 사람이 대신 당한다",
+     "disabled": false,
+     "lock": ""
+    }
+   ],
+   "tight": false,
+   "overflow": false,
+   "cg": false,
+   "choices": [
+    {
+     "label": "그릇 둘을 내민다",
+     "locked": false,
+     "reason": "",
+     "warn": "",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "맞고 버틴다",
+     "locked": false,
+     "reason": "",
+     "warn": "크게 다친다",
+     "taboo": false,
+     "chance": null
+    },
+    {
+     "label": "밀쳐 낸다",
+     "locked": false,
+     "reason": "",
+     "warn": "못 밀치면 끝이다",
+     "taboo": false,
+     "chance": 45
+    },
+    {
+     "label": "소리친다",
+     "locked": false,
+     "reason": "",
+     "warn": "아무도 안 깨면 끝이다",
+     "taboo": false,
+     "chance": 55
+    },
+    {
+     "label": "축 늘어진다",
+     "locked": false,
+     "reason": "",
+     "warn": "안 놓으면 끝이다",
+     "taboo": false,
+     "chance": 70
+    },
+    {
+     "label": "옆 담요를 가리킨다",
+     "locked": false,
+     "reason": "",
+     "warn": "그 사람이 대신 당한다",
+     "taboo": true,
+     "chance": null
+    }
+   ]
+  },
+  "picked": "맞고 버틴다",
+  "after": {
+   "day": 6,
+   "phase": "trace",
+   "pending": null,
+   "ended": null,
+   "you": "home",
+   "open": "",
+   "last": {
+    "event": "dawn_strike",
+    "choice": "맞고 버틴다",
+    "text": "목을 비틀어 빠져나왔다. 그림자가 갈비뼈를 걷어찼다."
+   },
+   "seen": [
+    "목을 비틀어 빠져나왔다.",
+    "그림자가 갈비뼈를 걷어찼다."
+   ]
+  },
+  "console_errors": []
+ },
+ "lock_called_up_notarget": {
+  "open": "event",
+  "day": 4,
+  "phase": "night",
+  "pending": "called_up",
+  "target": null,
+  "who": "",
+  "face": "",
+  "text": "자정. 계단 위에서 이름 하나가 내려온다. 당신 이름이다. 누가 담요 속에서 숨을 죽인다.",
+  "toast": "",
+  "opts": [
+   {
+    "text": "1불을 키우고 밤을 샌다땔감 −2",
+    "disabled": false,
+    "lock": ""
+   },
+   {
+    "text": "2귀를 막는다75%잠결에 대답하면 끝이다",
+    "disabled": false,
+    "lock": ""
+   },
+   {
+    "text": "3손등을 깨물며 버틴다다친다",
+    "disabled": false,
+    "lock": ""
+   },
+   {
+    "text": "4다른 이름을 댄다그 사람이 불린다댈 이름이 없다",
+    "disabled": true,
+    "lock": "댈 이름이 없다"
+   },
+   {
+    "text": "5대답한다대답한 사람은 올라간다",
+    "disabled": false,
+    "lock": ""
+   }
+  ],
+  "tight": false,
+  "overflow": false,
+  "cg": true,
+  "choices": [
+   {
+    "label": "불을 키우고 밤을 샌다",
+    "locked": false,
+    "reason": "",
+    "warn": "",
+    "taboo": false,
+    "chance": null
+   },
+   {
+    "label": "귀를 막는다",
+    "locked": false,
+    "reason": "",
+    "warn": "잠결에 대답하면 끝이다",
+    "taboo": false,
+    "chance": 75
+   },
+   {
+    "label": "손등을 깨물며 버틴다",
+    "locked": false,
+    "reason": "",
+    "warn": "다친다",
+    "taboo": false,
+    "chance": null
+   },
+   {
+    "label": "다른 이름을 댄다",
+    "locked": true,
+    "reason": "댈 이름이 없다",
+    "warn": "그 사람이 불린다",
+    "taboo": true,
+    "chance": null
+   },
+   {
+    "label": "대답한다",
+    "locked": false,
+    "reason": "",
+    "warn": "대답한 사람은 올라간다",
+    "taboo": true,
+    "chance": null
+   }
+  ],
+  "console_errors": []
+ },
+ "lock_dawn_mob_notarget_finger": {
+  "open": "event",
+  "day": 7,
+  "phase": "trace",
+  "pending": "dawn_mob",
+  "target": null,
+  "who": "",
+  "face": "",
+  "text": "새벽에 눈을 떴다. 담요들이 당신을 둘러서 있다. 아무도 말하지 않는다. 누가 당신 봉지를 들고 있다.",
+  "toast": "",
+  "opts": [
+   {
+    "text": "1가진 것을 다 내놓는다식량 −1 · 물 −1식량과 물이 다 나간다",
+    "disabled": false,
+    "lock": ""
+   },
+   {
+    "text": "2맞고 버틴다크게 다친다",
+    "disabled": false,
+    "lock": ""
+   },
+   {
+    "text": "3손가락 하나로 갚는다손가락을 잃는다손가락이 성치 않다",
+    "disabled": true,
+    "lock": "손가락이 성치 않다"
+   },
+   {
+    "text": "4다른 사람을 가리킨다그 사람이 대신 맞는다댈 이름이 없다",
+    "disabled": true,
+    "lock": "댈 이름이 없다"
+   },
+   {
+    "text": "5밀치고 달아난다45%넘어지면 끝이다",
+    "disabled": false,
+    "lock": ""
+   },
+   {
+    "text": "6무릎을 꿇고 빈다40%안 들으면 끝이다",
+    "disabled": false,
+    "lock": ""
+   }
+  ],
+  "tight": false,
+  "overflow": false,
+  "cg": false,
+  "choices": [
+   {
+    "label": "가진 것을 다 내놓는다",
+    "locked": false,
+    "reason": "",
+    "warn": "식량과 물이 다 나간다",
+    "taboo": false,
+    "chance": null
+   },
+   {
+    "label": "맞고 버틴다",
+    "locked": false,
+    "reason": "",
+    "warn": "크게 다친다",
+    "taboo": false,
+    "chance": null
+   },
+   {
+    "label": "손가락 하나로 갚는다",
+    "locked": true,
+    "reason": "손가락가 성치 않다",
+    "warn": "손가락을 잃는다",
+    "taboo": false,
+    "chance": null
+   },
+   {
+    "label": "다른 사람을 가리킨다",
+    "locked": true,
+    "reason": "댈 이름이 없다",
+    "warn": "그 사람이 대신 맞는다",
+    "taboo": true,
+    "chance": null
+   },
+   {
+    "label": "밀치고 달아난다",
+    "locked": false,
+    "reason": "",
+    "warn": "넘어지면 끝이다",
+    "taboo": false,
+    "chance": 45
+   },
+   {
+    "label": "무릎을 꿇고 빈다",
+    "locked": false,
+    "reason": "",
+    "warn": "안 들으면 끝이다",
+    "taboo": false,
+    "chance": 40
+   }
+  ],
+  "console_errors": []
+ },
+ "3_before": [
+  [
+   "soonrye",
+   10,
+   10,
+   null,
+   "down",
+   false
+  ],
+  [
+   "seoha",
+   16,
+   10,
+   null,
+   "down",
+   false
+  ],
+  [
+   "gicheol",
+   20,
+   10,
+   null,
+   "down",
+   false
+  ],
+  [
+   "eunji",
+   21,
+   11,
+   null,
+   "down",
+   false
+  ],
+  [
+   "dongha",
+   23,
+   11,
+   null,
+   "down",
+   false
+  ],
+  [
+   "mari",
+   22,
+   10,
+   null,
+   "down",
+   false
+  ]
+ ],
+ "3_signs": {
+  "view": [
+   {
+    "id": "soonrye",
+    "cold": false,
+    "address": "손님"
+   },
+   {
+    "id": "seoha",
+    "cold": false,
+    "address": "저기요"
+   },
+   {
+    "id": "gicheol",
+    "cold": true,
+    "address": "어이"
+   },
+   {
+    "id": "eunji",
+    "cold": true,
+    "address": "너"
+   },
+   {
+    "id": "dongha",
+    "cold": false,
+    "address": "형"
+   },
+   {
+    "id": "mari",
+    "cold": true,
+    "address": ""
+   }
+  ],
+  "map": [
+   [
+    "soonrye",
+    10,
+    10,
+    null,
+    "down",
+    false
+   ],
+   [
+    "seoha",
+    16,
+    10,
+    null,
+    "down",
+    false
+   ],
+   [
+    "gicheol",
+    20,
+    10,
+    null,
+    "right",
+    true
+   ],
+   [
+    "eunji",
+    21,
+    11,
+    null,
+    "right",
+    true
+   ],
+   [
+    "dongha",
+    23,
+    11,
+    null,
+    "down",
+    false
+   ],
+   [
+    "mari",
+    22,
+    10,
+    null,
+    "right",
+    true
+   ]
+  ],
+  "late": [
+   "crate_food",
+   "blanket_gicheol",
+   "bottle_soonrye",
+   "bowl_eunji"
+  ]
+ },
+ "3_late_inspect": {
+  "open": "line",
+  "day": 3,
+  "phase": "trace",
+  "pending": null,
+  "target": null,
+  "who": "",
+  "face": "",
+  "text": "빈 그릇이다.",
+  "toast": "어제 못 본 자리가 그대로다.",
+  "opts": [],
+  "tight": false,
+  "overflow": false,
+  "cg": false,
+  "choices": []
+ },
+ "3_inspect_texts": {
+  "bowl_you": [
+   "당신 그릇이 줄 끝으로 밀려나 있다."
+  ],
+  "blanket_gicheol": [
+   "담요가 당신 쪽을 등지고 말려 있다.",
+   "어제도 그랬다."
+  ],
+  "bottle_soonrye": [
+   "물통 주둥이가 말라 갈라졌다.",
+   "이틀째 빈 채다.",
+   "흰 붕대다.",
+   "오늘 감았다."
+  ]
+ },
+ "3_inspect_log": [
+  {
+   "id": "notebook_you",
+   "st": "inplace",
+   "lid": "insp_notebook",
+   "day": 1,
+   "notice": ""
+  },
+  {
+   "id": "notebook_you",
+   "st": "inplace",
+   "lid": "insp_notebook",
+   "day": 2,
+   "notice": ""
+  },
+  {
+   "id": "notebook_you",
+   "st": "inplace",
+   "lid": "insp_notebook",
+   "day": 3,
+   "notice": ""
+  },
+  {
+   "toast": "toast_late",
+   "text": "어제 못 본 자리가 그대로다.",
+   "day": 3
+  },
+  {
+   "id": "bowl_eunji",
+   "st": "empty",
+   "lid": "insp_bowl_empty_late",
+   "day": 3,
+   "notice": "toast_late"
+  },
+  {
+   "id": "bowl_you",
+   "st": "pushed",
+   "lid": "insp_bowl_pushed",
+   "day": 3,
+   "notice": ""
+  },
+  {
+   "id": "blanket_gicheol",
+   "st": "rolled",
+   "lid": "insp_blanket_rolled_late",
+   "day": 3,
+   "notice": ""
+  },
+  {
+   "id": "bottle_soonrye",
+   "st": "empty",
+   "lid": "insp_bottle_empty_late",
+   "day": 3,
+   "notice": ""
+  },
+  {
+   "id": "bandage_soonrye",
+   "st": "clean",
+   "lid": "insp_bandage_clean",
+   "day": 3,
+   "notice": ""
+  }
+ ],
+ "3_talk_box": {
+  "open": "line",
+  "day": 3,
+  "phase": "trace",
+  "pending": null,
+  "target": null,
+  "who": "박기철",
+  "face": "portraits80/gicheol.png",
+  "text": "어이, 할머니가 밤에 물을 부",
+  "toast": "",
+  "opts": [],
+  "tight": false,
+  "overflow": false,
+  "cg": false,
+  "choices": []
+ },
+ "3_talk": {
+  "gicheol": {
+   "call": "어이",
+   "seen": [
+    {
+     "text": "어이, 할머니가 밤에 물을 부었어.",
+     "name": "박기철"
+    }
+   ]
+  },
+  "mari": {
+   "call": "",
+   "seen": [
+    {
+     "text": "여자가 붕대를 다시 만다.",
+     "name": "",
+     "tag": "mari_idle"
+    }
+   ]
+  },
+  "eunji": {
+   "call": "너",
+   "seen": [
+    {
+     "text": "여자가 셔터 쪽을 본다.",
+     "name": "",
+     "tag": "eunji_idle"
+    }
+   ]
+  },
+  "soonrye": {
+   "call": "손님",
+   "seen": [
+    {
+     "text": "손님, 재가 한 칸 내려왔어.",
+     "name": "김순례",
+     "tag": ""
+    },
+    {
+     "text": "불빛 때문인지는 몰라.",
+     "name": "김순례",
+     "tag": ""
+    },
+    {
+     "text": "나는 그렇게 생각해.",
+     "name": "김순례",
+     "tag": ""
+    }
+   ]
+  },
+  "seoha": {
+   "call": "저기요",
+   "seen": [
+    {
+     "text": "저기요, …밖에서 걸어온 사람은 처음이에요.",
+     "name": "담요 속 여학생",
+     "tag": ""
+    }
+   ]
+  },
+  "dongha": {
+   "call": "형",
+   "seen": [
+    {
+     "text": "청년이 무릎을 끌어안는다.",
+     "name": "",
+     "tag": "dongha_idle"
+    }
+   ]
+  }
+ },
+ "3_talk_log": [
+  {
+   "who": "soonrye",
+   "day": 1,
+   "phase": "evening",
+   "key": "soonrye_d1_dark#0",
+   "fresh": true,
+   "text": "손님, 밤엔 창고 가지 마. 어두워. 쥐가 사람 가리지 않아."
+  },
+  {
+   "who": "soonrye",
+   "day": 2,
+   "phase": "evening",
+   "key": "rumor:rum_gave_bowl"
+  },
+  {
+   "who": "gicheol",
+   "day": 3,
+   "phase": "trace",
+   "key": "rumor:rum_grandma_poured"
+  },
+  {
+   "who": "mari",
+   "day": 3,
+   "phase": "trace",
+   "key": "mari_idle"
+  },
+  {
+   "who": "eunji",
+   "day": 3,
+   "phase": "trace",
+   "key": "eunji_idle"
+  },
+  {
+   "who": "soonrye",
+   "day": 3,
+   "phase": "trace",
+   "key": "soonrye_d3_after#0",
+   "fresh": true,
+   "text": "손님, 재가 한 칸 내려왔어. 불빛 때문인지는 몰라. 나는 그렇게 생각해."
+  },
+  {
+   "who": "seoha",
+   "day": 3,
+   "phase": "trace",
+   "key": "seoha_meet#0",
+   "fresh": true,
+   "text": "저기요, …밖에서 걸어온 사람은 처음이에요."
+  },
+  {
+   "who": "dongha",
+   "day": 3,
+   "phase": "trace",
+   "key": "dongha_idle"
+  }
+ ],
+ "3_noise_rule": {
+  "neglect": false,
+  "clock": false,
+  "steal": true
+ },
+ "3_reason_josa": [
+  "손가락이 성치 않다",
+  "다리가 성치 않다",
+  "귀가 성치 않다",
+  "약이 모자라다"
+ ],
+ "4_evening": {
+  "view": [
+   {
+    "id": "soonrye",
+    "cold": true,
+    "address": "손님"
+   },
+   {
+    "id": "seoha",
+    "cold": false,
+    "address": "저기요"
+   },
+   {
+    "id": "gicheol",
+    "cold": true,
+    "address": "어이"
+   },
+   {
+    "id": "eunji",
+    "cold": true,
+    "address": "너"
+   },
+   {
+    "id": "dongha",
+    "cold": false,
+    "address": "형"
+   },
+   {
+    "id": "mari",
+    "cold": false,
+    "address": "씨"
+   }
+  ],
+  "map": [
+   [
+    "soonrye",
+    14,
+    10,
+    "sitting",
+    "up",
+    true
+   ],
+   [
+    "seoha",
+    14,
+    12,
+    "sitting",
+    "down",
+    false
+   ],
+   [
+    "gicheol",
+    12,
+    12,
+    "sitting",
+    "up",
+    true
+   ],
+   [
+    "eunji",
+    11,
+    10,
+    "sitting",
+    "up",
+    true
+   ],
+   [
+    "dongha",
+    10,
+    10,
+    "sitting",
+    "right",
+    false
+   ],
+   [
+    "mari",
+    16,
+    10,
+    "sitting",
+    "left",
+    false
+   ]
+  ],
+  "late": []
+ },
+ "5_night": {
+  "view": [
+   {
+    "id": "soonrye",
+    "cold": true,
+    "address": "이봐"
+   },
+   {
+    "id": "seoha",
+    "cold": true,
+    "address": "저기요"
+   },
+   {
+    "id": "gicheol",
+    "cold": true,
+    "address": "당신"
+   },
+   {
+    "id": "eunji",
+    "cold": true,
+    "address": "너"
+   },
+   {
+    "id": "dongha",
+    "cold": true,
+    "address": "형"
+   },
+   {
+    "id": "mari",
+    "cold": true,
+    "address": "씨"
+   }
+  ],
+  "map": [
+   [
+    "soonrye",
+    16,
+    9,
+    "lying",
+    "down",
+    true
+   ],
+   [
+    "gicheol",
+    20,
+    9,
+    "lying",
+    "down",
+    true
+   ],
+   [
+    "eunji",
+    16,
+    11,
+    "lying",
+    "up",
+    true
+   ],
+   [
+    "dongha",
+    18,
+    11,
+    "lying",
+    "left",
+    true
+   ],
+   [
+    "mari",
+    20,
+    11,
+    "lying",
+    "down",
+    true
+   ]
+  ],
+  "late": []
+ },
+ "6_noart_night": {
+  "view": [
+   {
+    "id": "soonrye",
+    "cold": true,
+    "address": "이봐"
+   },
+   {
+    "id": "seoha",
+    "cold": false,
+    "address": "저기요"
+   },
+   {
+    "id": "gicheol",
+    "cold": true,
+    "address": "당신"
+   },
+   {
+    "id": "eunji",
+    "cold": false,
+    "address": "너"
+   },
+   {
+    "id": "dongha",
+    "cold": false,
+    "address": "형"
+   },
+   {
+    "id": "mari",
+    "cold": true,
+    "address": "씨"
+   }
+  ],
+  "map": [
+   [
+    "soonrye",
+    16,
+    9,
+    "lying",
+    "down",
+    true
+   ],
+   [
+    "gicheol",
+    20,
+    9,
+    "lying",
+    "down",
+    true
+   ],
+   [
+    "eunji",
+    16,
+    11,
+    "lying",
+    "up",
+    false
+   ],
+   [
+    "dongha",
+    18,
+    11,
+    "lying",
+    "left",
+    false
+   ],
+   [
+    "mari",
+    20,
+    11,
+    "lying",
+    "down",
+    true
+   ]
+  ],
+  "late": [
+   "blanket_gicheol"
+  ]
+ },
+ "6_noart_errors": [],
+ "7_dropped": {
+  "dropped": [
+   {
+    "table": "events",
+    "i": 128,
+    "id": "zz_bad_row"
+   }
+  ],
+  "toast": "표 1줄을 읽지 못해 빼고 시작했다 — 표 담당에게 알릴 것",
+  "console": [
+   "error: [ds4] 표 검증 실패 행을 빼고 읽었다:\n  events[128] zz_bad_row: grade: 필수 열이 비었음\n  events[128] zz_bad_row: choices: 최소 1개"
+  ]
+ }
+}

@@ -1,0 +1,2886 @@
+[
+  {
+    "id": "insp_fire_lit",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "드럼통 안에서 불이 탄다. 땔감이 밤마다 하나씩 든다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_fire_low",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "불이 낮다. 누가 밤에 재를 들쑤신 자국이 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_fire_out",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "불이 꺼졌다. 드럼통이 차갑다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_board",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "게시판이다. 「아들」이라고 적힌 전화번호 종이가 붙어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_board",
+    "speaker": "narrator",
+    "context": "flag:met_soonrye & day>=1",
+    "grade": "normal",
+    "text": "게시판이다. 순례가 아들 번호를 적어 둔 종이가 붙어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_board_torn",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "게시판이 있던 자리다. 못 자국만 남았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bench",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "승강장 의자다. 등받이를 뜯으면 하룻밤 땔감이 된다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bench_torn",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "의자가 있던 자리다. 오늘 밤부터 둘이 바닥에서 잔다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_crate_closed",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "창고 상자다. 뚜껑이 닫혀 있다. 배식 때만 연다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_crate_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "뚜껑이 열려 있다. 봉지 하나가 비었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_crate_empty",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "상자가 비었다. 바닥에 부스러기만 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_crate_moved",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "상자가 역무실 책상 위에 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_parts_storage",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "부품 상자다. 통로를 잇는 데 든다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_parts_office",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "부품 상자가 역무실에 있다. 누가 옮겼다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_parts_hidden",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "부품 상자가 있던 자리다. 비어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_office_locked",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "역무실 문이다. 잠겨 있다. 문 틈에 담요 자락이 보인다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_office_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "역무실이다. 책상, 서류철, 그날 근무표.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_chalk_blank",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "분필 벽이다. 아직 아무것도 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_chalk_lines",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "세로줄이 그어져 있다. 밤마다 한 줄씩 는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_chalk_lines",
+    "speaker": "narrator",
+    "context": "flag:met_soonrye & day>=1",
+    "grade": "normal",
+    "text": "세로줄이 그어져 있다. 순례가 밤마다 긋는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_chalk_names",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "세로줄 밑에 이름이 적혔다. 올라간 사람 이름이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_dry",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "출구 계단이다. 한가운데에 안개가 벽처럼 멈춰 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_ash",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "계단 가장자리에 재가 한 칸 쌓였다. 어제는 없었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_deep",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "재가 계단 절반까지 내려왔다. 밟으면 발자국이 남는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_blocked",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "재가 승강장 바로 위다. 숨을 쉬면 입안이 텁텁하다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_line",
+    "speaker": "narrator",
+    "context": "!flag:met_soonrye",
+    "grade": "normal",
+    "text": "분필로 그은 줄이다. 발자국이 줄 앞에서 끊긴다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_line",
+    "speaker": "narrator",
+    "context": "flag:met_soonrye",
+    "grade": "normal",
+    "text": "할머니가 말한 분필 줄이다. 그 위로는 발자국이 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_line",
+    "speaker": "narrator",
+    "context": "flag:met_soonrye & day>=1",
+    "grade": "normal",
+    "text": "순례가 그은 분필 줄이다. 그 위로는 발자국이 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shoes_none",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "계단 아래다. 아무것도 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shoes_one",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "신발 한 짝이 계단 아래 놓여 있다. 누구 것인지 안다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shoes_pair",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "신발 한 켤레가 가지런하다. 발끝이 계단 쪽을 본다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shutter_shut",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "지하상가 셔터다. 내려와 있다. 너머에서 발소리가 난다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shutter_can",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "셔터 밑에 통조림 하나가 놓여 있다. 안쪽에서 밀어 넣은 것이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shutter_blood",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "셔터 밑에 피가 말라 있다. 손가락 자국이 바깥으로 끌렸다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shutter_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "셔터가 반쯤 올라가 있다. 너머가 어둡다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_speaker_on",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "기둥 스피커다. 같은 말이 되풀이된다. 사람 목소리다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_speaker_cut",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "선이 끊긴 스피커다. 그래도 가끔 지직거린다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_seat",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "멈춘 전동차 좌석이다. 뜯으면 땔감이 된다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_seat_torn",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "좌석을 뜯어낸 자리다. 쇠틀만 남았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "cab_window",
+    "speaker": "narrator",
+    "context": "day<=3",
+    "grade": "normal",
+    "text": "운전실 유리창이다. 안이 어둡다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "cab_window",
+    "speaker": "narrator",
+    "context": "day>=4 & share>=2 & hand>=1",
+    "grade": "normal",
+    "text": "유리창에 모자 쓴 사람이 비친다. 돌아보면 아무도 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "cab_window",
+    "speaker": "narrator",
+    "context": "day>=4 & share<=-2",
+    "grade": "normal",
+    "text": "유리창에 좌석에 앉은 사람이 비친다. 당신 자리다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "cab_window",
+    "speaker": "narrator",
+    "context": "day>=4 & name>=2",
+    "grade": "normal",
+    "text": "유리창 너머에서 누가 입을 움직인다. 세고 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "cab_window",
+    "speaker": "narrator",
+    "context": "day>=4",
+    "grade": "normal",
+    "text": "운전실 유리창이다. 당신 얼굴만 비친다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_radio_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "무전기다. 지직거리기만 한다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_radio_on",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "무전기가 켜져 있다. 아무도 켜지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_body_none",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "선로다. 물이 차 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_body_whole",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "선로에 사람이 걸려 있다. 얼굴이 불었고 한쪽 신발이 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_body_cut",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "선로의 사람이 어제와 다르다. 담요로 덮여 있다. 누가 손댔다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_body_buried",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "묻은 자리다. 돌 하나를 올려 두었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_grave_none",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "승강장 끝이다. 아직 아무도 묻지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_grave",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "돌이 놓여 있다. 이름은 수첩에 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pipe",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "쇠파이프다. 화로 옆에 세워져 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pipe_blood",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "파이프 끝에 피가 말라 있다. 머리카락이 붙어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_scissors",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "가위다. 붕대를 자를 때 쓴다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_scissors",
+    "speaker": "narrator",
+    "context": "flag:met_mari",
+    "grade": "normal",
+    "text": "담요 여자의 가위다. 붕대를 자를 때 쓴다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_scissors",
+    "speaker": "narrator",
+    "context": "flag:met_mari & (day>=2 | day>=1 & !flag:met_late_mari)",
+    "grade": "normal",
+    "text": "마리의 가위다. 붕대를 자를 때 쓴다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_scissors_blood",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "가위 날 사이에 살점이 끼어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pillow",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "누군가의 베개다. 접은 옷이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pillow",
+    "speaker": "narrator",
+    "context": "flag:met_gicheol",
+    "grade": "normal",
+    "text": "헤드램프 남자의 베개다. 접은 옷이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pillow",
+    "speaker": "narrator",
+    "context": "flag:met_gicheol & (day>=2 | day>=1 & !flag:met_late_gicheol)",
+    "grade": "normal",
+    "text": "기철의 베개다. 접은 옷이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pillow_moved",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "베개가 머리맡이 아니라 담요 위에 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pillow_blood",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "베개에 피와 침이 말라 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_notebook",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "당신 수첩이다. 연필이 위에 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_notebook_moved",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "연필이 옆으로 옮겨져 있다. 누가 펼쳐 봤다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_rubble",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "무너진 통로다. 너머가 고가 구간이다. 열차가 서려면 이어야 한다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_rubble_work",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "공사 중이다. 도현의 연장이 놓여 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_rubble_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "통로가 이어졌다. 바람이 지나간다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bottle_full",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "물통이다. 반쯤 차 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bottle_empty",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "물통이 비어 있다. 바닥이 말라 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bottle_wet",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "물통 밑이 젖어 있다. 샜다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bowl_full",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "그릇이다. 오늘 몫이 들어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bowl_empty",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 그릇이다. 오늘 몫이 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bowl_meat",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "그릇에 통조림이 아닌 것이 있다. 아무도 뭐라 하지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_blanket",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "담요가 개어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_blanket_rolled",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "담요가 둘둘 말린 채 화로 옆에 있다. 밤에 옮겼다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_blanket_paired",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "담요 둘이 붙어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_blanket_empty",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "담요가 비어 있다. 개지 않은 채다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_lever",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "비상 레버다. 당기면 문이 열린다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_lever_pulled",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "당겨진 레버다. 문은 열려 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bag",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "좌석 밑에 주인 없는 가방들이 밀려 있다. 하나가 유난히 무겁다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bag_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "공구 가방이었다. 사원증 사진이 웃고 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_cab_door",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "운전실 문이 열려 있다. 기관사석은 비었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_radio_cab",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "무전기가 혼자 지직거린다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_radio_cab_used",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "무전기다. 아까 그 목소리는 다시 오지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_medkit",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "벽의 구급함이다. 잠금쇠가 녹슬었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_medkit_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "뜯은 구급함이다. 비었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_notebook_dash",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "계기판 위에 손때 묻은 수첩이 펼쳐져 있다. 「승객 명부」.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_notebook_taken",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "수첩이 있던 자리다. 먼지에 네모가 남았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shoe_cab",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "구두 한 짝이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_car_shoes",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "신발 한 켤레가 가지런하다. 주인은 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_car_shoes",
+    "speaker": "narrator",
+    "context": "map==tunnel",
+    "grade": "normal",
+    "text": "안전화 한 켤레가 가지런하다. 주인은 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelter",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "벽감에 비상 상자가 있다. 옆에 안전화 한 켤레가 가지런하다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelter_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 상자다. 안전화는 그대로다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelter_left",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "닫힌 비상 상자다. 등 뒤의 헤드램프 빛이 상자를 지킨다. 상자는 두고 간다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelter_left",
+    "speaker": "narrator",
+    "context": "flag:shelter_shut",
+    "grade": "normal",
+    "text": "뚜껑을 닫아 둔 비상 상자다. 헤드램프 빛이 그 위에 머문다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelter_left",
+    "speaker": "narrator",
+    "context": "flag:met_gicheol",
+    "grade": "normal",
+    "text": "닫힌 비상 상자다. 앞선 빛이 멀어진다. 상자는 두고 간다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_vent",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "환기 통로다. 안쪽에 안개가 차 있다. 발이 움직이지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_rubble_tunnel",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "무너진 구간이다. 잔해 앞에 헤드램프 불빛이 흔들린다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_rubble_crossed",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "넘어온 잔해다. 돌아갈 길은 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pharm_closed",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "약국 셔터다. 유리문 안쪽에서 누가 내다본다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pharm_half",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "셔터가 반쯤 올라가 있다. 안쪽 뒷방 문은 닫혀 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pharm_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "약국이 열려 있다. 선반이 거의 비었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pharm_dark",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "약국이 어둡다. 셔터가 끝까지 내려와 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_booth",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "공중전화다. 반환구에 전화카드가 걸려 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_booth_taken",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "공중전화다. 수화기가 제자리에 걸려 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_cart",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "노점 수레다. 바퀴 하나가 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bones",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "뼈 무더기다. 사람 것과 아닌 것이 섞여 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bones_scat",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "흩어진 뼈다. 무엇이 뒤졌다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bodybag",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "시체 자루다. 지퍼가 안에서 열려 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_valve",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "수문 밸브다. 돌리면 역의 물이 빠진다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_valve_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "열린 밸브다. 아래쪽에서 물이 숨 쉬는 소리가 난다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pump_locked",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "펌프실이다. 안에서 물 흐르는 소리가 난다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_pump_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "펌프실이다. 도현의 젖은 옷이 걸려 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_workers",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "배수관 안에 셋이 포개져 있다. 안전화가 보인다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_workers_stripped",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "배수관의 사람들이다. 발이 맨발이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_cistern",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "저수조다. 물 밑에서 무엇이 움직인다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_ladder",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "물에 잠긴 사다리다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "rum_saw_shadow",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 누가 창고 쪽으로 갔어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_saw_shadow",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "동하가 밤에 창고 쪽으로 갔어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_bottle_empty",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:의} 물통이 비었대. 자기가 마신 거야.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_bottle_empty",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 물 따르는 소리가 났어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_fire_poked",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "누가 불씨를 들쑤셨어. 겁이 났나 봐.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_at_stairs",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 계단 쪽에 서 있었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_mari_awake",
+    "speaker": "mari",
+    "context": "",
+    "grade": "normal",
+    "text": "밤새 안 잤어요. 냄새가 바뀌었어요.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_gave_bowl",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 제 걸 줬대.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_saw_notebook",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 네 수첩을 봤어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_shutter_can",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "셔터 밑에 뭐가 놓여 있었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_rats_did_it",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "쥐야. 쥐가 그랬어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_swung_asleep",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 잠결에 휘둘렀어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_grandma_poured",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니가 밤에 물을 부었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_gicheol_hit",
+    "speaker": "dongha",
+    "context": "",
+    "grade": "normal",
+    "text": "아저씨가 도현 씨를 때렸어요.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_sister_said_rat",
+    "speaker": "dongha",
+    "context": "",
+    "grade": "normal",
+    "text": "누나가 쥐라고 했어요. 맛있었어요.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_went_in_night",
+    "speaker": "mari",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 갔어요.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_dongha_did",
+    "speaker": "seoha",
+    "context": "",
+    "grade": "normal",
+    "text": "동하가 그랬대요.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "fixed",
+    "text": "운전석에 구두 한 짝이 있다. 당신 발에 맞는다. 승강장에서 이름을 불러 모은 사람이 앉던 자리다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 끝에서 철로를 내려다봤다. 운전석이 빈 열차가 서지 않고 지나갔다. 그 자리는 당신 것이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "열차는 맨 앞 칸을 비운 채 떠났다. 운전석에 구두 한 짝이 남아 있었다. 당신 발에 맞는 것이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "차장이 손을 내렸다. \"다시 모시겠습니까.\" 운전석에 구두 한 짝이 있었다. 당신 발에 맞았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_driver",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "정오에 열차가 왔다. 운전석이 비어 있었다. 구두 한 짝이 주인을 기다렸다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "fixed",
+    "text": "수첩 두 권이 나란히 놓여 있다. 글씨가 같다. 문을 닫는 손은 당신 손이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 위에서 지나가는 열차를 봤다. 문 옆 자리가 비어 있었다. 문을 닫던 사람은 여기서 걷고 있었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "차장이 문 안에서 당신을 봤다. 고개를 한 번 숙였다. 승강장에 남아 문을 닫는 사람, 그게 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "차장이 수첩을 내밀었다. 당신 것과 같은 수첩이었다. 바꿔 들었다. 문을 닫는 건 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_conductor",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "차장이 명부를 덮었다. 문 옆 자리가 비어 있었다. 문을 닫던 사람은 오지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "fixed",
+    "text": "손에 펀치가 들려 있다. 명부를 끝까지 읽을 사람은 당신뿐이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "주머니에 펀치가 있었다. 언제 들어왔는지 모른다. 걷는 사람들의 이름을 당신이 읽고 있었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "차장이 펀치를 당신 손에 놓고 문을 닫았다. 다음 열차까지 명부를 읽는 사람은 당신이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "차장이 펀치를 당신 손에 쥐여 줬다. 수첩을 돌려받았다. 명부를 읽는 사람은 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_inspector",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "차장이 당신 수첩을 집어 들었다. 줄마다 펀치 구멍이 나 있었다. 뚫은 사람은 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "fixed",
+    "text": "명부의 당신 이름 뒤에 님이 붙어 있다. 당신은 손님이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "걷는 동안 아무도 당신을 부르지 않았다. 명부의 당신 줄에는 님이 붙어 있었다. 손님이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "차장이 당신 이름을 한 번 더 읽었다. 님이 붙어 있었다. 손님 하나를 두고 문이 닫혔다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "차장이 당신 이름을 읽었다. 님이 붙어 있었다. 운전석에는 다른 사람이 앉아 있었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_passenger",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "차장이 명부에서 당신 줄을 짚었다. 님이 붙어 있었다. 손님 자리 하나가 비었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "fixed",
+    "text": "계단 아래 당신 신발이 가지런하다. 셋째 날 밤 하나 더 많았던 수가 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 끝에서 수를 셌다. 하나가 많았다. 셋째 날 밤에도 그랬다. 그 하나가 당신이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "차장은 당신 이름을 읽지 않았다. 셋째 날 밤 하나 더 많았던 수가 당신이었다. 문이 닫히자 신발을 벗었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "차장은 당신 이름을 읽지 않았다. 셋째 날 밤 하나 더 많았던 수가 당신이었다. 자리에 앉자 신발이 저절로 벗겨졌다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_counted",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "계단 아래 당신 신발이 가지런하다. 셋째 날 밤 하나 더 많았던 수가 당신이었다. 이제 수가 맞는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "fixed",
+    "text": "열차가 서지 않았다. 창 안의 사람들이 당신을 보지 못했다. 당신은 승강장에 서 있던 사람이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 아래로 열차가 지나갔다. 창 안의 사람들이 당신을 보지 못했다. 당신은 승강장에 서 있던 사람이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "fixed",
+    "text": "문이 닫혔다. 창 안의 사람들이 승강장을 보지 않았다. 당신은 처음부터 승강장에 서 있던 사람이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "열차에 올랐다. 창 밖 승강장에 누가 서 있었다. 당신 얼굴이었다. 아무도 그쪽을 보지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_platform",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "fixed",
+    "text": "열차가 승강장에 섰다. 아무도 당신 자리를 보지 않았다. 당신은 승강장에 서 있던 사람이었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_child",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "fixed",
+    "text": "계단 위에서 세는 소리가 났다. 당신 목소리였다. 하나. 둘. 명부의 글씨는 당신 것이 아니었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_child",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "fixed",
+    "text": "고가 위에서 누가 걷는 사람을 셌다. 당신 목소리였다. 하나. 둘. 명부의 글씨는 당신 것이 아니었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "reveal_child",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "fixed",
+    "text": "열차 안에서 누가 머릿수를 셌다. 당신 목소리였다. 하나. 둘. 명부의 글씨는 당신 것이 아니었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_cab",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 운전석에 앉아 있다. 앞 유리에 아무것도 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_cab2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 손잡이를 잡고 있다. 뒤에서 누가 이름을 센다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_cab3",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 역에 선다. 승강장에 여섯이 서 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_door",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 문 옆에 서 있다. 닫는 건 당신 손이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_door2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 문 사이에 손이 끼었다. 당신은 놓지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_door3",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 수첩이 두 권이다. 글씨가 같다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_punch",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 개찰구 앞이다. 손에 펀치가 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_gate2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 줄이 길다. 이름을 읽는다. 구멍을 뚫는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_gate3",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 마지막 사람이 당신이다. 읽을 사람이 없다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_seat",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 좌석에 앉아 있다. 창이 검다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_seat2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 옆자리가 비었다. 누가 앉았었는지 모른다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_seat3",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 안내방송이 당신 역을 부른다. 일어나지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_stairs",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 계단 위에서 승강장을 내려다본다. 여섯이 작다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_stairs2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 누가 당신 옆에서 센다. 당신도 따라 센다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_stairs3",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 신발이 무겁다. 벗고 싶다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_platform",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 승강장에 서 있다. 열차가 지나간다. 서지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_platform2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 창 안의 사람들이 밖을 본다. 당신을 보지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_platform3",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 노란 선 위에 서 있다. 아무도 끌어내리지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_count",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 입이 혼자 움직인다. 하나. 둘.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_count2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 아래에서 여섯이 숨을 죽인다. 당신이 센다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dream_count3",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "꿈. 수를 맞췄다. 하나가 남는다. 당신이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "toast_ledger_line",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "명부에 한 줄 — Tab",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "toast_bowl_warn",
+    "speaker": "ui",
+    "context": "hunger_you>=7",
+    "grade": "toast",
+    "text": "손이 떨린다. 사흘째 빈 그릇이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "toast_fuel_last",
+    "speaker": "ui",
+    "context": "fuel==1",
+    "grade": "toast",
+    "text": "땔감 하나. 오늘 밤이 마지막 불이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "toast_trip_hint",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "통로를 조사하면 원정이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "toast_fire_night",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "화로를 조사하면 밤이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "toast_passage_warn",
+    "speaker": "ui",
+    "context": "day>=5 & !flag:passage_open",
+    "grade": "toast",
+    "text": "통로가 없다. 지금대로면 열차는 서지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니가 장작을 뒤집는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "남자가 헤드램프 끈을 고쳐 맨다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "mari_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "여자가 붕대를 다시 만다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "eunji_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "여자가 셔터 쪽을 본다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dongha_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "청년이 무릎을 끌어안는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "seoha_idle",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "아이가 휴대폰을 뒤집어 든다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_meet",
+    "speaker": "soonrye",
+    "context": "day==0",
+    "grade": "normal",
+    "text": "앉든지 둘러보든지 해. 계단만 빼고.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_rule_train",
+    "speaker": "soonrye",
+    "context": "day==1 & flag:met_soonrye",
+    "grade": "normal",
+    "text": "저 소리가 열흘이래. 스피커 말이야. 사람은 자네가 세.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_d1_dark",
+    "speaker": "soonrye",
+    "context": "day==1 & phase==evening",
+    "grade": "normal",
+    "text": "밤엔 창고 가지 마. 어두워. 쥐가 사람 가리지 않아.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_d2",
+    "speaker": "soonrye",
+    "context": "day==2",
+    "grade": "normal",
+    "text": "역무실 열쇠야. 삼십 년 걸레만 넣어 뒀지. 자네가 열어. 밥은 문 틈으로 넣어.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_rule_answer",
+    "speaker": "soonrye",
+    "context": "day==3 & flag:met_soonrye",
+    "grade": "normal",
+    "text": "어젯밤에 저 위에서 뭔가 셌어. 오늘 밤엔 대답하지 마. 누가 불러도.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_d3_after",
+    "speaker": "soonrye",
+    "context": "day==3 & phase==trace & trace:stairs_ash==ash",
+    "grade": "normal",
+    "text": "재가 한 칸 내려왔어. 불빛 때문인지는 몰라. 나는 그렇게 생각해.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_sit",
+    "speaker": "soonrye",
+    "context": "phase==evening",
+    "grade": "normal",
+    "text": "아들이 남주에 있어. 그날 아침에 전화를 못 받았지. 일할 땐 안 받아. 삼십 년을 그랬어.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "soonrye_stairs",
+    "speaker": "soonrye",
+    "context": "day==9",
+    "grade": "normal",
+    "text": "잠이 안 왔어.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "mari_meet",
+    "speaker": "mari",
+    "context": "day==0",
+    "grade": "normal",
+    "text": "다치면 바로 말해요. 여기선 곪으면 끝이에요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "mari_d1",
+    "speaker": "mari",
+    "context": "day==1",
+    "grade": "normal",
+    "text": "여기선 곪으면 끝이에요. 다치면 바로 말해요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "mari_sit",
+    "speaker": "mari",
+    "context": "phase==evening",
+    "grade": "normal",
+    "text": "환자 이름을 매일 밤 하나씩 떠올려요. 걷지도 못하던 사람들이 걸어 나갔어요. 저는 서 있었고요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_meet",
+    "speaker": "gicheol",
+    "context": "day==0",
+    "grade": "normal",
+    "text": "…역이오. 불은 저 할머니 거요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_arrive",
+    "speaker": "gicheol",
+    "context": "day==1 & !flag:met_gicheol",
+    "grade": "normal",
+    "text": "당신 거요. 이름이 있소.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_rule_rail",
+    "speaker": "gicheol",
+    "context": "day==1 & flag:met_gicheol",
+    "grade": "normal",
+    "text": "선로가 잠겼소. 통로를 이어야 열차가 서오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_rule_count",
+    "speaker": "gicheol",
+    "context": "day>=1 & day<=2 & flag:met_gicheol",
+    "grade": "normal",
+    "text": "세는 것이 밤마다 머릿수를 세오. 숨죽이면 지나가오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_d2",
+    "speaker": "gicheol",
+    "context": "day==2",
+    "grade": "normal",
+    "text": "시장 쪽은 셔터가 많소. 수문 쪽은 물이 많소. 둘 중 하나요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_d4",
+    "speaker": "gicheol",
+    "context": "day==4",
+    "grade": "normal",
+    "text": "통로는 이틀이면 되오. 부품은 넉넉하오.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "gicheol_sit",
+    "speaker": "gicheol",
+    "context": "phase==evening",
+    "grade": "normal",
+    "text": "딸이 둘이오. 큰애가 올해 대학 갔소. 불빛 쪽으로 오지 마시오. 얼굴은 됐소.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_wire",
+    "speaker": "gicheol",
+    "context": "day==7",
+    "grade": "normal",
+    "text": "선이 살아 있소. 만지면 죽소.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "eunji_meet",
+    "speaker": "eunji",
+    "context": "day<=2",
+    "grade": "normal",
+    "text": "문 열어 줘서 고맙단 말은 안 해.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "eunji_sit",
+    "speaker": "eunji",
+    "context": "phase==evening",
+    "grade": "normal",
+    "text": "엄마 가게 간판을 아직 가지고 있어. 두 손으로 둘은 못 잡아.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "eunji_why",
+    "speaker": "eunji",
+    "context": "day==8 & phase==evening & flag:eunji_sold",
+    "grade": "normal",
+    "text": "셔터 너머가 더 커. 작은 쪽이 먹혀. 그게 다야.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dongha_meet",
+    "speaker": "dongha",
+    "context": "day<=2",
+    "grade": "normal",
+    "text": "…고마워요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dongha_sit",
+    "speaker": "dongha",
+    "context": "phase==evening",
+    "grade": "normal",
+    "text": "은지 누나가 저를 거둬 줬어요. 갚아야죠. 형이 그랬어요. 이름은 빌려도 된다고.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "seoha_meet",
+    "speaker": "seoha",
+    "context": "day<=3",
+    "grade": "normal",
+    "text": "…밖에서 걸어온 사람은 처음이에요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "seoha_sit",
+    "speaker": "seoha",
+    "context": "phase==evening",
+    "grade": "normal",
+    "text": "밤마다 휴대폰을 켜 봐요. 배터리는 아직 있어요. 그냥 안 켜는 거예요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "seoha_card",
+    "speaker": "seoha",
+    "context": "region==A",
+    "grade": "normal",
+    "text": "…순례 할머니, 아들이 남주랬죠.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "eunchae_meet",
+    "speaker": "eunchae",
+    "context": "region==A",
+    "grade": "normal",
+    "text": "혼자 어머니를 돌보고 있어요. 뒷문은 열 수 있는데… 낯선 사람한테는.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "dohyeon_meet",
+    "speaker": "dohyeon",
+    "context": "region==B",
+    "grade": "normal",
+    "text": "권도현. 이틀 뒤에 보답하지. 물속이 조용해. 바깥보다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "conductor_ticket",
+    "speaker": "narrator",
+    "context": "day==9",
+    "grade": "fixed",
+    "text": "\"운임을 보여 주시겠습니까.\"",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "conductor_last",
+    "speaker": "narrator",
+    "context": "day==10",
+    "grade": "fixed",
+    "text": "\"명부의 첫 이름은 당신입니다. 다시 모시겠습니까.\"",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "rum_grandma_called",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니가 밤에 계단에서 누구 이름을 불렀어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_grandma_called",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니는 밤새 잤어. 소리는 위에서만 났어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_seoha_shouted",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "서하가 제 이름을 소리쳤어. 그래서 내가 안 올라갔어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_mari_names",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 다친 사람 이름을 불러 줬어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_sister_shutter",
+    "speaker": "dongha",
+    "context": "",
+    "grade": "normal",
+    "text": "누나가 셔터 밑에서 뭘 받았어요.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_sister_went",
+    "speaker": "dongha",
+    "context": "",
+    "grade": "normal",
+    "text": "누나가 셔터 너머로 갔어요. 저 대신이래요.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_dongha_pipe",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "동하가 파이프로 누굴 때렸어. 그 사람은 안 일어났어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_dongha_pipe",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "쥐 잡는 소리였어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_dongha_carried",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "동하가 밤새 다친 사람 옆에 앉아 있었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_pharmacist_behind",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "횃불 뒤에 약사가 서 있었어. 눈을 안 마주쳤어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_dohyeon_price",
+    "speaker": "gicheol",
+    "context": "",
+    "grade": "normal",
+    "text": "도현이 값을 다시 불렀소. 어제와 다르오.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_clean",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "흰 붕대다. 오늘 감았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_wet",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "붕대가 피에 젖어 있다. 아직 마르지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_rot",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "붕대가 누렇다. 썩는 냄새가 난다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_seat_shoe",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "운전석에 구두 한 짝이 놓여 있다. 당신 발에 맞는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_seat_shoe",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "normal",
+    "text": "고가 아래 지나간 열차의 운전석이 비어 있다. 당신 발에 맞는 구두 한 짝이 거기 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_two_books",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "수첩 두 권이 나란히 놓여 있다. 글씨가 같다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_two_books",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "normal",
+    "text": "주머니에 수첩이 두 권 있다. 글씨가 같다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_punch_hand",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "당신 손에 펀치가 들려 있다. 읽을 사람은 당신뿐이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_empty_cab",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "운전석에 누가 앉아 있다. 당신 자리는 좌석이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_empty_cab",
+    "speaker": "narrator",
+    "context": "flag:walked_out",
+    "grade": "normal",
+    "text": "좌석 하나가 비어 있다. 손님이 걸어서 가는 동안.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_empty_cab",
+    "speaker": "narrator",
+    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
+    "grade": "normal",
+    "text": "좌석 하나가 비어 있다. 손님은 오지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_shoes_stairs",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "계단 아래 신발 한 켤레가 가지런하다. 발끝이 위를 본다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_train_passes",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "열차가 서지 않고 지나간다. 창 안의 얼굴들이 당신을 보지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_train_passes",
+    "speaker": "narrator",
+    "context": "flag:you_stayed",
+    "grade": "normal",
+    "text": "열차가 떠난 자리에 당신만 서 있다. 아무도 돌아보지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_train_passes",
+    "speaker": "narrator",
+    "context": "flag:you_boarded",
+    "grade": "normal",
+    "text": "창밖으로 승강장이 지나간다. 거기 서 있는 사람이 당신을 보지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "end_voice_above",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "계단 위에서 세는 소리가 난다. 당신 목소리다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_fire_wet",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "화로 가장자리가 젖어 있다. 누가 물을 흘렸다. 재에 손자국이 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "rum_water_rose",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 선로 물이 턱까지 올라왔어. 뭐가 떠내려왔어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "insp_fire_kept",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "화로 곁 재에 둘이 앉았던 자국이 있다. 불이 밤새 꺼지지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "rum_slept_beside",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 다친 사람 곁에 붙어 잤어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_slept_beside",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 누가 담요를 끌고 다녔어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_gave_seat",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "아저씨가 제 자리를 서하한테 준대요.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_meds_left",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "셔터 밑에 약이 놓여 있었어. 누가 두고 갔어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_valve_shut",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤에 물소리가 멎었어. 도현 씨가 내려간 뒤였어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_eyes_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 안 자고 네 쪽을 봤어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_eyes_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤새 누가 뒤척였어. 누군지는 몰라.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_named_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니가 밤에 계단에서 네 이름을 불렀어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_named_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "할머니는 밤새 잤어. 소리는 위에서만 났어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_dongha_over_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 파이프를 들고 네 머리맡에 서 있었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_dongha_over_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "동하는 밤새 잤어. 코를 골았어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "eunji_d7",
+    "speaker": "eunji",
+    "context": "day==7 & phase==evening",
+    "grade": "normal",
+    "text": "운임이 빵이랬지. 그럼 빵 가진 사람이 타는 거야. 간단해.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_d9",
+    "speaker": "gicheol",
+    "context": "day==9 & phase==evening",
+    "grade": "normal",
+    "text": "자리가 모자라면 누가 남소? 나는 딸이 둘이오. 미안하단 말은 안 하겠소.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "gicheol_counted",
+    "speaker": "gicheol",
+    "context": "day==4 & phase==trace",
+    "grade": "normal",
+    "text": "세는 것이 어젯밤엔 하나 더 셌소. 나는 귀를 막았소."
+  },
+  {
+    "id": "seoha_called",
+    "speaker": "seoha",
+    "context": "day==4 & phase==evening",
+    "grade": "normal",
+    "text": "부르는 거, 엄마 목소리로 와요. 엄마도 계단으로 올라갔어요."
+  },
+  {
+    "id": "eunji_eye",
+    "speaker": "eunji",
+    "context": "day==5 & phase==evening",
+    "grade": "normal",
+    "text": "눈이 위에만 있는 줄 알아? 셔터 너머에도 있어."
+  },
+  {
+    "id": "dongha_it",
+    "speaker": "dongha",
+    "context": "day==6 & phase==evening",
+    "grade": "normal",
+    "text": "그거가 제 진짜 이름을 알아요. 아무한테도 안 알려 줬는데요."
+  },
+  {
+    "id": "mari_calls",
+    "speaker": "mari",
+    "context": "day==7 & phase==evening",
+    "grade": "normal",
+    "text": "부르는 것은 다친 사람부터 불러요. 그래서 제가 먼저 이름을 불러 줘요."
+  },
+  {
+    "id": "eunchae_lord",
+    "speaker": "eunchae",
+    "context": "region==A & flag:met_eunchae",
+    "grade": "normal",
+    "text": "그분이 다 보세요. 약도 원래 그분 거예요."
+  },
+  {
+    "id": "dohyeon_water",
+    "speaker": "dohyeon",
+    "context": "region==B & flag:met_dohyeon",
+    "grade": "normal",
+    "text": "물소리가 이름을 불러. 대답만 안 하면 돼."
+  },
+  {
+    "id": "rum_over_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 새벽에 네 담요 옆에 앉아 있었어.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_over_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "새벽에 누가 화로 쪽으로 기어갔어. 누군지는 몰라.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "rum_blames_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "{who:이가} 밤새 네 그릇 얘기를 했어. 네 것만 찼다고.",
+    "rumor": 1,
+    "truth": 1
+  },
+  {
+    "id": "rum_blames_you",
+    "speaker": "{who}",
+    "context": "",
+    "grade": "normal",
+    "text": "밤새 누가 배고프다고 울었어.",
+    "rumor": 1,
+    "truth": 0
+  },
+  {
+    "id": "look_soonrye",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "청소원 조끼의 할머니",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_gicheol",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "헤드램프의 남자",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_mari",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "담요의 여자",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_eunji",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "셔터의 여자",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_dongha",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "큰 청년",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "look_seoha",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "담요 속 여학생",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_soonrye",
+    "speaker": "soonrye",
+    "context": "",
+    "grade": "normal",
+    "text": "김순례. 그날 아침 하늘이 한 번 깜빡였어. 그 뒤로 계단 위가 저래.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_soonrye_book",
+    "speaker": "soonrye",
+    "context": "flag:notebook",
+    "grade": "normal",
+    "text": "첫 줄에 벌써 자네 이름이네. 누가 적었어?",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_mari",
+    "speaker": "mari",
+    "context": "flag:met_mari",
+    "grade": "normal",
+    "text": "정마리요. 병동에서 누가 환자 이름을 불렀어요. 대답한 사람들이 계단으로 올라갔어요. 안 내려왔어요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_gicheol",
+    "speaker": "gicheol",
+    "context": "flag:met_gicheol",
+    "grade": "normal",
+    "text": "박기철이오. 선로에 신발만 줄지어 있었소. 사람은 없었소.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_eunji",
+    "speaker": "eunji",
+    "context": "flag:met_eunji",
+    "grade": "normal",
+    "text": "최은지. 하늘 봤어. 바로 눈 감았어. 그래서 여기 있어.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_dongha",
+    "speaker": "dongha",
+    "context": "flag:met_eunji",
+    "grade": "normal",
+    "text": "…한동하요. 시장 지붕에서 누가 이름이 불렸어요. 대답한 사람은 위로 갔어요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "testify_seoha",
+    "speaker": "seoha",
+    "context": "flag:met_seoha",
+    "grade": "normal",
+    "text": "…윤서하요. 창으로 계단을 봤어요. 신발이 하루에 한 켤레씩 늘어요.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_4",
+    "speaker": "gicheol",
+    "context": "day==0 & !flag:met_gicheol",
+    "grade": "toast",
+    "text": "거기 서.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_2",
+    "speaker": "gicheol",
+    "context": "day==0 & !flag:met_gicheol",
+    "grade": "toast",
+    "text": "…발 좀 보이시오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_1",
+    "speaker": "gicheol",
+    "context": "day==0 & !flag:met_gicheol",
+    "grade": "toast",
+    "text": "…신었군.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_soonrye_4",
+    "speaker": "soonrye",
+    "context": "day==0 & !flag:met_soonrye",
+    "grade": "toast",
+    "text": "멈춰.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_soonrye_2",
+    "speaker": "soonrye",
+    "context": "day==0 & !flag:met_soonrye",
+    "grade": "toast",
+    "text": "…발.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_mari_6",
+    "speaker": "mari",
+    "context": "day==0 & !flag:met_mari",
+    "grade": "toast",
+    "text": "…영자 씨, 순덕 씨, 광호 씨…",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_mari_4",
+    "speaker": "mari",
+    "context": "day==0 & !flag:met_mari",
+    "grade": "toast",
+    "text": "…다쳤어요?",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_shutter_8",
+    "speaker": "narrator",
+    "context": "day==1 & phase==day & !flag:met_eunji",
+    "grade": "toast",
+    "text": "쿵. 쿵. 쿵.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_shutter_3",
+    "speaker": "eunji",
+    "context": "day==1 & phase==day & !flag:met_eunji",
+    "grade": "toast",
+    "text": "열어. 사람이야. 신발 신었어.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_soonrye_rule_train",
+    "speaker": "soonrye",
+    "context": "day==1 & flag:met_soonrye",
+    "grade": "toast",
+    "text": "저 스피커 소리, 열흘이래.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_rule_rail",
+    "speaker": "gicheol",
+    "context": "day==1 & flag:met_gicheol",
+    "grade": "toast",
+    "text": "선로가 잠겼소. 통로를 이어야 서오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_gicheol_rule_count",
+    "speaker": "gicheol",
+    "context": "day==2 & flag:met_gicheol",
+    "grade": "toast",
+    "text": "밤에 세거든 숨죽이시오.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "bark_soonrye_rule_answer",
+    "speaker": "soonrye",
+    "context": "day==3 & flag:met_soonrye",
+    "grade": "toast",
+    "text": "오늘 밤엔 대답하지 마.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "toast_late",
+    "speaker": "ui",
+    "context": "",
+    "grade": "toast",
+    "text": "어제 못 본 자리가 그대로다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_crate_open_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "뚜껑이 어제처럼 열려 있다. 봉지가 더 비었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bottle_empty_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "물통 주둥이가 말라 갈라졌다. 이틀째 빈 채다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_rot_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "붕대가 검게 말라붙었다. 어제부터 아무도 안 풀었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bandage_wet_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "붕대가 어제부터 피에 젖은 채다. 아무도 갈지 않았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_blanket_rolled_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "담요가 당신 쪽을 등지고 말려 있다. 어제도 그랬다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_notebook_moved_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "연필이 어제처럼 옆에 있다. 펼친 장이 또 바뀌었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_stairs_deep_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "재가 한 칸 더 내려왔다. 계단 위 신발 자국이 그대로다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bowl_empty_late",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 그릇이다. 손잡이가 옆 그릇 쪽으로 돌려져 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bowl_pushed",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "당신 그릇이 줄 끝으로 밀려나 있다.",
+    "rumor": 0,
+    "truth": 1
+  }
+]

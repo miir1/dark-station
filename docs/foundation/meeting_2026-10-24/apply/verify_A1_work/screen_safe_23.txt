@@ -1,0 +1,110 @@
+bot ok
+1 0:evening:line k 0 inj 0 cold [] bowl full | 김순례 김순례.
+2 0:aftermath:line k 0 inj 0 cold [] bowl full |  밤이 지난다.
+3 1:trace:line k 0 inj 0 cold [] bowl full |  땔감 −1
+4 1:ration:ev:trial_d1_bowls k 0 inj 0 cold [] bowl full |  trial_d1_bowls
+5 1:evening:line k 2 inj 0 cold ['soonrye'] bowl full |  새 이름을 적는다.
+6 1:night:line k 2 inj 0 cold ['soonrye'] bowl full |  불가 밖이 어둡다.
+7 1:aftermath:line k 2 inj 2 cold ['soonrye'] bowl full |  밤이 지난다.
+8 2:trace:line k 2 inj 2 cold ['soonrye'] bowl full |  땔감 −1 밤에 무슨 소리가 났다.
+9 2:ration:line k 2 inj 2 cold ['soonrye'] bowl full | 김순례 줄 끝에 누가 빈 그릇을 들고 서 있다.
+10 2:ration:line k 2 inj 2 cold ['soonrye'] bowl full | 김순례 당신 쪽을 등지고 있다.
+11 2:ration:ev:repay_bowl k 2 inj 2 cold ['soonrye'] bowl full |  repay_bowl
+12 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 최은지 최은지.
+13 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 최은지 하늘 봤어.
+14 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 최은지 바로 눈 감았어.
+15 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 최은지 그래서 여기 있어.
+16 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 한동하 …한동하요.
+17 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 한동하 시장 지붕에서 누가 이름이 불렸어요.
+18 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 한동하 대답한 사람은 위로 갔어요.
+19 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 김순례 이봐, 아들이 남주에 있어.
+20 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 김순례 그날 아침에 전화를 못 받았지.
+21 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 김순례 일할 땐 안 받아.
+22 2:evening:line k 2 inj 1 cold ['soonrye'] bowl full | 김순례 삼십 년을 그랬어.
+23 2:night:line k 2 inj 1 cold ['soonrye'] bowl full |  셔터 너머에서 다시 두드린다.
+24 2:aftermath:line k 2 inj 1 cold ['soonrye'] bowl full |  밤이 지난다.
+25 3:trace:line k 2 inj 1 cold ['soonrye'] bowl full |  땔감 −1 밤에 무슨 소리가 났다.
+26 3:evening:line k 2 inj 1 cold ['soonrye'] bowl empty | 윤서하 …윤서하요.
+27 3:evening:line k 2 inj 1 cold ['soonrye'] bowl empty | 윤서하 창으로 계단을 봤어요.
+28 3:evening:line k 2 inj 1 cold ['soonrye'] bowl empty | 윤서하 신발이 하루에 한 켤레씩 늘어요.
+29 3:evening:line k 2 inj 1 cold ['soonrye'] bowl empty | 김순례 이봐, 어젯밤에 저 위에서 뭔가 셌어.
+30 3:evening:line k 2 inj 1 cold ['soonrye'] bowl empty | 김순례 오늘 밤엔 대답하지 마.
+31 3:evening:line k 2 inj 1 cold ['soonrye'] bowl empty | 김순례 누가 불러도.
+32 3:night:line k 2 inj 1 cold ['soonrye'] bowl empty |  밤새 출구 계단 위에서 누군가 숫자를 센다.
+33 3:aftermath:line k 2 inj 1 cold ['soonrye'] bowl empty |  밤이 지난다.
+34 4:trace:line k 2 inj 1 cold ['soonrye'] bowl empty |  윤서하가 밤에 갔다.
+35 4:trace:ev:dawn_strike k 2 inj 1 cold ['soonrye'] bowl empty |  dawn_strike
+36 4:ration:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl full | 박기철 줄 끝에 누가 빈 그릇을 들고 서 있다.
+37 4:ration:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl full | 박기철 당신 쪽을 등지고 있다.
+38 4:ration:ev:repay_bowl k 5 inj 1 cold ['soonrye', 'gicheol'] bowl full |  repay_bowl
+39 4:day:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty | 박기철 기철: "통로는 이틀이면 되오. 부품은 넉넉하오."
+40 4:day:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty | 박기철 헤드램프가 당신 얼굴에서 비켜나지 않는다.
+41 4:day:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty | 박기철 창고의 부품 상자는 보이지 않는다.
+42 4:evening:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty |  기철이 안전화 셋을 화로 옆에 말린다.
+43 4:evening:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty | 김순례 이봐, 아들이 남주에 있어.
+44 4:evening:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty | 김순례 그날 아침에 전화를 못 받았지.
+45 4:evening:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty | 김순례 일할 땐 안 받아.
+46 4:evening:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty | 김순례 삼십 년을 그랬어.
+47 4:aftermath:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty |  꿈.
+48 5:trace:line k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty |  식량 −2 · 땔감 −1 밤에 무슨 소리가 났다.
+49 5:trace:ev:dawn_strike k 5 inj 1 cold ['soonrye', 'gicheol'] bowl empty |  dawn_strike
+50 5:ration:line k 8 inj 1 cold ['soonrye', 'gicheol', 'dongha'] bowl full | 한동하 줄 끝에 누가 빈 그릇을 들고 서 있다.
+51 5:ration:line k 8 inj 1 cold ['soonrye', 'gicheol', 'dongha'] bowl full | 한동하 당신 쪽을 등지고 있다.
+52 5:ration:ev:repay_bowl k 8 inj 1 cold ['soonrye', 'gicheol', 'dongha'] bowl full |  repay_bowl
+53 5:evening:line k 8 inj 1 cold ['soonrye', 'gicheol', 'dongha'] bowl empty | 김순례 이봐, 동하가 밤새 다친 사람 옆에 앉아 있었어.
+54 5:night:line k 8 inj 1 cold ['soonrye', 'gicheol', 'dongha'] bowl empty |  선로에 사람이 걸려 있었다.
+55 5:night:ev:d5_flood k 9 inj 1 cold ['soonrye', 'gicheol', 'dongha'] bowl meat |  d5_flood
+56 5:aftermath:line k 11 inj 1 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl meat |  밤이 지난다.
+57 6:trace:line k 11 inj 1 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty |  식량 −3 · 땔감 −1 밤에 무슨 소리가 났다.
+58 6:ration:line k 11 inj 1 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl full | 정마리 줄 끝에 누가 빈 그릇을 들고 서 있다.
+59 6:ration:line k 11 inj 1 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl full | 정마리 당신 쪽을 등지고 있다.
+60 6:ration:ev:repay_bowl k 11 inj 1 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl full |  repay_bowl
+61 6:evening:line k 11 inj 2 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty |  환기구에서 목소리가 내려온다.
+62 6:evening:line k 11 inj 2 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty | 김순례 이봐, 최은지가 밤새 다친 사람 곁에 붙어 잤어.
+63 6:night:line k 11 inj 2 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty |  셔터가 반쯤 올라가 있었다.
+64 6:night:ev:called_up k 11 inj 2 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty |  called_up
+65 6:night:ev:fever_night k 11 inj 3 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty |  fever_night
+66 6:aftermath:line k 14 inj 3 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty |  꿈.
+67 7:trace:line k 14 inj 3 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty |  식량 −3 · 땔감 −1 밤에 무슨 소리가 났다.
+68 7:trace:ev:dawn_strike k 14 inj 3 cold ['soonrye', 'gicheol', 'dongha', 'mari'] bowl empty |  dawn_strike
+69 7:evening:line k 14 inj 3 cold ['soonrye', 'mari'] bowl empty |  자정, 스피커가 혼자 켜졌다.
+70 7:evening:line k 14 inj 3 cold ['soonrye', 'mari'] bowl empty | 김순례 이봐, 아들이 남주에 있어.
+71 7:evening:line k 14 inj 3 cold ['soonrye', 'mari'] bowl empty | 김순례 그날 아침에 전화를 못 받았지.
+72 7:evening:line k 14 inj 3 cold ['soonrye', 'mari'] bowl empty | 김순례 일할 땐 안 받아.
+73 7:evening:line k 14 inj 3 cold ['soonrye', 'mari'] bowl empty | 김순례 삼십 년을 그랬어.
+74 7:night:line k 14 inj 3 cold ['soonrye', 'mari'] bowl empty |  사흘째 빈 그릇이다.
+75 7:night:ev:starve_you k 14 inj 3 cold ['soonrye', 'mari'] bowl empty |  starve_you
+76 7:night:ev:fever_night k 17 inj 3 cold ['soonrye', 'dongha', 'mari'] bowl empty |  fever_night
+77 7:night:ev:called_up k 20 inj 3 cold ['soonrye', 'dongha', 'mari'] bowl empty |  called_up
+78 7:aftermath:line k 20 inj 3 cold ['soonrye', 'dongha', 'mari'] bowl empty |  밤이 지난다.
+79 8:trace:line k 20 inj 3 cold ['dongha', 'mari'] bowl empty |  김순례가 밤에 갔다.
+80 8:trace:ev:dawn_strike k 20 inj 2 cold ['dongha', 'mari'] bowl empty |  dawn_strike
+81 8:evening:line k 20 inj 3 cold ['dongha'] bowl empty | 박기철 당신, 밤에 누가 창고 쪽으로 갔어.
+82 8:night:line k 20 inj 3 cold ['dongha'] bowl empty |  새벽에 눈을 떴다.
+83 8:night:ev:starve_you k 20 inj 3 cold ['dongha'] bowl empty |  starve_you
+84 8:night:ev:called_up k 20 inj 3 cold ['eunji', 'dongha'] bowl empty |  called_up
+85 8:aftermath:line k 20 inj 3 cold ['eunji', 'dongha'] bowl empty |  꿈.
+86 9:trace:line k 20 inj 3 cold ['dongha'] bowl empty |  밤에 무슨 소리가 났다.
+87 9:trace:ev:dawn_strike k 20 inj 3 cold ['dongha'] bowl empty |  dawn_strike
+88 9:trace:ev:dawn_mob k 20 inj 3 cold ['dongha'] bowl empty |  dawn_mob
+89 9:evening:line k 20 inj 3 cold ['dongha'] bowl empty |  열차 한 칸이 승강장에 서 있다.
+90 9:evening:line k 20 inj 3 cold ['dongha'] bowl empty | 최은지 김순례가 새벽에 네 담요 옆에 앉아 있었어.
+91 9:night:line k 20 inj 3 cold ['dongha'] bowl empty |  사흘째 빈 그릇이다.
+92 9:night:ev:starve_you k 20 inj 3 cold ['dongha'] bowl empty |  starve_you
+93 9:night:ev:fever_night k 20 inj 3 cold ['dongha'] bowl empty |  fever_night
+94 9:night:ev:called_up k 20 inj 3 cold ['dongha', 'mari'] bowl empty |  called_up
+95 9:aftermath:line k 20 inj 3 cold ['dongha', 'mari'] bowl empty |  밤이 지난다.
+96 10:trace:line k 20 inj 3 cold ['dongha', 'mari'] bowl empty |  밤에 무슨 소리가 났다.
+97 10:trace:ev:dawn_strike k 20 inj 2 cold ['dongha', 'mari'] bowl empty |  dawn_strike
+98 10:trace:ev:dawn_mob k 20 inj 3 cold ['dongha'] bowl empty |  dawn_mob
+99 10:day:line k 20 inj 3 cold ['dongha'] bowl empty | 한동하 떠날 채비를 하는데 누가 당신 소매를 잡았다.
+100 10:day:line k 20 inj 3 cold ['dongha'] bowl empty | 한동하 밤마다 당신 쪽을 등지고 눕던 사람이다.
+101 10:day:line k 20 inj 3 cold ['dongha'] bowl empty | 한동하 손을 놓지 않는다.
+102 10:day:ev:d10_hold k 20 inj 3 cold ['dongha'] bowl empty |  d10_hold
+103 10:day:ev:d10_walk_weak k 20 inj 3 cold ['dongha'] bowl empty |  d10_walk_weak
+104 10:day:line k 20 inj 3 cold ['eunji', 'dongha'] bowl empty | 최은지 몇 걸음 못 가서 발목이 잡혔다.
+105 10:day:line k 20 inj 3 cold ['eunji', 'dongha'] bowl empty | 최은지 물병을 빼앗긴 사람이다.
+106 10:day:line k 20 inj 3 cold ['eunji', 'dongha'] bowl empty | 최은지 손톱이 살에 박힌다.
+107 10:day:ev:d10_grab k 20 inj 3 cold ['eunji', 'dongha'] bowl empty |  d10_grab
+108 end:ending k 20 inj 3 cold [] bowl empty |  
+end {"ended": {"why": "d10_walk", "cause": null}, "day": 10, "phase": "ended", "karma": 20, "you": "walked", "permanent": ["ear", "finger", "leg"], "injury": 3, "hurt": [{"day": 1, "src": "ev:d1_night_storage/창고를 보러 간다", "n": 2}, {"day": 6, "src": "ev:patrol_pact/내가 간다", "n": 1}, {"day": 6, "src": "ev:called_up/손등을 깨물며 버틴다", "n": 1}, {"day": 8, "src": "ev:dawn_strike/맞고 버틴다", "n": 1}, {"day": 10, "src": "ev:dawn_strike/맞고 버틴다", "n": 1}]} errors []

@@ -6,6 +6,8 @@
 #   ok = PNG 가 생겼고 + 게임이 떠서 그 지점에 닿았고(봇 기록 '[ds4 auto] <지점> … reached=1' — 게임 안에서 state·지도·단계·붙잡은 창을 보고 찍는다)
 #        + PNG 에서 잰 배율(png_scale)이 2 이고 + 시작 오류가 없다. 실패한 지점은 한 번 더 찍는다. 하나라도 실패면 끝 코드 1.
 #   --profile=<폴더> : 헤드리스 브라우저 프로필 폴더 (기본 v4/shots/.profile). 회의 검증 때는 회의 폴더 아래를 준다.
+#   컴퓨터가 바쁠 때 (2026-10-24 검증 #8·#10): 브라우저 한 번이 SHOT_TIMEOUT(600초)를 넘거나 fixture.js 가 FIXTURE_TIMEOUT 을 넘어도 도구는 죽지 않는다 —
+#     그 지점만 FAIL('시간 초과')로 적고 다시 찍고, shots.json 은 늘 남는다. fixture.js 는 FIXTURE_SEC(240초)에 찾은 만큼으로 멈춘다. 로컬 서버 대기열 128.
 # 브라우저 쪽 자동 진행은 game.js 의 autoRun(?auto=) 이 맡는다. 화면 갱신은 requestAnimationFrame + 보조 타이머(100ms 넘게 rAF 가 없으면 대신 한 번)라 숨은 창·헤드리스에서도 돈다.
 import os, re, sys, subprocess, threading, time, http.server, socketserver, functools, shutil, json, urllib.request
 
@@ -68,12 +70,34 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
         super().do_GET()
 
 
+class Server(socketserver.ThreadingTCPServer):
+    # 기본 대기열 5 는 붐빌 때 스크립트 요청을 버린다 (2026-10-24 검증 #10 — screen_check.py 와 같게)
+    request_queue_size = 128
+    daemon_threads = True
+    allow_reuse_address = os.name != 'nt'       # Windows 의 SO_REUSEADDR 는 이미 쓰는 포트에도 또 붙어 두 도구가 요청을 나눠 가진다 → 붙지 않게 하고 빈 포트로 옮긴다(serve)
+
+    def handle_error(self, request, client_address):   # 브라우저가 페이지를 바꾸며 끊은 연결(10053·끊긴 파이프)은 조용히 — 그 밖의 오류만 찍는다
+        if isinstance(sys.exc_info()[1], (ConnectionError, TimeoutError)):
+            return
+        super().handle_error(request, client_address)
+
+
 def serve():
-    handler = functools.partial(Quiet, directory=ROOT)
-    socketserver.TCPServer.allow_reuse_address = True
-    httpd = socketserver.ThreadingTCPServer(('127.0.0.1', PORT), handler)
-    threading.Thread(target=httpd.serve_forever, daemon=True).start()
-    return httpd
+    # 다른 담당이 같은 도구를 동시에 돌려 포트가 차 있으면 다음 빈 포트로 (페이지 주소는 전역 PORT 를 읽는다)
+    global PORT
+    err = None
+    for p in range(PORT, PORT + 20):
+        try:
+            httpd = Server(('127.0.0.1', p), functools.partial(Quiet, directory=ROOT))
+        except OSError as e:
+            err = e
+            continue
+        if p != PORT:
+            print(f'   포트 {PORT} 사용 중 - {p} 로')
+        PORT = p
+        threading.Thread(target=httpd.serve_forever, daemon=True).start()
+        return httpd
+    raise err
 
 
 def decode(b):
@@ -88,6 +112,8 @@ def decode(b):
 
 EXPECT_K = 2                                     # 창 1280×720 → 논리 640×320 의 정수 배율 2 (game.js fitApp)
 RETRY = 1                                        # 실패한 지점은 한 번 더 찍는다 (다른 Chrome 이 동시에 돌 때 페이지가 아예 안 뜨는 경우)
+SHOT_TIMEOUT = 600                               # 한 장을 찍는 브라우저 한 번의 시간 제한(초) — 넘으면 그 시도는 실패(도구는 계속)
+FIXTURE_SEC, FIXTURE_TIMEOUT = 240, 1500         # fixture.js: 찾을 만큼 찾았으면 240초에 멈춘다 · 그래도 1500초가 넘으면 저장 없이 봇이 처음부터
 
 
 def png_scale(out):
@@ -120,7 +146,7 @@ def judge(out, lines, key=None):
     k = png_scale(out)
     if k is not None and k < EXPECT_K - 0.1:
         why.append(f'그림 배율 {k} (기대 {EXPECT_K}) - 화면이 1배이거나 비었다')
-    bad = [ln for ln in lines if '시작하지 못했다' in ln or 'DS4 엔진이 먼저 읽혀야 한다' in ln or 'Uncaught' in ln]
+    bad = [ln for ln in lines if '시작하지 못했다' in ln or 'DS4 엔진이 먼저 읽혀야 한다' in ln or 'Uncaught' in ln or '표 검증 실패' in ln]   # 표 행이 빠진 채 뜬 게임도 실패 (10-24 지적 13)
     if bad:
         why.append('시작 오류: ' + bad[0][:120])
     return why, k
@@ -140,11 +166,17 @@ def shot(browser, key, name, log, seed=None):
         args = [browser, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--no-first-run', '--no-default-browser-check',
                 f'--user-data-dir={prof}', '--window-size=1280,720', f'--virtual-time-budget={BUDGET.get(key, 60000)}',
                 '--enable-logging=stderr', '--v=0', f'--screenshot={out}', url]
-        r = subprocess.run(args, capture_output=True, timeout=600)
-        lines = [decode(b) for b in (r.stderr or b'').splitlines()]
+        try:
+            r = subprocess.run(args, capture_output=True, timeout=SHOT_TIMEOUT)
+            raw, timed_out = r.stderr or b'', False
+        except subprocess.TimeoutExpired as te:   # 컴퓨터가 바쁠 때 (2026-10-24 검증 #8): 도구가 죽지 않고 그 지점만 실패로 적고 다시 찍는다
+            raw, timed_out = te.stderr or b'', True
+        lines = [decode(b) for b in raw.splitlines()]
         errs = [ln for ln in lines if 'CONSOLE' in ln and ('error' in ln.lower() or 'uncaught' in ln.lower())]
         auto = [ln[ln.index('[ds4'):].split('", source')[0] for ln in lines if 'CONSOLE' in ln and '[ds4' in ln]
         why, k = judge(out, lines, key)
+        if timed_out:
+            why = [f'시간 초과 ({SHOT_TIMEOUT}초) - 컴퓨터가 바쁘다'] + why
         tries.append({'attempt': attempt + 1, 'ok': not why, 'why': why, 'png_scale': k, 'console_errors': len(errs)})
         if not why:
             break
@@ -172,19 +204,28 @@ def main():
     browser = find_browser()
     need = sorted({FIXTURE[k] for k, _ in SHOTS if k in FIXTURE and (not only or k in only)})
     if need:
-        r = subprocess.run(['node', os.path.join(ROOT, 'v4', 'tools', 'fixture.js'), ','.join(need)], capture_output=True, timeout=600, cwd=ROOT)
-        try:
-            FIXTURES.update(json.loads(decode(r.stdout) or '{}'))
-        except ValueError:
-            pass
-        print('fixture', ', '.join(f'{k}={"OK" if k in FIXTURES else "missing (bot from start)"}' for k in need))
+        note = ''
+        try:                                     # (2026-10-24 검증 #8) 시간 초과로 도구가 죽지 않게 — 저장이 없으면 그 지점은 봇이 처음부터 간다(닿지 못하면 FAIL 로 남는다)
+            r = subprocess.run(['node', os.path.join(ROOT, 'v4', 'tools', 'fixture.js'), ','.join(need), '200', str(FIXTURE_SEC)], capture_output=True, timeout=FIXTURE_TIMEOUT, cwd=ROOT)
+            try:
+                FIXTURES.update(json.loads(decode(r.stdout) or '{}'))
+            except ValueError:
+                pass
+            note = (decode(r.stderr or b'').strip().splitlines() or [''])[-1][:160]
+        except subprocess.TimeoutExpired:
+            note = f'fixture.js 시간 초과 ({FIXTURE_TIMEOUT}초)'
+        print('fixture', ', '.join(f'{k}={"OK" if k in FIXTURES else "missing (bot from start)"}' for k in need), note)
     httpd = serve()
     log = []
     try:
         for key, name in SHOTS:
             if only and key not in only:
                 continue
-            shot(browser, key, name, log, seed)
+            try:
+                shot(browser, key, name, log, seed)
+            except Exception as e:               # 한 지점에서 도구가 넘어져도 나머지를 찍고 shots.json 을 남긴다
+                log.append({'shot': name, 'ok': False, 'why': ['도구 오류: ' + repr(e)[:200]], 'png_scale': None, 'tries': [], 'console_errors': [], 'auto': []})
+                print('FAIL', name, '- 도구 오류:', repr(e)[:200])
     finally:
         httpd.shutdown()
     if not only:

@@ -37,12 +37,20 @@ const POLICIES = {
   h_mixed: { share: 0, hand: 0, name: 0, inspect: 'normal', avoidWarn: 1, avoidDeadly: 1, pick: 'mixed' },          // 열에 여섯은 안전한 쪽, 넷은 궁금한 쪽
 };
 // 조심형 = 경고를 꽉 피하는 점수 정책(모험·사람 흉내·남을 내미는 금기를 좋아하는 정책은 뺀다)
-const CAREFUL = Object.keys(POLICIES).filter((k) => POLICIES[k].avoidWarn >= 1 && !POLICIES[k].risky && !POLICIES[k].pick && !POLICIES[k].tabooBonus);
+//   (10-24 검증 A1·REG) 몸 꺼림(bodyAverse) 정책도 뺀다 — '제 몸으로 치르기보다 죽음 주사위'를 일부러 고르는 버릇을 넣은 정책이라
+//   조심형이 아니다(selfish 의 봇 버릇 점검 457판이 전부 이 버릇). 그 정책의 죽음은 A1 측정 줄에 따로 싣는다.
+const CAREFUL = Object.keys(POLICIES).filter((k) => POLICIES[k].avoidWarn >= 1 && !POLICIES[k].risky && !POLICIES[k].pick && !POLICIES[k].tabooBonus && !POLICIES[k].bodyAverse);
 // 합격선 묶음 (stats.gate) — 정체는 성향 봇 평균과 사람 흉내 평균을 따로 낸다(A3 분석 §5: 성향 0 봇 다섯이 같은 결말을 다섯 번 세지 않게)
+//   selfishPlain = 버릇 없는 이기적(합격선 '이기심의 값'을 재는 정책): selfish_nb(금기를 고르다 막히면 버틴다) · selfish_rt0(끝까지 남을 내미는 금기)
+//   selfishQuirk = 몸 꺼림 버릇이 있는 이기적(selfish·selfish_rt) — 그 죽음은 봇 버릇이라 측정만 (10-24 검증 A1: selfish 사망 231판 전부 '버틴다'를 두고 고른 주사위)
+//   a4 = A4 게으름의 값을 재는 정책(보통·게으름·부지런) — run.js 가 이 셋만 블록을 더 돌린다(--a4blocks, 기본 8)
 const GROUPS = {
   personality: ['balanced', 'selfish', 'devoted', 'silent', 'caller', 'steward', 'counter', 'child'],
   human: ['h_random', 'h_wary', 'h_cautious', 'h_cautious2', 'h_mixed'],
   selfish: ['selfish', 'selfish_nb', 'selfish_rt', 'selfish_rt0'],
+  selfishPlain: ['selfish_nb', 'selfish_rt0'],
+  selfishQuirk: ['selfish', 'selfish_rt'],
+  a4: ['balanced', 'lazy', 'diligent'],
 };
 const RESOURCE_EVENTS = ['trade_shutter', 'patrol_pact', 'drink_flood'];
 const isResource = (id) => RESOURCE_EVENTS.some((r) => id === r || String(id || '').startsWith(r + '_'));   // 변형 행(trade_shutter_b·patrol_pact_b)도 같은 거래·협정
@@ -63,7 +71,7 @@ const isRecovery = (c, eventId, ctx) => !!(ctx && ctx.unwell && ctx.kind !== 'tr
 // 몸이 성치 않을 때 약으로 고치는 선택은 먼저 고른다(모든 정책). 모험의 판정 가점(+4)보다 크다 — 약을 손에 두고 열 주사위에 목숨을 거는 건
 // 모험(위험 ↔ 보상)이 아니라 봇의 버릇이다(10-22 검증 3: verify_risky3 — 아플 때 약을 쓰면 모험 생존이 약 두 배). 회복 선택의 경고 글('약이 준다')은 비용을 다시 말할 뿐이다.
 const RECOVERY_BONUS = 5;
-const OPT = { peek: false, perObject: false };   // run.js --peek: 옛 '바뀐 흔적' 판단으로 비교 · --per-object: 옛 아침 조사(물건 하나씩, 10-24 전)로 비교
+const OPT = { peek: false, perObject: false, allObjects: false, lazyBlank: false };   // run.js --peek: 옛 '바뀐 흔적' 판단으로 비교 · --per-object: 옛 아침 조사(물건 하나씩, 10-24 전)로 비교 · --all-objects: 화면에서 못 닿는 물건도 조사(10-24 검증 전) · --lazy-blank: 게으름이 명부를 늘 빈칸으로(10-24 검증 전)
 // (10-24) 제 몸으로 치르는 경고 글 · 남을 내미는 금기(화면 글: label·warn) · 둘 다 경고인 갈림의 동점 폭(A3 분석 §5 — 판정 % 몇 점 차로 매판 같은 쪽을 받는 버릇을 없앤다)
 const BODY = /다친다|잃는다|상한다/;
 const OTHER_TABOO = /그 사람|남의|옆 |다른/;
@@ -74,7 +82,13 @@ const D3_COUNT = /^trial_d3_count(_|$)/;   // D3 밤 셈(trial_d3_count·_b·_c)
 const INSPECT = { diligent: { objects: 99, talk: 2, rumors: 99 }, normal: { objects: 2, talk: 1, rumors: 1 }, lazy: { objects: 1, talk: 0, rumors: 0 } };
 
 // ── 선택 ──
-// ctx(선택) = { kind: 사건 kind, unwell: 몸이 성치 않음 } — 없으면 회복 예외 없이 옛 점수
+// ctx(선택) = { kind: 사건 kind, unwell: 몸이 성치 않음, plainAlt: 평범한 대안이 열려 있음 } — 없으면 회복 예외 없이 옛 점수
+// 평범한 대안 = 열려 있고, 금기 아니고, 죽음 글이 아닌 선택(화면 글만 본다 — stats 의 봇 버릇 점검과 같은 뜻)
+const isPlain = (c) => !c.locked && !c.taboo && !deadlyText(c);
+// (10-24 검증 REG) 성향 가점은 죽음 주사위를 사지 못한다: 조심형(avoidDeadly ≥ 1)은 평범한 대안이 열려 있으면 죽음 글 선택의 축 가점을 0 이하로 본다.
+//   전에는 selfish_nb 가 dawn_strike '축 늘어진다'(손 −1 가점 +2, 실패 15% 죽음)를 '맞고 버틴다'보다 위에 두어 73판을 죽었다(봇 버릇 점검 ✗).
+//   끝까지 남을 내미는 정책(tabooBonus)의 남을 내미는 금기는 그 정책의 본뜻이라 그대로 둔다(selfish_rt·rt0 — 카르마로 판정이 된 금기를 끝까지 고른다).
+const axisCapped = (c, pol, ctx) => !!(ctx && ctx.plainAlt && (pol.avoidDeadly == null ? 1 : pol.avoidDeadly) >= 1 && deadlyRisk(c) > 0 && !(pol.tabooBonus && c.taboo && OTHER_TABOO.test(`${c.label || ''} ${c.warn || ''}`)));
 function scoreChoice(c, pol, eventId, ctx) {
   if (c.locked) return -Infinity;
   let sc = 0;
@@ -83,7 +97,9 @@ function scoreChoice(c, pol, eventId, ctx) {
     if (c.check && (c.warn || c.hint)) sc += c.chance >= 35 ? 4 : -2;   // 모험이 즐기는 위험 = 판정(%)이 있는 것. 판정 없는 경고에 주던 +1 은 뺐다(10-22 검증 3)
     else if (c.warn || c.hint) sc -= RISKY_FLAT_WARN;
   }
-  for (const [k, v] of Object.entries(c.axis || {})) sc += (pol[k] || 0) * v * 2;
+  let ax = 0;
+  for (const [k, v] of Object.entries(c.axis || {})) ax += (pol[k] || 0) * v * 2;
+  sc += axisCapped(c, pol, ctx) ? Math.min(0, ax) : ax;
   // 봇은 메타의 killYou 를 안 본다 — 화면처럼 warn·hint·cost·% 와 경고 글만 본다. (killYou 는 통계용으로만 메타에 남긴다)
   if (c.warn || c.hint) sc -= 2 * pol.avoidWarn;
   if (isRecovery(c, eventId, ctx)) sc += RECOVERY_BONUS;      // 아플 때 약을 쓰는 건 비용 감점 없이 먼저
@@ -122,7 +138,7 @@ function pickChoice(s, db, pol, metas) {
   if (!metas) return -1;
   if (pol.pick && HUMAN_PICK[pol.pick]) return HUMAN_PICK[pol.pick](s, metas);
   const ev = db.events[s.pending.id];
-  const ctx = { kind: ev ? ev.kind : '', unwell: unwell(s) };
+  const ctx = { kind: ev ? ev.kind : '', unwell: unwell(s), plainAlt: metas.some(isPlain) };
   const scored = metas.map((c) => ({ c, sc: scoreChoice(c, pol, s.pending.id, ctx) }));
   const best = scored.reduce((m, x) => Math.max(m, x.sc), -Infinity);
   if (best === -Infinity) return metas.findIndex((c) => !c.locked);
@@ -146,6 +162,53 @@ function settle(s, db, pol, trace) {
 }
 const act = (s, db, a) => E.dispatch(s, a, db).ok;
 
+// ── 화면에서 조사할 수 있는 물건 (10-24 검증 A4-5) ──
+// 사람은 화면에서 걸어가 앞 칸(또는 제가 선 칸)의 물건을 Space 로 조사한다. 봇의 아침 조사도 그렇게 닿는 물건만 고른다.
+// 규칙은 game.js 와 같게 둔다(sim.test 가 game.js 글을 읽어 맞춰 본다):
+//   막힌 칸 = 벽 타일(SCREEN_WALL) · 잠긴 역무실 문 칸 'k'(office_door 가 open 이 아닐 때) · 숨지 않은 단단한(solid) 물건이 있는 칸 (game.js blocked)
+//     — 사람은 비켜 간다고 보고 막힌 칸으로 치지 않는다
+//   숨은 물건 = game.js objectsOnMap 의 hidden: 선로 시신·무덤·계단 신발이 none · 주인이 아직 안 온(away) 물통·그릇·붕대 · 만나기 전 사람의 그릇
+//   닿는 물건 = 숨지 않았고, 지도 시작 칸에서 이어진 빈 칸이 그 물건 칸이거나 그 칸과 붙어 있다(상하좌우)
+//   승강장 화로 (화면 useFire 를 따른다 — sim.test 가 맞춰 본다): 지금 화면은 화로 창에 '화로를 살핀다'(lookFire = 엔진 inspect)를 두고,
+//     단계를 넘길 때는 저절로 보지 않는다 → 화로는 다른 칸과 같은 조사 한 칸(SCREEN_NOT_INSPECT 에 없음, FIRE_ON_ADVANCE false).
+//     화면이 넘길 때 저절로 보게 바꾸면 FIRE_ON_ADVANCE = true(아침 끝에 모든 정책이 한 번), 살필 길이 없으면 SCREEN_NOT_INSPECT.station 에 'fire'
+// 지금 표에서 이 규칙으로 빠지는 물건: 역무실 안 창고 상자·부품 상자(문 물건이 solid 라 열려도 못 들어간다) · 서하 머리맡(17,9 — 사방이 벽·담요·의자)
+//   — 화면·표가 바뀌면 봇도 따라 바뀐다. run.js --all-objects 면 옛 판단(화로 반경 안 물건 전부)으로 돈다.
+const SCREEN_WALL = '#tRhDC';
+const SCREEN_NOT_INSPECT = { station: [] };   // 조사 '칸'으로 고를 수 없는 물건 (화면에 살필 길이 없는 것)
+// 화면 useFire 가 단계를 넘길 때 저절로 엔진 inspect('fire') 를 부르는가 — true 면 봇도 아침을 끝낼 때 화로를 한 번 본다(morningInspect 끝, 조사 칸 수에 안 듦)
+//   (10-24 화면: 부르지 않는다 — '화로를 살핀다'를 골라야 본다. 화로를 매일 저절로 본 것으로 치면 A4 가 화로 몫만큼 사라진다)
+const FIRE_ON_ADVANCE = false;
+const HIDDEN_NONE = { body_rail: 'none', grave: 'none', shoes_stairs: 'none', notebook_dash: 'taken' };
+function screenHidden(s, db, id) {
+  const t = s.traces[id]; const st = t ? t.st : (db.objects[id] ? db.objects[id].states[0] : null);
+  if (HIDDEN_NONE[id] && st === HIDDEN_NONE[id]) return true;
+  const m = /_([a-z]+)$/.exec(id); const who = m && m[1] !== 'you' && s.people[m[1]] ? m[1] : null;
+  if (who && /^(bottle|bowl|bandage)_/.test(id) && s.people[who].status === 'away') return true;
+  if (who && /^bowl_/.test(id) && !E.known(s, db, who)) return true;
+  return false;
+}
+function screenReach(s, db, mapId) {
+  const map = db.maps[mapId];
+  if (!map || !Array.isArray(map.rows)) return null;
+  const H = map.rows.length, W = Math.max(...map.rows.map((r) => r.length));
+  const tile = (x, y) => (map.rows[y] || '')[x] || '#';
+  const solidAt = new Set();
+  for (const o of map.objects || []) { const d = db.objects[o.id]; if (d && d.solid && !screenHidden(s, db, o.id) && !(o.id === 'rubble' && s.traces.rubble && s.traces.rubble.st === 'crossed')) solidAt.add(`${o.x},${o.y}`); }
+  const officeOpen = !!(s.traces.office_door && s.traces.office_door.st === 'open');
+  const blocked = (x, y) => x < 0 || y < 0 || x >= W || y >= H || SCREEN_WALL.includes(tile(x, y)) || (tile(x, y) === 'k' && !officeOpen) || solidAt.has(`${x},${y}`);
+  const st = map.start || [0, 0];
+  const seen = new Set();
+  if (!blocked(st[0], st[1])) { seen.add(`${st[0]},${st[1]}`); const q = [st]; while (q.length) { const [x, y] = q.shift(); for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const nx = x + dx, ny = y + dy, k = `${nx},${ny}`; if (seen.has(k) || blocked(nx, ny)) continue; seen.add(k); q.push([nx, ny]); } } }
+  const skip = SCREEN_NOT_INSPECT[mapId] || [];
+  const ok = new Set();
+  for (const o of map.objects || []) {
+    if (skip.includes(o.id) || screenHidden(s, db, o.id)) continue;
+    if ([[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => seen.has(`${o.x + dx},${o.y + dy}`))) ok.add(o.id);
+  }
+  return ok;
+}
+
 // ── 하루 단계별 행동 ──
 function morningInspect(s, db, pol, trace) {
   const rule = INSPECT[pol.inspect];
@@ -157,9 +220,11 @@ function morningInspect(s, db, pol, trace) {
   // 칸 단위(10-24 P0-E2): 화면은 Space 한 번에 그 칸의 물건 전부를 차례로 조사한다(P0-S6 — 머리맡 묶음 = 물통·붕대가 한 칸).
   //   봇도 칸을 고르고 그 칸의 물건 전부를 inspect 한다. 조사 수(INSPECT.objects) = 칸 수. 칸에 바뀐 흔적이 하나라도 있으면 '바뀐 칸'.
   const near = (o) => !map.fire || Math.max(Math.abs(o.x - map.fire[0]), Math.abs(o.y - map.fire[1])) <= 8;
+  const reach = OPT.allObjects ? null : screenReach(s, db, 'station');   // (10-24 검증 A4-5) 화면에서 닿는 물건만 — 부지런(상한 봇)도
   const cells = []; const at = {};
   for (const o of map.objects || []) {
     if (!(pol.inspect === 'diligent' || near(o)) || !s.traces[o.id]) continue;
+    if (reach && !reach.has(o.id)) continue;
     const k = OPT.perObject ? o.id : `${o.x},${o.y}`;   // perObject = 옛 판단(물건 하나 = 한 번) — 난수 쓰임까지 10-24 전과 같다
     if (!at[k]) { at[k] = []; cells.push(k); }
     if (!at[k].includes(o.id)) at[k].push(o.id);
@@ -181,6 +246,9 @@ function morningInspect(s, db, pol, trace) {
   for (let i = 0; i < s.rumors.length && heard < rule.rumors; i++) if (!s.rumors[i].heard && act(s, db, { type: 'hear', i })) heard++;
   let talked = 0;
   for (const id of shuffle(s, db.peopleOrder.filter((p) => p !== 'you' && s.people[p].status === 'home' && E.known(s, db, p)))) { if (talked >= rule.talk) break; if (act(s, db, { type: 'talk', who: id })) { talked++; settle(s, db, pol, trace); } if (s.ended) return; }
+  // 아침을 끝내는 화로 (FIRE_ON_ADVANCE — 화면 useFire 가 넘길 때 저절로 화로를 조사하면): 화면에서 아침을 떠나는 길은 화로뿐이라
+  //   모든 정책(게으름도)이 아침마다 화로 흔적을 본다. 조사 칸 수(INSPECT.objects)에는 세지 않는다. --all-objects(옛 판단)면 하지 않는다
+  if (FIRE_ON_ADVANCE && !OPT.allObjects && map.fire && s.traces.fire && !s.pending && !s.ended && act(s, db, { type: 'inspect', object: 'fire' })) settle(s, db, pol, trace);
 }
 // ── 원정 지도 뒤지기 (P1-11 엔진 몫 · U4 '걸어가서 수납을 연다') ──
 // 원정 지도: 지역 → [1층, 2층]. 화면 game.js 의 TRIP_MAPS 와 같아야 한다(sim.test 가 맞춰 본다).
@@ -273,8 +341,9 @@ function writeCauses(s, db, pol) {
     const p = s.people[id];
     if (id === 'you' || (p.status !== 'dead' && p.status !== 'ascended')) continue;
     if (Object.prototype.hasOwnProperty.call(s.ledger.causes, id)) continue;
-    // 정책: 헌신·부지런은 적는다, 게으름은 빈칸, 나머지는 반반(시드)
-    const write = pol.inspect === 'lazy' ? false : (pol.share > 0 || pol.inspect === 'diligent') ? true : R.chance(s, 0.5);
+    // 정책: 헌신·부지런은 적는다, 나머지는 반반(시드). (10-24 검증 A4-5) 게으름도 보통처럼 반반 — 게으름은 '조사'만 게으르다.
+    //   전에는 게으름이 늘 빈칸이라 A4 '게으름의 값'에 명부 차이가 섞였다(명부만 보통처럼 고친 봇 생존 41.3% 대 40.1%). --lazy-blank 면 옛 규칙
+    const write = pol.inspect === 'lazy' && OPT.lazyBlank ? false : (pol.share > 0 || pol.inspect === 'diligent') ? true : R.chance(s, 0.5);
     act(s, db, { type: 'writeCause', who: id, line: write ? (p.status === 'ascended' ? '올라갔다' : '밤에 갔다') : null });
   }
 }
@@ -316,4 +385,4 @@ function play(db, seed, policyName) {
   return { s, trace };
 }
 
-module.exports = { POLICIES, CAREFUL, GROUPS, INSPECT, OPT, D3_COUNT, TRIP_MAPS, tripSearch, DEADLY, DEADLY_PENALTY, RECOVERY_BONUS, RISKY_FLAT_WARN, BODY, OTHER_TABOO, TIE_WARN, CRISIS, HUMAN_PICK, play, morningInspect, pickChoice, scoreChoice, deadlyText, deadlyRisk, isRecovery, isResource, treatResidents };
+module.exports = { POLICIES, CAREFUL, GROUPS, INSPECT, OPT, D3_COUNT, TRIP_MAPS, tripSearch, DEADLY, DEADLY_PENALTY, RECOVERY_BONUS, RISKY_FLAT_WARN, BODY, OTHER_TABOO, TIE_WARN, CRISIS, HUMAN_PICK, SCREEN_WALL, SCREEN_NOT_INSPECT, FIRE_ON_ADVANCE, play, morningInspect, screenReach, screenHidden, pickChoice, scoreChoice, isPlain, axisCapped, deadlyText, deadlyRisk, isRecovery, isResource, treatResidents, writeCauses };

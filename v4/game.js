@@ -68,21 +68,26 @@
   function nameOf(id) { const p = person(id); if (!p) return ''; if (id === 'you') return p.name; return !testified(id) && lookName(id) ? lookName(id) : p.name; }
   // 글 속 사람 이름을 화면 이름으로 (물건 조사 글·수첩 사실 줄·사인 칸 — 표가 진짜 이름으로 적어 둔 것): 증언 전인 사람의 이름(성까지 '박기철' · 이름만 '기철')을
   //   생김새의 끝 낱말로 바꾸고 조사를 맞춘다 — '기철의 베개다' → '남자의 베개다' · '순례가 밤마다 긋는다' → '할머니가 밤마다 긋는다'. '한 마리' 같은 셈말은 건드리지 않는다
-  const PJOSA = { 이가: '이/가', 이: '이/가', 가: '이/가', 이는: '은/는', 은: '은/는', 는: '은/는', 이를: '을/를', 을: '을/를', 를: '을/를', 과: '과/와', 와: '과/와' };
+  //   (10-24 검증 #1·#5) 사건 본문·선택지·경고·결과 글도 이 규칙을 거친다 — 대사창 이름표(생김새)와 같은 창의 본문이 서로 다른 이름을 쓰지 않게.
+  //   부르는 말 '동하야.' → '청년아.' (아/야 는 뒤에 한글이 없을 때만 부르는 말로 본다)
+  const PJOSA = { 이가: '이/가', 이: '이/가', 가: '이/가', 이는: '은/는', 은: '은/는', 는: '은/는', 이를: '을/를', 을: '을/를', 를: '을/를', 과: '과/와', 와: '과/와', 아: '아/야', 야: '아/야' };
   const reEsc = (t) => String(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const lookNoun = (id) => { const w = lookName(id).trim().split(/\s+/); return w[w.length - 1] || '누군가'; };
+  const nameRe = (p) => { const given = p.name.length >= 3 ? p.name.slice(1) : p.name; return `(?<!(?:한|두|세|네|몇|여러|열|[0-9])\\s?)(?:${reEsc(p.name)}|${reEsc(given)})`; };
   function maskPeople(text) {
     let t = String(text == null ? '' : text);
     if (!state || !db || !t) return t;
     for (const id of db.peopleOrder) {
       const p = person(id);
       if (id === 'you' || !p || !p.name || testified(id) || !lookName(id)) continue;
-      const given = p.name.length >= 3 ? p.name.slice(1) : p.name, noun = lookNoun(id);
-      const re = new RegExp(`(?<!(?:한|두|세|네|몇|여러|열|[0-9])\\s?)(?:${reEsc(p.name)}|${reEsc(given)})(이가|이는|이를|이|가|은|는|을|를|과|와)?`, 'g');
+      const noun = lookNoun(id);
+      const re = new RegExp(`${nameRe(p)}(이가|이는|이를|이|가|은|는|을|를|과|와|아(?![가-힣])|야(?![가-힣]))?`, 'g');
       t = t.replace(re, (m, j) => (j ? B.fill(`{who:${PJOSA[j]}}`, noun) : noun));
     }
     return t;
   }
+  // 글이 그 사람을 가리키는가: 성까지 붙은 이름('김순례') 또는 이름만('순례') — 표의 사실 줄·결과 글은 거의 이름만 쓴다 (10-24 검증 #7). '한 마리' 같은 셈말은 아니다
+  const mentions = (text, id) => { const p = person(id); return !!(p && p.name && text && new RegExp(nameRe(p)).test(String(text))); };
   // 들은 줄을 엔진 heard 에 남긴다 ('<줄id>#<행번호>' → 오늘). hearLog = 화면 기억(검수·캡처용: 언제 무엇을 들었나)
   const hearLog = [];
   function hearLine(id, row, how) {
@@ -209,8 +214,13 @@
     return flesh || (n.hunger || 0) >= SIGN.hungry ? 'mouth' : '';
   }
 
-  // 지도 위 사람: [{id, name, x, y, face, pose, injury, mark, react, bubble, light, beam, talkable, stoke}]
+  // (2026-10-24 A1 §2-4) 등 돌림 = 엔진 view.people[].signs.cold (그 사람의 원한이 문턱 이상, 참/거짓만 — 숫자는 화면에 안 나온다)
+  const coldOf = (id) => !!(viewPeople[id] && viewPeople[id].signs && viewPeople[id].signs.cold);
+
+  // 지도 위 사람: [{id, name, x, y, face, pose, injury, mark, react, bubble, light, beam, talkable, stoke, cold}]
   const faceTo = (x, y) => { const dx = scene.px - x, dy = scene.py - y; return Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy < 0 ? 'up' : 'down'); };
+  const OPP = { up: 'down', down: 'up', left: 'right', right: 'left' };
+  const faceAway = (x, y) => OPP[faceTo(x, y)];
   const faceFire = (x, y) => { const f = scene.map && scene.map.fire; if (!f || f[0] < 0) return 'down'; const dx = f[0] - x, dy = f[1] - y; return Math.abs(dx) >= Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy < 0 ? 'up' : 'down'); };
   function peopleOnMap() {
     const out = [];
@@ -237,6 +247,7 @@
         continue;
       }
       let pos, pose = null, mark = '';
+      const cold = coldOf(id);
       if (ph === 'night' || ph === 'aftermath') { pos = bedOf(id); pose = 'lying'; }
       else if (ph === 'evening') { pos = SPOTS.evening[id]; pose = 'sitting'; if (!(sat.day === state.day && sat.ids.has(id))) mark = '…'; }
       else if (state.day === 0 && DS4.spots.FIRST[id]) { pos = DS4.spots.FIRST[id]; pose = 'crouch'; }   // D0 낮: 만난 뒤에도 순례는 불가를 지킨다 ("불은 저 할머니 거요")
@@ -245,8 +256,9 @@
       if (!pos) continue;
       const near3 = Math.abs(scene.px - pos[0]) + Math.abs(scene.py - pos[1]) <= 3;
       // 3칸 안이면 당신을 본다 · 쪼그린 순례는 불을 · 저녁 화로 둘레에 앉은 사람은 화로를 본다(사람마다 앉기 그림 4방향, P1-2) · 그 밖은 아래
-      const face = near3 ? faceTo(pos[0], pos[1]) : pose === 'crouch' ? 'right' : ph === 'evening' ? faceFire(pos[0], pos[1]) : 'down';
-      out.push({ id, name: nameOf(id), x: pos[0], y: pos[1], face, pose, injury: p.n.injury || 0, mark, react: signOf(id), talkable: ph !== 'night' && ph !== 'aftermath', bubble: bubbleOf(id), stoke: pose === 'crouch' && !near3 });
+      //   등 돌린 사람(signs.cold): 가깝든 멀든 당신 쪽을 등진다 — 고개를 숙이고(render.js), 잠자리에서는 뒤통수를 보인다
+      const face = cold && pose !== 'crouch' && pose !== 'lying' ? faceAway(pos[0], pos[1]) : near3 ? faceTo(pos[0], pos[1]) : pose === 'crouch' ? 'right' : ph === 'evening' ? faceFire(pos[0], pos[1]) : 'down';
+      out.push({ id, name: nameOf(id), x: pos[0], y: pos[1], face, pose, injury: p.n.injury || 0, mark, react: signOf(id), talkable: ph !== 'night' && ph !== 'aftermath', bubble: bubbleOf(id), stoke: pose === 'crouch' && !near3, cold });
     }
     return out;
   }
@@ -266,6 +278,8 @@
     for (const id of Object.keys(db.objects)) { const o = db.objects[id]; if (ownerOf(id) && o.name && t.includes(o.name)) t = t.split(o.name).join(objName(id)); }
     return maskPeople(t);
   }
+  // (2026-10-24 A4 E3) 못 본 밤이 바꾼 흔적: 엔진 traces[].late 이고 어젯밤 것(day = 오늘−1)이고 아직 안 봤다 → 지도에 먼지(render.js), 조사 글은 '<줄id>_late'
+  const lateOf = (id) => { const t = state.traces[id]; return !!(t && t.late && t.day === state.day - 1 && !t.seen); };
   // 지도 위 물건: 표의 자리 + 흔적 상태 → 덧그림
   function objectsOnMap() {
     if (!scene.map) return [];
@@ -283,8 +297,10 @@
       const who = ownerOf(mo.id);
       if (who && /^(bottle|bowl|bandage)_/.test(mo.id) && person(who).status === 'away') hidden = true;   // 주인이 아직 역 밖(away)인 그릇·물통·붕대는 숨긴다 (P0-S5)
       if (who && /^bowl_/.test(mo.id) && !met(who)) hidden = true;            // 만나기 전에는 그 사람 그릇이 없다 (역 안에 숨은 서하, D0 마리)
-      out.push({ id: mo.id, x: mo.x, y: mo.y, name: objName(mo.id), solid: !!o.solid && !(mo.id === 'rubble' && st === 'crossed'), state: st, stateName: st, overlay: ov, light: mo.id === 'notebook_dash' && st !== 'there' ? 0 : (o.light || 0), hidden,
-        bubble: mo.id === 'shutter_gap' ? bubbleOf('shutter') : '' });
+      // 지나갈 수 있게 된 물건: 넘은 잔해 · 열린 문(문 칸 'k' 위의 문 — 역무실 문. 10-24 검증 #3·#6: 열린 뒤에도 단단해서 창고 상자·부품 상자에 못 갔다)
+      const through = (mo.id === 'rubble' && st === 'crossed') || (st === 'open' && tileAt(mo.x, mo.y) === 'k');
+      out.push({ id: mo.id, x: mo.x, y: mo.y, name: objName(mo.id), solid: !!o.solid && !through, state: st, stateName: st, overlay: ov, light: mo.id === 'notebook_dash' && st !== 'there' ? 0 : (o.light || 0), hidden,
+        bubble: mo.id === 'shutter_gap' ? bubbleOf('shutter') : '', late: lateOf(mo.id) });
     }
     return out;
   }
@@ -551,14 +567,17 @@
   }
   // 선택지 부제: 확률 · 비용(늘 보인다, '약 −1') · 경고 · 잠김 이유. 엔진의 잠김 이유에 남은 영문 id(meds이(가) 모자라다)는 한국어로 바꾼다
   const costText = (cost) => Object.entries(cost || {}).map(([k, v]) => `${resName(k)} −${v}`).join(' · ');
-  const reasonKo = (r) => String(r || '').replace(/(\S+)이\(가\) 모자라다/g, (m, k) => `${josa(resName(k), '이가')} 모자라다`);
+  // 잠김 이유(엔진 choiceState.reason — req.why 글이 있으면 그것, 10-24 E5): 영문 자원 id 를 한국어로 · '손가락가 성치 않다' 같은 조사를 받침에 맞춘다
+  const reasonKo = (r) => String(r || '').replace(/(\S+)이\(가\) 모자라다/g, (m, k) => `${josa(resName(k), '이가')} 모자라다`)
+    .replace(/(\S+?)[이가] 성치 않다/g, (m, k) => `${josa(k, '이가')} 성치 않다`);
   const choiceSub = (c) => [c.chance != null ? `<small class="chance">${c.chance}%</small>` : '', c.cost && Object.keys(c.cost).length ? `<small class="cost">${esc(costText(c.cost))}</small>` : '',
-    c.warn ? `<small class="warn">${esc(c.warn)}</small>` : c.hint ? `<small>${esc(c.hint)}</small>` : '', c.locked ? `<small class="lock">${esc(reasonKo(c.reason))}</small>` : ''].join('');
+    c.warn ? `<small class="warn">${esc(maskPeople(c.warn))}</small>` : c.hint ? `<small>${esc(maskPeople(c.hint))}</small>` : '', c.locked ? `<small class="lock">${esc(maskPeople(reasonKo(c.reason)))}</small>` : ''].join('');
   // 장면 그림: v4 cg/<image> → v4 cg/<사건 id> → v3 대체 (art.js). 없으면 그림 층을 열지 않는다
   function eventCg(v) {
     const src = ART.cgSrc(v.image, v.id);
     if (src) UI.cg(src);
     else if (v.image) missing.add(v.image + '@' + v.id);
+    else if (v.explicit) missing.add('@' + v.id);                     // 그림 칸이 빈 적나라 사건(새 위기·카르마 사건) — 그림이 생기면 v4 cg/<사건 id> 로 바로 잡힌다(A5). 그 전에는 글만
     return !!src;
   }
   // 수납 열기 (P0-S6): 사건 결과로 이 지도 물건이 닫힘(closed·up) → 열림(open·empty·pulled)이 됐는가
@@ -605,28 +624,43 @@
   }
   const foundLog = [];
   const MEET_EV = { pro_platform: 'soonrye', pro_gicheol: 'gicheol', pro_mari: 'mari', d0_mari_fire: 'mari', d1_shutter_knock: 'eunji', d0_gicheol_notebook: 'gicheol', d1_gicheol_arrive: 'gicheol', d1_gicheol_arrive_b: 'gicheol' };
+  // (2026-10-24 A1·A4 새 사건) 사건 대상이 '그 일을 하는 사람'인 사건: 본문은 '누가'로만 쓰여 있다(엔진에 이름 넣기 서식이 없다) → 대사창에 그 사람 얼굴·이름표
+  //   d10_hold 소매를 잡은 사람(원한이 가장 높은 사람) · d10_grab 물병을 빼앗긴 사람 · repay_bowl 빈 그릇을 든 사람 · share_back 제 그릇을 밀어 주던 사람
+  //   (dawn_strike·dawn_mob·called_up·d4_spanner·d5_flood 의 대상은 '당신이 대신 내밀 사람'이라 얼굴을 띄우지 않는다)
+  const ACTOR_EV = { d10_hold: 1, d10_grab: 1, repay_bowl: 1, share_back: 1 };
+  const FACE_EV = { d4_spanner: 'gicheol', trial_d4_gicheol: 'gicheol' };   // 하는 사람이 정해진 사건 (본문에 그 사람이 나온다 — 스패너를 든 기철 · 부품을 말하는 기철)
+  function eventFaceId(v) {
+    if (MEET_EV[v.id] && person(MEET_EV[v.id])) return MEET_EV[v.id];
+    if (ACTOR_EV[v.id] && v.target && person(v.target)) return v.target;
+    if (FACE_EV[v.id] && person(FACE_EV[v.id]) && home(FACE_EV[v.id])) return FACE_EV[v.id];
+    return '';
+  }
   async function showEvent() {
     const v = E.eventView(state, db);
     if (!v) return;
     const black = v.id === 'pro_cold';
     if (!black) eventCg(v);
-    const who = MEET_EV[v.id] && person(MEET_EV[v.id]) ? nameOf(MEET_EV[v.id]) : '';   // 첫 만남 사건: 대사창에 이름표(생김새) — '헤드램프의 남자' (부록 A)
-    await UI.lines(v.text, who ? { black, tag: v.id, name: who, face: faceOf(MEET_EV[v.id]) } : { black, tag: v.id });
-    const sentences = UI.splitSentences(v.text);
+    const whoId = eventFaceId(v);
+    const who = whoId ? nameOf(whoId) : '';                          // 첫 만남 사건·누가 하는 사건: 대사창에 얼굴과 이름표(증언 전이면 생김새) — '헤드램프의 남자' (부록 A)
+    // 본문·선택지·경고·결과 글의 사람 이름도 이름표대로 (10-24 검증 #1 d4_spanner '헤드램프의 남자' + '기철이 머리맡에' · #5 trade_shutter '은지·동하'): 증언 전이면 생김새 낱말
+    const text = maskPeople(v.text);
+    await UI.lines(text, who ? { black, tag: v.id, name: who, face: faceOf(whoId) } : { black, tag: v.id });
+    const sentences = UI.splitSentences(text);
     let i;
     // 결말에 board:1 이 있으면(열차) 태울 사람을 고르는 줄이 선택지 맨 아래에 붙는다 — 엔진 board 동작(board_<id> 깃발, 다시 누르면 내린다)
     const boardIds = () => (v.board ? db.peopleOrder.filter((id) => id !== 'you' && home(id) && met(id)) : []);
     const boarded = () => boardIds().filter((id) => flagOn('board_' + id));
     for (;;) {                                                       // 되돌릴 수 없는 선택(금기·결말)은 상자 안에서 한 번 더 묻는다 — OS 확인창 없음
-      const opts = v.choices.map((c, k) => ({ label: c.label, sub: choiceSub(c), disabled: c.locked, value: k, warn: !!(c.warn || c.taboo) }));   // 경고·금기가 있으면 커서 없이 연다 (ui.js)
+      const opts = v.choices.map((c, k) => ({ label: maskPeople(c.label), sub: choiceSub(c), disabled: c.locked, value: k, warn: !!(c.warn || c.taboo) }));   // 경고·금기가 있으면 커서 없이 연다 (ui.js)
       if (boardIds().length) opts.push({ label: `태울 사람 (${boarded().length}/${boardIds().length})`, sub: `<small>${esc(boarded().map((id) => nameOf(id)).join(' · ') || '아직 아무도')}</small>`, value: 'board' });
       const head = who ? `<p class="who">${esc(who)}</p>` : '';
-      i = await UI.open(`${head}<p>${esc(v.text)}</p>`, { kind: 'event', fit: sentences, fitHead: head, options: opts, cls: opts.length > 3 ? 'wide' : '' });
+      i = await UI.open(`${head}<p>${esc(text)}</p>`, { kind: 'event', fit: sentences, fitHead: head, options: opts, cls: opts.length > 3 ? 'wide' : '' });
       if (i === 'board') { await boardMenu(boardIds()); continue; }
       const c = v.choices[i];
       if (!c || !(c.taboo || v.kind === 'ending')) break;
       const boardWho = boardIds().length ? `<p class="mini">태울 사람: ${esc(boarded().map((id) => nameOf(id)).join(' · ') || '없음')}</p>` : '';
-      const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(c.label)}${c.warn ? ` — <span class="warnt">${esc(c.warn)}</span>` : ''}</p>${boardWho}`, { kind: 'confirm2', sel: 1, options: [{ label: '그렇게 한다', value: true }, { label: '다시 고른다', value: false }] });   // 커서는 '다시 고른다'에서 시작
+      // 커서는 '다시 고른다'에서 시작 · '그렇게 한다'는 위험(danger) — ui.js 가 커서를 잠깐 멈추고 결정 키를 새로 눌러야 받는다 (걸으며 두드린 ↑·Space 연타로 넘어가지 않게, 10-24 검증 #4)
+      const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(maskPeople(c.label))}${c.warn ? ` — <span class="warnt">${esc(maskPeople(c.warn))}</span>` : ''}</p>${boardWho}`, { kind: 'confirm2', sel: 1, options: [{ label: '그렇게 한다', value: true, danger: true }, { label: '다시 고른다', value: false }] });
       if (sure) break;
     }
     const trBefore = traceStates(), worldBefore = Object.assign({}, state.world), flagsBefore = Object.assign({}, state.flags);
@@ -664,7 +698,7 @@
     const resIcon = opened.length && gained.length ? RES_ICON[gained.slice().sort((a, b) => (state.world[b] - worldBefore[b]) - (state.world[a] - worldBefore[a]))[0]] : '';
     const found = (fid && ART.iconSrc(fid)) || (resIcon && ART.iconSrc(resIcon)) || '';
     if (found) foundLog.push({ event: v.id, choice: i, icon: fid || resIcon, day: state.day, text: r.text || '' });
-    if (r.text) await UI.lines(r.text, found ? { black, tag: v.id + ':out', face: found, faceCls: 'icon' } : { black, tag: v.id + ':out' });
+    if (r.text) await UI.lines(maskPeople(r.text), found ? { black, tag: v.id + ':out', face: found, faceCls: 'icon' } : { black, tag: v.id + ':out' });
     scene.crouch = false;
     if (['pro_notebook', 'd1_gicheol_arrive', 'd0_gicheol_notebook'].includes(v.id)) UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
     if (!state.pending && !state.ended) UI.cgClear();
@@ -716,6 +750,34 @@
   //   할 말이 다 떨어지면 <사람>_idle 줄(서술, 얼굴·이름 없음). 바로 앞에도 그 몸짓이었으면 가장 맞는 줄을 다시 한다 — 같은 줄이 연달아 나오지 않게
   const lastTalk = {};
   const talkLog = [];
+  // 호칭 (2026-10-24 A1 §2-4 · E5): 그 사람이 지금 당신을 부르는 말(엔진 E.address — 원한이 깊으면 addressCold: 순례 '이봐'·기철 '어이'·은지 '야'·동하 '당신',
+  //   서하·마리는 '' = 부르지 않는다. 아니면 정체가 기운 호칭·기본 호칭)을 그 사람이 하는 말 앞에 붙인다 — '자네, 저 소리가 열흘이래.' → '이봐, 저 소리가 열흘이래.'
+  //   붙이지 않는 것: 빈 호칭 · 이름 뒤에 붙는 말만 있는 호칭('씨'·'님' — 당신 이름이 없다) · 이미 그 호칭으로 시작하는 줄 · 그 사람의 말이 아닌 줄(speaker 가 다른 사람·서술)
+  //   (10-24 검증 #9) 붙이는 것은 원한이 깊을 때의 차가운 호칭(addressCold)뿐이다 — 명세 §2-4. 평소 호칭('손님'·'자네'·'형')은 줄 글에 이미 들어 있어서
+  //   앞에 또 붙이면 한 말 안에서 부르는 말이 엇갈렸다('손님, … 자네가 열어.'). 차가울 때도 줄 안에 그 사람의 따뜻한 호칭(형·손님·기사님 같은 부르는 이름)이
+  //   이미 있으면 건너뛴다('당신, … 형이 그랬어요.' 가 되지 않게). 대명사처럼 쓰는 말(자네·너·당신·저기…)은 차가운 호칭과 같이 와도 어색하지 않다('이봐, … 자네가 열어.')
+  const SUFFIX_ONLY = /^(씨|님)$/;
+  const PRONOUN_CALL = new Set(['자네', '너', '당신', '거기', '거기요', '저기', '저기요', '이봐', '어이', '야']);
+  function callOf(id) { const a = E.address ? E.address(state, db, id) : null; return typeof a === 'string' && a.trim() && !SUFFIX_ONLY.test(a.trim()) ? a.trim() : ''; }
+  function coldNow(id) {
+    const row = db.people[id], p = person(id);
+    if (!row || !p || typeof row.addressCold !== 'string') return false;
+    const at = Number.isFinite(state.world.sign_cold_call) ? state.world.sign_cold_call : (E.SIGN_COLD_CALL_DEFAULT || 5);
+    return (p.n.grudge || 0) >= at;
+  }
+  // 줄 안에 이미 따뜻한 호칭이 있나: 그 사람의 addressYou 값 가운데 대명사가 아닌 것이 낱말 머리에 오고, 뒤가 끝·쉼표·빈칸·조사
+  function hasWarmCall(id, t) {
+    const row = db.people[id] || {};
+    const words = Object.values(row.addressYou || {}).filter((w) => typeof w === 'string' && w.trim() && !SUFFIX_ONLY.test(w.trim()) && !PRONOUN_CALL.has(w.trim())).map((w) => w.trim());
+    return words.some((w) => new RegExp(`(^|[\\s"“'‘(…,.])${reEsc(w)}(?=$|[\\s,.!?…"”'’)]|[이가은는을를도의께에한])`).test(t));
+  }
+  function withCall(id, text, row) {
+    const t = String(text || '');
+    if (row && row.speaker && row.speaker !== id) return t;
+    if (!coldNow(id)) return t;
+    const a = callOf(id);
+    return !a || !t || t.startsWith(a) || hasWarmCall(id, t) ? t : `${a}, ${t}`;
+  }
   async function talkTo(id) {
     const p = person(id);
     if (!p) return;
@@ -738,7 +800,7 @@
       act({ type: 'hear', i: ri, quiet: true });
       lastTalk[id] = { day: state.day, key: 'rumor:' + r.line };
       talkLog.push({ who: id, day: state.day, phase: state.phase, key: 'rumor:' + r.line });
-      if (row) { const who = r.roles && r.roles.actor && person(r.roles.actor) ? nameOf(r.roles.actor) : (r.roles && r.roles.target && person(r.roles.target) ? nameOf(r.roles.target) : ''); await UI.lines(B.fill(row.text, who), { name: nm, face: faceOf(id) }); return; }
+      if (row) { const who = r.roles && r.roles.actor && person(r.roles.actor) ? nameOf(r.roles.actor) : (r.roles && r.roles.target && person(r.roles.target) ? nameOf(r.roles.target) : ''); await UI.lines(withCall(id, B.fill(row.text, who), row.speaker === 'narrator' || db.people[row.speaker] ? row : null), { name: nm, face: faceOf(id) }); return; }   // 소문 줄 speaker '{who}' = 본 사람(지금 말하는 사람)
     }
     const ctx = B.lineCtx(state);
     const pk = B.talkPick(db, state, id, ctx);
@@ -762,8 +824,9 @@
     if (pk) {
       hearLine(pk.id, pk.row, 'talk');
       lastTalk[id] = { day: state.day, key: pk.key };
-      talkLog.push({ who: id, day: state.day, phase: state.phase, key: pk.key, fresh: pk.fresh });
-      await UI.lines(pk.row.text, { name: nm, face: faceOf(id) });
+      const said = withCall(id, pk.row.text, pk.row);
+      talkLog.push({ who: id, day: state.day, phase: state.phase, key: pk.key, fresh: pk.fresh, text: said });
+      await UI.lines(said, { name: nm, face: faceOf(id) });
       return;
     }
     lastTalk[id] = { day: state.day, key: '…' };
@@ -787,17 +850,28 @@
       }
     }
   }
+  // 방금 조작에 붙은 엔진 토스트 줄(view.notice — 지금은 toast_late 하나). 줄이 없으면 띄우지 않는다
+  const inspectLog = [];
+  function noticeToast() {
+    const n = state && state.notice;
+    if (!n) return;
+    const t = lineOf(n);
+    if (t) { UI.toast(t, 2800); inspectLog.push({ toast: n, text: t, day: state.day }); }
+  }
   async function useObject(id) {
     if (id === 'fire' && scene.map.id === 'station') {
       if (preMeet('soonrye')) return talkTo('soonrye');                       // 순례를 만나기 전: 화로를 조사하면 순례에게 말 걸기 → pro_platform (P0-S5)
       return useFire();
     }
     if (!act({ type: 'inspect', object: id })) return;
+    noticeToast();                                                              // (10-24 E3) 그날 첫 조사 + 어젯밤 못 본 흔적이 있다 → '어제 못 본 자리가 그대로다.' (사건이 걸려도 먼저)
     if (state.pending) return;
     const o = db.objects[id];
     const st = traceSt(id);
-    const lid = o.inspectLine && o.inspectLine[st];
-    const text = lid ? lineOf(lid) : '';
+    // 조사 글 줄: 엔진 inspectLineId — 못 본 밤이 바꾼 흔적(late)이면 '<줄id>_late'(어제부터 그대로라는 글), 아니면 inspectLine[지금 상태]
+    const lid = E.inspectLineId ? E.inspectLineId(state, db, id) : (o.inspectLine && o.inspectLine[st]);
+    inspectLog.push({ id, st, lid: lid || '', day: state.day, notice: state.notice || '' });
+    const text = lid ? lineOf(lid) || (o.inspectLine && o.inspectLine[st] ? lineOf(o.inspectLine[st]) : '') : '';
     const shownName = objName(id);                                              // 주인 증언 전이면 주인 이름을 뗀 낱말 ('담요')
     await UI.lines(text ? maskNames(text) : `${shownName}이다.`);                     // 조사 글의 사람 이름도 증언 전이면 생김새로 ('기철의 베개다' → '남자의 베개다')
     // 젖은·썩은 붕대: 그 사람이 다쳤으면 그 자리에서 새로 감을 수 있다
@@ -807,25 +881,62 @@
       const a = await UI.open(`<p class="who">${esc(shownName)}</p><p>${esc(nameOf(who))} — ${esc(hurtWord(person(who).n.injury))}</p>`, { kind: 'tend', cancel: true, cancelValue: null, options: [treatOpt('붕대를 새로 감는다', who), { label: '둔다', value: null }] });
       if (a === 'treat') await doTreat(who);
     }
-    // 수첩에 적을 수 있는 사실 줄이 있으면 묻는다 (사실 줄의 물건 이름도 화면 이름으로 — 증언 전에 진짜 이름이 새지 않게)
-    const fact = o.ledgerFact && o.ledgerFact[st];
-    const phase = db.phases.find((p) => p.id === state.phase);
-    if (fact && phase && phase.actions.includes('writeLedger') && !state.ledger.written.some((w) => w.object === id && w.day === state.day)) {
-      const t = state.traces[id] || {};
-      const txt = String(fact).replace(/\{day\}/g, t.day).replace(/\{by\}/g, t.by && person(t.by) ? nameOf(t.by) : '').split(o.name).join(shownName);
-      const txtShown = maskPeople(txt);
-      const w = await UI.open(`<p class="who">수첩</p><p>${esc(txtShown)}</p>`, { kind: 'write', options: [{ label: '수첩에 적는다', value: true }, { label: '둔다', value: false }], cancel: true, cancelValue: false });
-      if (w && act({ type: 'writeFact', object: id })) UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
-    }
+    await offerFact(id);
+  }
+  // 수첩에 적을 수 있는 사실 줄이 있으면 묻는다 (사실 줄의 물건 이름도 화면 이름으로 — 증언 전에 진짜 이름이 새지 않게)
+  // 지금 적을 수 있는 사실 줄(화면 글 — 물건·사람 이름은 이름표대로) 또는 '' : 그 상태의 사실 줄이 있고 · 적는 단계이고 · 오늘 그 물건을 아직 안 적었고 · 본 흔적(엔진 writeFact 조건)
+  function factText(id) {
+    const o = db.objects[id];
+    const fact = o && o.ledgerFact && o.ledgerFact[traceSt(id)];
+    const t = state.traces[id];
+    if (!fact || !t || !t.seen || !phaseAllows('writeLedger') || state.ledger.written.some((w) => w.object === id && w.day === state.day)) return '';
+    const txt = String(fact).replace(/\{day\}/g, t.day).replace(/\{by\}/g, t.by && person(t.by) ? nameOf(t.by) : '').split(o.name).join(objName(id));
+    return maskPeople(txt);
+  }
+  async function offerFact(id) {
+    const txtShown = factText(id);
+    if (!txtShown) return;
+    const w = await UI.open(`<p class="who">수첩</p><p>${esc(txtShown)}</p>`, { kind: 'write', options: [{ label: '수첩에 적는다', value: true }, { label: '둔다', value: false }], cancel: true, cancelValue: false });
+    if (w && act({ type: 'writeFact', object: id })) UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
   }
   function fireLabel() { return { trace: '배식으로', ration: '배식', seat: '자리', day: '저녁으로', evening: '밤으로', night: '잠든다', aftermath: '아침으로' }[state.phase] || '조사'; }
+  // 화로: 단계를 넘기는 곳이면서 흔적이 남는 물건이다 (젖은 화로 = 누가 물을 흘렸다 · 지킨 불 = 누가 밤을 지켰다).
+  //   (10-24 검증 #2) 전에는 단계를 넘기는 창이 화로 흔적 글을 늘 보여 주면서 엔진에는 조사를 보내지 않아, 본 사람에게 '못 본 일'을 매겼다.
+  //   이제 흔적 글은 '화로를 살핀다'(아침·낮 — 엔진 inspect: 흔적 seen · 그 밤 사건 발견 · 그날 첫 조사 토스트)를 골랐을 때만 보인다 = 다른 물건 조사와 같다.
+  //   단계만 넘기면 흔적 글을 보이지 않는다(지도의 젖은 화로·발자국 그림은 다른 물건의 덧그림처럼 그대로 보인다). 화로를 매일 저절로 '본 것'으로 치지 않아
+  //   A4(조사를 게을리 한 값)가 화로 몫만큼 사라지지 않는다. 조사 글은 엔진 inspectLineId(못 본 밤이 바꾼 화로면 '<줄id>_late')
+  //   시뮬 봇 맞춤: 화로 = 아침·낮에 '살필 수 있는' 물건 하나(다른 칸과 같은 조사 한 번). 단계를 넘길 때 저절로 보지 않는다 (useFire 본문에는 inspect 가 없다 — lookFire)
+  const FIRE_PLAIN = '드럼통 안에서 불이 탄다.';
+  async function lookFire() {
+    if (!act({ type: 'inspect', object: 'fire', quiet: true })) return false;
+    noticeToast();
+    const lid = (E.inspectLineId && E.inspectLineId(state, db, 'fire')) || 'insp_fire_' + traceSt('fire');
+    inspectLog.push({ id: 'fire', st: traceSt('fire'), lid, day: state.day, notice: state.notice || '' });
+    if (state.pending) return 'event';                                          // 화로 조사에 걸린 사건이 있으면 그것 먼저 (useCell → pendingFlow)
+    await UI.lines(maskNames(lineOf(lid) || lineOf('insp_fire_' + traceSt('fire')) || FIRE_PLAIN));
+    return true;
+  }
   async function useFire() {
     const ph = state.phase;
     const NEXT = { trace: ['불 앞에 앉으면 배식이다.', '그릇을 꺼낸다'], day: ['불 앞에 앉으면 저녁이 된다.', '앉는다'], evening: ['불을 돋우면 밤이다. 더 이야기할 사람이 없나.', '잠자리로'], night: ['잠든다. 아침까지 누구도 깨우지 않는다.', '잠든다'] };
-    if (!NEXT[ph]) { await UI.lines(lineOf('insp_fire_' + traceSt('fire')) || '드럼통 안에서 불이 탄다.'); return; }
-    const fireText = lineOf('insp_fire_' + traceSt('fire'));
-    const go = await UI.open(`<p class="who">화로</p><p>${esc(fireText)}</p><p>${esc(NEXT[ph][0])}</p>`, { kind: 'fire', options: [{ label: NEXT[ph][1], value: true }, { label: '아직', value: false }], cancel: true, cancelValue: false });
-    if (!go) return;
+    const canLook = phaseAllows('inspect') && !!db.objects.fire;
+    let looked = false;
+    if (!NEXT[ph]) {                                                            // 배식·자리·새벽: 넘길 것도 살필 것도 없다 — 흔적 글은 보이지 않는다
+      await UI.lines(traceSt('fire') === 'lit' ? (lineOf('insp_fire_lit') || FIRE_PLAIN) : '불 앞이다.');
+      return;
+    }
+    for (;;) {
+      const fact = looked ? factText('fire') : '';                              // 살핀 뒤 지킨 불(kept)이면 'D3 밤. 누가 불가에서 밤을 지켰다.' 를 이 창에서 적을 수 있다
+      const opts = [{ label: NEXT[ph][1], value: true }]
+        .concat(canLook && !looked ? [{ label: '화로를 살핀다', value: 'look' }] : [])
+        .concat(fact ? [{ label: '수첩에 적는다', sub: `<small>${esc(fact)}</small>`, value: 'write' }] : [])
+        .concat([{ label: '아직', value: false }]);
+      const go = await UI.open(`<p class="who">화로</p><p>${esc(NEXT[ph][0])}</p>`, { kind: 'fire', options: opts, cancel: true, cancelValue: false });
+      if (go === 'look') { const r = await lookFire(); if (r === 'event' || r === false) return; looked = true; continue; }
+      if (go === 'write') { if (act({ type: 'writeFact', object: 'fire' })) UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab'); continue; }
+      if (!go) return;
+      break;
+    }
     await nextPhase();
   }
 
@@ -919,7 +1030,9 @@
     for (const k of RES_ORDER) { const d = (state.world[k] || 0) - (before.world[k] || 0); if (d) parts.push(`${resName(k)} ${d > 0 ? '+' : '−'}${Math.abs(d)}`); }
     const gone = Object.values(state.people).filter((p) => before.status[p.id] === 'home' && p.status !== 'home' && p.id !== 'you' && met(p.id))
       .map((p) => josa(nameOf(p.id), '이가') + (p.status === 'ascended' ? ' 올라갔다' : p.status === 'stayed' ? ' 셔터 너머로 갔다' : ' 밤에 갔다'));
-    const noise = state.nightLog.some((e) => e.day === before.day && e.role !== 'clock');
+    // 밤에 난 소리 = 주민 간 밤 사건만. 세계 시계(clock)·방치 판정 줄(neglect — 어제 일의 못 봄/봄 판정, 10-24 E2)은 소리가 아니다
+    const resident = (E.night && E.night.isResidentRow) || ((e) => !!e && e.role !== 'clock' && e.role !== 'neglect');
+    const noise = state.nightLog.some((e) => e.day === before.day && resident(e));
     const text = [gone.length ? gone.join('. ') + '.' : '', parts.join(' · '), noise ? '밤에 무슨 소리가 났다. 흔적이 남았을 것이다.' : ''].filter(Boolean).join(' ');
     if (text) await UI.lines(text, { black: true });
   }
@@ -1047,12 +1160,12 @@
   async function writeCauseFlow(id) {
     const p = person(id), nm = nameOf(id);
     const base = p.status === 'ascended' ? '올라갔다' : '밤에 갔다';
-    const facts = state.ledger.written.filter((w) => w && w.text && w.text.includes(p.name)).slice(-2).map((w) => w.text);
+    const facts = state.ledger.written.filter((w) => w && w.text && mentions(w.text, id)).slice(-2).map((w) => w.text);   // 사실 줄은 이름만 쓴다('D2 밤. 순례 물통 빔.') — 성까지 붙은 이름으로만 거르면 한 줄도 안 나왔다 (10-24 검증 #7)
     const short = (t) => (t.length > 22 ? t.slice(0, 22) + '…' : t);
     const opts = [{ label: base, value: base }].concat(facts.map((t) => ({ label: short(maskNames(t)), value: t }))).concat([{ label: '비워 둔다', value: '__blank' }, { label: '아직', value: null }]);
     const c = await UI.open(`<p class="who">${esc(nm)} — 사인 칸</p><p class="mini">적지 않는 것도 적는 것이다. 한 번 적으면 고칠 수 없다.</p>`, { kind: 'cause', cancel: true, cancelValue: null, options: opts, cls: 'wide' });
     if (c == null) return;
-    const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(nm)} — ${c === '__blank' ? '___' : esc(c)}</p>`, { kind: 'confirm2', sel: 1, options: [{ label: '그렇게 적는다', value: true }, { label: '다시 고른다', value: false }] });
+    const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(nm)} — ${c === '__blank' ? '___' : esc(maskNames(c))}</p>`, { kind: 'confirm2', sel: 1, options: [{ label: '그렇게 적는다', value: true, danger: true }, { label: '다시 고른다', value: false }] });
     if (!sure) return;
     if (!act({ type: 'writeCause', who: id, line: c === '__blank' ? null : c, quiet: true })) UI.toast('지금은 적을 수 없다 — 아침·저녁·새벽에');
   }
@@ -1090,6 +1203,15 @@
     hud();
     unstack(); fireStand();
   }
+  // 저장에서 이어 하기: 걸린 사건만 보이고 끝나면 안 된다 — 배식·자리·새벽 단계는 화면 흐름(배식 창·자리로 흩어짐·꿈)이 있어야 다음 단계로 간다.
+  //   (2026-10-24) 배식 단계에 새 사건(repay_bowl·share_back)이 걸려 그 창에서 저장된 판을 이어 하면, 사건을 고른 뒤 배식 창 없이 멈췄다 → 단계 들어서기(phaseEnter)를 다시 탄다.
+  //   저녁이면 아직 안 들은 증언부터(이미 들은 사람은 건너뛴다). 낮·밤·아침 흔적은 걸린 사건만(지금과 같다)
+  async function resumeFlow() {
+    if (!state) return;
+    if (state.ended) { await endingScreen(); return; }
+    if (['ration', 'seat', 'aftermath', 'evening'].includes(state.phase)) { await phaseEnter(null); return; }
+    await pendingFlow();
+  }
   async function newGame(seed) {
     const s = E.newGame(db, seed == null ? ((Date.now() & 0x7fffffff) >>> 0) : seed);
     startGame(s);
@@ -1109,14 +1231,14 @@
       if (a === 'import') {
         await UI.open('<p class="title">저장 코드</p><p><input type="text" id="codeIn" placeholder="코드를 붙여 넣는다"></p>', { kind: 'import', cancel: true, options: [{ label: '불러온다', value: true }] });
         const el = $('codeIn'); const s = el ? store.importCode(el.value) : null;
-        if (s) { UI.cgClear(); startGame(s); store.save(state); await pendingFlow(); return; }
+        if (s) { UI.cgClear(); startGame(s); store.save(state); await resumeFlow(); return; }
         UI.toast('알 수 없는 저장 코드다.'); continue;
       }
       if (a === 'new') {
         if (loaded.state && !loaded.state.ended) { const ok = await UI.open('<p>진행 중인 판이 지워진다.</p>', { kind: 'confirm', options: [{ label: '그래도 새로 시작한다', value: true }, { label: '돌아간다', value: false }] }); if (!ok) continue; }
         UI.cgClear(); await newGame(); return;
       }
-      UI.cgClear(); startGame(loaded.state); await pendingFlow(); return;
+      UI.cgClear(); startGame(loaded.state); await resumeFlow(); return;
     }
   }
 
@@ -1197,6 +1319,7 @@
   //   night5 = D5 밤 고정 사건(d5_rail_body) · evening5 = D5 저녁 화로 둘레에 앉은 사람과 말하는 창 · night8 = D8 밤 고정 사건(d8_patrol_return/d8_pillow)
   //   called3 = D3 밤 '이름이 불렸다'(d3_called_you) 선택 창 · train = 열차 결말(d10_train) 뒤 명부 한 장
   //   화면 확인용(v4/tools/screen_check.py): tunnel = 터널에서 기철 4칸 앞 · arrive = 승강장에 막 도착한 지도 · eve3 = D3 저녁 화로 앞 지도 · manual = 첫 창에서 봇이 손을 뗀다
+  //   (10-24 spec) evline · evhold = ?state= 저장에서 시작해 걸린 사건의 첫 줄(얼굴·이름표) · 첫 선택 창에서 멈춘다
   //   (P0-S5) testify = D0 저녁 증언 한 줄(얼굴·진짜 이름) · ration1 = D1 배식 창(안 만난 이름 없음) · shutter1 = D1 낮 셔터 앞(조사 전, 말풍선) · open = 전동차 구급함을 막 연 뒤 지도
 //   ?state=<주소> 가 있으면 그 저장에서 시작한다 (shot.py 가 train 에 시뮬 봇 저장을 붙인다 — 캡처 봇은 D10 전에 주민이 다 죽는다)
   //   봇은 화면처럼 경고·%·비용을 보고, 캡처가 끝까지 가도록 '당신 사망'만 표의 효과로 피한다(death 지점은 반대로 고른다).
@@ -1244,6 +1367,8 @@
       reveal: (k, info) => k === 'line' && info.opts && info.opts.tag === 'reveal',
       death: (k) => k === 'death_ledger',
       manual: () => true,                                                // 손으로: 첫 창에서 봇이 손을 뗀다 (연타 검사 — v4/tools/screen_check.py space)
+      evhold: (k) => k === 'event',                                      // 첫 선택 창에서 멈춘다 (저장에서 시작한 새 사건 확인 — v4/tools/screen_check.py spec)
+      evline: (k, info) => k === 'line' && !!state.pending && !!info.opts && info.opts.tag === state.pending.id,   // 걸린 사건의 첫 줄(얼굴·이름표 칸)에서 멈춘다
       testify: (k, info) => k === 'line' && info.opts && /^testify_/.test(info.opts.tag || ''),
       ration1: (k) => k === 'ration' && state.day === 1,
       open: (k, info) => k === 'line' && info.opts && info.opts.faceCls === 'icon',   // 막 연 구급함의 결과 글 (얼굴 칸 = 찾은 물건 아이콘 80)
@@ -1269,7 +1394,7 @@
       let best = -1, bs = -Infinity;
       ev.choices.forEach((c, i) => {
         if (c.locked) return;
-        const row = rows[i] || {};
+        const row = (E.effChoice ? E.effChoice(state, db, rows[i] || {}) : rows[i]) || {};   // (10-24) swap 이 맞으면 바뀐 선택지(카르마 8 이상의 금기 = 판정, 실패하면 죽음)를 본다 — 표 원래 행만 보면 죽는 줄을 모르고 고른다
         const p = c.chance != null ? c.chance / 100 : 1;
         let sc = row.check ? p * outValue(row.ok) + (1 - p) * outValue(row.fail) : outValue(row.out);
         if (c.taboo) sc += wantDeath ? 3 : -3;
@@ -1317,7 +1442,7 @@
         startGame(s); store.save(state);
         // 열차 결말: 시뮬 판은 물이 0 이라 '탄다'(식량·물 1)가 잠긴다 → 캡처용 지름길로 운임 깃발을 세워 '챙긴 운임으로 탄다'를 연다 (기록에 남긴다)
         if (target === 'train' && !flagOn('fare_hoard') && ((state.world.food || 0) < 1 || (state.world.water || 0) < 1)) { act({ type: 'setFlag', flag: 'fare_hoard', quiet: true }); autoLog.push('[지름길 fare_hoard]'); }
-        await pendingFlow();
+        await resumeFlow();                                            // 이어 하기와 같은 길 (배식 단계 저장이면 사건 뒤 배식 창까지)
         if (!holding) { UI.setBot(null); report('end (저장에서 시작)', false); }
         return;
       }
@@ -1372,7 +1497,7 @@
 
   // ── 시작 ──
   window.__ds4 = { get state() { return state; }, get db() { return db; }, get scene() { return scene; }, dispatch: act, walkTo, pick: UI.pick, interact, frame, flow, use, goto, idle, autoRun, autoLog,
-    hearLog, talkLog, cellLog, openLog, foundLog, bark, nameOf, met, peopleOnMap, objectsOnMap, target, talkTo, objective, hoverName, maskPeople, foundIcon,
+    hearLog, talkLog, cellLog, openLog, foundLog, inspectLog, bark, nameOf, met, peopleOnMap, objectsOnMap, target, talkTo, objective, hoverName, maskPeople, foundIcon, hud, callOf, withCall, reasonKo, eventFaceId,
     missing: () => Array.from(missing), setBot: (fn) => { bot = fn; UI.setBot(fn); }, store: () => store, E, UI };
   (async () => {
     try {
@@ -1382,6 +1507,8 @@
       await ART.ready;
       fitApp();
       if (B.fast) $('app').classList.add('fast');
+      // 표 검증에 실패해 빼고 읽은 행이 있으면 화면에도 한 번 알린다 (콘솔에만 남으면 사건이 조용히 사라진 것을 아무도 모른다 — 10-24 검토 지적 13)
+      if (B.dropped && B.dropped.length) UI.toast(`표 ${B.dropped.length}줄을 읽지 못해 빼고 시작했다 — 표 담당에게 알릴 것`, 6000);
       // 화면 갱신은 모니터 박자(requestAnimationFrame). 숨은 창·헤드리스 캡처에서 rAF 가 멈추면 보조 타이머가 100ms 마다 대신 한 번 부른다
       let lastRaf = 0;
       const loop = () => { lastRaf = performance.now(); frame(); requestAnimationFrame(loop); };

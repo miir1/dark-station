@@ -1,0 +1,322 @@
+{
+ "scale": {
+  "person_height": 46,
+  "limit_25pct": 11.5,
+  "hand": {
+   "shoes_stairs:one": [
+    8,
+    5
+   ],
+   "shoes_stairs:pair": [
+    10,
+    5
+   ],
+   "radio:idle": [
+    10,
+    9
+   ],
+   "radio:on": [
+    10,
+    9
+   ],
+   "scissors:clean": [
+    8,
+    7
+   ],
+   "scissors:blood": [
+    10,
+    7
+   ],
+   "notebook_*:inplace": [
+    7,
+    5
+   ],
+   "notebook_*:moved": [
+    9,
+    5
+   ],
+   "bottle_*:full": [
+    4,
+    10
+   ],
+   "bottle_*:empty": [
+    10,
+    4
+   ],
+   "bottle_*:wet": [
+    10,
+    5
+   ],
+   "bowl_*:full": [
+    10,
+    6
+   ],
+   "bowl_*:empty": [
+    10,
+    5
+   ],
+   "bowl_*:meat": [
+    10,
+    6
+   ],
+   "bowl_*:pushed": [
+    10,
+    6
+   ],
+   "bandage_*:clean": [
+    10,
+    4
+   ],
+   "bandage_*:wet": [
+    12,
+    4
+   ],
+   "bandage_*:rot": [
+    12,
+    6
+   ],
+   "radio_cab:idle": [
+    10,
+    9
+   ],
+   "radio_cab:used": [
+    10,
+    9
+   ],
+   "notebook_dash:there": [
+    7,
+    5
+   ],
+   "notebook_dash:taken": [
+    7,
+    5
+   ],
+   "shoe_cab:there": [
+    8,
+    5
+   ],
+   "car_shoes:there": [
+    10,
+    5
+   ]
+  },
+  "hand_over_25pct": [
+   "bandage_*:wet",
+   "bandage_*:rot"
+  ],
+  "furniture": {
+   "crate_food:closed": [
+    19,
+    20
+   ],
+   "crate_food:open": [
+    20,
+    20
+   ],
+   "crate_food:empty": [
+    20,
+    20
+   ],
+   "crate_food:moved": [
+    19,
+    20
+   ],
+   "stairs_line:drawn": [
+    28,
+    4
+   ],
+   "pipe:clean": [
+    3,
+    24
+   ],
+   "pipe:blood": [
+    3,
+    24
+   ],
+   "lever:up": [
+    16,
+    20
+   ],
+   "lever:pulled": [
+    22,
+    20
+   ],
+   "bag:closed": [
+    11,
+    10
+   ],
+   "bag:open": [
+    11,
+    11
+   ],
+   "medkit:closed": [
+    13,
+    16
+   ],
+   "medkit:open": [
+    18,
+    16
+   ],
+   "shelter_box:closed": [
+    20,
+    20
+   ],
+   "shelter_box:open": [
+    21,
+    21
+   ],
+   "shelter_box:left": [
+    20,
+    20
+   ]
+  }
+ },
+ "cells": [
+  {
+   "cell": [
+    15,
+    11
+   ],
+   "target": {
+    "verb": "조사",
+    "name": "은지 물통 · 은지 붕대",
+    "ids": [
+     "bottle_eunji",
+     "bandage_eunji"
+    ]
+   },
+   "hint": "Space 조사 — 은지 물통 · 은지 붕대",
+   "inspected": [
+    "bottle_eunji",
+    "bandage_eunji"
+   ],
+   "lines": [
+    "물통이다.",
+    "반쯤 차 있다.",
+    "흰 붕대다.",
+    "오늘 감았다."
+   ],
+   "one_press": true
+  },
+  {
+   "cell": [
+    19,
+    11
+   ],
+   "target": {
+    "verb": "조사",
+    "name": "가위 · 마리 물통 · 마리 붕대",
+    "ids": [
+     "scissors",
+     "bottle_mari",
+     "bandage_mari"
+    ]
+   },
+   "hint": "Space 조사 — 가위 · 마리 물통 · 마리 붕대",
+   "inspected": [
+    "scissors",
+    "bottle_mari",
+    "bandage_mari"
+   ],
+   "lines": [
+    "마리의 가위다.",
+    "붕대를 자를 때 쓴다.",
+    "물통이다.",
+    "반쯤 차 있다.",
+    "흰 붕대다.",
+    "오늘 감았다."
+   ],
+   "one_press": true
+  }
+ ],
+ "open_medkit_line": {
+  "face": "icons/meds.png",
+  "natural": 40,
+  "shownLogical": 82,
+  "text": "붕대와 소독약, 진통제 한 줄.",
+  "medkit": "open",
+  "openLog": [
+   {
+    "ids": [
+     "medkit"
+    ],
+    "event": "pro_medkit",
+    "day": 0,
+    "gained": [
+     "meds"
+    ],
+    "crouch": false
+   }
+  ]
+ },
+ "car": {
+  "medkit": "open",
+  "bag": "open",
+  "tiles": {
+   "h": "#hhhhhh.hhhhhh.hh....#",
+   "D": "#hhhhhh.hhhhhh.hh.DDD#"
+  },
+  "blocked_h": 1,
+  "opened": [
+   {
+    "ids": [
+     "medkit"
+    ],
+    "event": "pro_medkit",
+    "day": 0,
+    "gained": [
+     "meds"
+    ],
+    "crouch": false
+   },
+   {
+    "ids": [
+     "bag"
+    ],
+    "event": "pro_bag",
+    "day": 0,
+    "gained": [
+     "parts"
+    ],
+    "crouch": true
+   }
+  ]
+ },
+ "three_beat": {
+  "choose_to_line_ms": 402,
+  "shake": {
+   "frames_on": 24,
+   "x_during_shake": [
+    611,
+    611,
+    613,
+    613,
+    613,
+    611,
+    611,
+    611,
+    613,
+    613,
+    613,
+    611,
+    611,
+    613,
+    613,
+    613,
+    611,
+    611,
+    611,
+    613,
+    613,
+    611,
+    611,
+    611
+   ],
+   "x_at_rest": 612,
+   "span_ms": 383
+  },
+  "shifted_frames": 24
+ },
+ "shelter_box": "open",
+ "console_errors": []
+}

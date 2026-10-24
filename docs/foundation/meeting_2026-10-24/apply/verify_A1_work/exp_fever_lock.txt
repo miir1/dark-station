@@ -1,0 +1,4 @@
+지금 표 | selfish_nb: 생존 91.3% · 강제 사망 0 · 사인 dawn_strike 11 · fever_night 2
+지금 표 | h_cautious: 생존 100.0% · 강제 사망 0 · 사인 
+담요 금기를 카르마 8+ 에서 잠금 | selfish_nb: 생존 80.7% · 강제 사망 18 · 사인 fever_night 18 · dawn_strike 11
+담요 금기를 카르마 8+ 에서 잠금 | h_cautious: 생존 100.0% · 강제 사망 0 · 사인 

@@ -1,0 +1,212 @@
+{
+ "spanner": {
+  "heard_gicheol": [],
+  "line1": {
+   "who": "헤드램프의 남자",
+   "text": "헤드램프의 남자남자가 머리맡에 서 있다.▼"
+  },
+  "box": {
+   "who": "헤드램프의 남자",
+   "text": "헤드램프의 남자남자가 머리맡에 서 있다. 헤드램프가 꺼져 있다. 손에 스패너가 있다. \"셌지.\"",
+   "opts": [
+    "1그릇 하나로 입을 막는다식량 −1식량이 준다",
+    "2다른 사람이 셌다고 한다그 사람이 맞는다",
+    "3스패너를 막는다80%못 막으면 끝이다"
+   ]
+  },
+  "leak": [],
+  "ok": true,
+  "errors": []
+ },
+ "fire": {
+  "before": {
+   "day": 5,
+   "phase": "trace",
+   "fire": {
+    "st": "wet",
+    "day": 4,
+    "by": "seoha",
+    "seen": false,
+    "late": 0
+   },
+   "notice": null,
+   "noticeDay": null,
+   "night": [
+    {
+     "id": "steal_water",
+     "traces": [
+      "bottle_gicheol",
+      "fire"
+     ],
+     "discovered": false
+    },
+    {
+     "id": "starve_resident",
+     "traces": [
+      "blanket_soonrye"
+     ],
+     "discovered": true
+    }
+   ]
+  },
+  "fire_box": "화로화로 가장자리가 젖어 있다. 누가 물을 흘렸다. 재에 손자국이 있다.불 앞에 앉으면 배식이다.1그릇을 꺼낸다2아직",
+  "fire_opts": [
+   "그릇을 꺼낸다",
+   "아직"
+  ],
+  "after": {
+   "day": 5,
+   "phase": "trace",
+   "fire": {
+    "st": "wet",
+    "day": 4,
+    "by": "seoha",
+    "seen": true,
+    "late": 0
+   },
+   "notice": "toast_late",
+   "noticeDay": 5,
+   "night": [
+    {
+     "id": "steal_water",
+     "traces": [
+      "bottle_gicheol",
+      "fire"
+     ],
+     "discovered": true
+    },
+    {
+     "id": "starve_resident",
+     "traces": [
+      "blanket_soonrye"
+     ],
+     "discovered": true
+    }
+   ]
+  },
+  "inspectLog": [
+   {
+    "toast": "toast_late",
+    "text": "어제 못 본 자리가 그대로다.",
+    "day": 5
+   },
+   {
+    "id": "fire",
+    "st": "wet",
+    "lid": "insp_fire_wet",
+    "day": 5,
+    "notice": "toast_late"
+   }
+  ],
+  "errors": [],
+  "fire_rows": [
+   {
+    "id": "steal_water",
+    "traces": [
+     "bottle_gicheol",
+     "fire"
+    ],
+    "discovered": true
+   }
+  ],
+  "ok": true
+ },
+ "call": {
+  "grudge0": [
+   [
+    "soonrye",
+    "역무실 열쇠야. 자네가 열어."
+   ],
+   [
+    "soonrye",
+    "저 소리가 열흘이래. 사람은 자네가 세."
+   ],
+   [
+    "soonrye",
+    "손님, 아들이 남주에 있어."
+   ],
+   [
+    "dongha",
+    "은지 누나가 저를 거둬 줬어요. 형이 그랬어요."
+   ],
+   [
+    "dongha",
+    "은지 누나가 저를 거둬 줬어요."
+   ],
+   [
+    "gicheol",
+    "통로는 이틀이면 되오."
+   ],
+   [
+    "eunji",
+    "너 뭘 봐."
+   ],
+   [
+    "seoha",
+    "물 좀 주세요."
+   ]
+  ],
+  "grudge6": [
+   [
+    "soonrye",
+    "이봐, 역무실 열쇠야. 자네가 열어."
+   ],
+   [
+    "soonrye",
+    "이봐, 저 소리가 열흘이래. 사람은 자네가 세."
+   ],
+   [
+    "soonrye",
+    "손님, 아들이 남주에 있어."
+   ],
+   [
+    "dongha",
+    "은지 누나가 저를 거둬 줬어요. 형이 그랬어요."
+   ],
+   [
+    "dongha",
+    "당신, 은지 누나가 저를 거둬 줬어요."
+   ],
+   [
+    "gicheol",
+    "어이, 통로는 이틀이면 되오."
+   ],
+   [
+    "eunji",
+    "야, 너 뭘 봐."
+   ],
+   [
+    "seoha",
+    "물 좀 주세요."
+   ]
+  ]
+ },
+ "cause": {
+  "setup": {
+   "name": "김순례",
+   "facts": [
+    "D2 밤. 순례 물통 빔.",
+    "순례가 밤마다 계단 줄을 긋는다."
+   ]
+  },
+  "opts": {
+   "book": [
+    "명부",
+    "사실 줄",
+    "뒷장",
+    "덮는다"
+   ],
+   "bookpage": [
+    "김순례 사인 칸",
+    "돌아간다"
+   ],
+   "cause": [
+    "밤에 갔다",
+    "D2 밤. 순례 물통 빔.",
+    "순례가 밤마다 계단 줄을 긋는다.",
+    "비워 둔다",
+    "아직"
+   ]
+  }
+ }
+}

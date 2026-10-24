@@ -1,0 +1,44 @@
+## 카르마를 올리는 선택지
+trial_d1_bowls #1 '남의 그릇을 비운다' karma+2 taboo= warn=그 사람이 잊지 않는다 cost={} check= | karma swap: NONE | when=day>=1 & phase==ration
+crate_lid #1 '봉지 하나를 꺼낸다' karma+1 taboo=steal_crate warn=누가 볼 수 있다 cost={"food":1} check= | karma swap: NONE | when=map==station & inspect:crate_food & trace:crate_food==closed & (phase==trace | phase==day | phase==evening)
+d2_shutter_arm #1 '옆 사람 팔을 내민다' karma+3 taboo=give_other warn=그 사람이 대신 끌린다 cost={} check= | karma swap: NONE | when=day==2 & phase==night & flag:shutter_arm
+d4_spanner #1 '다른 사람이 셌다고 한다' karma+3 taboo=give_other warn=그 사람이 맞는다 cost={} check= | karma swap: NONE | when=day==4 & phase==night & flag:gicheol_counted & alive:gicheol
+d5_rail_body #1 '받는다' karma+1 taboo=eat_human warn=먹은 사람에게 값이 남는다 cost={} check= | karma swap: NONE | when=day==5 & phase==night & alive:mari & alive:soonrye & alive:seoha
+d5_rail_body_c #1 '받는다' karma+1 taboo=eat_human warn=먹은 사람에게 값이 남는다 cost={} check= | karma swap: NONE | when=day==5 & phase==night & alive:mari & !(alive:soonrye & alive:seoha)
+d5_rail_body_b #1 '받는다' karma+1 taboo=eat_human warn=먹은 사람에게 값이 남는다 cost={} check= | karma swap: NONE | when=day==5 & phase==night & !alive:mari
+d5_flood #2 '남의 담요로 물길을 막는다' karma+2 taboo=take_blanket warn=그 사람이 밤새 젖는다 cost={} check= | karma swap: karma>=8 | when=day==5 & phase==night & flood>=4
+d5_lullaby #1 '놓친다' karma+2 taboo= warn=물에서 돌아오지 않는다 cost={} check= | karma swap: NONE | when=day==5 & phase==night & flood>=3
+d6_shutter #2 '아무것도 하지 않는다' karma+2 taboo= warn=기철이 밟힌다. 창고가 빈다 cost={} check= | karma swap: NONE | when=day==6 & phase==night & flag:met_eunji & alive:gicheol & alive:dongha
+d6_shutter_b #2 '아무것도 하지 않는다' karma+2 taboo= warn=창고가 빈다. 또 온다 cost={} check= | karma swap: NONE | when=day==6 & phase==night & flag:met_eunji & !(alive:gicheol & alive:dongha)
+trial_d8_key #3 '운임을 따로 챙긴다' karma+3 taboo= warn=순례가 본다 cost={"food":1,"water":1} check= | karma swap: NONE | when=day==8 & phase==trace & alive:soonrye
+trial_d8_key_b #2 '운임을 따로 챙긴다' karma+3 taboo= warn=누가 본다 cost={"food":1,"water":1} check= | karma swap: NONE | when=day==8 & phase==trace & !alive:soonrye
+d9_hoard #2 '하나만 나눠 받는다' karma+1 taboo= warn= cost={} check= | karma swap: NONE | when=day==9 & phase==trace & flag:fare_known & alive:eunji
+starve_you #1 '창고를 턴다' karma+2 taboo= warn=들키면 아침에 안다 cost={"food":2} check= | karma swap: NONE | when=day>=2 & phase==night & hunger_you>=8
+starve_you #2 '남의 그릇을 뺏는다' karma+3 taboo=steal_bowl warn=그 사람이 굶는다 cost={} check=str50 | karma swap: karma>=8 | when=day>=2 & phase==night & hunger_you>=8
+trip_b1_gate #2 '지나친다' karma+2 taboo=abandon_water warn=통로는 늦고 비싸진다 cost={} check= | karma swap: NONE | when=day>=2 & region==B & floor==1 & !flag:met_dohyeon & !flag:skipped_dohyeon
+d10_walk_weak #1 '옆 사람 물병을 비운다' karma+3 taboo=take_water warn=그 사람이 뒤처진다 cost={} check= | karma swap: NONE | when=day==10 & phase==day & !flag:passage_open & (injury_you>=2 | hunger_you>=8)
+trip_a2_bodybag #1 '가져간다' karma+1 taboo=eat_human warn=먹은 사람에게 값이 남는다 cost={} check= | karma swap: NONE | when=day>=3 & region==A & floor==2 & trace:bodybag_a2==normal
+trade_shutter #2 '동하를 하루 보낸다' karma+3 taboo= warn=돌아올지는 저쪽이 정한다 cost={} check= | karma swap: NONE | when=day>=2 & phase==day & flag:met_eunji & inspect:shutter_gap & alive:eunji & alive:dongha
+patrol_pact #1 '동하를 보낸다' karma+4 taboo= warn=돌아오지 않는다 cost={} check= | karma swap: NONE | when=day>=6 & phase==day & flag:patrol_knows & !flag:pact_done & alive:dongha
+fever_night #6 '남의 담요를 끌어온다' karma+3 taboo=take_blanket warn=그 사람이 밤새 떤다 cost={} check= | karma swap: karma>=8 | when=(phase==night | phase==aftermath) & injury_you>=3 & !flag:treated_you
+dawn_strike #5 '옆 담요를 가리킨다' karma+3 taboo=give_other warn=그 사람이 대신 당한다 cost={} check= | karma swap: karma>=8 | when=phase==trace & flag:dawn_strike
+dawn_mob #3 '다른 사람을 가리킨다' karma+3 taboo=give_other warn=그 사람이 대신 맞는다 cost={} check= | karma swap: karma>=8 | when=phase==trace & flag:dawn_mob
+called_up #3 '다른 이름을 댄다' karma+3 taboo=name_other warn=그 사람이 불린다 cost={} check= | karma swap: karma>=8 | when=phase==night & flag:named_you
+합계 25 · karma swap 있음 6
+
+## 비용과 결과가 같은 자원을 따로 깎는 선택지 (화면 비용 < 실제)
+pro_rubble_alone #0 '혼자 넘어 본다' cost={} 결과 water-1 warn=가방이 찢길 수 있다 
+d1_night_storage #1 '불가에 있는다' cost={} 결과 food-2 warn=봉지가 빈다 
+d6_shutter #0 '열쇠를 내준다' cost={} 결과 food-6 warn=창고가 빈다 
+d6_shutter #1 '동하와 덤빈다' cost={} 결과 food-6 warn=넷이다. 지면 끝이다 
+d6_shutter #2 '아무것도 하지 않는다' cost={} 결과 food-6 warn=기철이 밟힌다. 창고가 빈다 
+d6_shutter_b #0 '열쇠를 내준다' cost={} 결과 food-6 warn=창고가 빈다 
+d6_shutter_b #1 '맞선다' cost={} 결과 food-6 warn=넷이다. 지면 끝이다 
+d6_shutter_b #2 '아무것도 하지 않는다' cost={} 결과 food-6 warn=창고가 빈다. 또 온다 
+d8_patrol_return #0 '열쇠를 내준다' cost={} 결과 food-8 warn= 
+dawn_mob #0 '가진 것을 다 내놓는다' cost={} 결과 food-16 warn=식량과 물이 다 나간다 
+dawn_mob #0 '가진 것을 다 내놓는다' cost={} 결과 water-16 warn=식량과 물이 다 나간다 
+dawn_mob #1 '맞고 버틴다' cost={} 결과 food-2 warn=크게 다친다 
+dawn_mob #1 '맞고 버틴다' cost={} 결과 food-2 warn=다리를 잃는다. 담요들은 또 온다 (swap)
+dawn_mob #1 '맞고 버틴다' cost={} 결과 food-2 warn=크게 다친다. 담요들은 또 온다 (swap)
+dawn_mob #1 '맞고 버틴다' cost={} 결과 food-2 warn=다리를 잃는다 (swap)

@@ -1,0 +1,28 @@
+## 뒤 (engine_fix)
+생존%: balanced 44.4 · selfish 53.1 · devoted 21.3 · silent 44.9 · caller 38.9 · lazy 41.8 · diligent 41.3 · risky 28.9 · steward 47.5 · counter 36.3 · child 72.9 · selfish_nb 97.5 · selfish_rt 12.3 · selfish_rt0 33.5 · h_random 0.4 · h_wary 44.6 · h_first 100 · h_cautious 100 · h_cautious2 64.9 · h_mixed 78
+봇 버릇(deadlyPick): selfish 375 · devoted 187 · caller 107 · risky 498 · counter 160 · child 194 · selfish_rt 702 · selfish_rt0 532 · h_random 368 | 조심형 합 0
+이기적 사인 1위: selfish called_up 81.3% (사망 375) / selfish_nb fever_night 100% (사망 20) / selfish_rt dawn_mob 41.5% (사망 702) / selfish_rt0 dawn_mob 64.5% (사망 532)
+A1 생존 − 균형: selfish 8.7 · selfish_nb 53.1 · selfish_rt -32.1 · selfish_rt0 -10.9
+A2 날마다 그날 사건 사망: 조심형 D2 216 · D3 0 · D4 146 · D5 513 · D6 0 | 균형 D2 46 · D3 0 · D4 33 · D5 104 · D6 0 | 전 정책 D2 451 · D3 95 · D4 534 · D5 1197 · D6 508
+A3 사람 흉내 정체(프롤로그 포함): passenger 50 · platform_one 28 · counted 8.5 · conductor 5.4 · counting_child 4.9 · driver 2.2 · inspector 1.2
+A3 사람 흉내 정체(프롤로그 사망 뺌): passenger 36.2 · platform_one 28.2 · counted 15.3 · counting_child 8.2 · conductor 6 · driver 4 · inspector 2.1 | D0 사망 h_random 397 · h_wary 397 · h_cautious 0 · h_cautious2 0 · h_mixed 152
+A4 (8블록): balanced 생존 45.4 · D9 3.12 · D7 2.76 · 못 본 일 1.63 · 발견 81.8% · 모름≥1 84.8% / lazy 생존 41.6 · D9 3.06 · D7 2.73 · 못 본 일 3.56 · 발견 60.8% · 모름≥1 96.1% / diligent 생존 43.4 · D9 3.23 · D7 2.95 · 못 본 일 0.47 · 발견 93.7% · 모름≥1 45.2%
+A4 블록별 생존 보통−게으름: 5.5 / 0 / -1 / 6 / 0 / 10.5 / 5 / 4 | D9: 0.12 / 0.05 / 0.1 / 0.02 / 0.18 / -0.21 / -0.04 / 0.26 | D7: 0.11 / 0.07 / -0.19 / 0.01 / -0.06 / 0.24 / 0.17 / -0.1
+
+## 뒤 판정
+△ 당신 사망(올라감 포함)
+✓ 강제 사망 (전 정책 합산)
+✓   봇 버릇 점검: 조심형이 평범한 대안(안 죽고·금기 아니고·죽음 글 없음)을 두고 죽음 글 선택지로 죽음
+✗ 정체 — 사람 흉내 평균, 각 후보 (A3, 프롤로그 사망 판 뺌)
+✓ 정체 — 사람 흉내 평균, 가장 큰 후보 (A3, 프롤로그 사망 판 뺌)
+✓ A2 D5까지 당신 사망 (균형)
+△ A2 균형 사망 중 한 사건 비중 (사인 사건)
+△ A2 균형 사망 중 한 사건 비중 (원인 사건 = 부상 출처)
+✗ A2 D2~D6 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)
+△ A1 이른 안전: D1~D4 생존 − 균형 (버릇 없는 이기적 각각)
+✗ A1 이기심의 값: 열흘 생존 − 균형 (버릇 없는 이기적 각각 — selfish_nb·selfish_rt0)
+✗ A1 이기적 사인 쏠림 (버릇 없는 이기적, 사망 ≥ 10%인 정책만)
+△ A4 게으름의 값 — 생존 (보통−게으름 주 지표 / 부지런−게으름)
+△ A4 게으름의 값 — D9 아침 주민 수 차
+△ A4 게으름의 값 — D7 아침 식량+물+약 차
+✓ 경고 없는 사망 (전 정책 합산, 강제 사망 포함)

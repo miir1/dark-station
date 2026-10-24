@@ -1,0 +1,60 @@
+{
+ "before": {
+  "day": 5,
+  "phase": "trace",
+  "fire": {
+   "st": "wet",
+   "day": 4,
+   "by": "seoha",
+   "seen": false,
+   "late": 0
+  },
+  "night": [
+   {
+    "id": "steal_water",
+    "traces": [
+     "bottle_gicheol",
+     "fire"
+    ],
+    "discovered": false
+   },
+   {
+    "id": "starve_resident",
+    "traces": [
+     "blanket_soonrye"
+    ],
+    "discovered": true
+   }
+  ]
+ },
+ "fire_box": "화로화로 가장자리가 젖어 있다. 누가 물을 흘렸다. 재에 손자국이 있다.불 앞에 앉으면 배식이다.1그릇을 꺼낸다2아직",
+ "after_fire_view": {
+  "day": 5,
+  "phase": "trace",
+  "fire": {
+   "st": "wet",
+   "day": 4,
+   "by": "seoha",
+   "seen": false,
+   "late": 0
+  },
+  "night": [
+   {
+    "id": "steal_water",
+    "traces": [
+     "bottle_gicheol",
+     "fire"
+    ],
+    "discovered": false
+   },
+   {
+    "id": "starve_resident",
+    "traces": [
+     "blanket_soonrye"
+    ],
+    "discovered": true
+   }
+  ]
+ },
+ "errors": []
+}

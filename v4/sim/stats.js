@@ -99,6 +99,8 @@ function measure(db, s, trace) {
     d3: trace.d3 != null ? trace.d3 : null,
     // 10-24 A1·A2·A4 (명세 §6-2): 죽은 날 · D1~D4 생존 · D5까지 사망 · 사인 사건 · 원인 사건(부상 출처) · 그날 사건으로 죽음(깔때기 아님)
     deathDay, causeKey, root, aliveD4: !dead || deathDay > 4, deadByD5: dead && deathDay <= 5,
+    // (10-24 검증 A3) 프롤로그(D0) 사망 — 축이 거의 0 이라 대부분 승객으로 센다. 정체 묶음 평균은 이 판을 빼고 낸다
+    prologue: dead && deathDay === 0,
     dayEvent: dead && !funnelOf(db).has(causeKey),
     daysLived: dead ? Math.max(0, deathDay) : Math.min(s.day, 10),
     karma: s.world.karma || 0, neglect: (s.stats && s.stats.neglect) || 0, neglectRows,
@@ -124,8 +126,10 @@ function aggregate(db, runs) {
   const byForced = {};   // 강제 사망: "죽은 사건 ← 앞선 자유 경고 선택"
   for (const r of forced) { const k = `${r.cause ? r.cause.event : r.why} ← ${r.freeBefore || '(앞선 자유 선택 없음)'}`; byForced[k] = (byForced[k] || 0) + 1; }
   const unwarned = deaths.length - warned;   // 실질 경고 없는 죽음 = 강제 사망 + 경고 글 없는 선택 + 밤 사건 + 새벽 위독 + 사인 없음
-  const ids = {};
+  const ids = {}, idsNP = {};
   for (const r of runs) if (r.identity) ids[r.identity] = (ids[r.identity] || 0) + 1;
+  const runsNP = runs.filter((r) => !r.prologue);   // 프롤로그(D0)에서 죽은 판을 뺀 판 (10-24 검증 A3)
+  for (const r of runsNP) if (r.identity) idsNP[r.identity] = (idsNP[r.identity] || 0) + 1;
   const totalNights = runs.reduce((a, r) => a + r.nights, 0);
   const vals = (k) => runs.map((r) => r[k]).filter((v) => v != null && Number.isFinite(v));
   const crisis = {};
@@ -141,6 +145,7 @@ function aggregate(db, runs) {
     explicit: avg(runs.map((r) => r.explicit)), decisions: avg(runs.map((r) => r.decisionsPerDay)),
     blank: pct(runs.reduce((a, r) => a + r.blank, 0), runs.reduce((a, r) => a + r.deadRows, 0)),
     identity: Object.fromEntries(Object.entries(ids).map(([k, v]) => [k, pct(v, n)])),
+    identityNP: Object.fromEntries(Object.entries(idsNP).map(([k, v]) => [k, pct(v, runsNP.length)])), prologueDeaths: n - runsNP.length,   // 프롤로그 사망을 뺀 정체 분포 · 프롤로그 사망 판 수
     days: avg(runs.map((r) => r.days)), trips: avg(runs.map((r) => r.trips)), train: pct(runs.filter((r) => r.train).length, n), survived: pct(runs.filter((r) => r.survived).length, n), clock: avg(runs.map((r) => r.clock)),
     starveShare: pct(deaths.filter((r) => r.cause && r.cause.event === 'starve_you').length, deaths.length),
     forced: forced.length, forcedRate: pct(forced.length, deaths.length), forcedTraced: forced.filter((r) => r.freeBefore).length, byForced,
@@ -162,6 +167,7 @@ function aggregate(db, runs) {
 // rows = [항목, 합격선, 실측, 통과, 경계]. 경계 = %로 재는 줄의 실측이 합격선에서 margin(기본 5%p) 안 — 표본이 바뀌면 뒤집힐 수 있어 ✓로 확정하지 않는다
 // opts.groups = { personality, human, selfish } (기본 bots.GROUPS) — 없는 정책은 건너뛰고, 묶음이 비면 그 줄은 '-'(미달)
 const MARGIN = 5;
+const SIGN_MIN_RATE = 10;   // A1 사인 쏠림을 판정하는 최소 사망률 %(블록마다) — 200판 블록이면 20판
 const nearAny = (pairs, margin) => pairs.some(([v, line]) => Number.isFinite(v) && Number.isFinite(line) && Math.abs(v - line) <= (margin == null ? MARGIN : margin));
 const sgn = (v) => (v > 0 ? '+' : '') + r1(v);
 function gate(aggs, candidates, careful, opts) {
@@ -184,16 +190,20 @@ function gate(aggs, candidates, careful, opts) {
   const careN = care.reduce((t, k) => t + aggs[k].n, 0), careD = care.reduce((t, k) => t + aggs[k].deaths, 0), careF = care.reduce((t, k) => t + aggs[k].forced, 0);
   const careRate = pct(careD, careN), careForced = pct(careF, careD);
   const careDeadly = care.reduce((t, k) => t + (aggs[k].deadlyPick || 0), 0);
+  const quirk = (G.selfishQuirk || []).filter((k) => aggs[k]);
   const idOk = Object.values(idAll).filter((v) => v >= 7).length;
   // 정체 묶음 평균 (A3 분석 §5 추천: 성향 봇 평균과 사람 흉내 평균을 따로)
-  const groupId = (names) => {
+  //   (10-24 검증 A3) 프롤로그(D0) 사망 판을 뺀 분포(identityNP)로 낸다 — h_random·h_wary 는 판의 절반이 D0 계단에서 끝나고, 그 판은 축이 거의 0 이라 승객으로 센다.
+  //   옛 방식(프롤로그 사망 포함)은 사람 흉내만 참고 줄로 싣는다. identityNP 가 없는 집계(옛 시험값)는 identity 를 쓴다
+  const groupId = (names, key) => {
     const ps = names.filter((k) => aggs[k]);
     const out = {};
-    for (const k of ps) for (const [c, v] of Object.entries(aggs[k].identity || {})) out[c] = (out[c] || 0) + v;
+    for (const k of ps) for (const [c, v] of Object.entries(aggs[k][key || 'identityNP'] || aggs[k].identity || {})) out[c] = (out[c] || 0) + v;
     for (const c of candIds || Object.keys(out)) out[c] = ps.length ? r1((out[c] || 0) / ps.length) : 0;
     return { ps, out };
   };
-  const idP = groupId(G.personality), idH = groupId(G.human);
+  const idP = groupId(G.personality), idH = groupId(G.human), idHall = groupId(G.human, 'identity');
+  const proH = G.human.filter((k) => aggs[k]).map((k) => [k, pct(aggs[k].prologueDeaths || 0, aggs[k].n)]);
   const ID_MIN = 3, ID_MAX = 40;
   const idRow = (label, g, line) => {
     const vs = Object.values(g.out);
@@ -201,18 +211,30 @@ function gate(aggs, candidates, careful, opts) {
     return [label, `각 ≥ ${line}%`, g.ps.length ? Object.entries(g.out).map(([k, v]) => `${k} ${v}`).join(' · ') + ` (${g.ps.length}종)` : '-', g.ps.length > 0 && full && vs.length >= nCand && vs.every((v) => v >= line), nearAny(vs.map((v) => [v, line]), line / 2)];
   };
   const maxOf = (g) => { const e = Object.entries(g.out).sort((x, y) => y[1] - x[1])[0]; return e ? { k: e[0], v: e[1] } : { k: '-', v: 0 }; };
-  const mP = maxOf(idP), mH = maxOf(idH);
+  const mP = maxOf(idP), mH = maxOf(idH), mHall = maxOf(idHall);
   // 정책 사이 차이 (%p 또는 평균 차)
   const has = (a, k) => !!a && Number.isFinite(a[k]) && !(a[k + 'N'] === 0);   // home9N·res7N = 그 아침까지 간 판 수 — 0 이면 값이 없다
   const diff = (x, y, k) => (has(aggs[x], k) && has(aggs[y], k) ? Math.round(100 * (aggs[x][k] - aggs[y][k])) / 100 : null);
   const fmtDiff = (pairs) => pairs.map(([lab, v]) => `${lab} ${v == null ? '-' : sgn(v)}`).join(' / ');
-  // A1: 이기적 묶음
+  // A1: 이기적 묶음 (10-24 검증 A1) — 합격선은 버릇 없는 이기적(selfishPlain)만 잰다. 몸 꺼림(selfishQuirk)의 죽음은 '버틴다'를 두고 고른 주사위라
+  //   이기심의 값이 아니라 봇 버릇이다(selfish 사망 231판 전부 · 카르마로 판정이 된 금기로 죽은 판 0) → 참고 줄(측정)
   const selfs = G.selfish.filter((k) => aggs[k]);
-  const sDiff = selfs.map((k) => [k, diff(k, 'balanced', 'survived')]);
-  const sTop = selfs.map((k) => [k, aggs[k].deaths ? aggs[k].topCause : { k: '-', share: 0 }]);
-  // A2: D2~D6 날마다 그날 사건으로 죽은 판(정책 합산)
-  const dayEv = {}; for (const a of Object.values(aggs)) for (const [d, v] of Object.entries(a.dayEvent || {})) dayEv[d] = (dayEv[d] || 0) + v;
+  const plainNames = G.selfishPlain || G.selfish;
+  const plain = plainNames.filter((k) => aggs[k]);
+  const sDiff = plain.map((k) => [k, diff(k, 'balanced', 'survived')]);
+  const qDiff = quirk.map((k) => [k, diff(k, 'balanced', 'survived')]);
+  const eDiff = plain.map((k) => [k, diff(k, 'balanced', 'aliveD4')]);
+  // 사인 쏠림은 그 블록에서 SIGN_MIN_RATE % 이상 죽은 정책만 판정한다(몇 판 안 죽으면 비중이 뜻이 없다). 판정할 정책이 없으면 △(확정 안 함)
+  const topOf = (k) => (aggs[k].deaths ? aggs[k].topCause : { k: '-', share: 0 });
+  const sTop = plain.map((k) => [k, topOf(k), (aggs[k].deathRate || 0) >= SIGN_MIN_RATE]);
+  const sJudged = sTop.filter(([, , j]) => j);
+  // A2: D2~D6 날마다 그날 사건으로 죽은 판 (10-24 검증 A2) — 조심형(신중한 플레이어) 합산으로 판정한다.
+  //   전 정책 합산은 h_random(정말 아무거나)·이기적 변형까지 더해, D3 처럼 신중한 플레이어에게 죽음 길이 없는 날도 > 0 으로 가렸다(D3 105 중 h_random 91)
+  const dayEvOf = (names) => { const o = {}; for (const k of names) for (const [d, v] of Object.entries((aggs[k] && aggs[k].dayEvent) || {})) o[d] = (o[d] || 0) + v; return o; };
+  const dayEv = dayEvOf(care);
+  const dayEvP = dayEvOf(G.personality.filter((k) => aggs[k])), dayEvH = dayEvOf(G.human.filter((k) => aggs[k] && k !== 'h_random')), dayEvAll = dayEvOf(Object.keys(aggs));
   const D26 = [2, 3, 4, 5, 6];
+  const fmtDays = (o) => D26.map((d) => `D${d} ${o[d] || 0}`).join(' · ');
   // A4: 게으름의 값 (보통 = balanced 가 주 지표, 부지런 = 상한 봇)
   const lzS = [['보통−게으름', diff('balanced', 'lazy', 'survived')], ['부지런−게으름', diff('diligent', 'lazy', 'survived')]];
   const lzH = [['보통−게으름', diff('balanced', 'lazy', 'home9')], ['부지런−게으름', diff('diligent', 'lazy', 'home9')]];
@@ -226,6 +248,7 @@ function gate(aggs, candidates, careful, opts) {
     ['  강제 사망 중 앞선 자유 경고 선택 없음 (전 정책)', '0 판', `${sum('forced') - sum('forcedTraced')} 판`, sum('forced') - sum('forcedTraced') === 0, false],
     ['조심형 봇 사망 (' + (care.join('·') || '없음') + ' 합산)', '측정', care.length ? `${careRate}% (${careD}/${careN}), 그중 강제 ${careForced}%` : '-', true, false],
     ['  봇 버릇 점검: 조심형이 평범한 대안(안 죽고·금기 아니고·죽음 글 없음)을 두고 죽음 글 선택지로 죽음', '0 판', care.length ? `${careDeadly} 판 (전 정책 ${sum('deadlyPick')})` : '-', careDeadly === 0, false],
+    ['  참고: 몸 꺼림 정책(' + (quirk.join('·') || '없음') + ')의 같은 죽음 — 조심형이 아니다(10-24 검증)', '측정', quirk.length ? quirk.map((k) => `${k} ${aggs[k].deadlyPick || 0}`).join(' · ') + ' 판' : '-', true, false],
     ['전멸', '≤ 25%', `${b.allDead}%`, b.allDead <= 25, nearAny([[b.allDead, 25]])],
     ['밤 사건 수 / 판 (주민 사건만 — 시계·방치 판정 줄 뺌)', '≥ 6', `${b.nights} (방치 판정 줄 ${b.neglectRows != null ? b.neglectRows : '-'})`, b.nights >= 6, false],
     ['  그중 malice / hymn', '≥ 2 / ≥ 1', `${b.malice} / ${b.hymn}`, b.malice >= 2 && b.hymn >= 1, false],
@@ -236,8 +259,9 @@ function gate(aggs, candidates, careful, opts) {
     ['찬가 발견율 (게으름)', '측정만 (10-24 A4: 하한 폐기)', `${lazy.hymnDiscovery}%`, true, false],
     idRow('정체 — 성향 봇 평균, 각 후보 (A3)', idP, ID_MIN),
     ['정체 — 성향 봇 평균, 가장 큰 후보 (A3)', `≤ ${ID_MAX}%`, idP.ps.length ? `${mP.k} ${mP.v}%` : '-', idP.ps.length > 0 && mP.v <= ID_MAX, nearAny([[mP.v, ID_MAX]])],
-    idRow('정체 — 사람 흉내 평균, 각 후보 (A3)', idH, ID_MIN),
-    ['정체 — 사람 흉내 평균, 가장 큰 후보 (A3)', '측정 (디렉터 확인: 승객이 가장 흔한 결말)', idH.ps.length ? `${mH.k} ${mH.v}%` : '-', true, false],
+    idRow('정체 — 사람 흉내 평균, 각 후보 (A3, 프롤로그 사망 판 뺌)', idH, ID_MIN),
+    ['정체 — 사람 흉내 평균, 가장 큰 후보 (A3, 프롤로그 사망 판 뺌)', '측정 (디렉터 확인: 승객이 가장 흔한 결말)', idH.ps.length ? `${mH.k} ${mH.v}%` : '-', true, false],
+    ['  참고: 사람 흉내 평균 (옛 방식 — 프롤로그 사망 포함) · 프롤로그(D0) 사망 판 비율', '측정', idHall.ps.length ? Object.entries(idHall.out).map(([k, v]) => `${k} ${v}`).join(' · ') + ` · 가장 큰 ${mHall.k} ${mHall.v}% | D0 사망 ` + proH.map(([k, v]) => `${k} ${v}%`).join(' · ') : '-', true, false],
     ['정체 분포 (옛 방식: 정책 전체 평균, 각 후보)', `측정 (옛 합격선 ≥ ${thr}%)`, Object.entries(idAll).map(([k, v]) => `${k} ${v}%`).join(' · ') || '없음', true, false],
     ['  옛 방식: 7후보 중 ≥7% 인 후보 수', '측정 (옛 합격선 ≥ 5)', `${idOk} 후보`, true, false],
     ['explicit 사건 / 판', '≥ 7', `${b.explicit}`, b.explicit >= 7, false],
@@ -250,11 +274,14 @@ function gate(aggs, candidates, careful, opts) {
     ['A2 D5까지 당신 사망 (균형)', '≥ 10%', b.deadByD5 != null ? `${b.deadByD5}%` : '-', Number.isFinite(b.deadByD5) && b.deadByD5 >= 10, nearAny([[b.deadByD5, 10]])],
     ['A2 균형 사망 중 한 사건 비중 (사인 사건)', '≤ 40%', b.topCause ? `${b.topCause.k} ${b.topCause.share}%` : '-', !!b.topCause && b.topCause.share <= 40, !!b.topCause && nearAny([[b.topCause.share, 40]])],
     ['A2 균형 사망 중 한 사건 비중 (원인 사건 = 부상 출처)', '≤ 40%', b.topRoot ? `${b.topRoot.k} ${b.topRoot.share}%` : '-', !!b.topRoot && b.topRoot.share <= 40, !!b.topRoot && nearAny([[b.topRoot.share, 40]])],
-    ['A2 D2~D6 날마다 그날 사건으로 죽은 판 (정책 합산, 깔때기 사건 뺌)', '날마다 > 0', D26.map((d) => `D${d} ${dayEv[d] || 0}`).join(' · '), D26.every((d) => (dayEv[d] || 0) > 0), false],
+    ['A2 D2~D6 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)', '날마다 > 0', care.length ? fmtDays(dayEv) : '-', care.length > 0 && D26.every((d) => (dayEv[d] || 0) > 0), false],
+    ['  참고: 같은 값 — 성향 봇 8종 / 사람 흉내(h_random 뺌) / 전 정책 합산(옛 줄)', '측정', `성향 ${fmtDays(dayEvP)} | 사람 ${fmtDays(dayEvH)} | 전 ${fmtDays(dayEvAll)}`, true, false],
     // ── A1 이기심 = 늦게 오는 카르마 ──
-    ['A1 이른 안전: 이기적 D1~D4 생존 − 균형', '≥ +5%p', diff('selfish', 'balanced', 'aliveD4') == null ? '-' : `${sgn(diff('selfish', 'balanced', 'aliveD4'))}%p (${aggs.selfish.aliveD4} vs ${b.aliveD4})`, diff('selfish', 'balanced', 'aliveD4') != null && diff('selfish', 'balanced', 'aliveD4') >= 5, nearAny([[diff('selfish', 'balanced', 'aliveD4'), 5]])],
-    ['A1 이기심의 값: 열흘 생존 − 균형 (이기적 4종 각각 — 버릇 없는·끝까지 금기 포함)', '< 0 (모든 정책)', selfs.length ? fmtDiff(sDiff) + '%p' : '-', selfs.length === G.selfish.length && okAll(sDiff, (v) => v < 0), nearAny(sDiff.map(([, v]) => [v, 0]))],
-    ['A1 이기적 4종 사인 쏠림 (한 사건 비중)', '≤ 60%', sTop.length ? sTop.map(([k, t]) => `${k} ${t.k} ${t.share}%`).join(' / ') : '-', sTop.length > 0 && sTop.every(([, t]) => t.share <= 60), nearAny(sTop.map(([, t]) => [t.share, 60]))],
+    ['A1 이른 안전: D1~D4 생존 − 균형 (버릇 없는 이기적 각각)', '≥ +5%p', plain.length ? fmtDiff(eDiff) + `%p (균형 ${b.aliveD4})` : '-', plain.length > 0 && okAll(eDiff, (v) => v >= 5), nearAny(eDiff.map(([, v]) => [v, 5]))],
+    ['A1 이기심의 값: 열흘 생존 − 균형 (버릇 없는 이기적 각각 — ' + plainNames.join('·') + ')', '< 0 (모든 정책)', plain.length ? fmtDiff(sDiff) + '%p' : '-', plain.length === plainNames.length && okAll(sDiff, (v) => v < 0), nearAny(sDiff.map(([, v]) => [v, 0]))],
+    ['  참고: 몸 꺼림 버릇이 있는 이기적(' + (quirk.join('·') || '없음') + ') 열흘 생존 − 균형 — 이기심의 값이 아니다(10-24 검증 A1)', '측정', quirk.length ? fmtDiff(qDiff) + '%p' : '-', true, false],
+    [`A1 이기적 사인 쏠림 (버릇 없는 이기적, 사망 ≥ ${SIGN_MIN_RATE}%인 정책만)`, '≤ 60%', sTop.length ? sTop.map(([k, t, j]) => `${k} ${t.k} ${t.share}%` + (j ? '' : ` (사망 ${aggs[k].deaths || 0}판 — 판정 안 함)`)).join(' / ') : '-', sJudged.every(([, t]) => t.share <= 60), !sJudged.length || nearAny(sJudged.map(([, t]) => [t.share, 60]))],
+    ['  참고: 몸 꺼림 이기적 사인 쏠림', '측정', quirk.length ? quirk.map((k) => `${k} ${topOf(k).k} ${topOf(k).share}%`).join(' / ') : '-', true, false],
     ['  카르마 (판 끝 평균: 균형 / 이기적 4종)', '측정', `${b.karma != null ? b.karma : '-'} / ${selfs.map((k) => aggs[k].karma).join(' · ') || '-'}`, true, false],
     // ── A4 게으름 = 처벌 ──
     ['A4 게으름의 값 — 생존 (보통−게으름 주 지표 / 부지런−게으름)', '≥ +5%p', fmtDiff(lzS) + '%p', okAll(lzS, (v) => v >= 5), nearAny(lzS.map(([, v]) => [v, 5]))],
@@ -277,4 +304,4 @@ function combine(gates) {
   });
 }
 
-module.exports = { measure, aggregate, gate, combine, pct, avg, MARGIN, D3_TOGETHER, rootCause, funnelOf, deadlyPicked };
+module.exports = { measure, aggregate, gate, combine, pct, avg, MARGIN, SIGN_MIN_RATE, D3_TOGETHER, rootCause, funnelOf, deadlyPicked };

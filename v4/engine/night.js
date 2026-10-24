@@ -72,8 +72,10 @@
   // 발견했으면 caught, 못 봤으면 missed 를 그 사건의 행위자·대상 그대로 적용한다(둘 중 하나가 역에 없으면 건너뜀). 세계 시계·판정 줄은 판정하지 않는다.
   // 결과는 nightLog 에 { id:'<id>~missed'|'<id>~caught', role:'neglect', discovered:true } 한 줄 · missed 를 적용하면 s.stats.neglect++.
   // missed 가 바꾼 흔적은 late:1(조사 글 '<줄id>_late', E3). 더 오래된 줄은 판정 없이 judged 로만 둔다(옛 저장).
+  // 돌려주는 값: 이번에 late 로 바꾼 물건 id 목록 — rollNight 가 같은 밤 뒤 사건이 그 물건을 다시 바꿔도 late 를 지킨다(10-24 검증 A4-4).
   function applyNeglect(s, db) {
     const rows = s.nightLog.slice();
+    const lateIds = [];
     for (const e of rows) {
       if (e.judged || e.role === 'clock' || e.role === 'neglect') continue;
       if (e.day >= s.day) continue;
@@ -87,19 +89,22 @@
       const roles = { actor: e.actor, target: e.target || null };
       const late = !e.discovered;
       const traceIds = [];
-      for (const [o, st] of Object.entries(spec.trace || {})) { const id = FX.fillRole(o, roles); if (FX.setTrace(s, db, id, st, s.day, roles.actor, late)) traceIds.push(id); }
+      for (const [o, st] of Object.entries(spec.trace || {})) { const id = FX.fillRole(o, roles); if (FX.setTrace(s, db, id, st, s.day, roles.actor, late)) { traceIds.push(id); if (late && !lateIds.includes(id)) lateIds.push(id); } }
       const lines = [];
       if (spec.effects) FX.apply(s, db, spec.effects, roles, lines);
       FX.noteHurt(s, lines, 'neglect:' + e.id);
       s.nightLog.push({ day: s.day, id: e.id + (e.discovered ? '~caught' : '~missed'), kind: row.kind, role: 'neglect', actor: roles.actor, target: roles.target, traces: traceIds, rumor: false, lines, discovered: true, judged: true });
       if (!e.discovered) s.stats.neglect = (s.stats.neglect || 0) + 1;
     }
+    return lateIds;
   }
 
   // 밤 하나를 굴린다. 돌려주는 값: 일어난 사건 목록 [{id, actor, target}]
   // 순서: ① 방치 판정(applyNeglect) ② 주민 사건(상한 max_per_night, 행위자·대상 한 번씩) ③ 곁가지 행(side:1 — 상한 밖, 행마다 weight/10 확률로 한 번) ④ 세계 시계
+  //   ⑤ (10-24 검증 A4-4) ① 이 late 로 바꾼 물건을 ②~④ 가 같은 밤에 다시 바꿨으면(setTrace 는 late 를 0 으로 쓴다) late 를 되살린다.
+  //      '커져서 돌아온' 그 밤(grudge_boils·steal_meds_again·안개 등이 같은 물건을 건드린 밤)에 먼지·'_late' 글·토스트가 사라지지 않게. 효과는 그대로다.
   function rollNight(s, db) {
-    applyNeglect(s, db);
+    const lateIds = applyNeglect(s, db);
     const base = worldCtx(s);
     const cands = [];
     const clock = [], side = [];
@@ -142,6 +147,7 @@
       }
     }
     for (const n of clock) { const c = { n, actor: null, target: null }; enact(s, db, c); happened.push(c); }
+    for (const id of lateIds) { const t = s.traces[id]; if (t && t.day === s.day && !t.late) t.late = 1; }   // ⑤ 같은 밤에 덮인 late 를 되살린다
     return happened.map((c) => ({ id: c.n.id, actor: c.actor ? c.actor.id : null, target: c.target ? c.target.id : null }));
   }
 

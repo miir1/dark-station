@@ -1,0 +1,78 @@
+### balanced 800
+   D2 d2_night_shutter → 틈으로 말을 건다 [성공] 510
+   D2 d2_night_shutter → 틈으로 말을 건다 [실패] 290
+   D2 d2_shutter_arm → 통조림을 내밀어 바꾼다 28
+   D2 d2_shutter_arm → 팔을 비틀어 뺀다 [성공] 228
+   D2 d2_shutter_arm → 팔을 비틀어 뺀다 [실패] ✝ 34
+   D2 fever_night → 약을 쓴다 43
+   D3 fever_night → 위에 대고 빈다 49
+   D3 starve_you → 선로 밑을 뒤진다 [성공] 2
+   D3 starve_you → 선로 밑을 뒤진다 [실패] 7
+   D3 trial_d3_count → 숨을 죽인다 766
+   D4 d4_spanner → 그릇 하나로 입을 막는다 173
+   D4 d4_spanner → 스패너를 막는다 [성공] 185
+   D4 d4_spanner → 스패너를 막는다 [실패] ✝ 30
+   D4 fever_night → 썩은 데를 도려낸다 [성공] 20
+   D4 fever_night → 썩은 데를 도려낸다 [실패] ✝ 7
+   D4 fever_night → 약을 쓴다 114
+   D4 fever_night → 위에 대고 빈다 63
+   D4 fever_night → 젖은 천으로 식힌다 12
+   D4 starve_you → 선로 밑을 뒤진다 [성공] 178
+   D4 starve_you → 선로 밑을 뒤진다 [실패] 249
+   D4 trial_d4_gicheol → 믿는다 267
+   D4 trial_d4_gicheol → 상자를 센다 262
+   D4 trial_d4_gicheol → 추궁한다 [성공] 111
+   D4 trial_d4_gicheol → 추궁한다 [실패] 126
+   D5 d5_flood → 모두 매달려 퍼낸다 [성공] 347
+   D5 d5_flood → 모두 매달려 퍼낸다 [실패] ✝ 84
+   D5 d5_flood → 창고를 버리고 뺀다 298
+   D5 fever_night → 불가에서 땀을 뺀다 [성공] 9
+   D5 fever_night → 불가에서 땀을 뺀다 [실패] ✝ 1
+   D5 fever_night → 썩은 데를 도려낸다 [성공] 46
+   D5 fever_night → 썩은 데를 도려낸다 [실패] ✝ 5
+   D5 fever_night → 약을 쓴다 61
+   D5 fever_night → 위에 대고 빈다 90
+   D5 fever_night → 젖은 천으로 식힌다 4
+   D5 starve_you → 선로 밑을 뒤진다 [성공] 223
+   D5 starve_you → 선로 밑을 뒤진다 [실패] 286
+   D6 d6_shutter → 아무것도 하지 않는다 143
+   D6 d6_shutter → 열쇠를 내준다 174
+   D6 d6_shutter_b → 아무것도 하지 않는다 157
+   D6 d6_shutter_b → 열쇠를 내준다 165
+   D6 fever_night → 불가에서 땀을 뺀다 [성공] 26
+   D6 fever_night → 불가에서 땀을 뺀다 [실패] ✝ 16
+   D6 fever_night → 썩은 데를 도려낸다 [성공] 60
+   D6 fever_night → 썩은 데를 도려낸다 [실패] ✝ 9
+   D6 fever_night → 약을 쓴다 18
+   D6 fever_night → 위에 대고 빈다 101
+   D6 fever_night → 젖은 천으로 식힌다 16
+   D6 starve_you → 선로 밑을 뒤진다 [성공] 204
+   D6 starve_you → 선로 밑을 뒤진다 [실패] 286
+   D7 fever_night → 불가에서 땀을 뺀다 [성공] 46
+   D7 fever_night → 불가에서 땀을 뺀다 [실패] ✝ 20
+   D7 fever_night → 썩은 데를 도려낸다 [성공] 68
+   D7 fever_night → 썩은 데를 도려낸다 [실패] ✝ 15
+   D7 fever_night → 약을 쓴다 16
+   D7 fever_night → 위에 대고 빈다 131
+   D7 fever_night → 젖은 천으로 식힌다 18
+   D7 starve_you → 선로 밑을 뒤진다 [성공] 207
+   D7 starve_you → 선로 밑을 뒤진다 [실패] 270
+   D8 fever_night → 불가에서 땀을 뺀다 [성공] 63
+   D8 fever_night → 불가에서 땀을 뺀다 [실패] ✝ 28
+   D8 fever_night → 썩은 데를 도려낸다 [성공] 86
+   D8 fever_night → 썩은 데를 도려낸다 [실패] ✝ 17
+   D8 fever_night → 약을 쓴다 3
+   D8 fever_night → 위에 대고 빈다 74
+   D8 fever_night → 젖은 천으로 식힌다 29
+   D8 starve_you → 선로 밑을 뒤진다 [성공] 200
+   D8 starve_you → 선로 밑을 뒤진다 [실패] 238
+   D9 fever_night → 불가에서 땀을 뺀다 [성공] 106
+   D9 fever_night → 불가에서 땀을 뺀다 [실패] ✝ 46
+   D9 fever_night → 썩은 데를 도려낸다 [성공] 67
+   D9 fever_night → 썩은 데를 도려낸다 [실패] ✝ 10
+   D9 fever_night → 약을 쓴다 8
+   D9 fever_night → 위에 대고 빈다 56
+   D9 fever_night → 젖은 천으로 식힌다 16
+   D9 starve_you → 선로 밑을 뒤진다 [성공] 212
+   D9 starve_you → 선로 밑을 뒤진다 [실패] 225
+  deaths(D≤6): D2 d2_shutter_arm 34 · D4 d4_spanner 30 · D4 fever_night 7 · D5 d5_flood 84 · D5 fever_night 6 · D6 fever_night 25

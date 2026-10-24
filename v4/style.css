@@ -84,6 +84,8 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 #box.opts.wide .olist { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 6px; }
 #box .opt { text-align: left; background: var(--panel2); color: var(--fg); border: 1px solid var(--line); padding: 2px 6px; font: inherit; font-size: 9px; cursor: pointer; display: flex; gap: 4px; align-items: baseline; min-height: 18px; }
 #box .opt.sel { border-color: var(--accent); background: #2a2419; }
+#box .opt.sel.steady { animation: ds-steady .3s steps(2, end) 1; }   /* 위험한 선택지에서 결정 키를 아직 받지 않았다 (ui.js 두드림 보호) — 테두리가 한 번 어두워진다 */
+@keyframes ds-steady { 50% { border-color: var(--line); } }
 #box .opt .num { color: var(--dim); font-size: 7px; min-width: 6px; }
 #box .opt.sel .num { color: var(--accent); }
 #box .opt:disabled { color: var(--dim); border-color: #39342b; cursor: default; }

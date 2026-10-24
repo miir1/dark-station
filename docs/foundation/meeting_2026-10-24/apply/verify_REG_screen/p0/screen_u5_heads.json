@@ -1,0 +1,93 @@
+{
+ "sources": [
+  "dohyeon:v4",
+  "dongha:v4",
+  "eunchae:v4",
+  "eunji:v4",
+  "gicheol:v4",
+  "mari:v4",
+  "player:v4",
+  "seoha:v4",
+  "soonrye:v4"
+ ],
+ "cells_touching_top_edge": 0,
+ "touching": [],
+ "head_top_by_dir_stand": {
+  "player": {
+   "down": 2,
+   "left": 2,
+   "right": 2,
+   "up": 2
+  },
+  "soonrye": {
+   "down": 9,
+   "left": 9,
+   "right": 9,
+   "up": 9
+  },
+  "seoha": {
+   "down": 7,
+   "left": 7,
+   "right": 7,
+   "up": 7
+  },
+  "gicheol": {
+   "down": 3,
+   "left": 3,
+   "right": 3,
+   "up": 3
+  },
+  "eunji": {
+   "down": 4,
+   "left": 4,
+   "right": 4,
+   "up": 4
+  },
+  "dongha": {
+   "down": 2,
+   "left": 2,
+   "right": 2,
+   "up": 2
+  },
+  "mari": {
+   "down": 6,
+   "left": 6,
+   "right": 6,
+   "up": 6
+  },
+  "eunchae": {
+   "down": 4,
+   "left": 4,
+   "right": 4,
+   "up": 4
+  },
+  "dohyeon": {
+   "down": 3,
+   "left": 3,
+   "right": 3,
+   "up": 3
+  }
+ },
+ "head_top_spread_px": {
+  "player": 0,
+  "soonrye": 0,
+  "seoha": 0,
+  "gicheol": 0,
+  "eunji": 0,
+  "dongha": 0,
+  "mari": 0,
+  "eunchae": 0,
+  "dohyeon": 0
+ },
+ "stand_height_down": {
+  "player": 46,
+  "soonrye": 39,
+  "seoha": 41,
+  "gicheol": 45,
+  "eunji": 44,
+  "dongha": 46,
+  "mari": 42,
+  "eunchae": 44,
+  "dohyeon": 45
+ }
+}

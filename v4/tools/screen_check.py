@@ -14,7 +14,12 @@
 #   python v4/tools/screen_check.py props                   (P0-S6) 물건 크기 비교판 / 머리맡 묶음 / 한 칸 전부 조사 / 구급함·가방·벽감 상자 열기(3박자 흔들림·아이콘) / 전동차
 #   python v4/tools/screen_check.py apply [--n=9]           (2026-10-24 검증 남은 화면 몫 12건) 이름 새기·사망 명부·마리 자리·목표 줄·연타 보호·공구함·찾은 물건 아이콘·벽걸이 가림·
 #                                                           화로 상태·사람마다 앉기/잠·꼬리표 비킴 — 결과는 screen_apply_*.png · screen_apply.json
+#   python v4/tools/screen_check.py spec --out=docs/foundation/meeting_2026-10-24/apply
+#                                                           (2026-10-24 명세 A1·A2·A4 화면 몫) 새 사건 10개를 시뮬 저장에서 열고 골라 흐름 끝까지 · 잠긴 이유 ·
+#                                                           등 돌림(아침·저녁·밤)·호칭·밀린 그릇 · 못 본 밤 먼지·_late 글·토스트 · 그림 없을 때 · 표 행이 빠질 때 — screen_spec_*.png · screen_spec.json
 #   공통 --out=<폴더> : 결과와 헤드리스 프로필(.profile, 끝나면 지움)을 그 폴더에 (기본 after_shots)
+#   컴퓨터가 바쁠 때 (2026-10-24 검증 #8·#10): 페이지가 덜 뜨면(스크립트·표를 못 받음) 세 번까지 다시 연다(CDP.open → booted) · 로컬 서버 대기열 128 ·
+#     fixture.js 는 FIXTURE_SEC(240초)에 찾은 만큼으로 멈추고, FIXTURE_TIMEOUT 을 넘으면 저장 없이 간다(그 검사는 'fixture 없음'으로 결과에 남는다)
 #   (아무것도 안 주면 전부)
 # 결과: docs/foundation/meeting_2026-10-24/after_shots/screen_*.png|json|txt
 import os, sys, json, time, base64, io, asyncio, subprocess, tempfile, threading, functools, http.server, socketserver, shutil, urllib.request
@@ -26,6 +31,8 @@ OUTD = os.path.join(ROOT, 'docs', 'foundation', 'meeting_2026-10-24', 'after_sho
 PORT, DBG = 18791, 19533
 T, PH = 32, 48
 FIXTURES = {}
+OPEN_TRIES, BOOT_LIMIT = 3, 90                   # 페이지 열기: 세 번까지 · 한 번에 90초까지 기다린다 (붐빌 때)
+FIXTURE_SEC, FIXTURE_TIMEOUT = 240, 1500         # fixture.js: 찾을 만큼 찾았으면 240초에 멈춘다 · 그래도 1500초가 넘으면 버리고 저장 없이 간다
 VK = {'ArrowUp': 38, 'ArrowDown': 40, 'ArrowLeft': 37, 'ArrowRight': 39, ' ': 32, 'Enter': 13}
 
 
@@ -53,11 +60,35 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
         super().do_GET()
 
 
+class Server(socketserver.ThreadingTCPServer):
+    # (2026-10-24 검증 #10) 기본 대기열 5 — 컴퓨터가 붐비면 index.html 이 스크립트 17개를 한꺼번에 달라고 할 때 연결이 버려져
+    #   'ART is not defined'·'Failed to fetch' 로 게임이 시작조차 못 했다 → 대기열을 넉넉히, 일꾼 실은 데몬으로(끝날 때 매달리지 않게)
+    request_queue_size = 128
+    daemon_threads = True
+    allow_reuse_address = os.name != 'nt'       # Windows 의 SO_REUSEADDR 는 이미 쓰는 포트에도 또 붙어 두 도구가 요청을 나눠 가진다 → 붙지 않게 하고 빈 포트로 옮긴다(serve)
+
+    def handle_error(self, request, client_address):   # 브라우저가 페이지를 바꾸며 끊은 연결(10053·끊긴 파이프)은 조용히 — 그 밖의 오류만 찍는다
+        if isinstance(sys.exc_info()[1], (ConnectionError, TimeoutError)):
+            return
+        super().handle_error(request, client_address)
+
+
 def serve():
-    socketserver.TCPServer.allow_reuse_address = True
-    httpd = socketserver.ThreadingTCPServer(('127.0.0.1', PORT), functools.partial(Quiet, directory=ROOT))
-    threading.Thread(target=httpd.serve_forever, daemon=True).start()
-    return httpd
+    # 다른 담당이 같은 도구를 동시에 돌려 포트가 차 있으면 다음 빈 포트로 (페이지 주소는 전역 PORT 를 읽는다)
+    global PORT
+    err = None
+    for p in range(PORT, PORT + 20):
+        try:
+            httpd = Server(('127.0.0.1', p), functools.partial(Quiet, directory=ROOT))
+        except OSError as e:
+            err = e
+            continue
+        if p != PORT:
+            print(f'   포트 {PORT} 사용 중 - {p} 로')
+        PORT = p
+        threading.Thread(target=httpd.serve_forever, daemon=True).start()
+        return httpd
+    raise err
 
 
 def browser():
@@ -140,16 +171,45 @@ class CDP:
     async def size(self, w, h):
         await self.send('Emulation.setDeviceMetricsOverride', {'width': w, 'height': h, 'deviceScaleFactor': 1, 'mobile': False})
 
-    async def open(self, url, hz=None, w=1280, h=720):
+    async def open(self, url, hz=None, w=1280, h=720, tries=OPEN_TRIES):
         if self.shim:
             await self.send('Page.removeScriptToEvaluateOnNewDocument', {'identifier': self.shim})
             self.shim = None
         if hz:
             self.shim = (await self.send('Page.addScriptToEvaluateOnNewDocument', {'source': RAF_SHIM % hz}))['identifier']
         await self.size(w, h)
-        self.console = []
-        await self.send('Page.navigate', {'url': f'http://127.0.0.1:{PORT}' + url})
-        await asyncio.sleep(0.6)
+        # (2026-10-24 검증 #10) 페이지가 덜 뜨면(스크립트·표를 못 받음 — 컴퓨터가 붐빌 때) 다시 연다. 게임이 표를 다 읽었으면(__ds4.db) 뜬 것
+        for attempt in range(tries):
+            self.console = []
+            await self.send('Page.navigate', {'url': f'http://127.0.0.1:{PORT}' + url})
+            await asyncio.sleep(0.6)
+            st = await self.booted()
+            if st == 'ok':
+                return True
+            print(f'   페이지 다시 열기 {attempt + 1}/{tries - 1}: {st} ({url[:70]})' if attempt < tries - 1 else f'   페이지가 뜨지 않았다: {st} ({url[:70]})')
+        return False
+
+    async def booted(self, limit=BOOT_LIMIT):
+        """게임이 떴나: 'ok'(표를 다 읽음) · 'fail:<까닭>'(시작 실패 글 · 스크립트가 안 읽힘 · 표를 못 받음) · 'timeout'."""
+        t0 = time.time()
+        done_at = None
+        while time.time() - t0 < limit:
+            try:
+                st = await self.ev("""(() => { const g = document.getElementById('goal');
+                  if (g && /시작하지 못했다/.test(g.textContent)) return 'fail:' + g.textContent.slice(0, 80);
+                  if (window.__ds4 && window.__ds4.db) return 'ok';
+                  return document.readyState === 'complete' ? (typeof window.__ds4 === 'undefined' ? 'noscript' : 'loading') : 'loading'; })()""", False)
+            except Exception:
+                st = 'loading'                       # 막 바뀌는 중(실행 문맥이 없어짐)
+            if st == 'ok' or str(st).startswith('fail:'):
+                return st
+            if st == 'noscript':                     # 문서는 다 읽었는데 game.js 가 돌지 않았다 — 잠깐 더 보고(늦은 스크립트) 실패로
+                done_at = done_at or time.time()
+                if time.time() - done_at > 3:
+                    bad = [x for x in self.console if 'is not defined' in x or 'Failed to fetch' in x or 'EXCEPTION' in x]
+                    return 'fail:스크립트가 읽히지 않았다' + (' - ' + bad[0][:80] if bad else '')
+            await asyncio.sleep(0.2)
+        return 'timeout'
 
     async def wait(self, cond, limit=180):
         t0 = time.time()
@@ -1549,18 +1609,247 @@ async def task_apply(c, opts):
         await task_space(c, {'n': opts.get('n', '9')})
 
 
+# ── spec (2026-10-24 명세 A1·A2·A4 화면 몫): 새 사건이 화면 흐름에서 열리고 닫히는가 · 잠긴 이유 · 쌓이는 신호(등 돌림·호칭·밀린 그릇) · 못 본 밤(먼지·_late 글·토스트) ──
+SPEC_PICK = {'crate_lid': 1, 'dawn_strike': 1}       # crate_lid '봉지 하나를 꺼낸다'(금기) · dawn_strike '맞고 버틴다'(늘 열린 몸값)
+SPEC_EVENTS = ['dawn_mob', 'd10_hold', 'd10_grab', 'repay_bowl', 'share_back', 'crate_lid', 'd2_shutter_arm', 'd4_spanner', 'called_up', 'dawn_strike']
+
+SP_BOX_JS = r"""(() => { const D = __ds4, box = document.getElementById('box'), st = D.state, v = D.E.eventView(st, D.db);
+  const q = (sel) => (box && box.querySelector(sel)) || null;
+  return { open: D.UI.openKind(), day: st.day, phase: st.phase, pending: st.pending ? st.pending.id : null, target: st.pending ? st.pending.target || null : null,
+    who: (q('.body .who') || q('.lt .who') || {}).textContent || '', face: ((q('img.face') || {}).src || '').split('/').slice(-2).join('/'),
+    text: (q('.body') || q('.tw') || {}).textContent || '', toast: document.getElementById('toast').hidden ? '' : document.getElementById('toast').textContent,
+    opts: [...(box ? box.querySelectorAll('.opt') : [])].map((b) => ({ text: b.textContent, disabled: b.disabled, lock: (b.querySelector('small.lock') || {}).textContent || '' })),
+    tight: !!(box && box.classList.contains('tight')), overflow: box ? box.scrollHeight > box.clientHeight + 1 : null, cg: !document.getElementById('cg').hidden,
+    choices: v ? v.choices.map((c) => ({ label: c.label, locked: c.locked, reason: c.reason, warn: c.warn, taboo: c.taboo, chance: c.chance })) : [] }; })()"""
+
+# 흐름을 끝까지 보내는 봇: 한 줄은 넘기고, 이어 걸린 사건은 열린 첫 선택(금기·판정이 아닌 것 먼저), 배식은 '배식한다', 끝·타이틀은 그대로 둔다
+SP_FLOW_BOT = r"""(() => { window.__seen = []; __ds4.setBot((k, info) => {
+  if (k === 'line') { window.__seen.push({ text: info.text, name: info.opts && info.opts.name || '', tag: info.opts && info.opts.tag || '' }); return undefined; }
+  if (k === 'event') { const o = info.options; let i = o.findIndex((x) => !x.disabled && !x.warn); if (i < 0) i = o.findIndex((x) => !x.disabled); return i; }
+  if (k === 'confirm2') return 0;
+  if (k === 'ration' || k === 'board' || k === 'tend' || k === 'treat') return info.options.length - 1;
+  if (k === 'trip' || k === 'write' || k === 'deeper' || k === 'fire') return 1;
+  if (k === 'title' || k === 'death_ledger' || k === 'ending') return 'hold';
+  return undefined; }); return 1; })()"""
+
+SP_STATE_JS = r"""(() => { const s = __ds4.state; const r = s.lastResult || {}; return { day: s.day, phase: s.phase, pending: s.pending ? s.pending.id : null, ended: s.ended ? s.ended.why : null,
+  you: s.people.you.status, open: __ds4.UI.openKind(), last: { event: r.event || '', choice: r.choice || '', text: r.text || '' }, seen: (window.__seen || []).map((x) => (x.name ? x.name + ': ' : '') + x.text) }; })()"""
+
+# 신호 꾸미기: 원한(signs.cold 문턱 3 · 호칭 문턱 5) · 못 본 밤 흔적(late, 어제 날짜) · 당신 그릇 pushed. 그다음 hud() 로 view 를 새로 읽는다
+SP_SIGNS_JS = r"""((g, traces) => { const D = __ds4, s = D.state;
+  for (const [id, v] of Object.entries(g)) if (s.people[id]) s.people[id].n.grudge = v;
+  for (const [id, st, late] of traces) if (s.traces[id]) s.traces[id] = { st, day: late ? s.day - 1 : s.day, by: null, seen: false, late: late ? 1 : 0 };
+  s.noticeDay = null; D.hud();
+  const vp = D.E.view(s, D.db).people.filter((p) => p.status === 'home' && p.id !== 'you').map((p) => ({ id: p.id, cold: !!(p.signs && p.signs.cold), address: p.address }));
+  return { view: vp, map: D.peopleOnMap().map((p) => [p.id, p.x, p.y, p.pose, p.face, !!p.cold]), late: D.objectsOnMap().filter((o) => o.late).map((o) => o.id) }; })"""
+
+
+async def sp_shot_events(c, res):
+    for ev in SPEC_EVENTS:
+        if ev not in FIXTURES:
+            res[ev] = {'skip': 'fixture 없음'}
+            print('spec', ev, 'fixture 없음')
+            continue
+        r = {}
+        try:
+            await c.open(f'/v4/index.html?fast=1&auto=evline&state=/__fixture/{ev}.json&sc={int(time.time())}')
+            await c.wait("__ds4.state && __ds4.UI.openKind() === 'line'", 60)
+            await asyncio.sleep(0.35)
+            r['line'] = await c.ev(SP_BOX_JS, False)
+            await stage_shot(c, out(f'screen_spec_ev_{ev}_line.png'))
+            await c.ev("(() => { __ds4.setBot((k) => (k === 'event' ? 'hold' : undefined)); __ds4.UI.key('ok'); return 1; })()", False)
+            await c.wait("__ds4.UI.openKind() === 'event'", 30)
+            await asyncio.sleep(0.5)
+            r['box'] = await c.ev(SP_BOX_JS, False)
+            await stage_shot(c, out(f'screen_spec_ev_{ev}.png'))
+            ch = r['box']['choices']
+            pick = SPEC_PICK.get(ev)                 # 금기 길도 하나는 끝까지 (되돌릴 수 없다 확인창 → 그렇게 한다)
+            if pick is None or pick >= len(ch) or ch[pick]['locked']:
+                pick = next((i for i, x in enumerate(ch) if not x['locked'] and not x['taboo'] and x['chance'] is None), None)
+            if pick is None:
+                pick = next((i for i, x in enumerate(ch) if not x['locked']), 0)
+            r['picked'] = ch[pick]['label'] if ch else None
+            await c.ev(SP_FLOW_BOT, False)
+            await c.ev(f"__ds4.UI.pick({pick}); 1", False)
+            await until(c, "(__ds4.state.ended || !__ds4.state.pending) && !__ds4.UI.isOpen() && !__ds4.scene.auto || ['title', 'death_ledger', 'ending'].includes(__ds4.UI.openKind())", 40)
+            await asyncio.sleep(0.4)
+            r['after'] = await c.ev(SP_STATE_JS, False)
+        except BaseException as e:            # SystemExit(기다리다 지침)도 기록만 하고 다음 사건으로
+            r['error'] = str(e)[:300]
+        r['console_errors'] = c.errors()
+        res[ev] = r
+        b = r.get('box') or {}
+        print('spec', ev, '| who', (r.get('line') or {}).get('who'), (r.get('line') or {}).get('face'), '| opts', len(b.get('opts') or []), 'overflow', b.get('overflow'),
+              '| locks', [o['lock'] for o in (b.get('opts') or []) if o['lock']], '| picked', r.get('picked'), '| after', (r.get('after') or {}).get('phase'), (r.get('after') or {}).get('pending'),
+              (r.get('after') or {}).get('ended'), '| err', r.get('error'), r['console_errors'])
+
+
+async def task_spec(c, opts):
+    res = {}
+    # ── 1 새 사건 10개: 저장(시뮬 봇이 그 사건이 걸린 순간)에서 시작 → 첫 줄(누가 하는 사건은 얼굴·이름표) → 선택 창 → 하나 골라 흐름 끝까지 ──
+    await sp_shot_events(c, res)
+    # ── 2 잠긴 이유: 대상이 없는 사건(targetOptional)의 '댈 이름이 없다' · 손가락을 잃은 뒤 '손가락이 성치 않다'(조사) ──
+    for name, ev in (('called_up_notarget', 'called_up'), ('dawn_mob_notarget_finger', 'dawn_mob')):
+        if ev not in FIXTURES:
+            continue
+        r = {}
+        try:
+            await c.open(f'/v4/index.html?fast=1&auto=evhold&state=/__fixture/{name}.json&sc={int(time.time())}')
+            await c.wait("__ds4.state && __ds4.UI.openKind() === 'event'", 60)
+            await asyncio.sleep(0.5)
+            r = await c.ev(SP_BOX_JS, False)
+            await stage_shot(c, out(f'screen_spec_lock_{name}.png'))
+        except BaseException as e:
+            r = {'error': str(e)[:300]}
+        r['console_errors'] = c.errors()
+        res['lock_' + name] = r
+        print('spec lock', name, [(o['text'][:30], o['lock']) for o in r.get('opts', []) if o['disabled']], r.get('error'))
+    # ── 3 아침(D3 흔적): 등 돌림·밀린 그릇·못 본 밤 먼지 → 조사(_late 글 + 토스트) → 말 걸기(호칭) ──
+    await goto_point(c, 'morning3', "__ds4.state.day === 3 && __ds4.state.phase === 'trace'")
+    await normal_speed(c)
+    await c.ev(PASS_BOT, False)
+    await place(c, 17, 12, 'up')
+    await asyncio.sleep(0.4)
+    res['3_before'] = await c.ev("__ds4.peopleOnMap().map((p) => [p.id, p.x, p.y, p.pose, p.face, !!p.cold])", False)
+    await ap_zoom(c, 'screen_spec_signs_morning_before.png', 10, 8, 25, 13, 3)
+    G = {'gicheol': 6, 'eunji': 3, 'mari': 6, 'soonrye': 0, 'seoha': 0, 'dongha': 0}
+    TR = [['bowl_eunji', 'empty', 1], ['blanket_gicheol', 'rolled', 1], ['bottle_soonrye', 'empty', 1], ['crate_food', 'open', 1], ['bowl_you', 'pushed', 0]]
+    res['3_signs'] = await c.ev(SP_SIGNS_JS + f'({json.dumps(G)}, {json.dumps(TR)})', False)
+    await asyncio.sleep(0.5)
+    await ap_zoom(c, 'screen_spec_signs_morning_after.png', 10, 8, 25, 13, 3)
+    await place(c, 12, 12, 'up')
+    await asyncio.sleep(0.5)
+    await ap_zoom(c, 'screen_spec_late_dust_bowls.png', 9, 8, 16, 12, 5)
+    await app_shot(c, out('screen_spec_signs_morning_app.png'))
+    print('spec 3 signs', json.dumps(res['3_signs'], ensure_ascii=False)[:600])
+    # 조사: 늦은 그릇(은지) — 첫 조사 = 토스트 + _late 글. 그 줄에서 멈춰 찍는다
+    LATE_HOLD = r"""(() => { window.__seen = []; __ds4.setBot((k, info) => {
+      if (k === 'line') { window.__seen.push({ text: info.text, name: info.opts && info.opts.name || '' }); if (!window.__held) { window.__held = 1; return 'hold'; } return undefined; }
+      if (k === 'tend') { const i = info.options.findIndex((o) => o.label === '말을 건다'); return i >= 0 ? i : info.options.length - 1; }
+      if (k === 'write') return 1; return undefined; }); window.__held = 0; return 1; })()"""
+    await c.ev(LATE_HOLD, False)
+    await c.ev("__ds4.use('bowl_eunji'); 1", False)
+    await until(c, "window.__held === 1 && __ds4.UI.openKind() === 'line'", 20)
+    await asyncio.sleep(0.3)
+    res['3_late_inspect'] = await c.ev(SP_BOX_JS, False)
+    await stage_shot(c, out('screen_spec_late_inspect_toast.png'))
+    await c.ev(PASS_BOT + "; __ds4.UI.key('ok'); 1", False)
+    await drive_lines(c, 20)
+    insp = {}
+    for oid in ('bowl_you', 'blanket_gicheol', 'bottle_soonrye'):
+        insp[oid] = await ap_inspect(c, oid)
+    res['3_inspect_texts'] = insp
+    res['3_inspect_log'] = await c.ev('__ds4.inspectLog', False)
+    print('spec 3 late', res['3_late_inspect'].get('text'), '| toast', res['3_late_inspect'].get('toast'), '|', json.dumps(insp, ensure_ascii=False))
+    # 말 걸기: 호칭 (원한 6 기철 '어이' · 원한 6 마리 '' 부르지 않음 · 원한 3 은지 기본 · 순례 기본). 기철은 그날 첫 말에서 멈춰 찍는다
+    await c.ev(r"""(() => { window.__seen = []; __ds4.setBot((k, info) => { if (k === 'line') { window.__seen.push({ text: info.text, name: info.opts && info.opts.name || '' }); return window.__seen.length === 1 ? 'hold' : undefined; }
+      if (k === 'tend') { const i = info.options.findIndex((o) => o.label === '말을 건다'); return i >= 0 ? i : info.options.length - 1; } return undefined; }); return 1; })()""", False)
+    await c.ev("__ds4.flow(() => __ds4.talkTo('gicheol')); 1", False)
+    await until(c, "__ds4.UI.openKind() === 'line'", 10)
+    await asyncio.sleep(0.3)
+    res['3_talk_box'] = await c.ev(SP_BOX_JS, False)
+    await stage_shot(c, out('screen_spec_address_cold.png'))
+    talks = {'gicheol': {'call': await c.ev("__ds4.callOf('gicheol')", False), 'seen': await c.ev('window.__seen', False)}}
+    await c.ev(PASS_BOT + "; __ds4.UI.key('ok'); 1", False)
+    await drive_lines(c, 20)
+    for who in ('mari', 'eunji', 'soonrye', 'seoha', 'dongha'):
+        await c.ev("window.__seen = []; 1", False)
+        await c.ev(f"__ds4.flow(() => __ds4.talkTo('{who}'))", True)
+        await drive_lines(c, 20)
+        talks[who] = {'call': await c.ev(f"__ds4.callOf('{who}')", False), 'seen': await c.ev('window.__seen', False)}
+    res['3_talk'] = talks
+    res['3_talk_log'] = await c.ev('__ds4.talkLog.slice(-8)', False)
+    print('spec 3 talk', json.dumps({k: (v['call'], [x['text'] for x in v['seen']][:1]) for k, v in talks.items()}, ensure_ascii=False))
+    # 엔진 줄 셈: 방치 판정 줄은 '밤에 무슨 소리' 에서 빠진다
+    res['3_noise_rule'] = await c.ev("({ neglect: __ds4.E.night.isResidentRow({ role: 'neglect' }), clock: __ds4.E.night.isResidentRow({ role: 'clock' }), steal: __ds4.E.night.isResidentRow({ role: 'steal' }) })", False)
+    res['3_reason_josa'] = await c.ev("[__ds4.reasonKo('손가락가 성치 않다'), __ds4.reasonKo('다리가 성치 않다'), __ds4.reasonKo('귀가 성치 않다'), __ds4.reasonKo('meds이(가) 모자라다')]", False)
+    print('spec 3 noise', res['3_noise_rule'], '| josa', res['3_reason_josa'])
+    # ── 4 저녁(D3): 화로 둘레에 앉은 사람 — 등 돌림(고개 숙임) ──
+    await goto_point(c, 'eve3', "__ds4.state.day === 3 && __ds4.state.phase === 'evening'")
+    await normal_speed(c)
+    await place(c, 13, 13, 'up')
+    await asyncio.sleep(0.4)
+    await ap_zoom(c, 'screen_spec_signs_evening_before.png', 9, 8, 18, 14, 3)
+    res['4_evening'] = await c.ev(SP_SIGNS_JS + f"({json.dumps({'gicheol': 6, 'eunji': 3, 'soonrye': 4})}, [])", False)
+    await asyncio.sleep(0.5)
+    await ap_zoom(c, 'screen_spec_signs_evening_after.png', 9, 8, 18, 14, 3)
+    print('spec 4 evening', res['4_evening']['map'])
+    # ── 5 밤(D2): 잠자리 — 등지고 누움(뒤통수) ──
+    await goto_point(c, 'beds', "__ds4.state.day === 2 && __ds4.state.phase === 'night'")
+    await normal_speed(c)
+    await ap_zoom(c, 'screen_spec_signs_night_before.png', 14, 8, 23, 12, 4)
+    res['5_night'] = await c.ev(SP_SIGNS_JS + f"({json.dumps({'soonrye': 5, 'gicheol': 4, 'mari': 3, 'eunji': 3, 'dongha': 3, 'seoha': 3})}, [])", False)
+    await asyncio.sleep(0.5)
+    await ap_zoom(c, 'screen_spec_signs_night_after.png', 14, 8, 23, 12, 4)
+    print('spec 5 night', res['5_night']['map'])
+    # ── 6 그림이 없을 때(새 그림 숨김): 등 돌림·잠·먼지가 깨지지 않는가 ──
+    ident = (await c.send('Page.addScriptToEvaluateOnNewDocument', {'source': NOART_JS}))['identifier']
+    try:
+        await goto_point(c, 'beds', "__ds4.state.day === 2 && __ds4.state.phase === 'night'")
+        await normal_speed(c)
+        res['6_noart_night'] = await c.ev(SP_SIGNS_JS + f"({json.dumps({'soonrye': 5, 'gicheol': 4, 'mari': 3})}, [['bowl_you', 'pushed', 0], ['blanket_gicheol', 'rolled', 1]])", False)
+        await asyncio.sleep(0.5)
+        await ap_zoom(c, 'screen_spec_noart_night.png', 9, 8, 23, 12, 3)
+        res['6_noart_errors'] = c.errors()
+    finally:
+        await c.send('Page.removeScriptToEvaluateOnNewDocument', {'identifier': ident})
+    print('spec 6 noart errors', res['6_noart_errors'])
+    # ── 7 표 행이 빠지면 화면에 보인다 (events.json 에 틀린 행 하나를 끼워 넣는다) ──
+    BAD = r"""(() => { const of = window.fetch.bind(window); window.fetch = (u, o) => of(u, o).then((r) => {
+      if (!/data\/events\.json/.test(String(u))) return r;
+      return r.json().then((list) => new Response(JSON.stringify(list.concat([{ id: 'zz_bad_row', kind: 'trial', when: 'day==99', text: 'x', choices: [] }])), { headers: { 'Content-Type': 'application/json' } })); }); })();"""
+    ident = (await c.send('Page.addScriptToEvaluateOnNewDocument', {'source': BAD}))['identifier']
+    try:
+        await c.open(f'/v4/index.html?fast=1&auto=car&seed=7&sc={int(time.time())}')
+        await c.wait('__ds4.state && __ds4.scene.map', 60)
+        await asyncio.sleep(0.3)
+        res['7_dropped'] = {'dropped': await c.ev('DS4.browser.dropped', False), 'toast': await c.ev("document.getElementById('toast').hidden ? '' : document.getElementById('toast').textContent", False),
+                            'console': [x[:160] for x in c.console if '표 검증' in x]}
+        await app_shot(c, out('screen_spec_dropped_toast.png'))
+    finally:
+        await c.send('Page.removeScriptToEvaluateOnNewDocument', {'identifier': ident})
+    print('spec 7 dropped', json.dumps(res['7_dropped'], ensure_ascii=False)[:300])
+    with open(out('screen_spec.json'), 'w', encoding='utf-8') as fp:
+        json.dump(res, fp, ensure_ascii=False, indent=1)
+
+
+def spec_variants():
+    """저장 변형: 대상이 없는 사건(잠긴 이유 '댈 이름이 없다') · 손가락을 잃은 당신(잠긴 이유 '손가락이 성치 않다')."""
+    import copy
+    if 'called_up' in FIXTURES:
+        s = copy.deepcopy(FIXTURES['called_up'])
+        s['pending'].pop('target', None)
+        FIXTURES['called_up_notarget'] = s
+    if 'dawn_mob' in FIXTURES:
+        s = copy.deepcopy(FIXTURES['dawn_mob'])
+        s['pending'].pop('target', None)
+        s['people']['you']['permanent'] = dict(s['people']['you'].get('permanent') or {}, finger=max(1, s.get('day', 1)))
+        s['flags']['you_finger'] = True
+        FIXTURES['dawn_mob_notarget_finger'] = s
+
+
 def load_fixtures(ids):
-    r = subprocess.run(['node', os.path.join(ROOT, 'v4', 'tools', 'fixture.js'), ','.join(ids), '300'], capture_output=True, timeout=900, cwd=ROOT)
+    # (2026-10-24 검증 #8) 컴퓨터가 바쁘면 fixture.js 가 시간 제한에 걸려 TimeoutExpired 로 도구 전체가 죽고 결과 json 도 안 남았다
+    #   → fixture.js 는 FIXTURE_SEC 초에 찾은 만큼으로 멈추고, 그래도 넘으면 저장 없이 간다(그 사건 검사는 'fixture 없음'으로 결과에 남는다)
+    try:
+        r = subprocess.run(['node', os.path.join(ROOT, 'v4', 'tools', 'fixture.js'), ','.join(ids), '300', str(FIXTURE_SEC)], capture_output=True, timeout=FIXTURE_TIMEOUT, cwd=ROOT)
+    except subprocess.TimeoutExpired:
+        print(f'fixture 시간 초과 ({FIXTURE_TIMEOUT}초) - 저장 없이 간다:', ','.join(ids))
+        return
     try:
         FIXTURES.update(json.loads(r.stdout.decode('utf-8') or '{}'))
     except ValueError:
         print('fixture 실패', r.stderr.decode('utf-8', 'replace')[:400])
-    print('fixture', {k: k in FIXTURES for k in ids})
+    note = r.stderr.decode('utf-8', 'replace').strip().splitlines()
+    print('fixture', {k: k in FIXTURES for k in ids}, note[-1][:160] if note else '')
 
 
 async def amain(tasks, opts):
     if 'space' in tasks or 'dialog' in tasks or 'recheck' in tasks or ('apply' in tasks and opts.get('n', '9') != '0'):   # apply --n=0 = 연타 검사를 건너뛴다
         load_fixtures(SPACE_EVENTS)
+    if 'spec' in tasks:
+        load_fixtures(SPEC_EVENTS)
+        spec_variants()
     httpd = serve()
     prof = os.path.join(OUTD, '.profile')            # 헤드리스 프로필 = 결과 폴더 아래 (.profile 은 git 제외 · 끝나면 지운다) — 프로젝트 밖에 만들지 않는다
     shutil.rmtree(prof, ignore_errors=True)

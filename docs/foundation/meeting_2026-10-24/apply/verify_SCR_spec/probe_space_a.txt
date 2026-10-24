@@ -1,0 +1,25 @@
+space called_up hold_down+mash_space | picked: - | info None | died None | open None None | SystemExit("기다리다 지쳤다: __ds4.state && __ds4.UI.openKind() === 'line' && !__ds4.UI.bot")
+space called_up hold_up+mash_space | picked: - | info None | died False | open event  | 
+space called_up hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space called_up hold_space+hold_up | picked: - | info None | died False | open line  | 
+space called_up tap_up+mash_space | picked: - | info None | died False | open line  | 
+space called_up tap_down+mash_space | picked: 눈을 뜬다 | info None | died False | open   | 
+space dawn_mob hold_down+mash_space | picked: - | info None | died False | open event  | 
+space dawn_mob hold_up+mash_space | picked: - | info None | died False | open event  | 
+space dawn_mob hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space dawn_mob hold_space+hold_up | picked: - | info None | died False | open line  | 
+space dawn_mob tap_up+mash_space | picked: - | info None | died False | open   | 
+space dawn_mob tap_down+mash_space | picked: - | info None | died False | open line  | 
+space d10_hold hold_down+mash_space | picked: - | info None | died False | open event  | 
+space d10_hold hold_up+mash_space | picked: - | info None | died False | open event  | 
+space d10_hold hold_s+mash_enter | picked: - | info None | died None | open None None | SystemExit("기다리다 지쳤다: __ds4.state && __ds4.UI.openKind() === 'line' && !__ds4.UI.bot")
+space d10_hold hold_space+hold_up | picked: - | info None | died None | open None None | SystemExit("기다리다 지쳤다: __ds4.state && __ds4.UI.openKind() === 'line' && !__ds4.UI.bot")
+space d10_hold tap_up+mash_space | picked: - | info None | died False | open   | 
+space d10_hold tap_down+mash_space | picked: 그릇을 씻어 둔다 | info None | died False | open confirm2 다시 고른다 | 
+space dawn_strike hold_down+mash_space | picked: - | info None | died False | open event  | 
+space dawn_strike hold_up+mash_space | picked: - | info None | died False | open event  | 
+space dawn_strike hold_s+mash_enter | picked: - | info None | died False | open event  | 
+space dawn_strike hold_space+hold_up | picked: - | info None | died False | open line  | 
+space dawn_strike tap_up+mash_space | picked: 눈을 뜬다 | info None | died False | open   | 
+space dawn_strike tap_down+mash_space | picked: 눈을 뜬다 | info None | died False | open line  | 
+exit=0

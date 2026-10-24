@@ -1,0 +1,57 @@
+| 항목 | 합격선 | 블록 1 | 블록 1001 | 블록 2001 | 블록 3001 | 합산 | 판정 |
+|---|---|---|---|---|---|---|---|
+| A1 D1~D4 생존 − 균형: selfish | ≥ +5%p | +9 (99.5 vs 90.5) | +8.5 (99.5 vs 91) | +8 (100 vs 92) | +9 (100 vs 91) | +8.7 | △ |
+| A1 D1~D4 생존 − 균형: selfish_nb | ≥ +5%p | +9.5 (100 vs 90.5) | +9 (100 vs 91) | +8 (100 vs 92) | +9 (100 vs 91) | +8.9 | △ |
+| A1 D1~D4 생존 − 균형: selfish_rt | ≥ +5%p | +9 (99.5 vs 90.5) | +8.5 (99.5 vs 91) | +7.5 (99.5 vs 92) | +9 (100 vs 91) | +8.5 | △ |
+| A1 D1~D4 생존 − 균형: selfish_rt0 | ≥ +5%p | +9 (99.5 vs 90.5) | +8.5 (99.5 vs 91) | +7.5 (99.5 vs 92) | +9 (100 vs 91) | +8.5 | △ |
+| A1 열흘 생존 − 균형: selfish | < 0 | 0 (43.5 vs 43.5) | 0 (41 vs 41) | -2.5 (43 vs 45.5) | -8 (44 vs 52) | -2.6 | △ |
+| A1 열흘 생존 − 균형: selfish_nb | < 0 | +48.5 (92 vs 43.5) | +45.5 (86.5 vs 41) | +45.5 (91 vs 45.5) | +37 (89 vs 52) | +44.1 | ✗ |
+| A1 열흘 생존 − 균형: selfish_rt | < 0 | -33 (10.5 vs 43.5) | -29.5 (11.5 vs 41) | -31.5 (14 vs 45.5) | -46.5 (5.5 vs 52) | -35.1 | ✓ |
+| A1 열흘 생존 − 균형: selfish_rt0 | < 0 | -11 (32.5 vs 43.5) | -13.5 (27.5 vs 41) | -13.5 (32 vs 45.5) | -21 (31 vs 52) | -14.7 | ✓ |
+| 정체 성향 봇 평균: 가장 작은 후보 | ≥ 3% (경계 ±1.5) | platform_one 7.9 | platform_one 7.1 | platform_one 8 | platform_one 7.9 | platform_one 7.8 | ✓ |
+| 정체 성향 봇 평균: 가장 큰 후보 | ≤ 40% | passenger 19.3 | passenger 20.9 | passenger 20.4 | passenger 20.1 | passenger 20.2 | ✓ |
+|   (성향 봇 합산 분포) | | platform_one 7.8 · counting_child 13.3 · conductor 12.9 · passenger 20.2 · counted 13.4 · driver 16.4 · inspector 16.1 |
+| 정체 사람 흉내 평균: 가장 작은 후보 | ≥ 3% (경계 ±1.5) | driver 1.1 | inspector 1.1 | inspector 1.6 | inspector 1.2 | inspector 1.4 | ✗ |
+| 정체 사람 흉내 평균: 가장 큰 후보 | ≤ 40% | passenger 52.3 | passenger 49.6 | passenger 47.6 | passenger 50.2 | passenger 49.9 | ✗ |
+|   (사람 흉내 합산 분포) | | platform_one 27.8 · counting_child 4.5 · conductor 6.3 · passenger 49.9 · counted 8.4 · driver 1.8 · inspector 1.4 |
+| A4 D9 아침 주민 수 차: 보통−게으름 | > 0 | +0.36 | +0.01 | +0.29 | +0.12 | +0.19 | ✓ |
+| A4 D9 아침 주민 수 차: 부지런−게으름 | > 0 | +0.3 | +0.4 | +0.18 | +0.37 | +0.31 | ✓ |
+| A4 D7 아침 식량+물+약 차: 보통−게으름 | > 0 | +0.23 | -0.4 | +0.05 | +0.33 | +0.05 | △ |
+| A4 D7 아침 식량+물+약 차: 부지런−게으름 | > 0 | +0.6 | +0.08 | +0.5 | +0.38 | +0.39 | ✓ |
+| A4 생존 차: 보통−게으름 | ≥ +5%p | +8 | -2.5 | +6 | +12.5 | +6 | △ |
+| A4 생존 차: 부지런−게으름 | ≥ +5%p | +10 | +6.5 | +7 | +7.5 | +7.8 | △ |
+| 균형 사망 | ≥ 50% | 56.5 | 59 | 54.5 | 48 | 54.5 | △ |
+| 균형 D5까지 사망 | ≥ 10% | 20 | 18 | 21.5 | 21 | 20.1 | ✓ |
+| 모험 열흘 생존 | ≥ 25% | 25 | 28 | 20 | 24.5 | 24.4 | △ |
+| 열차 결말 (모험) | > 0% | 8 | 10 | 6 | 6.5 | 7.6 | ✓ |
+| 전멸 (균형) | ≤ 25% | 11 | 8 | 11.5 | 11 | 10.4 | ✓ |
+| explicit/판 (균형) | ≥ 7 | 10.03 | 10.09 | 10.06 | 10.08 | 10.06 | ✓ |
+| D2 그날 사건으로 죽은 판 (정책 합산) | > 0 | 80 | 127 | 78 | 104 | 389 | ✓ |
+| D3 그날 사건으로 죽은 판 (정책 합산) | > 0 | 24 | 25 | 32 | 24 | 105 | ✓ |
+| D4 그날 사건으로 죽은 판 (정책 합산) | > 0 | 132 | 130 | 135 | 129 | 526 | ✓ |
+| D5 그날 사건으로 죽은 판 (정책 합산) | > 0 | 293 | 271 | 308 | 285 | 1157 | ✓ |
+| D6 그날 사건으로 죽은 판 (정책 합산) | > 0 | 139 | 141 | 144 | 133 | 557 | ✓ |
+|   균형만 D2 | 측정 | 9 | 7 | 7 | 11 | 34 | 측정 |
+|   균형만 D3 | 측정 | 0 | 0 | 0 | 0 | 0 | 측정 |
+|   균형만 D4 | 측정 | 8 | 10 | 6 | 6 | 30 | 측정 |
+|   균형만 D5 | 측정 | 20 | 16 | 26 | 22 | 84 | 측정 |
+|   균형만 D6 | 측정 | 0 | 0 | 0 | 0 | 0 | 측정 |
+
+- balanced (사망 436/800): 사인 fever_night 174 (39.9%) · d10_walk_weak 114 (26.1%) · d5_flood 84 (19.3%) · d2_shutter_arm 34 (7.8%) / 원인 starve_you 179 (41.1%) · d5_flood 84 (19.3%) · d2_shutter_arm 68 (15.6%) · d4_spanner 30 (6.9%)
+- selfish (사망 457/800): 사인 called_up 306 (67%) · dawn_strike 131 (28.7%) · d10_hold 20 (4.4%) / 원인 called_up 306 (67%) · dawn_strike 131 (28.7%) · d10_hold 20 (4.4%)
+- selfish_nb (사망 83/800): 사인 dawn_strike 73 (88%) · fever_night 10 (12%) / 원인 dawn_strike 77 (92.8%) · starve_you 2 (2.4%) · d1_night_storage 2 (2.4%) · dawn_mob 1 (1.2%)
+- selfish_rt (사망 717/800): 사인 dawn_mob 280 (39.1%) · called_up 271 (37.8%) · dawn_strike 166 (23.2%) / 원인 dawn_mob 280 (39.1%) · called_up 271 (37.8%) · dawn_strike 166 (23.2%)
+- selfish_rt0 (사망 554/800): 사인 dawn_mob 333 (60.1%) · dawn_strike 221 (39.9%) / 원인 dawn_mob 333 (60.1%) · dawn_strike 221 (39.9%)
+- risky (사망 605/800): 사인 d5_flood 151 (25%) · fever_night 140 (23.1%) · dawn_strike 82 (13.6%) · d4_spanner 70 (11.6%) / 원인 d5_flood 151 (25%) · dawn_strike 91 (15%) · d4_spanner 70 (11.6%) · d2_shutter_arm 55 (9.1%)
+- devoted (사망 610/800): 사인 fever_night 255 (41.8%) · d5_flood 139 (22.8%) · d4_spanner 73 (12%) · d10_walk_weak 54 (8.9%) / 원인 d5_flood 139 (22.8%) · starve_you 110 (18%) · d2_shutter_arm 102 (16.7%) · d4_spanner 76 (12.5%)
+- lazy (사망 484/800): 사인 fever_night 176 (36.4%) · d10_walk_weak 132 (27.3%) · d5_flood 94 (19.4%) · d4_spanner 48 (9.9%) / 원인 starve_you 184 (38%) · d5_flood 94 (19.4%) · d2_shutter_arm 61 (12.6%) · d4_spanner 49 (10.1%)
+- diligent (사망 422/800): 사인 fever_night 152 (36%) · d10_walk_weak 123 (29.1%) · d5_flood 80 (19%) · d2_shutter_arm 34 (8.1%) / 원인 starve_you 184 (43.6%) · d5_flood 80 (19%) · d2_shutter_arm 57 (13.5%) · d4_spanner 33 (7.8%)
+- h_cautious2 (사망 287/800): 사인 fever_night 136 (47.4%) · d10_walk_weak 63 (22%) · d5_flood 54 (18.8%) · d4_spanner 25 (8.7%) / 원인 starve_you 133 (46.3%) · d5_flood 54 (18.8%) · d4_spanner 29 (10.1%) · d7_rot 16 (5.6%)
+- h_mixed (사망 170/800): 사인 pro_stairs 152 (89.4%) · d8_patrol_return 18 (10.6%) / 원인 pro_stairs 152 (89.4%) · d8_patrol_return 18 (10.6%)
+- h_wary (사망 444/800): 사인 pro_stairs 397 (89.4%) · d8_patrol_return 47 (10.6%) / 원인 pro_stairs 397 (89.4%) · d8_patrol_return 47 (10.6%)
+- h_random (사망 799/800): 사인 pro_stairs 397 (49.7%) · starve_you 119 (14.9%) · d3_called_you 85 (10.6%) · d2_night_shutter 36 (4.5%) / 원인 pro_stairs 397 (49.7%) · starve_you 131 (16.4%) · d3_called_you 85 (10.6%) · d2_night_shutter 36 (4.5%)
+
+- 균형 사인 1위 블록별: 블록 1 fever_night 40.7% · 블록 1001 fever_night 42.4% · 블록 2001 fever_night 40.4% · 블록 3001 fever_night 35.4%
+- 균형 원인 1위 블록별: 블록 1 starve_you 44.2% · 블록 1001 starve_you 42.4% · 블록 2001 starve_you 40.4% · 블록 3001 starve_you 36.5%
+- 굶주림(starve_you) 사인 비중 (전 정책): 블록 1 1.6% · 블록 1001 1.1% · 블록 2001 1.6% · 블록 3001 1.5% · 합산 1.4%
+- 균형 원인 starve_you 비중 블록별: 블록 1 44.2% · 블록 1001 42.4% · 블록 2001 40.4% · 블록 3001 36.5%

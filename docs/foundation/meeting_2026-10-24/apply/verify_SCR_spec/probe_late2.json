@@ -1,0 +1,272 @@
+{
+ "late2": [
+  {
+   "seed": 3,
+   "run": {
+    "log": [
+     "D0 day pro_lever -> 레버를 당긴다",
+     "D0 day pro_notebook -> 주머니에 넣는다",
+     "D0 day pro_gicheol -> 벽감 상자부터 연다",
+     "D0 day pro_platform -> 불가에 앉는다",
+     "D0 day pro_speaker -> 듣는다",
+     "D0 day pro_mari -> 손을 내민다",
+     "D0 evening d0_ledger -> 말없이 적는다",
+     "D1 ration trial_d1_bowls -> 똑같이 조금씩",
+     "D1 day d1_shutter_knock -> 두드려 답한다",
+     "D1 evening d1_names_quiet -> 적는다",
+     "D1 night d1_night_storage -> 불가에 있는다",
+     "D2 trace d2_key -> 받는다",
+     "D2 trace d2_soonrye_shutter -> 본다",
+     "D2 trace d2_rat_blanket -> 본다",
+     "D2 evening d2_soonrye_bread -> 본다",
+     "D2 night d2_night_shutter -> 틈으로 말을 건다",
+     "D2 night d2_night_count -> 숨을 참는다",
+     "D3 trace d3_soonrye_opens -> 본다",
+     "D3 night trial_d3_count -> 숨을 죽인다",
+     "D4 trace d3_guess -> 불빛 때문인 것 같다",
+     "D4 trace hymn_fire_kept -> 불을 쬔다",
+     "D4 day trial_d4_gicheol -> 믿는다",
+     "D4 evening d4_shoes_home -> 본다",
+     "D5 night d5_rail_body -> 받는다",
+     "D5 night d5_flood -> 남의 담요로 물길을 막는다",
+     "D5 night d5_lullaby -> 붙잡는다",
+     "D6 trace d6_morning -> 쇠줄을 긋는다",
+     "D6 day passage_alone_b -> 두고 걷기로 한다",
+     "D6 day patrol_pact -> 동하를 보낸다",
+     "D6 night d6_shutter_b -> 열쇠를 내준다"
+    ],
+    "day": 7,
+    "phase": "trace",
+    "ended": null,
+    "you": "home"
+   },
+   "late": [
+    {
+     "d": 1,
+     "eng": [],
+     "mapLate": [],
+     "dust0": [],
+     "noticeDay": null,
+     "office": "locked",
+     "metSeoha": false,
+     "key": false,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 1,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 2,
+     "eng": [],
+     "mapLate": [],
+     "dust0": [],
+     "noticeDay": null,
+     "office": "locked",
+     "metSeoha": false,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 2,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 3,
+     "eng": [],
+     "mapLate": [],
+     "dust0": [],
+     "noticeDay": null,
+     "office": "open",
+     "metSeoha": true,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 3,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 4,
+     "eng": [],
+     "mapLate": [],
+     "dust0": [],
+     "noticeDay": null,
+     "office": "open",
+     "metSeoha": true,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 4,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    },
+    {
+     "d": 5,
+     "eng": [
+      [
+       "crate_food",
+       "open"
+      ],
+      [
+       "bowl_eunji",
+       "empty"
+      ]
+     ],
+     "mapLate": [
+      [
+       "crate_food",
+       false
+      ],
+      [
+       "bowl_eunji",
+       false
+      ]
+     ],
+     "dust0": [
+      "crate_food",
+      "bowl_eunji"
+     ],
+     "noticeDay": null,
+     "office": "open",
+     "metSeoha": true,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [
+        "어제 못 본 자리가 그대로다."
+       ],
+       "log": [
+        {
+         "toast": "toast_late",
+         "text": "어제 못 본 자리가 그대로다.",
+         "day": 5
+        },
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 5,
+         "notice": "toast_late"
+        }
+       ],
+       "dust": [
+        "crate_food",
+        "bowl_eunji"
+       ]
+      },
+      {
+       "oid": "crate_food",
+       "toasts": [
+        "갈 수 없는 곳이다."
+       ],
+       "log": [],
+       "dust": [
+        "crate_food",
+        "bowl_eunji"
+       ]
+      },
+      {
+       "oid": "bowl_eunji",
+       "toasts": [],
+       "log": [
+        {
+         "id": "bowl_eunji",
+         "st": "empty",
+         "lid": "insp_bowl_empty_late",
+         "day": 5,
+         "notice": ""
+        }
+       ],
+       "dust": [
+        "crate_food"
+       ]
+      },
+      {
+       "oid": "crate_food",
+       "toasts": [
+        "갈 수 없는 곳이다."
+       ],
+       "log": [],
+       "dust": [
+        "crate_food"
+       ]
+      }
+     ]
+    },
+    {
+     "d": 6,
+     "eng": [],
+     "mapLate": [],
+     "dust0": [],
+     "noticeDay": 5,
+     "office": "open",
+     "metSeoha": true,
+     "key": true,
+     "ins": [
+      {
+       "oid": "blanket_soonrye",
+       "toasts": [],
+       "log": [
+        {
+         "id": "blanket_soonrye",
+         "st": "folded",
+         "lid": "insp_blanket",
+         "day": 6,
+         "notice": ""
+        }
+       ],
+       "dust": []
+      }
+     ]
+    }
+   ],
+   "errors": []
+  }
+ ]
+}

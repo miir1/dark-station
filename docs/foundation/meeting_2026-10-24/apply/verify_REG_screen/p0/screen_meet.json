@@ -1,0 +1,317 @@
+{
+ "tunnel": [
+  {
+   "distance": 4,
+   "you": [
+    12,
+    2
+   ],
+   "want": "거기 서.",
+   "shown": true,
+   "bubbles": [
+    "거기 서."
+   ],
+   "beam": {
+    "deg": 169,
+    "r": 6.5,
+    "spread": 40
+   },
+   "shot": "screen_n01_tunnel_4.png"
+  },
+  {
+   "distance": 2,
+   "you": [
+    14,
+    2
+   ],
+   "want": "…발 좀 보이시오.",
+   "shown": true,
+   "bubbles": [
+    "…발 좀 보이시오."
+   ],
+   "beam": {
+    "deg": 147,
+    "r": 3.09,
+    "spread": 40
+   },
+   "shot": "screen_n02_tunnel_2.png"
+  },
+  {
+   "distance": 1,
+   "you": [
+    15,
+    2
+   ],
+   "want": "…신었군.",
+   "shown": true,
+   "bubbles": [
+    "…신었군."
+   ],
+   "beam": {
+    "deg": 128,
+    "r": 2.34,
+    "spread": 40
+   },
+   "shot": "screen_n03_tunnel_1.png"
+  },
+  {
+   "after_1": true,
+   "beam": {
+    "deg": 142,
+    "r": 2.4
+   }
+  }
+ ],
+ "arrival": {
+  "open": false,
+  "kind": "",
+  "pending": "",
+  "you": [
+   1,
+   11
+  ],
+  "flags": [
+   "met_gicheol"
+  ]
+ },
+ "soonrye": [
+  {
+   "distance": 6,
+   "you": [
+    7,
+    11
+   ],
+   "want": "(몸만 돌린다)",
+   "shown": true,
+   "soonrye": {
+    "face": "left",
+    "pose": "crouch",
+    "at": [
+     12,
+     10
+    ],
+    "talkable": true
+   },
+   "bubbles": [],
+   "shot": "screen_n05_soonrye_6.png"
+  },
+  {
+   "distance": 4,
+   "you": [
+    9,
+    11
+   ],
+   "want": "멈춰.",
+   "shown": true,
+   "soonrye": {
+    "face": "left",
+    "pose": "crouch",
+    "at": [
+     12,
+     10
+    ],
+    "talkable": true
+   },
+   "bubbles": [
+    "멈춰."
+   ],
+   "shot": "screen_n05_soonrye_4.png"
+  },
+  {
+   "distance": 2,
+   "you": [
+    11,
+    11
+   ],
+   "want": "…발.",
+   "shown": true,
+   "soonrye": {
+    "face": "down",
+    "pose": "crouch",
+    "at": [
+     12,
+     10
+    ],
+    "talkable": true
+   },
+   "bubbles": [
+    "…발."
+   ],
+   "shot": "screen_n05_soonrye_2.png"
+  }
+ ],
+ "mari_6": {
+  "want": "…영자 씨, 순덕 씨, 광호 씨…",
+  "shown": true
+ },
+ "hint_soonrye": "Space 말 걸기 — 청소원 조끼의 할머니",
+ "platform_tag": {
+  "who": "청소원 조끼의 할머니",
+  "text": "할머니가 당신 발을 오래 본다.",
+  "pending": "pro_platform"
+ },
+ "testify": {
+  "day": 0,
+  "phase": "evening",
+  "who": "김순례",
+  "text": "김순례.",
+  "face": "portraits80/soonrye.png",
+  "faceNatural": 80,
+  "pending": "d0_ledger"
+ },
+ "ration_d1": {
+  "day": 1,
+  "bowls": [
+   "당신",
+   "김순례",
+   "박기철",
+   "정마리"
+  ],
+  "unmet": [
+   "seoha",
+   "eunji",
+   "dongha"
+  ],
+  "unmet_status": {
+   "seoha": "home",
+   "eunji": "away",
+   "dongha": "away"
+  },
+  "leaks": []
+ },
+ "shutter": {
+  "want": "열어. 사람이야. 신발 신었어.",
+  "shown": true,
+  "bubbles": [
+   "열어. 사람이야. 신발 신었어."
+  ],
+  "heard": [
+   "bark_shutter_8#0",
+   "bark_shutter_3#0"
+  ]
+ },
+ "talk3": {
+  "soonrye": {
+   "seq": [
+    {
+     "key": "soonrye_d3_after#0",
+     "lines": [
+      "손님, 재가 한 칸 내려왔어.",
+      "불빛 때문인지는 몰라.",
+      "나는 그렇게 생각해."
+     ],
+     "name": "김순례"
+    },
+    {
+     "key": "soonrye_rule_answer#0",
+     "lines": [
+      "손님, 어젯밤에 저 위에서 뭔가 셌어.",
+      "오늘 밤엔 대답하지 마.",
+      "누가 불러도."
+     ],
+     "name": "김순례"
+    },
+    {
+     "key": "soonrye_idle",
+     "lines": [
+      "할머니가 장작을 뒤집는다."
+     ],
+     "name": ""
+    }
+   ],
+   "consecutive_repeat": false
+  },
+  "gicheol": {
+   "seq": [
+    {
+     "key": "rumor:rum_grandma_poured",
+     "lines": [
+      "당신, 할머니가 밤에 물을 부었어."
+     ],
+     "name": "박기철"
+    },
+    {
+     "key": "gicheol_idle",
+     "lines": [
+      "남자가 헤드램프 끈을 고쳐 맨다."
+     ],
+     "name": ""
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "name": ""
+    }
+   ],
+   "consecutive_repeat": false
+  },
+  "mari": {
+   "seq": [
+    {
+     "key": "mari_idle",
+     "lines": [
+      "여자가 붕대를 다시 만다."
+     ],
+     "name": ""
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "name": ""
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "name": ""
+    }
+   ],
+   "consecutive_repeat": true
+  },
+  "eunji": {
+   "seq": [
+    {
+     "key": "eunji_idle",
+     "lines": [
+      "여자가 셔터 쪽을 본다."
+     ],
+     "name": ""
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "name": ""
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "name": ""
+    }
+   ],
+   "consecutive_repeat": true
+  },
+  "dongha": {
+   "seq": [
+    {
+     "key": "dongha_idle",
+     "lines": [
+      "청년이 무릎을 끌어안는다."
+     ],
+     "name": ""
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "name": ""
+    },
+    {
+     "key": "(done)",
+     "lines": [],
+     "name": ""
+    }
+   ],
+   "consecutive_repeat": true
+  }
+ },
+ "talk3_any_repeat": true,
+ "console_errors": []
+}

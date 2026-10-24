@@ -1,0 +1,298 @@
+[
+ {
+  "hz": null,
+  "rows": [
+   [
+    0.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": true,
+     "open": "line",
+     "auto": false,
+     "moving": false,
+     "log": []
+    }
+   ],
+   [
+    4.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    8.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    12.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    16.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    20.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    24.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    28.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    32.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    36.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ]
+  ],
+  "errors": [],
+  "console": [
+   "log: [ds4 auto] car stop reached=1 D0 day map=car open=- you=home food=6 | D0 day pro_cold → 눈을 뜬다"
+  ]
+ },
+ {
+  "hz": 60,
+  "rows": [
+   [
+    0.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    4.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    8.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    12.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    16.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    20.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    24.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    28.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    32.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ],
+   [
+    36.0,
+    {
+     "st": true,
+     "map": "car",
+     "bot": false,
+     "open": "",
+     "auto": false,
+     "moving": false,
+     "log": [
+      "D0 day pro_cold → 눈을 뜬다"
+     ]
+    }
+   ]
+  ],
+  "errors": [],
+  "console": [
+   "log: [ds4 auto] car stop reached=1 D0 day map=car open=- you=home food=6 | D0 day pro_cold → 눈을 뜬다"
+  ]
+ }
+]

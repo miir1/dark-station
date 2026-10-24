@@ -1,0 +1,56 @@
+{
+ "A_flaky2": {
+  "opened": true,
+  "secs": 9.8,
+  "left": 0,
+  "db": true
+ },
+ "A_dead": {
+  "opened": false,
+  "secs": 7.8
+ },
+ "B_timeout": {
+  "secs": 16.6,
+  "entry": {
+   "shot": "zz_timeout",
+   "ok": false,
+   "why": [
+    "시간 초과 (3초) - 컴퓨터가 바쁘다",
+    "PNG 없음"
+   ],
+   "tries": [
+    {
+     "attempt": 1,
+     "ok": false,
+     "why": [
+      "시간 초과 (3초) - 컴퓨터가 바쁘다",
+      "PNG 없음"
+     ],
+     "png_scale": null,
+     "console_errors": 0
+    },
+    {
+     "attempt": 2,
+     "ok": false,
+     "why": [
+      "시간 초과 (3초) - 컴퓨터가 바쁘다",
+      "PNG 없음"
+     ],
+     "png_scale": null,
+     "console_errors": 0
+    }
+   ]
+  }
+ },
+ "C_fixture_timeout": {
+  "note": "fixture.js 시간 초과 (1초)",
+  "secs": 1.0
+ },
+ "C_fixture_cap3": {
+  "secs": 3.3,
+  "stderr": "[fixture] 16 games, 3.0s, time cap 3s (best so far); found d10_train; missing -",
+  "found": [
+   "d10_train"
+  ]
+ }
+}

@@ -1,0 +1,4 @@
+[balanced] {"starve_you > 선로 밑을 뒤진다":693,"patrol_pact > 동하를 보낸다":45,"patrol_pact > 내가 간다":50,"d5_lullaby > 붙잡는다":43,"patrol_pact > 거절한다":48,"d5_lullaby > 놓친다":50}
+[silent] {"patrol_pact > 거절한다":51,"starve_you > 선로 밑을 뒤진다":724,"d5_lullaby > 붙잡는다":41,"patrol_pact > 내가 간다":46,"patrol_pact > 동하를 보낸다":49,"d5_lullaby > 놓친다":40}
+[h_cautious] {"d5_lullaby > 놓친다":169,"starve_you > 선로 밑을 뒤진다":994,"starve_you > 창고를 턴다":7}
+[h_cautious2] {"starve_you > 선로 밑을 뒤진다":791,"patrol_pact > 동하를 보낸다":19,"starve_you > 창고를 턴다":24,"d5_lullaby > 붙잡는다":68,"d5_lullaby > 놓친다":69,"patrol_pact > 거절한다":23,"patrol_pact > 내가 간다":20}
