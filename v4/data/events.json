@@ -2147,6 +2147,19 @@
           ],
           "ledger": "",
           "target": "randomSleeper"
+        },
+        "rope": {
+          "kind": "point",
+          "fail": {
+            "text": "잠든 팔이 빠져나갔다. 셔터 날이 당신 팔로 왔다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -2935,6 +2948,19 @@
             }
           ],
           "ledger": ""
+        },
+        "rope": {
+          "kind": "point",
+          "fail": {
+            "text": "헤드램프는 켜지지 않았다. 스패너가 관자놀이로 왔다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -3873,7 +3899,20 @@
               "target": "randomSleeper"
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "point",
+          "fail": {
+            "text": "주인이 담요를 놓지 않았다. 물살이 당신 발을 들었다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       }
     ]
   },
@@ -5917,6 +5956,20 @@
             }
           ],
           "ledger": ""
+        },
+        "rope": {
+          "kind": "pay",
+          "from": 8,
+          "fail": {
+            "text": "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -6086,7 +6139,21 @@
               "ledger": ""
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "point",
+          "from": 8,
+          "fail": {
+            "text": "그 사람이 손목을 잡았다. 주먹이 멎지 않았다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "눈을 감는다",
@@ -7211,7 +7278,20 @@
               "ledger": ""
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "pay",
+          "fail": {
+            "text": "그는 받아 들고도 소매를 놓지 않았다. 소매를 감은 손이 목으로 올라왔다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "끌려가며 버틴다",
@@ -7252,7 +7332,20 @@
               "ledger": ""
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "endure",
+          "fail": {
+            "text": "선로 끝에서 돌이 머리로 내려왔다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "손가락을 내준다",
@@ -7289,6 +7382,19 @@
             }
           ],
           "ledger": ""
+        },
+        "rope": {
+          "kind": "pay",
+          "fail": {
+            "text": "돌은 손가락에서 멈추지 않았다. 떠나는 사람들은 돌아보지 않았다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -7335,7 +7441,10 @@
               "base": 50
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "fight"
+        }
       }
     ],
     "target": "most:grudge",
@@ -7539,6 +7648,20 @@
             }
           ],
           "ledger": ""
+        },
+        "rope": {
+          "kind": "point",
+          "fail": {
+            "text": "그 사람이 물병을 놓지 않았다. 마른 목 위로 이름이 내려왔다.",
+            "how": "ascended",
+            "image": "death_counted",
+            "ledger": {
+              "who": "you",
+              "status": "ascended",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -7622,6 +7745,19 @@
             }
           ],
           "ledger": ""
+        },
+        "rope": {
+          "kind": "pay",
+          "fail": {
+            "text": "물병을 받고도 손톱은 빠지지 않았다. 그 물병이 당신 머리를 내리쳤다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -7663,7 +7799,20 @@
               "ledger": ""
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "endure",
+          "fail": {
+            "text": "얼굴부터 레일에 박혔다. 일어나지 못했다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "발을 빼낸다",
@@ -7700,6 +7849,9 @@
             "day": "{day}",
             "cause": ""
           }
+        },
+        "rope": {
+          "kind": "fight"
         }
       }
     ],
@@ -10160,7 +10312,20 @@
               "target": "any"
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "point",
+          "fail": {
+            "text": "주인이 담요를 도로 끌어갔다. 새벽에 몸이 식어 있었다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       }
     ]
   },
@@ -10189,6 +10354,11 @@
             {
               "verb": "flag",
               "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "flag",
+              "id": "strike_blind",
               "set": 0
             },
             {
@@ -10226,6 +10396,11 @@
                   "set": 0
                 },
                 {
+                  "verb": "flag",
+                  "id": "strike_blind",
+                  "set": 0
+                },
+                {
                   "verb": "number",
                   "id": "grudge",
                   "n": -3,
@@ -10245,7 +10420,22 @@
               "ledger": ""
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "pay",
+          "blind": 1,
+          "fail": {
+            "text": "그림자는 받아 들고도 목을 놓지 않았다. 마지막 숨이 그 손 밑에서 막혔다.",
+            "how": "dead",
+            "image": "death_starve",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "맞고 버틴다",
@@ -10260,6 +10450,11 @@
             {
               "verb": "flag",
               "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "flag",
+              "id": "strike_blind",
               "set": 0
             },
             {
@@ -10289,6 +10484,11 @@
                   "set": 0
                 },
                 {
+                  "verb": "flag",
+                  "id": "strike_blind",
+                  "set": 0
+                },
+                {
                   "verb": "permanent",
                   "who": "you",
                   "loss": "ear"
@@ -10314,6 +10514,11 @@
                   "set": 0
                 },
                 {
+                  "verb": "flag",
+                  "id": "strike_blind",
+                  "set": 0
+                },
+                {
                   "verb": "injure",
                   "who": "you",
                   "n": 2
@@ -10331,6 +10536,11 @@
                 {
                   "verb": "flag",
                   "id": "dawn_strike",
+                  "set": 0
+                },
+                {
+                  "verb": "flag",
+                  "id": "strike_blind",
                   "set": 0
                 },
                 {
@@ -10353,7 +10563,21 @@
               "ledger": ""
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "endure",
+          "blind": 1,
+          "fail": {
+            "text": "갈비뼈가 안으로 꺾였다. 숨이 돌아오지 않았다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "밀쳐 낸다",
@@ -10371,6 +10595,11 @@
             {
               "verb": "flag",
               "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "flag",
+              "id": "strike_blind",
               "set": 0
             },
             {
@@ -10402,6 +10631,9 @@
             "day": "{day}",
             "cause": ""
           }
+        },
+        "rope": {
+          "kind": "fight"
         }
       },
       {
@@ -10420,6 +10652,11 @@
             {
               "verb": "flag",
               "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "flag",
+              "id": "strike_blind",
               "set": 0
             },
             {
@@ -10452,6 +10689,9 @@
             "day": "{day}",
             "cause": ""
           }
+        },
+        "rope": {
+          "kind": "fight"
         }
       },
       {
@@ -10470,6 +10710,11 @@
             {
               "verb": "flag",
               "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "flag",
+              "id": "strike_blind",
               "set": 0
             },
             {
@@ -10501,6 +10746,9 @@
             "day": "{day}",
             "cause": ""
           }
+        },
+        "rope": {
+          "kind": "fight"
         }
       },
       {
@@ -10516,6 +10764,11 @@
             {
               "verb": "flag",
               "id": "dawn_strike",
+              "set": 0
+            },
+            {
+              "verb": "flag",
+              "id": "strike_blind",
               "set": 0
             },
             {
@@ -10570,6 +10823,11 @@
                   "set": 0
                 },
                 {
+                  "verb": "flag",
+                  "id": "strike_blind",
+                  "set": 0
+                },
+                {
                   "verb": "injure",
                   "who": "target",
                   "n": 2
@@ -10620,7 +10878,21 @@
               }
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "point",
+          "blind": 1,
+          "fail": {
+            "text": "손가락이 허공을 가리켰다. 아무도 돌아보지 않았다. 손이 다시 목을 눌렀다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       }
     ],
     "target": "randomSleeper",
@@ -10686,6 +10958,19 @@
             }
           ],
           "ledger": ""
+        },
+        "rope": {
+          "kind": "pay",
+          "fail": {
+            "text": "봉지를 다 받고도 발길질은 그치지 않았다. 숨소리가 먼저 끊겼다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -10814,7 +11099,20 @@
               "ledger": ""
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "endure",
+          "fail": {
+            "text": "웅크린 등 위로 발이 계속 내려왔다. 소리가 멎었다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "손가락 하나로 갚는다",
@@ -10856,6 +11154,19 @@
             }
           ],
           "ledger": ""
+        },
+        "rope": {
+          "kind": "pay",
+          "fail": {
+            "text": "칼이 한 번 더 내려왔다. 판자가 검게 젖었다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -10963,7 +11274,20 @@
               }
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "point",
+          "fail": {
+            "text": "손끝을 따라 아무도 돌아서지 않았다. 발길질이 다시 당신에게 왔다.",
+            "how": "dead",
+            "ledger": {
+              "who": "you",
+              "status": "dead",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "밀치고 달아난다",
@@ -11005,6 +11329,9 @@
             "day": "{day}",
             "cause": ""
           }
+        },
+        "rope": {
+          "kind": "fight"
         }
       },
       {
@@ -11048,6 +11375,9 @@
             "day": "{day}",
             "cause": ""
           }
+        },
+        "rope": {
+          "kind": "fight"
         }
       }
     ],
@@ -11517,6 +11847,27 @@
             }
           ],
           "ledger": ""
+        },
+        "rope": {
+          "kind": "pay",
+          "fail": {
+            "text": "불이 꺼진 새벽, 입이 먼저 \"네\" 했다.",
+            "how": "ascended",
+            "image": "death_counted",
+            "effects": [
+              {
+                "verb": "trace",
+                "id": "shoes_stairs",
+                "state": "pair"
+              }
+            ],
+            "ledger": {
+              "who": "you",
+              "status": "ascended",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
         }
       },
       {
@@ -11567,6 +11918,9 @@
             "cause": ""
           },
           "image": "death_counted"
+        },
+        "rope": {
+          "kind": "fight"
         }
       },
       {
@@ -11663,7 +12017,28 @@
               "ledger": ""
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "endure",
+          "fail": {
+            "text": "깨문 손이 입에서 빠졌다. 그 입으로 \"네\" 했다.",
+            "how": "ascended",
+            "image": "death_counted",
+            "effects": [
+              {
+                "verb": "trace",
+                "id": "shoes_stairs",
+                "state": "pair"
+              }
+            ],
+            "ledger": {
+              "who": "you",
+              "status": "ascended",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "다른 이름을 댄다",
@@ -11785,7 +12160,20 @@
               }
             }
           }
-        ]
+        ],
+        "rope": {
+          "kind": "point",
+          "fail": {
+            "text": "그 사람이 깨어 당신 이름을 되받아 댔다. 계단이 따뜻해졌다. 신발이 저절로 벗겨졌다.",
+            "how": "ascended",
+            "ledger": {
+              "who": "you",
+              "status": "ascended",
+              "day": "{day}",
+              "cause": ""
+            }
+          }
+        }
       },
       {
         "label": "대답한다",

@@ -20,6 +20,7 @@
   //  · 같은 수치 id · injure · kill · permanent 가 두 번 이상 나오면 값이 목록이 된다(순서 유지, 전부 적용) — 마지막 것만 남던 문제(10-22)
   //  · (10-24) nightEvents 의 missed·caught({effects, trace}) 안 effects 도 두 꼴 · public·side 빈 칸은 없는 것 · events 의 targetIf·targetOptional 빈 칸은 없는 것
   //    선택지 swap(객체 또는 목록) 안의 결과 effects 도 두 꼴 — swap 변형의 빈 값 칸은 '그 칸을 비운다'는 뜻이라 지우지 않는다
+  //  · (10-24 tightrope) 선택지 rope(줄타기) 칸: 빈 rope·빈 fail 은 없는 것, rope.fail.effects 도 두 꼴
   //  · (10-24 A1·A4) who:'you' 는 {who:'you', n} 그대로 둔다 — 밤 사건·방치 판정(missed·caught)에서 맨숫자는 행위자(주민)의 것이라,
   //    '당신 +1' 이 행위자에게 가던 오류(share_bowl.caught)를 막는다. 선택 결과에서는 행위자가 당신이라 결과가 같다. who 없음·self = 맨숫자(행위자)
   function effectsToObject(arr, where) {
@@ -48,6 +49,22 @@
   function normChoice(c, where, variant) {
     if (!variant) for (const key of ['check', 'cost', 'req', 'taboo', 'warn', 'hint']) if (blank(c[key])) delete c[key];
     for (const key of ['out', 'ok', 'fail']) { const o = c[key]; if (!o || typeof o !== 'object') continue; if (blank(o.ledger)) delete o.ledger; if (blank(o.image)) delete o.image; if (blank(o.target)) delete o.target; if (o.effects !== undefined) { if (blank(o.effects)) delete o.effects; else o.effects = effectsToObject(o.effects, `${where}.${key}`); } }
+    if (!variant && c.rope !== undefined) normRope(c, where);
+  }
+  // (10-24 tightrope R0) 줄타기 칸 rope = { kind, from, blind, skill, fail:{ text, how, image, effects, ledger } } — 빈 칸은 없는 것, fail.effects 는 두 꼴(배열이면 객체 꼴로)
+  //   blind 0 은 그대로 둔다(꺼짐). swap 변형에 쓴 rope 는 지우지 않는다(표 검사가 '쓸 수 없는 칸'으로 알린다)
+  function normRope(c, where) {
+    if (blank(c.rope)) { delete c.rope; return; }
+    const r = c.rope;
+    if (typeof r !== 'object' || Array.isArray(r)) return;          // 꼴 오류는 표 검사가 말한다
+    for (const k of ['from', 'skill', 'blind']) if (r[k] === null || r[k] === '' || r[k] === '-') delete r[k];
+    if (r.fail === undefined) return;
+    if (blank(r.fail)) { delete r.fail; return; }
+    const f = r.fail;
+    if (typeof f !== 'object' || Array.isArray(f)) return;
+    for (const k of ['text', 'how', 'image', 'ledger']) if (blank(f[k])) delete f[k];
+    if (f.effects !== undefined) { if (blank(f.effects) || (Array.isArray(f.effects) && !f.effects.length)) delete f.effects; else f.effects = effectsToObject(f.effects, `${where}.rope.fail`); }
+    if (blank(f)) delete r.fail;
   }
   // 밤 사건의 방치 판정 칸 missed·caught = { effects, trace } (10-24 A4 E1) — effects 는 두 꼴, 빈 칸은 없는 것
   function normJudge(n, key, where) {

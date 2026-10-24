@@ -1,0 +1,8 @@
+manifest 215
+    13_run seed 11: D6 you_gone
+    13_run seed 11: D6 you_gone
+FAIL 13_run (console errors 0, try 2) - 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fi
+    [ds4 auto] run end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess \u2192 \ubd88\ube5b \ub54c\ubb38\uc778 \uac83 \uac19\ub2e4 / D4 trace hymn_fire_kept \u2192 \ubd88\uc744 \ucb14\ub2e4 / [D4 food0 water5 hunger4] / D4 day trial_d4_gicheol \u2192 \ubbff\ub294\
+    [ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike
+shots 0/1 ok · console errors 0 · FAIL 13_run
+exit=1

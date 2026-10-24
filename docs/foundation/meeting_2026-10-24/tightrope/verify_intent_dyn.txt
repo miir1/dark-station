@@ -1,0 +1,244 @@
+# 동적 검증 — 시드 블록 9001,11001 × 200판
+
+## 정책별: 생존 · 사망 · 확정 사망 결정 · 경고 없는 사망 · k≥5 위험 사건 결정(위험0 열림/줄타기만)/판 · 위험0 고름/판
+- balanced     생존 37.5% · 사망 62.5% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 1.09 (위험0 열림 0.53 · 줄타기만 0.56) · 위험0 고름/판 0.52
+- selfish      생존 29.0% · 사망 71.0% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 5.92 (위험0 열림 2.37 · 줄타기만 3.55) · 위험0 고름/판 2.34
+- devoted      생존 17.5% · 사망 82.5% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 0.00 (위험0 열림 0.00 · 줄타기만 0.00) · 위험0 고름/판 0.00
+- silent       생존 37.8% · 사망 62.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 0.84 (위험0 열림 0.43 · 줄타기만 0.42) · 위험0 고름/판 0.42
+- caller       생존 30.5% · 사망 69.5% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 0.90 (위험0 열림 0.46 · 줄타기만 0.44) · 위험0 고름/판 0.42
+- lazy         생존 26.8% · 사망 73.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 0.82 (위험0 열림 0.35 · 줄타기만 0.47) · 위험0 고름/판 0.34
+- diligent     생존 46.5% · 사망 53.5% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 1.23 (위험0 열림 0.68 · 줄타기만 0.55) · 위험0 고름/판 0.68
+- risky        생존 30.8% · 사망 69.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 2.28 (위험0 열림 1.35 · 줄타기만 0.93) · 위험0 고름/판 0.98
+- steward      생존 43.0% · 사망 57.0% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 0.00 (위험0 열림 0.00 · 줄타기만 0.00) · 위험0 고름/판 0.00
+- counter      생존 10.5% · 사망 89.5% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 4.80 (위험0 열림 2.07 · 줄타기만 2.73) · 위험0 고름/판 1.35
+- child        생존 23.8% · 사망 76.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 5.89 (위험0 열림 2.38 · 줄타기만 3.51) · 위험0 고름/판 1.81
+- selfish_nb   생존 30.3% · 사망 69.8% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 6.87 (위험0 열림 2.54 · 줄타기만 4.33) · 위험0 고름/판 2.51
+- selfish_rt   생존 6.8% · 사망 93.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 3.54 (위험0 열림 1.28 · 줄타기만 2.27) · 위험0 고름/판 0.79
+- selfish_rt0  생존 9.5% · 사망 90.5% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 3.97 (위험0 열림 1.40 · 줄타기만 2.58) · 위험0 고름/판 0.89
+- h_random     생존 0.0% · 사망 100.0% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 0.60 (위험0 열림 0.37 · 줄타기만 0.23) · 위험0 고름/판 0.18
+- h_wary       생존 4.8% · 사망 95.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 3.24 (위험0 열림 1.76 · 줄타기만 1.48) · 위험0 고름/판 1.75
+- h_first      생존 68.8% · 사망 31.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 3.15 (위험0 열림 1.46 · 줄타기만 1.69) · 위험0 고름/판 1.46
+- h_cautious   생존 61.8% · 사망 38.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 6.55 (위험0 열림 3.65 · 줄타기만 2.90) · 위험0 고름/판 3.65
+- h_cautious2  생존 34.0% · 사망 66.0% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 2.90 (위험0 열림 1.54 · 줄타기만 1.36) · 위험0 고름/판 1.54
+- h_mixed      생존 30.8% · 사망 69.3% · 확정사망결정 0 · 경고없는사망 0 · 강제사망 0 · k≥5위험결정/판 5.67 (위험0 열림 3.03 · 줄타기만 2.65) · 위험0 고름/판 3.02
+
+## selfish_nb: k≥5 위험 사건에서 위험0 출구가 열려 있던 사건(횟수/400판)
+  d6_shutter_b: 369
+  starve_you: 201
+  fever_night: 169
+  d5_flood: 142
+  d10_walk_other: 108
+  d8_patrol_return: 29
+  — 그중 위험0 출구를 고른 것:
+  d6_shutter_b/아무것도 하지 않는다: 369
+  starve_you/선로 밑을 뒤진다: 186
+  fever_night/위에 대고 빈다: 145
+  d5_flood/창고를 버리고 뺀다: 142
+  d10_walk_other/걷는다: 108
+  d8_patrol_return/열쇠를 내준다: 29
+  fever_night/젖은 천으로 식힌다: 12
+  fever_night/약을 쓴다: 12
+  산 판 121: 줄타기 넘김 평균 5.06 · ≥2 82.6% · 0번 11.6% · 모든 죽음 판정 넘김 5.43 · 누적 살 확률 평균 0.47 · 누적 ≤ 50% 인 산 판 63.6% · 넘긴 가장 낮은 % 평균 77.58
+  산 판 줄타기 넘김 분포: 0:14 1:7 2:9 3:10 4:9 5:10 6:20 7:15 8:12 9:7 10:5 11:1 13:2
+  사인: dawn_strike 89 · called_up 69 · d10_walk_weak 45 · dawn_mob 33 · fever_night 17 · d10_hold 16 · d10_grab 9 · starve_you 1
+
+## selfish_rt0: k≥5 위험 사건에서 위험0 출구가 열려 있던 사건(횟수/400판)
+  d6_shutter_b: 271
+  d5_flood: 180
+  starve_you: 53
+  fever_night: 28
+  d10_walk_other: 14
+  d8_patrol_return: 12
+  — 그중 위험0 출구를 고른 것:
+  d6_shutter_b/아무것도 하지 않는다: 271
+  starve_you/선로 밑을 뒤진다: 26
+  fever_night/위에 대고 빈다: 21
+  d10_walk_other/걷는다: 14
+  d8_patrol_return/열쇠를 내준다: 12
+  starve_you/남의 그릇을 뺏는다: 9
+  fever_night/약을 쓴다: 4
+  산 판 38: 줄타기 넘김 평균 3.97 · ≥2 78.9% · 0번 13.2% · 모든 죽음 판정 넘김 4.03 · 누적 살 확률 평균 0.45 · 누적 ≤ 50% 인 산 판 57.9% · 넘긴 가장 낮은 % 평균 66.79
+  산 판 줄타기 넘김 분포: 0:5 1:3 2:3 3:6 4:7 5:6 6:2 7:1 8:1 9:2 10:1 11:1
+  사인: dawn_mob 124 · dawn_strike 112 · called_up 71 · d5_flood 24 · d10_walk_weak 11 · starve_you 8 · d10_hold 5 · d10_grab 4
+
+## balanced: k≥5 위험 사건에서 위험0 출구가 열려 있던 사건(횟수/400판)
+  starve_you: 122
+  d6_shutter_b: 30
+  fever_night: 30
+  d10_walk_other: 23
+  d8_patrol_return: 4
+  d10_walk: 1
+  — 그중 위험0 출구를 고른 것:
+  starve_you/선로 밑을 뒤진다: 118
+  d10_walk_other/걷는다: 23
+  fever_night/위에 대고 빈다: 19
+  d6_shutter_b/열쇠를 내준다: 15
+  d6_shutter_b/아무것도 하지 않는다: 15
+  fever_night/젖은 천으로 식힌다: 8
+  d8_patrol_return/열쇠를 내준다: 4
+  fever_night/약을 쓴다: 3
+  d10_walk/걷는다: 1
+  산 판 150: 줄타기 넘김 평균 0.70 · ≥2 18.0% · 0번 64.0% · 모든 죽음 판정 넘김 3.79 · 누적 살 확률 평균 0.46 · 누적 ≤ 50% 인 산 판 62.7% · 넘긴 가장 낮은 % 평균 73.33
+  산 판 줄타기 넘김 분포: 0:96 1:27 2:12 3:7 4:7 5:1
+  사인: fever_night 76 · d5_flood 60 · d10_walk_weak 45 · dawn_strike 25 · d4_spanner 23 · d2_shutter_arm 14 · dawn_mob 3 · called_up 3
+
+## lazy: k≥5 위험 사건에서 위험0 출구가 열려 있던 사건(횟수/400판)
+  starve_you: 87
+  d6_shutter_b: 25
+  fever_night: 20
+  d10_walk_other: 6
+  d8_patrol_return: 3
+  — 그중 위험0 출구를 고른 것:
+  starve_you/선로 밑을 뒤진다: 84
+  d6_shutter_b/열쇠를 내준다: 15
+  fever_night/위에 대고 빈다: 13
+  d6_shutter_b/아무것도 하지 않는다: 10
+  d10_walk_other/걷는다: 6
+  fever_night/젖은 천으로 식힌다: 5
+  d8_patrol_return/열쇠를 내준다: 3
+  fever_night/약을 쓴다: 2
+  산 판 107: 줄타기 넘김 평균 1.77 · ≥2 46.7% · 0번 16.8% · 모든 죽음 판정 넘김 5.19 · 누적 살 확률 평균 0.36 · 누적 ≤ 50% 인 산 판 73.8% · 넘긴 가장 낮은 % 평균 72.38
+  산 판 줄타기 넘김 분포: 0:18 1:39 2:25 3:14 4:5 5:3 7:2 9:1
+  사인: fever_night 92 · dawn_strike 70 · d5_flood 59 · d10_walk_weak 33 · d4_spanner 19 · d2_shutter_arm 13 · called_up 4 · dawn_mob 3
+
+## 그날 사건 사망 (dayEvent) D2·D3·D4·D5·D6 — 정책별 (조심형 = bots.CAREFUL)
+CAREFUL = balanced,silent,lazy,diligent,steward,selfish_nb
+- balanced     D2 14 · D3 0 · D4 23 · D5 63 · D6 7
+- selfish      D2 0 · D3 2 · D4 0 · D5 8 · D6 14
+- devoted      D2 21 · D3 0 · D4 44 · D5 76 · D6 15
+- silent       D2 16 · D3 0 · D4 28 · D5 64 · D6 5
+- caller       D2 18 · D3 0 · D4 36 · D5 73 · D6 14
+- lazy         D2 13 · D3 0 · D4 23 · D5 68 · D6 16
+- diligent     D2 15 · D3 0 · D4 13 · D5 63 · D6 0
+- risky        D2 22 · D3 0 · D4 29 · D5 71 · D6 5
+- steward      D2 21 · D3 0 · D4 0 · D5 54 · D6 4
+- counter      D2 23 · D3 0 · D4 37 · D5 71 · D6 20
+- child        D2 0 · D3 3 · D4 2 · D5 44 · D6 38
+- selfish_nb   D2 0 · D3 2 · D4 1 · D5 7 · D6 14
+- selfish_rt   D2 0 · D3 2 · D4 2 · D5 37 · D6 112
+- selfish_rt0  D2 0 · D3 2 · D4 2 · D5 36 · D6 113
+- h_random     D2 23 · D3 47 · D4 25 · D5 36 · D6 39
+- h_wary       D2 0 · D3 1 · D4 1 · D5 12 · D6 57
+- h_first      D2 0 · D3 0 · D4 0 · D5 4 · D6 7
+- h_cautious   D2 0 · D3 0 · D4 0 · D5 4 · D6 10
+- h_cautious2  D2 5 · D3 0 · D4 6 · D5 47 · D6 27
+- h_mixed      D2 0 · D3 0 · D4 0 · D5 12 · D6 34
+
+## D3 에 죽은 판 전부 (정책 · 시드 · 사인 · 그때 카르마 · 고른 것 · 열린 선택지 살 확률)
+- selfish seed11137 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.97 [물병 둘을 내민다:0.97 / 맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- selfish seed11177 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.93 [맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- devoted seed9097 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 젖은 천으로 식힌다:1 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- devoted seed9121 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- devoted seed9136 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- devoted seed9190 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 젖은 천으로 식힌다:1 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- devoted seed9197 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- devoted seed11127 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- caller seed9027 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- caller seed9158 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 젖은 천으로 식힌다:1 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- caller seed11183 fever_night dayEvent0 | fever_night k0 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 젖은 천으로 식힌다:1 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- risky seed9109 fever_night dayEvent0 | fever_night k3 '썩은 데를 도려낸다' p=0.85 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- risky seed11047 fever_night dayEvent0 | fever_night k3 '불가에서 땀을 뺀다' p=0.7 best=1 [눈을 감는다:0.4 / 불가에서 땀을 뺀다:0.7 / 젖은 천으로 식힌다:1 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- risky seed11136 fever_night dayEvent0 | fever_night k3 '불가에서 땀을 뺀다' p=0.7 best=1 [눈을 감는다:0.4 / 불가에서 땀을 뺀다:0.7 / 젖은 천으로 식힌다:1 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- child seed9083 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.93 [맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- child seed11127 dawn_strike dayEvent1 | dawn_strike k5 '축 늘어진다' p=0.75 best=0.93 [맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- child seed11152 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.93 [맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- selfish_nb seed11137 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.97 [물병 둘을 내민다:0.97 / 맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- selfish_nb seed11177 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.93 [맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- selfish_rt seed11137 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.97 [물병 둘을 내민다:0.97 / 맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- selfish_rt seed11177 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.93 [맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- selfish_rt0 seed11137 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.97 [물병 둘을 내민다:0.97 / 맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- selfish_rt0 seed11177 dawn_strike dayEvent1 | dawn_strike k5 '옆 담요를 가리킨다' p=0.87 best=0.93 [맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+- h_random seed9010 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9018 d3_called_you dayEvent1 | d3_called_you k4 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9024 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9028 d3_called_you dayEvent1 | d3_called_you k7 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9036 d3_called_you dayEvent1 | d3_called_you k2 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9046 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9047 d3_called_you dayEvent1 | d3_called_you k3 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9059 d3_called_you dayEvent1 | d3_called_you k3 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9070 d3_called_you dayEvent1 | d3_called_you k2 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9074 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9078 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9081 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9090 d3_called_you dayEvent1 | d3_called_you k2 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9101 starve_you dayEvent1 | starve_you k3 '눈을 감는다' p=0 best=1 [선로 밑을 뒤진다:1 / 남의 그릇을 뺏는다:1 / 눈을 감는다:0]
+- h_random seed9128 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9129 d3_called_you dayEvent1 | d3_called_you k4 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9145 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9146 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9163 d3_called_you dayEvent1 | d3_called_you k2 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9169 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9172 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9179 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9181 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9190 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9197 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed9200 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11032 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11034 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11040 d3_called_you dayEvent1 | d3_called_you k2 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11042 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11046 d3_called_you dayEvent1 | d3_called_you k3 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11049 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11073 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11080 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11082 starve_you dayEvent1 | starve_you k0 '눈을 감는다' p=0 best=1 [선로 밑을 뒤진다:1 / 남의 그릇을 뺏는다:1 / 눈을 감는다:0]
+- h_random seed11097 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11103 d3_called_you dayEvent1 | d3_called_you k4 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11105 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11129 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11130 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11139 d3_called_you dayEvent1 | d3_called_you k3 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11140 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11146 d3_called_you dayEvent1 | d3_called_you k2 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11163 fever_night dayEvent0 | fever_night k2 '눈을 감는다' p=0.45 best=1 [눈을 감는다:0.45 / 불가에서 땀을 뺀다:0.75 / 썩은 데를 도려낸다:0.85 / 위에 대고 빈다:1 / 남의 담요를 끌어온다:1]
+- h_random seed11177 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11184 d3_called_you dayEvent1 | d3_called_you k3 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11187 d3_called_you dayEvent1 | d3_called_you k0 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_random seed11190 d3_called_you dayEvent1 | d3_called_you k1 '대답한다' p=0 best=1 [대답하지 않는다:1 / 대답한다:0]
+- h_wary seed9113 dawn_strike dayEvent1 | dawn_strike k5 '축 늘어진다' p=0.75 best=0.97 [물병 둘을 내민다:0.97 / 맞고 버틴다:0.93 / 밀쳐 낸다:0.5 / 소리친다:0.55 / 축 늘어진다:0.75 / 옆 담요를 가리킨다:0.87]
+
+## D6 에 그날 사건으로 죽은 판 — 사인별
+- balanced: dawn_strike/맞고 버틴다 (best 0.8) ×4 · starve_you/창고를 턴다 (best 1) ×1 · dawn_strike/맞고 버틴다 (best 0.75) ×1 · dawn_strike/물병 둘을 내민다 (best 0.9) ×1
+- selfish: dawn_strike/축 늘어진다 (best 0.8) ×1 · dawn_mob/다른 사람을 가리킨다 (best 0.97) ×5 · dawn_strike/축 늘어진다 (best 0.9) ×3 · called_up/귀를 막는다 (best 0.9) ×1 · dawn_strike/옆 담요를 가리킨다 (best 0.97) ×1 · called_up/불을 키우고 밤을 샌다 (best 0.9) ×1 · dawn_strike/축 늘어진다 (best 0.95) ×1 · dawn_mob/가진 것을 다 내놓는다 (best 0.95) ×1
+- devoted: d6_shutter_b/맞선다 (best 1) ×10 · dawn_strike/밀쳐 낸다 (best 0.75) ×2 · dawn_strike/물병 둘을 내민다 (best 0.9) ×1 · dawn_strike/밀쳐 낸다 (best 0.8) ×1 · dawn_strike/밀쳐 낸다 (best 1) ×1
+- silent: dawn_strike/맞고 버틴다 (best 0.85) ×1 · dawn_strike/맞고 버틴다 (best 0.8) ×3 · dawn_strike/물병 둘을 내민다 (best 0.9) ×1
+- caller: dawn_strike/소리친다 (best 0.8) ×5 · dawn_strike/소리친다 (best 0.9) ×4 · dawn_strike/소리친다 (best 0.75) ×2 · starve_you/창고를 턴다 (best 1) ×3
+- lazy: dawn_strike/맞고 버틴다 (best 0.85) ×3 · dawn_strike/맞고 버틴다 (best 0.75) ×4 · dawn_strike/맞고 버틴다 (best 0.8) ×6 · dawn_strike/물병 둘을 내민다 (best 0.9) ×3
+- risky: dawn_strike/물병 둘을 내민다 (best 0.9) ×1 · dawn_strike/그릇 둘을 내민다 (best 0.9) ×2 · d6_shutter/동하와 덤빈다 (best 1) ×2
+- steward: dawn_strike/물병 둘을 내민다 (best 0.9) ×1 · dawn_strike/축 늘어진다 (best 0.8) ×3
+- counter: called_up/손등을 깨물며 버틴다 (best 0.9) ×2 · starve_you/창고를 턴다 (best 1) ×9 · dawn_strike/소리친다 (best 0.8) ×3 · called_up/손등을 깨물며 버틴다 (best 0.78) ×1 · dawn_mob/손가락 하나로 갚는다 (best 0.92) ×1 · called_up/손등을 깨물며 버틴다 (best 0.95) ×1 · called_up/불을 키우고 밤을 샌다 (best 0.9) ×1 · dawn_mob/손가락 하나로 갚는다 (best 0.9) ×1 · called_up/손등을 깨물며 버틴다 (best 0.93) ×1
+- child: dawn_mob/다른 사람을 가리킨다 (best 0.97) ×6 · called_up/불을 키우고 밤을 샌다 (best 0.83) ×1 · dawn_mob/손가락 하나로 갚는다 (best 0.95) ×4 · called_up/불을 키우고 밤을 샌다 (best 0.9) ×1 · called_up/손등을 깨물며 버틴다 (best 0.83) ×5 · starve_you/창고를 턴다 (best 1) ×1 · called_up/손등을 깨물며 버틴다 (best 0.95) ×1 · called_up/손등을 깨물며 버틴다 (best 0.85) ×1 · called_up/손등을 깨물며 버틴다 (best 0.75) ×1 · dawn_strike/축 늘어진다 (best 0.97) ×1 · called_up/손등을 깨물며 버틴다 (best 0.9) ×6 · dawn_strike/축 늘어진다 (best 0.9) ×7 · dawn_strike/축 늘어진다 (best 0.83) ×1 · dawn_strike/축 늘어진다 (best 0.95) ×1 · dawn_strike/축 늘어진다 (best 0.93) ×1
+- selfish_nb: dawn_strike/축 늘어진다 (best 0.8) ×1 · called_up/손등을 깨물며 버틴다 (best 0.95) ×2 · dawn_strike/축 늘어진다 (best 0.9) ×3 · dawn_mob/다른 사람을 가리킨다 (best 0.97) ×4 · called_up/불을 키우고 밤을 샌다 (best 0.9) ×2 · called_up/손등을 깨물며 버틴다 (best 0.83) ×1 · dawn_strike/옆 담요를 가리킨다 (best 0.97) ×1
+- selfish_rt: dawn_strike/옆 담요를 가리킨다 (best 0.95) ×11 · dawn_strike/옆 담요를 가리킨다 (best 0.9) ×19 · called_up/불을 키우고 밤을 샌다 (best 0.83) ×13 · dawn_mob/다른 사람을 가리킨다 (best 0.97) ×6 · dawn_mob/다른 사람을 가리킨다 (best 0.95) ×43 · called_up/불을 키우고 밤을 샌다 (best 0.9) ×4 · dawn_strike/옆 담요를 가리킨다 (best 0.8) ×1 · called_up/다른 이름을 댄다 (best 0.75) ×3 · dawn_mob/다른 사람을 가리킨다 (best 0.9) ×4 · called_up/다른 이름을 댄다 (best 0.9) ×1 · dawn_mob/다른 사람을 가리킨다 (best 0.83) ×3 · starve_you/남의 그릇을 뺏는다 (best 1) ×2 · dawn_strike/옆 담요를 가리킨다 (best 0.83) ×1 · dawn_strike/옆 담요를 가리킨다 (best 0.97) ×1
+- selfish_rt0: dawn_strike/옆 담요를 가리킨다 (best 0.95) ×12 · dawn_strike/옆 담요를 가리킨다 (best 0.9) ×20 · called_up/불을 키우고 밤을 샌다 (best 0.83) ×13 · dawn_mob/다른 사람을 가리킨다 (best 0.97) ×6 · dawn_mob/다른 사람을 가리킨다 (best 0.95) ×41 · called_up/불을 키우고 밤을 샌다 (best 0.9) ×4 · dawn_strike/옆 담요를 가리킨다 (best 0.8) ×1 · dawn_mob/다른 사람을 가리킨다 (best 0.9) ×4 · called_up/손등을 깨물며 버틴다 (best 0.9) ×1 · called_up/불을 키우고 밤을 샌다 (best 0.95) ×1 · called_up/손등을 깨물며 버틴다 (best 0.75) ×3 · dawn_mob/다른 사람을 가리킨다 (best 0.83) ×3 · starve_you/남의 그릇을 뺏는다 (best 1) ×2 · dawn_strike/옆 담요를 가리킨다 (best 0.83) ×1 · dawn_strike/옆 담요를 가리킨다 (best 0.97) ×1
+- h_random: dawn_mob/밀치고 달아난다 (best 0.95) ×3 · d6_shutter/동하와 덤빈다 (best 1) ×5 · starve_you/눈을 감는다 (best 1) ×15 · d6_shutter_b/맞선다 (best 1) ×5 · dawn_mob/무릎을 꿇고 빈다 (best 0.97) ×3 · dawn_mob/맞고 버틴다 (best 0.95) ×1 · dawn_mob/무릎을 꿇고 빈다 (best 0.83) ×1 · starve_you/남의 그릇을 뺏는다 (best 1) ×3 · called_up/대답한다 (best 0.97) ×1 · dawn_mob/맞고 버틴다 (best 0.97) ×1 · dawn_mob/무릎을 꿇고 빈다 (best 0.95) ×1
+- h_wary: called_up/다른 이름을 댄다 (best 0.93) ×1 · dawn_strike/밀쳐 낸다 (best 0.8) ×2 · called_up/다른 이름을 댄다 (best 0.78) ×1 · dawn_mob/손가락 하나로 갚는다 (best 0.95) ×1 · called_up/다른 이름을 댄다 (best 0.9) ×6 · dawn_mob/무릎을 꿇고 빈다 (best 0.95) ×2 · dawn_strike/맞고 버틴다 (best 0.9) ×1 · dawn_mob/무릎을 꿇고 빈다 (best 0.97) ×4 · dawn_mob/밀치고 달아난다 (best 0.9) ×2 · dawn_mob/밀치고 달아난다 (best 0.95) ×3 · dawn_strike/밀쳐 낸다 (best 0.93) ×2 · called_up/손등을 깨물며 버틴다 (best 0.95) ×1 · dawn_mob/다른 사람을 가리킨다 (best 0.95) ×1 · called_up/귀를 막는다 (best 0.9) ×3 · called_up/다른 이름을 댄다 (best 0.95) ×4 · called_up/불을 키우고 밤을 샌다 (best 0.95) ×1 · dawn_strike/축 늘어진다 (best 0.8) ×1 · dawn_strike/소리친다 (best 0.9) ×1 · dawn_strike/축 늘어진다 (best 0.85) ×1 · called_up/다른 이름을 댄다 (best 0.75) ×1 · dawn_mob/다른 사람을 가리킨다 (best 0.97) ×1 · dawn_mob/밀치고 달아난다 (best 0.97) ×4 · dawn_mob/무릎을 꿇고 빈다 (best 0.93) ×1 · dawn_strike/옆 담요를 가리킨다 (best 0.9) ×3 · dawn_strike/소리친다 (best 0.95) ×2 · called_up/손등을 깨물며 버틴다 (best 0.83) ×1 · dawn_strike/밀쳐 낸다 (best 0.95) ×1 · dawn_strike/밀쳐 낸다 (best 0.97) ×1 · called_up/불을 키우고 밤을 샌다 (best 0.9) ×1 · called_up/귀를 막는다 (best 0.88) ×1 · dawn_strike/물병 둘을 내민다 (best 0.9) ×1 · called_up/다른 이름을 댄다 (best 0.83) ×1
+- h_first: called_up/귀를 막는다 (best 0.93) ×1 · dawn_mob/맞고 버틴다 (best 0.93) ×2 · dawn_mob/가진 것을 다 내놓는다 (best 0.93) ×1 · dawn_strike/맞고 버틴다 (best 0.8) ×2 · dawn_strike/물병 둘을 내민다 (best 0.9) ×1
+- h_cautious: dawn_strike/맞고 버틴다 (best 0.93) ×1 · dawn_strike/물병 둘을 내민다 (best 0.9) ×3 · dawn_mob/손가락 하나로 갚는다 (best 0.97) ×2 · dawn_strike/맞고 버틴다 (best 0.8) ×1 · called_up/불을 키우고 밤을 샌다 (best 0.97) ×1 · dawn_mob/가진 것을 다 내놓는다 (best 0.97) ×2
+- h_cautious2: dawn_strike/밀쳐 낸다 (best 0.9) ×3 · dawn_mob/다른 사람을 가리킨다 (best 0.97) ×1 · called_up/귀를 막는다 (best 0.78) ×1 · called_up/귀를 막는다 (best 0.93) ×2 · dawn_strike/소리친다 (best 0.85) ×1 · dawn_mob/무릎을 꿇고 빈다 (best 0.97) ×2 · dawn_mob/밀치고 달아난다 (best 0.97) ×5 · dawn_mob/다른 사람을 가리킨다 (best 0.93) ×1 · called_up/귀를 막는다 (best 0.9) ×1 · dawn_strike/옆 담요를 가리킨다 (best 0.9) ×1 · dawn_strike/소리친다 (best 0.75) ×1 · dawn_strike/소리친다 (best 0.9) ×2 · dawn_mob/손가락 하나로 갚는다 (best 0.97) ×1 · dawn_strike/밀쳐 낸다 (best 0.93) ×1 · dawn_mob/맞고 버틴다 (best 0.93) ×1 · dawn_mob/밀치고 달아난다 (best 0.93) ×2 · called_up/다른 이름을 댄다 (best 0.93) ×1
+- h_mixed: dawn_mob/무릎을 꿇고 빈다 (best 0.97) ×5 · called_up/다른 이름을 댄다 (best 0.93) ×1 · dawn_mob/밀치고 달아난다 (best 0.95) ×1 · called_up/불을 키우고 밤을 샌다 (best 0.95) ×2 · dawn_mob/가진 것을 다 내놓는다 (best 0.97) ×3 · dawn_strike/밀쳐 낸다 (best 0.97) ×1 · dawn_strike/옆 담요를 가리킨다 (best 0.9) ×1 · dawn_strike/물병 둘을 내민다 (best 0.9) ×2 · called_up/다른 이름을 댄다 (best 0.9) ×3 · dawn_strike/밀쳐 낸다 (best 0.8) ×1 · called_up/귀를 막는다 (best 0.95) ×1 · dawn_mob/무릎을 꿇고 빈다 (best 0.95) ×1 · dawn_mob/맞고 버틴다 (best 0.95) ×1 · dawn_mob/손가락 하나로 갚는다 (best 0.92) ×1 · called_up/다른 이름을 댄다 (best 0.95) ×1 · dawn_mob/다른 사람을 가리킨다 (best 0.95) ×1 · called_up/불을 키우고 밤을 샌다 (best 0.85) ×1 · called_up/귀를 막는다 (best 0.97) ×1 · dawn_strike/맞고 버틴다 (best 0.8) ×1 · dawn_strike/소리친다 (best 0.9) ×1 · dawn_mob/밀치고 달아난다 (best 0.97) ×1 · dawn_mob/무릎을 꿇고 빈다 (best 0.93) ×1 · dawn_strike/소리친다 (best 0.97) ×1 · dawn_strike/맞고 버틴다 (best 0.97) ×1
+
+## 확정 사망 결정(있으면)
+
+## 죽은 판에서 고른 선택이 best 보다 낮았던 비율 (경고를 읽고도 더 낮은 % 를 고른 죽음)
+- balanced     217/250
+- selfish      244/284
+- devoted      326/330
+- silent       223/249
+- caller       274/278
+- lazy         220/293
+- diligent     207/214
+- risky        243/277
+- steward      225/228
+- counter      253/358
+- child        167/305
+- selfish_nb   109/279
+- selfish_rt   342/373
+- selfish_rt0  281/362
+- h_random     399/400
+- h_wary       351/381
+- h_first      54/125
+- h_cautious   0/153
+- h_cautious2  244/264
+- h_mixed      185/277

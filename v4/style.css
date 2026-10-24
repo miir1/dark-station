@@ -94,6 +94,31 @@ body { font-family: 'Noto Serif KR', 'Batang', serif; font-size: 9px; line-heigh
 #box .opt small.chance { color: var(--accent); }
 #box .opt small.cost { color: #c9b48a; }
 #box .opt small.lock { color: var(--bad); }
+/* (10-24 줄타기) 죽을 수 있는 선택지의 위험 단계 — % 와 ⚠ 가 노랑 → 주황 → 빨강 (살 확률 90·75·55% 문턱, 숫자는 그대로 하나도 안 늘린다) */
+#box .opt small[data-r="1"] { color: #d9b45e; }
+#box .opt small[data-r="2"] { color: #e8964f; }
+#box .opt small[data-r="3"] { color: #ec6f5c; }
+#box .opt small[data-r="4"] { color: #ff4a3a; font-weight: 700; }
+#box .opt small.warn[data-r]::before { color: #ff5a4a; }   /* 죽을 수 있는 길의 ⚠ 는 늘 빨강 — 다치기만 하는 길(노란 ⚠)과 한눈에 갈린다 */
+#box .opt:disabled small[data-r], #box .opt:disabled small.warn[data-r]::before { color: var(--dim); font-weight: 400; }
+/* 위험 0 출구가 없는 창(모든 길이 죽을 수 있다): 테두리가 심장처럼 두 번씩 뛴다 — 가장 나은 길의 살 확률이 낮을수록 빨리
+   (game.js beatTier: 96% 이상 hb1 1.5초 · 92% hb2 1.15 · 86% hb3 0.9 · 그 밑 hb4 0.7 — 습격 창이면 카르마 구간 K1~K4 마다 한 단계씩) */
+#box.opts.rope { animation: ds-heart 1.5s ease-out infinite; }
+#box.opts.rope.hb2 { animation-duration: 1.15s; }
+#box.opts.rope.hb3 { animation-duration: .9s; }
+#box.opts.rope.hb4 { animation-duration: .7s; }
+@keyframes ds-heart {
+  0%, 34%, 100% { border-color: #8a7d66; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #2a251d; }
+  8% { border-color: #c4473a; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #4a1c16, 0 0 8px rgba(196, 71, 58, .55); }
+  16% { border-color: #8a5a4c; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #2a251d; }
+  22% { border-color: #a8443a; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #3a1a15, 0 0 5px rgba(168, 68, 58, .4); }
+}
+/* 죽을 뻔한 판정을 넘긴 줄('판정 78% — 살았다.'): 상자가 한 번 크게 뛰고 가라앉는다 */
+#box.line.close { animation: ds-thump .9s ease-out 1; }
+@keyframes ds-thump { 0% { border-color: #e0574a; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #4a1c16, 0 0 14px rgba(224, 87, 74, .7); } 100% { border-color: #8a7d66; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #2a251d; } }
+/* 눈먼 새벽 한 줄 (본문 끝) */
+#box.opts .body .blind { color: #ec6f5c; font-size: 8px; margin: 1px 0 0; }
+@media (prefers-reduced-motion: reduce) { #box.opts.rope { animation: none; border-color: #a8443a; } #box.line.close { animation: none; border-color: #c4473a; } }
 #box .ledger { font-size: 8px; line-height: 1.6; }
 #box .ledger .row { display: grid; grid-template-columns: 96px 1fr; gap: 4px; }   /* 이름 칸: 증언 전 이름표(생김새, '청소원 조끼의 할머니')가 한 줄에 들어가게 */
 #box .ledger .row .blank { color: var(--dim); }

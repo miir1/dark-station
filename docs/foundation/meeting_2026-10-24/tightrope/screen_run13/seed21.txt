@@ -1,0 +1,7 @@
+manifest 215
+    13_run seed 21: D10 d10_walk_other - OK
+OK   13_run (console errors 0)
+    [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D8 night starve_you \u2192 \ub0a8\uc758 \uadf8\ub987\uc744 \ube8f\ub294\ub2e4 / D8 night fever_night \u2192 \uc369\uc740 \ub370\ub97c \ub3c4\ub824\ub0b8\ub2e4 / [\uafc8 D8] / D9 trace d9_stairs \
+    [ds4 missing] @dawn_strike trip_a2_bones@trip_a2_bones @d6_shutter_b wound_critical@wound_critical @dawn_mob @d10_hold @d10_grab
+shots 1/1 ok ¡¤ console errors 0
+exit=0

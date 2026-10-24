@@ -1,0 +1,40 @@
+[
+ {
+  "shot": "13_run",
+  "ok": false,
+  "why": [
+   "처음부터 끝까지 간 판이 없다 (시드 2개 모두 D10 결말 전에 멈췄다: 11=D6 you_gone, 7=D9 you_gone)",
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl → 그냥 지나간다 / D6 day passage_al"
+  ],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fi"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": 11,
+    "end": "D6 you_gone"
+   },
+   {
+    "attempt": 2,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl → 그냥 지나간다 / D6 day passage_al"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": 7,
+    "end": "D9 you_gone"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl → 그냥 지나간다 / D6 day passage_alone → 두고 걷기로 한다 / D6 day patrol_pact_b → 거절한다 / D6 night d6_shutter_b → 열쇠를 내준다 / [꿈 D6] / D7 trace dawn_strike → 맞고 버틴다 / D7 trace wound_critical → 상처를 지진다 / [D7 food0 water1 hunger4] / D7 ration repay_bowl → 그냥 지나간다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food0 water1 hunger6] / D8 ration repay_bowl → 그냥 지나간다 / [꿈 D8] / D9 trace d9_hoard → 창고에 돌려놓는다 / D9 trace dawn_strike → 그릇 둘을 내민다",
+   "[ds4 missing] @dawn_strike @d6_shutter_b wound_critical@wound_critical"
+  ]
+ }
+]

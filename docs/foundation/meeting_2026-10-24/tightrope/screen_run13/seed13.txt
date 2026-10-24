@@ -1,0 +1,8 @@
+manifest 215
+   포트 8765 사용 중 - 8766 로
+    13_run seed 13: D8 you_gone
+FAIL 13_run (console errors 0) - 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D8 ended map=station open=- ended=you_gone you=dead food=0 | D5 night d5_flood → 창고를 버리고 뺀다 / D6 trace d6_morni
+    [ds4 auto] run end reached=0 D8 ended map=station open=- ended=you_gone you=dead food=0 | D5 night d5_flood \u2192 \ucc3d\uace0\ub97c \ubc84\ub9ac\uace0 \ube80\ub2e4 / D6 trace d6_morning \u2192 \uc1e0\uc904\uc744 \uae0b\ub294\ub2e4 / D6 trace hymn_fire_kept \u2192 \ubd88\uc744 \ucb14\ub2e4 / [D6 fo
+    [ds4 missing] @dawn_strike @d6_shutter_b @dawn_mob
+shots 0/1 ok · console errors 0 · FAIL 13_run
+exit=1

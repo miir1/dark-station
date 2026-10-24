@@ -1,0 +1,46 @@
+[
+ {
+  "shot": "13_run",
+  "ok": true,
+  "why": [],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fi"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": 11,
+    "end": "D6 you_gone"
+   },
+   {
+    "attempt": 2,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl → 그냥 지나간다 / D6 day passage_al"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": 7,
+    "end": "D9 you_gone"
+   },
+   {
+    "attempt": 3,
+    "ok": true,
+    "why": [],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": 3,
+    "end": "D10 d10_walk_other"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | [꿈 D6] / [D7 food2 water5 hunger2] / D7 ration repay_bowl → 그냥 지나간다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food0 water3 hunger5] / D8 ration repay_bowl → 그냥 지나간다 / [꿈 D8] / D9 trace d9_stairs → 묻는다 / [D9 food0 water3 hunger7] / D9 evening d9_inspection → 고개를 돌린다 / [D10 food0 water3 hunger9] / D10 ration repay_bowl → 그냥 지나간다 / D10 day d10_walk_weak → 옆 사람 물병을 비운다 / D10 day d10_grab → 물병을 돌려준다 / D10 day d10_walk_other → 걷는다",
+   "[ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike @d6_shutter_b @d10_grab"
+  ]
+ }
+]

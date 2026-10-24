@@ -1,0 +1,24 @@
+[
+ {
+  "shot": "13_run",
+  "ok": true,
+  "why": [],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": true,
+    "why": [],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": "21",
+    "end": "D10 d10_walk_other"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D8 night starve_you → 남의 그릇을 뺏는다 / D8 night fever_night → 썩은 데를 도려낸다 / [꿈 D8] / D9 trace d9_stairs → 묻는다 / D9 trace dawn_strike → 맞고 버틴다 / D9 trace wound_critical → 약국 안쪽을 뒤진다 / D9 trace dawn_mob → 손가락 하나로 갚는다 / [D9 food0 water0 hunger10] / D9 evening d9_inspection → 고개를 돌린다 / D9 night starve_you → 선로 밑을 뒤진다 / D10 trace wound_critical → 약국 안쪽을 뒤진다 / [D10 food0 water0 hunger8] / D10 day d10_walk_weak → 옆 사람 물병을 비운다 / D10 day d10_hold → 끌려가며 버틴다 / D10 day d10_grab → 끌려 넘어진다 / D10 day d10_walk_other → 걷는다",
+   "[ds4 missing] @dawn_strike trip_a2_bones@trip_a2_bones @d6_shutter_b wound_critical@wound_critical @dawn_mob @d10_hold @d10_grab"
+  ]
+ }
+]

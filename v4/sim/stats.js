@@ -58,6 +58,15 @@ function rootCause(db, s, causeKey) {
   return ks[0];
 }
 
+// 누구나 아는 밤(10-24 A4): public:1 이거나 effects 에 kill 이 있는 밤 사건 행 id — 굴릴 때 바로 발견되므로 '실제 발견율'에서 뺀다 (tightrope 설계 §2-3)
+const PUBLIC = new WeakMap();
+function publicIds(db) {
+  if (PUBLIC.has(db)) return PUBLIC.get(db);
+  const out = new Set(db.nightEvents.filter((n) => n.public || (n.effects && n.effects.kill)).map((n) => n.id));
+  PUBLIC.set(db, out);
+  return out;
+}
+
 // 한 판에서 뽑는 값
 function measure(db, s, trace) {
   trace = trace || {};
@@ -81,6 +90,9 @@ function measure(db, s, trace) {
   const causeKey = dead ? (cause ? cause.event : (s.ended && s.ended.why === 'all_dead' ? '전멸' : s.ended ? s.ended.why : 'none')) : null;
   const deathDay = dead ? (you.day != null ? you.day : s.day) : null;
   const root = dead ? rootCause(db, s, causeKey) : null;
+  const st = s.stats || {};
+  const pub = publicIds(db);
+  const priv = resident.filter((e) => !pub.has(e.id));   // 숨은 밤 = 주민 사건 가운데 누구나 아는 밤이 아닌 것
   return {
     seed: s.seed, days: s.day, dead, why: s.ended ? s.ended.why : 'none', cause,
     allDead, identity: s.ended ? s.ended.identity : null, nights: resident.length, clock, malice, hymn, found: disc.found, unknown: disc.unknown, hymnFound,
@@ -106,6 +118,14 @@ function measure(db, s, trace) {
     karma: s.world.karma || 0, neglect: (s.stats && s.stats.neglect) || 0, neglectRows,
     home9: trace.home9 != null ? trace.home9 : null, res7: trace.res7 != null ? trace.res7 : null,
     crisis: trace.crisis || {}, swapped: dead && !!(cause && cause.swapped),
+    // (10-24 tightrope §1-7 · R4) 아슬함: 줄타기 판정 굴림·넘김 · 당신을 죽이는 모든 판정 굴림·넘김 (엔진 s.stats) · 눈먼 새벽을 만난 횟수
+    ropeRolls: st.ropeRolls || 0, ropeClose: st.ropeClose || 0, deathRolls: st.deathRolls || 0, closeCalls: st.closeCalls || 0, blindMet: st.blindMet || 0,
+    //   (tightrope 검증) 느껴지는 아슬함: 그중 화면 % ≤ E.ROPE_FELT_MAX(85, 죽을 확률 ≥ 15%)인 줄타기 판정 굴림·넘김
+    ropeFeltRolls: st.ropeFeltRolls || 0, ropeFelt: st.ropeFelt || 0,
+    //   줄타기로 죽음 · 눈먼 새벽에 죽음 · 위험 0 출구가 없던 죽음(옛 강제 정의 — R1 뒤 forced 는 확정 사망)
+    ropeDeath: dead && !!(cause && cause.roped), blindDeath: dead && !!(cause && cause.blind), noSafe: dead && !!(cause && cause.noSafe),
+    // (tightrope §2-3) 실제 발견: 누구나 아는 밤(public·kill)을 뺀 주민 사건 수·그중 발견 · 누구나 아는 밤 수
+    privTotal: priv.length, privFound: priv.filter((e) => e.discovered).length, pubTotal: resident.length - priv.length,
   };
 }
 
@@ -113,6 +133,7 @@ function measure(db, s, trace) {
 function aggregate(db, runs) {
   const n = runs.length;
   const deaths = runs.filter((r) => r.dead);
+  const surv = runs.filter((r) => r.survived);
   const byCause = {}, byRoot = {}, byDay = {}, dayEvent = {};
   for (const r of deaths) {
     const k = r.causeKey || (r.cause ? r.cause.event : (r.why === 'all_dead' ? '전멸' : r.why)); byCause[k] = (byCause[k] || 0) + 1;
@@ -160,8 +181,25 @@ function aggregate(db, runs) {
     karma: avg(vals('karma')), neglect: avg(vals('neglect')), neglectRows: avg(vals('neglectRows')),
     home9: avg(vals('home9')), home9N: vals('home9').length, res7: avg(vals('res7')), res7N: vals('res7').length,
     daysLived: avg(vals('daysLived')), crisis, swappedDeaths: deaths.filter((r) => r.swapped).length,
+    // (10-24 tightrope §1-7) 아슬함 — '산 판' = 열흘을 산 판(survived). survN 이 0 이면 산 판 값은 null
+    survN: surv.length,
+    ropeRolls: avg(runs.map((r) => r.ropeRolls || 0)), ropeClose: avg(runs.map((r) => r.ropeClose || 0)),
+    ropeCloseSurv: surv.length ? avg(surv.map((r) => r.ropeClose || 0)) : null,
+    ropeClose2: surv.length ? pct(surv.filter((r) => (r.ropeClose || 0) >= 2).length, surv.length) : null,
+    // (tightrope 검증) 느껴지는 아슬함 — 화면 ≤ 85% 줄타기만: 굴림/판 · 넘김/판 · 산 판 넘김/판 · 산 판 중 ≥ 2번% · 산 판 넘김 중 그 비중%
+    ropeFeltRolls: avg(runs.map((r) => r.ropeFeltRolls || 0)), ropeFelt: avg(runs.map((r) => r.ropeFelt || 0)),
+    ropeFeltSurv: surv.length ? avg(surv.map((r) => r.ropeFelt || 0)) : null,
+    ropeFelt2: surv.length ? pct(surv.filter((r) => (r.ropeFelt || 0) >= 2).length, surv.length) : null,
+    ropeFeltShare: sumOf(surv, 'ropeClose') ? pct(sumOf(surv, 'ropeFelt'), sumOf(surv, 'ropeClose')) : null,
+    deathRolls: avg(runs.map((r) => r.deathRolls || 0)), closeCalls: avg(runs.map((r) => r.closeCalls || 0)),
+    closeCallsSurv: surv.length ? avg(surv.map((r) => r.closeCalls || 0)) : null,
+    blindMet: avg(runs.map((r) => r.blindMet || 0)), blindDeaths: deaths.filter((r) => r.blindDeath).length,
+    ropeDeaths: deaths.filter((r) => r.ropeDeath).length, noSafeDeaths: deaths.filter((r) => r.noSafe).length,
+    // (tightrope §2-3) 실제 발견율 = Σ 숨은 밤 발견 / Σ 숨은 밤 (옛 discovery 는 그대로 둔다) · 누구나 아는 밤/판 · 숨은 밤/판
+    discReal: pct(sumOf(runs, 'privFound'), sumOf(runs, 'privTotal')), pubNights: avg(runs.map((r) => r.pubTotal || 0)), privNights: avg(runs.map((r) => r.privTotal || 0)),
   };
 }
+const sumOf = (runs, k) => runs.reduce((a, r) => a + (r[k] || 0), 0);
 
 // 합격선 판정 (31 §4 · §6-6). aggs: {policy: aggregate}, candidates: 후보 수(또는 후보 id 목록), careful: 조심형 정책 이름 목록(bots.CAREFUL)
 // rows = [항목, 합격선, 실측, 통과, 경계]. 경계 = %로 재는 줄의 실측이 합격선에서 margin(기본 5%p) 안 — 표본이 바뀌면 뒤집힐 수 있어 ✓로 확정하지 않는다
@@ -216,6 +254,8 @@ function gate(aggs, candidates, careful, opts) {
   const has = (a, k) => !!a && Number.isFinite(a[k]) && !(a[k + 'N'] === 0);   // home9N·res7N = 그 아침까지 간 판 수 — 0 이면 값이 없다
   const diff = (x, y, k) => (has(aggs[x], k) && has(aggs[y], k) ? Math.round(100 * (aggs[x][k] - aggs[y][k])) / 100 : null);
   const fmtDiff = (pairs) => pairs.map(([lab, v]) => `${lab} ${v == null ? '-' : sgn(v)}`).join(' / ');
+  // (10-27 측정 고침) D9 주민·D7 자원 차는 판정이 소수 둘째 자리 값(diff)으로 되는데 첫째 자리로 찍혀, +0.19(미달)가 '+0.2'로 보였다 — 판정과 같은 자리까지 찍는다
+  const fmtDiff2 = (pairs) => pairs.map(([lab, v]) => `${lab} ${v == null ? '-' : (v > 0 ? '+' : '') + v}`).join(' / ');
   // A1: 이기적 묶음 (10-24 검증 A1) — 합격선은 버릇 없는 이기적(selfishPlain)만 잰다. 몸 꺼림(selfishQuirk)의 죽음은 '버틴다'를 두고 고른 주사위라
   //   이기심의 값이 아니라 봇 버릇이다(selfish 사망 231판 전부 · 카르마로 판정이 된 금기로 죽은 판 0) → 참고 줄(측정)
   const selfs = G.selfish.filter((k) => aggs[k]);
@@ -234,18 +274,34 @@ function gate(aggs, candidates, careful, opts) {
   const dayEv = dayEvOf(care);
   const dayEvP = dayEvOf(G.personality.filter((k) => aggs[k])), dayEvH = dayEvOf(G.human.filter((k) => aggs[k] && k !== 'h_random')), dayEvAll = dayEvOf(Object.keys(aggs));
   const D26 = [2, 3, 4, 5, 6];
-  const fmtDays = (o) => D26.map((d) => `D${d} ${o[d] || 0}`).join(' · ');
+  // (10-24 디렉터 · tightrope §3) D3 = 규칙을 배우는 날(신중하면 그날 안 죽음) · D6 = 값을 치르면 사는 날 → 그날 사망 합격선은 D2·D4·D5 만, D3·D6 은 측정
+  const D_GATE = [2, 4, 5], D_MEAS = [3, 6];
+  const fmtDays = (o, days) => (days || D26).map((d) => `D${d} ${o[d] || 0}`).join(' · ');
   // A4: 게으름의 값 (보통 = balanced 가 주 지표, 부지런 = 상한 봇)
   const lzS = [['보통−게으름', diff('balanced', 'lazy', 'survived')], ['부지런−게으름', diff('diligent', 'lazy', 'survived')]];
   const lzH = [['보통−게으름', diff('balanced', 'lazy', 'home9')], ['부지런−게으름', diff('diligent', 'lazy', 'home9')]];
   const lzR = [['보통−게으름', diff('balanced', 'lazy', 'res7')], ['부지런−게으름', diff('diligent', 'lazy', 'res7')]];
   const okAll = (pairs, f) => pairs.every(([, v]) => v != null && f(v));
   const cr = (b && b.crisis) || {};
+  // (10-24 tightrope §1-7) 아슬함 — 경고를 읽고 버티는 이기적(G.rope, 기본 selfish_nb)이 열흘을 산 판에서 줄타기 판정을 몇 번 넘겼나
+  const ropeNames = (G.rope || []).filter((k) => aggs[k]);
+  const rp = ropeNames.length ? aggs[ropeNames[0]] : null;
+  const rpName = (G.rope || ['selfish_nb']).join('·');
+  const ROPE_CLOSE_MIN = 2, ROPE_CLOSE2_MIN = 60;
+  const rpOk = !!rp && rp.survN > 0 && rp.ropeCloseSurv != null;
+  // (tightrope 검증) 느껴지는 아슬함 — 화면 ≤ 85% 줄타기만. 같은 참고선(≥ 2 · ≥ 60%)에 대어 표시만 한다: 측정 줄, 합격선이 아니다(디렉터 확인 전). 옛 집계(칸 없음)는 '-'
+  const FELT = E.ROPE_FELT_MAX;
+  const rfOk = rpOk && rp.ropeFeltSurv != null && Number.isFinite(rp.ropeFeltSurv);
+  const val = (a, k, unit) => (a && a[k] != null && Number.isFinite(a[k]) ? `${a[k]}${unit || ''}` : '-');
+  const tri = (k, unit) => [lazy, b, dil].map((a) => val(a, k, unit)).join(' / ');
+  const someOf = (names, f) => names.filter((k) => aggs[k]).map((k) => `${k} ${f(aggs[k])}`).join(' · ') || '-';
+  const ropeShow = ['balanced', 'lazy', ...(G.rope || [])].filter((k, i, a) => a.indexOf(k) === i);
   const rows = [
     ['당신 사망(올라감 포함)', '≥ 50%', `${b.deathRate}%`, b.deathRate >= 50, nearAny([[b.deathRate, 50]])],
     ['사망 중 경고 있던 선택 (실질: 강제 사망은 경고 없음)', '100%', b.deaths ? `${b.warnedRate}% (형식 기준 ${b.warnTextRate}%)` : '사망 없음', b.warnedRate === 100 || b.deathRate === 0, nearAny([[b.warnedRate, 100]])],
-    ['강제 사망 (전 정책 합산)', '0 판 (10-24 바꿈: ≤20% → 0)', `${sum('forced')} 판 (${forcedAll}%, ${sum('forced')}/${sum('deaths')})`, sum('forced') === 0, false],
+    ['강제 사망 = 확정 사망 (고를 때 열린 선택지 전부 살 확률 0, 전 정책 합산)', '0 판 (10-24 tightrope R1: 살 확률 > 0 인 주사위는 강제가 아니다)', `${sum('forced')} 판 (${forcedAll}%, ${sum('forced')}/${sum('deaths')})`, sum('forced') === 0, false],
     ['  강제 사망 중 앞선 자유 경고 선택 없음 (전 정책)', '0 판', `${sum('forced') - sum('forcedTraced')} 판`, sum('forced') - sum('forcedTraced') === 0, false],
+    ['  참고: 위험 0 출구가 없던 죽음 (옛 강제 정의 — 카르마 판의 줄타기는 일부러 그렇다, 전 정책)', '측정', `${sum('noSafeDeaths')} 판 (그중 줄타기 판정 ${sum('ropeDeaths')})`, true, false],
     ['조심형 봇 사망 (' + (care.join('·') || '없음') + ' 합산)', '측정', care.length ? `${careRate}% (${careD}/${careN}), 그중 강제 ${careForced}%` : '-', true, false],
     ['  봇 버릇 점검: 조심형이 평범한 대안(안 죽고·금기 아니고·죽음 글 없음)을 두고 죽음 글 선택지로 죽음', '0 판', care.length ? `${careDeadly} 판 (전 정책 ${sum('deadlyPick')})` : '-', careDeadly === 0, false],
     ['  참고: 몸 꺼림 정책(' + (quirk.join('·') || '없음') + ')의 같은 죽음 — 조심형이 아니다(10-24 검증)', '측정', quirk.length ? quirk.map((k) => `${k} ${aggs[k].deadlyPick || 0}`).join(' · ') + ' 판' : '-', true, false],
@@ -261,7 +317,7 @@ function gate(aggs, candidates, careful, opts) {
     ['정체 — 성향 봇 평균, 가장 큰 후보 (A3)', `≤ ${ID_MAX}%`, idP.ps.length ? `${mP.k} ${mP.v}%` : '-', idP.ps.length > 0 && mP.v <= ID_MAX, nearAny([[mP.v, ID_MAX]])],
     idRow('정체 — 사람 흉내 평균, 각 후보 (A3, 프롤로그 사망 판 뺌)', idH, ID_MIN),
     ['정체 — 사람 흉내 평균, 가장 큰 후보 (A3, 프롤로그 사망 판 뺌)', '측정 (디렉터 확인: 승객이 가장 흔한 결말)', idH.ps.length ? `${mH.k} ${mH.v}%` : '-', true, false],
-    ['  참고: 사람 흉내 평균 (옛 방식 — 프롤로그 사망 포함) · 프롤로그(D0) 사망 판 비율', '측정', idHall.ps.length ? Object.entries(idHall.out).map(([k, v]) => `${k} ${v}`).join(' · ') + ` · 가장 큰 ${mHall.k} ${mHall.v}% | D0 사망 ` + proH.map(([k, v]) => `${k} ${v}%`).join(' · ') : '-', true, false],
+    ['  참고: 사람 흉내 평균 (옛 방식 — 프롤로그 사망 포함) · 프롤로그(D0) 사망 판 비율', '측정', idHall.ps.length ? Object.entries(idHall.out).map(([k, v]) => `${k} ${v}`).join(' · ') + ` · 가장 큰 ${mHall.k} ${mHall.v}% ‖ D0 사망 ` + proH.map(([k, v]) => `${k} ${v}%`).join(' · ') : '-', true, false],
     ['정체 분포 (옛 방식: 정책 전체 평균, 각 후보)', `측정 (옛 합격선 ≥ ${thr}%)`, Object.entries(idAll).map(([k, v]) => `${k} ${v}%`).join(' · ') || '없음', true, false],
     ['  옛 방식: 7후보 중 ≥7% 인 후보 수', '측정 (옛 합격선 ≥ 5)', `${idOk} 후보`, true, false],
     ['explicit 사건 / 판', '≥ 7', `${b.explicit}`, b.explicit >= 7, false],
@@ -274,8 +330,9 @@ function gate(aggs, candidates, careful, opts) {
     ['A2 D5까지 당신 사망 (균형)', '≥ 10%', b.deadByD5 != null ? `${b.deadByD5}%` : '-', Number.isFinite(b.deadByD5) && b.deadByD5 >= 10, nearAny([[b.deadByD5, 10]])],
     ['A2 균형 사망 중 한 사건 비중 (사인 사건)', '≤ 40%', b.topCause ? `${b.topCause.k} ${b.topCause.share}%` : '-', !!b.topCause && b.topCause.share <= 40, !!b.topCause && nearAny([[b.topCause.share, 40]])],
     ['A2 균형 사망 중 한 사건 비중 (원인 사건 = 부상 출처)', '≤ 40%', b.topRoot ? `${b.topRoot.k} ${b.topRoot.share}%` : '-', !!b.topRoot && b.topRoot.share <= 40, !!b.topRoot && nearAny([[b.topRoot.share, 40]])],
-    ['A2 D2~D6 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)', '날마다 > 0', care.length ? fmtDays(dayEv) : '-', care.length > 0 && D26.every((d) => (dayEv[d] || 0) > 0), false],
-    ['  참고: 같은 값 — 성향 봇 8종 / 사람 흉내(h_random 뺌) / 전 정책 합산(옛 줄)', '측정', `성향 ${fmtDays(dayEvP)} | 사람 ${fmtDays(dayEvH)} | 전 ${fmtDays(dayEvAll)}`, true, false],
+    ['A2 D2·D4·D5 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)', '날마다 > 0', care.length ? fmtDays(dayEv, D_GATE) : '-', care.length > 0 && D_GATE.every((d) => (dayEv[d] || 0) > 0), false],
+    ['  A2 D3·D6 그날 사건으로 죽은 판 (조심형 합산 — D3 규칙을 배우는 날 · D6 값을 치르면 사는 날, 10-24 디렉터)', '측정', care.length ? fmtDays(dayEv, D_MEAS) : '-', true, false],
+    ['  참고: 같은 값 — 성향 봇 8종 / 사람 흉내(h_random 뺌) / 전 정책 합산(옛 줄)', '측정', `성향 ${fmtDays(dayEvP)} ‖ 사람 ${fmtDays(dayEvH)} ‖ 전 ${fmtDays(dayEvAll)}`, true, false],
     // ── A1 이기심 = 늦게 오는 카르마 ──
     ['A1 이른 안전: D1~D4 생존 − 균형 (버릇 없는 이기적 각각)', '≥ +5%p', plain.length ? fmtDiff(eDiff) + `%p (균형 ${b.aliveD4})` : '-', plain.length > 0 && okAll(eDiff, (v) => v >= 5), nearAny(eDiff.map(([, v]) => [v, 5]))],
     ['A1 이기심의 값: 열흘 생존 − 균형 (버릇 없는 이기적 각각 — ' + plainNames.join('·') + ')', '< 0 (모든 정책)', plain.length ? fmtDiff(sDiff) + '%p' : '-', plain.length === plainNames.length && okAll(sDiff, (v) => v < 0), nearAny(sDiff.map(([, v]) => [v, 0]))],
@@ -283,11 +340,22 @@ function gate(aggs, candidates, careful, opts) {
     [`A1 이기적 사인 쏠림 (버릇 없는 이기적, 사망 ≥ ${SIGN_MIN_RATE}%인 정책만)`, '≤ 60%', sTop.length ? sTop.map(([k, t, j]) => `${k} ${t.k} ${t.share}%` + (j ? '' : ` (사망 ${aggs[k].deaths || 0}판 — 판정 안 함)`)).join(' / ') : '-', sJudged.every(([, t]) => t.share <= 60), !sJudged.length || nearAny(sJudged.map(([, t]) => [t.share, 60]))],
     ['  참고: 몸 꺼림 이기적 사인 쏠림', '측정', quirk.length ? quirk.map((k) => `${k} ${topOf(k).k} ${topOf(k).share}%`).join(' / ') : '-', true, false],
     ['  카르마 (판 끝 평균: 균형 / 이기적 4종)', '측정', `${b.karma != null ? b.karma : '-'} / ${selfs.map((k) => aggs[k].karma).join(' · ') || '-'}`, true, false],
+    // ── 줄타기 아슬함 (10-24 tightrope §1-7) ──
+    [`A1 아슬함: 줄타기 판정 넘김/판 (열흘 산 판, ${rpName})`, `≥ ${ROPE_CLOSE_MIN}`, rpOk ? `${rp.ropeCloseSurv} (산 판 ${rp.survN} · 전체 판 ${rp.ropeClose})` : '-', rpOk && rp.ropeCloseSurv >= ROPE_CLOSE_MIN, false],
+    [`A1 아슬함: 산 판 중 줄타기 판정 ≥ 2번 넘김 (${rpName})`, `≥ ${ROPE_CLOSE2_MIN}%`, rpOk ? `${rp.ropeClose2}%` : '-', rpOk && rp.ropeClose2 >= ROPE_CLOSE2_MIN, rpOk && nearAny([[rp.ropeClose2, ROPE_CLOSE2_MIN]])],
+    [`  A1 느껴지는 아슬함: 화면 ≤ ${FELT}% (죽을 확률 ≥ ${100 - FELT}%) 줄타기 넘김/판 (열흘 산 판, ${rpName})`, `측정 — 참고선 ≥ ${ROPE_CLOSE_MIN} (합격선 아님, 디렉터 확인)`, rfOk ? `${rp.ropeFeltSurv} (산 판 넘김 중 ${rp.ropeFeltShare != null ? rp.ropeFeltShare : '-'}% · 전체 판 ${rp.ropeFelt})` : '-', rfOk && rp.ropeFeltSurv >= ROPE_CLOSE_MIN, false],
+    [`  A1 느껴지는 아슬함: 산 판 중 화면 ≤ ${FELT}% 줄타기 ≥ 2번 넘김 (${rpName})`, `측정 — 참고선 ≥ ${ROPE_CLOSE2_MIN}% (합격선 아님, 디렉터 확인)`, rfOk ? `${rp.ropeFelt2}%` : '-', rfOk && rp.ropeFelt2 >= ROPE_CLOSE2_MIN, rfOk && nearAny([[rp.ropeFelt2, ROPE_CLOSE2_MIN]])],
+    ['  죽음 판정 넘김/판 (산 판 — 당신을 죽이는 모든 판정)', '측정', someOf(ropeShow, (a) => val(a, 'closeCallsSurv')), true, false],
+    ['  줄타기 판정 굴림/판 (그중 줄타기로 죽은 판)', '측정', someOf(ropeShow, (a) => `${val(a, 'ropeRolls')} (${a.ropeDeaths != null ? a.ropeDeaths : '-'}판)`), true, false],
     // ── A4 게으름 = 처벌 ──
     ['A4 게으름의 값 — 생존 (보통−게으름 주 지표 / 부지런−게으름)', '≥ +5%p', fmtDiff(lzS) + '%p', okAll(lzS, (v) => v >= 5), nearAny(lzS.map(([, v]) => [v, 5]))],
-    ['A4 게으름의 값 — D9 아침 주민 수 차', '> 0', fmtDiff(lzH), okAll(lzH, (v) => v > 0), false],
-    ['A4 게으름의 값 — D7 아침 식량+물+약 차', '≥ +0.2', fmtDiff(lzR), okAll(lzR, (v) => v >= 0.2), false],
+    ['A4 게으름의 값 — D9 아침 주민 수 차', '> 0', fmtDiff2(lzH), okAll(lzH, (v) => v > 0), false],
+    ['A4 게으름의 값 — D7 아침 식량+물+약 차', '≥ +0.2', fmtDiff2(lzR), okAll(lzR, (v) => v >= 0.2), false],
     ['  못 본 일(missed 적용) / 판 (게으름 / 보통 / 부지런)', '측정', `${lazy.neglect != null ? lazy.neglect : '-'} / ${b.neglect != null ? b.neglect : '-'} / ${dil.neglect != null ? dil.neglect : '-'}`, true, false],
+    // (10-24 tightrope §2-3) 게으름 측정 구분 — 누구나 아는 밤(public·kill)은 조사와 상관없이 발견된다. 실제 발견율은 그 밤을 뺀다(소문은 안 늘린다)
+    ['  A4 측정: 실제 발견율 — 누구나 아는 밤 뺌 (게으름 / 보통 / 부지런)', '측정', `${tri('discReal', '%')} (옛 발견율 ${tri('discovery', '%')})`, true, false],
+    ['  A4 측정: 누구나 아는 밤/판 · 숨은 밤/판 (게으름 / 보통 / 부지런)', '측정', `${tri('pubNights')} · ${tri('privNights')}`, true, false],
+    ['  A4 측정: 눈먼 새벽/판 · 그 죽음 판 (게으름 / 보통 / 부지런)', '측정', `${tri('blindMet')} · ${[lazy, b, dil].map((a) => (a && a.blindDeaths != null ? a.blindDeaths : '-')).join(' / ')}`, true, false],
     ['  위기 때 값 길(비용 있는 선택)이 열린 비율 (균형)', '측정 (디렉터 확인)', CRISIS.map((k) => `${k} ${cr[k] ? `${cr[k].rate}% (${cr[k].costOpen}/${cr[k].reached})` : '-'}`).join(' · '), true, false],
     ['헌신 봇 생존', '측정 (> 0%)', aggs.devoted ? `${aggs.devoted.survived}%` : '-', !!aggs.devoted && aggs.devoted.survived > 0, false],
     ['사망 원인 중 굶주림 (전 정책 합산)', '< 50%', `${starveAll}% (${sum('starveDeaths')}/${sum('deaths')})`, starveAll < 50, nearAny([[starveAll, 50]])],
@@ -304,4 +372,4 @@ function combine(gates) {
   });
 }
 
-module.exports = { measure, aggregate, gate, combine, pct, avg, MARGIN, SIGN_MIN_RATE, D3_TOGETHER, rootCause, funnelOf, deadlyPicked };
+module.exports = { measure, aggregate, gate, combine, pct, avg, MARGIN, SIGN_MIN_RATE, D3_TOGETHER, rootCause, funnelOf, deadlyPicked, publicIds };

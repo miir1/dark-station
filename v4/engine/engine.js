@@ -15,11 +15,19 @@
   const SAVE_V = 1;
   const MAX_LOG = 80;
   const SKILL_PCT = 5;                      // 판정: base% + 기술 × 5%p (화면의 % = 실제 %)
+  const ROPE_FELT_MAX = 85;                 // (10-24 tightrope 검증) '느껴지는 아슬함' — 화면 % 가 이 값 이하(죽을 확률 ≥ 15%)인 줄타기 판정만 따로 센다(측정용, 규칙은 안 바꾼다)
   const EVENT_RANDOM = ['any', 'randomSleeper', 'nearestSleeper', 'farthestSleeper'];   // 사건 대상 낱말(자리 정보 없음 = 무작위)
   const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
   // 선택지가 당신을 죽일 수 있는가(결과 out·ok·fail 중 하나라도 kill 이 당신에게 닿는다) — 강제 사망 판정과 봇 메타가 같이 쓴다
   const meWho = (w) => !w || w === 'you' || w === 'self' || w === 'actor' || w === 'party' || w === 'all';
-  const killsYou = (c) => [c.out, c.ok, c.fail].some((o) => o && o.effects && o.effects.kill && FX.list(o.effects.kill).some((kv) => meWho(kv.who)));
+  const outKills = (o) => !!(o && o.effects && o.effects.kill && FX.list(o.effects.kill).some((kv) => meWho(kv.who)));
+  const killsYou = (c) => [c.out, c.ok, c.fail].some(outKills);
+  // (10-24 tightrope R1) 살 확률 0~1: 판정 없으면 결과가 당신을 죽이지 않을 때 1 · 판정이면 %×(성공이 안 죽임) + (1−%)×(실패가 안 죽임). chance = 화면의 % (choiceState)
+  function survival(c, chance) {
+    if (!c) return 0;
+    if (c.check) { const p = Math.max(0, Math.min(100, Number.isFinite(chance) ? chance : 0)) / 100; return Math.round(10000 * (p * (outKills(c.ok) ? 0 : 1) + (1 - p) * (outKills(c.fail) ? 0 : 1))) / 10000; }
+    return outKills(c.out) ? 0 : 1;
+  }
   const injuryMax = (db) => (db.numbers.injury ? db.numbers.injury.max : Infinity);   // 위독 = injury 의 최대값 (numbers 표)
   const SIGN_COLD_CALL_DEFAULT = 5;          // 호칭이 차가워지는 원한 문턱 (numbers 세계 수치 sign_cold_call 이 있으면 그것, 10-24 E5)
   const NO_TARGET_WHY = '댈 이름이 없다';     // targetOptional 사건에서 대상이 없어 잠긴 선택지의 기본 이유 (10-24)
@@ -75,9 +83,10 @@
       v: SAVE_V, seed, rng: seed, day: world.day != null ? world.day : 0, phase: null, ended: null,
       world, people: {}, pos: { map: null, x: 0, y: 0 },
       flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {}, fired: {}, phaseSeen: [], critical: null, trip: null, lastFree: null, heard: {}, found: null,
-      pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0, neglect: 0 },
+      pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0, neglect: 0, ropeRolls: 0, ropeClose: 0, ropeFeltRolls: 0, ropeFelt: 0, deathRolls: 0, closeCalls: 0, blindMet: 0 },
       hurt: [], notice: null, noticeDay: null,
-    };   // (10-24) hurt = 당신 부상의 출처 [{day, src, n}](통계용) · notice = 방금 조작에 붙은 토스트 줄 id(toast_late) · noticeDay = 그 토스트를 띄운 날 · stats.neglect = 적용한 missed 수   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 그날 마지막 치료 기회 때의 위독자(아침 판정용) · lastFree = 마지막 자유 경고 선택 {event, choice, day}(사인 기록용) · heard = 들은 줄 '<줄id>#<행번호>' → 마지막으로 들은 날 · found = 방금 연 수납의 결과(P1-11, 다음 조사·next 에 지워진다)
+    };   // (10-24 tightrope R4) stats.ropeRolls·ropeClose = 줄타기 판정을 굴림·넘김 · ropeFeltRolls·ropeFelt = 그중 화면 % ≤ ROPE_FELT_MAX(85) 인 판정(느껴지는 아슬함)을 굴림·넘김 · deathRolls·closeCalls = 당신을 죽이는 모든 판정을 굴림·넘김 · blindMet = 눈먼 새벽(rope.blind 깃발이 선 사건)을 만남
+    // (10-24) hurt = 당신 부상의 출처 [{day, src, n}](통계용) · notice = 방금 조작에 붙은 토스트 줄 id(toast_late) · noticeDay = 그 토스트를 띄운 날 · stats.neglect = 적용한 missed 수   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 그날 마지막 치료 기회 때의 위독자(아침 판정용) · lastFree = 마지막 자유 경고 선택 {event, choice, day}(사인 기록용) · heard = 들은 줄 '<줄id>#<행번호>' → 마지막으로 들은 날 · found = 방금 연 수납의 결과(P1-11, 다음 조사·next 에 지워진다)
     if (!db.people.you) throw new Error('people 표에 you 가 없음');
     for (const o of Object.values(db.objects)) s.traces[o.id] = { st: o.states[0], day: 0, by: null, seen: false, late: 0 };   // 물건의 첫 상태 = states[0]
     for (const id of db.peopleOrder) s.people[id] = makePerson(db, id);
@@ -195,7 +204,9 @@
   //   열차가 그냥 온 끝(why train)도 board 깃발을 태운다.
   // cause: 당신이 죽었거나 올라갔거나 떠났으면 마지막 결과(사건 id·선택·경고 여부·강제 여부·앞선 자유 경고 선택·결과 그림·밤 사건 여부). 결말 사건 안의 죽음도 여기 남는다.
   //   warned = 실질 경고: 고른 선택지에 경고 글(warn·hint·taboo)이 있고 강제가 아니다 (10-22 리드 결정 — 선택지 하나뿐·나머지가 잠긴 주사위는 '경고 있음'이 아니다)
-  //   forced = 그 순간 당신이 죽지 않는 열린 선택지가 0개 · free = 갈림길: 강제면 그 전 마지막 자유 경고 선택, 아니면 이 선택까지의 마지막 자유 경고 선택 (없으면 null)
+  //   forced = (10-24 tightrope R1) 확정 사망 — 그 순간 열린 선택지 전부 살 확률 0 (살 확률 > 0 인 주사위가 하나라도 열려 있으면 강제가 아니다)
+  //            · noSafe = 옛 정의(당신이 죽지 않는 열린 선택지 0개 — 줄타기 판은 일부러 그렇다, 측정용)
+  //   free = 갈림길: 강제면 그 전 마지막 자유 경고 선택, 아니면 이 선택까지의 마지막 자유 경고 선택 (없으면 null)
   function endGame(s, db, why, ev) {
     const endEv = ev && ev.kind === 'ending' ? ev : null;
     const boarding = (endEv && endEv.board) || why === 'train';
@@ -209,23 +220,52 @@
     const youGone = why === 'you_gone' || you.status === 'dead' || you.status === 'ascended';
     const r = s.lastResult;
     s.ended = { why, identity: c ? c.id : null, reader: LEDGER.reader(s, db), readerId: LEDGER.readerId(s, db), ledger: LEDGER.rows(s, db),
-      cause: youGone && r ? { event: r.event, choice: r.choice, warned: !!r.warned, forced: !!r.forced, free: r.free || null, image: r.image || '', night: !!r.night, warn: r.warn || '', swapped: !!r.swapped } : null };   // (10-24) warn = 고른 선택지의 화면 경고 글 · swapped = swap 변형으로 골랐다
+      cause: youGone && r ? { event: r.event, choice: r.choice, warned: !!r.warned, forced: !!r.forced, free: r.free || null, image: r.image || '', night: !!r.night, warn: r.warn || '', swapped: !!r.swapped, roped: !!r.roped, blind: !!r.blind, noSafe: !!r.noSafe } : null };   // (10-24) warn = 고른 선택지의 화면 경고 글 · swapped = swap 변형으로 골랐다 · (tightrope) roped = 줄타기 판정으로 골랐다 · blind = 눈먼 새벽이었다 · noSafe = 위험 0 출구가 없었다(옛 강제 정의 — 측정용)
     s.phase = 'ended'; s.pending = null;
   }
 
   // ── 선택 ──
   // swap (10-24 A1): 선택지의 swap 변형 가운데 when 이 지금 맞는 첫 것으로 바꾼 선택지. 없으면 그대로. 합치는 규칙은 schema.js mergeSwap(표 검사와 같다)
+  //   (10-24 tightrope R0) 그다음 rope(줄타기) 칸이 있으면 그 모습 위에 얹는다 — ropeChoice. 화면·봇·강제 판정·집계가 모두 이 모습을 본다
   const SWAP_CACHE = new WeakMap();
   function effChoice(s, db, c, ctx) {
-    if (!c || c.swap == null) return c;
-    ctx = ctx || phaseCtx(s);
-    for (const v of S.swapsOf(c)) {
-      let ok = false; try { ok = C.test(v.when, ctx); } catch (e) { ok = false; }
-      if (!ok) continue;
-      let m = SWAP_CACHE.get(v); if (!m) { m = S.mergeSwap(c, v); SWAP_CACHE.set(v, m); }
-      return m;
+    if (!c) return c;
+    let m = c;
+    if (c.swap != null) {
+      ctx = ctx || phaseCtx(s);
+      for (const v of S.swapsOf(c)) {
+        let ok = false; try { ok = C.test(v.when, ctx); } catch (e) { ok = false; }
+        if (!ok) continue;
+        m = SWAP_CACHE.get(v); if (!m) { m = S.mergeSwap(c, v); SWAP_CACHE.set(v, m); }
+        break;
+      }
     }
-    return c;
+    return m.rope ? ropeChoice(s, db, m) : m;
+  }
+  // ── 줄타기 (10-24 tightrope R0) — 규칙은 schema.js ropeState·ropeCheck·applyRope (표 검사와 같은 함수) ──
+  //   구간 = 지금 world.karma · 손잡이 = numbers 세계 수치 rope_*(없으면 schema ROPE_DEFAULTS) · 눈먼 새벽 = rope.blind 깃발(기본 strike_blind)이 섬
+  //   돌려주는 선택지에 roped = { kind, band(0 = 구간 아님), blind, base } (봇 메타·집계용 — 화면 eventView 에는 안 나간다)
+  const ROPE_CACHE = new WeakMap();
+  const worldGet = (s) => (id) => (Number.isFinite(s.world[id]) ? s.world[id] : undefined);
+  function ropeTail(db, kind) {
+    if (kind === 'fight') return '';
+    const L = db.lines['rope_tail_' + kind];
+    const t = L && L[0] && typeof L[0].text === 'string' ? L[0].text : '';
+    return t || S.ROPE_TAIL[kind] || '';
+  }
+  function ropeChoice(s, db, m) {
+    const spec = m.rope;
+    if (!spec || !S.ROPE_KINDS.includes(spec.kind)) return m;
+    const get = worldGet(s);
+    const st = S.ropeState(spec, s.world.karma || 0, s.flags, get);
+    if (!st.active) return m;
+    const rc = S.ropeCheck(spec, m, st, get);
+    if (!rc) return m;
+    const key = `${st.band}|${st.blind ? 1 : 0}|${rc.skill}|${rc.base}`;
+    let byKey = ROPE_CACHE.get(m); if (!byKey) { byKey = new Map(); ROPE_CACHE.set(m, byKey); }
+    let r = byKey.get(key);
+    if (!r) { r = S.applyRope(m, spec, rc, ropeTail(db, spec.kind)); if (r !== m) r.roped = { kind: spec.kind, band: st.band, blind: st.blind, base: rc.base }; byKey.set(key, r); }
+    return r;
   }
   // 잠금 이유: req.why 가 있으면 그 글(10-24 E5), 없으면 지금까지의 글. req.cond = 조건식(사건 when 과 같은 환경)이 맞아야 열림.
   //   대상이 필요한 선택지는 사건 대상이 없으면 잠긴다: targetOptional 사건(대상 없이 걸린 경우)에서 결과가 who:'target' 등을 쓰는 선택지 · req.target:1 인 선택지
@@ -258,29 +298,40 @@
     const ev = db.events[s.pending.id];
     const c0 = ev.choices[i];
     if (!c0) return false;
-    const st = choiceState(s, db, ev, c0);
+    const states = ev.choices.map((x) => choiceState(s, db, ev, x));
+    const st = states[i];
     if (st.locked) return false;
-    const c = effChoice(s, db, c0);                 // swap 이 맞으면 바뀐 선택지 (10-24)
-    // 강제 = 지금 열린 선택지(이것 포함) 가운데 당신이 죽지 않는 것이 0개. 자유 경고 선택 = 경고 글이 있고 다른 열린 선택지가 있던 선택.
-    // 비용을 치르기 전에 잰다(비용이 잠금 상태를 바꾸므로). swap 도 비용 전의 모습으로 본다.
-    const open = ev.choices.filter((x) => !choiceState(s, db, ev, x).locked);
+    const c = effChoice(s, db, c0);                 // swap 이 맞으면 바뀐 선택지 (10-24) · 줄타기가 걸리면 그 판정 (tightrope)
+    // 강제(확정 사망, tightrope R1) = 지금 열린 선택지(이것 포함) 전부 살 확률 0. 자유 경고 선택 = 경고 글이 있고 다른 열린 선택지가 있던 선택.
+    // 비용을 치르기 전에 잰다(비용이 잠금 상태를 바꾸므로). swap·줄타기도 비용 전의 모습으로 본다. 살 확률은 화면의 % 로 잰다.
+    const openIdx = ev.choices.map((x, k) => k).filter((k) => !states[k].locked);
+    const open = openIdx.map((k) => ev.choices[k]);
     const openEff = open.map((x) => effChoice(s, db, x));
-    const forced = !openEff.some((x) => !killsYou(x));
-    const alts = open.map((x, k) => ({ i: ev.choices.indexOf(x), kill: killsYou(openEff[k]), taboo: !!openEff[k].taboo, warn: `${openEff[k].warn || ''} ${openEff[k].hint || ''}`.trim() }));   // 집계용(봇 버릇 점검): 고를 때 열린 선택지의 모습
+    const ps = openEff.map((x, k) => survival(x, states[openIdx[k]].chance));
+    const forced = ps.every((p) => p === 0);
+    const noSafe = !openEff.some((x) => !killsYou(x));                  // 옛 강제 정의(위험 0 출구 없음) — 측정용
+    const alts = open.map((x, k) => ({ i: openIdx[k], kill: killsYou(openEff[k]), taboo: !!openEff[k].taboo, warn: `${openEff[k].warn || ''} ${openEff[k].hint || ''}`.trim(), p: ps[k] }));   // 집계용(봇 버릇 점검): 고를 때 열린 선택지의 모습 · p = 살 확률
+    const blind = ev.choices.some((x) => x.rope && x.rope.blind && x.rope.kind !== 'fight' && s.flags[S.ropeBlindFlag(x.rope)] === true);   // 눈먼 새벽 — 결과가 깃발을 지우기 전에 잰다
+    if (blind) s.stats.blindMet = (s.stats.blindMet || 0) + 1;
     const warnText = !!(c.warn || c.hint || c.taboo);
     const freeBefore = s.lastFree || null;
     if (warnText && open.length > 1) s.lastFree = { event: ev.id, choice: c.label, day: s.day };
     const lines = [];
     if (c.cost) for (const [k, v] of Object.entries(c.cost)) FX.setNumber(s, db, k, 'you', -v, lines);
     let roll = null, out = c.out;
-    if (c.check) { const ok = R.rand(s) * 100 < st.chance; roll = { chance: st.chance, success: ok }; out = ok ? c.ok : c.fail; }
+    if (c.check) {
+      const ok = R.rand(s) * 100 < st.chance; roll = { chance: st.chance, success: ok }; out = ok ? c.ok : c.fail;
+      if (outKills(c.fail)) { s.stats.deathRolls = (s.stats.deathRolls || 0) + 1; if (ok) s.stats.closeCalls = (s.stats.closeCalls || 0) + 1; }   // (tightrope R4) 죽을 뻔한 판정
+      if (c.roped) { s.stats.ropeRolls = (s.stats.ropeRolls || 0) + 1; if (ok) s.stats.ropeClose = (s.stats.ropeClose || 0) + 1; }            // 줄타기 판정
+      if (c.roped && st.chance <= ROPE_FELT_MAX) { s.stats.ropeFeltRolls = (s.stats.ropeFeltRolls || 0) + 1; if (ok) s.stats.ropeFelt = (s.stats.ropeFelt || 0) + 1; }   // 느껴지는 줄타기(화면 ≤ 85%)
+    }
     const roles = rolesFor(s, db, out);
     if (out && out.effects) FX.apply(s, db, out.effects, roles, lines);
     FX.noteHurt(s, lines, `ev:${ev.id}/${c0.label}`);
     arrive(s, db);                     // 만남 깃발이 섰으면 역에 온다 — 이어지는 사건(연쇄)이 그 사람을 본다
     if (out && out.ledger) applyLedger(s, db, out.ledger, roles);
     s.lastResult = { event: ev.id, choice: c.label, i, open: open.map((x) => ev.choices.indexOf(x)), alts, warned: warnText && !forced, forced, free: forced ? freeBefore : s.lastFree || null, roll, text: (out && out.text) || '', lines, image: (out && out.image) || '', target: roles.target, companion: roles.companion,
-      warn: `${c.warn || ''} ${c.hint || ''}`.trim(), swapped: c !== c0 };   // open = 고를 때 열려 있던 선택지 번호 · alts = 그 선택지들의 모습(swap 뒤) · warn = 고른 선택지의 화면 경고 글 · swapped = swap 변형으로 골랐다 (봇 집계용)
+      warn: `${c.warn || ''} ${c.hint || ''}`.trim(), swapped: c !== c0, roped: c.roped ? Object.assign({}, c.roped) : null, blind, noSafe, p: survival(c, st.chance) };   // open = 고를 때 열려 있던 선택지 번호 · alts = 그 선택지들의 모습(swap·줄타기 뒤) · warn = 고른 선택지의 화면 경고 글 · swapped = swap 변형(또는 줄타기)으로 골랐다 · roped = 줄타기 {kind, band, blind, base} · blind = 눈먼 새벽 · noSafe = 위험 0 출구 없음 · p = 고른 선택지의 살 확률 (봇 집계용)
     if (ev.once === 0 ? false : (ev.once || ev.kind === 'fixed' || ev.kind === 'trial' || ev.kind === 'ending')) s.done[ev.id] = s.day;   // once:0 이면 되풀이(미룬다 류)
     s.fired[ev.id] = (s.fired[ev.id] || 0) + 1;
     if (!s.phaseSeen.includes(ev.id)) s.phaseSeen.push(ev.id);
@@ -562,6 +613,7 @@
     s.notice = typeof raw.notice === 'string' && db.lines[raw.notice] ? raw.notice : null;
     s.noticeDay = Number.isInteger(raw.noticeDay) ? raw.noticeDay : null;
     if (!Number.isFinite(s.stats.neglect)) s.stats.neglect = 0;
+    for (const k of ['ropeRolls', 'ropeClose', 'ropeFeltRolls', 'ropeFelt', 'deathRolls', 'closeCalls', 'blindMet']) if (!Number.isFinite(s.stats[k])) s.stats[k] = 0;   // (10-24 tightrope R4 · 검증 ropeFelt) 옛 저장은 0
     if (!Array.isArray(s.phaseSeen)) s.phaseSeen = [];
     if (!s.critical || typeof s.critical !== 'object' || !Array.isArray(s.critical.ids)) s.critical = null;
     if (!s.lastFree || typeof s.lastFree !== 'object' || typeof s.lastFree.event !== 'string') s.lastFree = null;
@@ -641,9 +693,9 @@
       for (const o of outs) { const e = o.effects || {}; for (const [k, v] of Object.entries(e.axis || {})) axis[k] = (axis[k] || 0) + v;
         if (e.kill) for (const kv of FX.list(e.kill)) { if (meWho(kv.who)) kill = true; else killOther = true; }
         for (const [k, v] of Object.entries(e)) { const d = db.numbers[k]; if (d && d.owner === 'world' && d.visible === 'always') for (const x of FX.list(v)) gain += typeof x === 'number' ? x : (x && x.n) || 0; } }
-      return Object.assign(choiceState(s, db, ev, c0), { i, axis, killYou: kill, killOther, check: !!c.check, gain, swapped: c !== c0 }); });   // gain = 화면에 보이는 자원 변화 합(봇의 '자원 + 가장 큰 label') · swapped = swap 변형이 맞았다
+      return Object.assign(choiceState(s, db, ev, c0), { i, axis, killYou: kill, killOther, check: !!c.check, gain, swapped: c !== c0, roped: !!c.roped }); });   // gain = 화면에 보이는 자원 변화 합(봇의 '자원 + 가장 큰 label') · swapped = swap 변형이 맞았다 · roped = 줄타기 판정(집계용 — 봇 점수는 안 본다)
   }
-  const API = { SAVE_V, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, effChoice, eventTarget, inspectLineId, lateNow, address, rationOf, rand: R.rand, killsYou, known, heardKey, closedHolds, openStateOf, inspectGated, NO_TARGET_WHY, SIGN_COLD_CALL_DEFAULT,
+  const API = { SAVE_V, ROPE_FELT_MAX, DELAYS, setFast, isFast, newGame, dispatch, normalize, view, eventView, choiceState, choiceMeta, effChoice, eventTarget, inspectLineId, lateNow, address, rationOf, rand: R.rand, killsYou, survival, ropeChoice, known, heardKey, closedHolds, openStateOf, inspectGated, NO_TARGET_WHY, SIGN_COLD_CALL_DEFAULT,
     identity: (s, db) => ID.identity(s.axes, db.identity), signs: (s, db) => NIGHT.signs(s, db), readerId: (s, db) => LEDGER.readerId(s, db), ledger: LEDGER, night: NIGHT, cond: C };
   if (isNode) module.exports = API;
   else (root.DS4 = root.DS4 || {}).engine = API;

@@ -1,0 +1,9 @@
+fixture {'called_up': True, 'dawn_strike': True} [fixture] 13 games, 1.3s, good enough; found called_up,dawn_strike; missing -
+  run mash {"chosen": 0, "last": "", "you": "home", "ended": false, "open": "event", "pending": "dawn_strike", "died": false, "mode": "mash"}
+  run hold {"chosen": 0, "last": "", "you": "home", "ended": false, "open": "event", "pending": "dawn_strike", "died": false, "mode": "hold"}
+  run arrowhold {"chosen": 0, "last": "", "you": "home", "ended": false, "open": "event", "pending": "dawn_strike", "died": false, "mode": "arrowhold"}
+dawn_strike 16 {"by_mode": {"mash": {"runs": 1, "chosen": 0, "died": 0, "picked": []}, "hold": {"runs": 1, "chosen": 0, "died": 0, "picked": []}, "arrowhold": {"runs": 1, "chosen": 0, "died": 0, "picked": []}}, "errors": [], "console_errors": []}
+  run mash {"chosen": 0, "last": "", "you": "home", "ended": false, "open": "event", "pending": "called_up", "died": false, "mode": "mash"}
+  run hold {"chosen": 0, "last": "", "you": "home", "ended": false, "open": "event", "pending": "called_up", "died": false, "mode": "hold"}
+  run arrowhold {"chosen": 0, "last": "", "you": "home", "ended": false, "open": "event", "pending": "called_up", "died": false, "mode": "arrowhold"}
+called_up 16 {"by_mode": {"mash": {"runs": 1, "chosen": 0, "died": 0, "picked": []}, "hold": {"runs": 1, "chosen": 0, "died": 0, "picked": []}, "arrowhold": {"runs": 1, "chosen": 0, "died": 0, "picked": []}}, "errors": [], "console_errors": []}

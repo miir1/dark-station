@@ -1,0 +1,8 @@
+manifest 215
+   포트 8765 사용 중 - 8766 로
+    13_run seed 4: D10 you_gone
+FAIL 13_run (console errors 0) - 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=ascended food=0 | D9 trace wound_critical → 약국 안쪽을 뒤진다 / D9 tra
+    [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=ascended food=0 | D9 trace wound_critical \u2192 \uc57d\uad6d \uc548\ucabd\uc744 \ub4a4\uc9c4\ub2e4 / D9 trace dawn_strike \u2192 \ub9de\uace0 \ubc84\ud2f4\ub2e4 / D9 trace dawn_mob \u2192 \uac00\uc9c4 \uac83\uc744 \ub2e4 \
+    [ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike wound_critical@wound_critical @d6_shutter_b @dawn_mob @d10_hold
+shots 0/1 ok · console errors 0 · FAIL 13_run
+exit=1

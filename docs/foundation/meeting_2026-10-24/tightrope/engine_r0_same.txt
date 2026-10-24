@@ -1,0 +1,24 @@
+# 엔진 R0 확인 (same) — 정책 20 × 40판 × 블록 1,2001, 72초
+R0 표: rope 칸 30개 + 눈먼 새벽 3 · 표 경고 21건 (ropeFail) · noExit 0
+| 정책 | 메모리 시험(swap 펼침) | rope 칸(R0) | 같다 |
+|---|---|---|---|
+| balanced | 7b47e61e01d4 | 7b47e61e01d4 | ✓ |
+| selfish | ae83d89112c4 | ae83d89112c4 | ✓ |
+| selfish_nb | 01df8905239c | 01df8905239c | ✓ |
+| selfish_rt | 119c4f648440 | 119c4f648440 | ✓ |
+| selfish_rt0 | 2d1a74ee056e | 2d1a74ee056e | ✓ |
+| lazy | 39fed709d4b3 | 39fed709d4b3 | ✓ |
+| diligent | b740119ed007 | b740119ed007 | ✓ |
+| risky | 6faae33e262a | 6faae33e262a | ✓ |
+| h_cautious | 254c12984ef5 | 254c12984ef5 | ✓ |
+| h_first | 2a37bf679fe2 | 2a37bf679fe2 | ✓ |
+| h_cautious2 | 9c7f8d71a949 | 9c7f8d71a949 | ✓ |
+| devoted | f31ea2fea3fd | f31ea2fea3fd | ✓ |
+| counter | 7379169f72da | 7379169f72da | ✓ |
+| child | a2f1867181ff | a2f1867181ff | ✓ |
+| h_wary | 2953e367edb0 | 2953e367edb0 | ✓ |
+| h_mixed | bc5da0955b59 | bc5da0955b59 | ✓ |
+| h_random | 3b739a49c127 | 3b739a49c127 | ✓ |
+| silent | db28387a44d9 | db28387a44d9 | ✓ |
+| caller | 991589809238 | 991589809238 | ✓ |
+| steward | 2f740927dc7c | 2f740927dc7c | ✓ |

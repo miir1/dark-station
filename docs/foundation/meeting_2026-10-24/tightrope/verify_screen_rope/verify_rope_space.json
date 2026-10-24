@@ -1,0 +1,146 @@
+{
+ "dawn_strike_k12": {
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "hold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "arrowhold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   }
+  },
+  "errors": [],
+  "console_errors": []
+ },
+ "dawn_strike_k16": {
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "hold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "arrowhold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   }
+  },
+  "errors": [],
+  "console_errors": []
+ },
+ "dawn_mob_k16": {
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "hold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "arrowhold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   }
+  },
+  "errors": [],
+  "console_errors": []
+ },
+ "called_up_k16": {
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "hold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "arrowhold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   }
+  },
+  "errors": [],
+  "console_errors": []
+ },
+ "d10_grab_k16": {
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "hold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "arrowhold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   }
+  },
+  "errors": [],
+  "console_errors": []
+ },
+ "d10_hold_k16": {
+  "by_mode": {
+   "mash": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "hold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   },
+   "arrowhold": {
+    "runs": 3,
+    "chosen": 0,
+    "died": 0,
+    "picked": []
+   }
+  },
+  "errors": [],
+  "console_errors": []
+ }
+}

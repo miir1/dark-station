@@ -1,0 +1,15 @@
+# 데이터 몫 점검 로그 (data 담당, 10-24 줄타기)
+
+## 데이터 로드
+data OK · 표 경고 0 건
+
+## node --test "v4/test/*.test.js"
+# tests 164
+# pass 164
+# fail 0
+# cancelled 0
+# skipped 0
+
+## 봇 버릇 점검 △ 의 두 판 (조심형 6정책 × 블록 1001·3001 다시 돌림)
+balanced 3008 D7 starve_you | 창고를 턴다 |warn 들키면 아침에 안다. 모자라면 끝이다 |roped {"kind":"pay","band":2,"blind":false,"base":90} |alts [{"i":0,"kill":false,"taboo":false,"warn":"쥐가 먼저 와 있다","p":1},{"i":1,"kill":true,"taboo":false,"warn":"들키면 아침에 안다. 모자라면 끝이다","p":0.95},{"i":2,"kill":true,"taboo":true,"warn":"그 사람이 굶는다. 아침에 다들 안다. 안 통하면 끝이다","p":0.55},{"i":3,"kill":true,"taboo":false,"warn":"굶으면 아침에 못 일어난다","p":0}]
+selfish_nb 1193 D8 starve_you | 창고를 턴다 |warn 들키면 아침에 안다. 모자라면 끝이다 |roped {"kind":"pay","band":2,"blind":false,"base":90} |alts [{"i":0,"kill":false,"taboo":false,"warn":"쥐가 먼저 와 있다","p":1},{"i":1,"kill":true,"taboo":false,"warn":"들키면 아침에 안다. 모자라면 끝이다","p":0.95},{"i":2,"kill":true,"taboo":true,"warn":"그 사람이 굶는다. 아침에 다들 안다. 안 통하면 끝이다","p":0.55},{"i":3,"kill":true,"taboo":false,"warn":"굶으면 아침에 못 일어난다","p":0}]

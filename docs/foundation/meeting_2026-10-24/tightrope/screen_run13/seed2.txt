@@ -1,0 +1,8 @@
+manifest 215
+   포트 8765 사용 중 - 8766 로
+    13_run seed 2: D7 you_gone
+FAIL 13_run (console errors 0) - 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D7 ended map=station open=- ended=you_gone you=dead food=0 | D5 ration repay_bowl → 그냥 지나간다 / D5 day trip_b1_wo
+    [ds4 auto] run end reached=0 D7 ended map=station open=- ended=you_gone you=dead food=0 | D5 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D5 day trip_b1_workers \u2192 \uc2e0\ubc1c\uc744 \ucc59\uae34\ub2e4 / D5 day trip_b2_lockers \u2192 \ube44\ud2c0\uc5b4 \uc5f0\ub2e4 / D5 night
+    [ds4 missing] @d2_shutter_arm @dawn_strike @dawn_mob wound_critical@wound_critical @d6_shutter_b
+shots 0/1 ok · console errors 0 · FAIL 13_run
+exit=1

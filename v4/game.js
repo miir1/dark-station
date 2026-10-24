@@ -570,8 +570,21 @@
   // 잠김 이유(엔진 choiceState.reason — req.why 글이 있으면 그것, 10-24 E5): 영문 자원 id 를 한국어로 · '손가락가 성치 않다' 같은 조사를 받침에 맞춘다
   const reasonKo = (r) => String(r || '').replace(/(\S+)이\(가\) 모자라다/g, (m, k) => `${josa(resName(k), '이가')} 모자라다`)
     .replace(/(\S+?)[이가] 성치 않다/g, (m, k) => `${josa(k, '이가')} 성치 않다`);
-  const choiceSub = (c) => [c.chance != null ? `<small class="chance">${c.chance}%</small>` : '', c.cost && Object.keys(c.cost).length ? `<small class="cost">${esc(costText(c.cost))}</small>` : '',
-    c.warn ? `<small class="warn">${esc(maskPeople(c.warn))}</small>` : c.hint ? `<small>${esc(maskPeople(c.hint))}</small>` : '', c.locked ? `<small class="lock">${esc(maskPeople(reasonKo(c.reason)))}</small>` : ''].join('');
+  // (10-24 tightrope) 죽을 수 있는 선택지의 위험 단계(숫자 없이 색으로): 살 확률 p(엔진 survival — 화면의 % 와 결과가 당신을 죽이는가에서 나온다)
+  //   0 = 죽지 않음(지금 그대로) · 1 = 90% 이상 · 2 = 75% 이상 · 3 = 55% 이상 · 4 = 그 밑(확정 죽음 포함). 카르마가 쌓여 % 가 내려가면 ⚠ 가 노랑 → 주황 → 빨강으로 짙어진다
+  //   (% 와 ⚠ 에만 data-r 을 단다 — 경고 글 class="warn" 은 그대로라 ui.js 의 위험 선택지 판정이 같다)
+  const riskTier = (p) => (p == null || !(p < 1) ? 0 : p >= 0.9 ? 1 : p >= 0.75 ? 2 : p >= 0.55 ? 3 : 4);
+  // 심장 박동 단계 = 열린 길 가운데 가장 나은 살 확률 (갚는 길이 K1 97 · K2 95 · K3 90 · K4 83% 라 구간마다 한 단계씩 빨라진다)
+  const beatTier = (best) => (best >= 0.96 ? 1 : best >= 0.92 ? 2 : best >= 0.86 ? 3 : 4);
+  const choiceSub = (c, tier) => { const r = tier ? ` data-r="${tier}"` : '';
+    return [c.chance != null ? `<small class="chance"${r}>${c.chance}%</small>` : '', c.cost && Object.keys(c.cost).length ? `<small class="cost">${esc(costText(c.cost))}</small>` : '',
+      c.warn ? `<small class="warn"${r}>${esc(maskPeople(c.warn))}</small>` : c.hint ? `<small>${esc(maskPeople(c.hint))}</small>` : '', c.locked ? `<small class="lock">${esc(maskPeople(reasonKo(c.reason)))}</small>` : ''].join(''); };
+  // 선택지 하나의 살 확률 (화면이 보는 모습 = swap·줄타기 뒤) · 판정 실패가 당신을 죽이는가 (판정 줄 '살았다' — 죽을 뻔한 판정을 넘겼다)
+  const survivalOf = (ev, i, c) => { const row = ev && ev.choices[i] ? E.effChoice(state, db, ev.choices[i]) : null; return row && E.survival ? E.survival(row, c.chance) : 1; };
+  const failKills = (row) => !!(row && row.check && E.survival && E.survival(row, 0) === 0);
+  // 눈먼 새벽: 줄타기 칸 rope.blind 가 붙은 사건이 그 깃발(기본 strike_blind — 못 본 원한이 터진 밤)이 선 채 걸렸다 (엔진 choose 의 blind 와 같은 판정)
+  const blindNow = (ev) => !!(ev && DS4.schema && DS4.schema.ropeBlindFlag && ev.choices.some((x) => x.rope && x.rope.blind && x.rope.kind !== 'fight' && state.flags[DS4.schema.ropeBlindFlag(x.rope)] === true));
+  const BLIND_HEAD = '못 본 일이 커져서 왔다.';   // 대사표 rope_blind_head 가 있으면 그것
   // 장면 그림: v4 cg/<image> → v4 cg/<사건 id> → v3 대체 (art.js). 없으면 그림 층을 열지 않는다
   function eventCg(v) {
     const src = ART.cgSrc(v.image, v.id);
@@ -650,11 +663,20 @@
     // 결말에 board:1 이 있으면(열차) 태울 사람을 고르는 줄이 선택지 맨 아래에 붙는다 — 엔진 board 동작(board_<id> 깃발, 다시 누르면 내린다)
     const boardIds = () => (v.board ? db.peopleOrder.filter((id) => id !== 'you' && home(id) && met(id)) : []);
     const boarded = () => boardIds().filter((id) => flagOn('board_' + id));
+    // (10-24 tightrope) 줄타기가 화면에서 느껴지게 — 숫자(카르마)는 안 보이고, 이미 보이는 % 를 몸 신호로 옮긴다
+    //   ① 선택지마다 위험 단계(riskTier): 죽을 수 있는 길은 ⚠ 가 빨강, 글·% 색이 노랑 → 주황 → 빨강으로 짙어진다 ② 열린 선택지 전부가 죽을 수 있으면(위험 0 출구가 없다)
+    //      상자 테두리가 심장처럼 뛴다 — 가장 나은 길의 살 확률이 낮을수록 빨리 (beatTier hb1~hb4) ③ 눈먼 새벽(못 본 원한이 터진 아침)이면 본문 끝에 한 줄 '못 본 일이 커져서 왔다.'
+    const evRow = db.events[v.id];
+    const ps = v.choices.map((c, k) => survivalOf(evRow, k, c));
+    const openPs = ps.filter((p, k) => !v.choices[k].locked);
+    const noSafe = openPs.length > 0 && openPs.every((p) => p < 1);
+    const beat = noSafe ? ` rope hb${beatTier(Math.max(...openPs))}` : '';
+    const tail = blindNow(evRow) ? `<p class="blind">${esc(lineOf('rope_blind_head') || BLIND_HEAD)}</p>` : '';
     for (;;) {                                                       // 되돌릴 수 없는 선택(금기·결말)은 상자 안에서 한 번 더 묻는다 — OS 확인창 없음
-      const opts = v.choices.map((c, k) => ({ label: maskPeople(c.label), sub: choiceSub(c), disabled: c.locked, value: k, warn: !!(c.warn || c.taboo) }));   // 경고·금기가 있으면 커서 없이 연다 (ui.js)
+      const opts = v.choices.map((c, k) => ({ label: maskPeople(c.label), sub: choiceSub(c, riskTier(ps[k])), disabled: c.locked, value: k, warn: !!(c.warn || c.taboo) }));   // 경고·금기가 있으면 커서 없이 연다 (ui.js)
       if (boardIds().length) opts.push({ label: `태울 사람 (${boarded().length}/${boardIds().length})`, sub: `<small>${esc(boarded().map((id) => nameOf(id)).join(' · ') || '아직 아무도')}</small>`, value: 'board' });
       const head = who ? `<p class="who">${esc(who)}</p>` : '';
-      i = await UI.open(`${head}<p>${esc(text)}</p>`, { kind: 'event', fit: sentences, fitHead: head, options: opts, cls: opts.length > 3 ? 'wide' : '' });
+      i = await UI.open(`${head}<p>${esc(text)}</p>${tail}`, { kind: 'event', fit: sentences, fitHead: head, fitTail: tail, options: opts, cls: (opts.length > 3 ? 'wide' : '') + beat });
       if (i === 'board') { await boardMenu(boardIds()); continue; }
       const c = v.choices[i];
       if (!c || !(c.taboo || v.kind === 'ending')) break;
@@ -664,6 +686,7 @@
       if (sure) break;
     }
     const trBefore = traceStates(), worldBefore = Object.assign({}, state.world), flagsBefore = Object.assign({}, state.flags);
+    const deadlyRoll = failKills(evRow && evRow.choices[i] ? E.effChoice(state, db, evRow.choices[i]) : null);   // 고르기 전의 모습으로 (고른 뒤에는 카르마·깃발이 바뀐다)
     if (!act({ type: 'choose', i })) return;
     const r = state.lastResult || {};
     // 수납 열기 3박자 (P0-S6): 이 지도의 물건이 닫힘 → 열림·빔으로 바뀌었으면 ① 열린 그림으로 즉시 바뀌고(지도가 상태를 그린다)
@@ -690,7 +713,8 @@
       const src = ART.cgSrc(r.image) || (/^death_/.test(r.image) ? ART.deathSrc(r.image) : '');
       if (src) UI.cg(src); else missing.add(r.image + '@' + v.id + ':out');
     }
-    if (r.roll) await UI.line(`판정 ${r.roll.chance}% — ${r.roll.success ? '됐다.' : '안 됐다.'}`, { black });
+    // 판정 줄: 실패가 당신을 죽이는 판정을 넘겼으면 '살았다.' + 상자가 한 번 크게 뛴다 (줄타기의 아슬함 — 죽을 뻔한 판정을 넘긴 것이 보이게)
+    if (r.roll) await UI.line(`판정 ${r.roll.chance}% — ${r.roll.success ? (deadlyRoll ? '살았다.' : '됐다.') : '안 됐다.'}`, { black, tag: 'roll', cls: r.roll.success && deadlyRoll ? 'close' : '' });
     // 결과 글 얼굴 칸 = 찾은 물건 아이콘(40px 을 2배 = 80): 사건이 손에 쥐여 준 물건(foundIcon — 케이블·수첩·건빵·생수·장갑·열쇠·전화카드…)이 먼저, 없으면 연 수납에서 늘어난 자원
     const newFlags = Object.keys(state.flags).filter((f) => state.flags[f] === true && flagsBefore[f] !== true);
     const gainedAll = RES_ORDER.filter((k) => (state.world[k] || 0) > (worldBefore[k] || 0));
@@ -1034,8 +1058,22 @@
     const resident = (E.night && E.night.isResidentRow) || ((e) => !!e && e.role !== 'clock' && e.role !== 'neglect');
     const noise = state.nightLog.some((e) => e.day === before.day && resident(e));
     const text = [gone.length ? gone.join('. ') + '.' : '', parts.join(' · '), noise ? '밤에 무슨 소리가 났다. 흔적이 남았을 것이다.' : ''].filter(Boolean).join(' ');
-    if (text) await UI.lines(text, { black: true });
+    if (text) await UI.lines(text, { black: true, tag: 'night_report' });
+    // (10-24 tightrope A4) 못 본 밤의 일이 당신에게 직접 왔다 — '내가 안 봐서'로 읽히게 한 줄 더 (숫자 없이: 그릇·상처).
+    //   대상 = 그 밤 굴린 주민 사건 가운데 행위자 조건이 '못 본 일' 깃발(flag:unseen_…, 부정 아님)인 행이 당신 수치를 바꾼 것
+    //   (지금 표: steal_food_again 당신 굶주림 +3·당신 그릇 빔 · steal_meds_again 당신 부상 +1·당신 붕대 썩음). 글 = 대사표 report_<행 id> → 아래 기본 글 → report_unseen → 마지막 기본 글
+    const unseen = [];
+    for (const e of state.nightLog) {
+      if (e.day !== before.day || !resident(e) || unseen.includes(e.id)) continue;
+      const row = db.nightEvents.find((n) => n.id === e.id);
+      if (!row || !UNSEEN_ACTOR.test(row.actor || '')) continue;
+      if ((e.lines || []).some((l) => l.who === 'you')) unseen.push(e.id);   // 깃발만 세운 행(grudge_boils → 눈먼 새벽)은 뺀다 — 그 아침 사건 창이 따로 말한다
+    }
+    for (const id of unseen) await UI.lines(lineOf('report_' + id) || UNSEEN_REPORT[id] || lineOf('report_unseen') || UNSEEN_REPORT_ANY, { black: true, tag: 'night_unseen' });
   }
+  const UNSEEN_ACTOR = /(^|[^!])flag:unseen_/;
+  const UNSEEN_REPORT = { steal_food_again: '어제 못 본 손이 또 왔다. 당신 그릇까지 비었다.', steal_meds_again: '어제 못 본 손이 또 왔다. 약이 비어 상처가 덧났다.' };
+  const UNSEEN_REPORT_ANY = '어제 못 본 일이 당신에게 왔다.';
 
   // ── 명부·결말 ──
   const STATUS_KO = { boarded: '탔다', dead: '갔다', ascended: '올라갔다', stayed: '남았다', walked: '걸어 나갔다' };
@@ -1364,6 +1402,7 @@
       called3l: (k) => k === 'line' && pend('d3_called_you'),           // 같은 사건의 첫 줄에서 멈춘다 (연타 검사 — 방향키를 누른 채 선택 창까지 지나가기)
       train: (k) => k === 'ending' && state.ended && state.ended.why === 'd10_train',
       ending: (k) => k === 'ending',
+      run: (k) => k === 'ending' && state.day >= 10,                    // 처음부터 끝까지: 저장 없이 D0 부터 D10 결말 명부까지 (all_dead 명부는 지나간다 — shot.py 13_run 회귀 검사)
       reveal: (k, info) => k === 'line' && info.opts && info.opts.tag === 'reveal',
       death: (k) => k === 'death_ledger',
       manual: () => true,                                                // 손으로: 첫 창에서 봇이 손을 뗀다 (연타 검사 — v4/tools/screen_check.py space)
@@ -1376,12 +1415,12 @@
     // 지점이 바라는 깃발: 그 깃발을 세우는 선택에 +50 (고정 사건이 걸리는 길)
     const WANT = { called3: ['counted_together'], called3l: ['counted_together'], night8: ['patrol_promised', 'key_you'], train: ['met_dohyeon', 'passage_work', 'passage_half', 'passage_open', 'fare_hoard'] }[target] || [];
     const setsWanted = (o) => !!(o && o.effects && o.effects.flag && WANT.some((f) => o.effects.flag[f]));
-    // 결과 하나의 값 (캡처 봇 전용 — 표의 효과를 직접 읽는다): 당신이 죽음 −100 · 다침 −6/칸 · 손상 −4 · 식량·물·약 +1.5 · 배고픔 −0.5
+    // 결과 하나의 값 (캡처 봇 전용 — 표의 효과를 직접 읽는다): 당신이 죽음 −1000 · 다침 −6/칸 · 손상 −4 · 식량·물·약 +1.5 · 배고픔 −0.5
     const meHit = (v) => v && (v.who == null || v.who === 'you' || v.who === 'self');
     function outValue(o) {
       if (!o || !o.effects) return 0;
       const e = o.effects; let sc = 0;
-      if (e.kill && meHit(e.kill)) sc += wantDeath ? 100 : -100;
+      if (e.kill && meHit(e.kill)) sc += wantDeath ? 100 : -1000;   // (10-24 tightrope) 카르마 판에는 위험 0 출구가 없다 — 캡처 봇은 살 확률을 먼저 본다(−100 이면 30% 죽는 주사위와 크게 다치기가 비슷해 D8 새벽에 죽었다)
       if (e.injure && meHit(e.injure)) sc -= 6 * (e.injure.n || 1);
       if (e.permanent && meHit(e.permanent)) sc -= 4;
       for (const k of ['food', 'water', 'meds']) if (typeof e[k] === 'number') sc += 1.5 * e[k];

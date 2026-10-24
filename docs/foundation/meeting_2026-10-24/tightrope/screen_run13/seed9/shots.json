@@ -1,0 +1,28 @@
+[
+ {
+  "shot": "13_run",
+  "ok": false,
+  "why": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=0 | D6 night d6_shutter_b → 열쇠를 내준다 / D6 night called_"
+  ],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=0 | D6 night d6_shutter_b → 열쇠를 내준다 / D6 night called_"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": "9",
+    "end": "D9 you_gone"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=0 | D6 night d6_shutter_b → 열쇠를 내준다 / D6 night called_up → 불을 키우고 밤을 샌다 / [꿈 D6] / D7 trace dawn_strike → 그릇 둘을 내민다 / [D7 food2 water0 hunger3] / D7 day trip_b1_gate → 물에 들어가 끌어낸다 / D7 day trip_b2_lockers → 비틀어 연다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / [D8 food0 water0 hunger8] / D8 ration repay_bowl → 그냥 지나간다 / D8 day trip_a1_phone → 카드를 챙긴다 / D8 day trip_a2_bodybag → 가져간다 / D8 night starve_you → 창고를 턴다 / [꿈 D8] / D9 trace dawn_strike → 맞고 버틴다",
+   "[ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike @d6_shutter_b"
+  ]
+ }
+]

@@ -1,0 +1,59 @@
+# 이른 날 깊이 보기 — 정책 9 × 200판 × 블록 1·1001·2001·3001·8001 (그날 사건으로 죽은 판 = 깔때기 사건 아님)
+
+## D2
+- balanced: 그날 사건 43 (d2_shutter_arm/팔을 비틀어 뺀다 43) · 깔때기 0 (-)
+- silent: 그날 사건 48 (d2_shutter_arm/팔을 비틀어 뺀다 48) · 깔때기 0 (-)
+- lazy: 그날 사건 44 (d2_shutter_arm/팔을 비틀어 뺀다 44) · 깔때기 0 (-)
+- diligent: 그날 사건 45 (d2_shutter_arm/팔을 비틀어 뺀다 45) · 깔때기 0 (-)
+- steward: 그날 사건 65 (d2_shutter_arm/팔을 비틀어 뺀다 65) · 깔때기 0 (-)
+- selfish_nb: 0
+- h_cautious: 0
+- h_first: 0
+- h_cautious2: 그날 사건 14 (d2_shutter_arm/팔을 비틀어 뺀다 14) · 깔때기 0 (-)
+
+## D3
+- balanced: 0
+- silent: 0
+- lazy: 0
+- diligent: 0
+- steward: 0
+- selfish_nb: 그날 사건 2 (dawn_strike/옆 담요를 가리킨다 [줄타기] 2) · 깔때기 0 (-)
+- h_cautious: 0
+- h_first: 0
+- h_cautious2: 0
+
+## D4
+- balanced: 그날 사건 47 (d4_spanner/스패너를 막는다 47) · 깔때기 1 (fever_night←d2_shutter_arm 1)
+- silent: 그날 사건 45 (d4_spanner/스패너를 막는다 45) · 깔때기 4 (fever_night←d2_shutter_arm 4)
+- lazy: 그날 사건 49 (d4_spanner/스패너를 막는다 46 · dawn_strike/물병 둘을 내민다 [줄타기] 1 · dawn_strike/맞고 버틴다 [줄타기] 1 · dawn_strike/그릇 둘을 내민다 [줄타기] 1) · 깔때기 2 (fever_night←d2_shutter_arm 2)
+- diligent: 그날 사건 43 (d4_spanner/스패너를 막는다 43) · 깔때기 4 (fever_night←d2_shutter_arm 4)
+- steward: 그날 사건 0 (-) · 깔때기 9 (fever_night←d2_shutter_arm 7 · fever_night←starve_you 2)
+- selfish_nb: 그날 사건 5 (dawn_strike/축 늘어진다 [줄타기] 4 · dawn_strike/옆 담요를 가리킨다 [줄타기] 1) · 깔때기 0 (-)
+- h_cautious: 0
+- h_first: 0
+- h_cautious2: 그날 사건 28 (d4_spanner/스패너를 막는다 28) · 깔때기 1 (fever_night←d1_night_storage 1)
+
+## D5
+- balanced: 그날 사건 145 (d5_flood/모두 매달려 퍼낸다 133 · dawn_strike/맞고 버틴다 [줄타기] 9 · dawn_strike/물병 둘을 내민다 [줄타기] 2 · dawn_strike/그릇 둘을 내민다 [줄타기] 1) · 깔때기 12 (fever_night←d2_shutter_arm 7 · fever_night←starve_you 3 · fever_night←d1_night_storage 2)
+- silent: 그날 사건 167 (d5_flood/모두 매달려 퍼낸다 162 · dawn_strike/맞고 버틴다 [줄타기] 3 · dawn_strike/그릇 둘을 내민다 [줄타기] 1 · dawn_strike/물병 둘을 내민다 [줄타기] 1) · 깔때기 11 (fever_night←d2_shutter_arm 6 · fever_night←starve_you 3 · fever_night←d1_night_storage 2)
+- lazy: 그날 사건 197 (d5_flood/모두 매달려 퍼낸다 169 · dawn_strike/맞고 버틴다 [줄타기] 23 · dawn_strike/물병 둘을 내민다 [줄타기] 4 · dawn_strike/그릇 둘을 내민다 [줄타기] 1) · 깔때기 10 (fever_night←d2_shutter_arm 5 · fever_night←d1_night_storage 3 · fever_night←starve_you 2)
+- diligent: 그날 사건 143 (d5_flood/모두 매달려 퍼낸다 143) · 깔때기 16 (fever_night←d2_shutter_arm 8 · fever_night←d1_night_storage 5 · fever_night←starve_you 3)
+- steward: 그날 사건 153 (d5_flood/모두 매달려 퍼낸다 148 · dawn_strike/축 늘어진다 4 · dawn_strike/물병 둘을 내민다 [줄타기] 1) · 깔때기 14 (fever_night←starve_you 11 · fever_night←d2_shutter_arm 3)
+- selfish_nb: 그날 사건 16 (dawn_strike/축 늘어진다 [줄타기] 9 · dawn_strike/축 늘어진다 5 · called_up/불을 키우고 밤을 샌다 [줄타기] 2) · 깔때기 1 (fever_night←starve_you 1)
+- h_cautious: 그날 사건 11 (dawn_strike/물병 둘을 내민다 [줄타기] 8 · dawn_strike/맞고 버틴다 [줄타기] 2 · called_up/불을 키우고 밤을 샌다 [줄타기] 1) · 깔때기 0 (-)
+- h_first: 그날 사건 9 (dawn_strike/맞고 버틴다 [줄타기] 4 · dawn_strike/물병 둘을 내민다 [줄타기] 3 · called_up/불을 키우고 밤을 샌다 [줄타기] 2) · 깔때기 2 (fever_night←trip_a2_escalator 1 · fever_night←starve_you 1)
+- h_cautious2: 그날 사건 106 (d5_flood/모두 매달려 퍼낸다 86 · dawn_strike/밀쳐 낸다 5 · dawn_strike/옆 담요를 가리킨다 [줄타기] 4 · dawn_strike/맞고 버틴다 [줄타기] 3 · dawn_strike/축 늘어진다 3 · called_up/불을 키우고 밤을 샌다 [줄타기] 2 · dawn_strike/소리친다 2 · d5_flood/남의 담요로 물길을 막는다 [줄타기] 1) · 깔때기 11 (fever_night←starve_you 8 · fever_night←d4_spanner 1 · fever_night←d1_night_storage 1 · fever_night←d2_shutter_arm 1)
+
+## D6
+- balanced: 그날 사건 11 (dawn_strike/맞고 버틴다 [줄타기] 7 · dawn_strike/물병 둘을 내민다 [줄타기] 2 · called_up/손등을 깨물며 버틴다 [줄타기] 2) · 깔때기 27 (fever_night←starve_you 12 · fever_night←d2_shutter_arm 10 · fever_night←d1_night_storage 4 · fever_night←dawn_strike 1)
+- silent: 그날 사건 12 (dawn_strike/맞고 버틴다 [줄타기] 8 · called_up/손등을 깨물며 버틴다 [줄타기] 2 · dawn_strike/그릇 둘을 내민다 [줄타기] 1 · dawn_strike/물병 둘을 내민다 [줄타기] 1) · 깔때기 18 (fever_night←starve_you 7 · fever_night←d2_shutter_arm 6 · fever_night←d1_night_storage 2 · fever_night←night:steal_meds_again 1 · fever_night←d5_rail_body 1 · fever_night←dawn_strike 1)
+- lazy: 그날 사건 43 (dawn_strike/맞고 버틴다 [줄타기] 29 · dawn_strike/물병 둘을 내민다 [줄타기] 12 · called_up/손등을 깨물며 버틴다 [줄타기] 1 · dawn_strike/그릇 둘을 내민다 [줄타기] 1) · 깔때기 25 (fever_night←starve_you 16 · fever_night←d2_shutter_arm 6 · fever_night←dawn_strike 2 · fever_night←d1_night_storage 1)
+- diligent: 그날 사건 2 (called_up/손등을 깨물며 버틴다 [줄타기] 2) · 깔때기 17 (fever_night←starve_you 11 · fever_night←d2_shutter_arm 4 · fever_night←d1_night_storage 2)
+- steward: 그날 사건 3 (dawn_strike/물병 둘을 내민다 [줄타기] 3) · 깔때기 26 (fever_night←starve_you 20 · fever_night←d2_shutter_arm 6)
+- selfish_nb: 그날 사건 43 (dawn_strike/축 늘어진다 15 · called_up/불을 키우고 밤을 샌다 [줄타기] 10 · dawn_strike/축 늘어진다 [줄타기] 6 · dawn_mob/다른 사람을 가리킨다 [줄타기] 6 · called_up/손등을 깨물며 버틴다 [줄타기] 3 · dawn_mob/손가락 하나로 갚는다 [줄타기] 2 · starve_you/창고를 턴다 [줄타기] 1) · 깔때기 0 (-)
+- h_cautious: 그날 사건 26 (dawn_strike/물병 둘을 내민다 [줄타기] 12 · called_up/손등을 깨물며 버틴다 [줄타기] 8 · dawn_mob/손가락 하나로 갚는다 [줄타기] 3 · dawn_strike/맞고 버틴다 [줄타기] 2 · called_up/불을 키우고 밤을 샌다 [줄타기] 1) · 깔때기 0 (-)
+- h_first: 그날 사건 29 (called_up/귀를 막는다 [줄타기] 10 · dawn_strike/맞고 버틴다 [줄타기] 8 · dawn_mob/가진 것을 다 내놓는다 [줄타기] 4 · dawn_strike/물병 둘을 내민다 [줄타기] 4 · dawn_mob/맞고 버틴다 [줄타기] 3) · 깔때기 9 (fever_night←d1_night_storage 5 · fever_night←trip_a2_escalator 2 · fever_night←trip_a2_stockroom 1 · fever_night←dawn_mob 1)
+- h_cautious2: 그날 사건 56 (dawn_strike/소리친다 8 · called_up/다른 이름을 댄다 [줄타기] 7 · dawn_mob/무릎을 꿇고 빈다 [줄타기] 6 · dawn_strike/축 늘어진다 5 · dawn_strike/옆 담요를 가리킨다 [줄타기] 4 · dawn_strike/밀쳐 낸다 4 · called_up/귀를 막는다 [줄타기] 4 · dawn_mob/다른 사람을 가리킨다 [줄타기] 4 · dawn_strike/맞고 버틴다 [줄타기] 2 · dawn_mob/맞고 버틴다 [줄타기] 2 · dawn_mob/밀치고 달아난다 [줄타기] 2 · dawn_strike/밀쳐 낸다 [줄타기] 2 · dawn_strike/물병 둘을 내민다 [줄타기] 2 · dawn_strike/축 늘어진다 [줄타기] 1 · called_up/손등을 깨물며 버틴다 [줄타기] 1 · called_up/불을 키우고 밤을 샌다 [줄타기] 1 · dawn_strike/소리친다 [줄타기] 1) · 깔때기 20 (fever_night←starve_you 10 · fever_night←d1_night_storage 6 · fever_night←d4_spanner 2 · fever_night←d5_rail_body 1 · fever_night←d5_rail_body_c 1)
+
+D6 위기 사건(d6_*)으로 죽은 판: balanced 0 · silent 0 · lazy 0 · diligent 0 · steward 0 · selfish_nb 0 · h_cautious 0 · h_first 0 · h_cautious2 0
+D3 사건(d3_*·trial_d3*)으로 죽은 판: balanced 0 · silent 0 · lazy 0 · diligent 0 · steward 0 · selfish_nb 0 · h_cautious 0 · h_first 0 · h_cautious2 0

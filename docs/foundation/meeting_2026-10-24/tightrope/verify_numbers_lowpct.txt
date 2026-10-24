@@ -1,0 +1,5 @@
+8× dawn_mob/무릎을 꿇고 빈다 30% (base 30, talk=0, karma 13, roped fight K3)
+4× dawn_mob/무릎을 꿇고 빈다 30% (base 30, talk=0, karma 12, roped fight K3)
+3× dawn_mob/무릎을 꿇고 빈다 30% (base 30, talk=0, karma 14, roped fight K3)
+2× dawn_mob/무릎을 꿇고 빈다 30% (base 30, talk=0, karma 15, roped fight K3)
+1× dawn_mob/무릎을 꿇고 빈다 30% (base 30, talk=0, karma 19, roped fight K4)

@@ -1,0 +1,8 @@
+manifest 215
+    13_run seed 11: D6 you_gone
+    13_run seed 7: D9 you_gone
+FAIL 13_run (console errors 0, try 2) - 처음부터 끝까지 간 판이 없다 (시드 2개 모두 D10 결말 전에 멈췄다: 11=D6 you_gone, 7=D9 you_gone) / 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl → 그냥 지나간다 / D6 day passage_al
+    [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D6 day passage_alone \u2192 \ub450\uace0 \uac77\uae30\ub85c \ud55c\ub2e4 / D6 day patrol_pact_b \u2192 \uac70\uc808\ud55c\ub2e4 / D6 night d6_
+    [ds4 missing] @dawn_strike @d6_shutter_b wound_critical@wound_critical
+shots 0/1 ok · console errors 0 · FAIL 13_run
+exit=1

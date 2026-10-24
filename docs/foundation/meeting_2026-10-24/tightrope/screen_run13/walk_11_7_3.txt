@@ -1,0 +1,9 @@
+manifest 215
+    13_run seed 11: D6 you_gone
+    13_run seed 7: D9 you_gone
+    13_run seed 3: D10 d10_walk_other - OK
+OK   13_run (console errors 0, try 3)
+    [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | [\uafc8 D6] / [D7 food2 water5 hunger2] / D7 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D7 evening d7_broadcast \u2192 \uc218\ucca9\uc5d0 \ubc1b\uc544 \uc801\ub294\ub2e4 / D
+    [ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike @d6_shutter_b @d10_grab
+shots 1/1 ok ¡¤ console errors 0
+exit=0

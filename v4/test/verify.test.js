@@ -184,7 +184,7 @@ test('봇 치료(10-23): 저녁에 위독한 주민을 치료한다 — 중립�
   assert.deepStrictEqual(run('selfish', 3), [false, 3]);
 });
 
-// ── 4. 강제 사망: 그 순간 당신이 죽지 않는 열린 선택지가 0개 — 엔진이 사인 기록(ended.cause)에 남기고, 실질 경고로 세지 않는다 ──
+// ── 4. 강제 사망 = 확정 사망 (10-24 tightrope R1): 그 순간 열린 선택지 전부 살 확률 0 — 엔진이 사인 기록(ended.cause)에 남기고, 실질 경고로 세지 않는다 ──
 test('사인 기록: 선택지 하나뿐인 죽음은 강제 — warned 거짓, 갈림길은 그 전 자유 경고 선택', () => {
   const t = rawTables();
   t.events.push(ev('x_fork', 'trial', 'day==0 & phase==evening', [pass('간다', { effects: { flag: { went: true } } }, { warn: '돌아오기 어렵다' }), pass('안 간다', {})]));
@@ -208,28 +208,38 @@ test('사인 기록: 선택지 하나뿐인 죽음은 강제 — warned 거짓, 
   assert.deepStrictEqual([a.forced, a.forcedRate, a.forcedTraced, a.warnedRate, a.warnTextRate, a.unwarned], [1, 100, 1, 0, 100, 1]);
   assert.deepStrictEqual(Object.keys(a.byForced), ['x_end ← x_fork/간다']);
 });
-test('사인 기록: 다른 길이 모두 잠긴 주사위(약 0)는 강제, 약이 있으면 자유 선택 — 저장 왕복에도 lastFree 가 남는다', () => {
-  const mk = (meds) => {
+test('사인 기록 (10-24 tightrope R1): 다른 길이 모두 잠긴 주사위(약 0)도 살 확률 > 0 이면 강제가 아니다(경고 있는 결정) · 확정 죽음만 열려 있으면 강제 · 약이 있으면 자유 선택 — 저장 왕복에도 lastFree 가 남는다', () => {
+  const dice = { label: '버틴다', warn: '아침이 안 올 수 있다', check: { skill: 'str', base: 30 }, ok: { text: '' }, fail: { text: '', effects: { kill: { who: 'you' } } } };
+  const doom = { label: '눈을 감는다', warn: '아침이 안 올 것이다', out: { text: '', effects: { kill: { who: 'you' } } } };
+  // 화면 % = 30 + 5 × 기술. 기술 −5 = 5% (살 확률 > 0) — 죽는 시드를 찾아 쓴다(결정적)
+  const mk = (meds, alt) => {
     const t = rawTables();
-    t.events.push(ev('x_fever', 'trial', 'day==0 & phase==night', [
-      { label: '약을 쓴다', cost: { meds: 1 }, out: { text: '' } },
-      { label: '버틴다', warn: '아침이 안 올 수 있다', check: { skill: 'str', base: 0 }, ok: { text: '' }, fail: { text: '', effects: { kill: { who: 'you' } } } }]));
+    t.events.push(ev('x_fever', 'trial', 'day==0 & phase==night', [{ label: '약을 쓴다', cost: { meds: 1 }, out: { text: '' } }, alt]));
     const db = T.load(t);
-    const s = E.newGame(db, 5);
-    E.dispatch(s, { type: 'choose', i: 1 }, db);
-    toPhase(s, db, 0, 'night');
-    s.world.meds = meds;
-    assert.strictEqual(s.pending && s.pending.id, 'x_fever');
-    E.dispatch(s, { type: 'choose', i: 1 }, db);
-    s._db = db;
-    return s;
+    for (let seed = 5; seed < 60; seed++) {
+      const s = E.newGame(db, seed);
+      E.dispatch(s, { type: 'choose', i: 1 }, db);
+      toPhase(s, db, 0, 'night');
+      s.world.meds = meds;
+      assert.strictEqual(s.pending && s.pending.id, 'x_fever');
+      s.people.you.skills.str = -5;
+      E.dispatch(s, { type: 'choose', i: 1 }, db);
+      if (s.people.you.status === 'dead') { s._db = db; return s; }
+    }
+    throw new Error('죽는 시드를 못 찾음');
   };
-  const a = mk(0);
-  assert.strictEqual(S.measure(a._db, a, { trips: 0 }).deadlyPick, false, '강제 죽음은 봇 버릇이 아니다');
-  assert.strictEqual(a.people.you.status, 'dead');
-  assert.deepStrictEqual([a.ended.cause.forced, a.ended.cause.warned], [true, false]);
-  const b = mk(1);
-  assert.deepStrictEqual([b.ended.cause.forced, b.ended.cause.warned, b.ended.cause.free.event], [false, true, 'x_fever'], '약이 있었는데 버텼다 = 경고가 보인 결정');
+  const a = mk(0, dice);
+  assert.strictEqual(S.measure(a._db, a, { trips: 0 }).deadlyPick, false, '다른 길이 잠긴 주사위 죽음은 봇 버릇이 아니다');
+  assert.deepStrictEqual([a.ended.cause.forced, a.ended.cause.warned, a.ended.cause.noSafe], [false, true, true], '살 확률 5% 가 있었다 = 강제(확정 사망) 아님 · 위험 0 출구는 없었다(옛 강제 정의)');
+  assert.deepStrictEqual(a.lastResult.alts.map((x) => x.p), [0.05]);
+  assert.strictEqual(a.lastResult.p, 0.05);
+  const ra = S.measure(a._db, a, { trips: 0 });
+  assert.deepStrictEqual([ra.forced, ra.noSafe, ra.warned], [false, true, true]);
+  const z = mk(0, doom);
+  assert.deepStrictEqual([z.ended.cause.forced, z.ended.cause.warned, z.lastResult.alts.map((x) => x.p)], [true, false, [0]], '열린 선택지 전부 살 확률 0 = 확정 사망 — 경고 글이 있어도 경고 있음이 아니다');
+  const b = mk(1, dice);
+  assert.deepStrictEqual([b.ended.cause.forced, b.ended.cause.warned, b.ended.cause.free.event, b.ended.cause.noSafe], [false, true, 'x_fever', false], '약이 있었는데 버텼다 = 경고가 보인 결정');
+  assert.deepStrictEqual(b.lastResult.alts.map((x) => x.p), [1, 0.05]);
   const rb = S.measure(b._db, b, { trips: 0 });
   assert.strictEqual(rb.deadlyPick, true, '대안(약)이 있는데 죽음 글("아침이 안 올") 선택으로 죽음 = 봇 버릇 점검 줄에 잡힌다');
   assert.strictEqual(S.aggregate(b._db, [rb]).deadlyPick, 1);
@@ -238,10 +248,11 @@ test('사인 기록: 다른 길이 모두 잠긴 주사위(약 0)는 강제, 약
   const t3 = rawTables();
   t3.events.push(ev('x_cold', 'trial', 'day==0 & phase==night', [
     { label: '담요를 뺏는다', warn: '그 사람이 떤다', taboo: true, out: { text: '' } },
-    { label: '버틴다', warn: '아침이 안 올 수 있다', check: { skill: 'str', base: 0 }, ok: { text: '' }, fail: { text: '', effects: { kill: { who: 'you' } } } }]));
+    { label: '버틴다', warn: '아침이 안 올 수 있다', check: { skill: 'str', base: 30 }, ok: { text: '' }, fail: { text: '', effects: { kill: { who: 'you' } } } }]));
   const db3 = T.load(t3); const s3 = E.newGame(db3, 5);
   E.dispatch(s3, { type: 'choose', i: 1 }, db3); toPhase(s3, db3, 0, 'night');
   assert.strictEqual(s3.pending && s3.pending.id, 'x_cold');
+  s3.people.you.skills.str = -6;   // 화면 % 0 — 반드시 실패
   E.dispatch(s3, { type: 'choose', i: 1 }, db3);
   assert.deepStrictEqual([s3.people.you.status, s3.ended.cause.forced, S.measure(db3, s3, { trips: 0 }).deadlyPick], ['dead', false, false]);
   const t2 = rawTables(); const db2 = T.load(t2); const s2 = E.newGame(db2, 1);

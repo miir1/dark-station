@@ -2882,5 +2882,32 @@
     "text": "당신 그릇이 줄 끝으로 밀려나 있다.",
     "rumor": 0,
     "truth": 1
+  },
+  {
+    "id": "rope_tail_pay",
+    "speaker": "ui",
+    "context": "",
+    "grade": "choice",
+    "text": "그래도 안 되면 끝이다",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "rope_tail_endure",
+    "speaker": "ui",
+    "context": "",
+    "grade": "choice",
+    "text": "못 버티면 끝이다",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "rope_tail_point",
+    "speaker": "ui",
+    "context": "",
+    "grade": "choice",
+    "text": "안 통하면 끝이다",
+    "rumor": 0,
+    "truth": 1
   }
 ]

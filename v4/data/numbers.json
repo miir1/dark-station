@@ -273,5 +273,221 @@
     "start": 0,
     "perDay": 0,
     "visible": "never"
+  },
+  {
+    "id": "rope_k1",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 5,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_k2",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 8,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_k3",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 12,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_k4",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 16,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_pay_1",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 92,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_pay_2",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 88,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_pay_3",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 80,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_pay_4",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 70,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_endure_1",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 88,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_endure_2",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 80,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_endure_3",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 70,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_endure_4",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 60,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_point_1",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 82,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_point_2",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 70,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_point_3",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 55,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_point_4",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 40,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_fight_1",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_fight_2",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_fight_3",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 5,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_fight_4",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 10,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_floor",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 30,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_blind_pay",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 85,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_blind_endure",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 75,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_blind_point",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 65,
+    "perDay": 0,
+    "visible": "never"
   }
 ]

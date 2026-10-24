@@ -17,6 +17,9 @@
 #   python v4/tools/screen_check.py spec --out=docs/foundation/meeting_2026-10-24/apply
 #                                                           (2026-10-24 명세 A1·A2·A4 화면 몫) 새 사건 10개를 시뮬 저장에서 열고 골라 흐름 끝까지 · 잠긴 이유 ·
 #                                                           등 돌림(아침·저녁·밤)·호칭·밀린 그릇 · 못 본 밤 먼지·_late 글·토스트 · 그림 없을 때 · 표 행이 빠질 때 — screen_spec_*.png · screen_spec.json
+#   python v4/tools/screen_check.py rope --out=docs/foundation/meeting_2026-10-24/tightrope
+#                                                           (2026-10-24 줄타기·게으름 처벌 화면 몫) 카르마 구간별 선택 창(%·경고·비용·위험 단계 색·심장 박동) · 눈먼 새벽 한 줄 ·
+#                                                           죽을 뻔한 판정 '살았다' · 실패 글·사망 화면 · 못 본 도둑이 당신에게 온 아침 밤 보고·조사 글 — screen_rope_*.png · screen_rope.json
 #   공통 --out=<폴더> : 결과와 헤드리스 프로필(.profile, 끝나면 지움)을 그 폴더에 (기본 after_shots)
 #   컴퓨터가 바쁠 때 (2026-10-24 검증 #8·#10): 페이지가 덜 뜨면(스크립트·표를 못 받음) 세 번까지 다시 연다(CDP.open → booted) · 로컬 서버 대기열 128 ·
 #     fixture.js 는 FIXTURE_SEC(240초)에 찾은 만큼으로 멈추고, FIXTURE_TIMEOUT 을 넘으면 저장 없이 간다(그 검사는 'fixture 없음'으로 결과에 남는다)
@@ -1813,6 +1816,174 @@ async def task_spec(c, opts):
         json.dump(res, fp, ensure_ascii=False, indent=1)
 
 
+# ── rope (2026-10-24 줄타기 · 게으름 처벌 화면 몫, tightrope/design.md §1·§2): 카르마 구간마다 바뀐 선택지의 %·경고·비용이 보이는가 ·
+#    살 확률이 내려가는 것이 숫자 없이(위험 단계 색 · 상자 심장 박동) 느껴지는가 · 죽을 뻔한 판정을 넘긴 줄 · 실패 글과 사망 화면 ·
+#    눈먼 새벽 한 줄 · 못 본 도둑이 당신 그릇·붕대에 온 아침 '밤 보고' 줄과 조사 글. 결과 screen_rope_*.png · screen_rope.json (--out 폴더)
+ROPE_EVENTS = ['dawn_strike', 'dawn_mob', 'called_up', 'd10_hold', 'starve_you', 'd2_shutter_arm', 'night:steal_food_again', 'night:steal_meds_again']
+# (이름, 사건, 카르마, 눈먼 새벽) — 저장(시뮬 봇이 그 사건이 걸린 순간)의 카르마·깃발만 바꾼다. 습격은 그릇 둘이 열리게 식량 3
+ROPE_WINDOWS = [('dawn_k0', 'dawn_strike', 0, False), ('dawn_k5', 'dawn_strike', 5, False), ('dawn_k12', 'dawn_strike', 12, False), ('dawn_k16', 'dawn_strike', 16, False),
+                ('dawn_blind', 'dawn_strike', 0, True), ('mob_k8', 'dawn_mob', 8, False), ('called_k12', 'called_up', 12, False), ('hold_k16', 'd10_hold', 16, False),
+                ('starve_k8', 'starve_you', 8, False), ('arm_k12', 'd2_shutter_arm', 12, False)]
+# (이름, 창 저장, 고를 선택 label, 판정 난수 강제값) — 0.01 = 넘김 · 0.995 = 실패
+ROPE_ROLLS = [('ok', 'dawn_k12', '맞고 버틴다', 0.01), ('fail', 'dawn_k12', '그릇 둘을 내민다', 0.995), ('starve_fail', 'starve_k8', '남의 그릇을 뺏는다', 0.995),
+              ('blind_ok', 'dawn_blind', '옆 담요를 가리킨다', 0.01)]
+
+ROPE_BOX_JS = r"""(() => { const D = __ds4, box = document.getElementById('box'), st = D.state, db = D.db, v = D.E.eventView(st, db);
+  const cs = box ? getComputedStyle(box) : null, ev = v ? db.events[v.id] : null;
+  const opts = [...(box ? box.querySelectorAll('.opt') : [])].map((b) => { const w = b.querySelector('small.warn'), ch = b.querySelector('small.chance');
+    return { text: b.textContent, disabled: b.disabled, r: (w && w.dataset.r) || (ch && ch.dataset.r) || '', warn: w ? w.textContent : '', warnColor: w ? getComputedStyle(w).color : '',
+      chance: ch ? ch.textContent : '', chanceColor: ch ? getComputedStyle(ch).color : '', cost: (b.querySelector('small.cost') || {}).textContent || '',
+      cut: b.scrollWidth > b.clientWidth + 1 || b.scrollHeight > b.clientHeight + 1 }; });
+  const all = [(box.querySelector('.body') || {}).textContent || ''].concat([...box.querySelectorAll('.opt .ol')].map((x) => x.textContent)).join(' ');   // 선택지 번호(1~9)는 빼고 본다
+  const leak = all.replace(/\d+%/g, '').replace(/−\d+/g, '').match(/\d+/g);   // % 와 비용(−2) 밖의 숫자 = 새는 수치 (카르마·원한 등)
+  return { open: D.UI.openKind(), day: st.day, phase: st.phase, karma: st.world.karma, blindFlag: !!st.flags.strike_blind, pending: st.pending ? st.pending.id : null,
+    cls: box ? box.className : '', anim: cs ? cs.animationName + ' ' + cs.animationDuration : '', body: (box.querySelector('.body') || {}).textContent || '',
+    blind: (box.querySelector('.body .blind') || {}).textContent || '', tight: box.classList.contains('tight'), overflow: box.scrollHeight > box.clientHeight + 1, opts, leak,
+    engine: v ? v.choices.map((c, i) => ({ label: c.label, chance: c.chance, warn: c.warn, locked: c.locked, p: D.E.survival(D.E.effChoice(st, db, ev.choices[i]), c.chance) })) : [] }; })()"""
+
+# 판정 흐름 봇: 줄은 모으고, 판정 줄('roll')·결과 글(':out')·사망 한 줄('death')·사망 명부 창에서 한 번씩 멈춘다(window.__hold = 멈춘 곳)
+ROPE_ROLL_BOT = r"""(() => { window.__seen = []; window.__hold = ''; window.__held = {}; __ds4.setBot((k, info) => {
+  const tag = (info.opts && info.opts.tag) || '';
+  if (k === 'line') { window.__seen.push({ text: info.text, tag, cls: (document.getElementById('box') || {}).className || '' });
+    const h = tag === 'roll' ? 'roll' : /:out$/.test(tag) ? 'out' : tag === 'death' ? 'death' : '';
+    if (h && !window.__held[h]) { window.__held[h] = 1; window.__hold = h; return 'hold'; } return undefined; }
+  if (k === 'confirm2') return 0;
+  if (k === 'death_ledger' || k === 'ending' || k === 'title') { window.__hold = k; return 'hold'; }
+  if (k === 'event') { const o = info.options; let i = o.findIndex((x) => !x.disabled && !x.warn); if (i < 0) i = o.findIndex((x) => !x.disabled); return i; }
+  if (k === 'ration' || k === 'board' || k === 'tend' || k === 'treat') return info.options.length - 1;
+  if (k === 'trip' || k === 'write' || k === 'deeper' || k === 'fire') return 1;
+  return undefined; }); return 1; })()"""
+# 판정 난수를 한 번만 정한다 (엔진 choose 는 판정에 R.rand 를 한 번 쓴다 — 화면 파일은 안 고치고 페이지 안에서만 감싼다)
+ROPE_FORCE_JS = r"""((v) => { const R = DS4.rng; if (!R.__orig) { R.__orig = R.rand; R.rand = (s) => { const x = R.__orig(s); if (window.__force != null) { const f = window.__force; window.__force = null; return f; } return x; }; } window.__force = v; return 1; })"""
+# 아침 밤 보고: 못 본 일 줄('night_unseen')에서 멈춘다. 그 밖의 창은 흐름을 이어 간다
+ROPE_NIGHT_BOT = r"""(() => { window.__seen = []; window.__hold = ''; __ds4.setBot((k, info) => {
+  const tag = (info.opts && info.opts.tag) || '';
+  if (k === 'line') { window.__seen.push({ text: info.text, tag }); if (tag === 'night_unseen' && window.__hold !== 'unseen') { window.__hold = 'unseen'; return 'hold'; } return undefined; }
+  if (k === 'event') { const o = info.options; let i = o.findIndex((x) => !x.disabled && !x.warn); if (i < 0) i = o.findIndex((x) => !x.disabled); return i; }
+  if (k === 'confirm2') return 0;
+  if (k === 'ration' || k === 'board' || k === 'tend' || k === 'treat') return info.options.length - 1;
+  if (k === 'trip' || k === 'write' || k === 'deeper' || k === 'fire') return 1;
+  if (k === 'title' || k === 'death_ledger' || k === 'ending') return 'hold';
+  return undefined; }); return 1; })()"""
+
+
+async def rope_window(c, name):
+    await c.open(f'/v4/index.html?fast=1&auto=evhold&state=/__fixture/rope_{name}.json&sc={int(time.time())}')
+    await c.wait("__ds4.state && __ds4.UI.openKind() === 'event'", 60)
+    await asyncio.sleep(0.6)
+
+
+async def task_rope(c, opts):
+    res = {'windows': {}, 'rolls': {}, 'night': {}}
+    # ── 1 선택 창: 카르마 구간마다 (지금 → K1 → K3 → K4 · 눈먼 새벽 · 긴 경고 · 남을 내미는 길) ──
+    for name, ev, k, blind in ROPE_WINDOWS:
+        if 'rope_' + name not in FIXTURES:
+            res['windows'][name] = {'skip': 'fixture 없음'}
+            print('rope', name, 'fixture 없음')
+            continue
+        r = {}
+        try:
+            await rope_window(c, name)
+            r = await c.ev(ROPE_BOX_JS, False)
+            await stage_shot(c, out(f'screen_rope_{name}.png'))
+        except BaseException as e:
+            r = {'error': str(e)[:300]}
+        r['console_errors'] = c.errors()
+        res['windows'][name] = r
+        print('rope', name, 'K', r.get('karma'), '| cls', r.get('cls'), '| anim', r.get('anim'), '| tight', r.get('tight'), 'overflow', r.get('overflow'), '| leak', r.get('leak'),
+              '| blind', r.get('blind'), '|', [(o['text'][:44], o['r']) for o in r.get('opts', [])], r.get('error') or '', r['console_errors'])
+    # ── 2 판정: 죽을 뻔한 판정을 넘김('살았다' + 상자 한 번 뜀) · 실패 → 실패 글 → 사망 화면 ──
+    for name, win, label, force in ROPE_ROLLS:
+        if 'rope_' + win not in FIXTURES:
+            res['rolls'][name] = {'skip': 'fixture 없음'}
+            continue
+        r = {'window': win, 'pick': label, 'force': force, 'holds': {}}
+        try:
+            await rope_window(c, win)
+            ch = await c.ev("__ds4.E.eventView(__ds4.state, __ds4.db).choices.map((c) => ({ label: c.label, locked: c.locked, chance: c.chance }))", False)
+            i = next((k for k, x in enumerate(ch) if x['label'] == label and not x['locked']), None)
+            if i is None:
+                raise RuntimeError('고를 선택이 없다: ' + label + ' / ' + json.dumps(ch, ensure_ascii=False)[:200])
+            r['chance'] = ch[i]['chance']
+            await c.ev(ROPE_ROLL_BOT, False)
+            await c.ev(ROPE_FORCE_JS + f'({force})', False)
+            await c.ev(f"__ds4.UI.pick({i}); 1", False)
+            for _ in range(4):
+                if not await until(c, "window.__hold !== ''", 25):
+                    break
+                h = await c.ev("window.__hold", False)
+                await asyncio.sleep(0.25)
+                info = await c.ev("(() => { const b = document.getElementById('box'); const cg = document.getElementById('cg'); return { cls: b.className, text: (b.querySelector('.tw') || b.querySelector('.body') || b).textContent, anim: getComputedStyle(b).animationName, cg: cg.hidden ? '' : ((cg.querySelector('img') || {}).src || '').split('/').slice(-2).join('/') }; })()", False)
+                r['holds'][h] = info
+                await stage_shot(c, out(f'screen_rope_roll_{name}_{h}.png'))
+                if h in ('death_ledger', 'ending', 'title'):
+                    break
+                await c.ev("window.__hold = ''; __ds4.UI.key('ok'); 1", False)
+            r['last'] = await c.ev("(() => { const s = __ds4.state, x = s.lastResult || {}; return { roll: x.roll || null, roped: x.roped || null, blind: !!x.blind, p: x.p, you: s.people.you.status, ended: s.ended ? s.ended.why : null,"
+                                   " cause: s.ended && s.ended.cause ? { event: s.ended.cause.event, warned: s.ended.cause.warned, forced: s.ended.cause.forced, roped: s.ended.cause.roped, image: s.ended.cause.image } : null }; })()", False)
+            r['seen'] = await c.ev("window.__seen", False)
+        except BaseException as e:
+            r['error'] = str(e)[:300]
+        r['console_errors'] = c.errors()
+        res['rolls'][name] = r
+        print('rope roll', name, label, r.get('chance'), '| holds', {k: (v['text'][:40], v['anim'], v['cg']) for k, v in r['holds'].items()}, '| last', json.dumps(r.get('last'), ensure_ascii=False)[:200], r.get('error') or '', r['console_errors'])
+    # ── 3 못 본 도둑이 당신에게 온 아침: 밤 보고의 '못 본' 줄 → 흔적 단계에서 당신 그릇·붕대 조사 · 당신 몸(부상) ──
+    for name, oid in (('unseen_food', 'bowl_you'), ('unseen_meds', 'bandage_you')):
+        if 'rope_' + name not in FIXTURES:
+            res['night'][name] = {'skip': 'fixture 없음'}
+            print('rope night', name, 'fixture 없음')
+            continue
+        r = {}
+        try:
+            await c.open(f'/v4/index.html?fast=1&auto=manual&state=/__fixture/rope_{name}.json&sc={int(time.time())}')
+            await c.wait("__ds4.state && __ds4.UI.isOpen()", 60)
+            r['before'] = await c.ev("(() => { const s = __ds4.state; return { day: s.day, phase: s.phase, you: Object.assign({}, s.people.you.n), food: s.world.food, meds: s.world.meds }; })()", False)
+            await c.ev(ROPE_NIGHT_BOT, False)
+            await c.ev("__ds4.UI.key('ok'); 1", False)
+            r['held'] = await until(c, "window.__hold === 'unseen'", 40)
+            await asyncio.sleep(0.3)
+            r['line'] = await c.ev("(document.getElementById('box').querySelector('.tw') || {}).textContent || ''", False)
+            await app_shot(c, out(f'screen_rope_{name}_report.png'))
+            await c.ev("__ds4.UI.key('ok'); 1", False)               # 같은 봇이 흐름을 잇는다 (못 본 줄에서는 한 번만 멈춘다)
+            await until(c, "__ds4.state.phase === 'trace' && !__ds4.UI.isOpen() && !__ds4.scene.auto && !__ds4.scene.moving && !__ds4.state.pending", 40)
+            r['report'] = [x['text'] for x in (await c.ev("window.__seen", False) or [])]
+            r['after'] = await c.ev("(() => { const s = __ds4.state; return { day: s.day, phase: s.phase, you: Object.assign({}, s.people.you.n), food: s.world.food, meds: s.world.meds, trace: s.traces['" + oid + "'] }; })()", False)
+            r['map_you'] = await c.ev("(() => { const s = __ds4.scene; return [s.px, s.py]; })()", False)
+            px, py = r['map_you']
+            await ap_zoom(c, f'screen_rope_{name}_you.png', max(0, px - 4), max(0, py - 3), px + 5, py + 2, 3)
+            r['inspect'] = await ap_inspect(c, oid)
+            r['toast'] = await c.ev("document.getElementById('toast').hidden ? '' : document.getElementById('toast').textContent", False)
+            await stage_shot(c, out(f'screen_rope_{name}_inspect.png'))
+        except BaseException as e:
+            r['error'] = str(e)[:300]
+        r['console_errors'] = c.errors()
+        res['night'][name] = r
+        print('rope night', name, '| held', r.get('held'), '|', r.get('line'), '| report', r.get('report'), '| inspect', r.get('inspect'), '| you', (r.get('before') or {}).get('you', {}).get('hunger'), '→', (r.get('after') or {}).get('you', {}).get('hunger'),
+              'inj', (r.get('before') or {}).get('you', {}).get('injury'), '→', (r.get('after') or {}).get('you', {}).get('injury'), r.get('error') or '', r['console_errors'])
+    with open(out('screen_rope.json'), 'w', encoding='utf-8') as fp:
+        json.dump(res, fp, ensure_ascii=False, indent=1)
+
+
+def rope_variants():
+    """줄타기 창 저장: 사건이 걸린 순간의 저장에서 카르마·눈먼 새벽 깃발만 바꾼다 · 밤 저장(night:<행>)은 rope_unseen_* 이름으로."""
+    import copy
+    for name, ev, k, blind in ROPE_WINDOWS:
+        if ev not in FIXTURES:
+            continue
+        s = copy.deepcopy(FIXTURES[ev])
+        s['world']['karma'] = k
+        if ev == 'dawn_strike':
+            s['world']['food'] = max(3, s['world'].get('food', 0))
+        if blind:
+            s['flags']['strike_blind'] = True
+        else:
+            s['flags'].pop('strike_blind', None)
+        FIXTURES['rope_' + name] = s
+    for key, name in (('night:steal_food_again', 'unseen_food'), ('night:steal_meds_again', 'unseen_meds')):
+        if key in FIXTURES:
+            FIXTURES['rope_' + name] = FIXTURES[key]
+
+
 def spec_variants():
     """저장 변형: 대상이 없는 사건(잠긴 이유 '댈 이름이 없다') · 손가락을 잃은 당신(잠긴 이유 '손가락이 성치 않다')."""
     import copy
@@ -1850,6 +2021,9 @@ async def amain(tasks, opts):
     if 'spec' in tasks:
         load_fixtures(SPEC_EVENTS)
         spec_variants()
+    if 'rope' in tasks:
+        load_fixtures(ROPE_EVENTS)
+        rope_variants()
     httpd = serve()
     prof = os.path.join(OUTD, '.profile')            # 헤드리스 프로필 = 결과 폴더 아래 (.profile 은 git 제외 · 끝나면 지운다) — 프로젝트 밖에 만들지 않는다
     shutil.rmtree(prof, ignore_errors=True)

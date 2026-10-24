@@ -1,0 +1,19 @@
+# 변형 rope:vlo+fight:lo+blind+gsy+boilside:7 — 200판 × 8블록 (1,1001,2001,3001,4001,5001,6001,7001), 372초
+바꾼 칸 34: dawn_strike/그릇 둘을 내민다:pay / dawn_strike/맞고 버틴다:endure / dawn_strike/옆 담요를 가리킨다:point / dawn_mob/가진 것을 다 내놓는다:pay / dawn_mob/맞고 버틴다:endure / dawn_mob/손가락 하나로 갚는다:pay / dawn_mob/다른 사람을 가리킨다:point / called_up/불을 키우고 밤을 샌다:pay / called_up/손등을 깨물며 버틴다:endure / called_up/다른 이름을 댄다:point / d10_hold/가진 것을 내준다:pay / d10_hold/끌려가며 버틴다:endure / d10_hold/손가락을 내준다:pay / d10_grab/물병을 돌려준다:pay / d10_grab/끌려 넘어진다:endure / d2_shutter_arm/옆 사람 팔을 내민다:point / d4_spanner/다른 사람이 셌다고 한다:point / d5_flood/남의 담요로 물길을 막는다:point / fever_night/남의 담요를 끌어온다:point / d10_walk_weak/옆 사람 물병을 비운다:point / starve_you/창고를 턴다:pay / starve_you/남의 그릇을 뺏는다:point / dawn_strike/밀쳐 낸다:fight / dawn_strike/소리친다:fight / dawn_strike/축 늘어진다:fight / dawn_mob/밀치고 달아난다:fight / dawn_mob/무릎을 꿇고 빈다:fight / called_up/귀를 막는다:fight / d10_hold/뿌리치고 걷는다:fight / d10_grab/발을 빼낸다:fight / grudge_boils+strike_blind / dawn_strike blind 3 / grudge_strike_you actor !unseen / grudge_boils side w7
+| 정책 | 생존% | 블록별 생존% | 사망% | 확정사망(살 확률 0) | 옛 강제 | 경고 없는 사망 | 넘긴 죽음 판정/판 (산 판) | 산 판 중 ≥2번% | 줄타기 판정 넘김/판 (산 판) · 산 판 중 ≥2번% · 굴림/판 | ≤75% 넘김/판 | 죽음 판정 굴림/판 | 카르마 | 카르마≥5에서 안전 출구 열린 사건/판 | D1~D4 생존 | D5까지 사망 | 사인 1위 | 원인 1위 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 38.6 | 39.5 / 38.5 / 40 / 37.5 / 37.5 / 41.5 / 35.5 / 38.5 | 61.4 | 0 | 189 | 189 | 2.63 (3.61) | 85.6 | 0.48 (0.65) · 13.5 · 0.54 | 0.63 | 3.24 | 2.2 | 0.6 | 90.8 | 26.1 | fever_night 30.9% | starve_you 31.9% |
+| lazy | 29.2 | 33.5 / 28.5 / 30.5 / 28.5 / 29.5 / 27.5 / 27 / 28.5 | 70.8 | 0 | 333 | 333 | 3.14 (4.76) | 93.1 | 1 (1.53) · 41.5 · 1.16 | 0.67 | 3.85 | 1.92 | 0.43 | 90.5 | 28.6 | fever_night 26.8% | dawn_strike 28.7% |
+| diligent | 41.5 | 39 / 47.5 / 42.5 / 45 / 36 / 46 / 38 / 38 | 58.5 | 0 | 140 | 140 | 2.4 (3.28) | 84.6 | 0.27 (0.35) · 11 · 0.29 | 0.62 | 2.99 | 2.38 | 0.69 | 89.8 | 25.8 | fever_night 33.7% | starve_you 37% |
+
+| 정책 | 날별 그날 사건 사망 D2·D3·D4·D5·D6 | 못 본 일/판 | 실제 발견%(누구나 아는 밤 뺌) | 숨은 밤/판 | 누구나 아는 밤/판 | 옛 발견% | D9 주민 | D7 자원 | 전멸% | 새벽 습격/판 · 그중 눈먼 새벽/판 · 눈먼 새벽 사망 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 66·0·79·246·16 | 2.36 | 60.7 | 11.24 | 2.74 | 68.4 | 3.07 | 2.66 | 11.4 | 0.32 · 0.23 · 55 |
+| lazy | 66·0·84·290·60 | 4.4 | 31 | 11.12 | 3.38 | 47.1 | 2.96 | 2.4 | 9.9 | 0.97 · 0.84 · 225 |
+| diligent | 84·0·73·230·4 | 0.46 | 92.5 | 10.71 | 2.26 | 93.8 | 3.18 | 2.87 | 11.8 | 0.06 · 0 · 0 |
+
+- balanced 사인: fever_night 304 · d5_flood 237 · d10_walk_weak 205 · d4_spanner 78 · d2_shutter_arm 66 · dawn_strike 64 · called_up 15
+- lazy 사인: fever_night 304 · d5_flood 253 · dawn_strike 232 · d10_walk_weak 161 · d4_spanner 83 · d2_shutter_arm 66 · called_up 19
+- diligent 사인: fever_night 315 · d5_flood 230 · d10_walk_weak 201 · d2_shutter_arm 84 · d4_spanner 73 · called_up 18 · dawn_mob 10
+- 보통−게으름 생존: 합산 9.4%p · 블록 6 / 10 / 9.5 / 9 / 8 / 14 / 8.5 / 10
+- 부지런−게으름 생존: 합산 12.3%p · 블록 5.5 / 19 / 12 / 16.5 / 6.5 / 18.5 / 11 / 9.5

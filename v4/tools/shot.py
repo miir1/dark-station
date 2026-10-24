@@ -1,11 +1,12 @@
 # 어두운 역 v4 — 헤드리스 캡처. 로컬 http 서버를 띄우고 Chrome/Edge headless 로 ?fast=1&auto=<지점> 을 열어 PNG 로 남긴다.
-# 쓰기:  python v4/tools/shot.py            (C:\dev\dark_station 에서)   → v4/shots/01_car.png … 12_beds.png + shots.json
+# 쓰기:  python v4/tools/shot.py            (C:\dev\dark_station 에서)   → v4/shots/01_car.png … 13_run.png + shots.json
 #        python v4/tools/shot.py car         (하나만)      python v4/tools/shot.py ending --seed=3   (시드 바꿔서)
 # 캡처 전에 v4/tools/manifest.py 로 그림 목록(v4/img/manifest.json)을 새로 만든다 — 새 그림이 자동으로 잡힌다.
 # shots.json: ok + why(실패 까닭) + tries + console_errors(오류·uncaught) + auto(봇이 남긴 [ds4 …] 줄: 도달한 날·고른 선택·그림 없는 장면)
 #   ok = PNG 가 생겼고 + 게임이 떠서 그 지점에 닿았고(봇 기록 '[ds4 auto] <지점> … reached=1' — 게임 안에서 state·지도·단계·붙잡은 창을 보고 찍는다)
 #        + PNG 에서 잰 배율(png_scale)이 2 이고 + 시작 오류가 없다. 실패한 지점은 한 번 더 찍는다. 하나라도 실패면 끝 코드 1.
 #   --profile=<폴더> : 헤드리스 브라우저 프로필 폴더 (기본 v4/shots/.profile). 회의 검증 때는 회의 폴더 아래를 준다.
+#   --out=<폴더>     : PNG·shots.json 을 둘 폴더 (기본 v4/shots). 회의 검증 때는 회의 폴더 아래를 준다 (정본 캡처를 덮지 않게).
 #   컴퓨터가 바쁠 때 (2026-10-24 검증 #8·#10): 브라우저 한 번이 SHOT_TIMEOUT(600초)를 넘거나 fixture.js 가 FIXTURE_TIMEOUT 을 넘어도 도구는 죽지 않는다 —
 #     그 지점만 FAIL('시간 초과')로 적고 다시 찍고, shots.json 은 늘 남는다. fixture.js 는 FIXTURE_SEC(240초)에 찾은 만큼으로 멈춘다. 로컬 서버 대기열 128.
 # 브라우저 쪽 자동 진행은 game.js 의 autoRun(?auto=) 이 맡는다. 화면 갱신은 requestAnimationFrame + 보조 타이머(100ms 넘게 rAF 가 없으면 대신 한 번)라 숨은 창·헤드리스에서도 돈다.
@@ -16,15 +17,23 @@ OUT = os.path.join(ROOT, 'v4', 'shots')
 PORT = 8765
 # 지점 → 파일. night5 = D5 밤 고정 사건(옛 이름 day5) · evening5 = D5 저녁 화로 둘레 대화 · night8 = D8 밤 고정 사건
 # called3 = D3 밤 '이름이 불렸다' 선택 창 · train = 열차 결말 뒤 명부 · beds = D2 밤 지도(잠든 사람이 잠자리 위에 눕는다)
+# run = D0 차량부터 D10 결말 명부까지 저장 없이 처음부터 끝까지 도는 판 (회귀 검사 — 열흘 전체를 한 판으로 지나가며 오류·멈춤을 잡는다)
 SHOTS = [('car', '01_car'), ('morning3', '02_morning3'), ('night3', '03_night3'), ('night5', '04_night5'), ('night8', '05_night8'),
          ('ending', '06_ending'), ('death', '07_death'), ('evening5', '08_evening5'), ('reveal', '09_reveal'),
-         ('called3', '10_called3'), ('train', '11_train'), ('beds', '12_beds')]
+         ('called3', '10_called3'), ('train', '11_train'), ('beds', '12_beds'), ('run', '13_run')]
 BUDGET = {'car': 15000, 'morning3': 120000, 'night3': 150000, 'night5': 300000, 'night8': 450000, 'ending': 700000, 'death': 300000,
-          'evening5': 300000, 'reveal': 700000, 'called3': 150000, 'train': 700000, 'beds': 120000}
+          'evening5': 300000, 'reveal': 700000, 'called3': 150000, 'train': 700000, 'beds': 120000, 'run': 700000}
 STALE = ['04_day5']                              # 이름이 바뀐 옛 캡처 — 전부 찍을 때 지운다
 # 처음부터 봇으로 가면 닿지 않는 지점은 시뮬 봇이 만든 저장에서 시작한다 (v4/tools/fixture.js → 메모리 → /__fixture/<사건 id>.json → ?state=)
 #   train: 열차 결말(d10_train)은 통로가 열리고 주민이 살아 있어야 걸린다 — 캡처 봇(시드 7)은 D10 전에 주민이 다 죽어 all_dead 로 끝난다
-FIXTURE = {'train': 'd10_train'}
+#   ending: (10-24 줄타기) 카르마가 쌓인 판에는 위험 0 출구가 없어(모든 출구가 판정) 처음부터 가는 캡처 봇도 D7~D9 습격에서 3~10% 로 죽는다 —
+#           시드 하나의 운에 걸리지 않게 걷는 결말(d10_walk)이 걸린 저장에서 시작한다. 처음부터 끝까지 가는 판은 run(13) 이 맡는다
+FIXTURE = {'train': 'd10_train', 'ending': 'd10_walk'}
+# 처음부터 D10 결말까지 가야 하는 지점은 시드를 차례로 바꿔 가며 찍는다 — 줄타기 판에서 캡처 봇은 시드에 따라 D4~D10 에 죽는다(게임의 정상 결과).
+#   죽은 시드도 D0 부터 죽은 날까지 돈 판이라 그 판의 오류는 그대로 센다. 모든 시드가 D10 전에 죽으면 FAIL ('처음부터 끝까지 간 판이 없다').
+#   (10-25 확인, 판마다 같은 결과: 3·21·6·8 = D10 걷는 결말, 1 = D10 all_dead 결말 / 7 D9 · 11 D6 · 5 D4 · 13 D8 · 2 D7 · 4 D10 · 9 D9 사망 —
+#    tightrope/screen_run13/) 닿는 시드를 앞에 둬 보통은 한 판(약 40초)으로 끝난다. 표가 바뀌어 앞 시드가 죽으면 다음 시드로 · --seed=N 을 주면 그 시드만
+SEEDS = {'run': [3, 21, 6, 8, 1, 7, 11, 5, 13, 2, 4, 9]}
 FIXTURES = {}
 PROFILE = None                                   # --profile=<폴더> (없으면 v4/shots/.profile)
 
@@ -143,6 +152,8 @@ def judge(out, lines, key=None):
     elif key is not None and not any(re.search(r'\[ds4 auto\] ' + re.escape(key) + r' .*reached=1', ln) for ln in auto):
         last = auto[-1][auto[-1].index('[ds4 auto]'):].split('", source')[0][:140]
         why.append('지점에 닿지 못했다 (reached=1 없음): ' + last)
+    elif key in SEEDS and not any(re.search(r'\[ds4 auto\] ' + re.escape(key) + r' .*reached=1 D10 ', ln) for ln in auto):
+        why.append('D10 결말에 닿지 못했다')                 # 처음부터 끝까지 가는 판(run)은 D10 결말 창이어야 한다 (게임 쪽 HOLD 가 바뀌어도 여기서 잡는다)
     k = png_scale(out)
     if k is not None and k < EXPECT_K - 0.1:
         why.append(f'그림 배율 {k} (기대 {EXPECT_K}) - 화면이 1배이거나 비었다')
@@ -152,14 +163,24 @@ def judge(out, lines, key=None):
     return why, k
 
 
+def where(auto):
+    """봇의 마지막 기록 줄에서 판이 어디서 멈췄는지: 'D9 you_gone' · 'D10 d10_walk_other' (시드를 바꿔 찍는 판의 시도 기록용)"""
+    last = next((a for a in reversed(auto) if a.startswith('[ds4 auto]')), '')
+    m = re.search(r'reached=\d (D\d+)', last)
+    e = re.search(r' ended=(\S+)', last)
+    return ' '.join(x for x in ((m.group(1) if m else '?'), (e.group(1) if e else '')) if x)
+
+
 def shot(browser, key, name, log, seed=None):
     os.makedirs(OUT, exist_ok=True)
     out = os.path.join(OUT, name + '.png')
-    tries = []
-    for attempt in range(1 + RETRY):
+    tries, errs_all = [], []
+    # 처음부터 끝까지 가는 판(SEEDS)은 시드를 바꿔 가며 한 판씩 — 그 밖의 지점(또는 --seed 를 준 경우)은 같은 시드로 1+RETRY 번
+    plan = SEEDS[key] if key in SEEDS and not seed else [seed] * (1 + RETRY)
+    for attempt, sd in enumerate(plan):
         if os.path.exists(out):
             os.remove(out)                       # 옛 캡처가 남아 있으면 '파일이 생겼다'로 오판한다
-        url = f'http://127.0.0.1:{PORT}/v4/index.html?fast=1&auto={key}&shot={int(time.time())}{attempt}' + (f'&seed={seed}' if seed else '')
+        url = f'http://127.0.0.1:{PORT}/v4/index.html?fast=1&auto={key}&shot={int(time.time())}{attempt}' + (f'&seed={sd}' if sd else '')
         if key in FIXTURE:
             url += f'&state=/__fixture/{FIXTURE[key]}.json' if FIXTURE[key] in FIXTURES else ''
         prof = PROFILE or os.path.join(OUT, '.profile')
@@ -177,12 +198,19 @@ def shot(browser, key, name, log, seed=None):
         why, k = judge(out, lines, key)
         if timed_out:
             why = [f'시간 초과 ({SHOT_TIMEOUT}초) - 컴퓨터가 바쁘다'] + why
-        tries.append({'attempt': attempt + 1, 'ok': not why, 'why': why, 'png_scale': k, 'console_errors': len(errs)})
+        errs_all += errs                         # 실패한 시도의 오류도 센다 (죽은 시드도 D0 부터 죽은 날까지 돈 진짜 판이다)
+        t = {'attempt': attempt + 1, 'ok': not why, 'why': why, 'png_scale': k, 'console_errors': len(errs)}
+        if key in SEEDS:
+            t.update(seed=sd, end=where(auto))
+            print(f'    {name} seed {sd}: {t["end"]}' + (' - OK' if not why else ''))
+        tries.append(t)
         if not why:
             break
-    log.append({'shot': name, 'ok': not why, 'why': why, 'png_scale': k, 'tries': tries, 'console_errors': errs, 'auto': auto})
-    print(('OK  ' if not why else 'FAIL'), name, f'(console errors {len(errs)}{", try " + str(len(tries)) if len(tries) > 1 else ""})' + (' - ' + ' / '.join(why) if why else ''))
-    for e in errs + auto:
+    if why and key in SEEDS and not seed:
+        why = [f'처음부터 끝까지 간 판이 없다 (시드 {len(tries)}개 모두 D10 결말 전에 멈췄다: ' + ', '.join(f'{t["seed"]}={t["end"]}' for t in tries) + ')'] + why
+    log.append({'shot': name, 'ok': not why, 'why': why, 'png_scale': k, 'tries': tries, 'console_errors': errs_all, 'auto': auto})
+    print(('OK  ' if not why else 'FAIL'), name, f'(console errors {len(errs_all)}{", try " + str(len(tries)) if len(tries) > 1 else ""})' + (' - ' + ' / '.join(why) if why else ''))
+    for e in errs_all + auto:
         print('   ', e.encode('ascii', 'backslashreplace').decode('ascii')[:300])
 
 
@@ -193,10 +221,13 @@ def main():
         pass
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     seed = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--seed=')), None)
-    global PROFILE
+    global PROFILE, OUT
     prof = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--profile=')), None)
     if prof:
         PROFILE = os.path.abspath(os.path.join(ROOT, prof)) if not os.path.isabs(prof) else prof
+    outd = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--out=')), None)
+    if outd:
+        OUT = os.path.abspath(os.path.join(ROOT, outd)) if not os.path.isabs(outd) else outd
     only = set(args)
     sys.path.insert(0, os.path.dirname(__file__))
     import manifest

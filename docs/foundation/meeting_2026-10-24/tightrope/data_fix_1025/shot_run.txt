@@ -1,0 +1,35 @@
+manifest 215
+fixture d10_train=OK, d10_walk=OK [fixture] 647 games, 240.3s, time cap 240s (best so far); found d10_train,d10_walk; missing -
+OK   01_car (console errors 0)
+    [ds4 auto] car stop reached=1 D0 day map=car open=- you=home food=6 | D0 day pro_cold \u2192 \ub208\uc744 \ub72c\ub2e4
+OK   02_morning3 (console errors 0)
+    [ds4 auto] morning3 stop reached=1 D3 trace map=station open=- you=home food=2 | D1 ration trial_d1_bowls \u2192 \ub611\uac19\uc774 \uc870\uae08\uc529 / D1 day d1_shutter_knock \u2192 \ub450\ub4dc\ub824 \ub2f5\ud55c\ub2e4 / D1 day trip_b1_debris \u2192 \uc9c0\ub098\uac04\ub2e4 / D1 evening d1_names_
+OK   03_night3 (console errors 0)
+    [ds4 auto] night3 hold reached=1 D3 night map=station open=line you=home food=1 | D1 day trip_b1_debris \u2192 \uc9c0\ub098\uac04\ub2e4 / D1 evening d1_names_quiet \u2192 \uc801\ub294\ub2e4 / D1 night d1_night_storage \u2192 \ubd88\uac00\uc5d0 \uc788\ub294\ub2e4 / D2 trace d2_key \u2192 \ubc1b\ub294
+OK   04_night5 (console errors 0)
+    [ds4 auto] night5 hold reached=1 D5 night map=station open=line you=home food=0 | D3 trace d3_bottle \u2192 \ub0b4 \ubb3c\uc744 \uc21c\ub840\uc5d0\uac8c / [D3 food2 water4 hunger2] / D3 ration share_back \u2192 \ubaa8\ub978 \ucc99\ud55c\ub2e4 / D3 day trip_g_crates \u2192 \ub4a4\uc9c4\ub2e4 / D3 nig
+    [ds4 missing] @dawn_strike
+OK   05_night8 (console errors 0)
+    [ds4 auto] night8 hold reached=1 D8 night map=station open=event you=home food=0 | D5 night d5_rail_body \u2192 \ubc1b\ub294\ub2e4 / D5 night d5_flood \u2192 \ucc3d\uace0\ub97c \ubc84\ub9ac\uace0 \ube80\ub2e4 / D6 trace d6_morning \u2192 \uc1e0\uc904\uc744 \uae0b\ub294\ub2e4 / D6 trace hymn_paired \
+    [ds4 missing] @dawn_strike @d6_shutter_b
+OK   06_ending (console errors 0)
+    [ds4 auto] ending hold reached=1 D10 ended map=station open=ending ended=d10_walk you=walked food=0 | [\uc800\uc7a5\uc5d0\uc11c \uc2dc\uc791 D10 day d10_walk seed6] / D10 day d10_walk \u2192 \uac77\ub294\ub2e4
+OK   07_death (console errors 0)
+    [ds4 auto] death hold reached=1 D3 ended map=station open=death_ledger ended=you_gone you=ascended food=0 | D1 ration trial_d1_bowls \u2192 \ub0a8\uc758 \uadf8\ub987\uc744 \ube44\uc6b4\ub2e4 / D1 day d1_shutter_knock \u2192 \uc5f0\ub2e4 / D1 evening d1_names \u2192 \uc801\ub294\ub2e4 / D1 night d1_n
+OK   08_evening5 (console errors 0)
+    [ds4 auto] evening5 hold reached=1 D5 evening map=station open=line you=home food=0 | D3 trace d3_bottle \u2192 \ub0b4 \ubb3c\uc744 \uc21c\ub840\uc5d0\uac8c / [D3 food2 water4 hunger2] / D3 ration share_back \u2192 \ubaa8\ub978 \ucc99\ud55c\ub2e4 / D3 day trip_g_crates \u2192 \ub4a4\uc9c4\ub2e4 / D3
+    [ds4 missing] @dawn_strike
+OK   09_reveal (console errors 0)
+    [ds4 auto] reveal hold reached=1 D9 ended map=station open=line ended=you_gone you=dead food=1 | D6 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D6 day passage_alone \u2192 \ub450\uace0 \uac77\uae30\ub85c \ud55c\ub2e4 / D6 day patrol_pact_b \u2192 \uac70\uc808\ud55c\ub2e4 / D6 ni
+    [ds4 missing] @dawn_strike @d6_shutter_b wound_critical@wound_critical
+OK   10_called3 (console errors 0)
+    [ds4 auto] called3 hold reached=1 D3 night map=station open=event you=home food=1 | D1 evening d1_names_quiet \u2192 \uc801\ub294\ub2e4 / D1 night d1_night_storage \u2192 \ubd88\uac00\uc5d0 \uc788\ub294\ub2e4 / D2 trace d2_key \u2192 \ubc1b\ub294\ub2e4 / D2 trace d2_soonrye_shutter \u2192 \ubcf8\ub2
+OK   11_train (console errors 0)
+    [ds4 auto] train hold reached=1 D10 ended map=station open=ending ended=d10_train you=boarded food=7 | [\uc800\uc7a5\uc5d0\uc11c \uc2dc\uc791 D10 day d10_train seed51] / [\uc9c0\ub984\uae38 fare_hoard] / D10 day d10_train \u2192 \ucc59\uae34 \uc6b4\uc784\uc73c\ub85c \ud0c4\ub2e4
+OK   12_beds (console errors 0)
+    [ds4 auto] beds stop reached=1 D2 night map=station open=- you=home food=2 | [D0 food9 water11 hunger3] / D0 evening d0_ledger \u2192 \ub9d0\uc5c6\uc774 \uc801\ub294\ub2e4 / [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls \u2192 \ub611\uac19\uc774 \uc870\uae08\uc529 / D1 day d1_shutter_knock \
+    13_run seed 3: D10 d10_walk_other - OK
+OK   13_run (console errors 0)
+    [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | [\uafc8 D6] / [D7 food2 water5 hunger2] / D7 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D7 evening d7_broadcast \u2192 \uc218\ucca9\uc5d0 \ubc1b\uc544 \uc801\ub294\ub2e4 / D
+    [ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike @d6_shutter_b @d10_grab
+shots 13/13 ok ¡¤ console errors 0

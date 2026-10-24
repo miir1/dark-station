@@ -194,15 +194,19 @@ test('E3 late (10-24 검증 A4-4·A4-6): 같은 밤 뒤 사건(주민·세계 �
 });
 
 // ── E4 noExit ──
-test('E4 noExit 경고: 당신이 죽을 수 있는 사건에 늘 열린·안 죽는 선택지(금기 포함)가 없으면 경고 — swap 변형·targetOptional 까지 본다', () => {
+test('E4 noExit 경고 (10-24 tightrope R1 바꿈): 당신이 죽을 수 있는 사건에 늘 열린·살 확률 > 0 인 선택지(판정·금기 포함)가 없으면 경고 — swap 변형·줄타기·targetOptional 까지 본다', () => {
   const kill = { text: '', effects: { kill: { who: 'you' } } };
   const has = (t, id) => warns(t).some((w) => w.kind === 'noExit' && w.id === id);
   const dice = { label: '버틴다', warn: '끝이다', check: { skill: 'str', base: 50 }, ok: { text: '' }, fail: kill };
-  assert.ok(has(withKarma((t) => t.events.push(ev('x1', 'trial', 'day==0', [pass('판다', {}, { cost: { food: 1 } }), dice]))), 'x1'), '비용 선택과 죽는 주사위뿐');
-  assert.ok(!has(withKarma((t) => t.events.push(ev('x2', 'trial', 'day==0', [pass('판다', {}, { cost: { food: 1 } }), dice, pass('가리킨다', {}, { taboo: 'give_other', warn: '그 사람이 맞는다' })]))), 'x2'), '금기 출구');
-  assert.ok(has(withKarma((t) => t.events.push(ev('x3', 'trial', 'day==0', [dice, pass('가리킨다', {}, { taboo: 'give_other', swap: { when: 'karma>=8', check: { skill: 'talk', base: 50 }, ok: { text: '' }, fail: kill } })]))), 'x3'), '카르마가 높으면 금기가 죽는 판정이 된다 → 출구 아님');
-  assert.ok(has(withKarma((t) => t.events.push(ev('x4', 'trial', 'day==0', [dice, pass('가리킨다', { effects: { injure: { who: 'target', n: 2 } } }, { taboo: 'give_other' })], { target: 'any', targetOptional: 1 }))), 'x4'), '대상이 없으면 잠기는 금기는 출구가 아니다');
-  assert.ok(!has(withKarma((t) => t.events.push(ev('x5', 'trial', 'day==0', [dice, pass('버틴다', { effects: { injure: { who: 'you', n: 2 } } }, { warn: '크게 다친다' })]))), 'x5'), "'버틴다' 몸값");
+  const doom = pass('대답한다', kill, { warn: '올라간다' });   // 확정 죽음(살 확률 0)
+  assert.ok(!has(withKarma((t) => t.events.push(ev('x1', 'trial', 'day==0', [pass('판다', {}, { cost: { food: 1 } }), dice]))), 'x1'), '죽는 주사위도 살 확률 > 0 이면 출구다 (전에는 경고였다 — R1)');
+  assert.ok(has(withKarma((t) => t.events.push(ev('x1b', 'trial', 'day==0', [pass('판다', {}, { cost: { food: 1 } }), doom]))), 'x1b'), '비용 선택과 확정 죽음뿐');
+  assert.ok(!has(withKarma((t) => t.events.push(ev('x2', 'trial', 'day==0', [pass('판다', {}, { cost: { food: 1 } }), doom, pass('가리킨다', {}, { taboo: 'give_other', warn: '그 사람이 맞는다' })]))), 'x2'), '금기 출구');
+  assert.ok(has(withKarma((t) => t.events.push(ev('x3', 'trial', 'day==0', [doom, pass('가리킨다', {}, { taboo: 'give_other', swap: { when: 'karma>=8', out: { text: '', effects: { kill: { who: 'you' } } } } })]))), 'x3'), '카르마가 높으면 금기가 확정 죽음이 된다 → 출구 아님');
+  assert.ok(!has(withKarma((t) => t.events.push(ev('x3b', 'trial', 'day==0', [doom, pass('가리킨다', {}, { taboo: 'give_other', swap: { when: 'karma>=8', check: { skill: 'talk', base: 50 }, ok: { text: '' }, fail: kill } })]))), 'x3b'), '카르마가 높으면 금기가 죽는 판정 — 살 확률 > 0 이라 출구');
+  assert.ok(has(withKarma((t) => t.events.push(ev('x4', 'trial', 'day==0', [doom, pass('가리킨다', { effects: { injure: { who: 'target', n: 2 } } }, { taboo: 'give_other' })], { target: 'any', targetOptional: 1 }))), 'x4'), '대상이 없으면 잠기는 금기는 출구가 아니다');
+  assert.ok(!has(withKarma((t) => t.events.push(ev('x5', 'trial', 'day==0', [doom, pass('버틴다', { effects: { injure: { who: 'you', n: 2 } } }, { warn: '크게 다친다' })]))), 'x5'), "'버틴다' 몸값");
+  assert.ok(!has(withKarma((t) => t.events.push(ev('x6', 'trial', 'day==0', [doom, pass('버틴다', { effects: { injure: { who: 'you', n: 2 } } }, { warn: '크게 다친다', rope: { kind: 'endure' } })]))), 'x6'), '줄타기가 얹힌 몸값도 살 확률 > 0 (위험 0 출구가 없어도 강제가 아니다)');
 });
 test('E4 지금 표(v4/data)에 noExit 경고 0건 · 오류 0건', () => {
   const db = T.loadDir(path.join(__dirname, '..', 'data'));
@@ -332,7 +336,7 @@ test('fired:<사건> 조건 — 그 사건을 고른 횟수 (swap·req.cond 의 
 test('부상 출처 s.hurt 와 원인 사건: 깔때기 사건(when 이 당신 부상을 봄)으로 죽으면 원인 = 그 자리까지 다치게 한 사건', () => {
   const { db, s } = setup((t) => {
     t.events.push(ev('e_hurt', 'trial', 'day==0 & phase==evening', [pass('맞선다', { effects: { injure: { who: 'you', n: 2 } } }, { warn: '다친다' })]));
-    t.events.push(ev('e_fever', 'trial', 'phase==night & injury_you>=3', [pass('약을 쓴다', {}, { cost: { meds: 99 } }), pass('남의 담요', {}, { taboo: 'take_blanket' }), { label: '땀을 뺀다', warn: '끝이다', check: { skill: 'str', base: 0 }, ok: { text: '' }, fail: { text: '', effects: { kill: { who: 'you' } } } }]));
+    t.events.push(ev('e_fever', 'trial', 'phase==night & injury_you>=3', [pass('약을 쓴다', {}, { cost: { meds: 99 } }), pass('남의 담요', {}, { taboo: 'take_blanket' }), { label: '땀을 뺀다', warn: '끝이다', check: { skill: 'str', base: 30 }, ok: { text: '' }, fail: { text: '', effects: { kill: { who: 'you' } } } }]));   // base 30 = 바닥(ropeFloor, 10-24 tightrope) — 아래에서 기술을 깎아 반드시 실패
   });
   toPhase(s, db, 0, 'evening');
   E.dispatch(s, { type: 'choose', i: 0 }, db);
@@ -433,13 +437,17 @@ test('합격선 새 줄: A1 이기심(이른 안전 +5%p·열흘 생존 < 균형
   // 사인 쏠림: 사망률이 SIGN_MIN_RATE % 보다 낮은 정책은 판정 안 함 — 판정할 정책이 없으면 △(경계)
   const few = S.gate(Object.assign({}, aggs, { selfish_nb: mk({ survived: 35, deaths: 3, deathRate: 1.5, topCause: { k: 'x', share: 100 } }), selfish_rt0: mk({ survived: 25, deaths: 5, deathRate: 2.5, topCause: { k: 'y', share: 100 } }) }), ids, ['balanced']).rows.find((r) => r[0].startsWith('A1 이기적 사인 쏠림'));
   assert.deepStrictEqual(few.slice(3), [true, true], few[2]);
-  // A2 날마다: 조심형 합산 — 전 정책 합산이면 >0 이어도 조심형이 0 인 날이 있으면 미달 (10-24 검증 A2)
+  // A2 날마다 (10-24 tightrope §3 바꿈): 합격선은 D2·D4·D5 만 — D3(규칙을 배우는 날)·D6(값을 치르면 사는 날)은 측정 줄.
+  //   조심형 합산 — 전 정책 합산이면 >0 이어도 조심형이 0 인 날이 있으면 미달 (10-24 검증 A2)
   const a2 = S.gate(Object.assign({}, aggs, { balanced: mk({ dayEvent: { 2: 1, 4: 2, 5: 9 } }), h_random: mk({ dayEvent: { 2: 5, 3: 90, 4: 5, 5: 5, 6: 5 } }) }), ids, ['balanced']).rows;
-  assert.strictEqual(a2.find((r) => r[0].startsWith('A2 D2~D6'))[3], false, '균형(조심형)의 D3·D6 0 이 h_random 에 가려지지 않는다');
+  assert.strictEqual(a2.find((r) => r[0].startsWith('A2 D2·D4·D5'))[3], true, 'D3·D6 이 0 이어도 D2·D4·D5 > 0 이면 통과');
+  assert.deepStrictEqual(a2.find((r) => r[0].startsWith('  A2 D3·D6')).slice(2, 4), ['D3 0 · D6 0', true], 'D3·D6 은 측정');
+  const a2b = S.gate(Object.assign({}, aggs, { balanced: mk({ dayEvent: { 2: 1, 3: 4, 5: 9, 6: 2 } }), h_random: mk({ dayEvent: { 2: 5, 3: 90, 4: 5, 5: 5, 6: 5 } }) }), ids, ['balanced']).rows;
+  assert.strictEqual(a2b.find((r) => r[0].startsWith('A2 D2·D4·D5'))[3], false, '균형(조심형)의 D4 0 이 h_random 에 가려지지 않는다');
   assert.ok(a2.find((r) => r[0].startsWith('  참고: 같은 값'))[2].includes('전 D2 12 · D3 96'));
   assert.deepStrictEqual(row('A2 D5까지').slice(3), [true, false]);
   assert.deepStrictEqual(row('A2 균형 사망 중 한 사건 비중 (사인').slice(3), [true, true], '35% = 통과지만 ±5 안');
-  assert.strictEqual(row('A2 D2~D6')[3], true);
+  assert.strictEqual(row('A2 D2·D4·D5')[3], true);
   assert.deepStrictEqual(row('A4 게으름의 값 — 생존').slice(3), [true, false], '+15·+16');
   assert.strictEqual(row('A4 게으름의 값 — D9')[3], true);
   assert.strictEqual(row('A4 게으름의 값 — D7')[3], true);
@@ -454,13 +462,13 @@ test('합격선 새 줄: A1 이기심(이른 안전 +5%p·열흘 생존 < 균형
   // 발견율 하한은 측정만
   assert.strictEqual(row('발견율 (게으름)')[3], true);
   assert.strictEqual(row('찬가 발견율 (게으름)')[3], true);
-  assert.strictEqual(row('강제 사망 (전 정책 합산)')[1].startsWith('0 판'), true);
+  assert.strictEqual(row('강제 사망 = 확정 사망')[1].startsWith('0 판'), true);
 });
 
 test('run.js: 밑줄 정책 이름·여러 일꾼으로 끝까지 돈다 (보고서 표에 날별 사망·A1·A2·A4 지표·정체 묶음)', () => {
   const r = spawnSync(process.execPath, [path.join(__dirname, '..', 'sim', 'run.js'), '2', 'balanced,selfish_rt0,h_cautious', '--blocks=1', '--workers=2'], { encoding: 'utf8', timeout: 120000 });
   assert.strictEqual(r.status, 0, r.stderr);
-  for (const want of ['selfish_rt0', 'h_cautious', '### 날별 당신 사망', '### A1·A2·A4 지표', '### 정체 묶음 평균', 'A4 게으름의 값 — 생존']) assert.ok(r.stdout.includes(want), want);
+  for (const want of ['selfish_rt0', 'h_cautious', '### 날별 당신 사망', '### A1·A2·A4 지표', '### 줄타기·발견 지표', '### 정체 묶음 평균', 'A4 게으름의 값 — 생존', 'A1 아슬함', 'A2 D2·D4·D5']) assert.ok(r.stdout.includes(want), want);
   const bad = spawnSync(process.execPath, [path.join(__dirname, '..', 'sim', 'run.js'), '1', 'nobody_here', '--blocks=1', '--workers=1'], { encoding: 'utf8', timeout: 60000 });
   assert.notStrictEqual(bad.status, 0, '모르는 정책은 멈춘다');
 });

@@ -51,6 +51,7 @@ const GROUPS = {
   selfishPlain: ['selfish_nb', 'selfish_rt0'],
   selfishQuirk: ['selfish', 'selfish_rt'],
   a4: ['balanced', 'lazy', 'diligent'],
+  rope: ['selfish_nb'],   // (10-24 tightrope §1-7) 아슬함 합격선을 재는 정책 — 경고를 읽고 버티는 이기적
 };
 const RESOURCE_EVENTS = ['trade_shutter', 'patrol_pact', 'drink_flood'];
 const isResource = (id) => RESOURCE_EVENTS.some((r) => id === r || String(id || '').startsWith(r + '_'));   // 변형 행(trade_shutter_b·patrol_pact_b)도 같은 거래·협정
@@ -111,19 +112,23 @@ function scoreChoice(c, pol, eventId, ctx) {
   return sc;
 }
 // ── 사람 흉내 (A3 분석 identity_runs/runs.js 그대로) — 화면 글(label·warn·hint·taboo·cost·%)만 본다 ──
+// (10-24 tightrope §1-6) 모든 선택이 죽음 글일 때, 판정 없는 죽음 글(대답한다 등)은 성공 0% 로 본다 — 사람은 '올라간다'를 90% 판정보다 먼저 고르지 않는다.
+//   전에는 100% 로 봐서 줄타기 called_up 에서 h_cautious 가 '대답한다'를 329판 골랐다. cautious·cautious2·mixed·wary 에 적용
 const openOf = (ms) => ms.filter((c) => !c.locked);
 const warnedC = (c) => !!(c.warn || c.hint || c.taboo);
 const pickUniform = (s, set) => set[Math.floor(R.rand(s) * set.length)].i;
+const humanChance = (c) => (c.chance != null ? c.chance : deadlyText(c) ? 0 : 100);
 function cautiousPick(s, ms, dice) {
   const o = openOf(ms); if (!o.length) return ms[0].i;
   let set = o.filter((c) => !warnedC(c));
   if (set.length) { const nc = set.filter((c) => !c.cost); return pickUniform(s, nc.length ? nc : set); }
-  set = o.filter((c) => !deadlyText(c) && !c.taboo); if (!set.length) set = o;
+  set = o.filter((c) => !deadlyText(c) && !c.taboo);
+  if (!set.length) { set = o.filter((c) => humanChance(c) > 0); if (!set.length) set = o; }
   if (!dice) return pickUniform(s, set);
-  const best = Math.max(...set.map((c) => (c.chance != null ? c.chance : 100)));
-  return pickUniform(s, set.filter((c) => (c.chance != null ? c.chance : 100) === best));
+  const best = Math.max(...set.map(humanChance));
+  return pickUniform(s, set.filter((c) => humanChance(c) === best));
 }
-const waryPick = (s, ms) => { const o = openOf(ms); if (!o.length) return ms[0].i; const nd = o.filter((c) => !deadlyText(c)); return pickUniform(s, nd.length ? nd : o); };
+const waryPick = (s, ms) => { const o = openOf(ms); if (!o.length) return ms[0].i; let nd = o.filter((c) => !deadlyText(c)); if (!nd.length) nd = o.filter((c) => humanChance(c) > 0); return pickUniform(s, nd.length ? nd : o); };
 const HUMAN_PICK = {
   random: (s, ms) => { const o = openOf(ms); return o.length ? pickUniform(s, o) : ms[0].i; },
   wary: (s, ms) => waryPick(s, ms),
@@ -385,4 +390,4 @@ function play(db, seed, policyName) {
   return { s, trace };
 }
 
-module.exports = { POLICIES, CAREFUL, GROUPS, INSPECT, OPT, D3_COUNT, TRIP_MAPS, tripSearch, DEADLY, DEADLY_PENALTY, RECOVERY_BONUS, RISKY_FLAT_WARN, BODY, OTHER_TABOO, TIE_WARN, CRISIS, HUMAN_PICK, SCREEN_WALL, SCREEN_NOT_INSPECT, FIRE_ON_ADVANCE, play, morningInspect, screenReach, screenHidden, pickChoice, scoreChoice, isPlain, axisCapped, deadlyText, deadlyRisk, isRecovery, isResource, treatResidents, writeCauses };
+module.exports = { POLICIES, CAREFUL, GROUPS, INSPECT, OPT, D3_COUNT, TRIP_MAPS, tripSearch, DEADLY, DEADLY_PENALTY, RECOVERY_BONUS, RISKY_FLAT_WARN, BODY, OTHER_TABOO, TIE_WARN, CRISIS, HUMAN_PICK, humanChance, cautiousPick, waryPick, SCREEN_WALL, SCREEN_NOT_INSPECT, FIRE_ON_ADVANCE, play, morningInspect, screenReach, screenHidden, pickChoice, scoreChoice, isPlain, axisCapped, deadlyText, deadlyRisk, isRecovery, isResource, treatResidents, writeCauses };

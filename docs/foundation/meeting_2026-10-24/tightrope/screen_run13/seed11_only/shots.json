@@ -1,0 +1,39 @@
+[
+ {
+  "shot": "13_run",
+  "ok": false,
+  "why": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fi"
+  ],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fi"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": "11",
+    "end": "D6 you_gone"
+   },
+   {
+    "attempt": 2,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fi"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": "11",
+    "end": "D6 you_gone"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn_fire_kept → 불을 쬔다 / [D4 food0 water5 hunger4] / D4 day trial_d4_gicheol → 믿는다 / D4 day trip_a1_phone → 카드를 챙긴다 / D4 day trip_a2_bones → 물러난다 / D4 evening d4_shoes_home → 본다 / [꿈 D4] / D5 trace dawn_strike → 물병 둘을 내민다 / [D5 food0 water3 hunger6] / D5 day trip_b1_debris → 지나간다 / D5 day trip_b2_lockers → 비틀어 연다 / D5 night d5_rail_body → 받는다 / D5 night d5_flood → 창고를 버리고 뺀다 / D6 trace d6_morning → 쇠줄을 긋는다 / D6 trace dawn_strike → 물병 둘을 내민다",
+   "[ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike"
+  ]
+ }
+]

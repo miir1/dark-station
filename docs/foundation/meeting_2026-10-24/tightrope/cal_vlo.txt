@@ -1,0 +1,22 @@
+# 변형 rope:vlo+fight:lo+blind:hi+a4:b — 200판 × 4블록 (1,1001,2001,3001), 189초
+바꾼 칸 35: dawn_strike/그릇 둘을 내민다:pay / dawn_strike/맞고 버틴다:endure / dawn_strike/옆 담요를 가리킨다:point / dawn_mob/가진 것을 다 내놓는다:pay / dawn_mob/맞고 버틴다:endure / dawn_mob/손가락 하나로 갚는다:pay / dawn_mob/다른 사람을 가리킨다:point / called_up/불을 키우고 밤을 샌다:pay / called_up/손등을 깨물며 버틴다:endure / called_up/다른 이름을 댄다:point / d10_hold/가진 것을 내준다:pay / d10_hold/끌려가며 버틴다:endure / d10_hold/손가락을 내준다:pay / d10_grab/물병을 돌려준다:pay / d10_grab/끌려 넘어진다:endure / d2_shutter_arm/옆 사람 팔을 내민다:point / d4_spanner/다른 사람이 셌다고 한다:point / d5_flood/남의 담요로 물길을 막는다:point / fever_night/남의 담요를 끌어온다:point / d10_walk_weak/옆 사람 물병을 비운다:point / starve_you/창고를 턴다:point / starve_you/남의 그릇을 뺏는다:point / dawn_strike/밀쳐 낸다:fight / dawn_strike/소리친다:fight / dawn_strike/축 늘어진다:fight / dawn_mob/밀치고 달아난다:fight / dawn_mob/무릎을 꿇고 빈다:fight / called_up/귀를 막는다:fight / d10_hold/뿌리치고 걷는다:fight / d10_grab/발을 빼낸다:fight / grudge_boils+strike_blind / dawn_strike blind 3 / steal_food_again hunger you / share_bowl missed grudge+flag / steal_meds_again injure you
+| 정책 | 생존% | 블록별 생존% | 사망% | 확정사망(살 확률 0) | 옛 강제 | 경고 없는 사망 | 넘긴 죽음 판정/판 (산 판) | 산 판 중 ≥2번% | 줄타기 판정 넘김/판 (산 판) · 산 판 중 ≥2번% · 굴림/판 | ≤75% 넘김/판 | 죽음 판정 굴림/판 | 카르마 | 카르마≥5에서 안전 출구 열린 사건/판 | D1~D4 생존 | D5까지 사망 | 사인 1위 | 원인 1위 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 40 | 41.5 / 39 / 42.5 / 37 | 60 | 0 | 80 | 80 | 2.42 (3.31) | 85 | 0.29 (0.33) · 7.8 · 0.32 | 0.61 | 3.02 | 2.14 | 0.51 | 90.5 | 24.9 | fever_night 33.3% | starve_you 35% |
+| selfish_nb | 30.8 | 30 / 30.5 / 34.5 / 28 | 69.3 | 0 | 553 | 553 | 3.78 (5.45) | 87 | 3.54 (5.04) · 86.2 · 4.15 | 0.77 | 4.47 | 10.5 | 2.63 | 99.8 | 0.9 | dawn_strike 25.3% | called_up 31.4% |
+| selfish_rt0 | 6.5 | 6.5 / 6 / 5.5 / 8 | 93.5 | 0 | 659 | 659 | 2.27 (3.88) | 75 | 2.25 (3.83) · 75 · 3.19 | 1.09 | 3.2 | 14.68 | 1.39 | 98.1 | 9 | dawn_mob 36.1% | dawn_mob 36.6% |
+| h_cautious | 68.5 | 66.5 / 68 / 68 / 71.5 | 31.5 | 0 | 252 | 252 | 2.76 (2.7) | 59.5 | 2.54 (2.52) · 57.7 · 2.81 | 0.07 | 3.08 | 6.85 | 3.68 | 100 | 0.3 | d10_walk_weak 30.6% | starve_you 39.7% |
+
+| 정책 | 날별 그날 사건 사망 D2·D3·D4·D5·D6 | 못 본 일/판 | 실제 발견%(누구나 아는 밤 뺌) | 숨은 밤/판 | 누구나 아는 밤/판 | 옛 발견% | D9 주민 | D7 자원 | 전멸% |
+|---|---|---|---|---|---|---|---|---|---|
+| balanced | 33·0·42·109·1 | 2.41 | 60.3 | 11.52 | 2.54 | 67.5 | 3.15 | 2.64 | 10.8 |
+| selfish_nb | 0·2·0·4·32 | 2.33 | 52.8 | 16.21 | 6.6 | 66.5 | 3.02 | 5.58 | 8.4 |
+| selfish_rt0 | 0·2·13·57·236 | 1.64 | 50.4 | 13.17 | 4.8 | 63.6 | 2.04 | 6.85 | 5.6 |
+| h_cautious | 0·0·0·2·16 | 2.81 | 57.9 | 13.54 | 6.02 | 70.8 | 2.43 | 3.85 | 38.4 |
+
+- balanced 사인: fever_night 160 · d5_flood 109 · d10_walk_weak 102 · d4_spanner 42 · d2_shutter_arm 33 · dawn_strike 21 · dawn_mob 7
+- selfish_nb 사인: dawn_strike 140 · called_up 139 · dawn_mob 88 · d10_walk_weak 88 · fever_night 43 · d10_hold 37 · d10_grab 19
+- selfish_rt0 사인: dawn_mob 270 · dawn_strike 191 · called_up 150 · d5_flood 48 · starve_you 30 · d10_walk_weak 20 · d10_hold 16
+- h_cautious 사인: d10_walk_weak 77 · fever_night 40 · called_up 37 · d10_grab 32 · dawn_mob 28 · d10_hold 22 · dawn_strike 16
+- selfish_nb − 균형 생존: -9.2%p · 블록 -11.5 / -8.5 / -8 / -9
+- selfish_rt0 − 균형 생존: -33.5%p · 블록 -35 / -33 / -37 / -29

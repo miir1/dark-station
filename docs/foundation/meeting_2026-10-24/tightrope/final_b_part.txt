@@ -1,0 +1,32 @@
+# 변형 rope:vlo+fight:lo+blind:hi+a4:b — 200판 × 4블록 (1,1001,2001,3001), 190초
+바꾼 칸 35: dawn_strike/그릇 둘을 내민다:pay / dawn_strike/맞고 버틴다:endure / dawn_strike/옆 담요를 가리킨다:point / dawn_mob/가진 것을 다 내놓는다:pay / dawn_mob/맞고 버틴다:endure / dawn_mob/손가락 하나로 갚는다:pay / dawn_mob/다른 사람을 가리킨다:point / called_up/불을 키우고 밤을 샌다:pay / called_up/손등을 깨물며 버틴다:endure / called_up/다른 이름을 댄다:point / d10_hold/가진 것을 내준다:pay / d10_hold/끌려가며 버틴다:endure / d10_hold/손가락을 내준다:pay / d10_grab/물병을 돌려준다:pay / d10_grab/끌려 넘어진다:endure / d2_shutter_arm/옆 사람 팔을 내민다:point / d4_spanner/다른 사람이 셌다고 한다:point / d5_flood/남의 담요로 물길을 막는다:point / fever_night/남의 담요를 끌어온다:point / d10_walk_weak/옆 사람 물병을 비운다:point / starve_you/창고를 턴다:pay / starve_you/남의 그릇을 뺏는다:point / dawn_strike/밀쳐 낸다:fight / dawn_strike/소리친다:fight / dawn_strike/축 늘어진다:fight / dawn_mob/밀치고 달아난다:fight / dawn_mob/무릎을 꿇고 빈다:fight / called_up/귀를 막는다:fight / d10_hold/뿌리치고 걷는다:fight / d10_grab/발을 빼낸다:fight / grudge_boils+strike_blind / dawn_strike blind 3 / steal_food_again hunger you / share_bowl missed grudge+flag / steal_meds_again injure you
+| 정책 | 생존% | 블록별 생존% | 사망% | 확정사망(살 확률 0) | 옛 강제 | 경고 없는 사망 | 넘긴 죽음 판정/판 (산 판) | 산 판 중 ≥2번% | 줄타기 판정 넘김/판 (산 판) · 산 판 중 ≥2번% · 굴림/판 | ≤75% 넘김/판 | 죽음 판정 굴림/판 | 카르마 | 카르마≥5에서 안전 출구 열린 사건/판 | D1~D4 생존 | D5까지 사망 | 사인 1위 | 원인 1위 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| counter | 10.4 | 8.5 / 11.5 / 9.5 / 12 | 89.6 | 0 | 326 | 326 | 4.36 (7.3) | 97.6 | 2.25 (4.22) · 83.1 · 2.67 | 0.42 | 5.26 | 7.51 | 2.17 | 82.4 | 33.3 | fever_night 17.4% | starve_you 18% |
+| child | 26 | 31.5 / 23.5 / 21 / 28 | 74 | 0 | 498 | 498 | 3.62 (5.2) | 85.6 | 2.96 (4.22) · 78.4 · 3.55 | 0.81 | 4.36 | 12.2 | 2.53 | 99.3 | 10.3 | called_up 21.8% | called_up 26.4% |
+| h_wary | 6.4 | 4.5 / 4.5 / 9 / 7.5 | 93.6 | 0 | 343 | 343 | 0.96 (3.18) | 72.5 | 0.83 (2.61) · 64.7 · 1.18 | 0.42 | 1.39 | 4.73 | 1.67 | 49.5 | 55.3 | pro_stairs 53% | pro_stairs 53% |
+| h_mixed | 28.6 | 29 / 24 / 29.5 / 32 | 71.4 | 0 | 403 | 403 | 2.34 (3.7) | 74.7 | 2.07 (3.14) · 72.5 · 2.49 | 0.44 | 2.84 | 6.81 | 3.24 | 81 | 21.4 | pro_stairs 26.6% | pro_stairs 26.6% |
+| selfish_nb | 30.9 | 26.5 / 30 / 37 / 30 | 69.1 | 0 | 551 | 551 | 3.8 (5.47) | 87.4 | 3.54 (5.04) · 86.6 · 4.17 | 0.76 | 4.49 | 10.55 | 2.57 | 99.8 | 0.9 | called_up 25.9% | called_up 32.4% |
+| selfish | 28.8 | 29 / 24 / 33.5 / 28.5 | 71.3 | 0 | 567 | 567 | 3.01 (4.35) | 86.5 | 2.91 (4.19) · 86.1 · 3.59 | 1.57 | 3.72 | 10.08 | 2.48 | 99.6 | 0.8 | called_up 42.6% | called_up 42.6% |
+| h_cautious | 68.4 | 66.5 / 67.5 / 68.5 / 71 | 31.6 | 0 | 253 | 253 | 2.77 (2.71) | 59.6 | 2.54 (2.53) · 57.8 · 2.81 | 0.08 | 3.08 | 6.86 | 3.67 | 100 | 0.3 | d10_walk_weak 29.6% | starve_you 39.1% |
+| h_first | 73 | 70 / 68 / 79 / 75 | 27 | 0 | 216 | 216 | 1.6 (1.6) | 34.8 | 1.52 (1.54) · 34.4 · 1.68 | 0.2 | 1.87 | 5.15 | 1.51 | 100 | 0.6 | fever_night 42.6% | starve_you 18.5% |
+
+| 정책 | 날별 그날 사건 사망 D2·D3·D4·D5·D6 | 못 본 일/판 | 실제 발견%(누구나 아는 밤 뺌) | 숨은 밤/판 | 누구나 아는 밤/판 | 옛 발견% | D9 주민 | D7 자원 | 전멸% |
+|---|---|---|---|---|---|---|---|---|---|
+| counter | 36·0·91·116·38 | 1.63 | 54.4 | 11.9 | 3.96 | 65.8 | 2.99 | 3.72 | 2.5 |
+| child | 0·1·4·76·51 | 2.13 | 52.9 | 14.72 | 5.89 | 66.4 | 2.48 | 6.69 | 14.4 |
+| h_wary | 0·0·5·31·73 | 1.13 | 53.4 | 6.34 | 2.02 | 64.6 | 3.19 | 3.71 | 1.9 |
+| h_mixed | 0·0·0·18·63 | 2.18 | 54.1 | 11.21 | 4.26 | 66.7 | 2.84 | 3.65 | 11.6 |
+| selfish_nb | 0·2·0·4·33 | 2.32 | 52.8 | 16.19 | 6.6 | 66.5 | 3 | 5.58 | 8.3 |
+| selfish | 0·2·1·3·34 | 2.24 | 53.8 | 15.56 | 6.13 | 66.9 | 2.93 | 5.52 | 8.5 |
+| h_cautious | 0·0·0·2·16 | 2.81 | 57.8 | 13.55 | 6.02 | 70.8 | 2.43 | 3.85 | 38.3 |
+| h_first | 0·0·0·3·17 | 2.92 | 58 | 15.65 | 3.78 | 66.2 | 4.04 | 2.87 | 3.8 |
+
+- counter 사인: fever_night 125 · starve_you 118 · d5_flood 110 · called_up 91 · d4_spanner 88 · dawn_mob 66 · dawn_strike 55
+- child 사인: called_up 129 · dawn_strike 117 · dawn_mob 100 · d5_flood 71 · d10_walk_weak 67 · d10_hold 42 · fever_night 37
+- h_wary 사인: pro_stairs 397 · dawn_mob 111 · called_up 100 · dawn_strike 47 · fever_night 39 · d5_flood 18 · d10_walk_weak 17
+- h_mixed 사인: pro_stairs 152 · dawn_mob 114 · called_up 107 · d10_walk_weak 50 · fever_night 44 · dawn_strike 41 · d10_hold 19
+- selfish_nb 사인: called_up 143 · dawn_strike 141 · d10_walk_weak 93 · dawn_mob 86 · fever_night 37 · d10_hold 36 · d10_grab 16
+- selfish 사인: called_up 243 · dawn_strike 116 · dawn_mob 64 · d10_walk_weak 60 · d10_hold 41 · d10_grab 31 · fever_night 13
+- h_cautious 사인: d10_walk_weak 75 · fever_night 40 · called_up 37 · d10_grab 32 · dawn_mob 30 · d10_hold 22 · dawn_strike 17
+- h_first 사인: fever_night 92 · called_up 29 · dawn_mob 28 · d10_grab 23 · d10_walk_weak 20 · dawn_strike 15 · d10_hold 9

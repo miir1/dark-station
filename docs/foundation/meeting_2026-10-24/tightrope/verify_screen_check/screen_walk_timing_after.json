@@ -1,0 +1,44 @@
+{
+ "60Hz": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   229.4,
+   230.2,
+   229.8,
+   230.2,
+   230.1
+  ],
+  "ms_per_tile_avg": 229.9,
+  "frames_walking": 83,
+  "stall_frames_same_pos": 0,
+  "same_int_pixel_frames": 0,
+  "frame_dt_avg": 16.99,
+  "walk_frames": "LLLLLLLSSSSSSSRRRRRRRSSSSSSSLLLLLLSSSSSSSRRRRRRRSSSSSSSLLLLLLSSSSSSSRRRRRRRSSSSSSSL",
+  "stand_3s_frames": 178,
+  "stand_fps": 59.2,
+  "tick_span": 90,
+  "fire_frame_changes_3s": 22,
+  "console_errors": []
+ },
+ "144Hz": {
+  "tiles_crossed": 6,
+  "ms_per_tile": [
+   229.3,
+   230.4,
+   229.7,
+   230.3,
+   230.1
+  ],
+  "ms_per_tile_avg": 230.0,
+  "frames_walking": 200,
+  "stall_frames_same_pos": 0,
+  "same_int_pixel_frames": 7,
+  "frame_dt_avg": 6.95,
+  "walk_frames": "LLLLLLLLLLLLLLLLLSSSSSSSSSSSSSSSSSRRRRRRRRRRRRRRRRSSSSSSSSSSSSSSSSSLLLLLLLLLLLLLLLLLSSSSSSSSSSSSSSSSRRRRRRRRRRRRRRRRSSSSSSSSSSSSSSSSSLLLLLLLLLLLLLLLLSSSSSSSSSSSSSSSSSRRRRRRRRRRRRRRRRSSSSSSSSSSSSSSSSSL",
+  "stand_3s_frames": 425,
+  "stand_fps": 141.9,
+  "tick_span": 90,
+  "fire_frame_changes_3s": 22,
+  "console_errors": []
+ }
+}

@@ -69,7 +69,7 @@
     o = o || {};
     if (cur) close(undefined);
     const box = $('box');
-    box.className = 'line' + (o.black ? ' black' : '') + (o.face ? ' hasface' : '');
+    box.className = 'line' + (o.black ? ' black' : '') + (o.face ? ' hasface' : '') + (o.cls ? ' ' + o.cls : '');   // o.cls: 'close' = 죽을 뻔한 판정을 넘긴 줄 (상자가 한 번 뛴다)
     const face = o.face ? `<img class="face${o.faceCls ? ' ' + o.faceCls : ''}" alt="" src="${o.face}">` : (o.name ? '<div class="face ph"></div>' : '');   // faceCls 'icon' = 찾은 물건 아이콘 40px 을 2배(80)로
     box.innerHTML = `${face}<div class="lt">${o.name ? `<p class="who">${esc(o.name)}</p>` : ''}<p class="tw"></p><p class="more">▼</p></div>`;
     box.hidden = false;
@@ -119,6 +119,7 @@
   async function lines(text, o) { for (const s of splitSentences(text)) for (const p of paginate(s)) await line(p, o); }
 
   // ── 선택 창: 글 + 번호 선택지. o.options: [{label, sub(HTML), disabled, value, warn}]. o.fit: [문장…] 이면 넘칠 때 앞 문장부터 덜어 낸다 ──
+  //   o.fitHead / o.fitTail: 덜어 낼 때도 남기는 본문 앞·뒤 HTML (머리 이름표 · 눈먼 새벽 한 줄)
   // o.sel: 처음 커서 자리(되돌릴 수 없는 확인창 = '다시 고른다'). 없으면 경고 있는 창은 커서 없음(-1), 아니면 첫 번째 열린 선택지
   function open(body, o) {
     o = o || {};
@@ -135,7 +136,7 @@
     const ok = () => fits(box) && fits(box.querySelector('.body'));
     if (!ok() && Array.isArray(o.fit) && o.fit.length > 1) {                    // 넘친다 → 앞 문장을 덜어 낸다
       const head = o.fitHead || '';
-      for (let k = 1; k < o.fit.length && !ok(); k++) render(`${head}<p>… ${esc(o.fit.slice(k).join(' '))}</p>`);
+      for (let k = 1; k < o.fit.length && !ok(); k++) render(`${head}<p>… ${esc(o.fit.slice(k).join(' '))}</p>${o.fitTail || ''}`);
     }
     if (!ok()) box.classList.add('tight');                                      // 그래도 넘치면 글씨를 한 단계 줄인다
     openedAt = Date.now();

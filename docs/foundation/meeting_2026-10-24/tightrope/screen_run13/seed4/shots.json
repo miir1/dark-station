@@ -1,0 +1,28 @@
+[
+ {
+  "shot": "13_run",
+  "ok": false,
+  "why": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=ascended food=0 | D9 trace wound_critical → 약국 안쪽을 뒤진다 / D9 tra"
+  ],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=ascended food=0 | D9 trace wound_critical → 약국 안쪽을 뒤진다 / D9 tra"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": "4",
+    "end": "D10 you_gone"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=ascended food=0 | D9 trace wound_critical → 약국 안쪽을 뒤진다 / D9 trace dawn_strike → 맞고 버틴다 / D9 trace dawn_mob → 가진 것을 다 내놓는다 / [D9 food0 water0 hunger10] / D9 ration repay_bowl → 그냥 지나간다 / D9 evening d9_inspection → 고개를 돌린다 / D9 night starve_you → 선로 밑을 뒤진다 / D9 night fever_night → 남의 담요를 끌어온다 / D9 night called_up → 손등을 깨물며 버틴다 / D10 trace wound_critical → 약국 안쪽을 뒤진다 / D10 trace dawn_strike → 맞고 버틴다 / D10 trace dawn_mob → 맞고 버틴다 / [D10 food0 water0 hunger8] / D10 ration repay_bowl → 그냥 지나간다 / D10 day d10_hold → 끌려가며 버틴다 / D10 day d10_walk_weak → 이를 악물고 걷는다",
+   "[ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike wound_critical@wound_critical @d6_shutter_b @dawn_mob @d10_hold"
+  ]
+ }
+]

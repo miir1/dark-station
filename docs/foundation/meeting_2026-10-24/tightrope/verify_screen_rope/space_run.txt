@@ -1,0 +1,8 @@
+fixture {'called_up': True, 'd10_grab': True, 'd10_hold': True, 'dawn_mob': True, 'dawn_strike': True} [fixture] 651 games, 65.3s, good enough; found called_up,d10_grab,d10_hold,dawn_mob,dawn_strike; missing -
+dawn_strike 12 {"by_mode": {"mash": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "hold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "arrowhold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}}, "errors": [], "console_errors": []}
+dawn_strike 16 {"by_mode": {"mash": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "hold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "arrowhold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}}, "errors": [], "console_errors": []}
+dawn_mob 16 {"by_mode": {"mash": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "hold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "arrowhold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}}, "errors": [], "console_errors": []}
+called_up 16 {"by_mode": {"mash": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "hold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "arrowhold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}}, "errors": [], "console_errors": []}
+d10_grab 16 {"by_mode": {"mash": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "hold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "arrowhold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}}, "errors": [], "console_errors": []}
+d10_hold 16 {"by_mode": {"mash": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "hold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}, "arrowhold": {"runs": 3, "chosen": 0, "died": 0, "picked": []}}, "errors": [], "console_errors": []}
+exit=0

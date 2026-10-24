@@ -1,0 +1,8 @@
+manifest 215
+   포트 8765 사용 중 - 8766 로
+    13_run seed 1: D10 all_dead - OK
+OK   13_run (console errors 0)
+    [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=all_dead you=home food=0 | D6 night d6_shutter_b \u2192 \uc5f4\uc1e0\ub97c \ub0b4\uc900\ub2e4 / [\uafc8 D6] / D7 trace dawn_strike \u2192 \uadf8\ub987 \ub458\uc744 \ub0b4\ubbfc\ub2e4 / [D7 food0 water2 hunger7] / D7 day trip_g_cra
+    [ds4 missing] @dawn_strike @d6_shutter_b
+shots 1/1 ok · console errors 0
+exit=0

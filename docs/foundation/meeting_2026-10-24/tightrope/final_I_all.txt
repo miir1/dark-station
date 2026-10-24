@@ -1,0 +1,475 @@
+# 변형 rope:vlo+fight:lo+blind+a4:b+gsy+boilside:7 — 200판 × 4블록 (1,1001,2001,3001), 425초
+바꾼 칸 37: dawn_strike/그릇 둘을 내민다:pay / dawn_strike/맞고 버틴다:endure / dawn_strike/옆 담요를 가리킨다:point / dawn_mob/가진 것을 다 내놓는다:pay / dawn_mob/맞고 버틴다:endure / dawn_mob/손가락 하나로 갚는다:pay / dawn_mob/다른 사람을 가리킨다:point / called_up/불을 키우고 밤을 샌다:pay / called_up/손등을 깨물며 버틴다:endure / called_up/다른 이름을 댄다:point / d10_hold/가진 것을 내준다:pay / d10_hold/끌려가며 버틴다:endure / d10_hold/손가락을 내준다:pay / d10_grab/물병을 돌려준다:pay / d10_grab/끌려 넘어진다:endure / d2_shutter_arm/옆 사람 팔을 내민다:point / d4_spanner/다른 사람이 셌다고 한다:point / d5_flood/남의 담요로 물길을 막는다:point / fever_night/남의 담요를 끌어온다:point / d10_walk_weak/옆 사람 물병을 비운다:point / starve_you/창고를 턴다:pay / starve_you/남의 그릇을 뺏는다:point / dawn_strike/밀쳐 낸다:fight / dawn_strike/소리친다:fight / dawn_strike/축 늘어진다:fight / dawn_mob/밀치고 달아난다:fight / dawn_mob/무릎을 꿇고 빈다:fight / called_up/귀를 막는다:fight / d10_hold/뿌리치고 걷는다:fight / d10_grab/발을 빼낸다:fight / grudge_boils+strike_blind / dawn_strike blind 3 / steal_food_again hunger you / share_bowl missed grudge+flag / steal_meds_again injure you / grudge_strike_you actor !unseen / grudge_boils side w7
+| 정책 | 생존% | 블록별 생존% | 사망% | 확정사망(살 확률 0) | 옛 강제 | 경고 없는 사망 | 넘긴 죽음 판정/판 (산 판) | 산 판 중 ≥2번% | 줄타기 판정 넘김/판 (산 판) · 산 판 중 ≥2번% · 굴림/판 | ≤75% 넘김/판 | 죽음 판정 굴림/판 | 카르마 | 카르마≥5에서 안전 출구 열린 사건/판 | D1~D4 생존 | D5까지 사망 | 사인 1위 | 원인 1위 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 37.8 | 37 / 36.5 / 38.5 / 39 | 62.3 | 0 | 101 | 101 | 2.69 (3.74) | 87.4 | 0.57 (0.72) · 14.6 · 0.64 | 0.63 | 3.31 | 2.17 | 0.53 | 90.5 | 24.3 | fever_night 32.1% | starve_you 32.5% |
+| selfish | 28.3 | 29.5 / 24.5 / 31.5 / 27.5 | 71.8 | 0 | 571 | 571 | 2.93 (4.45) | 87.2 | 2.8 (4.26) · 86.3 · 3.47 | 1.53 | 3.65 | 9.9 | 2.4 | 99.4 | 1.5 | called_up 40.6% | called_up 40.6% |
+| devoted | 17.6 | 21 / 16.5 / 15 / 18 | 82.4 | 0 | 49 | 49 | 3.01 (5.4) | 100 | 0.09 (0.18) · 2.8 · 0.1 | 0.97 | 3.84 | 0 | 0 | 79 | 40.8 | fever_night 40.7% | d5_flood 19.3% |
+| silent | 38.9 | 38 / 39 / 33 / 45.5 | 61.1 | 0 | 105 | 105 | 2.72 (3.83) | 91 | 0.55 (0.69) · 14.8 · 0.61 | 0.64 | 3.34 | 2.21 | 0.63 | 90.1 | 27.8 | fever_night 30.1% | starve_you 32.3% |
+| caller | 30.6 | 29.5 / 27 / 33 / 33 | 69.4 | 0 | 115 | 115 | 2.8 (4.44) | 97.1 | 0.39 (0.63) · 13.9 · 0.43 | 0.68 | 3.49 | 2.06 | 0.55 | 86.5 | 34.3 | fever_night 27% | d5_flood 25.8% |
+| lazy | 27.3 | 29.5 / 26.5 / 26.5 / 26.5 | 72.8 | 0 | 190 | 190 | 3.31 (5.28) | 96.8 | 1.12 (1.81) · 55.5 · 1.32 | 0.72 | 4.03 | 1.88 | 0.39 | 90.3 | 30 | fever_night 26.3% | dawn_strike 33% |
+| diligent | 42.3 | 37 / 48.5 / 40 / 43.5 | 57.8 | 0 | 62 | 62 | 2.44 (3.32) | 88.2 | 0.24 (0.32) · 10.1 · 0.25 | 0.66 | 3.02 | 2.4 | 0.64 | 90.5 | 25 | fever_night 34.2% | starve_you 37.2% |
+| risky | 29.3 | 32.5 / 25 / 26 / 33.5 | 70.8 | 0 | 88 | 88 | 3.28 (5.45) | 97.9 | 1.05 (1.91) · 48.3 · 1.14 | 0.85 | 3.98 | 3.83 | 1.13 | 83.6 | 37.6 | fever_night 29.5% | d5_flood 24% |
+| steward | 39.6 | 41.5 / 36 / 44 / 37 | 60.4 | 0 | 34 | 34 | 2.3 (3.31) | 88.3 | 0.09 (0.15) · 0.3 · 0.09 | 0.85 | 2.9 | 2.03 | 0 | 91.8 | 25 | fever_night 34.8% | starve_you 40.8% |
+| counter | 10.3 | 10.5 / 9 / 11 / 10.5 | 89.8 | 0 | 338 | 338 | 4.29 (7.13) | 98.8 | 2.16 (4.13) · 82.9 · 2.56 | 0.45 | 5.19 | 7.32 | 2.08 | 82.4 | 34.5 | fever_night 16.7% | starve_you 16.7% |
+| child | 25.8 | 29 / 27.5 / 21 / 25.5 | 74.3 | 0 | 498 | 498 | 3.55 (5.12) | 84 | 2.87 (4.12) · 75.7 · 3.45 | 0.86 | 4.3 | 12.02 | 2.46 | 99.4 | 11.4 | dawn_strike 23.6% | called_up 25.6% |
+| selfish_nb | 29.1 | 23.5 / 31.5 / 32 / 29.5 | 70.9 | 0 | 565 | 565 | 3.69 (5.39) | 88.4 | 3.41 (4.98) · 87.6 · 4.04 | 0.86 | 4.4 | 10.44 | 2.49 | 99.5 | 1.6 | dawn_strike 29.5% | called_up 31.4% |
+| selfish_rt | 6.6 | 6 / 7 / 9 / 4.5 | 93.4 | 0 | 680 | 680 | 1.91 (3.02) | 71.7 | 1.91 (3.02) · 71.7 · 2.84 | 0.87 | 2.84 | 14.74 | 1.28 | 99.4 | 9.5 | dawn_mob 34.3% | dawn_mob 34.4% |
+| selfish_rt0 | 6 | 5 / 5.5 / 7 / 6.5 | 94 | 0 | 674 | 674 | 2.24 (3.96) | 75 | 2.22 (3.88) · 75 · 3.16 | 1.07 | 3.18 | 14.61 | 1.37 | 99.4 | 9.4 | dawn_mob 36.4% | dawn_mob 37% |
+| h_random | 0.6 | 0.5 / 0.5 / 0.5 / 1 | 99.4 | 0 | 75 | 75 | 0.56 (3.8) | 80 | 0.24 (2.4) · 40 · 0.32 | 0.27 | 0.78 | 2.5 | 0.44 | 27.8 | 80.6 | pro_stairs 49.9% | pro_stairs 49.9% |
+| h_wary | 6.3 | 4.5 / 4.5 / 8 / 8 | 93.8 | 0 | 344 | 344 | 1.05 (3.98) | 82 | 0.9 (3.38) · 72 · 1.25 | 0.46 | 1.48 | 4.7 | 1.65 | 49.4 | 55.5 | pro_stairs 52.9% | pro_stairs 52.9% |
+| h_first | 67.3 | 62 / 64 / 70 / 73 | 32.8 | 0 | 262 | 262 | 1.72 (1.81) | 42.9 | 1.63 (1.75) · 42.8 · 1.86 | 0.18 | 2.05 | 4.95 | 1.38 | 100 | 1.4 | fever_night 30.9% | dawn_strike 27.1% |
+| h_cautious | 65.3 | 59.5 / 65.5 / 68.5 / 67.5 | 34.8 | 0 | 278 | 278 | 2.8 (2.8) | 63.4 | 2.59 (2.61) · 61.9 · 2.88 | 0.08 | 3.15 | 6.67 | 3.58 | 100 | 1.3 | d10_walk_weak 20.9% | starve_you 36.3% |
+| h_cautious2 | 35 | 30.5 / 39.5 / 36.5 / 33.5 | 65 | 0 | 330 | 330 | 1.88 (2.43) | 63.6 | 0.9 (1.08) · 22.9 · 1.21 | 0.69 | 2.53 | 4.89 | 1.44 | 95.6 | 15.4 | fever_night 23.1% | starve_you 21.7% |
+| h_mixed | 27.6 | 22.5 / 23.5 / 30.5 / 34 | 72.4 | 0 | 412 | 412 | 2.5 (3.76) | 76 | 2.2 (3.26) · 71.9 · 2.63 | 0.48 | 3.01 | 6.76 | 3.18 | 81 | 21.9 | pro_stairs 26.3% | pro_stairs 26.3% |
+
+| 정책 | 날별 그날 사건 사망 D2·D3·D4·D5·D6 | 못 본 일/판 | 실제 발견%(누구나 아는 밤 뺌) | 숨은 밤/판 | 누구나 아는 밤/판 | 옛 발견% | D9 주민 | D7 자원 | 전멸% | 새벽 습격/판 · 그중 눈먼 새벽/판 · 눈먼 새벽 사망 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 33·0·42·107·10 | 2.4 | 60.3 | 11.46 | 2.81 | 68.1 | 3.04 | 2.5 | 11.9 | 0.41 · 0.33 · 39 |
+| selfish | 0·2·3·7·51 | 2.22 | 53.7 | 15.28 | 6.09 | 66.9 | 2.88 | 5.38 | 9.8 | 0.81 · 0.28 · 55 |
+| devoted | 49·0·74·132·47 | 1.92 | 62 | 9.39 | 1.24 | 66.5 | 4.1 | 2.13 | 1.4 | 0.21 · 0.2 · 49 |
+| silent | 37·0·39·134·9 | 2.52 | 59.1 | 11.4 | 2.63 | 66.7 | 3.23 | 2.55 | 11.1 | 0.39 · 0.31 · 34 |
+| caller | 40·0·55·154·24 | 2.2 | 60.2 | 10.45 | 2.39 | 67.6 | 3.07 | 2.87 | 9.1 | 0.33 · 0.26 · 60 |
+| lazy | 33·0·43·156·42 | 4.23 | 32 | 10.92 | 3.42 | 48.2 | 3.01 | 2.18 | 9.5 | 1.16 · 1.03 · 141 |
+| diligent | 35·0·38·113·2 | 0.43 | 94.9 | 10.84 | 2.19 | 95.7 | 3.21 | 2.92 | 10 | 0.04 · 0 · 0 |
+| risky | 35·0·74·151·18 | 1.94 | 57.5 | 12.52 | 3.37 | 66.5 | 3.52 | 9.85 | 3.5 | 0.54 · 0.29 · 31 |
+| steward | 58·0·0·121·1 | 2.6 | 60 | 11.42 | 2.41 | 67 | 2.94 | 1.91 | 12.6 | 0.28 · 0.27 · 34 |
+| counter | 36·0·91·127·48 | 1.63 | 54.4 | 11.73 | 3.96 | 65.9 | 2.95 | 3.7 | 2.9 | 0.56 · 0.16 · 40 |
+| child | 0·1·3·86·66 | 2.08 | 53.1 | 14.56 | 5.82 | 66.5 | 2.49 | 6.84 | 14.4 | 0.66 · 0.23 · 55 |
+| selfish_nb | 0·2·2·8·40 | 2.3 | 52.8 | 15.95 | 6.55 | 66.5 | 2.98 | 5.47 | 8.6 | 0.9 · 0.31 · 60 |
+| selfish_rt | 0·2·3·71·257 | 1.6 | 50.9 | 12.68 | 4.48 | 63.7 | 1.92 | 6.81 | 5.4 | 0.62 · 0.14 · 34 |
+| selfish_rt0 | 0·2·3·70·248 | 1.65 | 50.2 | 13.14 | 4.79 | 63.5 | 2.03 | 6.85 | 4.8 | 0.66 · 0.15 · 40 |
+| h_random | 34·84·49·59·67 | 0.46 | 62.9 | 3.35 | 0.7 | 69.3 | 4.14 | 4.33 | 0.1 | 0.12 · 0.05 · 12 |
+| h_wary | 0·0·6·33·73 | 1.15 | 52.8 | 6.33 | 2.06 | 64.4 | 3.23 | 3.65 | 1.8 | 0.28 · 0.1 · 23 |
+| h_first | 0·0·0·9·22 | 2.88 | 58.2 | 15.51 | 3.85 | 66.5 | 4.08 | 2.93 | 3.3 | 0.53 · 0.4 · 57 |
+| h_cautious | 0·0·0·10·17 | 2.82 | 58.1 | 13.39 | 6.03 | 71.1 | 2.42 | 3.71 | 39.4 | 0.56 · 0.4 · 35 |
+| h_cautious2 | 10·0·24·80·44 | 2.52 | 57.5 | 12.14 | 3.76 | 67.6 | 2.94 | 2.79 | 12.1 | 0.44 · 0.3 · 79 |
+| h_mixed | 0·0·0·22·60 | 2.22 | 53.8 | 11.32 | 4.4 | 66.7 | 2.93 | 3.56 | 12.6 | 0.52 · 0.25 · 32 |
+
+- balanced 사인: fever_night 160 · d10_walk_weak 110 · d5_flood 97 · d4_spanner 42 · dawn_strike 41 · d2_shutter_arm 33 · dawn_mob 7
+- selfish 사인: called_up 233 · dawn_strike 156 · dawn_mob 57 · d10_walk_weak 49 · d10_hold 34 · d10_grab 30 · fever_night 13
+- devoted 사인: fever_night 268 · d5_flood 127 · d4_spanner 74 · d10_walk_weak 54 · dawn_strike 52 · d2_shutter_arm 49 · d6_shutter_b 35
+- silent 사인: fever_night 147 · d5_flood 129 · d10_walk_weak 88 · d4_spanner 39 · d2_shutter_arm 37 · dawn_strike 36 · dawn_mob 9
+- caller 사인: fever_night 150 · d5_flood 143 · d10_walk_weak 86 · dawn_strike 64 · d4_spanner 55 · d2_shutter_arm 40 · called_up 13
+- lazy 사인: fever_night 153 · dawn_strike 145 · d5_flood 132 · d10_walk_weak 64 · d4_spanner 40 · d2_shutter_arm 33 · called_up 9
+- diligent 사인: fever_night 158 · d5_flood 113 · d10_walk_weak 107 · d4_spanner 38 · d2_shutter_arm 35 · called_up 7 · dawn_mob 4
+- risky 사인: fever_night 167 · d5_flood 136 · d4_spanner 74 · d10_walk_weak 52 · dawn_strike 49 · d2_shutter_arm 35 · called_up 30
+- steward 사인: fever_night 168 · d5_flood 117 · d10_walk_weak 106 · d2_shutter_arm 58 · dawn_strike 34
+- counter 사인: fever_night 120 · starve_you 110 · d5_flood 108 · d4_spanner 88 · dawn_strike 88 · called_up 84 · dawn_mob 60
+- child 사인: dawn_strike 140 · called_up 129 · dawn_mob 92 · d5_flood 71 · d10_walk_weak 59 · fever_night 36 · d10_hold 34
+- selfish_nb 사인: dawn_strike 167 · called_up 147 · dawn_mob 88 · d10_walk_weak 76 · fever_night 38 · d10_hold 33 · d10_grab 17
+- selfish_rt 사인: dawn_mob 256 · called_up 205 · dawn_strike 200 · d5_flood 53 · starve_you 14 · d10_walk_weak 13 · d10_grab 3
+- selfish_rt0 사인: dawn_mob 274 · dawn_strike 221 · called_up 129 · d5_flood 53 · d10_walk_weak 23 · d10_hold 17 · starve_you 16
+- h_random 사인: pro_stairs 397 · starve_you 136 · d3_called_you 77 · fever_night 31 · dawn_mob 30 · d2_night_shutter 29 · called_up 26
+- h_wary 사인: pro_stairs 397 · dawn_mob 110 · called_up 92 · dawn_strike 58 · fever_night 41 · d10_walk_weak 18 · d5_flood 17
+- h_first 사인: fever_night 81 · dawn_strike 62 · dawn_mob 32 · called_up 29 · d10_grab 25 · d10_walk_weak 22 · d10_hold 11
+- h_cautious 사인: d10_walk_weak 58 · fever_night 55 · dawn_strike 43 · called_up 40 · dawn_mob 36 · d10_grab 27 · d10_hold 19
+- h_cautious2 사인: fever_night 120 · dawn_strike 109 · dawn_mob 76 · d5_flood 64 · called_up 51 · d10_walk_weak 34 · d4_spanner 24
+- h_mixed 사인: pro_stairs 152 · dawn_mob 107 · called_up 98 · dawn_strike 61 · d10_walk_weak 50 · fever_night 48 · d10_hold 19
+- 보통−게으름 생존: 합산 10.5%p · 블록 7.5 / 10 / 12 / 12.5
+- 부지런−게으름 생존: 합산 15%p · 블록 7.5 / 22 / 13.5 / 17
+- selfish − 균형 생존: -9.5%p · 블록 -7.5 / -12 / -7 / -11.5
+- selfish_nb − 균형 생존: -8.7%p · 블록 -13.5 / -5 / -6.5 / -9.5
+- selfish_rt − 균형 생존: -31.2%p · 블록 -31 / -29.5 / -29.5 / -34.5
+- selfish_rt0 − 균형 생존: -31.8%p · 블록 -32 / -31 / -31.5 / -32.5
+
+## balanced 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 2602 · 250 · 250 · 238 · 2 · 선로 밑을 뒤진다 238 · 창고를 턴다 12
+  fever_night: 1625 · 169 · 61 · 61 · 160 · 썩은 데를 도려낸다 54 · 불가에서 땀을 뺀다 54 · 위에 대고 빈다 42 · 젖은 천으로 식힌다 14
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 714 · 0 · 0 · 0 · 97 · 
+  called_up: 594 · 83 · 0 · 0 · 6 · 손등을 깨물며 버틴다 83
+  d4_spanner: 380 · 0 · 0 · 0 · 42 · 
+  d10_walk_weak: 351 · 50 · 0 · 0 · 110 · 이를 악물고 걷는다 50
+  dawn_strike: 330 · 72 · 0 · 0 · 41 · 맞고 버틴다 53 · 그릇 둘을 내민다 19
+  d6_shutter: 304 · 0 · 0 · 0 · 0 · 
+  d6_shutter_b: 294 · 71 · 71 · 71 · 0 · 아무것도 하지 않는다 40 · 열쇠를 내준다 31
+  d2_shutter_arm: 267 · 0 · 0 · 0 · 33 · 
+  d10_walk_other: 144 · 29 · 29 · 29 · 0 · 걷는다 29
+  d10_walk: 118 · 3 · 3 · 3 · 0 · 걷는다 3
+  dawn_mob: 108 · 107 · 0 · 0 · 7 · 가진 것을 다 내놓는다 42 · 손가락 하나로 갚는다 40 · 맞고 버틴다 25
+  d8_patrol_return: 88 · 13 · 13 · 13 · 0 · 열쇠를 내준다 13
+  d10_hold: 2 · 2 · 0 · 0 · 0 · 끌려가며 버틴다 2
+  못 본 일(missed) 행별: read_notebook 549 · steal_food_seoha 441 · hungry_blames_you 239 · stand_stairs 192 · steal_food 188 · share_bowl 122 · steal_water 111 · eye_you 62 · wound_rots 16 · soonrye_water 2 · dongha_carries 1
+
+## selfish 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  called_up: 1012 · 963 · 0 · 0 · 233 · 귀를 막는다 839 · 불을 키우고 밤을 샌다 124
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 789 · 286 · 286 · 286 · 0 · 창고를 버리고 뺀다 286
+  d6_shutter_b: 757 · 732 · 732 · 732 · 0 · 아무것도 하지 않는다 732
+  dawn_mob: 753 · 753 · 0 · 0 · 57 · 가진 것을 다 내놓는다 506 · 다른 사람을 가리킨다 129 · 손가락 하나로 갚는다 101 · 맞고 버틴다 17
+  dawn_strike: 647 · 575 · 0 · 0 · 156 · 축 늘어진다 435 · 옆 담요를 가리킨다 140
+  starve_you: 513 · 493 · 493 · 465 · 2 · 선로 밑을 뒤진다 455 · 창고를 턴다 38
+  d2_shutter_arm: 284 · 0 · 0 · 0 · 0 · 
+  fever_night: 229 · 220 · 173 · 173 · 13 · 위에 대고 빈다 129 · 약을 쓴다 42 · 불가에서 땀을 뺀다 41 · 남의 담요를 끌어온다 6
+  d10_walk_weak: 216 · 216 · 0 · 0 · 49 · 옆 사람 물병을 비운다 181 · 이를 악물고 걷는다 35
+  d10_walk_other: 188 · 188 · 188 · 188 · 0 · 걷는다 188
+  d10_hold: 155 · 155 · 0 · 0 · 34 · 뿌리치고 걷는다 93 · 손가락을 내준다 56 · 물병 셋을 내준다 4 · 끌려가며 버틴다 2
+  d10_grab: 117 · 117 · 0 · 0 · 30 · 발을 빼낸다 63 · 끌려 넘어진다 28 · 물병을 돌려준다 26
+  d8_patrol_return: 49 · 49 · 49 · 49 · 0 · 열쇠를 내준다 49
+  못 본 일(missed) 행별: steal_food_seoha 471 · read_notebook 416 · steal_food 223 · hungry_blames_you 191 · share_bowl 188 · stand_stairs 99 · eye_you 91 · steal_water 86 · wound_rots 12 · soonrye_water 1
+
+## devoted 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 2428 · 0 · 0 · 0 · 0 · 
+  fever_night: 2147 · 0 · 0 · 0 · 268 · 
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 627 · 0 · 0 · 0 · 127 · 
+  d4_spanner: 565 · 0 · 0 · 0 · 74 · 
+  called_up: 416 · 0 · 0 · 0 · 0 · 
+  d6_shutter: 399 · 0 · 0 · 0 · 0 · 
+  d2_shutter_arm: 310 · 0 · 0 · 0 · 49 · 
+  d9_night_stand: 179 · 0 · 0 · 0 · 0 · 
+  d10_walk_weak: 176 · 0 · 0 · 0 · 54 · 
+  dawn_strike: 169 · 0 · 0 · 0 · 52 · 
+  d10_walk: 79 · 0 · 0 · 0 · 0 · 
+  d6_shutter_b: 63 · 0 · 0 · 0 · 35 · 
+  d10_walk_other: 44 · 0 · 0 · 0 · 0 · 
+  d10_train: 13 · 0 · 0 · 0 · 0 · 
+  dawn_dongha2: 1 · 0 · 0 · 0 · 0 · 
+  못 본 일(missed) 행별: read_notebook 514 · steal_food_seoha 402 · hungry_blames_you 138 · steal_food 134 · stand_stairs 118 · share_bowl 95 · steal_water 69 · eye_you 32 · wound_rots 15 · soonrye_water 14 · swing_pipe 5 · dongha_carries 1
+
+## silent 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 2525 · 293 · 293 · 285 · 0 · 선로 밑을 뒤진다 285 · 창고를 턴다 8
+  fever_night: 1585 · 208 · 62 · 62 · 147 · 불가에서 땀을 뺀다 80 · 썩은 데를 도려낸다 66 · 위에 대고 빈다 38 · 젖은 천으로 식힌다 20
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 716 · 0 · 0 · 0 · 129 · 
+  called_up: 558 · 82 · 0 · 0 · 4 · 손등을 깨물며 버틴다 82
+  d4_spanner: 393 · 0 · 0 · 0 · 39 · 
+  d10_walk_weak: 344 · 69 · 0 · 0 · 88 · 이를 악물고 걷는다 69
+  dawn_strike: 312 · 71 · 0 · 0 · 36 · 맞고 버틴다 59 · 그릇 둘을 내민다 11 · 물병 둘을 내민다 1
+  d6_shutter_b: 295 · 80 · 80 · 80 · 0 · 열쇠를 내준다 46 · 아무것도 하지 않는다 34
+  d2_shutter_arm: 280 · 0 · 0 · 0 · 37 · 
+  d6_shutter: 275 · 0 · 0 · 0 · 0 · 
+  d10_walk_other: 166 · 45 · 45 · 45 · 0 · 걷는다 45
+  d10_walk: 110 · 4 · 4 · 4 · 0 · 걷는다 4
+  dawn_mob: 103 · 103 · 0 · 0 · 9 · 손가락 하나로 갚는다 38 · 가진 것을 다 내놓는다 34 · 맞고 버틴다 31
+  d8_patrol_return: 64 · 16 · 16 · 16 · 0 · 열쇠를 내준다 16
+  dawn_dongha2: 1 · 0 · 0 · 0 · 0 · 
+  못 본 일(missed) 행별: read_notebook 605 · steal_food_seoha 465 · stand_stairs 251 · steal_food 203 · hungry_blames_you 196 · share_bowl 118 · steal_water 96 · eye_you 53 · wound_rots 11 · swing_pipe 10 · soonrye_water 2 · dongha_carries 2
+
+## caller 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 2271 · 249 · 249 · 226 · 1 · 선로 밑을 뒤진다 226 · 창고를 턴다 23
+  fever_night: 1478 · 183 · 85 · 59 · 150 · 불가에서 땀을 뺀다 74 · 썩은 데를 도려낸다 50 · 위에 대고 빈다 48 · 약을 쓴다 6
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 681 · 0 · 0 · 0 · 143 · 
+  called_up: 484 · 91 · 0 · 0 · 13 · 손등을 깨물며 버틴다 91
+  d4_spanner: 382 · 0 · 0 · 0 · 55 · 
+  d10_walk_weak: 300 · 45 · 0 · 0 · 86 · 이를 악물고 걷는다 45
+  d6_shutter_b: 293 · 66 · 66 · 66 · 0 · 열쇠를 내준다 38 · 아무것도 하지 않는다 28
+  d2_shutter_arm: 280 · 0 · 0 · 0 · 40 · 
+  dawn_strike: 264 · 68 · 0 · 0 · 64 · 맞고 버틴다 64 · 그릇 둘을 내민다 3 · 물병 둘을 내민다 1
+  d6_shutter: 212 · 0 · 0 · 0 · 0 · 
+  d10_walk_other: 141 · 32 · 32 · 32 · 0 · 걷는다 32
+  dawn_mob: 109 · 109 · 0 · 0 · 3 · 손가락 하나로 갚는다 49 · 가진 것을 다 내놓는다 42 · 맞고 버틴다 18
+  d10_walk: 81 · 1 · 1 · 1 · 0 · 걷는다 1
+  d8_patrol_return: 57 · 8 · 8 · 8 · 0 · 열쇠를 내준다 8
+  d10_hold: 1 · 1 · 0 · 0 · 0 · 끌려가며 버틴다 1
+  못 본 일(missed) 행별: read_notebook 526 · steal_food_seoha 422 · stand_stairs 211 · steal_food 181 · hungry_blames_you 176 · share_bowl 102 · steal_water 75 · eye_you 47 · wound_rots 10 · swing_pipe 9 · soonrye_water 3
+
+## lazy 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 2376 · 199 · 199 · 197 · 0 · 선로 밑을 뒤진다 197 · 창고를 턴다 2
+  fever_night: 1619 · 155 · 42 · 42 · 153 · 불가에서 땀을 뺀다 68 · 썩은 데를 도려낸다 45 · 위에 대고 빈다 30 · 젖은 천으로 식힌다 9
+  dawn_strike: 926 · 89 · 0 · 0 · 145 · 맞고 버틴다 78 · 그릇 둘을 내민다 11
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 698 · 0 · 0 · 0 · 132 · 
+  called_up: 556 · 73 · 0 · 0 · 9 · 손등을 깨물며 버틴다 72 · 불을 키우고 밤을 샌다 1
+  d4_spanner: 388 · 0 · 0 · 0 · 40 · 
+  d2_shutter_arm: 267 · 0 · 0 · 0 · 33 · 
+  d6_shutter: 261 · 0 · 0 · 0 · 0 · 
+  d6_shutter_b: 258 · 45 · 45 · 45 · 0 · 열쇠를 내준다 25 · 아무것도 하지 않는다 20
+  d10_walk_weak: 246 · 24 · 0 · 0 · 64 · 이를 악물고 걷는다 24
+  d10_walk_other: 104 · 16 · 16 · 16 · 0 · 걷는다 16
+  dawn_mob: 101 · 101 · 0 · 0 · 6 · 손가락 하나로 갚는다 41 · 가진 것을 다 내놓는다 32 · 맞고 버틴다 28
+  d10_walk: 80 · 3 · 3 · 3 · 0 · 걷는다 3
+  d8_patrol_return: 49 · 7 · 7 · 7 · 0 · 열쇠를 내준다 7
+  dawn_dongha2: 6 · 0 · 0 · 0 · 0 · 
+  못 본 일(missed) 행별: read_notebook 752 · hungry_blames_you 715 · share_bowl 462 · steal_food_seoha 417 · steal_food 409 · eye_you 304 · stand_stairs 137 · steal_water 112 · wound_rots 33 · soonrye_water 20 · swing_pipe 18 · dongha_carries 1
+
+## diligent 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 2713 · 296 · 296 · 288 · 0 · 선로 밑을 뒤진다 288 · 창고를 턴다 8
+  fever_night: 1677 · 198 · 70 · 70 · 158 · 불가에서 땀을 뺀다 74 · 썩은 데를 도려낸다 54 · 위에 대고 빈다 52 · 젖은 천으로 식힌다 10
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 724 · 0 · 0 · 0 · 113 · 
+  called_up: 589 · 89 · 0 · 0 · 7 · 손등을 깨물며 버틴다 89
+  d4_spanner: 394 · 0 · 0 · 0 · 38 · 
+  d10_walk_weak: 393 · 85 · 0 · 0 · 107 · 이를 악물고 걷는다 85
+  d6_shutter_b: 324 · 64 · 64 · 64 · 0 · 아무것도 하지 않는다 39 · 열쇠를 내준다 25
+  d6_shutter: 276 · 0 · 0 · 0 · 0 · 
+  d2_shutter_arm: 270 · 0 · 0 · 0 · 35 · 
+  d10_walk_other: 175 · 62 · 62 · 62 · 0 · 걷는다 62
+  d10_walk: 128 · 6 · 6 · 6 · 0 · 걷는다 6
+  d8_patrol_return: 98 · 16 · 16 · 16 · 0 · 열쇠를 내준다 16
+  dawn_mob: 72 · 72 · 0 · 0 · 4 · 손가락 하나로 갚는다 33 · 가진 것을 다 내놓는다 30 · 맞고 버틴다 9
+  dawn_strike: 34 · 30 · 0 · 0 · 0 · 맞고 버틴다 21 · 그릇 둘을 내민다 9
+  못 본 일(missed) 행별: steal_food 159 · steal_food_seoha 147 · stand_stairs 38
+
+## risky 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 1407 · 391 · 391 · 351 · 1 · 선로 밑을 뒤진다 351 · 창고를 턴다 40
+  fever_night: 811 · 184 · 182 · 2 · 167 · 불가에서 땀을 뺀다 129 · 썩은 데를 도려낸다 53 · 약을 쓴다 2
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 655 · 0 · 0 · 0 · 136 · 
+  dawn_strike: 431 · 192 · 0 · 0 · 49 · 그릇 둘을 내민다 106 · 맞고 버틴다 56 · 물병 둘을 내민다 30
+  d4_spanner: 423 · 0 · 0 · 0 · 74 · 
+  dawn_mob: 310 · 303 · 0 · 0 · 13 · 가진 것을 다 내놓는다 156 · 손가락 하나로 갚는다 137 · 맞고 버틴다 10
+  d2_shutter_arm: 273 · 0 · 0 · 0 · 35 · 
+  d6_shutter_b: 270 · 217 · 217 · 217 · 0 · 아무것도 하지 않는다 115 · 열쇠를 내준다 102
+  d6_shutter: 221 · 0 · 0 · 0 · 9 · 
+  called_up: 208 · 172 · 0 · 0 · 30 · 손등을 깨물며 버틴다 172
+  d10_walk_weak: 181 · 58 · 1 · 0 · 52 · 이를 악물고 걷는다 58
+  d10_walk_other: 104 · 44 · 44 · 44 · 0 · 붙잡는다 44
+  d10_train: 82 · 19 · 19 · 19 · 0 · 남는다 19
+  flood_sick_end: 43 · 31 · 31 · 31 · 0 · 굶으며 버틴다 25 · 약을 쓴다 6
+  d10_walk: 35 · 0 · 0 · 0 · 0 · 
+  d8_patrol_return: 28 · 16 · 16 · 16 · 0 · 열쇠를 내준다 16
+  d10_hold: 8 · 8 · 0 · 0 · 0 · 끌려가며 버틴다 3 · 손가락을 내준다 3 · 물병 셋을 내준다 2
+  못 본 일(missed) 행별: read_notebook 546 · stand_stairs 358 · steal_food_seoha 168 · share_bowl 159 · hungry_blames_you 100 · eye_you 83 · steal_food 56 · wound_rots 31 · steal_water 20 · swing_pipe 17 · soonrye_water 14 · dongha_carries 2
+
+## steward 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 3190 · 0 · 0 · 0 · 0 · 
+  fever_night: 1842 · 0 · 0 · 0 · 168 · 
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 730 · 0 · 0 · 0 · 117 · 
+  called_up: 582 · 0 · 0 · 0 · 0 · 
+  d10_walk_weak: 376 · 0 · 0 · 0 · 106 · 
+  d6_shutter: 368 · 0 · 0 · 0 · 0 · 
+  d2_shutter_arm: 292 · 0 · 0 · 0 · 58 · 
+  d6_shutter_b: 231 · 0 · 0 · 0 · 0 · 
+  dawn_strike: 226 · 0 · 0 · 0 · 34 · 
+  d10_walk: 145 · 0 · 0 · 0 · 0 · 
+  d10_walk_other: 126 · 0 · 0 · 0 · 0 · 
+  d9_night_stand: 93 · 0 · 0 · 0 · 0 · 
+  못 본 일(missed) 행별: read_notebook 731 · steal_food_seoha 471 · stand_stairs 252 · hungry_blames_you 210 · steal_food 150 · share_bowl 109 · steal_water 87 · eye_you 50 · wound_rots 8 · soonrye_water 8 · swing_pipe 5
+
+## counter 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  fever_night: 1277 · 708 · 441 · 279 · 120 · 썩은 데를 도려낸다 249 · 위에 대고 빈다 236 · 불가에서 땀을 뺀다 172 · 젖은 천으로 식힌다 33
+  starve_you: 959 · 681 · 681 · 260 · 110 · 남의 그릇을 뺏는다 441 · 창고를 턴다 239 · 선로 밑을 뒤진다 1
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  called_up: 752 · 591 · 0 · 0 · 84 · 손등을 깨물며 버틴다 552 · 불을 키우고 밤을 샌다 39
+  d5_flood: 644 · 48 · 2 · 2 · 108 · 모두 매달려 퍼낸다 42 · 남의 담요로 물길을 막는다 4 · 창고를 버리고 뺀다 2
+  dawn_mob: 619 · 619 · 0 · 0 · 60 · 손가락 하나로 갚는다 339 · 맞고 버틴다 280
+  d4_spanner: 595 · 0 · 0 · 0 · 88 · 
+  d6_shutter_b: 498 · 468 · 468 · 468 · 0 · 열쇠를 내준다 468
+  dawn_strike: 448 · 368 · 0 · 0 · 88 · 맞고 버틴다 353 · 소리친다 15
+  d2_shutter_arm: 274 · 0 · 0 · 0 · 36 · 
+  d10_walk_weak: 59 · 57 · 0 · 0 · 16 · 이를 악물고 걷는다 57
+  d10_walk_other: 47 · 44 · 44 · 44 · 0 · 붙잡는다 44
+  d10_hold: 35 · 35 · 0 · 0 · 8 · 끌려가며 버틴다 33 · 손가락을 내준다 2
+  d10_train: 18 · 17 · 17 · 17 · 0 · 남는다 17
+  d8_patrol_return: 16 · 11 · 11 · 11 · 0 · 열쇠를 내준다 11
+  못 본 일(missed) 행별: steal_food_seoha 372 · read_notebook 306 · stand_stairs 194 · steal_food 124 · share_bowl 107 · hungry_blames_you 94 · steal_water 44 · eye_you 41 · swing_pipe 11 · wound_rots 10 · dongha_carries 1
+
+## child 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  called_up: 976 · 949 · 0 · 0 · 129 · 손등을 깨물며 버틴다 852 · 불을 키우고 밤을 샌다 97
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  dawn_mob: 791 · 791 · 0 · 0 · 92 · 손가락 하나로 갚는다 420 · 맞고 버틴다 251 · 다른 사람을 가리킨다 120
+  d5_flood: 784 · 481 · 481 · 239 · 71 · 모두 매달려 퍼낸다 242 · 창고를 버리고 뺀다 239
+  d6_shutter_b: 666 · 657 · 657 · 657 · 0 · 아무것도 하지 않는다 657
+  dawn_strike: 528 · 491 · 0 · 0 · 140 · 축 늘어진다 444 · 옆 담요를 가리킨다 47
+  fever_night: 400 · 394 · 315 · 203 · 36 · 위에 대고 빈다 185 · 썩은 데를 도려낸다 139 · 불가에서 땀을 뺀다 51 · 약을 쓴다 12
+  starve_you: 341 · 317 · 317 · 189 · 15 · 선로 밑을 뒤진다 183 · 창고를 턴다 134
+  d2_shutter_arm: 289 · 0 · 0 · 0 · 0 · 
+  d10_walk_weak: 217 · 217 · 0 · 0 · 59 · 옆 사람 물병을 비운다 147 · 이를 악물고 걷는다 70
+  d10_hold: 159 · 159 · 0 · 0 · 34 · 끌려가며 버틴다 144 · 손가락을 내준다 13 · 물병 셋을 내준다 2
+  d10_walk_other: 140 · 140 · 140 · 140 · 0 · 걷는다 140
+  d10_grab: 90 · 90 · 0 · 0 · 18 · 끌려 넘어진다 72 · 물병을 돌려준다 18
+  d8_patrol_return: 59 · 59 · 59 · 59 · 0 · 열쇠를 내준다 59
+  dawn_dongha2: 1 · 1 · 1 · 1 · 0 · 무릎을 꿇는다 1
+  못 본 일(missed) 행별: steal_food_seoha 431 · read_notebook 405 · stand_stairs 195 · steal_food 163 · hungry_blames_you 163 · share_bowl 129 · eye_you 95 · steal_water 60 · wound_rots 14 · swing_pipe 10 · soonrye_water 1 · dongha_carries 1
+
+## selfish_nb 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  called_up: 1163 · 1110 · 0 · 0 · 147 · 손등을 깨물며 버틴다 1011 · 불을 키우고 밤을 샌다 99
+  dawn_mob: 849 · 849 · 0 · 0 · 88 · 손가락 하나로 갚는다 480 · 맞고 버틴다 321 · 다른 사람을 가리킨다 48
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 790 · 287 · 287 · 287 · 0 · 창고를 버리고 뺀다 287
+  d6_shutter_b: 759 · 734 · 734 · 734 · 0 · 아무것도 하지 않는다 734
+  dawn_strike: 719 · 644 · 0 · 0 · 167 · 축 늘어진다 508 · 옆 담요를 가리킨다 106 · 맞고 버틴다 30
+  fever_night: 504 · 491 · 313 · 313 · 38 · 위에 대고 빈다 279 · 썩은 데를 도려낸다 90 · 불가에서 땀을 뺀다 87 · 젖은 천으로 식힌다 17
+  starve_you: 433 · 407 · 407 · 376 · 1 · 선로 밑을 뒤진다 376 · 창고를 턴다 31
+  d10_walk_weak: 285 · 282 · 0 · 0 · 76 · 옆 사람 물병을 비운다 235 · 이를 악물고 걷는다 47
+  d2_shutter_arm: 284 · 0 · 0 · 0 · 0 · 
+  d10_hold: 208 · 208 · 0 · 0 · 33 · 끌려가며 버틴다 169 · 손가락을 내준다 26 · 물병 셋을 내준다 13
+  d10_walk_other: 208 · 207 · 207 · 207 · 0 · 걷는다 207
+  d10_grab: 154 · 154 · 0 · 0 · 17 · 끌려 넘어진다 131 · 물병을 돌려준다 23
+  d8_patrol_return: 43 · 43 · 43 · 43 · 0 · 열쇠를 내준다 43
+  못 본 일(missed) 행별: steal_food_seoha 477 · read_notebook 428 · steal_food 232 · hungry_blames_you 217 · share_bowl 188 · stand_stairs 97 · eye_you 96 · steal_water 92 · wound_rots 12 · soonrye_water 1
+
+## selfish_rt 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 784 · 341 · 341 · 0 · 53 · 남의 담요로 물길을 막는다 341
+  called_up: 698 · 670 · 0 · 0 · 205 · 불을 키우고 밤을 샌다 335 · 다른 이름을 댄다 332 · 귀를 막는다 3
+  dawn_mob: 693 · 693 · 0 · 0 · 256 · 다른 사람을 가리킨다 560 · 가진 것을 다 내놓는다 118 · 손가락 하나로 갚는다 14 · 맞고 버틴다 1
+  d6_shutter_b: 529 · 529 · 529 · 529 · 0 · 아무것도 하지 않는다 529
+  dawn_strike: 494 · 469 · 0 · 0 · 200 · 옆 담요를 가리킨다 469
+  d2_shutter_arm: 284 · 0 · 0 · 0 · 0 · 
+  starve_you: 116 · 96 · 96 · 67 · 14 · 남의 그릇을 뺏는다 53 · 선로 밑을 뒤진다 43
+  d10_walk_weak: 26 · 26 · 0 · 0 · 13 · 옆 사람 물병을 비운다 26
+  d10_walk_other: 22 · 22 · 22 · 22 · 0 · 걷는다 22
+  d8_patrol_return: 18 · 18 · 18 · 18 · 0 · 열쇠를 내준다 18
+  d10_hold: 17 · 17 · 0 · 0 · 3 · 손가락을 내준다 12 · 뿌리치고 걷는다 5
+  fever_night: 17 · 17 · 16 · 16 · 0 · 위에 대고 빈다 12 · 약을 쓴다 4 · 남의 담요를 끌어온다 1
+  d10_grab: 11 · 11 · 0 · 0 · 3 · 발을 빼낸다 10 · 물병을 돌려준다 1
+  못 본 일(missed) 행별: steal_food_seoha 384 · read_notebook 336 · share_bowl 143 · steal_food 122 · stand_stairs 100 · hungry_blames_you 95 · eye_you 60 · steal_water 28 · wound_rots 6 · swing_pipe 2 · dongha_carries 1
+
+## selfish_rt0 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 784 · 341 · 341 · 0 · 53 · 남의 담요로 물길을 막는다 341
+  dawn_mob: 763 · 763 · 0 · 0 · 274 · 다른 사람을 가리킨다 586 · 손가락 하나로 갚는다 118 · 맞고 버틴다 59
+  called_up: 759 · 731 · 0 · 0 · 129 · 손등을 깨물며 버틴다 360 · 불을 키우고 밤을 샌다 328 · 다른 이름을 댄다 43
+  d6_shutter_b: 529 · 529 · 529 · 529 · 0 · 아무것도 하지 않는다 529
+  dawn_strike: 525 · 500 · 0 · 0 · 221 · 옆 담요를 가리킨다 500
+  d2_shutter_arm: 284 · 0 · 0 · 0 · 0 · 
+  starve_you: 135 · 115 · 115 · 80 · 16 · 남의 그릇을 뺏는다 59 · 선로 밑을 뒤진다 56
+  fever_night: 79 · 79 · 66 · 44 · 9 · 위에 대고 빈다 42 · 남의 담요를 끌어온다 24 · 썩은 데를 도려낸다 11 · 약을 쓴다 2
+  d10_walk_weak: 50 · 50 · 0 · 0 · 23 · 옆 사람 물병을 비운다 50
+  d10_hold: 47 · 47 · 0 · 0 · 17 · 끌려가며 버틴다 36 · 손가락을 내준다 10 · 물병 셋을 내준다 1
+  d10_grab: 22 · 22 · 0 · 0 · 10 · 끌려 넘어진다 17 · 물병을 돌려준다 5
+  d8_patrol_return: 21 · 21 · 21 · 21 · 0 · 열쇠를 내준다 21
+  d10_walk_other: 20 · 20 · 20 · 20 · 0 · 걷는다 20
+  못 본 일(missed) 행별: steal_food_seoha 391 · read_notebook 351 · share_bowl 149 · steal_food 121 · hungry_blames_you 100 · stand_stairs 100 · eye_you 68 · steal_water 27 · wound_rots 6 · swing_pipe 2 · dongha_carries 1
+
+## h_random 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  pro_stairs: 800 · 0 · 0 · 0 · 397 · 
+  starve_you: 410 · 171 · 171 · 84 · 136 · 남의 그릇을 뺏는다 66 · 눈을 감는다 55 · 선로 밑을 뒤진다 42 · 창고를 턴다 8
+  d2_night_shutter: 394 · 2 · 2 · 2 · 29 · 셔터를 괸다 1 · 틈으로 말을 건다 1
+  d5_flood: 193 · 50 · 24 · 11 · 14 · 남의 담요로 물길을 막는다 20 · 모두 매달려 퍼낸다 19 · 창고를 버리고 뺀다 11
+  d3_called_you: 175 · 7 · 7 · 4 · 77 · 대답하지 않는다 4 · 대답한다 3
+  fever_night: 160 · 55 · 52 · 13 · 31 · 불가에서 땀을 뺀다 17 · 눈을 감는다 11 · 남의 담요를 끌어온다 9 · 위에 대고 빈다 8
+  d4_spanner: 133 · 4 · 1 · 0 · 5 · 다른 사람이 셌다고 한다 4
+  dawn_strike: 92 · 51 · 0 · 0 · 24 · 축 늘어진다 11 · 밀쳐 낸다 10 · 옆 담요를 가리킨다 10 · 소리친다 8
+  dawn_mob: 89 · 89 · 0 · 0 · 30 · 밀치고 달아난다 22 · 맞고 버틴다 17 · 무릎을 꿇고 빈다 15 · 손가락 하나로 갚는다 13
+  d6_shutter: 87 · 46 · 46 · 32 · 13 · 열쇠를 내준다 20 · 동하와 덤빈다 14 · 아무것도 하지 않는다 12
+  called_up: 79 · 51 · 0 · 0 · 26 · 다른 이름을 댄다 15 · 귀를 막는다 12 · 대답한다 12 · 손등을 깨물며 버틴다 7
+  d6_shutter_b: 48 · 37 · 37 · 26 · 5 · 아무것도 하지 않는다 16 · 맞선다 11 · 열쇠를 내준다 10
+  d2_shutter_arm: 37 · 1 · 0 · 0 · 1 · 팔을 비틀어 뺀다 1
+  d10_walk_weak: 6 · 3 · 0 · 0 · 1 · 이를 악물고 걷는다 2 · 옆 사람 물병을 비운다 1
+  d9_night_stand: 5 · 3 · 3 · 2 · 3 · 대답하지 않는다 2 · 대답한다 1
+  d10_walk: 5 · 3 · 3 · 3 · 0 · 걷는다 3
+  d8_patrol_return: 5 · 4 · 4 · 2 · 3 · 내주지 않는다 2 · 열쇠를 내준다 2
+  d10_grab: 3 · 2 · 0 · 0 · 0 · 물병을 돌려준다 1 · 끌려 넘어진다 1
+  d10_hold: 2 · 2 · 0 · 0 · 0 · 끌려가며 버틴다 2
+  못 본 일(missed) 행별: read_notebook 118 · steal_food_seoha 104 · stand_stairs 38 · hungry_blames_you 35 · share_bowl 31 · steal_food 22 · eye_you 10 · steal_water 9 · swing_pipe 3 · wound_rots 1
+
+## h_wary 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 1059 · 690 · 690 · 690 · 0 · 선로 밑을 뒤진다 536 · 남의 그릇을 뺏는다 143 · 창고를 턴다 11
+  pro_stairs: 800 · 0 · 0 · 0 · 397 · 
+  fever_night: 528 · 379 · 270 · 270 · 41 · 위에 대고 빈다 165 · 젖은 천으로 식힌다 97 · 불가에서 땀을 뺀다 39 · 눈을 감는다 31
+  d2_night_shutter: 403 · 4 · 4 · 4 · 0 · 셔터를 괸다 2 · 틈으로 말을 건다 1 · 둔다 1
+  called_up: 397 · 348 · 0 · 0 · 92 · 다른 이름을 댄다 110 · 귀를 막는다 105 · 손등을 깨물며 버틴다 99 · 불을 키우고 밤을 샌다 34
+  d5_flood: 349 · 141 · 62 · 62 · 17 · 창고를 버리고 뺀다 62 · 남의 담요로 물길을 막는다 40 · 모두 매달려 퍼낸다 39
+  dawn_mob: 332 · 331 · 0 · 0 · 110 · 밀치고 달아난다 66 · 다른 사람을 가리킨다 64 · 무릎을 꿇고 빈다 61 · 맞고 버틴다 54
+  dawn_strike: 224 · 166 · 0 · 0 · 58 · 축 늘어진다 33 · 소리친다 30 · 밀쳐 낸다 29 · 옆 담요를 가리킨다 26
+  d4_spanner: 211 · 14 · 1 · 1 · 2 · 스패너를 막는다 7 · 다른 사람이 셌다고 한다 6 · 그릇 하나로 입을 막는다 1
+  d6_shutter: 209 · 138 · 138 · 138 · 0 · 열쇠를 내준다 72 · 아무것도 하지 않는다 66
+  d6_shutter_b: 94 · 70 · 70 · 70 · 0 · 열쇠를 내준다 36 · 아무것도 하지 않는다 34
+  d10_walk_weak: 57 · 55 · 0 · 0 · 18 · 이를 악물고 걷는다 28 · 옆 사람 물병을 비운다 27
+  d2_shutter_arm: 45 · 1 · 0 · 0 · 0 · 팔을 비틀어 뺀다 1
+  d10_hold: 28 · 28 · 0 · 0 · 4 · 뿌리치고 걷는다 10 · 손가락을 내준다 9 · 끌려가며 버틴다 8 · 물병 셋을 내준다 1
+  d8_patrol_return: 25 · 22 · 22 · 14 · 9 · 열쇠를 내준다 14 · 내주지 않는다 8
+  d10_grab: 22 · 22 · 0 · 0 · 2 · 끌려 넘어진다 11 · 물병을 돌려준다 6 · 발을 빼낸다 5
+  d9_night_stand: 21 · 21 · 21 · 21 · 0 · 대답하지 않는다 21
+  d10_walk: 20 · 20 · 20 · 20 · 0 · 동하를 붙잡는다 14 · 걷는다 6
+  d10_walk_other: 20 · 18 · 18 · 18 · 0 · 붙잡는다 11 · 걷는다 7
+  d10_train: 3 · 3 · 3 · 3 · 0 · 남는다 3
+  못 본 일(missed) 행별: read_notebook 319 · steal_food_seoha 219 · stand_stairs 111 · hungry_blames_you 89 · share_bowl 71 · steal_food 43 · eye_you 31 · steal_water 18 · wound_rots 11 · swing_pipe 3 · soonrye_water 1 · dongha_carries 1
+
+## h_first 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 3428 · 567 · 567 · 567 · 0 · 선로 밑을 뒤진다 567
+  fever_night: 1740 · 269 · 119 · 119 · 81 · 눈을 감는다 150 · 위에 대고 빈다 56 · 젖은 천으로 식힌다 51 · 약을 쓴다 12
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d6_shutter: 695 · 86 · 86 · 86 · 0 · 열쇠를 내준다 86
+  called_up: 627 · 122 · 0 · 0 · 29 · 귀를 막는다 96 · 불을 키우고 밤을 샌다 26
+  d5_flood: 598 · 0 · 0 · 0 · 0 · 
+  d10_walk_weak: 538 · 149 · 0 · 0 · 22 · 옆 사람 물병을 비운다 149
+  d10_grab: 505 · 384 · 0 · 0 · 25 · 끌려 넘어진다 265 · 물병을 돌려준다 119
+  dawn_strike: 420 · 114 · 0 · 0 · 62 · 맞고 버틴다 91 · 물병 둘을 내민다 17 · 그릇 둘을 내민다 6
+  dawn_mob: 381 · 371 · 0 · 0 · 32 · 맞고 버틴다 210 · 가진 것을 다 내놓는다 161
+  d10_walk: 337 · 220 · 220 · 220 · 0 · 동하를 붙잡는다 220
+  d2_shutter_arm: 283 · 0 · 0 · 0 · 0 · 
+  d10_walk_other: 148 · 84 · 84 · 84 · 0 · 붙잡는다 84
+  d6_shutter_b: 81 · 23 · 23 · 23 · 0 · 열쇠를 내준다 23
+  d10_hold: 70 · 70 · 0 · 0 · 11 · 끌려가며 버틴다 70
+  d10_train: 39 · 7 · 7 · 7 · 0 · 남는다 7
+  dawn_dongha2: 1 · 0 · 0 · 0 · 0 · 
+  못 본 일(missed) 행별: read_notebook 836 · steal_food_seoha 587 · share_bowl 244 · hungry_blames_you 221 · steal_food 149 · steal_water 79 · eye_you 75 · stand_stairs 58 · wound_rots 55 · swing_pipe 1 · dongha_carries 1
+
+## h_cautious 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 3777 · 1633 · 1633 · 1633 · 0 · 선로 밑을 뒤진다 1624 · 창고를 턴다 9
+  fever_night: 1440 · 838 · 570 · 570 · 55 · 위에 대고 빈다 266 · 젖은 천으로 식힌다 197 · 썩은 데를 도려낸다 167 · 약을 쓴다 107
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 791 · 0 · 0 · 0 · 0 · 
+  called_up: 721 · 472 · 0 · 0 · 40 · 손등을 깨물며 버틴다 405 · 불을 키우고 밤을 샌다 67
+  dawn_mob: 635 · 629 · 0 · 0 · 36 · 손가락 하나로 갚는다 241 · 가진 것을 다 내놓는다 232 · 맞고 버틴다 156
+  dawn_strike: 449 · 245 · 0 · 0 · 43 · 물병 둘을 내민다 124 · 맞고 버틴다 121
+  d10_walk_weak: 415 · 257 · 0 · 0 · 58 · 옆 사람 물병을 비운다 224 · 이를 악물고 걷는다 33
+  d4_spanner: 405 · 0 · 0 · 0 · 0 · 
+  d6_shutter_b: 405 · 131 · 131 · 131 · 0 · 아무것도 하지 않는다 70 · 열쇠를 내준다 61
+  d6_shutter: 375 · 143 · 143 · 143 · 0 · 아무것도 하지 않는다 85 · 열쇠를 내준다 58
+  d10_grab: 320 · 311 · 0 · 0 · 27 · 끌려 넘어진다 204 · 물병을 돌려준다 107
+  d10_walk_other: 188 · 176 · 176 · 176 · 0 · 걷는다 176
+  d10_walk: 148 · 133 · 133 · 133 · 0 · 걷는다 133
+  d10_hold: 141 · 141 · 0 · 0 · 19 · 끌려가며 버틴다 84 · 손가락을 내준다 55 · 물병 셋을 내준다 2
+  d8_patrol_return: 92 · 73 · 73 · 73 · 0 · 열쇠를 내준다 73
+  dawn_dongha2: 2 · 1 · 1 · 1 · 0 · 파이프를 손으로 받는다 1
+  못 본 일(missed) 행별: steal_food_seoha 652 · read_notebook 650 · hungry_blames_you 349 · share_bowl 203 · stand_stairs 178 · steal_water 73 · eye_you 73 · steal_food 45 · wound_rots 26 · soonrye_water 3 · swing_pipe 3 · dongha_carries 2
+
+## h_cautious2 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 2837 · 631 · 631 · 631 · 0 · 선로 밑을 뒤진다 619 · 창고를 턴다 12
+  fever_night: 1397 · 370 · 231 · 231 · 120 · 위에 대고 빈다 125 · 젖은 천으로 식힌다 79 · 남의 담요를 끌어온다 50 · 불가에서 땀을 뺀다 38
+  pro_stairs: 800 · 0 · 0 · 0 · 0 · 
+  d2_night_shutter: 800 · 0 · 0 · 0 · 0 · 
+  d5_flood: 751 · 14 · 0 · 0 · 64 · 모두 매달려 퍼낸다 9 · 남의 담요로 물길을 막는다 5
+  called_up: 581 · 240 · 0 · 0 · 51 · 귀를 막는다 74 · 다른 이름을 댄다 72 · 손등을 깨물며 버틴다 72 · 불을 키우고 밤을 샌다 22
+  d4_spanner: 396 · 0 · 0 · 0 · 24 · 
+  d6_shutter: 385 · 60 · 60 · 60 · 0 · 아무것도 하지 않는다 31 · 열쇠를 내준다 29
+  dawn_strike: 350 · 128 · 0 · 0 · 109 · 소리친다 29 · 옆 담요를 가리킨다 26 · 맞고 버틴다 25 · 축 늘어진다 23
+  dawn_mob: 260 · 258 · 0 · 0 · 76 · 다른 사람을 가리킨다 51 · 손가락 하나로 갚는다 50 · 밀치고 달아난다 47 · 맞고 버틴다 44
+  d10_walk_weak: 258 · 73 · 0 · 0 · 34 · 옆 사람 물병을 비운다 45 · 이를 악물고 걷는다 28
+  d6_shutter_b: 256 · 81 · 81 · 81 · 0 · 아무것도 하지 않는다 47 · 열쇠를 내준다 34
+  d10_grab: 122 · 114 · 0 · 0 · 22 · 발을 빼낸다 55 · 끌려 넘어진다 42 · 물병을 돌려준다 17
+  d10_walk: 107 · 57 · 57 · 57 · 0 · 걷는다 57
+  d10_walk_other: 106 · 55 · 55 · 55 · 0 · 걷는다 55
+  d2_shutter_arm: 87 · 0 · 0 · 0 · 10 · 
+  d8_patrol_return: 57 · 32 · 32 · 32 · 0 · 열쇠를 내준다 32
+  d10_hold: 37 · 37 · 0 · 0 · 10 · 끌려가며 버틴다 14 · 뿌리치고 걷는다 12 · 손가락을 내준다 7 · 물병 셋을 내준다 4
+  d10_train: 16 · 5 · 5 · 5 · 0 · 남는다 3 · 챙긴 운임으로 탄다 2
+  dawn_dongha2: 2 · 0 · 0 · 0 · 0 · 
+  못 본 일(missed) 행별: read_notebook 619 · steal_food_seoha 575 · hungry_blames_you 221 · stand_stairs 199 · share_bowl 159 · steal_food 94 · steal_water 67 · eye_you 59 · wound_rots 17 · soonrye_water 5 · dongha_carries 2 · swing_pipe 2
+
+## h_mixed 사건별 (죽을 수 있는 사건만): 도달 · 카르마≥5 도달 · 그때 안전 출구 열림 · 안전 출구 고름 · 그 사건 사망 · 카르마≥5 고른 것
+  starve_you: 2411 · 1437 · 1437 · 1437 · 0 · 선로 밑을 뒤진다 1249 · 남의 그릇을 뺏는다 173 · 창고를 턴다 15
+  fever_night: 1045 · 757 · 513 · 513 · 48 · 위에 대고 빈다 264 · 젖은 천으로 식힌다 171 · 썩은 데를 도려낸다 104 · 약을 쓴다 78
+  pro_stairs: 800 · 0 · 0 · 0 · 152 · 
+  called_up: 753 · 649 · 0 · 0 · 98 · 손등을 깨물며 버틴다 361 · 불을 키우고 밤을 샌다 110 · 다른 이름을 댄다 100 · 귀를 막는다 78
+  dawn_mob: 657 · 649 · 0 · 0 · 107 · 가진 것을 다 내놓는다 194 · 손가락 하나로 갚는다 182 · 맞고 버틴다 135 · 밀치고 달아난다 47
+  d2_night_shutter: 648 · 1 · 1 · 1 · 0 · 둔다 1
+  d5_flood: 610 · 89 · 18 · 18 · 13 · 남의 담요로 물길을 막는다 52 · 모두 매달려 퍼낸다 19 · 창고를 버리고 뺀다 18
+  dawn_strike: 416 · 306 · 0 · 0 · 61 · 맞고 버틴다 112 · 물병 둘을 내민다 94 · 옆 담요를 가리킨다 23 · 밀쳐 낸다 23
+  d6_shutter: 364 · 180 · 180 · 180 · 0 · 아무것도 하지 않는다 94 · 열쇠를 내준다 86
+  d4_spanner: 325 · 2 · 1 · 1 · 0 · 다른 사람이 셌다고 한다 1 · 그릇 하나로 입을 막는다 1
+  d10_walk_weak: 233 · 191 · 0 · 0 · 50 · 옆 사람 물병을 비운다 110 · 이를 악물고 걷는다 81
+  d6_shutter_b: 227 · 154 · 154 · 154 · 0 · 아무것도 하지 않는다 83 · 열쇠를 내준다 71
+  d10_grab: 115 · 113 · 0 · 0 · 16 · 끌려 넘어진다 58 · 물병을 돌려준다 33 · 발을 빼낸다 22
+  d10_hold: 91 · 91 · 0 · 0 · 19 · 끌려가며 버틴다 48 · 손가락을 내준다 19 · 뿌리치고 걷는다 15 · 물병 셋을 내준다 9
+  d8_patrol_return: 84 · 71 · 71 · 59 · 15 · 열쇠를 내준다 59 · 내주지 않는다 12
+  d10_walk_other: 81 · 80 · 80 · 80 · 0 · 걷는다 61 · 붙잡는다 19
+  d10_walk: 80 · 73 · 73 · 73 · 0 · 걷는다 62 · 동하를 붙잡는다 11
+  d2_shutter_arm: 42 · 0 · 0 · 0 · 0 · 
+  d9_night_stand: 21 · 17 · 17 · 17 · 0 · 대답하지 않는다 17
+  dawn_dongha2: 4 · 2 · 2 · 2 · 0 · 파이프를 손으로 받는다 1 · 무릎을 꿇는다 1
+  못 본 일(missed) 행별: read_notebook 572 · steal_food_seoha 467 · hungry_blames_you 204 · stand_stairs 162 · share_bowl 154 · eye_you 74 · steal_food 59 · steal_water 53 · wound_rots 13 · soonrye_water 7 · swing_pipe 5 · dongha_carries 2

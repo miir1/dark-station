@@ -20,7 +20,23 @@ const db = T.loadDir(path.join(ROOT, 'data'));
 const pols = Object.keys(BOTS.POLICIES).sort((a, b) => (b === 'risky') - (a === 'risky'));   // 통로를 여는 판(열차 결말)은 모험 봇에서 잘 나온다
 const got = {};
 const orig = E.dispatch;
+// (10-24 tightrope 화면) 'night:<밤 사건 id>' = 그 밤 행이 당신에게 닿은(당신 수치·당신 물건) 밤의 '굴리기 직전' 상태 (새벽 단계, 'next' 바로 앞).
+//   상태에 난수가 들어 있어 화면이 같은 저장에서 다음 단계로 넘기면 같은 밤이 굴러간다 → 아침 '밤 보고' 줄을 찍을 수 있다
+const nightWant = want.filter((w) => w.startsWith('night:')).map((w) => w.slice(6));
+const hitsYou = (e) => (e.lines || []).some((l) => l.who === 'you') || (e.traces || []).some((t) => /_you$/.test(t));
 E.dispatch = function (s, a, d) {
+  if (nightWant.length && a && a.type === 'next' && s.phase === 'aftermath' && s.people.you.status === 'home') {
+    const before = JSON.stringify(s), n0 = s.nightLog.length;
+    const r = orig.call(this, s, a, d);
+    for (const id of nightWant) {
+      const hit = s.nightLog.slice(n0).find((e) => e.id === id && hitsYou(e));
+      if (!hit || s.people.you.status !== 'home') continue;
+      const alive = Object.values(s.people).filter((p) => p.status === 'home' && p.id !== 'you').length;
+      const key = 'night:' + id, g = got[key];
+      if (!g || alive > g.alive) got[key] = { alive, open: 1, all: 1, score: alive, state: JSON.parse(before) };
+    }
+    return r;
+  }
   const r = orig.call(this, s, a, d);
   // 걸린 순간: 당신이 살아 있고, 열린 선택지가 많고(열차 결말이면 '탄다'가 잠기지 않게), 주민이 많이 남은 판을 고른다 (결말 캡처가 명부를 채우게)
   if (s.pending && want.includes(s.pending.id) && s.people.you.status === 'home') {

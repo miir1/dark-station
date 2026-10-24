@@ -116,7 +116,7 @@ const gates = byBlock.map((a) => S.gate(a, candIds, CAREFUL));
 const combined = S.combine(gates);
 const gateAll = S.gate(aggs, candIds, CAREFUL);   // 참고 열: 모든 블록을 합친 값으로 잰 실측(판정은 블록별)
 // A4 줄은 A4 정책의 블록 전부로 판정한다 (10-24 검증 A4-5). gate 의 줄 순서는 정책 묶음과 상관없이 같다
-const A4_ROW = /^A4 /;
+const A4_ROW = /^( {2})?A4 /;   // A4 판정 줄 + (10-24 tightrope §2-3) '  A4 측정:' 줄 — 둘 다 A4 정책의 블록 전부로 잰다
 const a4On = a4Extra.length > 0 && GROUPS.a4.every((k) => names.includes(k));
 const a4Comb = a4On ? S.combine(a4ByBlock.map((a) => S.gate(a, candIds, CAREFUL))) : null;
 const a4Pool = a4On ? S.gate(a4All, candIds, CAREFUL) : null;
@@ -165,7 +165,10 @@ const ALIAS = { '찬가 발견율 (부지런)': ['찬가 발견율 (부지런 / 
   '참고: 같은 값 — 성향 봇 8종 / 사람 흉내(h_random 뺌) / 전 정책 합산(옛 줄)': ['A2 D2~D6 날마다 그날 사건으로 죽은 판 (정책 합산, 깔때기 사건 뺌)'],
   'A1 이른 안전: D1~D4 생존 − 균형 (버릇 없는 이기적 각각)': ['A1 이른 안전: 이기적 D1~D4 생존 − 균형'],
   'A1 이기심의 값: 열흘 생존 − 균형 (버릇 없는 이기적 각각 — selfish_nb·selfish_rt0)': ['A1 이기심의 값: 열흘 생존 − 균형 (이기적 4종 각각 — 버릇 없는·끝까지 금기 포함)'],
-  'A1 이기적 사인 쏠림 (버릇 없는 이기적, 사망 ≥ 10%인 정책만)': ['A1 이기적 4종 사인 쏠림 (한 사건 비중)'] };
+  'A1 이기적 사인 쏠림 (버릇 없는 이기적, 사망 ≥ 10%인 정책만)': ['A1 이기적 4종 사인 쏠림 (한 사건 비중)'],
+  // (10-24 tightrope) 정의가 바뀐 줄 — 옛 값은 옛 정의(강제 = 위험 0 출구 없음 · A2 = D2~D6 날마다)로 잰 것
+  '강제 사망 = 확정 사망 (고를 때 열린 선택지 전부 살 확률 0, 전 정책 합산)': ['강제 사망 (전 정책 합산)', '강제 사망 비율 (전 정책 합산)'],
+  'A2 D2·D4·D5 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)': ['A2 D2~D6 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)', 'A2 D2~D6 날마다 그날 사건으로 죽은 판 (정책 합산, 깔때기 사건 뺌)'] };
 // 조심형 봇 사망 줄은 이름에 정책 목록이 들어 있어(10-24 selfish_nb 가 더해짐) 앞머리로 찾는다
 const prevOf = (cmp, k0) => { const k = k0.trim(); if (cmp.gate[k] !== undefined) return cmp.gate[k]; const a = (ALIAS[k] || []).map((x) => cmp.gate[x]).find((v) => v !== undefined); if (a !== undefined) return a; if (k.startsWith('조심형 봇 사망 (')) { const o = Object.keys(cmp.gate).find((x) => x.startsWith('조심형 봇 사망 (')); if (o) return `${cmp.gate[o]} (옛 묶음 ${o.slice(10, -1)})`; } return '—'; };
 
@@ -186,7 +189,7 @@ md += `\n굶주림 = 아침마다 잰 당신 굶주림의 판 평균(10-24 추�
 md += `\n정책: balanced 축 중립·보통 조사 / selfish 몫−손− / devoted 몫+손+ / silent 이름− / caller 이름+ / lazy 게으른 조사(1곳·말 0) / diligent 부지런(상한 보고용) / risky 모험(판정+경고 선택 우선 ≥35%, 원정 매일 1층→2층, 거래·협정·범람수는 자원 + 최대) / steward 몫+손−이름+(정체 inspector 쪽 성향, 10-23 추가). 조심형(합격선 따로 집계) = ${CAREFUL.join('·')}.\n`;
 for (const name of names) md += `- ${name} 사망 원인: ` + (Object.entries(aggs[name].byCause).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ') || '없음') + (aggs[name].unwarned ? ` (경고 없는 죽음 ${aggs[name].unwarned})` : '') + (aggs[name].deadlyPick ? ` [평범한 대안 두고 죽음 글 선택 ${aggs[name].deadlyPick}]` : '')
   + (aggs[name].forced ? ` — 강제 ${aggs[name].forced}: ` + Object.entries(aggs[name].byForced).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ') : '') + '\n';
-md += `\n강제 = 그 순간 당신이 죽지 않는 열린 선택지가 0개였던 죽음(선택지 하나뿐, 나머지가 잠긴 주사위). "←" 뒤는 그 전 마지막 자유 경고 선택(대안이 있었는데 고른 경고 선택). 실질경고% = 사망 중 '경고 글이 있고 강제가 아닌' 선택으로 죽은 비율(10-22 리드 결정: 강제 사망은 경고 있음으로 세지 않는다). 둘 다 엔진의 사인 기록(ended.cause.forced·free)에서 읽는다.\n`;
+md += `\n강제 = 확정 사망 — 고를 때 열린 선택지 전부 살 확률 0 (10-24 tightrope R1, 살 확률 > 0 인 주사위가 하나라도 열려 있으면 강제가 아니다 · 옛 정의 '죽지 않는 열린 선택지 0개'는 아래 '줄타기·발견 지표' 표의 '옛 강제'). "←" 뒤는 그 전 마지막 자유 경고 선택(대안이 있었는데 고른 경고 선택). 실질경고% = 사망 중 '경고 글이 있고 강제가 아닌' 선택으로 죽은 비율(10-22 리드 결정: 강제 사망은 경고 있음으로 세지 않는다). 둘 다 엔진의 사인 기록(ended.cause.forced·free)에서 읽는다.\n`;
 if (blocks.length > 1) {
   md += `\n### 블록별 (생존% / 사망% / 열차% / 강제%)\n| 정책 | ${blocks.map(blockName).join(' | ')} |\n|---|${blocks.map(() => '---').join('|')}|\n`;
   for (const name of names) md += `| ${name} | ${byBlock.map((a) => `${a[name].survived} / ${a[name].deathRate} / ${a[name].train} / ${a[name].deaths ? a[name].forcedRate : '-'}`).join(' | ')} |\n`;
@@ -204,6 +207,12 @@ md += `\n### 날별 당신 사망 (판 수, ${N * blocks.length}판 중 · 괄�
 for (const name of names) md += `| ${name} | ${DAYS.map((d) => { const a = aggs[name].byDay[d] || 0, e = aggs[name].dayEvent[d] || 0; return a ? `${a} (${e})` : '0'; }).join(' | ')} |\n`;
 md += `\n### A1·A2·A4 지표 (블록 합산)\n| 정책 | 생존% | D1~D4 생존% | D5까지 사망% | 산 날 | 카르마(끝) | 못 본 일/판 | 방치 줄/판 | D9 주민 | D7 자원 | 사인 1위 | 원인 1위 |\n|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
 for (const name of names) { const a = aggs[name]; md += `| ${name} | ${a.survived} | ${a.aliveD4} | ${a.deadByD5} | ${a.daysLived} | ${a.karma} | ${a.neglect} | ${a.neglectRows} | ${a.home9N ? a.home9 : '-'} | ${a.res7N ? a.res7 : '-'} | ${a.deaths ? `${a.topCause.k} ${a.topCause.share}%` : '-'} | ${a.deaths ? `${a.topRoot.k} ${a.topRoot.share}%` : '-'} |\n`; }
+// ── 10-24 tightrope 표: 확정 사망 · 아슬함 · 실제 발견율 ──
+const dash = (v, u) => (v == null || !Number.isFinite(v) ? '-' : `${v}${u || ''}`);
+const FELT = require('../engine/engine.js').ROPE_FELT_MAX;   // (tightrope 검증) 느껴지는 줄타기 = 화면 % ≤ 85
+md += `\n### 줄타기·발견 지표 (10-24 tightrope, 블록 합산 — '산 판' = 열흘을 산 판)\n| 정책 | 확정 사망 | 옛 강제(위험 0 출구 없음) | 경고 없는 사망 | 줄타기 굴림/판 | 줄타기 넘김/판 (산 판) | 산 판 중 줄타기 ≥2번% | 느껴지는 줄타기(≤${FELT}%) 넘김/판 (산 판) · 넘김 중 비중 | 산 판 중 느껴지는 줄타기 ≥2번% | 죽음 판정 넘김/판 (산 판) | 줄타기로 죽은 판 | 눈먼 새벽/판 · 그 죽음 | 실제 발견% | 옛 발견% | 누구나 아는 밤/판 · 숨은 밤/판 |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
+for (const name of names) { const a = aggs[name]; md += `| ${name} | ${a.forced} | ${a.noSafeDeaths} | ${a.unwarned} | ${dash(a.ropeRolls)} | ${dash(a.ropeCloseSurv)} | ${dash(a.ropeClose2, '%')} | ${dash(a.ropeFeltSurv)} · ${dash(a.ropeFeltShare, '%')} | ${dash(a.ropeFelt2, '%')} | ${dash(a.closeCallsSurv)} | ${a.ropeDeaths} | ${dash(a.blindMet)} · ${a.blindDeaths} | ${dash(a.discReal, '%')} | ${dash(a.discovery, '%')} | ${dash(a.pubNights)} · ${dash(a.privNights)} |\n`; }
+md += `\n확정 사망 = 고를 때 열린 선택지 전부 살 확률 0 (R1 — 엔진 ended.cause.forced). 옛 강제 = 당신이 죽지 않는 열린 선택지 0개(카르마 판의 줄타기는 일부러 그렇다). 줄타기 = rope 칸이 얹힌 판정(엔진 s.stats.ropeRolls·ropeClose), 느껴지는 줄타기 = 그중 화면 % ≤ ${FELT}(죽을 확률 ≥ ${100 - FELT}%)인 판정(ropeFeltRolls·ropeFelt — 90% 넘는 판정은 넘겨도 아슬하게 느껴지기 어렵다, 10-24 tightrope 검증) · 넘김 중 비중 = 산 판 줄타기 넘김 가운데 느껴지는 줄타기의 몫, 죽음 판정 = 실패가 당신을 죽이는 모든 판정(deathRolls·closeCalls). 실제 발견% = 누구나 아는 밤(public·kill)을 뺀 주민 사건 가운데 발견한 비율 — 옛 발견%(발견%) 옆에 싣는다.\n`;
 md += `\n원인 = 깔때기 사건(when 이 당신 부상을 보는 사건 — fever_night 등 — 과 새벽 위독)으로 죽었으면, 그 자리까지 당신을 다치게 한 출처(사건·night:밤 사건·neglect:방치 판정) 가운데 가장 많이 다치게 한 것. 아니면 사인 사건 그대로.\n`;
 for (const name of names.filter((k) => aggs[k].deaths)) md += `- ${name} 원인 사건: ` + Object.entries(aggs[name].byRoot).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([k, v]) => `${k} ${v}`).join(' · ') + '\n';
 md += `\n### 정체 묶음 평균 (A3 분석 §5: 성향 봇 ${GROUPS.personality.filter((k) => aggs[k]).length}종 · 사람 흉내 ${GROUPS.human.filter((k) => aggs[k]).length}종, 블록 합산)\n| 묶음 | ${candIds.join(' | ')} |\n|---|${candIds.map(() => '---').join('|')}|\n`;

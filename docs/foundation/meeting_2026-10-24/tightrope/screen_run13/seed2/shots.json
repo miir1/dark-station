@@ -1,0 +1,28 @@
+[
+ {
+  "shot": "13_run",
+  "ok": false,
+  "why": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D7 ended map=station open=- ended=you_gone you=dead food=0 | D5 ration repay_bowl → 그냥 지나간다 / D5 day trip_b1_wo"
+  ],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D7 ended map=station open=- ended=you_gone you=dead food=0 | D5 ration repay_bowl → 그냥 지나간다 / D5 day trip_b1_wo"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": "2",
+    "end": "D7 you_gone"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run end reached=0 D7 ended map=station open=- ended=you_gone you=dead food=0 | D5 ration repay_bowl → 그냥 지나간다 / D5 day trip_b1_workers → 신발을 챙긴다 / D5 day trip_b2_lockers → 비틀어 연다 / D5 night d5_rail_body → 받는다 / D5 night d5_flood → 창고를 버리고 뺀다 / D6 trace d6_morning → 쇠줄을 긋는다 / D6 trace dawn_strike → 맞고 버틴다 / D6 trace dawn_mob → 손가락 하나로 갚는다 / D6 trace wound_critical → 약을 쓴다 / [D6 food1 water1 hunger3] / D6 ration repay_bowl → 그냥 지나간다 / D6 day passage_alone → 두고 걷기로 한다 / D6 day patrol_pact → 동하를 보낸다 / D6 night d6_shutter_b → 열쇠를 내준다 / [꿈 D6] / D7 trace dawn_strike → 그릇 둘을 내민다",
+   "[ds4 missing] @d2_shutter_arm @dawn_strike @dawn_mob wound_critical@wound_critical @d6_shutter_b"
+  ]
+ }
+]

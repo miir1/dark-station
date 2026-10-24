@@ -1,0 +1,281 @@
+{
+ "inject": "",
+ "blocks": [
+  1
+ ],
+ "byBlock": [
+  {
+   "selfish_nb": {
+    "n": 200,
+    "deathRate": 81.5,
+    "warnedRate": 100,
+    "warnTextRate": 100,
+    "unwarned": 0,
+    "deaths": 163,
+    "starveDeaths": 0,
+    "byCause": {
+     "d10_hold": 10,
+     "dawn_strike": 42,
+     "fever_night": 10,
+     "called_up": 49,
+     "d10_walk_weak": 21,
+     "d10_grab": 6,
+     "dawn_mob": 25
+    },
+    "allDead": 7,
+    "nights": 21.85,
+    "malice": 12.35,
+    "hymn": 3.67,
+    "discovery": 66.1,
+    "unknownOk": 100,
+    "hymnDiscovery": 92.8,
+    "explicit": 10.69,
+    "decisions": 20.69,
+    "blank": 63.8,
+    "identity": {
+     "passenger": 99.5,
+     "counting_child": 0.5
+    },
+    "identityNP": {
+     "passenger": 99.5,
+     "counting_child": 0.5
+    },
+    "prologueDeaths": 0,
+    "days": 8.49,
+    "trips": 6.64,
+    "train": 0,
+    "survived": 18.5,
+    "clock": 13.84,
+    "starveShare": 0,
+    "forced": 0,
+    "forcedRate": 0,
+    "forcedTraced": 0,
+    "byForced": {},
+    "deadlyPick": 0,
+    "hunger": 4.7,
+    "d3Reached": 99.5,
+    "d3Together": 0,
+    "aliveD4": 99.5,
+    "deadByD5": 1.5,
+    "byDay": {
+     "3": 1,
+     "5": 2,
+     "6": 7,
+     "7": 52,
+     "8": 38,
+     "9": 23,
+     "10": 40
+    },
+    "dayEvent": {
+     "3": 1,
+     "5": 2,
+     "6": 7,
+     "7": 52,
+     "8": 33,
+     "9": 18,
+     "10": 19
+    },
+    "byRoot": {
+     "d10_hold": 12,
+     "dawn_strike": 42,
+     "dawn_mob": 27,
+     "called_up": 58,
+     "d9_inspection": 2,
+     "d10_grab": 6,
+     "d1_night_storage": 3,
+     "d9_inspection_b": 3,
+     "starve_you": 7,
+     "night:steal_meds_again": 3
+    },
+    "topCause": {
+     "k": "called_up",
+     "share": 30.1
+    },
+    "topRoot": {
+     "k": "called_up",
+     "share": 35.6
+    },
+    "karma": 10.08,
+    "neglect": 2.32,
+    "neglectRows": 7.43,
+    "home9": 2.9,
+    "home9N": 98,
+    "res7": 5.49,
+    "res7N": 190,
+    "daysLived": 8.49,
+    "crisis": {
+     "d5_flood": {
+      "reached": 197,
+      "costOpen": 197,
+      "rate": 100
+     },
+     "d2_shutter_arm": {
+      "reached": 75,
+      "costOpen": 4,
+      "rate": 5.3
+     }
+    },
+    "swappedDeaths": 147,
+    "survN": 37,
+    "ropeRolls": 3.68,
+    "ropeClose": 2.94,
+    "ropeCloseSurv": 5,
+    "ropeClose2": 97.3,
+    "ropeFeltRolls": 2.86,
+    "ropeFelt": 2.18,
+    "ropeFeltSurv": 4,
+    "ropeFelt2": 83.8,
+    "ropeFeltShare": 80,
+    "deathRolls": 3.96,
+    "closeCalls": 3.14,
+    "closeCallsSurv": 5.32,
+    "blindMet": 0.28,
+    "blindDeaths": 18,
+    "ropeDeaths": 147,
+    "noSafeDeaths": 163,
+    "discReal": 52.3,
+    "pubNights": 6.3,
+    "privNights": 15.55
+   }
+  }
+ ],
+ "a4Blocks": [
+  1
+ ],
+ "a4ByBlock": [
+  {
+   "selfish_nb": {
+    "n": 200,
+    "deathRate": 81.5,
+    "warnedRate": 100,
+    "warnTextRate": 100,
+    "unwarned": 0,
+    "deaths": 163,
+    "starveDeaths": 0,
+    "byCause": {
+     "d10_hold": 10,
+     "dawn_strike": 42,
+     "fever_night": 10,
+     "called_up": 49,
+     "d10_walk_weak": 21,
+     "d10_grab": 6,
+     "dawn_mob": 25
+    },
+    "allDead": 7,
+    "nights": 21.85,
+    "malice": 12.35,
+    "hymn": 3.67,
+    "discovery": 66.1,
+    "unknownOk": 100,
+    "hymnDiscovery": 92.8,
+    "explicit": 10.69,
+    "decisions": 20.69,
+    "blank": 63.8,
+    "identity": {
+     "passenger": 99.5,
+     "counting_child": 0.5
+    },
+    "identityNP": {
+     "passenger": 99.5,
+     "counting_child": 0.5
+    },
+    "prologueDeaths": 0,
+    "days": 8.49,
+    "trips": 6.64,
+    "train": 0,
+    "survived": 18.5,
+    "clock": 13.84,
+    "starveShare": 0,
+    "forced": 0,
+    "forcedRate": 0,
+    "forcedTraced": 0,
+    "byForced": {},
+    "deadlyPick": 0,
+    "hunger": 4.7,
+    "d3Reached": 99.5,
+    "d3Together": 0,
+    "aliveD4": 99.5,
+    "deadByD5": 1.5,
+    "byDay": {
+     "3": 1,
+     "5": 2,
+     "6": 7,
+     "7": 52,
+     "8": 38,
+     "9": 23,
+     "10": 40
+    },
+    "dayEvent": {
+     "3": 1,
+     "5": 2,
+     "6": 7,
+     "7": 52,
+     "8": 33,
+     "9": 18,
+     "10": 19
+    },
+    "byRoot": {
+     "d10_hold": 12,
+     "dawn_strike": 42,
+     "dawn_mob": 27,
+     "called_up": 58,
+     "d9_inspection": 2,
+     "d10_grab": 6,
+     "d1_night_storage": 3,
+     "d9_inspection_b": 3,
+     "starve_you": 7,
+     "night:steal_meds_again": 3
+    },
+    "topCause": {
+     "k": "called_up",
+     "share": 30.1
+    },
+    "topRoot": {
+     "k": "called_up",
+     "share": 35.6
+    },
+    "karma": 10.08,
+    "neglect": 2.32,
+    "neglectRows": 7.43,
+    "home9": 2.9,
+    "home9N": 98,
+    "res7": 5.49,
+    "res7N": 190,
+    "daysLived": 8.49,
+    "crisis": {
+     "d5_flood": {
+      "reached": 197,
+      "costOpen": 197,
+      "rate": 100
+     },
+     "d2_shutter_arm": {
+      "reached": 75,
+      "costOpen": 4,
+      "rate": 5.3
+     }
+    },
+    "swappedDeaths": 147,
+    "survN": 37,
+    "ropeRolls": 3.68,
+    "ropeClose": 2.94,
+    "ropeCloseSurv": 5,
+    "ropeClose2": 97.3,
+    "ropeFeltRolls": 2.86,
+    "ropeFelt": 2.18,
+    "ropeFeltSurv": 4,
+    "ropeFelt2": 83.8,
+    "ropeFeltShare": 80,
+    "deathRolls": 3.96,
+    "closeCalls": 3.14,
+    "closeCallsSurv": 5.32,
+    "blindMet": 0.28,
+    "blindDeaths": 18,
+    "ropeDeaths": 147,
+    "noSafeDeaths": 163,
+    "discReal": 52.3,
+    "pubNights": 6.3,
+    "privNights": 15.55
+   }
+  }
+ ]
+}

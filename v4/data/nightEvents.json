@@ -318,6 +318,17 @@
           "id": "hunger",
           "n": 4,
           "who": "actor"
+        },
+        {
+          "verb": "number",
+          "id": "grudge",
+          "n": 4,
+          "who": "actor"
+        },
+        {
+          "verb": "flag",
+          "id": "unseen_grudge_actor",
+          "set": 1
         }
       ],
       "trace": {
@@ -1420,7 +1431,7 @@
   {
     "id": "grudge_strike_you",
     "role": "kill",
-    "actor": "grudge>=5 & self!=dongha",
+    "actor": "(grudge>=5 & self!=dongha) & !flag:unseen_grudge_actor",
     "target": "you",
     "cond": "!flag:dawn_strike & !flag:dawn_dongha & !flag:dawn_dongha2",
     "weight": 7,
@@ -1708,7 +1719,8 @@
     "weight": 10,
     "kind": "malice",
     "trace": {
-      "crate_food": "open"
+      "crate_food": "open",
+      "bowl_you": "empty"
     },
     "rumor": {
       "witness": "",
@@ -1719,6 +1731,12 @@
         "verb": "number",
         "id": "food",
         "n": -2
+      },
+      {
+        "verb": "number",
+        "id": "hunger",
+        "who": "you",
+        "n": 3
       }
     ],
     "oncePerRun": 0,
@@ -1741,7 +1759,8 @@
     "weight": 10,
     "kind": "malice",
     "trace": {
-      "crate_food": "open"
+      "crate_food": "open",
+      "bandage_you": "rot"
     },
     "rumor": {
       "witness": "",
@@ -1752,6 +1771,11 @@
         "verb": "number",
         "id": "meds",
         "n": -1
+      },
+      {
+        "verb": "injure",
+        "who": "you",
+        "n": 1
       }
     ],
     "oncePerRun": 0,
@@ -1771,7 +1795,7 @@
     "actor": "flag:unseen_grudge_actor & grudge>=2 & self!=dongha",
     "target": "you",
     "cond": "day>=3 & !flag:dawn_strike & !flag:dawn_dongha & !flag:dawn_dongha2",
-    "weight": 10,
+    "weight": 7,
     "kind": "malice",
     "trace": {
       "blanket_actor": "rolled",
@@ -1791,10 +1815,16 @@
         "verb": "flag",
         "id": "unseen_grudge_actor",
         "set": 0
+      },
+      {
+        "verb": "flag",
+        "id": "strike_blind",
+        "set": 1
       }
     ],
     "oncePerRun": 0,
-    "public": 1
+    "public": 1,
+    "side": 1
   },
   {
     "id": "ascend_unseen",

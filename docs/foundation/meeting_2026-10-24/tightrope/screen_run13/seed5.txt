@@ -1,0 +1,7 @@
+manifest 215
+    13_run seed 5: D4 you_gone
+FAIL 13_run (console errors 0) - 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_
+    [ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D1 night d1_night_storage \u2192 \ubd88\uac00\uc5d0 \uc788\ub294\ub2e4 / D2 trace d2_key \u2192 \ubc1b\ub294\ub2e4 / D2 trace d2_soonrye_shutter \u2192 \ubcf8\ub2e4 / D2 trace d2_rat_blanket \u2192 \ubcf8\ub2e4
+    [ds4 missing] @dawn_strike
+shots 0/1 ok · console errors 0 · FAIL 13_run
+exit=1

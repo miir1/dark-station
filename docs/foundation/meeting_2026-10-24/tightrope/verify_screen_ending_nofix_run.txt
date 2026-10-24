@@ -1,0 +1,23 @@
+manifest 215
+FAIL 06_ending (console errors 0) - 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] ending end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl → 그냥 지나간다 / D6 day passage
+    [ds4 auto] ending end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D6 day passage_alone \u2192 \ub450\uace0 \uac77\uae30\ub85c \ud55c\ub2e4 / D6 day patrol_pact_b \u2192 \uac70\uc808\ud55c\ub2e4 / D6 night 
+    [ds4 missing] @dawn_strike @d6_shutter_b wound_critical@wound_critical
+shots 0/1 ok · console errors 0 · FAIL 06_ending
+exit 1
+manifest 215
+OK   06_ending (console errors 0)
+    [ds4 auto] ending hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | [\uafc8 D6] / [D7 food2 water5 hunger2] / D7 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D7 evening d7_broadcast \u2192 \uc218\ucca9\uc5d0 \ubc1b\uc544 \uc801\ub294\ub2e4 
+    [ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike @d6_shutter_b @d10_grab
+shots 1/1 ok · console errors 0
+manifest 215
+FAIL 06_ending (console errors 0) - 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] ending end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace hymn
+    [ds4 auto] ending end reached=0 D6 ended map=station open=- ended=you_gone you=dead food=1 | D4 trace d3_guess \u2192 \ubd88\ube5b \ub54c\ubb38\uc778 \uac83 \uac19\ub2e4 / D4 trace hymn_fire_kept \u2192 \ubd88\uc744 \ucb14\ub2e4 / [D4 food0 water5 hunger4] / D4 day trial_d4_gicheol \u2192 \ubbff\ub2
+    [ds4 missing] trip_a2_bones@trip_a2_bones @dawn_strike
+shots 0/1 ok · console errors 0 · FAIL 06_ending
+exit 1
+manifest 215
+OK   06_ending (console errors 0)
+    [ds4 auto] ending hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D8 night starve_you \u2192 \ub0a8\uc758 \uadf8\ub987\uc744 \ube8f\ub294\ub2e4 / D8 night fever_night \u2192 \uc369\uc740 \ub370\ub97c \ub3c4\ub824\ub0b8\ub2e4 / [\uafc8 D8] / D9 trace d9_stair
+    [ds4 missing] @dawn_strike trip_a2_bones@trip_a2_bones @d6_shutter_b wound_critical@wound_critical @dawn_mob @d10_hold @d10_grab
+shots 1/1 ok · console errors 0
+exit=0

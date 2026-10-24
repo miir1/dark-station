@@ -212,6 +212,30 @@
     }
     if (c.cost && isObj(c.cost)) for (const k of Object.keys(c.cost)) if (!ctx.numbers[k]) e2(`cost.${k}: numbers에 없음`);
   }
+  // 줄타기 칸 rope 검사 (10-24 tightrope R0) — c = 기본 선택지
+  function checkRope(c, ctx, e2) {
+    const r = c.rope;
+    if (!isObj(r)) { e2(`rope: {${ROPE_KEYS.join(', ')}} 꼴`); return; }
+    for (const k of Object.keys(r)) if (!ROPE_KEYS.includes(k)) e2(`rope.${k}: rope 칸은 ${ROPE_KEYS.join('·')}`);
+    if (!ROPE_KINDS.includes(r.kind)) e2(`rope.kind: ${ROPE_KINDS.join('/')} 중 하나 ("${r.kind}")`);
+    if (r.from != null && (!isInt(r.from) || r.from < 0)) e2(`rope.from: 0 이상 정수 — 카르마 문턱 ("${r.from}")`);
+    if (r.blind != null && ![0, 1, true, false].includes(r.blind) && !(typeof r.blind === 'string' && ID.test(r.blind))) e2(`rope.blind: 0/1 또는 깃발 id ("${r.blind}")`);
+    if (r.blind && r.kind === 'fight') e2('rope.blind: 눈먼 새벽은 pay·endure·point 만 (fight 는 원래 판정을 깎는다)');
+    if (r.skill != null && !['obs', 'str', 'tech', 'talk'].includes(r.skill)) e2('rope.skill: obs/str/tech/talk');
+    if (r.fail != null) {
+      if (!isObj(r.fail)) e2(`rope.fail: {${ROPE_FAIL_KEYS.join(', ')}} 꼴`);
+      else {
+        const f = r.fail;
+        for (const k of Object.keys(f)) if (!ROPE_FAIL_KEYS.includes(k)) e2(`rope.fail.${k}: rope.fail 칸은 ${ROPE_FAIL_KEYS.join('·')}`);
+        if (f.text != null && typeof f.text !== 'string') e2('rope.fail.text: 글');
+        if (f.image != null && typeof f.image !== 'string') e2('rope.fail.image: 그림 id 글');
+        if (f.how != null && !ROPE_HOW.includes(f.how)) e2(`rope.fail.how: ${ROPE_HOW.join('/')} 중 하나 ("${f.how}")`);
+        if (f.effects != null) { checkEffects(f.effects, ctx, (m) => e2('rope.fail.' + m)); if (isObj(f.effects) && f.effects.kill) e2('rope.fail.effects: kill 은 쓰지 않는다 — 줄타기 실패는 늘 당신을 죽인다 (어떻게 = how 칸)'); }
+        if (f.ledger != null) checkLedger(f.ledger, ctx, (m) => e2('rope.fail.' + m));
+      }
+    }
+    if (r.kind === 'fight') variantsOf(c).forEach((x, j) => { if (!isObj(x.check)) e2(`rope.kind fight: 판정(check)이 있는 선택지에만 — ${j ? `swap[${j - 1}]` : '기본 선택지'}에 check 가 없다`); });
+  }
   // 사건·결과 대상: 사람 id · 대상 낱말 · most:<사람 수치>
   function validTarget(v, ctx) {
     if (typeof v !== 'string') return false;
@@ -250,8 +274,141 @@
   }
   const needsTarget = (c) => !!(isObj(c) && ((isObj(c.req) && (c.req.target === 1 || c.req.target === true)) || usesTarget(c)));
 
+  // ── 줄타기 rope (10-24 tightrope 설계 §1 R0) — 카르마가 쌓인 판에서 위험 0 출구를 '판정'으로 바꾼다. engine.js effChoice 가 swap 을 고른 뒤 같은 함수로 얹는다 ──
+  //  선택지 칸 rope = { kind, from, blind, skill, fail } (기본 선택지에만 — swap 변형에는 못 쓴다. swap 이 고른 모습 위에 얹힌다)
+  //   kind  pay(갚는다, talk) · endure(버틴다, str) · point(가리킨다, talk) · fight(싸운다 — 원래 판정의 base 를 깎는다)
+  //   from  카르마 문턱(정수, 없으면 0 = 구간만 본다). 예 starve_you 는 8 (K2 부터)
+  //   blind 1(깃발 strike_blind) 또는 깃발 id — 그 깃발이 서 있으면 카르마와 상관없이 눈먼 새벽 % (pay·endure·point 만)
+  //   skill 판정 기술(없으면 kind 기본) · fail { text, how(dead|ascended|ashed, 기본 dead), image, effects(kill 은 안 쓴다 — 늘 당신을 죽인다), ledger }
+  //  구간 = 그 순간의 karma: K1 ≥ rope_k1(5) · K2 ≥ rope_k2(8) · K3 ≥ rope_k3(12) · K4 ≥ rope_k4(16). 구간 0 이거나 karma < from 이면(눈먼 새벽도 아니면) 그대로.
+  //  base: pay·endure·point = numbers rope_<kind>_<구간> (눈먼 새벽 rope_blind_<kind>, 둘 다면 낮은 쪽 · 원래 판정이면 min(원래, 표)) · fight = 원래 − rope_fight_<구간>.
+  //        어느 쪽이든 rope_floor(30) 아래로는 안 간다 (화면 % = base + 기술 × 5, 기술은 0 밑으로 안 내려간다 = 바닥)
+  //  판정 없던 선택지: 성공 = 원래 out (비용은 그대로 먼저 낸다) · 실패 = 당신 죽음 + fail 글. 판정이던 선택지: 실패가 당신을 안 죽였으면 죽음을 더한다(글은 fail.text, 없으면 원래 글).
+  //  경고 = 원래 경고 + 꼬리(대사표 rope_tail_<kind>, 없으면 아래 기본 글 — '끝이다'가 꼭 든다). 원래 경고에 이미 '끝이다'가 있으면 그대로. fight 는 원래 경고 그대로.
+  //  손잡이(numbers 세계 수치, owner world · visible never)가 표에 없으면 아래 기본값 [제안] 을 쓴다 — 표 한 곳에서 돌린다.
+  const ROPE_KINDS = ['pay', 'endure', 'point', 'fight'];
+  const ROPE_KEYS = ['kind', 'from', 'blind', 'skill', 'fail'];
+  const ROPE_FAIL_KEYS = ['text', 'how', 'image', 'effects', 'ledger'];
+  const ROPE_HOW = ['dead', 'ascended', 'ashed'];
+  const ROPE_SKILL = { pay: 'talk', endure: 'str', point: 'talk' };
+  const ROPE_BLIND_FLAG = 'strike_blind';
+  const ROPE_BANDS = 4;
+  const ROPE_DEFAULTS = {
+    rope_k1: 5, rope_k2: 8, rope_k3: 12, rope_k4: 16,
+    rope_pay_1: 92, rope_pay_2: 90, rope_pay_3: 85, rope_pay_4: 78,
+    rope_endure_1: 88, rope_endure_2: 85, rope_endure_3: 78, rope_endure_4: 70,
+    rope_point_1: 82, rope_point_2: 70, rope_point_3: 55, rope_point_4: 40,
+    rope_fight_1: 0, rope_fight_2: 0, rope_fight_3: 5, rope_fight_4: 10,
+    rope_floor: 30, rope_blind_pay: 85, rope_blind_endure: 75, rope_blind_point: 65,
+  };
+  const ROPE_KNOB = /^rope_(k[1-4]|(pay|endure|point|fight)_[1-4]|floor|blind_(pay|endure|point))$/;
+  const ROPE_TAIL = { pay: '안 받으면 끝이다', endure: '못 버티면 끝이다', point: '아무도 안 돌아서면 끝이다' };     // 대사표 rope_tail_<kind> 가 없을 때
+  const ROPE_FAIL_TEXT = { pay: '받아 들고도 손이 풀리지 않았다.', endure: '버티던 몸이 먼저 꺾였다.', point: '아무도 손끝을 따라 돌아보지 않았다.' };   // rope.fail.text 가 없을 때
+  // get(id) = 세계 수치 값(없으면 undefined) → 손잡이 값
+  const ropeKnob = (get, id) => { const v = get ? get(id) : undefined; return Number.isFinite(v) ? v : ROPE_DEFAULTS[id]; };
+  const ropeBlindFlag = (spec) => (isObj(spec) && typeof spec.blind === 'string' && ID.test(spec.blind) ? spec.blind : ROPE_BLIND_FLAG);
+  function ropeBand(karma, get) { let b = 0; for (let i = 1; i <= ROPE_BANDS; i++) if ((karma || 0) >= ropeKnob(get, 'rope_k' + i)) b = i; return b; }
+  // 지금 줄타기가 걸리나: { band(걸린 구간, 0 = 구간 아님), bandOn, blind(눈먼 새벽), active }
+  function ropeState(spec, karma, flags, get) {
+    const k = karma || 0;
+    const band = ropeBand(k, get);
+    const bandOn = band >= 1 && k >= (isInt(spec.from) ? spec.from : 0);
+    const blind = !!(spec.blind && spec.kind !== 'fight' && flags && flags[ropeBlindFlag(spec)] === true);
+    return { band: bandOn ? band : 0, bandOn, blind, active: bandOn || blind };
+  }
+  // 줄타기 판정 { skill, base(바닥 적용), pct(표 값 — fight 는 null), floor } · 걸리지 않거나 fight 인데 판정이 없으면 null. form = swap 을 고른 뒤의 선택지
+  function ropeCheck(spec, form, st, get) {
+    if (!st || !st.active || !isObj(spec) || !ROPE_KINDS.includes(spec.kind)) return null;
+    const floor = ropeKnob(get, 'rope_floor');
+    const has = isObj(form.check) && isInt(form.check.base);
+    if (spec.kind === 'fight') {
+      if (!has || !st.bandOn) return null;
+      const pen = ropeKnob(get, `rope_fight_${st.band}`);
+      return { skill: form.check.skill, base: Math.max(floor, Math.min(form.check.base, form.check.base - pen)), pct: null, floor };
+    }
+    const vals = [];
+    if (st.bandOn) vals.push(ropeKnob(get, `rope_${spec.kind}_${st.band}`));
+    if (st.blind) vals.push(ropeKnob(get, `rope_blind_${spec.kind}`));
+    if (!vals.length) return null;
+    const pct = Math.min(...vals);
+    return { skill: has ? form.check.skill : spec.skill || ROPE_SKILL[spec.kind], base: Math.max(floor, has ? Math.min(form.check.base, pct) : pct), pct, floor };
+  }
+  const outKillsMe = (o) => isObj(o) && isObj(o.effects) && !!o.effects.kill && (Array.isArray(o.effects.kill) ? o.effects.kill : [o.effects.kill]).some((k) => isObj(k) && ME_WHO.includes(k.who || 'you'));
+  // 살 길이 있나(표 검사용 — 실제 % 는 기술에 달렸다): 판정이면 성공이 안 죽이거나 실패가 안 죽인다 · 판정 없으면 결과가 안 죽인다 (engine.js survival 의 표 꼴)
+  const canLive = (x) => (isObj(x.check) ? (!outKillsMe(x.ok) && !(isInt(x.check.base) && x.check.base <= 0)) || (!outKillsMe(x.fail) && !(isInt(x.check.base) && x.check.base >= 100)) : !outKillsMe(x.out));
+  // 실패 결과 effects 합치기: flag·trace 는 칸별로, axis 는 더하고, 그 밖의 같은 키는 목록(전부 적용)
+  function mergeEffects(a, b) {
+    const out = Object.assign({}, isObj(a) ? a : {});
+    for (const [k, v] of Object.entries(isObj(b) ? b : {})) {
+      if (!Object.prototype.hasOwnProperty.call(out, k)) { out[k] = v; continue; }
+      if ((k === 'flag' || k === 'trace') && isObj(out[k]) && isObj(v)) out[k] = Object.assign({}, out[k], v);
+      else if (k === 'axis' && isObj(out[k]) && isObj(v)) { const sum = Object.assign({}, out[k]); for (const [x, n] of Object.entries(v)) sum[x] = (sum[x] || 0) + n; out[k] = sum; }
+      else out[k] = [].concat(out[k], v);
+    }
+    return out;
+  }
+  // 줄타기 실패 결과: orig = 원래 실패(판정이던 선택지) 또는 null(판정 없던 선택지)
+  function ropeFail(orig, spec) {
+    const f = isObj(spec.fail) ? spec.fail : {};
+    const o = { text: typeof f.text === 'string' && f.text ? f.text : isObj(orig) && typeof orig.text === 'string' && orig.text ? orig.text : ROPE_FAIL_TEXT[spec.kind] || '' };
+    const img = typeof f.image === 'string' && f.image ? f.image : isObj(orig) && typeof orig.image === 'string' ? orig.image : '';
+    if (img) o.image = img;
+    const eff = mergeEffects(isObj(orig) ? orig.effects : null, f.effects);
+    const kill = { who: 'you', how: ROPE_HOW.includes(f.how) ? f.how : 'dead' };
+    eff.kill = eff.kill ? [].concat(eff.kill, kill) : kill;
+    o.effects = eff;
+    const led = f.ledger != null && f.ledger !== '' ? f.ledger : isObj(orig) && orig.ledger != null && orig.ledger !== '' ? orig.ledger : null;
+    if (led != null) o.ledger = led;
+    if (isObj(orig) && typeof orig.target === 'string' && orig.target) o.target = orig.target;
+    return o;
+  }
+  // 경고 + 꼬리 (원래 경고에 '끝이다'·꼬리가 이미 있으면 그대로)
+  function ropeWarn(w, tail) {
+    const s = typeof w === 'string' ? w : '';
+    if (s && (/끝이다/.test(s) || (tail && s.includes(tail)))) return s;
+    if (!tail) return s;
+    const b = s.replace(/[.\s]+$/, '');
+    return b ? `${b}. ${tail}` : tail;
+  }
+  // swap 을 고른 뒤의 선택지 form 에 줄타기를 얹은 선택지. rc = ropeCheck 결과(null 이면 그대로), tail = 경고 꼬리 글
+  function applyRope(form, spec, rc, tail) {
+    if (!rc || !isObj(form)) return form;
+    const m = Object.assign({}, form);
+    if (isObj(form.check)) {
+      m.check = { skill: rc.skill, base: rc.base };
+      if (!outKillsMe(form.fail)) m.fail = ropeFail(form.fail, spec);
+    } else {
+      if (!isObj(form.out) || outKillsMe(form.out)) return form;   // 이미 확정 죽음(대답한다 등) — 줄타기로 바꿀 것이 없다
+      m.check = { skill: rc.skill, base: rc.base };
+      m.ok = form.out; delete m.out;
+      m.fail = ropeFail(null, spec);
+    }
+    if (spec.kind !== 'fight') m.warn = ropeWarn(form.warn, tail);
+    return m;
+  }
+  // 표 검사용: 선택지의 모든 줄타기 모습 [{ form, band, blind, pct }] — 변형(swap)마다 × (닿을 수 있는 구간 1~4 · 눈먼 새벽 · 눈먼 새벽 × 구간). get = 세계 수치 첫 값
+  function ropeFormsOf(c, get, tailOf) {
+    const spec = isObj(c) ? c.rope : null;
+    if (!isObj(spec) || !ROPE_KINDS.includes(spec.kind)) return [];
+    const ks = []; for (let i = 1; i <= ROPE_BANDS; i++) ks.push(ropeKnob(get, 'rope_k' + i)); ks.push(Infinity);
+    const from = isInt(spec.from) ? spec.from : 0;
+    const states = [];
+    for (let b = 1; b <= ROPE_BANDS; b++) if (ks[b] > ks[b - 1] && ks[b] > from) states.push({ band: b, bandOn: true, blind: false, active: true });
+    if (spec.blind && spec.kind !== 'fight') { states.push({ band: 0, bandOn: false, blind: true, active: true }); for (const st of states.slice()) if (st.bandOn) states.push(Object.assign({}, st, { blind: true })); }
+    const tail = tailOf ? tailOf(spec.kind) : ROPE_TAIL[spec.kind] || '';
+    const out = [];
+    for (const x of variantsOf(c)) for (const st of states) { const rc = ropeCheck(spec, x, st, get); if (!rc) continue; const form = applyRope(x, spec, rc, spec.kind === 'fight' ? '' : tail); if (form !== x) out.push({ form, band: st.band, blind: st.blind, pct: rc.pct }); }
+    return out;
+  }
+  // 줄타기처럼 쓴 swap 변형(R2): when 에 karma·flag:strike_blind 가 들고, 살 길이 있는 판정 — 1번 자리 '당신이 죽을 수 있다'에서 뺀다
+  function ropeLikeSwap(v, x) {
+    if (!isObj(v) || typeof v.when !== 'string' || !isObj(x.check) || !canLive(x)) return false;
+    let ns = []; try { ns = C.names(C.parse(v.when)); } catch (e) { return false; }
+    return ns.some((n) => n === 'karma' || n === 'flag:' + ROPE_BLIND_FLAG);
+  }
+
   // 검사 = { errors, warnings }. errors 가 하나라도 있으면 표를 읽지 않는다(load 가 던진다). warnings 는 읽되 알린다.
-  //   warnings[].kind: firstDeath(1번 자리 죽음) · reasonWord(이유 낱말) · owner(주인 없는 물건이 남의 머리맡 묶음에) · holdsRefill(다시 차는 수납, P1-11) · noExit(강제 사망 길, E4 10-24)
+  //   warnings[].kind: firstDeath(1번 자리 죽음) · reasonWord(이유 낱말) · owner(주인 없는 물건이 남의 머리맡 묶음에) · holdsRefill(다시 차는 수납, P1-11) · noExit(확정 사망 길, E4 10-24 · R1) · ropeFail(줄타기 실패 글 없음, 10-24 tightrope)
   function validate(tables) { return check(tables).errors; }
   function warnings(tables) { return check(tables).warnings; }
   function check(tables) {
@@ -302,6 +459,28 @@
     const phaseIds = tables.phases.map((p) => p.id);
     const orders = tables.phases.map((p) => p.order);
     if (new Set(orders).size !== orders.length) push('phases', -1, '', 'order 중복');
+    // (10-24 tightrope) 줄타기 손잡이: numbers 의 rope_* 세계 수치 첫 값(없으면 기본값) · 경고 꼬리: 대사표 rope_tail_<kind>(없으면 기본 글)
+    const knobGet = (id) => (ctx.numbers[id] && ctx.numbers[id].owner === 'world' && isInt(ctx.numbers[id].start) ? ctx.numbers[id].start : undefined);
+    const tailOf = (kind) => (kind === 'fight' ? '' : ctx.lines['rope_tail_' + kind] && typeof ctx.lines['rope_tail_' + kind].text === 'string' && ctx.lines['rope_tail_' + kind].text ? ctx.lines['rope_tail_' + kind].text : ROPE_TAIL[kind] || '');
+    const ropeFloorV = ropeKnob(knobGet, 'rope_floor');
+    const numIdx = (id) => tables.numbers.findIndex((n) => n.id === id);
+    tables.numbers.forEach((n, i) => {
+      if (!ROPE_KNOB.test(n.id)) return;
+      const err = (m) => push('numbers', i, n.id, m);
+      if (n.owner !== 'world') err('rope_*: 줄타기 손잡이는 owner world');
+      if (n.visible !== 'never') err('rope_*: 줄타기 손잡이는 visible never — 화면에 카르마 쪽 숫자를 보이지 않는다');
+      if (/^rope_(pay|endure|point|blind)_/.test(n.id) && isInt(n.start) && (n.start < 0 || n.start > 100)) err(`rope_*: 판정 % 는 0~100 (${n.start})`);
+    });
+    // 바닥: pay·endure·point 의 구간 % 와 눈먼 새벽 % 는 rope_floor 이상 (fight 는 엔진이 바닥에서 멈춘다). 값이 표에 없으면(기본값) 바닥 행이 틀린 것
+    for (const id of Object.keys(ROPE_DEFAULTS)) {
+      if (!/^rope_(pay|endure|point)_\d$|^rope_blind_/.test(id)) continue;
+      const v = ropeKnob(knobGet, id);
+      if (v < ropeFloorV) { const at = numIdx(id) >= 0 ? numIdx(id) : numIdx('rope_floor'); push('numbers', at, at >= 0 ? tables.numbers[at].id : id, `ropeFloor — ${id} ${v}% < 바닥 rope_floor ${ropeFloorV}% (당신을 죽이는 판정은 바닥 아래로 내려가지 않는다)`); }
+    }
+    for (let k = 2; k <= ROPE_BANDS; k++) {
+      const lo = ropeKnob(knobGet, 'rope_k' + (k - 1)), hi = ropeKnob(knobGet, 'rope_k' + k);
+      if (hi < lo) { const at = numIdx('rope_k' + k) >= 0 ? numIdx('rope_k' + k) : numIdx('rope_k' + (k - 1)); push('numbers', at, at >= 0 ? tables.numbers[at].id : 'rope_k' + k, `rope_k${k} ${hi} < rope_k${k - 1} ${lo} — 카르마 구간 문턱은 오름차순`); }
+    }
     tables.events.forEach((ev, i) => {
       const err = (m) => push('events', i, ev.id, m);
       let free = 0;
@@ -323,6 +502,10 @@
             checkChoiceBody(mergeSwap(c, v), ctx, e3);
           });
         }
+        // (10-24 tightrope R0) 줄타기 칸 rope — 기본 선택지에만
+        if (c.rope !== undefined) checkRope(c, ctx, e2);
+        // (R3) 바닥 ropeFloor: 당신을 죽이는 판정(변형 포함)의 base < rope_floor(없으면 30) — 오류. 줄타기가 깎은 값은 엔진이 바닥에서 멈춘다(손잡이 값은 numbers 검사)
+        variantsOf(c).forEach((x, j) => { if (isObj(x.check) && isInt(x.check.base) && (outKillsMe(x.fail) || outKillsMe(x.ok)) && x.check.base < ropeFloorV) e2(`${j ? `swap[${j - 1}]: ` : ''}ropeFloor — 당신을 죽이는 판정 base ${x.check.base} < 바닥 ${ropeFloorV} (numbers rope_floor, 없으면 ${ROPE_DEFAULTS.rope_floor}) — 확정 죽음이 아니면 살 확률이 바닥 아래로 내려가지 않는다`); });
       });
       if (!free) err('항상 고를 수 있는 선택지(cost·req 없음)가 하나도 없음 — 막다른 길');
       if (ev.target != null && !validTarget(ev.target, ctx)) err(`target: 사람 id 또는 ${EVENT_TARGETS.join('·')}·most:<사람 수치> ("${ev.target}")`);
@@ -334,7 +517,7 @@
     // 사건·밤 사건 결과가 세우는 깃발 전부 (metFlag 가 영영 안 서는 오타를 잡는다)
     const setFlags = new Set();
     const addFlags = (eff) => { if (isObj(eff) && isObj(eff.flag)) for (const [f, on] of Object.entries(eff.flag)) if (on) setFlags.add(f); };
-    tables.events.forEach((ev) => (Array.isArray(ev.choices) ? ev.choices : []).forEach((c) => { if (isObj(c)) for (const x of variantsOf(c)) for (const o of [x.out, x.ok, x.fail]) if (isObj(o)) addFlags(o.effects); }));
+    tables.events.forEach((ev) => (Array.isArray(ev.choices) ? ev.choices : []).forEach((c) => { if (isObj(c)) { for (const x of variantsOf(c)) for (const o of [x.out, x.ok, x.fail]) if (isObj(o)) addFlags(o.effects); if (isObj(c.rope) && isObj(c.rope.fail)) addFlags(c.rope.fail.effects); } }));
     tables.nightEvents.forEach((n) => { addFlags(n.effects); for (const key of ['missed', 'caught']) if (isObj(n[key])) addFlags(n[key].effects); });
     tables.people.forEach((p, i) => {
       const err = (m) => push('people', i, p.id, m);
@@ -423,31 +606,43 @@
     // 3) 경고 (10-24 P0-E2) — 표는 읽히지만 고칠 것
     //  firstDeath: 선택지 [0](Space 를 누른 채 지나가면 골리는 자리, P0-S7)에 금기가 있거나, 당신이 죽을 수 있거나,
     //              다른 사람이 죽을 수 있는데 뒤에 아무도 안 죽는 선택지가 있다. (모든 선택지가 같은 사람을 죽이는 장면 — d8_pillow 등 — 은 자리를 바꿔도 같아 빼고 센다)
+    //  (10-24 tightrope R2) 줄타기 판정(살 확률 > 0)은 '당신이 죽을 수 있다'에서 뺀다 — rope 칸(줄타기 모습은 변형 목록에 안 든다) · 줄타기처럼 쓴 swap 변형
+    //              (when 에 karma·flag:strike_blind 가 든 살 길 있는 판정, ropeLikeSwap). 줄타기 구간에서 1번 = 갚는다(가장 높은 %). 금기·확정 죽음은 그대로 경고
     tables.events.forEach((ev, i) => {
       if (!Array.isArray(ev.choices) || ev.choices.length < 2 || !isObj(ev.choices[0])) return;
-      const c0 = ev.choices[0], v0 = variantsOf(c0), k0 = [].concat(...v0.map(killWhos));   // swap 변형이 죽일 수 있어도 1번 자리 죽음이다
+      const c0 = ev.choices[0], v0 = variantsOf(c0), sw0 = swapsOf(c0);
+      const k0 = [].concat(...v0.filter((x, j) => !(j > 0 && ropeLikeSwap(sw0[j - 1], x))).map(killWhos));   // swap 변형이 죽일 수 있어도 1번 자리 죽음이다 (줄타기 판정은 뺀다)
       const tab0 = v0.find((x) => x.taboo);
       const why = tab0 ? `금기("${tab0.taboo}")가 있다`
         : k0.some((w) => ME_WHO.includes(w)) ? '당신이 죽을 수 있다'
           : k0.length && ev.choices.slice(1).some((c) => isObj(c) && !killWhos(c).length) ? `${k0.join('·')} 이(가) 죽을 수 있는데 아무도 안 죽는 선택지가 뒤에 있다` : '';
       if (why) warn('events', i, ev.id, 'firstDeath', `choices[0] "${c0.label}": 1번 자리에 ${why} — 죽는 선택·금기는 1번에 두지 않는다`);
     });
-    //  noExit (E4, 10-24 A1): 당신을 죽일 수 있는 선택(swap 변형 포함)이 있는 사건에, 비용·req 없고 당신을 죽이지 않는(변형까지) 선택지가 하나도 없다 — 강제 사망 길.
+    //  noExit (E4, 10-24 A1 · **10-24 tightrope R1 바꿈**): 당신을 죽일 수 있는 선택(swap 변형·줄타기 모습 포함)이 있는 사건에, 비용·req 없고 **살 확률 > 0** 인
+    //          (변형·줄타기 모습까지 — 판정이면 성공이나 실패 한쪽이 안 죽인다) 선택지가 하나도 없다 — 확정 사망 길.
     //          금기도 출구로 센다. targetOptional 사건에서 대상이 필요한 선택지는 대상이 없으면 잠기므로 출구가 아니다.
+    //          (전에는 '당신을 죽일 수 없는' 선택지만 출구로 셌다 — 줄타기 판은 일부러 위험 0 출구가 없다. 03 '어느 선택지에도 살 확률이 있다' = 살 확률 > 0 인 길이 늘 하나 이상)
     //          경고로 둔다(브라우저 로더가 틀린 행을 빼고 읽지 않게) — 지금 표에 0건인지는 테스트(karma.test.js)가 막는다.
     const killsMe = (c) => killWhos(c).some((w) => ME_WHO.includes(w));
+    const formsAll = (c) => variantsOf(c).concat(ropeFormsOf(c, knobGet, tailOf).map((f) => f.form));
     tables.events.forEach((ev, i) => {
       if (!Array.isArray(ev.choices)) return;
       const cs = ev.choices.filter(isObj);
-      if (!cs.some((c) => variantsOf(c).some(killsMe))) return;
-      const exit = cs.some((c) => variantsOf(c).every((x) => !x.cost && !x.req && !killsMe(x)) && !(ev.targetOptional && variantsOf(c).some(needsTarget)));
-      if (!exit) warn('events', i, ev.id, 'noExit', '당신이 죽을 수 있는 사건인데 늘 고를 수 있고(비용·req 없음) 당신을 죽이지 않는 선택지가 없다 — 강제 사망 길. 죽지 않는 몸값(버틴다 등)·금기 출구를 하나 둔다');
+      if (!cs.some((c) => formsAll(c).some(killsMe))) return;
+      const exit = cs.some((c) => { const fs = formsAll(c); return fs.every((x) => !x.cost && !x.req && canLive(x)) && !(ev.targetOptional && fs.some(needsTarget)); });
+      if (!exit) warn('events', i, ev.id, 'noExit', '당신이 죽을 수 있는 사건인데 늘 고를 수 있고(비용·req 없음) 살 확률이 있는(판정이면 한쪽은 안 죽는) 선택지가 없다 — 확정 사망 길. 몸값(버틴다 등)·판정·금기 출구를 하나 둔다');
     });
+    //  ropeFail (10-24 tightrope): 판정 없던 모습에 줄타기(pay·endure·point)를 얹는데 실패 글(rope.fail.text)이 없다 — 엔진 기본 글이 나간다. 사건마다 새 글을 쓴다(40자 1문장 ≤ 2개)
+    tables.events.forEach((ev, i) => (Array.isArray(ev.choices) ? ev.choices : []).forEach((c, k) => {
+      if (!isObj(c) || !isObj(c.rope) || c.rope.kind === 'fight' || !ROPE_KINDS.includes(c.rope.kind)) return;
+      if (isObj(c.rope.fail) && typeof c.rope.fail.text === 'string' && c.rope.fail.text) return;
+      if (variantsOf(c).some((x) => !isObj(x.check) && isObj(x.out) && !outKillsMe(x.out))) warn('events', i, ev.id, 'ropeFail', `choices[${k}] "${c.label}": rope.fail.text 가 없다 — 실패하면 기본 글("${ROPE_FAIL_TEXT[c.rope.kind]}")이 나간다`);
+    }));
     //  reasonWord: 화면 글에 '때문에·왜냐하면' (문장 규칙 — 이유는 말하지 않는다)
     const reason = (table, i, id, col, v) => { if (typeof v === 'string' && REASON_WORDS.test(v)) warn(table, i, id, 'reasonWord', `${col}: '${REASON_WORDS.exec(v)[0]}' — 이유를 대는 낱말은 쓰지 않는다 ("${v.slice(0, 30)}…")`); };
     tables.events.forEach((ev, i) => {
       reason('events', i, ev.id, 'text', ev.text);
-      (Array.isArray(ev.choices) ? ev.choices : []).forEach((c0, k) => { if (!isObj(c0)) return; variantsOf(c0).forEach((c, j) => { const at = j ? `choices[${k}].swap[${j - 1}]` : `choices[${k}]`; for (const col of ['label', 'warn', 'hint']) reason('events', i, ev.id, `${at}.${col}`, c[col]); if (isObj(c.req)) reason('events', i, ev.id, `${at}.req.why`, c.req.why); for (const r of ['out', 'ok', 'fail']) if (isObj(c[r])) reason('events', i, ev.id, `${at}.${r}.text`, c[r].text); }); });
+      (Array.isArray(ev.choices) ? ev.choices : []).forEach((c0, k) => { if (!isObj(c0)) return; variantsOf(c0).forEach((c, j) => { const at = j ? `choices[${k}].swap[${j - 1}]` : `choices[${k}]`; for (const col of ['label', 'warn', 'hint']) reason('events', i, ev.id, `${at}.${col}`, c[col]); if (isObj(c.req)) reason('events', i, ev.id, `${at}.req.why`, c.req.why); for (const r of ['out', 'ok', 'fail']) if (isObj(c[r])) reason('events', i, ev.id, `${at}.${r}.text`, c[r].text); }); if (isObj(c0.rope) && isObj(c0.rope.fail)) reason('events', i, ev.id, `choices[${k}].rope.fail.text`, c0.rope.fail.text); });
     });
     tables.lines.forEach((l, i) => reason('lines', i, l.id, 'text', l.text));
     tables.nightEvents.forEach((n, i) => reason('nightEvents', i, n.id, 'text', n.text));
@@ -460,7 +655,9 @@
     return done();
   }
 
-  const API = { TABLES: T, IDENTITY_COLS, TABLE_NAMES, EFFECT_VERBS, PERMANENT, EVENT_TARGETS, MOST_TARGET, REQ_KEYS, SWAP_KEYS, WHO_WORDS, LEDGER_STATUS, validate, warnings, check, holdsOpenState, mergeSwap, swapsOf, variantsOf, usesTarget, needsTarget, ownerOf: (tables, id) => ownerOf({ objects: Object.fromEntries((tables.objects || []).map((o) => [o.id, o])), people: Object.fromEntries((tables.people || []).map((p) => [p.id, p])) }, id) };
+  const API = { TABLES: T, IDENTITY_COLS, TABLE_NAMES, EFFECT_VERBS, PERMANENT, EVENT_TARGETS, MOST_TARGET, REQ_KEYS, SWAP_KEYS, WHO_WORDS, LEDGER_STATUS, validate, warnings, check, holdsOpenState, mergeSwap, swapsOf, variantsOf, usesTarget, needsTarget,
+    ROPE_KINDS, ROPE_KEYS, ROPE_FAIL_KEYS, ROPE_HOW, ROPE_SKILL, ROPE_BLIND_FLAG, ROPE_BANDS, ROPE_DEFAULTS, ROPE_KNOB, ROPE_TAIL, ROPE_FAIL_TEXT,
+    ropeKnob, ropeBand, ropeState, ropeCheck, applyRope, ropeWarn, ropeFail, ropeFormsOf, ropeLikeSwap, ropeBlindFlag, canLive, outKillsMe, mergeEffects, ownerOf: (tables, id) => ownerOf({ objects: Object.fromEntries((tables.objects || []).map((o) => [o.id, o])), people: Object.fromEntries((tables.people || []).map((p) => [p.id, p])) }, id) };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else (root.DS4 = root.DS4 || {}).schema = API;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -1,0 +1,28 @@
+[
+ {
+  "shot": "13_run",
+  "ok": false,
+  "why": [
+   "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_"
+  ],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": false,
+    "why": [
+     "지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_"
+    ],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": "5",
+    "end": "D4 you_gone"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food6 water8 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 틈으로 말을 건다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food1 water2 hunger2] / D3 day trip_b1_gate → 물에 들어가 끌어낸다 / D3 night trial_d3_count → 숨을 죽인다 / D4 trace d3_guess → 불빛 때문인 것 같다 / D4 trace dawn_strike → 맞고 버틴다",
+   "[ds4 missing] @dawn_strike"
+  ]
+ }
+]

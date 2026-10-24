@@ -1,0 +1,41 @@
+# 데이터 넣기 — C:\dev\dark_station\v4\data
+- events dawn_strike/그릇 둘을 내민다: rope pay blind + 실패 글
+- events dawn_strike/맞고 버틴다: rope endure blind + 실패 글
+- events dawn_strike/옆 담요를 가리킨다: rope point blind + 실패 글
+- events dawn_mob/가진 것을 다 내놓는다: rope pay + 실패 글
+- events dawn_mob/맞고 버틴다: rope endure + 실패 글
+- events dawn_mob/손가락 하나로 갚는다: rope pay + 실패 글
+- events dawn_mob/다른 사람을 가리킨다: rope point + 실패 글
+- events called_up/불을 키우고 밤을 샌다: rope pay + 실패 글
+- events called_up/손등을 깨물며 버틴다: rope endure + 실패 글
+- events called_up/다른 이름을 댄다: rope point + 실패 글
+- events d10_hold/가진 것을 내준다: rope pay + 실패 글
+- events d10_hold/끌려가며 버틴다: rope endure + 실패 글
+- events d10_hold/손가락을 내준다: rope pay + 실패 글
+- events d10_grab/물병을 돌려준다: rope pay + 실패 글
+- events d10_grab/끌려 넘어진다: rope endure + 실패 글
+- events d2_shutter_arm/옆 사람 팔을 내민다: rope point + 실패 글
+- events d4_spanner/다른 사람이 셌다고 한다: rope point + 실패 글
+- events d5_flood/남의 담요로 물길을 막는다: rope point + 실패 글
+- events fever_night/남의 담요를 끌어온다: rope point + 실패 글
+- events d10_walk_weak/옆 사람 물병을 비운다: rope point + 실패 글
+- events starve_you/창고를 턴다: rope pay from 8 + 실패 글
+- events starve_you/남의 그릇을 뺏는다: rope point from 8 + 실패 글
+- events dawn_strike/밀쳐 낸다: rope fight
+- events dawn_strike/소리친다: rope fight
+- events dawn_strike/축 늘어진다: rope fight
+- events dawn_mob/밀치고 달아난다: rope fight
+- events dawn_mob/무릎을 꿇고 빈다: rope fight
+- events called_up/귀를 막는다: rope fight
+- events d10_hold/뿌리치고 걷는다: rope fight
+- events d10_grab/발을 빼낸다: rope fight
+- events dawn_strike: 죽지 않는 결과 11개에 flag strike_blind 0
+- nightEvents grudge_boils: side 1 · weight 10 → 7 (그 밤 70%, 상한 밖) · + flag strike_blind 1
+- nightEvents grudge_strike_you: actor → (grudge>=5 & self!=dongha) & !flag:unseen_grudge_actor
+- nightEvents steal_food_again: + hunger you +3 · trace + bowl_you empty
+- nightEvents steal_meds_again: + injure you 1 · trace + bandage_you rot
+- nightEvents share_bowl: missed.effects + grudge actor +4 · flag unseen_grudge_actor 1
+- lines rope_tail_pay: "모자라면 끝이다"
+- lines rope_tail_endure: "못 버티면 끝이다"
+- lines rope_tail_point: "안 통하면 끝이다"
+- numbers rope_* 24행: k1=5 k2=8 k3=12 k4=16 pay_1=92 pay_2=90 pay_3=85 pay_4=78 endure_1=88 endure_2=85 endure_3=78 endure_4=70 point_1=82 point_2=70 point_3=55 point_4=40 fight_1=0 fight_2=0 fight_3=5 fight_4=10 floor=30 blind_pay=85 blind_endure=75 blind_point=65
