@@ -1,0 +1,35 @@
+## data_before (P1-11 전 표)
+balanced /docs/foundation/final_2026-10-25/data_before n 1000 identity {"conductor":399,"passenger":299,"platform_one":265,"counting_child":26,"inspector":2,"driver":7,"counted":2} mean axes {"share":1.92,"hand":1.51,"name":-1.09}
+  560 hand-1 trip_a1_pharmacy | 지나친다
+  484 hand+1 d4_shoes_home | 꺼내 묻는다
+  357 hand+1 d5_rail_body | 칼을 빼앗는다
+  345 hand+1 trip_b1_gate | 밧줄을 던진다
+  323 hand-1 d5_lullaby | 놓친다
+  322 hand+1 trial_d4_gicheol | 상자를 센다
+  306 hand+1 d10_walk_weak | 이를 악물고 걷는다
+  298 hand+1 d5_lullaby | 붙잡는다
+  223 hand+1 d6_vent_voice | 동하의 입을 막아 준다
+  207 hand+1 d6_shutter | 열쇠를 내준다
+  186 hand-1 d10_walk_other | 걷는다
+  181 hand+1 d3_bottle | 기철 몫을 깎는다
+  175 hand-1 d6_shutter | 아무것도 하지 않는다
+  175 hand-1 d6_shutter_b | 아무것도 하지 않는다
+  166 hand-1 d9_hoard | 모른 척한다
+
+## 지금 v4/data
+balanced /v4/data n 1000 identity {"passenger":374,"conductor":415,"counting_child":24,"platform_one":179,"driver":5,"counted":3} mean axes {"share":2.44,"hand":1.23,"name":-1.12}
+ 1091 hand-1 trip_a1_pharmacy | 지나친다
+  632 hand+1 trip_b1_gate | 밧줄을 던진다
+  470 hand+1 d4_shoes_home | 꺼내 묻는다
+  380 hand+1 d5_rail_body | 칼을 빼앗는다
+  353 hand-1 d5_lullaby | 놓친다
+  343 hand+1 d5_lullaby | 붙잡는다
+  330 hand+1 d10_walk_weak | 이를 악물고 걷는다
+  329 hand+1 trial_d4_gicheol | 상자를 센다
+  223 hand+1 d6_vent_voice | 동하의 입을 막아 준다
+  197 hand-1 d6_shutter | 아무것도 하지 않는다
+  178 hand-1 d3_bottle | 그대로 둔다
+  175 hand+1 d6_shutter | 열쇠를 내준다
+  164 hand+1 d3_bottle | 기철 몫을 깎는다
+  162 hand-1 d9_hoard | 모른 척한다
+  155 hand-1 d10_walk_other | 걷는다

@@ -1,0 +1,1304 @@
+{
+ "run": "farm",
+ "policy": "survivor",
+ "real": false,
+ "rseed": 901,
+ "finished": "time_limit",
+ "wall_s": 25.7,
+ "keys": 181,
+ "steps": 115,
+ "click_fallback": 0,
+ "fallback_to": [],
+ "days": {
+  "-1": {
+   "lines": 0,
+   "chars": 0,
+   "choices": 0,
+   "steps": 0,
+   "keys": 1,
+   "events": 0,
+   "wall_s": 0.2,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  },
+  "2": {
+   "lines": 13,
+   "chars": 166,
+   "choices": 3,
+   "steps": 12,
+   "keys": 20,
+   "events": 2,
+   "wall_s": 8.1,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  },
+  "3": {
+   "lines": 26,
+   "chars": 291,
+   "choices": 3,
+   "steps": 103,
+   "keys": 45,
+   "events": 1,
+   "wall_s": 16.5,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  }
+ },
+ "deaths": [],
+ "ending": null,
+ "issues": [
+  {
+   "kind": "time_limit",
+   "msg": "25.0초 안에 끝나지 않았다",
+   "t": 25.7
+  }
+ ],
+ "rope": [
+  {
+   "id": "d2_shutter_arm",
+   "day": 2,
+   "karma": 3,
+   "boxCls": "opts",
+   "blind": "",
+   "opts": [
+    {
+     "label": "통조림을 내밀어 바꾼다",
+     "subs": [
+      [
+       "",
+       "식량 −2식량이 준다",
+       ""
+      ],
+      [
+       "cost",
+       "식량 −2",
+       ""
+      ],
+      [
+       "warn",
+       "식량이 준다",
+       ""
+      ]
+     ],
+     "disabled": false
+    },
+    {
+     "label": "옆 사람 팔을 내민다",
+     "subs": [
+      [
+       "",
+       "그 사람이 대신 끌린다",
+       ""
+      ],
+      [
+       "warn",
+       "그 사람이 대신 끌린다",
+       ""
+      ]
+     ],
+     "disabled": false
+    },
+    {
+     "label": "팔을 비틀어 뺀다",
+     "subs": [
+      [
+       "",
+       "85%못 빼면 끝이다",
+       ""
+      ],
+      [
+       "chance",
+       "85%",
+       "2"
+      ],
+      [
+       "warn",
+       "못 빼면 끝이다",
+       "2"
+      ]
+     ],
+     "disabled": false
+    }
+   ],
+   "surv": [
+    1,
+    1,
+    0.85
+   ]
+  }
+ ],
+ "unseen": [],
+ "nocg_events": [
+  {
+   "id": "d3_soonrye_opens",
+   "day": 3,
+   "phase": "trace"
+  }
+ ],
+ "events_shown": [
+  "d2_shutter_arm",
+  "d2_night_count",
+  "d3_soonrye_opens"
+ ],
+ "missing": [],
+ "sound": {
+  "status": {
+   "off": false,
+   "test": true,
+   "eager": true,
+   "broken": "",
+   "gestured": true,
+   "ctx": "running",
+   "on": true,
+   "level": 1,
+   "levelName": "보통",
+   "hidden": false,
+   "deathHush": false,
+   "nodes": 474,
+   "nodeKinds": {
+    "createBuffer": 11,
+    "createGain": 169,
+    "createDynamicsCompressor": 1,
+    "createAnalyser": 1,
+    "createConvolver": 1,
+    "createBiquadFilter": 132,
+    "createOscillator": 27,
+    "createBufferSource": 127,
+    "createStereoPanner": 5
+   },
+   "counts": {
+    "drip": 3,
+    "crackle": 101,
+    "hiss": 0
+   },
+   "master": 0.5,
+   "amb": {
+    "map": "station",
+    "night": false,
+    "hum": 1,
+    "humF": 1,
+    "air": 0.5,
+    "fire": 0.694,
+    "water": 0,
+    "hiss": 0,
+    "amb": 1
+   }
+  },
+  "n": 24,
+  "hist": {
+   "start": 1,
+   "pick": 7,
+   "event": 3,
+   "amb": 2,
+   "hurt": 1,
+   "bubble": 1,
+   "inspect": 9
+  },
+  "last": [
+   {
+    "t": 15787,
+    "id": "bandage_seoha",
+    "st": "clean",
+    "played": true,
+    "nodes": 271,
+    "kind": "inspect"
+   },
+   {
+    "t": 16907,
+    "id": "bottle_soonrye",
+    "st": "full",
+    "played": true,
+    "nodes": 292,
+    "kind": "inspect"
+   },
+   {
+    "t": 17641,
+    "id": "bandage_soonrye",
+    "st": "clean",
+    "played": true,
+    "nodes": 316,
+    "kind": "inspect"
+   },
+   {
+    "t": 18992,
+    "id": "parts_crate",
+    "st": "storage",
+    "played": true,
+    "nodes": 352,
+    "kind": "inspect"
+   },
+   {
+    "t": 20219,
+    "id": "blanket_seoha",
+    "st": "folded",
+    "played": true,
+    "nodes": 360,
+    "kind": "inspect"
+   },
+   {
+    "t": 21262,
+    "id": "bench2",
+    "st": "intact",
+    "played": true,
+    "nodes": 369,
+    "kind": "inspect"
+   },
+   {
+    "t": 25040,
+    "danger": false,
+    "played": true,
+    "nodes": 446,
+    "kind": "pick"
+   },
+   {
+    "t": 26013,
+    "danger": false,
+    "played": true,
+    "nodes": 469,
+    "kind": "pick"
+   }
+  ]
+ },
+ "final_state": {
+  "day": 3,
+  "phase": "trace",
+  "seed": 1,
+  "ended": null,
+  "you": "home",
+  "people": {
+   "soonrye": "home",
+   "seoha": "home",
+   "gicheol": "home",
+   "eunji": "home",
+   "dongha": "home",
+   "mari": "home",
+   "eunchae": "outside",
+   "dohyeon": "outside",
+   "you": "home"
+  },
+  "stats": {
+   "decisions": 145,
+   "nights": 3,
+   "deaths": 0,
+   "neglect": 0,
+   "ropeRolls": 0,
+   "ropeClose": 0,
+   "ropeFeltRolls": 0,
+   "ropeFelt": 0,
+   "deathRolls": 0,
+   "closeCalls": 0,
+   "blindMet": 0,
+   "holds": 7
+  }
+ },
+ "console_errors": [],
+ "windows": [
+  {
+   "n": 1,
+   "kind": "line",
+   "tag": "d2_shutter_arm",
+   "text": "틈으로 들어온 손이 당신 손목을 잡았다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_shutter_arm",
+   "opts": null,
+   "t": 1792876803276,
+   "map": "station"
+  },
+  {
+   "n": 2,
+   "kind": "line",
+   "tag": "d2_shutter_arm",
+   "text": "너머에서 당긴다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_shutter_arm",
+   "opts": null,
+   "t": 1792876803562,
+   "map": "station"
+  },
+  {
+   "n": 3,
+   "kind": "line",
+   "tag": "d2_shutter_arm",
+   "text": "셔터 날이 팔꿈치까지 왔다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_shutter_arm",
+   "opts": null,
+   "t": 1792876803929,
+   "map": "station"
+  },
+  {
+   "n": 4,
+   "kind": "event",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_shutter_arm",
+   "opts": [
+    "통조림을 내밀어 바꾼다",
+    "옆 사람 팔을 내민다",
+    "팔을 비틀어 뺀다"
+   ],
+   "t": 1792876804313,
+   "map": "station"
+  },
+  {
+   "n": 5,
+   "kind": "line",
+   "tag": "d2_shutter_arm:out",
+   "text": "통조림이 넘어가자 손이 풀렸다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_night_count",
+   "opts": null,
+   "t": 1792876805364,
+   "map": "station"
+  },
+  {
+   "n": 6,
+   "kind": "line",
+   "tag": "d2_shutter_arm:out",
+   "text": "손목에 손톱자국이 남았다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_night_count",
+   "opts": null,
+   "t": 1792876805728,
+   "map": "station"
+  },
+  {
+   "n": 7,
+   "kind": "line",
+   "tag": "d2_night_count",
+   "text": "계단 위에서 작게 센다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_night_count",
+   "opts": null,
+   "t": 1792876806095,
+   "map": "station"
+  },
+  {
+   "n": 8,
+   "kind": "line",
+   "tag": "d2_night_count",
+   "text": "\"하나, 둘…\"",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_night_count",
+   "opts": null,
+   "t": 1792876806479,
+   "map": "station"
+  },
+  {
+   "n": 9,
+   "kind": "line",
+   "tag": "d2_night_count",
+   "text": "할머니의 손바닥이 당신 입을 덮는다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_night_count",
+   "opts": null,
+   "t": 1792876806845,
+   "map": "station"
+  },
+  {
+   "n": 10,
+   "kind": "line",
+   "tag": "d2_night_count",
+   "text": "걸레 냄새가 난다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_night_count",
+   "opts": null,
+   "t": 1792876807229,
+   "map": "station"
+  },
+  {
+   "n": 11,
+   "kind": "event",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "d2_night_count",
+   "opts": [
+    "숨을 참는다",
+    "손을 밀어낸다"
+   ],
+   "t": 1792876807596,
+   "map": "station"
+  },
+  {
+   "n": 12,
+   "kind": "line",
+   "tag": "d2_night_count:out",
+   "text": "숨이 새어 나갔다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "",
+   "opts": null,
+   "t": 1792876808730,
+   "map": "station"
+  },
+  {
+   "n": 13,
+   "kind": "line",
+   "tag": "d2_night_count:out",
+   "text": "셈이 하나 늘었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "",
+   "opts": null,
+   "t": 1792876809096,
+   "map": "station"
+  },
+  {
+   "n": 14,
+   "kind": "line",
+   "tag": "d2_night_count:out",
+   "text": "한참 뒤에야 줄었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "",
+   "opts": null,
+   "t": 1792876809461,
+   "map": "station"
+  },
+  {
+   "n": 15,
+   "kind": "fire",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "night",
+   "pend": "",
+   "opts": [
+    "잠든다",
+    "아직"
+   ],
+   "t": 1792876810211,
+   "map": "station"
+  },
+  {
+   "n": 16,
+   "kind": "line",
+   "tag": "",
+   "text": "밤이 지난다.",
+   "black": true,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 2,
+   "phase": "aftermath",
+   "pend": "",
+   "opts": null,
+   "t": 1792876811095,
+   "map": "station"
+  },
+  {
+   "n": 17,
+   "kind": "line",
+   "tag": "night_report",
+   "text": "땔감 −1 밤에 무슨 소리가 났다.",
+   "black": true,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "d3_soonrye_opens",
+   "opts": null,
+   "t": 1792876811472,
+   "map": "station"
+  },
+  {
+   "n": 18,
+   "kind": "line",
+   "tag": "night_report",
+   "text": "흔적이 남았을 것이다.",
+   "black": true,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "d3_soonrye_opens",
+   "opts": null,
+   "t": 1792876811845,
+   "map": "station"
+  },
+  {
+   "n": 19,
+   "kind": "line",
+   "tag": "d3_soonrye_opens",
+   "text": "할머니가 역무실 문을 열었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "d3_soonrye_opens",
+   "opts": null,
+   "t": 1792876812212,
+   "map": "station"
+  },
+  {
+   "n": 20,
+   "kind": "line",
+   "tag": "d3_soonrye_opens",
+   "text": "\"어젯밤 소리에 애가 문을 긁었어.\"",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "d3_soonrye_opens",
+   "opts": null,
+   "t": 1792876812578,
+   "map": "station"
+  },
+  {
+   "n": 21,
+   "kind": "line",
+   "tag": "d3_soonrye_opens",
+   "text": "여학생이 담요를 끌고 나왔다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "d3_soonrye_opens",
+   "opts": null,
+   "t": 1792876812962,
+   "map": "station"
+  },
+  {
+   "n": 22,
+   "kind": "event",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "d3_soonrye_opens",
+   "opts": [
+    "본다"
+   ],
+   "t": 1792876813329,
+   "map": "station"
+  },
+  {
+   "n": 23,
+   "kind": "line",
+   "tag": "d3_soonrye_opens:out",
+   "text": "여학생은 당신을 보지 않았다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876814331,
+   "map": "station"
+  },
+  {
+   "n": 24,
+   "kind": "line",
+   "tag": "",
+   "text": "쇠파이프다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876815080,
+   "map": "station"
+  },
+  {
+   "n": 25,
+   "kind": "line",
+   "tag": "",
+   "text": "화로 옆에 세워져 있다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876815445,
+   "map": "station"
+  },
+  {
+   "n": 26,
+   "kind": "line",
+   "tag": "",
+   "text": "담요가 개어 있다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876816195,
+   "map": "station"
+  },
+  {
+   "n": 27,
+   "kind": "line",
+   "tag": "",
+   "text": "물통이다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876816945,
+   "map": "station"
+  },
+  {
+   "n": 28,
+   "kind": "line",
+   "tag": "",
+   "text": "반쯤 차 있다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876817312,
+   "map": "station"
+  },
+  {
+   "n": 29,
+   "kind": "line",
+   "tag": "",
+   "text": "흰 붕대다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876817680,
+   "map": "station"
+  },
+  {
+   "n": 30,
+   "kind": "line",
+   "tag": "",
+   "text": "오늘 감았다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876818061,
+   "map": "station"
+  },
+  {
+   "n": 31,
+   "kind": "line",
+   "tag": "",
+   "text": "물통이다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876818811,
+   "map": "station"
+  },
+  {
+   "n": 32,
+   "kind": "line",
+   "tag": "",
+   "text": "반쯤 차 있다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876819178,
+   "map": "station"
+  },
+  {
+   "n": 33,
+   "kind": "line",
+   "tag": "",
+   "text": "흰 붕대다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876819546,
+   "map": "station"
+  },
+  {
+   "n": 34,
+   "kind": "line",
+   "tag": "",
+   "text": "오늘 감았다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876819912,
+   "map": "station"
+  },
+  {
+   "n": 35,
+   "kind": "line",
+   "tag": "",
+   "text": "부품 상자다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876820895,
+   "map": "station"
+  },
+  {
+   "n": 36,
+   "kind": "line",
+   "tag": "",
+   "text": "통로를 잇는 데 든다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876821261,
+   "map": "station"
+  },
+  {
+   "n": 37,
+   "kind": "line",
+   "tag": "",
+   "text": "담요가 개어 있다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876822111,
+   "map": "station"
+  },
+  {
+   "n": 38,
+   "kind": "line",
+   "tag": "",
+   "text": "승강장 의자다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876823162,
+   "map": "station"
+  },
+  {
+   "n": 39,
+   "kind": "line",
+   "tag": "",
+   "text": "등받이를 뜯으면 하룻밤 땔감이 된다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876823529,
+   "map": "station"
+  },
+  {
+   "n": 40,
+   "kind": "line",
+   "tag": "",
+   "text": "재가 한 칸 내려왔어.",
+   "black": false,
+   "cls": "",
+   "name": "청소원 조끼의 할머니",
+   "face": "http://127.0.0.1:19151/v4/img/portraits80/soonrye.png",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876824278,
+   "map": "station"
+  },
+  {
+   "n": 41,
+   "kind": "line",
+   "tag": "",
+   "text": "불빛 때문인지는 몰라.",
+   "black": false,
+   "cls": "",
+   "name": "청소원 조끼의 할머니",
+   "face": "http://127.0.0.1:19151/v4/img/portraits80/soonrye.png",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876824644,
+   "map": "station"
+  },
+  {
+   "n": 42,
+   "kind": "line",
+   "tag": "",
+   "text": "나는 그렇게 생각해.",
+   "black": false,
+   "cls": "",
+   "name": "청소원 조끼의 할머니",
+   "face": "http://127.0.0.1:19151/v4/img/portraits80/soonrye.png",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876825029,
+   "map": "station"
+  },
+  {
+   "n": 43,
+   "kind": "line",
+   "tag": "",
+   "text": "…밖에서 걸어온 사람은 처음이에요.",
+   "black": false,
+   "cls": "",
+   "name": "담요 속 여학생",
+   "face": "http://127.0.0.1:19151/v4/img/portraits80/seoha.png",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": null,
+   "t": 1792876825778,
+   "map": "station"
+  },
+  {
+   "n": 44,
+   "kind": "book",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": [
+    "명부",
+    "사실 줄",
+    "뒷장",
+    "덮는다"
+   ],
+   "t": 1792876826228,
+   "map": "station"
+  },
+  {
+   "n": 45,
+   "kind": "bookpage",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 3,
+   "phase": "trace",
+   "pend": "",
+   "opts": [
+    "돌아간다"
+   ],
+   "t": 1792876826945,
+   "map": "station"
+  }
+ ],
+ "choices": [
+  {
+   "kind": "title",
+   "day": null,
+   "phase": null,
+   "text": "어두운 역\n\n묵현역 · 열차까지 열흘 · 18+\n유혈·시체·살해 묘사가 직접 나옵니다",
+   "opts": [
+    "계속 (D2)",
+    "새로 시작",
+    "저장 코드 불러오기",
+    "전체화면"
+   ],
+   "boxCls": "opts wide",
+   "pend": null,
+   "picked": "계속 (D2)"
+  },
+  {
+   "kind": "event",
+   "day": 2,
+   "phase": "night",
+   "text": "틈으로 들어온 손이 당신 손목을 잡았다. 너머에서 당긴다. 셔터 날이 팔꿈치까지 왔다.",
+   "opts": [
+    "통조림을 내밀어 바꾼다",
+    "옆 사람 팔을 내민다",
+    "팔을 비틀어 뺀다"
+   ],
+   "boxCls": "opts",
+   "pend": "d2_shutter_arm",
+   "ev": {
+    "id": "d2_shutter_arm",
+    "kind": "trial",
+    "choices": [
+     {
+      "i": 0,
+      "label": "통조림을 내밀어 바꾼다",
+      "locked": false,
+      "chance": null,
+      "warn": "식량이 준다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {
+       "food": 2
+      },
+      "rope": false,
+      "hurt": 1,
+      "food": 0
+     },
+     {
+      "i": 1,
+      "label": "옆 사람 팔을 내민다",
+      "locked": false,
+      "chance": null,
+      "warn": "그 사람이 대신 끌린다",
+      "taboo": true,
+      "karma": 3,
+      "surv": 1,
+      "cost": {},
+      "rope": true,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 2,
+      "label": "팔을 비틀어 뺀다",
+      "locked": false,
+      "chance": 85,
+      "warn": "못 빼면 끝이다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 0.85,
+      "cost": {},
+      "rope": false,
+      "hurt": 2,
+      "food": 0
+     }
+    ]
+   },
+   "cg": [
+    {
+     "src": "http://127.0.0.1:19151/v4/img/cg_s/d2_shutter_arm.png",
+     "cls": "small",
+     "ok": true,
+     "w": 256,
+     "vis": true
+    }
+   ],
+   "picked": "통조림을 내밀어 바꾼다"
+  },
+  {
+   "kind": "event",
+   "day": 2,
+   "phase": "night",
+   "text": "계단 위에서 작게 센다. \"하나, 둘…\" 할머니의 손바닥이 당신 입을 덮는다. 걸레 냄새가 난다.",
+   "opts": [
+    "숨을 참는다",
+    "손을 밀어낸다"
+   ],
+   "boxCls": "opts",
+   "pend": "d2_night_count",
+   "ev": {
+    "id": "d2_night_count",
+    "kind": "fixed",
+    "choices": [
+     {
+      "i": 0,
+      "label": "숨을 참는다",
+      "locked": false,
+      "chance": null,
+      "warn": "",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 1,
+      "label": "손을 밀어낸다",
+      "locked": false,
+      "chance": null,
+      "warn": "순례의 손이 떨린다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     }
+    ]
+   },
+   "cg": [
+    {
+     "src": "http://127.0.0.1:19151/v4/img/cg_s/d2_shutter_arm.png",
+     "cls": "small",
+     "ok": true,
+     "w": 256,
+     "vis": true
+    }
+   ],
+   "picked": "손을 밀어낸다"
+  },
+  {
+   "kind": "fire",
+   "day": 2,
+   "phase": "night",
+   "text": "화로\n\n잠든다. 아침까지 누구도 깨우지 않는다.",
+   "opts": [
+    "잠든다",
+    "아직"
+   ],
+   "boxCls": "opts",
+   "pend": "",
+   "picked": "잠든다"
+  },
+  {
+   "kind": "event",
+   "day": 3,
+   "phase": "trace",
+   "text": "할머니가 역무실 문을 열었다. \"어젯밤 소리에 애가 문을 긁었어.\" 여학생이 담요를 끌고 나왔다.",
+   "opts": [
+    "본다"
+   ],
+   "boxCls": "opts",
+   "pend": "d3_soonrye_opens",
+   "ev": {
+    "id": "d3_soonrye_opens",
+    "kind": "fixed",
+    "choices": [
+     {
+      "i": 0,
+      "label": "본다",
+      "locked": false,
+      "chance": null,
+      "warn": "",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     }
+    ]
+   },
+   "cg": [],
+   "picked": "본다"
+  },
+  {
+   "kind": "book",
+   "day": 3,
+   "phase": "trace",
+   "text": "수첩\n\n명부 · 사실 줄 · 뒷장",
+   "opts": [
+    "명부",
+    "사실 줄",
+    "뒷장",
+    "덮는다"
+   ],
+   "boxCls": "opts wide",
+   "pend": "",
+   "picked": "명부"
+  },
+  {
+   "kind": "bookpage",
+   "day": 3,
+   "phase": "trace",
+   "text": "승객 명부\n\n당신\n당신 글씨\n청소원 조끼의 할머니\n담요 속 여학생\n헤드램프의 남자\n셔터의 여자\n큰 청년\n담요의 여자",
+   "opts": [
+    "돌아간다"
+   ],
+   "boxCls": "opts",
+   "pend": "",
+   "page": "승객 명부\n\n당신\n당신 글씨\n청소원 조끼의 할머니\n담요 속 여학생\n헤드램프의 남자\n셔터의 여자\n큰 청년\n담요의 여자",
+   "picked": "돌아간다"
+  }
+ ]
+}

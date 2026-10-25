@@ -1,0 +1,6 @@
+manifest 243
+    13_run seed 3: D10 d10_walk_other - OK
+OK   13_run (console errors 0)
+    [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=8 | [\uafc8 D6] / D7 trace dawn_strike \u2192 \uadf8\ub987 \ub458\uc744 \ub0b4\ubbfc\ub2e4 / [D7 food8 water0 hunger2] / D7 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D7 evening
+    [ds4 missing] trip_a1_backroom@trip_a1_backroom
+shots 1/1 ok · console errors 0

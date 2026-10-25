@@ -1,0 +1,1918 @@
+{
+ "run": {
+  "tries": [
+   {
+    "seed": 3,
+    "day": 10,
+    "report": "log: [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=8 | [꿈 D6] / D7 trace dawn_strike → 그릇 둘을 내민다 / [D7 food8 water0 hunger2] / D7 ration repay_bowl → 그냥 지나간다 / D7 evening d7_broadcast →"
+   }
+  ],
+  "seed": 3,
+  "kinds": {
+   "event": {
+    "calls": 63,
+    "played": 62
+   },
+   "start": {
+    "calls": 1,
+    "played": 0
+   },
+   "pick": {
+    "calls": 141,
+    "played": 141
+   },
+   "amb": {
+    "calls": 35,
+    "played": 0
+   },
+   "inspect": {
+    "calls": 34,
+    "played": 34
+   },
+   "open": {
+    "calls": 12,
+    "played": 12
+   },
+   "event_sound": {
+    "calls": 3,
+    "played": 0
+   },
+   "bubble": {
+    "calls": 6,
+    "played": 6
+   },
+   "knock": {
+    "calls": 2,
+    "played": 2
+   },
+   "fail": {
+    "calls": 5,
+    "played": 5
+   },
+   "ok": {
+    "calls": 5,
+    "played": 5
+   },
+   "hurt": {
+    "calls": 2,
+    "played": 2
+   }
+  },
+  "event_hook_ids": [
+   "d0_ledger",
+   "d10_grab",
+   "d10_walk_other",
+   "d10_walk_weak",
+   "d1_names_quiet",
+   "d1_night_storage",
+   "d1_shutter_knock",
+   "d2_key",
+   "d2_night_count",
+   "d2_night_shutter",
+   "d2_rat_blanket",
+   "d2_soonrye_bread",
+   "d2_soonrye_shutter",
+   "d3_bottle",
+   "d3_guess",
+   "d3_soonrye_opens",
+   "d4_shoes_home",
+   "d5_flood",
+   "d5_rail_body",
+   "d6_morning",
+   "d6_shutter_b",
+   "d7_broadcast",
+   "d9_inspection_b",
+   "d9_stairs",
+   "dawn_strike",
+   "hymn_fire_kept",
+   "hymn_names",
+   "passage_alone",
+   "patrol_pact",
+   "pro_cold",
+   "pro_gicheol",
+   "pro_lever",
+   "pro_mari",
+   "pro_notebook",
+   "pro_platform",
+   "pro_speaker",
+   "repay_bowl",
+   "share_back",
+   "trial_d1_bowls",
+   "trial_d3_count",
+   "trial_d4_gicheol",
+   "trial_d8_key",
+   "trip_a1_backroom",
+   "trip_a1_pharmacy",
+   "trip_a1_phone",
+   "trip_a1_stall",
+   "trip_a2_bodybag",
+   "trip_a2_bones",
+   "trip_a2_escalator",
+   "trip_a2_stockroom",
+   "trip_b1_debris",
+   "trip_b1_valve",
+   "trip_b1_workers",
+   "trip_b2_lockers",
+   "trip_b2_pumproom",
+   "trip_g_crates",
+   "trip_g_rats"
+  ],
+  "event_sounds": [
+   {
+    "id": "pro_speaker",
+    "sound": "radio_long"
+   },
+   {
+    "id": "d2_night_shutter",
+    "sound": "knock"
+   },
+   {
+    "id": "d7_broadcast",
+    "sound": "radio_long"
+   }
+  ],
+  "open_ids": [
+   "barrel_b1",
+   "barrel_b2",
+   "crate_b1",
+   "crate_food",
+   "drawer_a1",
+   "lever",
+   "locker_a1",
+   "locker_a2",
+   "locker_b2",
+   "shelf_a1",
+   "shelter_box",
+   "toolbox_b2"
+  ],
+  "inspect_ids": [
+   "bag_b1",
+   "bandage_you",
+   "barrel_a2",
+   "bodybag_a2",
+   "cistern",
+   "crate_b1",
+   "lever",
+   "locker_b2",
+   "notebook_dash",
+   "notebook_you",
+   "phonebooth",
+   "shelf_a2",
+   "shutter_gap",
+   "speaker",
+   "worker_pipe"
+  ],
+  "amb_changes": [
+   {
+    "map": "car",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0
+   },
+   {
+    "map": "tunnel",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.03,
+    "water": 0
+   },
+   {
+    "map": "drain_b1",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.52
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.35
+   },
+   {
+    "map": "station",
+    "night": true,
+    "amb": 1,
+    "fire": 0.49,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.69,
+    "water": 0
+   },
+   {
+    "map": "mall_a1",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.2
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": true,
+    "amb": 1,
+    "fire": 0.49,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.08,
+    "water": 0
+   },
+   {
+    "map": "drain_b1",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.52
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.22
+   },
+   {
+    "map": "station",
+    "night": true,
+    "amb": 1,
+    "fire": 0.49,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.69,
+    "water": 0
+   },
+   {
+    "map": "mall_a1",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.2
+   },
+   {
+    "map": "mall_a2",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.2
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0
+   },
+   {
+    "map": "drain_b1",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.52
+   },
+   {
+    "map": "drain_b2",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.51
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.35
+   },
+   {
+    "map": "station",
+    "night": true,
+    "amb": 1,
+    "fire": 0.49,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.08,
+    "water": 0
+   },
+   {
+    "map": "mall_a1",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.2
+   },
+   {
+    "map": "mall_a2",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0.2
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": true,
+    "amb": 1,
+    "fire": 0.49,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.69,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": true,
+    "amb": 1,
+    "fire": 0.49,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.69,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": true,
+    "amb": 1,
+    "fire": 0.59,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.08,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": true,
+    "amb": 1,
+    "fire": 0.49,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0.69,
+    "water": 0
+   },
+   {
+    "map": "station",
+    "night": false,
+    "amb": 0.5,
+    "fire": 0.69,
+    "water": 0
+   }
+  ],
+  "status": {
+   "off": false,
+   "test": true,
+   "eager": true,
+   "broken": "",
+   "gestured": false,
+   "ctx": "running",
+   "on": true,
+   "level": 1,
+   "levelName": "보통",
+   "hidden": false,
+   "deathHush": false,
+   "nodes": 1499,
+   "nodeKinds": {
+    "createBuffer": 11,
+    "createGain": 600,
+    "createDynamicsCompressor": 1,
+    "createAnalyser": 1,
+    "createConvolver": 1,
+    "createBiquadFilter": 331,
+    "createOscillator": 251,
+    "createBufferSource": 291,
+    "createStereoPanner": 12
+   },
+   "counts": {
+    "drip": 4,
+    "crackle": 44,
+    "hiss": 0
+   },
+   "master": 0.5,
+   "amb": {
+    "map": "station",
+    "night": false,
+    "hum": 1,
+    "humF": 1,
+    "air": 0.5,
+    "fire": 0.694,
+    "water": 0,
+    "hiss": 0,
+    "amb": 0.5
+   }
+  },
+  "console_errors": [],
+  "checks": {
+   "ran_to_D9_or_more": true,
+   "nodes_created": true,
+   "pick": true,
+   "roll_ok_or_fail": true,
+   "inspect": true,
+   "open": true,
+   "event_hook": true,
+   "broadcast_static": true,
+   "hurt": true,
+   "bubble": true,
+   "night_ambience": true,
+   "trip_water": true,
+   "trip_furniture_open": true
+  }
+ },
+ "loud": {
+  "sfx": [
+   {
+    "kind": "step",
+    "o": {
+     "surface": "tile"
+    },
+    "small": {
+     "peakDb": -38.2,
+     "rmsDb": -66,
+     "loudest50msDb": -53
+    },
+    "normal": {
+     "peakDb": -34.8,
+     "rmsDb": -61.8,
+     "loudest50msDb": -48.8
+    },
+    "large": {
+     "peakDb": -30.7,
+     "rmsDb": -58.6,
+     "loudest50msDb": -45.6
+    }
+   },
+   {
+    "kind": "step",
+    "o": {
+     "surface": "concrete"
+    },
+    "small": {
+     "peakDb": -37,
+     "rmsDb": -62.8,
+     "loudest50msDb": -49.9
+    },
+    "normal": {
+     "peakDb": -34.7,
+     "rmsDb": -60.4,
+     "loudest50msDb": -47.5
+    },
+    "large": {
+     "peakDb": -32.4,
+     "rmsDb": -56.6,
+     "loudest50msDb": -43.7
+    }
+   },
+   {
+    "kind": "step",
+    "o": {
+     "surface": "edge"
+    },
+    "small": {
+     "peakDb": -37.4,
+     "rmsDb": -63.2,
+     "loudest50msDb": -50.3
+    },
+    "normal": {
+     "peakDb": -35,
+     "rmsDb": -60.4,
+     "loudest50msDb": -47.5
+    },
+    "large": {
+     "peakDb": -29.9,
+     "rmsDb": -55.5,
+     "loudest50msDb": -42.6
+    }
+   },
+   {
+    "kind": "step",
+    "o": {
+     "surface": "metal"
+    },
+    "small": {
+     "peakDb": -40.1,
+     "rmsDb": -65.4,
+     "loudest50msDb": -52.5
+    },
+    "normal": {
+     "peakDb": -36.2,
+     "rmsDb": -61.2,
+     "loudest50msDb": -48.3
+    },
+    "large": {
+     "peakDb": -31.9,
+     "rmsDb": -58.1,
+     "loudest50msDb": -45.2
+    }
+   },
+   {
+    "kind": "step",
+    "o": {
+     "surface": "gravel"
+    },
+    "small": {
+     "peakDb": -42.8,
+     "rmsDb": -69.8,
+     "loudest50msDb": -58.4
+    },
+    "normal": {
+     "peakDb": -39.6,
+     "rmsDb": -66,
+     "loudest50msDb": -55.3
+    },
+    "large": {
+     "peakDb": -34.2,
+     "rmsDb": -62.5,
+     "loudest50msDb": -51
+    }
+   },
+   {
+    "kind": "step",
+    "o": {
+     "surface": "water"
+    },
+    "small": {
+     "peakDb": -45.2,
+     "rmsDb": -69.1,
+     "loudest50msDb": -57.5
+    },
+    "normal": {
+     "peakDb": -43.8,
+     "rmsDb": -66.6,
+     "loudest50msDb": -55.5
+    },
+    "large": {
+     "peakDb": -39.7,
+     "rmsDb": -63.1,
+     "loudest50msDb": -51.9
+    }
+   },
+   {
+    "kind": "step",
+    "o": {
+     "surface": "wet"
+    },
+    "small": {
+     "peakDb": -39.4,
+     "rmsDb": -63.7,
+     "loudest50msDb": -50.8
+    },
+    "normal": {
+     "peakDb": -35,
+     "rmsDb": -60.1,
+     "loudest50msDb": -47.2
+    },
+    "large": {
+     "peakDb": -28.8,
+     "rmsDb": -55.8,
+     "loudest50msDb": -42.9
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "blanket_mari"
+    },
+    "small": {
+     "peakDb": -39.6,
+     "rmsDb": -61.4,
+     "loudest50msDb": -51.1
+    },
+    "normal": {
+     "peakDb": -36.4,
+     "rmsDb": -57.5,
+     "loudest50msDb": -47
+    },
+    "large": {
+     "peakDb": -32,
+     "rmsDb": -54.1,
+     "loudest50msDb": -43.7
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "crate_food"
+    },
+    "small": {
+     "peakDb": -40.3,
+     "rmsDb": -67.1,
+     "loudest50msDb": -55.1
+    },
+    "normal": {
+     "peakDb": -41.8,
+     "rmsDb": -66.6,
+     "loudest50msDb": -55.5
+    },
+    "large": {
+     "peakDb": -37,
+     "rmsDb": -61.9,
+     "loudest50msDb": -50.2
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "medkit"
+    },
+    "small": {
+     "peakDb": -46.1,
+     "rmsDb": -65.4,
+     "loudest50msDb": -55.6
+    },
+    "normal": {
+     "peakDb": -42.1,
+     "rmsDb": -61.4,
+     "loudest50msDb": -51.8
+    },
+    "large": {
+     "peakDb": -38.3,
+     "rmsDb": -57.8,
+     "loudest50msDb": -48.2
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "notebook_you"
+    },
+    "small": {
+     "peakDb": -36.6,
+     "rmsDb": -59.8,
+     "loudest50msDb": -48.6
+    },
+    "normal": {
+     "peakDb": -31.9,
+     "rmsDb": -56,
+     "loudest50msDb": -44.7
+    },
+    "large": {
+     "peakDb": -27.2,
+     "rmsDb": -52.4,
+     "loudest50msDb": -41
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "bottle_you"
+    },
+    "small": {
+     "peakDb": -47.7,
+     "rmsDb": -69.3,
+     "loudest50msDb": -57.1
+    },
+    "normal": {
+     "peakDb": -43.8,
+     "rmsDb": -65.5,
+     "loudest50msDb": -53.3
+    },
+    "large": {
+     "peakDb": -40.1,
+     "rmsDb": -61.9,
+     "loudest50msDb": -49.7
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "bowl_you"
+    },
+    "small": {
+     "peakDb": -49.6,
+     "rmsDb": -67.7,
+     "loudest50msDb": -57.8
+    },
+    "normal": {
+     "peakDb": -46.2,
+     "rmsDb": -63.9,
+     "loudest50msDb": -54
+    },
+    "large": {
+     "peakDb": -43.7,
+     "rmsDb": -60.4,
+     "loudest50msDb": -50.4
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "stairs_ash"
+    },
+    "small": {
+     "peakDb": -45.8,
+     "rmsDb": -69.4,
+     "loudest50msDb": -60.9
+    },
+    "normal": {
+     "peakDb": -41.5,
+     "rmsDb": -65.6,
+     "loudest50msDb": -56.6
+    },
+    "large": {
+     "peakDb": -38,
+     "rmsDb": -62.2,
+     "loudest50msDb": -53.6
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "fire"
+    },
+    "small": {
+     "peakDb": -28.5,
+     "rmsDb": -59.5,
+     "loudest50msDb": -47.8
+    },
+    "normal": {
+     "peakDb": -23.2,
+     "rmsDb": -55.1,
+     "loudest50msDb": -43.4
+    },
+    "large": {
+     "peakDb": -21.6,
+     "rmsDb": -53.2,
+     "loudest50msDb": -41.6
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "speaker",
+     "st": "on"
+    },
+    "small": {
+     "peakDb": -38.4,
+     "rmsDb": -52.4,
+     "loudest50msDb": -48.8
+    },
+    "normal": {
+     "peakDb": -34.6,
+     "rmsDb": -48.7,
+     "loudest50msDb": -45.2
+    },
+    "large": {
+     "peakDb": -31,
+     "rmsDb": -46.5,
+     "loudest50msDb": -41.8
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "crate_food"
+     ]
+    },
+    "small": {
+     "peakDb": -27.3,
+     "rmsDb": -51.3,
+     "loudest50msDb": -38.4
+    },
+    "normal": {
+     "peakDb": -23.7,
+     "rmsDb": -48.1,
+     "loudest50msDb": -35.3
+    },
+    "large": {
+     "peakDb": -19.1,
+     "rmsDb": -43.8,
+     "loudest50msDb": -30.8
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "bag"
+     ]
+    },
+    "small": {
+     "peakDb": -39.1,
+     "rmsDb": -63.4,
+     "loudest50msDb": -50.3
+    },
+    "normal": {
+     "peakDb": -34.5,
+     "rmsDb": -59.7,
+     "loudest50msDb": -46.6
+    },
+    "large": {
+     "peakDb": -32.6,
+     "rmsDb": -56.6,
+     "loudest50msDb": -43.6
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "medkit"
+     ]
+    },
+    "small": {
+     "peakDb": -36.7,
+     "rmsDb": -57.8,
+     "loudest50msDb": -46.1
+    },
+    "normal": {
+     "peakDb": -32.6,
+     "rmsDb": -53.9,
+     "loudest50msDb": -42.3
+    },
+    "large": {
+     "peakDb": -26.7,
+     "rmsDb": -50.6,
+     "loudest50msDb": -38.8
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "lever"
+     ]
+    },
+    "small": {
+     "peakDb": -24,
+     "rmsDb": -44.5,
+     "loudest50msDb": -32.3
+    },
+    "normal": {
+     "peakDb": -19.5,
+     "rmsDb": -40.6,
+     "loudest50msDb": -28.2
+    },
+    "large": {
+     "peakDb": -15.7,
+     "rmsDb": -37.5,
+     "loudest50msDb": -25.5
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "pharmacy_shutter"
+     ]
+    },
+    "small": {
+     "peakDb": -39.8,
+     "rmsDb": -60.3,
+     "loudest50msDb": -51.9
+    },
+    "normal": {
+     "peakDb": -37.7,
+     "rmsDb": -56.8,
+     "loudest50msDb": -48.5
+    },
+    "large": {
+     "peakDb": -34,
+     "rmsDb": -53.6,
+     "loudest50msDb": -45
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "valve"
+     ]
+    },
+    "small": {
+     "peakDb": -43,
+     "rmsDb": -67.1,
+     "loudest50msDb": -54.8
+    },
+    "normal": {
+     "peakDb": -33.6,
+     "rmsDb": -63.2,
+     "loudest50msDb": -51.6
+    },
+    "large": {
+     "peakDb": -35.5,
+     "rmsDb": -60,
+     "loudest50msDb": -48.5
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "locker_a1"
+     ]
+    },
+    "small": {
+     "peakDb": -37,
+     "rmsDb": -57.7,
+     "loudest50msDb": -45.8
+    },
+    "normal": {
+     "peakDb": -31.8,
+     "rmsDb": -53.7,
+     "loudest50msDb": -41.9
+    },
+    "large": {
+     "peakDb": -28,
+     "rmsDb": -50.2,
+     "loudest50msDb": -38.4
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "drawer_a1"
+     ]
+    },
+    "small": {
+     "peakDb": -31.6,
+     "rmsDb": -55.3,
+     "loudest50msDb": -41.1
+    },
+    "normal": {
+     "peakDb": -27.6,
+     "rmsDb": -51.3,
+     "loudest50msDb": -37.2
+    },
+    "large": {
+     "peakDb": -22,
+     "rmsDb": -47,
+     "loudest50msDb": -32.8
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "barrel_b1"
+     ]
+    },
+    "small": {
+     "peakDb": -34.2,
+     "rmsDb": -53.9,
+     "loudest50msDb": -43
+    },
+    "normal": {
+     "peakDb": -31.5,
+     "rmsDb": -50.4,
+     "loudest50msDb": -40.2
+    },
+    "large": {
+     "peakDb": -27.7,
+     "rmsDb": -46.7,
+     "loudest50msDb": -36.2
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "shelf_a1"
+     ]
+    },
+    "small": {
+     "peakDb": -41.7,
+     "rmsDb": -64.3,
+     "loudest50msDb": -54.6
+    },
+    "normal": {
+     "peakDb": -38.4,
+     "rmsDb": -60.8,
+     "loudest50msDb": -50.8
+    },
+    "large": {
+     "peakDb": -32.7,
+     "rmsDb": -56.9,
+     "loudest50msDb": -47.1
+    }
+   },
+   {
+    "kind": "open",
+    "o": {
+     "ids": [
+      "toolbox_b2"
+     ]
+    },
+    "small": {
+     "peakDb": -37,
+     "rmsDb": -58,
+     "loudest50msDb": -46.3
+    },
+    "normal": {
+     "peakDb": -30.7,
+     "rmsDb": -54,
+     "loudest50msDb": -42.2
+    },
+    "large": {
+     "peakDb": -30.1,
+     "rmsDb": -50.7,
+     "loudest50msDb": -38.9
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "locker_a1"
+    },
+    "small": {
+     "peakDb": -45.9,
+     "rmsDb": -65.2,
+     "loudest50msDb": -55.6
+    },
+    "normal": {
+     "peakDb": -41.5,
+     "rmsDb": -61.4,
+     "loudest50msDb": -51.8
+    },
+    "large": {
+     "peakDb": -38,
+     "rmsDb": -57.9,
+     "loudest50msDb": -48.1
+    }
+   },
+   {
+    "kind": "inspect",
+    "o": {
+     "id": "drawer_a1"
+    },
+    "small": {
+     "peakDb": -46,
+     "rmsDb": -70.4,
+     "loudest50msDb": -59.1
+    },
+    "normal": {
+     "peakDb": -38.6,
+     "rmsDb": -65,
+     "loudest50msDb": -53.3
+    },
+    "large": {
+     "peakDb": -34.7,
+     "rmsDb": -60.7,
+     "loudest50msDb": -48.8
+    }
+   },
+   {
+    "kind": "pick",
+    "o": {},
+    "small": {
+     "peakDb": -44.8,
+     "rmsDb": -71,
+     "loudest50msDb": -58.2
+    },
+    "normal": {
+     "peakDb": -40.9,
+     "rmsDb": -67.1,
+     "loudest50msDb": -54.3
+    },
+    "large": {
+     "peakDb": -37.2,
+     "rmsDb": -63.6,
+     "loudest50msDb": -50.8
+    }
+   },
+   {
+    "kind": "pick",
+    "o": {
+     "danger": true
+    },
+    "small": {
+     "peakDb": -36.4,
+     "rmsDb": -51.5,
+     "loudest50msDb": -41.6
+    },
+    "normal": {
+     "peakDb": -31.8,
+     "rmsDb": -47.6,
+     "loudest50msDb": -37.7
+    },
+    "large": {
+     "peakDb": -28.7,
+     "rmsDb": -44.1,
+     "loudest50msDb": -34.2
+    }
+   },
+   {
+    "kind": "ok",
+    "o": {},
+    "small": {
+     "peakDb": -38.3,
+     "rmsDb": -56.3,
+     "loudest50msDb": -45.6
+    },
+    "normal": {
+     "peakDb": -34.2,
+     "rmsDb": -52.5,
+     "loudest50msDb": -42
+    },
+    "large": {
+     "peakDb": -31.6,
+     "rmsDb": -49.5,
+     "loudest50msDb": -39.4
+    }
+   },
+   {
+    "kind": "ok",
+    "o": {
+     "close": true
+    },
+    "small": {
+     "peakDb": -23.8,
+     "rmsDb": -45.8,
+     "loudest50msDb": -33.6
+    },
+    "normal": {
+     "peakDb": -19.9,
+     "rmsDb": -41.9,
+     "loudest50msDb": -29.8
+    },
+    "large": {
+     "peakDb": -16.4,
+     "rmsDb": -38.4,
+     "loudest50msDb": -26.2
+    }
+   },
+   {
+    "kind": "fail",
+    "o": {},
+    "small": {
+     "peakDb": -33,
+     "rmsDb": -47.3,
+     "loudest50msDb": -36.8
+    },
+    "normal": {
+     "peakDb": -29.2,
+     "rmsDb": -43.5,
+     "loudest50msDb": -33
+    },
+    "large": {
+     "peakDb": -25.4,
+     "rmsDb": -39.9,
+     "loudest50msDb": -29.4
+    }
+   },
+   {
+    "kind": "hurt",
+    "o": {},
+    "small": {
+     "peakDb": -31.4,
+     "rmsDb": -51.2,
+     "loudest50msDb": -39.4
+    },
+    "normal": {
+     "peakDb": -28,
+     "rmsDb": -47.3,
+     "loudest50msDb": -35.5
+    },
+    "large": {
+     "peakDb": -24,
+     "rmsDb": -43.7,
+     "loudest50msDb": -32
+    }
+   },
+   {
+    "kind": "death",
+    "o": {},
+    "small": {
+     "peakDb": -21.6,
+     "rmsDb": -35.1,
+     "loudest50msDb": -24.8
+    },
+    "normal": {
+     "peakDb": -17.7,
+     "rmsDb": -31.2,
+     "loudest50msDb": -21
+    },
+    "large": {
+     "peakDb": -14.8,
+     "rmsDb": -28,
+     "loudest50msDb": -17.9
+    }
+   },
+   {
+    "kind": "bubble",
+    "o": {},
+    "small": {
+     "peakDb": -57.1,
+     "rmsDb": -80.3,
+     "loudest50msDb": -67.8
+    },
+    "normal": {
+     "peakDb": -53.3,
+     "rmsDb": -76.4,
+     "loudest50msDb": -63.9
+    },
+    "large": {
+     "peakDb": -49.7,
+     "rmsDb": -72.9,
+     "loudest50msDb": -60.4
+    }
+   },
+   {
+    "kind": "knock",
+    "o": {},
+    "small": {
+     "peakDb": -26.3,
+     "rmsDb": -46.3,
+     "loudest50msDb": -36.7
+    },
+    "normal": {
+     "peakDb": -22.5,
+     "rmsDb": -42.5,
+     "loudest50msDb": -33.1
+    },
+    "large": {
+     "peakDb": -18.9,
+     "rmsDb": -38.9,
+     "loudest50msDb": -29.4
+    }
+   },
+   {
+    "kind": "knock",
+    "o": {
+     "one": true,
+     "v": 0.4
+    },
+    "small": {
+     "peakDb": -43.9,
+     "rmsDb": -64.6,
+     "loudest50msDb": -52.8
+    },
+    "normal": {
+     "peakDb": -39.8,
+     "rmsDb": -60.7,
+     "loudest50msDb": -48.9
+    },
+    "large": {
+     "peakDb": -36.5,
+     "rmsDb": -57.1,
+     "loudest50msDb": -45.3
+    }
+   },
+   {
+    "kind": "radio",
+    "o": {},
+    "small": {
+     "peakDb": -31.6,
+     "rmsDb": -50.2,
+     "loudest50msDb": -42.9
+    },
+    "normal": {
+     "peakDb": -27.9,
+     "rmsDb": -46.7,
+     "loudest50msDb": -38.8
+    },
+    "large": {
+     "peakDb": -25.3,
+     "rmsDb": -43.5,
+     "loudest50msDb": -35.1
+    }
+   },
+   {
+    "kind": "radio",
+    "o": {
+     "long": true
+    },
+    "small": {
+     "peakDb": -31.8,
+     "rmsDb": -46.7,
+     "loudest50msDb": -42.8
+    },
+    "normal": {
+     "peakDb": -27.4,
+     "rmsDb": -43.9,
+     "loudest50msDb": -38.7
+    },
+    "large": {
+     "peakDb": -24.5,
+     "rmsDb": -40.3,
+     "loudest50msDb": -35.4
+    }
+   },
+   {
+    "kind": "event",
+    "o": {
+     "id": "d7_broadcast"
+    },
+    "small": {
+     "peakDb": -32.5,
+     "rmsDb": -48.4,
+     "loudest50msDb": -44.2
+    },
+    "normal": {
+     "peakDb": -28.5,
+     "rmsDb": -44.1,
+     "loudest50msDb": -39.6
+    },
+    "large": {
+     "peakDb": -25.8,
+     "rmsDb": -40.6,
+     "loudest50msDb": -36.2
+    }
+   }
+  ],
+  "amb": [
+   {
+    "scene": "station_fire_day",
+    "peakDb": -25.5,
+    "rmsDb": -37.3,
+    "loudest50msDb": -34
+   },
+   {
+    "scene": "station_fire_night",
+    "peakDb": -30.3,
+    "rmsDb": -41.7,
+    "loudest50msDb": -38.5
+   },
+   {
+    "scene": "station_far_day",
+    "peakDb": -27.3,
+    "rmsDb": -38.1,
+    "loudest50msDb": -34.6
+   },
+   {
+    "scene": "station_stairs_night",
+    "peakDb": -26.6,
+    "rmsDb": -42,
+    "loudest50msDb": -38.6
+   },
+   {
+    "scene": "car",
+    "peakDb": -29.4,
+    "rmsDb": -39.8,
+    "loudest50msDb": -36.5
+   },
+   {
+    "scene": "tunnel",
+    "peakDb": -24.5,
+    "rmsDb": -36,
+    "loudest50msDb": -33
+   },
+   {
+    "scene": "drain_b1",
+    "peakDb": -22.9,
+    "rmsDb": -34.9,
+    "loudest50msDb": -32.5
+   },
+   {
+    "scene": "mall_a1",
+    "peakDb": -25.1,
+    "rmsDb": -37.6,
+    "loudest50msDb": -33.5
+   }
+  ],
+  "layers": [
+   {
+    "layer": "hum",
+    "peakDb": -31.2,
+    "rmsDb": -39.8,
+    "loudest50msDb": -36.3
+   },
+   {
+    "layer": "air",
+    "peakDb": -31.2,
+    "rmsDb": -44.1,
+    "loudest50msDb": -41.5
+   },
+   {
+    "layer": "fire",
+    "peakDb": -30,
+    "rmsDb": -46.6,
+    "loudest50msDb": -44.9
+   },
+   {
+    "layer": "water",
+    "peakDb": -23.4,
+    "rmsDb": -36.5,
+    "loudest50msDb": -34.4
+   },
+   {
+    "layer": "drip",
+    "peakDb": -30.6,
+    "rmsDb": -66.1,
+    "loudest50msDb": -46.5
+   },
+   {
+    "layer": "hiss",
+    "peakDb": -30.4,
+    "rmsDb": -53.9,
+    "loudest50msDb": -43.5
+   }
+  ],
+  "console_errors": [],
+  "summary": {
+   "sfx_peak_normal_max": -17.7,
+   "sfx_peak_large_max": -14.8,
+   "amb_rms_normal_range": [
+    -42,
+    -34.9
+   ]
+  },
+  "checks": {
+   "sfx_not_loud": true,
+   "amb_quiet": true,
+   "all_render": true,
+   "console_errors_0": true
+  }
+ },
+ "gate": {
+  "before_input": {
+   "ac": 0,
+   "snd": {
+    "off": false,
+    "test": true,
+    "eager": true,
+    "broken": "",
+    "gestured": false,
+    "ctx": null,
+    "on": true,
+    "level": 1,
+    "levelName": "보통",
+    "hidden": false,
+    "deathHush": false,
+    "nodes": 0,
+    "nodeKinds": {},
+    "counts": {
+     "drip": 0,
+     "crackle": 0,
+     "hiss": 0
+    },
+    "master": null,
+    "amb": null
+   }
+  },
+  "after_esc": {
+   "ac": 0,
+   "snd": {
+    "off": false,
+    "test": true,
+    "eager": true,
+    "broken": "",
+    "gestured": false,
+    "ctx": null,
+    "on": true,
+    "level": 1,
+    "levelName": "보통",
+    "hidden": false,
+    "deathHush": false,
+    "nodes": 0,
+    "nodeKinds": {},
+    "counts": {
+     "drip": 0,
+     "crackle": 0,
+     "hiss": 0
+    },
+    "master": null,
+    "amb": null
+   }
+  },
+  "after_click": {
+   "ac": 1,
+   "snd": {
+    "off": false,
+    "test": true,
+    "eager": true,
+    "broken": "",
+    "gestured": true,
+    "ctx": "running",
+    "on": true,
+    "level": 1,
+    "levelName": "보통",
+    "hidden": false,
+    "deathHush": false,
+    "nodes": 52,
+    "nodeKinds": {
+     "createBuffer": 11,
+     "createGain": 19,
+     "createDynamicsCompressor": 1,
+     "createAnalyser": 1,
+     "createConvolver": 1,
+     "createBiquadFilter": 7,
+     "createOscillator": 6,
+     "createBufferSource": 4,
+     "createStereoPanner": 2
+    },
+    "counts": {
+     "drip": 0,
+     "crackle": 0,
+     "hiss": 0
+    },
+    "master": 0.3664,
+    "amb": {
+     "map": "title",
+     "night": false,
+     "hum": 0.7,
+     "humF": 1,
+     "air": 0.35,
+     "fire": 0,
+     "water": 0,
+     "hiss": 0,
+     "amb": 1
+    }
+   }
+  },
+  "kinds_play": {
+   "pick": {
+    "calls": 4,
+    "played": 4
+   },
+   "amb": {
+    "calls": 1,
+    "played": 0
+   },
+   "step": {
+    "calls": 38,
+    "played": 38
+   },
+   "inspect": {
+    "calls": 3,
+    "played": 3
+   },
+   "event": {
+    "calls": 3,
+    "played": 3
+   },
+   "open": {
+    "calls": 3,
+    "played": 3
+   }
+  },
+  "open_ids": [
+   "medkit",
+   "bag",
+   "lever"
+  ],
+  "inspect_ids": [
+   "medkit",
+   "bag",
+   "lever"
+  ],
+  "steps": [
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal",
+   "metal"
+  ],
+  "after_m_off": {
+   "ac": 1,
+   "snd": {
+    "off": false,
+    "test": true,
+    "eager": true,
+    "broken": "",
+    "gestured": true,
+    "ctx": "suspended",
+    "on": false,
+    "level": 1,
+    "levelName": "보통",
+    "hidden": false,
+    "deathHush": false,
+    "nodes": 630,
+    "nodeKinds": {
+     "createBuffer": 11,
+     "createGain": 220,
+     "createDynamicsCompressor": 1,
+     "createAnalyser": 1,
+     "createConvolver": 1,
+     "createBiquadFilter": 112,
+     "createOscillator": 57,
+     "createBufferSource": 109,
+     "createStereoPanner": 118
+    },
+    "counts": {
+     "drip": 2,
+     "crackle": 0,
+     "hiss": 0
+    },
+    "master": 0,
+    "amb": {
+     "map": "car",
+     "night": false,
+     "hum": 0.8,
+     "humF": 1,
+     "air": 0.35,
+     "fire": 0,
+     "water": 0,
+     "hiss": 0,
+     "amb": 1
+    }
+   }
+  },
+  "after_m_on": {
+   "ac": 1,
+   "snd": {
+    "off": false,
+    "test": true,
+    "eager": true,
+    "broken": "",
+    "gestured": true,
+    "ctx": "running",
+    "on": true,
+    "level": 1,
+    "levelName": "보통",
+    "hidden": false,
+    "deathHush": false,
+    "nodes": 630,
+    "nodeKinds": {
+     "createBuffer": 11,
+     "createGain": 220,
+     "createDynamicsCompressor": 1,
+     "createAnalyser": 1,
+     "createConvolver": 1,
+     "createBiquadFilter": 112,
+     "createOscillator": 57,
+     "createBufferSource": 109,
+     "createStereoPanner": 118
+    },
+    "counts": {
+     "drip": 2,
+     "crackle": 0,
+     "hiss": 0
+    },
+    "master": 0.4903,
+    "amb": {
+     "map": "car",
+     "night": false,
+     "hum": 0.8,
+     "humF": 1,
+     "air": 0.35,
+     "fire": 0,
+     "water": 0,
+     "hiss": 0,
+     "amb": 1
+    }
+   }
+  },
+  "pause_menus": [
+   [
+    "계속",
+    "전체화면",
+    "소리 끄기",
+    "소리 크기 — 보통",
+    "저장 코드 복사",
+    "타이틀로"
+   ],
+   [
+    "계속",
+    "전체화면",
+    "소리 끄기",
+    "소리 크기 — 크게",
+    "저장 코드 복사",
+    "타이틀로"
+   ],
+   [
+    "계속",
+    "전체화면",
+    "소리 켜기",
+    "소리 크기 — 크게",
+    "저장 코드 복사",
+    "타이틀로"
+   ],
+   [
+    "계속",
+    "전체화면",
+    "소리 끄기",
+    "소리 크기 — 크게",
+    "저장 코드 복사",
+    "타이틀로"
+   ]
+  ],
+  "stored": "{\"on\":true,\"level\":2}",
+  "after_menu": {
+   "ac": 1,
+   "snd": {
+    "off": false,
+    "test": true,
+    "eager": true,
+    "broken": "",
+    "gestured": true,
+    "ctx": "running",
+    "on": true,
+    "level": 2,
+    "levelName": "크게",
+    "hidden": false,
+    "deathHush": false,
+    "nodes": 650,
+    "nodeKinds": {
+     "createBuffer": 11,
+     "createGain": 228,
+     "createDynamicsCompressor": 1,
+     "createAnalyser": 1,
+     "createConvolver": 1,
+     "createBiquadFilter": 116,
+     "createOscillator": 61,
+     "createBufferSource": 113,
+     "createStereoPanner": 118
+    },
+    "counts": {
+     "drip": 2,
+     "crackle": 0,
+     "hiss": 0
+    },
+    "master": 0.7499,
+    "amb": {
+     "map": "car",
+     "night": false,
+     "hum": 0.8,
+     "humF": 1,
+     "air": 0.35,
+     "fire": 0,
+     "water": 0,
+     "hiss": 0,
+     "amb": 1
+    }
+   }
+  },
+  "hidden": {
+   "ac": 1,
+   "snd": {
+    "off": false,
+    "test": true,
+    "eager": true,
+    "broken": "",
+    "gestured": true,
+    "ctx": "suspended",
+    "on": true,
+    "level": 2,
+    "levelName": "크게",
+    "hidden": true,
+    "deathHush": false,
+    "nodes": 650,
+    "nodeKinds": {
+     "createBuffer": 11,
+     "createGain": 228,
+     "createDynamicsCompressor": 1,
+     "createAnalyser": 1,
+     "createConvolver": 1,
+     "createBiquadFilter": 116,
+     "createOscillator": 61,
+     "createBufferSource": 113,
+     "createStereoPanner": 118
+    },
+    "counts": {
+     "drip": 2,
+     "crackle": 0,
+     "hiss": 0
+    },
+    "master": 0.0001,
+    "amb": {
+     "map": "car",
+     "night": false,
+     "hum": 0.8,
+     "humF": 1,
+     "air": 0.35,
+     "fire": 0,
+     "water": 0,
+     "hiss": 0,
+     "amb": 1
+    }
+   }
+  },
+  "visible_again": {
+   "ac": 1,
+   "snd": {
+    "off": false,
+    "test": true,
+    "eager": true,
+    "broken": "",
+    "gestured": true,
+    "ctx": "running",
+    "on": true,
+    "level": 2,
+    "levelName": "크게",
+    "hidden": false,
+    "deathHush": false,
+    "nodes": 650,
+    "nodeKinds": {
+     "createBuffer": 11,
+     "createGain": 228,
+     "createDynamicsCompressor": 1,
+     "createAnalyser": 1,
+     "createConvolver": 1,
+     "createBiquadFilter": 116,
+     "createOscillator": 61,
+     "createBufferSource": 113,
+     "createStereoPanner": 118
+    },
+    "counts": {
+     "drip": 2,
+     "crackle": 0,
+     "hiss": 0
+    },
+    "master": 0.7482,
+    "amb": {
+     "map": "car",
+     "night": false,
+     "hum": 0.8,
+     "humF": 1,
+     "air": 0.35,
+     "fire": 0,
+     "water": 0,
+     "hiss": 0,
+     "amb": 1
+    }
+   }
+  },
+  "pause_menu_png": "docs\\foundation\\final_2026-10-25\\screen_sound\\sound_pause_menu.png",
+  "console_errors": [],
+  "checks": {
+   "no_context_before_input": true,
+   "esc_is_not_input": true,
+   "one_context_after_click": true,
+   "nodes_created": true,
+   "pick_sound": true,
+   "metal_steps": true,
+   "open_sounds": true,
+   "m_toggles": true,
+   "menu_level_and_onoff": true,
+   "saved_to_localStorage": true,
+   "hidden_quiets": true,
+   "visible_resumes": true,
+   "console_errors_0": true
+  }
+ }
+}

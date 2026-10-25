@@ -1,0 +1,19 @@
+데이터 v4\data · 정책 balanced,risky,selfish_nb,lazy,h_cautious,h_first,devoted × 100판 = 700판
+사건(사본 합침) | 뜬 판 | 판당 평균 | 최대 | 3번 이상 뜬 판 | 같은 글 최대 | 같은 글 3번 이상 판
+starve_you | 531 | 3.83 | 7 | 403 | 4 | 97
+wound_critical | 556 | 3.42 | 9 | 355 | 6 | 79
+repay_bowl | 461 | 3.63 | 9 | 303 | 9 | 303
+fever_night | 503 | 2.49 | 7 | 230 | 4 | 11
+share_back | 568 | 1.92 | 6 | 133 | 6 | 133
+passage_alone | 342 | 1.49 | 4 | 32 | 4 | 32
+dawn_strike | 285 | 1.44 | 4 | 31 | 2 | 0
+passage_day2 | 101 | 1.93 | 4 | 28 | 4 | 28
+called_up | 415 | 1.27 | 5 | 26 | 4 | 4
+dawn_mob | 204 | 1.41 | 5 | 13 | 4 | 2
+passage_alone_b | 101 | 1.47 | 4 | 11 | 4 | 11
+passage_day1 | 41 | 1.95 | 5 | 8 | 5 | 8
+flood_sick | 81 | 1.20 | 3 | 2 | 3 | 2
+crate_lid | 700 | 1.00 | 1 | 0 | 1 | 0
+d6_dohyeon_back | 110 | 1.00 | 1 | 0 | 1 | 0
+dawn_dongha2 | 1 | 1.00 | 1 | 0 | 1 | 0
+flood_sick_end | 10 | 1.30 | 2 | 0 | 2 | 0

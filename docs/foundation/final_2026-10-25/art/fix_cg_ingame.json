@@ -1,0 +1,2342 @@
+{
+ "events": {
+  "pro_notebook": {
+   "event": "pro_notebook",
+   "line": {
+    "open": "line",
+    "day": 0,
+    "phase": "day",
+    "pending": "pro_notebook",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "「승객 명부」.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "주머니에 넣는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_notebook.png",
+    "small": "img/cg_s/cg_notebook.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_notebook",
+   "box": {
+    "open": "event",
+    "day": 0,
+    "phase": "day",
+    "pending": "pro_notebook",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "「승객 명부」. 첫 줄에 당신 이름이 적혀 있다. 옆에 작게, 묵현. 그 아래는 전부 빈칸이다. 당신은 이 열차에 탄 기억이 없다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1주머니에 넣는다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "주머니에 넣는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_notebook.png",
+    "small": "img/cg_s/cg_notebook.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "주머니에 넣는다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "pro_gicheol": {
+   "event": "pro_gicheol",
+   "line": {
+    "open": "line",
+    "day": 0,
+    "phase": "day",
+    "pending": "pro_gicheol",
+    "target": null,
+    "who": "헤드램프의 남자",
+    "face": "portraits80/gicheol.png",
+    "text": "헤드램프 빛이 당신 신발에 머물다가 비켜난다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "그가 비춘 곳을 밟는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "벽감 상자부터 연다",
+      "locked": false,
+      "reason": "",
+      "warn": "식량·물 · 그가 본다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "돌을 같이 든다",
+      "locked": false,
+      "reason": "",
+      "warn": "손을 다칠 수 있다",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_gicheol.png",
+    "small": "img/cg_s/cg_gicheol.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_gicheol",
+   "box": {
+    "open": "event",
+    "day": 0,
+    "phase": "day",
+    "pending": "pro_gicheol",
+    "target": null,
+    "who": "헤드램프의 남자",
+    "face": "",
+    "text": "헤드램프의 남자헤드램프 빛이 당신 신발에 머물다가 비켜난다. \"사람이면 됐소. 이 잔해만 넘으면 역이오.\" \"발 디딜 곳만 보시오. 위는 보지 말고.\"",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1그가 비춘 곳을 밟는다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2벽감 상자부터 연다식량·물 · 그가 본다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3돌을 같이 든다손을 다칠 수 있다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "그가 비춘 곳을 밟는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "벽감 상자부터 연다",
+      "locked": false,
+      "reason": "",
+      "warn": "식량·물 · 그가 본다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "돌을 같이 든다",
+      "locked": false,
+      "reason": "",
+      "warn": "손을 다칠 수 있다",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_gicheol.png",
+    "small": "img/cg_s/cg_gicheol.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "그가 비춘 곳을 밟는다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "벽감 상자부터 연다",
+     "chance": "",
+     "cost": "",
+     "warn": "식량·물 · 그가 본다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "돌을 같이 든다",
+     "chance": "",
+     "cost": "",
+     "warn": "손을 다칠 수 있다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "pro_speaker": {
+   "event": "pro_speaker",
+   "line": {
+    "open": "line",
+    "day": 0,
+    "phase": "day",
+    "pending": "pro_speaker",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "기둥의 스피커가 지직거린다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "듣는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_speaker.png",
+    "small": "img/cg_s/cg_speaker.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_speaker",
+   "box": {
+    "open": "event",
+    "day": 0,
+    "phase": "day",
+    "pending": "pro_speaker",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "기둥의 스피커가 지직거린다. \"…열흘 뒤 정오… 선로가 이어진 역에만 섭니다…\" 녹음인데 숨을 쉰다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1듣는다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "듣는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_speaker.png",
+    "small": "img/cg_s/cg_speaker.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "듣는다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "d3_guess": {
+   "event": "d3_guess",
+   "line": {
+    "open": "line",
+    "day": 4,
+    "phase": "trace",
+    "pending": "d3_guess",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "수첩 뒷장이 비어 있다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "불빛 때문인 것 같다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "둘이 서면 흐려지는 듯",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "적지 않는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_notebook_back.png",
+    "small": "img/cg_s/cg_notebook_back.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_notebook_back",
+   "box": {
+    "open": "event",
+    "day": 4,
+    "phase": "trace",
+    "pending": "d3_guess",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "수첩 뒷장이 비어 있다. 어젯밤 일을 어떻게 적나. 사실이 아니라 짐작이다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1불빛 때문인 것 같다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2둘이 서면 흐려지는 듯",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3적지 않는다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "불빛 때문인 것 같다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "둘이 서면 흐려지는 듯",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "적지 않는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_notebook_back.png",
+    "small": "img/cg_s/cg_notebook_back.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "불빛 때문인 것 같다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "둘이 서면 흐려지는 듯",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "적지 않는다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "d4_dohyeon_key": {
+   "event": "d4_dohyeon_key",
+   "line": {
+    "open": "line",
+    "day": 4,
+    "phase": "evening",
+    "pending": "d4_dohyeon_key",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "도현이 바지가 젖은 채 역에 와 있다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "부품을 내고 약속한다",
+      "locked": false,
+      "reason": "",
+      "warn": "소리 내어 한 약속이다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "기다려 달라 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "필요 없다 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_dohyeon.png",
+    "small": "img/cg_s/cg_dohyeon.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_dohyeon",
+   "box": {
+    "open": "event",
+    "day": 4,
+    "phase": "evening",
+    "pending": "d4_dohyeon_key",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "도현이 바지가 젖은 채 역에 와 있다. \"이 열쇠로 통로를 열 수 있어. 낡아서 같이 고쳐야 해.\" 통로가 없으면 열차는 서지 않는다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1부품을 내고 약속한다부품 −2소리 내어 한 약속이다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2기다려 달라 한다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3필요 없다 한다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "부품을 내고 약속한다",
+      "locked": false,
+      "reason": "",
+      "warn": "소리 내어 한 약속이다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "기다려 달라 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "필요 없다 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_dohyeon.png",
+    "small": "img/cg_s/cg_dohyeon.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "부품을 내고 약속한다",
+     "chance": "",
+     "cost": "부품 −2",
+     "warn": "소리 내어 한 약속이다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "기다려 달라 한다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "필요 없다 한다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "d6_dohyeon_back": {
+   "event": "d6_dohyeon_back",
+   "line": {
+    "open": "line",
+    "day": 6,
+    "phase": "evening",
+    "pending": "d6_dohyeon_back",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "도현이 다시 왔다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "부품 셋을 내고 약속한다",
+      "locked": false,
+      "reason": "",
+      "warn": "소리 내어 한 약속이다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "더 기다려 달라 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "통로는 늦어진다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "필요 없다 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_dohyeon.png",
+    "small": "img/cg_s/cg_dohyeon.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_dohyeon",
+   "box": {
+    "open": "event",
+    "day": 6,
+    "phase": "evening",
+    "pending": "d6_dohyeon_back",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "도현이 다시 왔다. 바지가 젖어 있다. \"기다렸지. 부품 셋이면 오늘부터 잇지.\"",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1부품 셋을 내고 약속한다부품 −3소리 내어 한 약속이다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2더 기다려 달라 한다통로는 늦어진다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3필요 없다 한다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "부품 셋을 내고 약속한다",
+      "locked": false,
+      "reason": "",
+      "warn": "소리 내어 한 약속이다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "더 기다려 달라 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "통로는 늦어진다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "필요 없다 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_dohyeon.png",
+    "small": "img/cg_s/cg_dohyeon.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "부품 셋을 내고 약속한다",
+     "chance": "",
+     "cost": "부품 −3",
+     "warn": "소리 내어 한 약속이다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "더 기다려 달라 한다",
+     "chance": "",
+     "cost": "",
+     "warn": "통로는 늦어진다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "필요 없다 한다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "d6_dohyeon_price": {
+   "event": "d6_dohyeon_price",
+   "line": {
+    "open": "line",
+    "day": 7,
+    "phase": "evening",
+    "pending": "d6_dohyeon_price",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "도현이 다시 왔다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "부품 다섯을 내고 약속한다",
+      "locked": false,
+      "reason": "",
+      "warn": "소리 내어 한 약속이다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "더 기다려 달라 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "통로는 늦어진다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "필요 없다 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_dohyeon.png",
+    "small": "img/cg_s/cg_dohyeon.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_dohyeon",
+   "box": {
+    "open": "event",
+    "day": 7,
+    "phase": "evening",
+    "pending": "d6_dohyeon_price",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "도현이 다시 왔다. 바지가 젖어 있다. \"값이 올랐어. 부품 다섯.\"",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1부품 다섯을 내고 약속한다부품 −5소리 내어 한 약속이다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2더 기다려 달라 한다통로는 늦어진다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3필요 없다 한다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "부품 다섯을 내고 약속한다",
+      "locked": false,
+      "reason": "",
+      "warn": "소리 내어 한 약속이다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "더 기다려 달라 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "통로는 늦어진다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "필요 없다 한다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_dohyeon.png",
+    "small": "img/cg_s/cg_dohyeon.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "부품 다섯을 내고 약속한다",
+     "chance": "",
+     "cost": "부품 −5",
+     "warn": "소리 내어 한 약속이다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "더 기다려 달라 한다",
+     "chance": "",
+     "cost": "",
+     "warn": "통로는 늦어진다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "필요 없다 한다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "trip_a1_pharmacy": {
+   "event": "trip_a1_pharmacy",
+   "line": {
+    "open": "line",
+    "day": 2,
+    "phase": "day",
+    "pending": "trip_a1_pharmacy",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "유리문 안쪽에서 약사 가운의 여자가 내다본다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "자물쇠를 딴다",
+      "locked": false,
+      "reason": "",
+      "warn": "실패하면 손이 뚫린다",
+      "taboo": false,
+      "chance": 45
+     },
+     {
+      "label": "약 하나를 밀어 넣는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "지나친다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_pharmacy.png",
+    "small": "img/cg_s/cg_pharmacy.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_pharmacy",
+   "box": {
+    "open": "event",
+    "day": 2,
+    "phase": "day",
+    "pending": "trip_a1_pharmacy",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "유리문 안쪽에서 약사 가운의 여자가 내다본다. \"혼자 어머니를 돌봐요.\" \"뒷문은 열 수 있는데… 낯선 사람한테는.\"",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1자물쇠를 딴다45%실패하면 손이 뚫린다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2약 하나를 밀어 넣는다약 −1",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3지나친다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "자물쇠를 딴다",
+      "locked": false,
+      "reason": "",
+      "warn": "실패하면 손이 뚫린다",
+      "taboo": false,
+      "chance": 45
+     },
+     {
+      "label": "약 하나를 밀어 넣는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "지나친다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_pharmacy.png",
+    "small": "img/cg_s/cg_pharmacy.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "자물쇠를 딴다",
+     "chance": "45%",
+     "cost": "",
+     "warn": "실패하면 손이 뚫린다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "약 하나를 밀어 넣는다",
+     "chance": "",
+     "cost": "약 −1",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "지나친다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "trip_a1_backroom": {
+   "event": "trip_a1_backroom",
+   "line": {
+    "open": "line",
+    "day": 4,
+    "phase": "day",
+    "pending": "trip_a1_backroom",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "약국 뒷방 문이 반쯤 열려 있다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "뒷방을 본다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "보지 않는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/trip_a1_backroom.png",
+    "small": "img/cg_s/trip_a1_backroom.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/trip_a1_backroom",
+   "box": {
+    "open": "event",
+    "day": 4,
+    "phase": "day",
+    "pending": "trip_a1_backroom",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "약국 뒷방 문이 반쯤 열려 있다. 은채는 계산대에 있다. 안에서 냄새가 난다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1뒷방을 본다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2보지 않는다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "뒷방을 본다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "보지 않는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/trip_a1_backroom.png",
+    "small": "img/cg_s/trip_a1_backroom.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "뒷방을 본다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "보지 않는다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "trip_b1_gate": {
+   "event": "trip_b1_gate",
+   "line": {
+    "open": "line",
+    "day": 3,
+    "phase": "day",
+    "pending": "trip_b1_gate",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "허리까지 찬 물 너머 불빛이 깜빡인다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "물에 들어가 끌어낸다",
+      "locked": false,
+      "reason": "",
+      "warn": "실패하면 같이 가라앉는다",
+      "taboo": false,
+      "chance": 55
+     },
+     {
+      "label": "밧줄을 던진다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "지나친다",
+      "locked": false,
+      "reason": "",
+      "warn": "통로는 늦고 비싸진다",
+      "taboo": true,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_gate.png",
+    "small": "img/cg_s/cg_gate.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_gate",
+   "box": {
+    "open": "event",
+    "day": 3,
+    "phase": "day",
+    "pending": "trip_b1_gate",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "허리까지 찬 물 너머 불빛이 깜빡인다. 정비복 남자가 배수관에 발이 낀 채 매달려 있다. \"거기 누구 있소! 물이 차!\"",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1물에 들어가 끌어낸다55%실패하면 같이 가라앉는다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2밧줄을 던진다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3지나친다통로는 늦고 비싸진다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "물에 들어가 끌어낸다",
+      "locked": false,
+      "reason": "",
+      "warn": "실패하면 같이 가라앉는다",
+      "taboo": false,
+      "chance": 55
+     },
+     {
+      "label": "밧줄을 던진다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "지나친다",
+      "locked": false,
+      "reason": "",
+      "warn": "통로는 늦고 비싸진다",
+      "taboo": true,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_gate.png",
+    "small": "img/cg_s/cg_gate.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "물에 들어가 끌어낸다",
+     "chance": "55%",
+     "cost": "",
+     "warn": "실패하면 같이 가라앉는다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "밧줄을 던진다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "지나친다",
+     "chance": "",
+     "cost": "",
+     "warn": "통로는 늦고 비싸진다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "d10_train": {
+   "event": "d10_train",
+   "line": {
+    "open": "line",
+    "day": 10,
+    "phase": "day",
+    "pending": "d10_train",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "정오, 선로 끝에서 불빛이 온다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "탄다",
+      "locked": true,
+      "reason": "식량이(가) 모자라다",
+      "warn": "자리 하나가 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "챙긴 운임으로 탄다",
+      "locked": true,
+      "reason": "챙긴 운임이 없다",
+      "warn": "자리 하나가 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "남는다",
+      "locked": false,
+      "reason": "",
+      "warn": "열차는 기관사 없이 간다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "운임 없이 탄다",
+      "locked": false,
+      "reason": "",
+      "warn": "세어진 사람은 올라간다",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_train.png",
+    "small": "img/cg_s/cg_train.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/cg_train",
+   "box": {
+    "open": "event",
+    "day": 10,
+    "phase": "day",
+    "pending": "d10_train",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "정오, 선로 끝에서 불빛이 온다. 문이 열리고 안은 보이지 않는다. 차장이 손을 내민다. \"명부의 첫 이름은 당신입니다. 다시 모시겠습니까.\"",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1탄다식량 −1 · 물 −1자리 하나가 준다식량이 모자라다",
+      "disabled": true,
+      "lock": "식량이 모자라다"
+     },
+     {
+      "text": "2챙긴 운임으로 탄다자리 하나가 준다챙긴 운임이 없다",
+      "disabled": true,
+      "lock": "챙긴 운임이 없다"
+     },
+     {
+      "text": "3남는다열차는 기관사 없이 간다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "4운임 없이 탄다세어진 사람은 올라간다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "5태울 사람 (0/6)아직 아무도",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "탄다",
+      "locked": true,
+      "reason": "식량이(가) 모자라다",
+      "warn": "자리 하나가 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "챙긴 운임으로 탄다",
+      "locked": true,
+      "reason": "챙긴 운임이 없다",
+      "warn": "자리 하나가 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "남는다",
+      "locked": false,
+      "reason": "",
+      "warn": "열차는 기관사 없이 간다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "운임 없이 탄다",
+      "locked": false,
+      "reason": "",
+      "warn": "세어진 사람은 올라간다",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/cg_train.png",
+    "small": "img/cg_s/cg_train.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "탄다",
+     "chance": "",
+     "cost": "식량 −1 · 물 −1",
+     "warn": "자리 하나가 준다",
+     "hint": "",
+     "lock": "식량이 모자라다",
+     "disabled": true,
+     "tier": ""
+    },
+    {
+     "label": "챙긴 운임으로 탄다",
+     "chance": "",
+     "cost": "",
+     "warn": "자리 하나가 준다",
+     "hint": "",
+     "lock": "챙긴 운임이 없다",
+     "disabled": true,
+     "tier": ""
+    },
+    {
+     "label": "남는다",
+     "chance": "",
+     "cost": "",
+     "warn": "열차는 기관사 없이 간다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "운임 없이 탄다",
+     "chance": "",
+     "cost": "",
+     "warn": "세어진 사람은 올라간다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": "4"
+    },
+    {
+     "label": "태울 사람 (0/6)",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "아직 아무도",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "flood_sick": {
+   "event": "flood_sick",
+   "line": {
+    "open": "line",
+    "day": 3,
+    "phase": "night",
+    "pending": "flood_sick",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "배가 뒤틀린다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "약을 쓴다",
+      "locked": false,
+      "reason": "",
+      "warn": "약이 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "버틴다",
+      "locked": false,
+      "reason": "",
+      "warn": "사흘 안에 약이 없으면",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/flood_sick.png",
+    "small": "img/cg_s/flood_sick.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/flood_sick",
+   "box": {
+    "open": "event",
+    "day": 3,
+    "phase": "night",
+    "pending": "flood_sick",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "배가 뒤틀린다. 선로 쪽에 쪼그려 앉았더니 피가 섞여 나왔다. 약 하나면 잡힌다. 없으면 사흘이다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1약을 쓴다약 −1약이 준다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2버틴다사흘 안에 약이 없으면",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "약을 쓴다",
+      "locked": false,
+      "reason": "",
+      "warn": "약이 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "버틴다",
+      "locked": false,
+      "reason": "",
+      "warn": "사흘 안에 약이 없으면",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/flood_sick.png",
+    "small": "img/cg_s/flood_sick.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "약을 쓴다",
+     "chance": "",
+     "cost": "약 −1",
+     "warn": "약이 준다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "버틴다",
+     "chance": "",
+     "cost": "",
+     "warn": "사흘 안에 약이 없으면",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "d3_rat_fever": {
+   "event": "d3_rat_fever",
+   "line": {
+    "open": "line",
+    "day": 3,
+    "phase": "trace",
+    "pending": "d3_rat_fever",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "쥐에 물린 자리가 검붉게 부었다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "약을 쓴다",
+      "locked": false,
+      "reason": "",
+      "warn": "약이 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "째고 짜낸다",
+      "locked": false,
+      "reason": "",
+      "warn": "잘못 째면 번진다",
+      "taboo": false,
+      "chance": 60
+     },
+     {
+      "label": "둔다",
+      "locked": false,
+      "reason": "",
+      "warn": "열이 몸으로 번진다",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/d3_rat_fever.png",
+    "small": "img/cg_s/d3_rat_fever.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/d3_rat_fever",
+   "box": {
+    "open": "event",
+    "day": 3,
+    "phase": "trace",
+    "pending": "d3_rat_fever",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "쥐에 물린 자리가 검붉게 부었다. 밤새 이가 딱딱 부딪혔다. 열이 머리까지 오른다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1약을 쓴다약 −1약이 준다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2째고 짜낸다60%잘못 째면 번진다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "3둔다열이 몸으로 번진다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "약을 쓴다",
+      "locked": false,
+      "reason": "",
+      "warn": "약이 준다",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "째고 짜낸다",
+      "locked": false,
+      "reason": "",
+      "warn": "잘못 째면 번진다",
+      "taboo": false,
+      "chance": 60
+     },
+     {
+      "label": "둔다",
+      "locked": false,
+      "reason": "",
+      "warn": "열이 몸으로 번진다",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/d3_rat_fever.png",
+    "small": "img/cg_s/d3_rat_fever.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "약을 쓴다",
+     "chance": "",
+     "cost": "약 −1",
+     "warn": "약이 준다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "째고 짜낸다",
+     "chance": "60%",
+     "cost": "",
+     "warn": "잘못 째면 번진다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "둔다",
+     "chance": "",
+     "cost": "",
+     "warn": "열이 몸으로 번진다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "d7_fingers_dead": {
+   "event": "d7_fingers_dead",
+   "line": {
+    "open": "line",
+    "day": 7,
+    "phase": "day",
+    "pending": "d7_fingers_dead",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "남자의 담요를 걷었다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "묻는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "헤드램프를 챙긴다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/d7_fingers_dead.png",
+    "small": "img/cg_s/d7_fingers_dead.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/d7_fingers_dead",
+   "box": {
+    "open": "event",
+    "day": 7,
+    "phase": "day",
+    "pending": "d7_fingers_dead",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "남자의 담요를 걷었다. 왼손 손가락 셋이 반대로 꺾인 채 검게 굳어 있다. 헤드램프는 아직 켜져 있었다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1묻는다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2헤드램프를 챙긴다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "묻는다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "헤드램프를 챙긴다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/d7_fingers_dead.png",
+    "small": "img/cg_s/d7_fingers_dead.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "묻는다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "헤드램프를 챙긴다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "trial_d3_count": {
+   "event": "trial_d3_count",
+   "line": {
+    "open": "line",
+    "day": 3,
+    "phase": "night",
+    "pending": "trial_d3_count",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "밤새 출구 계단 위에서 누군가 숫자를 센다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "숨을 죽인다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "함께 센다",
+      "locked": false,
+      "reason": "",
+      "warn": "소리를 내면 같이 세어진다",
+      "taboo": true,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/trial_d3_count.png",
+    "small": "img/cg_s/trial_d3_count.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/trial_d3_count",
+   "box": {
+    "open": "event",
+    "day": 3,
+    "phase": "night",
+    "pending": "trial_d3_count",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "밤새 출구 계단 위에서 누군가 숫자를 센다. 역에 있는 사람 수에서 멈추지 않는다. 하나 더 센다. 그리고 처음부터 다시 센다. 할머니가 담요 속에서 입을 틀어막는다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1숨을 죽인다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2함께 센다소리를 내면 같이 세어진다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "숨을 죽인다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "함께 센다",
+      "locked": false,
+      "reason": "",
+      "warn": "소리를 내면 같이 세어진다",
+      "taboo": true,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/trial_d3_count.png",
+    "small": "img/cg_s/trial_d3_count.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "숨을 죽인다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "함께 센다",
+     "chance": "",
+     "cost": "",
+     "warn": "소리를 내면 같이 세어진다",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  },
+  "trip_b1_workers": {
+   "event": "trip_b1_workers",
+   "line": {
+    "open": "line",
+    "day": 5,
+    "phase": "day",
+    "pending": "trip_b1_workers",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "배수관 안에 셋이 포개져 있다.",
+    "toast": "",
+    "opts": [],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "신발을 챙긴다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "그대로 둔다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_line": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/trip_b1_workers.png",
+    "small": "img/cg_s/trip_b1_workers.png",
+    "smallShown": false,
+    "bigShown": true
+   },
+   "cgKey": "v4/cg/trip_b1_workers",
+   "box": {
+    "open": "event",
+    "day": 5,
+    "phase": "day",
+    "pending": "trip_b1_workers",
+    "target": null,
+    "who": "",
+    "face": "",
+    "text": "배수관 안에 셋이 포개져 있다. 안전화가 보인다. 맨 위 사람의 안전화를 당기자 발이 같이 빠졌다.",
+    "toast": "",
+    "opts": [
+     {
+      "text": "1신발을 챙긴다",
+      "disabled": false,
+      "lock": ""
+     },
+     {
+      "text": "2그대로 둔다",
+      "disabled": false,
+      "lock": ""
+     }
+    ],
+    "tight": false,
+    "overflow": false,
+    "cg": true,
+    "choices": [
+     {
+      "label": "신발을 챙긴다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     },
+     {
+      "label": "그대로 둔다",
+      "locked": false,
+      "reason": "",
+      "warn": "",
+      "taboo": false,
+      "chance": null
+     }
+    ]
+   },
+   "cg_box": {
+    "hidden": false,
+    "cls": "hassmall",
+    "big": "img/cg/trip_b1_workers.png",
+    "small": "img/cg_s/trip_b1_workers.png",
+    "smallShown": true,
+    "bigShown": false
+   },
+   "subs": [
+    {
+     "label": "신발을 챙긴다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    },
+    {
+     "label": "그대로 둔다",
+     "chance": "",
+     "cost": "",
+     "warn": "",
+     "hint": "",
+     "lock": "",
+     "disabled": false,
+     "tier": ""
+    }
+   ],
+   "cg_ok": true,
+   "console_errors": []
+  }
+ },
+ "table": {
+  "pro_notebook": {
+   "image": "cg_notebook",
+   "key": "v4/cg/cg_notebook",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "pro_gicheol": {
+   "image": "cg_gicheol",
+   "key": "v4/cg/cg_gicheol",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "pro_speaker": {
+   "image": "cg_speaker",
+   "key": "v4/cg/cg_speaker",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "d3_guess": {
+   "image": "cg_notebook_back",
+   "key": "v4/cg/cg_notebook_back",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "d4_dohyeon_key": {
+   "image": "cg_dohyeon",
+   "key": "v4/cg/cg_dohyeon",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "d6_dohyeon_back": {
+   "image": "cg_dohyeon",
+   "key": "v4/cg/cg_dohyeon",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "d6_dohyeon_price": {
+   "image": "cg_dohyeon",
+   "key": "v4/cg/cg_dohyeon",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "trip_a1_pharmacy": {
+   "image": "cg_pharmacy",
+   "key": "v4/cg/cg_pharmacy",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "trip_a1_backroom": {
+   "image": "trip_a1_backroom",
+   "key": "v4/cg/trip_a1_backroom",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "trip_b1_gate": {
+   "image": "cg_gate",
+   "key": "v4/cg/cg_gate",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "d10_train": {
+   "image": "cg_train",
+   "key": "v4/cg/cg_train",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "flood_sick": {
+   "image": "flood_sick",
+   "key": "v4/cg/flood_sick",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "d3_rat_fever": {
+   "image": "d3_rat_fever",
+   "key": "v4/cg/d3_rat_fever",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "d7_fingers_dead": {
+   "image": "d7_fingers_dead",
+   "key": "v4/cg/d7_fingers_dead",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "trial_d3_count": {
+   "image": "trial_d3_count",
+   "key": "v4/cg/trial_d3_count",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  },
+  "trip_b1_workers": {
+   "image": "trip_b1_workers",
+   "key": "v4/cg/trip_b1_workers",
+   "ok": true,
+   "bigW": 384,
+   "smallW": 256
+  }
+ },
+ "table_console_errors": [],
+ "summary": {
+  "fixture_cg_ok": {
+   "pro_notebook": true,
+   "pro_gicheol": true,
+   "pro_speaker": true,
+   "d3_guess": true,
+   "d4_dohyeon_key": true,
+   "d6_dohyeon_back": true,
+   "d6_dohyeon_price": true,
+   "trip_a1_pharmacy": true,
+   "trip_a1_backroom": true,
+   "trip_b1_gate": true,
+   "d10_train": true,
+   "flood_sick": true,
+   "d3_rat_fever": true,
+   "d7_fingers_dead": true,
+   "trial_d3_count": true,
+   "trip_b1_workers": true
+  },
+  "fixture_skip": [],
+  "table_ok": true,
+  "table_bad": {},
+  "console_errors": 0
+ }
+}

@@ -1,0 +1,73 @@
+조합 수 445952
+
+== 확정 사망 조합(열린 선택지 전부 살 확률 0) == 0
+
+== 줄타기 선택지 화면 % < 30 == 0
+
+== 위험 사건(당신을 죽일 수 있는 선택지가 열리는 사건): 가장 높은 살 확률의 최저값 ==
+  pro_stairs               줄타기 0 · 최저 best 1 @ null
+  pro_stairs_b             줄타기 0 · 최저 best 1 @ null
+  d2_night_shutter         줄타기 0 · 최저 best 1 @ null
+  d2_shutter_arm           줄타기 1 · 최저 best 0.8 @ k8 blind0 perm[] rich0 sk01 tgt1 fired0
+  d3_called_you            줄타기 0 · 최저 best 1 @ null
+  d4_spanner               줄타기 1 · 최저 best 0.8 @ k8 blind0 perm[] rich0 sk01 tgt1 fired0
+  d5_flood                 줄타기 1 · 최저 best 0.75 @ k8 blind0 perm[] rich0 sk01 tgt1 fired0
+  d6_shutter               줄타기 1 · 최저 best 1 @ null
+  d6_shutter_b             줄타기 1 · 최저 best 1 @ null
+  d8_patrol_return         줄타기 0 · 최저 best 1 @ null
+  d9_night_stand           줄타기 0 · 최저 best 1 @ null
+  starve_you               줄타기 2 · 최저 best 1 @ null
+  d10_hold                 줄타기 4 · 최저 best 0.6 @ k16 blind0 perm[finger] rich0 sk01 tgt1 fired0
+  d10_train                줄타기 0 · 최저 best 1 @ null
+  d10_walk_weak            줄타기 1 · 최저 best 0.7 @ k8 blind0 perm[] rich0 sk01 tgt1 fired0
+  d10_grab                 줄타기 3 · 최저 best 0.6 @ k16 blind0 perm[] rich0 sk01 tgt1 fired0
+  d10_walk                 줄타기 1 · 최저 best 1 @ null
+  d10_walk_other           줄타기 1 · 최저 best 1 @ null
+  d10_walk_alone           줄타기 0 · 최저 best 1 @ null
+  flood_sick_end           줄타기 0 · 최저 best 1 @ null
+  fever_night_d3           줄타기 0 · 최저 best 1 @ null
+  fever_night              줄타기 1 · 최저 best 0.7 @ k8 blind0 perm[leg,ear] rich0 sk01 tgt1 fired0
+  dawn_strike_d3           줄타기 0 · 최저 best 1 @ null
+  dawn_strike_d6           줄타기 5 · 최저 best 0.6 @ k16 blind0 perm[] rich0 sk01 tgt1 fired0
+  dawn_strike              줄타기 6 · 최저 best 0.6 @ k16 blind0 perm[] rich0 sk01 tgt1 fired0
+  dawn_mob_d3              줄타기 0 · 최저 best 1 @ null
+  dawn_mob_d6              줄타기 4 · 최저 best 0.6 @ k16 blind0 perm[finger] rich0 sk01 tgt1 fired0
+  dawn_mob                 줄타기 6 · 최저 best 0.6 @ k16 blind0 perm[finger] rich0 sk01 tgt1 fired0
+  dawn_dongha2             줄타기 0 · 최저 best 1 @ null
+  called_up_d3             줄타기 0 · 최저 best 1 @ null
+  called_up_d6             줄타기 3 · 최저 best 0.6 @ k16 blind0 perm[] rich0 sk01 tgt1 fired0
+  called_up                줄타기 4 · 최저 best 0.6 @ k16 blind0 perm[] rich0 sk01 tgt1 fired0
+
+== 카르마 ≥ 5 위험 사건에 남은 위험 0 출구 (조합 중 위험 0 출구가 열린 비율) ==
+  pro_stairs               줄타기 0 · 위험0 열림 2816/2816 · [0] 돌아선다
+  pro_stairs_b             줄타기 0 · 위험0 열림 2816/2816 · [0] 돌아선다
+  d2_night_shutter         줄타기 0 · 위험0 열림 2816/2816 · [0] 틈으로 말을 건다 | [2] 셔터를 괸다 | [3] 둔다
+  d2_shutter_arm           줄타기 1 · 위험0 열림 1408/2816 · [0] 통조림을 내밀어 바꾼다
+  d3_called_you            줄타기 0 · 위험0 열림 2816/2816 · [0] 대답하지 않는다
+  d4_spanner               줄타기 1 · 위험0 열림 1408/2816 · [0] 그릇 하나로 입을 막는다
+  d5_flood                 줄타기 1 · 위험0 열림 1408/2816 · [0] 창고를 버리고 뺀다
+  d6_shutter               줄타기 1 · 위험0 열림 2816/2816 · [0] 열쇠를 내준다
+  d6_shutter_b             줄타기 1 · 위험0 열림 2816/2816 · [0] 열쇠를 내준다
+  d8_patrol_return         줄타기 0 · 위험0 열림 2816/2816 · [0] 열쇠를 내준다
+  d9_night_stand           줄타기 0 · 위험0 열림 2816/2816 · [0] 대답하지 않는다
+  starve_you               줄타기 2 · 위험0 열림 2816/2816 · [0] 선로 밑을 뒤진다 | [2] 남의 그릇을 뺏는다 | [1] 창고를 턴다
+  d10_hold                 줄타기 4 · 위험0 열림 0/2816 · 없음
+  d10_train                줄타기 0 · 위험0 열림 2816/2816 · [2] 남는다 | [0] 탄다
+  d10_walk_weak            줄타기 1 · 위험0 열림 1408/2816 · [0] 마지막 빵을 먹는다
+  d10_grab                 줄타기 3 · 위험0 열림 0/2816 · 없음
+  d10_walk                 줄타기 1 · 위험0 열림 2816/2816 · [0] 동하를 붙잡는다
+  d10_walk_other           줄타기 1 · 위험0 열림 2816/2816 · [0] 붙잡는다
+  d10_walk_alone           줄타기 0 · 위험0 열림 2816/2816 · [0] 대답하지 않는다
+  flood_sick_end           줄타기 0 · 위험0 열림 1408/1408 · [0] 약을 쓴다 | [2] 굶으며 버틴다
+  fever_night_d3           줄타기 0 · 위험0 열림 2816/2816 · [5] 위에 대고 빈다 | [6] 남의 담요를 끌어온다 | [0] 약을 쓴다 | [4] 젖은 천으로 식힌다
+  fever_night              줄타기 1 · 위험0 열림 2112/2816 · [5] 위에 대고 빈다 | [0] 약을 쓴다 | [4] 젖은 천으로 식힌다
+  dawn_strike_d3           줄타기 0 · 위험0 열림 2816/2816 · [1] 맞고 버틴다 | [5] 옆 담요를 가리킨다 | [0] 그릇 둘을 내민다
+  dawn_strike_d6           줄타기 5 · 위험0 열림 1408/2816 · [0] 그릇 둘을 내민다
+  dawn_strike              줄타기 6 · 위험0 열림 0/2816 · 없음
+  dawn_mob_d3              줄타기 0 · 위험0 열림 2816/2816 · [1] 맞고 버틴다 | [2] 손가락 하나로 갚는다 | [3] 다른 사람을 가리킨다 | [0] 가진 것을 다 내놓는다
+  dawn_mob_d6              줄타기 4 · 위험0 열림 2112/2816 · [2] 손가락 하나로 갚는다 | [0] 가진 것을 다 내놓는다
+  dawn_mob                 줄타기 6 · 위험0 열림 0/2816 · 없음
+  dawn_dongha2             줄타기 0 · 위험0 열림 2816/2816 · [4] 파이프를 손으로 받는다 | [5] 무릎을 꿇는다 | [0] 그릇 둘을 내민다
+  called_up_d3             줄타기 0 · 위험0 열림 2816/2816 · [2] 손등을 깨물며 버틴다 | [3] 다른 이름을 댄다 | [0] 불을 키우고 밤을 샌다
+  called_up_d6             줄타기 3 · 위험0 열림 1408/2816 · [0] 불을 키우고 밤을 샌다
+  called_up                줄타기 4 · 위험0 열림 0/2816 · 없음

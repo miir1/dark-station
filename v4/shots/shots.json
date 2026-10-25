@@ -34,7 +34,7 @@
   ],
   "console_errors": [],
   "auto": [
-   "[ds4 auto] morning3 stop reached=1 D3 trace map=station open=- you=home food=2 | D1 ration trial_d1_bowls → 똑같이 조금씩 / D1 day d1_shutter_knock → 두드려 답한다 / D1 day trip_b1_debris → 지나간다 / D1 evening d1_names_quiet → 적는다 / D1 night d1_night_storage → 불가에 있는다 / D2 trace d2_key → 받는다 / D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food3 water7 hunger4] / D2 day trip_a1_phone → 카드를 챙긴다 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 틈으로 말을 건다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food2 water4 hunger2]"
+   "[ds4 auto] morning3 stop reached=1 D3 trace map=station open=- you=home food=2 | D2 trace d2_soonrye_shutter → 본다 / D2 trace d2_rat_blanket → 본다 / [D2 food6 water8 hunger4] / D2 day trip_a1_stall → 좌판을 눈여겨본다 / D2 원정 mall_a1 조사 phonebooth / D2 day trip_a1_phone → 카드를 챙긴다 / D2 원정 mall_a1 조사 drawer_a1 / D2 원정 mall_a1 조사 shelf_a1 / D2 원정 mall_a1 조사 locker_a1 / D2 원정 mall_a1 → 역 / D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 틈으로 말을 건다 / D2 night d2_night_count → 숨을 참는다 / D3 trace d3_soonrye_opens → 본다 / D3 trace d3_bottle → 내 물을 순례에게 / [D3 food2 water3 hunger2]"
   ]
  },
  {

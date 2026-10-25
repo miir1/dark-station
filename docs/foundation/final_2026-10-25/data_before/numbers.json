@@ -1,0 +1,493 @@
+[
+  {
+    "id": "food",
+    "owner": "world",
+    "min": 0,
+    "max": 16,
+    "start": 6,
+    "perDay": 0,
+    "visible": "always",
+    "name": "식량"
+  },
+  {
+    "id": "water",
+    "owner": "world",
+    "min": 0,
+    "max": 16,
+    "start": 6,
+    "perDay": 0,
+    "visible": "always",
+    "name": "물"
+  },
+  {
+    "id": "fuel",
+    "owner": "world",
+    "min": 0,
+    "max": 12,
+    "start": 8,
+    "perDay": -1,
+    "visible": "always",
+    "name": "땔감"
+  },
+  {
+    "id": "fog",
+    "owner": "world",
+    "min": 0,
+    "max": 8,
+    "start": 0,
+    "perDay": 0,
+    "visible": "inspect"
+  },
+  {
+    "id": "flood",
+    "owner": "world",
+    "min": 0,
+    "max": 8,
+    "start": 1,
+    "perDay": 0,
+    "visible": "inspect"
+  },
+  {
+    "id": "day",
+    "owner": "world",
+    "min": 0,
+    "max": 10,
+    "start": 0,
+    "perDay": 1,
+    "visible": "always"
+  },
+  {
+    "id": "parts",
+    "owner": "world",
+    "min": 0,
+    "max": 18,
+    "start": 4,
+    "perDay": 0,
+    "visible": "inspect",
+    "name": "부품"
+  },
+  {
+    "id": "meds",
+    "owner": "world",
+    "min": 0,
+    "max": 6,
+    "start": 1,
+    "perDay": 0,
+    "visible": "inspect",
+    "name": "약"
+  },
+  {
+    "id": "hunger",
+    "owner": "person",
+    "min": 0,
+    "max": 10,
+    "start": 3,
+    "perDay": 2,
+    "visible": "inspect"
+  },
+  {
+    "id": "thirst",
+    "owner": "person",
+    "min": 0,
+    "max": 10,
+    "start": 3,
+    "perDay": 2,
+    "visible": "inspect"
+  },
+  {
+    "id": "fear",
+    "owner": "person",
+    "min": 0,
+    "max": 10,
+    "start": 4,
+    "perDay": 0,
+    "visible": "inspect"
+  },
+  {
+    "id": "injury",
+    "owner": "person",
+    "min": 0,
+    "max": 3,
+    "start": 0,
+    "perDay": 0,
+    "visible": "inspect"
+  },
+  {
+    "id": "counted",
+    "owner": "person",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": 0,
+    "visible": "inspect"
+  },
+  {
+    "id": "finger",
+    "owner": "person",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": 0,
+    "visible": "inspect"
+  },
+  {
+    "id": "leg",
+    "owner": "person",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": 0,
+    "visible": "inspect"
+  },
+  {
+    "id": "ear",
+    "owner": "person",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": 0,
+    "visible": "inspect"
+  },
+  {
+    "id": "share",
+    "owner": "world",
+    "min": -9,
+    "max": 9,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "hand",
+    "owner": "world",
+    "min": -9,
+    "max": 9,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "name",
+    "owner": "world",
+    "min": -9,
+    "max": 9,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "ration_food",
+    "owner": "world",
+    "min": 0,
+    "max": 3,
+    "start": 1,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "ration_water",
+    "owner": "world",
+    "min": 0,
+    "max": 3,
+    "start": 1,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "ration_hunger",
+    "owner": "world",
+    "min": -9,
+    "max": 0,
+    "start": -4,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "ration_thirst",
+    "owner": "world",
+    "min": -9,
+    "max": 0,
+    "start": -4,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "max_per_night",
+    "owner": "world",
+    "min": 1,
+    "max": 4,
+    "start": 2,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "treat_meds",
+    "owner": "world",
+    "min": 0,
+    "max": 3,
+    "start": 1,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "treat_injury",
+    "owner": "world",
+    "min": -3,
+    "max": 0,
+    "start": -1,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "grudge",
+    "owner": "person",
+    "min": 0,
+    "max": 10,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "trip_party",
+    "owner": "world",
+    "min": 0,
+    "max": 3,
+    "start": 2,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "flood_days",
+    "owner": "person",
+    "min": 0,
+    "max": 9,
+    "start": 0,
+    "perDay": 1,
+    "visible": "never"
+  },
+  {
+    "id": "karma",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_k1",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 5,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_k2",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 8,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_k3",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 12,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_k4",
+    "owner": "world",
+    "min": 0,
+    "max": 30,
+    "start": 16,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_pay_1",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 92,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_pay_2",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 88,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_pay_3",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 80,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_pay_4",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 70,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_endure_1",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 88,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_endure_2",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 80,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_endure_3",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 70,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_endure_4",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 60,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_point_1",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 82,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_point_2",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 70,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_point_3",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 55,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_point_4",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 40,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_fight_1",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_fight_2",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 0,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_fight_3",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 5,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_fight_4",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 10,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_floor",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 30,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_blind_pay",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 85,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_blind_endure",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 75,
+    "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "rope_blind_point",
+    "owner": "world",
+    "min": 0,
+    "max": 100,
+    "start": 65,
+    "perDay": 0,
+    "visible": "never"
+  }
+]

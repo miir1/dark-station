@@ -408,7 +408,7 @@
   }
 
   // 검사 = { errors, warnings }. errors 가 하나라도 있으면 표를 읽지 않는다(load 가 던진다). warnings 는 읽되 알린다.
-  //   warnings[].kind: firstDeath(1번 자리 죽음) · reasonWord(이유 낱말) · owner(주인 없는 물건이 남의 머리맡 묶음에) · holdsRefill(다시 차는 수납, P1-11) · noExit(확정 사망 길, E4 10-24 · R1) · ropeFail(줄타기 실패 글 없음, 10-24 tightrope)
+  //   warnings[].kind: firstDeath(1번 자리 죽음) · reasonWord(이유 낱말) · owner(주인 없는 물건이 남의 머리맡 묶음에) · holdsRefill(다시 차는 수납, P1-11) · unknownRef(조건식의 없는 물건·사람·상태, 10-25) · unplaced(지도에 없는 수납·원정 조사 물건, 10-25) · noExit(확정 사망 길, E4 10-24 · R1) · ropeFail(줄타기 실패 글 없음, 10-24 tightrope)
   function validate(tables) { return check(tables).errors; }
   function warnings(tables) { return check(tables).warnings; }
   function check(tables) {
@@ -651,6 +651,47 @@
       if (!isObj(o.holds)) return;
       reason('objects', i, o.id, 'holds.text', o.holds.text);
       if (o.resetOn === 'morning' || o.resetOn === 'inspect') warn('objects', i, o.id, 'holdsRefill', `resetOn "${o.resetOn}": 연 수납이 닫힌 상태로 돌아가 다시 찬다 — 위험 없이 매일 얻는 샘이 된다. 한 번 연 것은 열린 채 두려면 never`);
+    });
+    //  unknownRef (10-25 최종판 · P1-11): 사건 when·req.cond·swap.when · 단계 skipIf 의 inspect:/trace: 가 물건표에 없는 물건, talk:/alive: 가 인물표에 없는 사람,
+    //              또는 trace:물건==값(!=값)의 값이 그 물건 states 에 없다 — 그 조건은 늘 같은 값이라 사건이 영영 안 걸리거나 늘 걸린다(이름 오타 하나로 원정 수납 사건이 조용히 사라진다)
+    const condRefs = (src, at, w) => {
+      if (typeof src !== 'string' || !src.trim()) return;
+      let tree; try { tree = C.parse(src); } catch (e) { return; }   // 문법 오류는 위에서 오류로 보고됨
+      const seen = new Set();
+      const walk = (t) => {
+        if (!t || typeof t !== 'object') return;
+        if ((t.op === 'cmp' || t.op === 'truthy') && typeof t.name === 'string') {
+          const p = C.prefixOf(t.name), id = t.name.slice(p.length + 1);
+          const o = ctx.objects[id];
+          let msg = '';
+          if ((p === 'inspect' || p === 'trace') && !o) msg = `"${t.name}" — objects 표에 없는 물건`;
+          else if ((p === 'talk' || p === 'alive') && !ctx.people[id]) msg = `"${t.name}" — people 표에 없는 사람`;
+          else if (p === 'trace' && t.op === 'cmp' && (t.cmp === '==' || t.cmp === '!=') && typeof t.value === 'string' && Array.isArray(o.states) && !o.states.includes(t.value)) msg = `"${t.name}${t.cmp}${t.value}" — ${id} 의 states(${o.states.join('/')})에 없는 상태`;
+          if (msg && !seen.has(msg)) { seen.add(msg); w(`${at}: ${msg}`); }
+        }
+        walk(t.a); walk(t.b);
+      };
+      walk(tree);
+    };
+    tables.events.forEach((ev, i) => {
+      const w = (m) => warn('events', i, ev.id, 'unknownRef', m);
+      condRefs(ev.when, 'when', w);
+      (Array.isArray(ev.choices) ? ev.choices : []).forEach((c, k) => {
+        if (!isObj(c)) return;
+        if (isObj(c.req)) condRefs(c.req.cond, `choices[${k}].req.cond`, w);
+        swapsOf(c).forEach((sw, j) => { if (isObj(sw)) condRefs(sw.when, `choices[${k}].swap[${j}].when`, w); });
+      });
+    });
+    tables.phases.forEach((p, i) => condRefs(p.skipIf, 'skipIf', (m) => warn('phases', i, p.id, 'unknownRef', m)));
+    //  unplaced (10-25 · P1-11): 수납(holds)이 있는 물건, 또는 조사로 걸리는 원정 사건(kind trip · when 에 inspect:물건)이 가리키는 물건이 어느 지도(maps[].objects)에도 없다 — 걸어가 열 수 없다
+    const placed = new Set();
+    tables.maps.forEach((m) => (Array.isArray(m.objects) ? m.objects : []).forEach((ob) => { if (isObj(ob)) placed.add(ob.id); }));
+    const tripGated = new Set();
+    tables.events.forEach((ev) => { if (ev.kind !== 'trip' || typeof ev.when !== 'string') return; try { for (const n of C.names(C.parse(ev.when))) if (C.prefixOf(n) === 'inspect') tripGated.add(n.slice(8)); } catch (e) { /* 위에서 보고됨 */ } });
+    tables.objects.forEach((o, i) => {
+      const holds = isObj(o.holds) && Object.keys(o.holds).length > 0;   // 빈 {} 는 없는 것
+      if (placed.has(o.id) || !(holds || tripGated.has(o.id))) return;
+      warn('objects', i, o.id, 'unplaced', `${holds ? '수납 내용(holds)이 있는' : '조사로 걸리는 원정 사건이 가리키는'} 물건인데 어느 지도에도 없다 — 걸어가 열 수 없다 (maps[].objects 에 놓는다)`);
     });
     return done();
   }

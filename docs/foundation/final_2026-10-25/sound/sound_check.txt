@@ -1,0 +1,9 @@
+gate     OK   13/13
+plain    OK   3/3
+walk     OK   7/7
+knock    OK   4/4
+run      OK   13/13
+death    OK   4/4
+capture  OK   2/2
+parity   OK   3/3
+loud     OK   4/4

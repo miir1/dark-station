@@ -1,0 +1,6 @@
+run: 24s {"ran_to_D9_or_more": true, "nodes_created": true, "pick": true, "roll_ok_or_fail": true, "inspect": true, "open": true, "event_hook": true, "broadcast_static": true, "hurt": true, "bubble": true, "night_ambience": true, "trip_water": true, "trip_furniture_open": true}
+loud: 10s {"sfx_not_loud": true, "amb_quiet": true, "all_render": true, "console_errors_0": true}
+gate: 25s {"no_context_before_input": true, "esc_is_not_input": true, "one_context_after_click": true, "nodes_created": true, "pick_sound": true, "metal_steps": true, "open_sounds": true, "m_toggles": true, "menu_level_and_onoff": true, "saved_to_localStorage": true, "hidden_quiets": true, "visible_resumes": true, "console_errors_0": true}
+run      OK   13/13
+loud     OK   4/4
+gate     OK   13/13

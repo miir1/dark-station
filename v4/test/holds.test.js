@@ -215,3 +215,226 @@ test('봇의 원정 지도 이름(TRIP_MAPS)이 화면 game.js 의 TRIP_MAPS 와
   const db = T.loadDir(path.join(__dirname, '..', 'data'));
   for (const ids of Object.values(B.TRIP_MAPS)) for (const id of ids) assert.ok(db.maps[id], `maps 에 ${id}`);
 });
+
+// ── 10-25 최종판: 원정 수납(P1-11) 데이터가 들어오기 전 엔진 흐름 마무리 ──
+const ST = require('../sim/stats.js');
+const kill = { text: '사물함 문이 목을 쳤다.', effects: [{ verb: 'kill', who: 'you' }] };
+// 픽스처 + 2층 지도(drain_b2) + 1층 위험한 상자(t_crate: holds 없음 — 내용은 사건 결과) + 2층 서랍장(t_drawer: holds)
+function tripTables(edit) {
+  return holdsTables((t) => {
+    t.objects.push({ id: 't_crate', name: '못 박힌 상자', states: ['closed', 'open'], solid: 1, resetOn: 'never' });
+    t.objects.push({ id: 't_drawer', name: '서랍장', states: ['closed', 'open'], solid: 1, resetOn: 'never', holds: { text: '붕대 한 묶음.', effects: [{ verb: 'number', id: 'meds', n: 1 }] } });
+    t.events.push(ev('trip_t_crate', 'trip', 'region==B & floor==1 & inspect:t_crate & trace:t_crate==closed', [
+      pass('지나간다'),
+      { label: '비틀어 연다', check: { skill: 'tech', base: 50 }, warn: '손을 다칠 수 있다',
+        ok: { text: '통조림 셋.', effects: [{ verb: 'number', id: 'food', n: 3 }, { verb: 'trace', id: 't_crate', state: 'open' }] },
+        fail: { text: '못에 손바닥이 꿰였다.', effects: [{ verb: 'injure', who: 'you', n: 1 }] } },
+    ]));
+    t.maps.find((m) => m.id === 'drain_b1').objects.push({ id: 't_crate', x: 1, y: 1 });
+    t.maps.push({ id: 'drain_b2', displayName: '배수로 아래', rows: ['######', '#....#', '######'], start: [1, 1], dark: 0.4, objects: [{ id: 't_drawer', x: 3, y: 1 }] });
+    if (edit) edit(t);
+  });
+}
+// D<d> 낮(걸린 사건 없음)까지 — 사건은 첫 선택지(지나간다·본다)로 넘긴다
+function toDay(s, db, d) {
+  let g = 0;
+  while (!(s.day === d && s.phase === 'day' && !s.pending) && !s.ended && g++ < 200) { if (s.pending) E.dispatch(s, { type: 'choose', i: 0 }, db); else E.dispatch(s, { type: 'next' }, db); }
+  assert.deepStrictEqual([s.day, s.phase, s.pending, !!s.ended], [d, 'day', null, false], `D${d} 낮 도착`);
+  return s;
+}
+// 원정을 나가 도착 사건(픽스처 trip_a1_stall — day>=1 이라 어느 층에나)을 '지나간다'로 넘긴다
+function walkIn(s, db, a) { assert.ok(E.dispatch(s, Object.assign({ type: 'trip', walk: true }, a), db).ok); while (s.pending) E.dispatch(s, { type: 'choose', i: 1 }, db); return s; }
+// 판정 사건을 고르는데 결과(성공/실패)를 정해 둔다: 같은 상태를 복사해 난수만 바꿔 본다
+function chooseWith(s, db, i, want) {
+  for (let k = 0; k < 200; k++) {
+    const c = clone(s); c.rng = (s.rng + k * 2654435761) >>> 0;
+    assert.ok(E.dispatch(c, { type: 'choose', i }, db).ok);
+    if (c.lastResult.roll && c.lastResult.roll.success === want) return c;
+  }
+  throw new Error('원하는 판정 결과를 못 찾음');
+}
+
+test('10-25 원정 층에서 수납을 열어 얻는다: 1층 사물함 → 2층 서랍장 · 새 층에 들어서면 found 를 지운다 · 연 수납 수(stats.holds) · 봇 measure·aggregate', () => {
+  const db = T.load(tripTables());
+  assert.deepStrictEqual(errs(tripTables()), []);
+  const s = walkIn(dayOne(db, 11), db, { region: 'B', floor: 1 });
+  const food = s.world.food, meds = s.world.meds;
+  assert.strictEqual(s.stats.holds, 0, '새 판 0');
+  E.dispatch(s, { type: 'inspect', object: 't_locker' }, db);
+  assert.deepStrictEqual([s.world.food, s.found && s.found.object, s.stats.holds], [food + 2, 't_locker', 1], '1층에서 열어 얻는다');
+  walkIn(s, db, { floor: 2 });
+  assert.strictEqual(s.trip.floor, 2);
+  assert.strictEqual(s.found, null, '새 층에 들어서면 윗층에서 연 수납 결과는 지운다');
+  assert.strictEqual(E.view(s, db).found, null);
+  assert.ok(E.closedHolds(s, db, 't_drawer'));
+  E.dispatch(s, { type: 'inspect', object: 't_drawer' }, db);
+  assert.deepStrictEqual([s.world.meds, s.traces.t_drawer.st, s.found.text, s.stats.holds], [meds + 1, 'open', '붕대 한 묶음.', 2], '2층 서랍장');
+  // 봇 원정 지도 뒤지기(2층 지도 drain_b2 도) · 집계: 원정 조사 물건 · 연 수납 · 조사로 걸린 원정 사건
+  const b = walkIn(dayOne(db, 12), db, { region: 'B', floor: 1 });
+  const trace = { choices: 0, trips: 1, known: {}, hunger: [], d3: null };
+  assert.strictEqual(B.tripSearch(b, db, B.POLICIES.balanced, trace), 4, '1층: 사물함·드럼통·수납장·상자');
+  walkIn(b, db, { floor: 2 });
+  assert.strictEqual(B.tripSearch(b, db, B.POLICIES.balanced, trace), 1, '2층: 서랍장');
+  assert.strictEqual(b.traces.t_drawer.st, 'open');
+  b.ended = { why: 'train', identity: null, ledger: [], cause: null };
+  const m = ST.measure(db, b, trace);
+  assert.deepStrictEqual([m.searched, m.holdsOpened], [5, 3], '조사 5 · 연 수납 3(사물함·드럼통·서랍장 — 수납장·상자는 사건이 쥔다)');
+  assert.strictEqual(m.tripGated, (b.fired.trip_t_cabinet || 0) + (b.fired.trip_t_crate || 0), '조사로 걸린 원정 사건 = 고른 횟수');
+  assert.ok(m.tripGated >= 2, '수납장·상자 사건을 골랐다');
+  const a = ST.aggregate(db, [m, Object.assign({}, m, { searched: 1, holdsOpened: 1, tripGated: 0 })]);
+  assert.deepStrictEqual([a.searched, a.holdsOpened, a.tripGated], [3, 2, m.tripGated / 2]);
+  // 옛 저장(stats.holds 없음)은 0
+  const old = clone(s); delete old.stats.holds;
+  assert.strictEqual(E.normalize(old, db).stats.holds, 0);
+});
+
+test('10-25 위험한 수납 판정: 조사하면 원정 사건(비틀어 연다 tech 판정)이 걸린다 — 성공 = 내용·열림 · 실패 = 다침·닫힌 채 · 같은 원정에서 다시 못 함 · 다음 날 원정에서 다시 판정', () => {
+  const db = T.load(tripTables());
+  const s = walkIn(dayOne(db, 21), db, { region: 'B', floor: 1 });
+  E.dispatch(s, { type: 'inspect', object: 't_crate' }, db);
+  assert.strictEqual(s.pending && s.pending.id, 'trip_t_crate', '조사로 걸린다(도착 때가 아니다)');
+  const v = E.eventView(s, db);
+  assert.ok(Number.isFinite(v.choices[1].chance) && v.choices[1].chance > 0 && v.choices[1].chance < 100, `판정 % 가 보인다 (${v.choices[1].chance})`);
+  // 성공
+  const food = s.world.food;
+  const ok = chooseWith(s, db, 1, true);
+  assert.deepStrictEqual([ok.world.food, ok.traces.t_crate.st, ok.pending, ok.found], [food + 3, 'open', null, null], '성공: 사건 결과가 내용 — found 는 수납(holds) 몫이라 비어 있다');
+  E.dispatch(ok, { type: 'inspect', object: 't_crate' }, db);
+  assert.deepStrictEqual([ok.pending, ok.world.food], [null, food + 3], '연 상자는 다시 조사해도 아무것도 없다');
+  // 실패
+  const inj = s.people.you.n.injury || 0;
+  const bad = chooseWith(s, db, 1, false);
+  assert.deepStrictEqual([bad.people.you.n.injury, bad.traces.t_crate.st, bad.world.food], [inj + 1, 'closed', food], '실패: 다치고 닫힌 채');
+  assert.ok(bad.hurt.some((h) => h.src.includes('trip_t_crate')), '부상 출처 = 그 사건(원인 사건 통계)');
+  E.dispatch(bad, { type: 'inspect', object: 't_crate' }, db);
+  assert.deepStrictEqual([bad.pending, bad.world.food, bad.traces.t_crate.st], [null, food, 'closed'], '같은 원정에서는 다시 판정하지 못한다');
+  // 다음 날 원정에서 다시 판정
+  toDay(bad, db, 2);
+  walkIn(bad, db, { region: 'B', floor: 1 });
+  E.dispatch(bad, { type: 'inspect', object: 't_crate' }, db);
+  assert.strictEqual(bad.pending && bad.pending.id, 'trip_t_crate', '다음 원정에서 다시 걸린다');
+});
+
+test('10-25 위험한 수납 판정 — 실패가 당신을 죽이면: 사인 = 그 원정 사건 · 경고 있음 · 확정 사망 아님 · 죽음 판정 집계', () => {
+  const db = T.load(tripTables((t) => {
+    const c = t.events.find((e) => e.id === 'trip_t_crate').choices[1];
+    c.warn = '못 열면 끝이다'; c.fail = kill;
+  }));
+  assert.deepStrictEqual(T.warnings(tripTables((t) => { t.events.find((e) => e.id === 'trip_t_crate').choices[1].fail = kill; })).filter((w) => w.id === 'trip_t_crate').map((w) => w.kind), [], '지나간다가 1번 · 출구가 있다 — firstDeath·noExit 없음');
+  const s = walkIn(dayOne(db, 31), db, { region: 'B', floor: 1 });
+  E.dispatch(s, { type: 'inspect', object: 't_crate' }, db);
+  const dead = chooseWith(s, db, 1, false);
+  assert.strictEqual(dead.people.you.status, 'dead');
+  assert.ok(dead.ended, '판이 끝난다');
+  assert.deepStrictEqual([dead.ended.cause.event, dead.ended.cause.warned, dead.ended.cause.forced], ['trip_t_crate', true, false]);
+  assert.deepStrictEqual([dead.stats.deathRolls, dead.stats.closeCalls], [1, 0]);
+  const m = ST.measure(db, dead, { trips: 1 });
+  assert.deepStrictEqual([m.dead, m.causeKey, m.warned, m.forced], [true, 'trip_t_crate', true, false]);
+});
+
+test('10-25 같은 수납 두 번 열기: 같은 원정 · 다음 날 원정 · 저장 왕복 뒤에도 한 번만 얻는다', () => {
+  const db = T.load(tripTables());
+  const s = walkIn(dayOne(db, 41), db, { region: 'B', floor: 1 });
+  const food = s.world.food;
+  E.dispatch(s, { type: 'inspect', object: 't_locker' }, db);
+  E.dispatch(s, { type: 'inspect', object: 't_locker' }, db);
+  assert.deepStrictEqual([s.world.food, s.stats.holds, s.found], [food + 2, 1, null], '같은 원정에서 두 번째는 아무것도 없다');
+  const back = E.normalize(JSON.parse(JSON.stringify(s)), db);
+  E.dispatch(back, { type: 'inspect', object: 't_locker' }, db);
+  assert.deepStrictEqual([back.world.food, back.stats.holds, back.traces.t_locker.st], [food + 2, 1, 'open'], '저장 왕복 뒤에도 열린 채');
+  toDay(back, db, 2);
+  walkIn(back, db, { region: 'B', floor: 1 });
+  const f2 = back.world.food;
+  E.dispatch(back, { type: 'inspect', object: 't_locker' }, db);
+  assert.deepStrictEqual([back.world.food, back.stats.holds, back.traces.t_locker.st, back.found], [f2, 1, 'open', null], '다음 날 원정에서도 다시 차지 않는다');
+  assert.ok(!E.closedHolds(back, db, 't_locker'), '봇 원정 뒤지기도 연 수납은 건너뛴다');
+});
+
+test('10-25 사건이 쥐는 수납 손질: 원정 아닐 때 원정 사건은 쥐지 않는다 · 아직 안 고른 사건이 대상을 못 정하면 쥐지 않는다(고른 뒤엔 쥔다)', () => {
+  // t_box: 수납(holds) + 지역·층 조건이 없는 원정 사건(조사로 걸림) · t_note: 수납 + 대상이 기철인 원정 사건
+  const db = T.load(tripTables((t) => {
+    t.objects.push({ id: 't_box', name: '철제 함', states: ['closed', 'open'], solid: 1, resetOn: 'never', holds: { effects: { food: 1 } } });
+    t.objects.push({ id: 't_note', name: '젖은 공책', states: ['closed', 'open'], solid: 0, resetOn: 'never', holds: { effects: { water: 1 } } });
+    t.events.push(ev('trip_t_box', 'trip', 'inspect:t_box & trace:t_box==closed', [pass('둔다'), pass('연다', { effects: { food: 2, trace: { t_box: 'open' } } })]));
+    t.events.push(ev('trip_t_note', 'trip', 'region==B & inspect:t_note & trace:t_note==closed', [pass('둔다'), pass('이름을 읽는다', { effects: { water: 2, trace: { t_note: 'open' } } })], { target: 'gicheol' }));
+    t.maps.find((m) => m.id === 'drain_b2').objects.push({ id: 't_box', x: 1, y: 1 }, { id: 't_note', x: 2, y: 1 });   // 놓는 자리만(배치 검사) — 엔진은 원정 중 자리를 보지 않는다
+  }));
+  // 원정이 아니면(역에서 조사) 원정 사건은 안 걸리고 수납이 열린다 — 전에는 사건이 '쥐고' 있어 아무 일도 없었다
+  const a = dayOne(db, 51);
+  const food = a.world.food;
+  E.dispatch(a, { type: 'inspect', object: 't_box' }, db);
+  assert.deepStrictEqual([a.pending, a.world.food, a.traces.t_box.st], [null, food + 1, 'open']);
+  // 원정 중이면 원정 사건이 먼저 · 거절하면 그 원정 동안 수납은 쥔 채
+  const b = walkIn(dayOne(db, 52), db, { region: 'B', floor: 1 });
+  E.dispatch(b, { type: 'inspect', object: 't_box' }, db);
+  assert.strictEqual(b.pending && b.pending.id, 'trip_t_box');
+  E.dispatch(b, { type: 'choose', i: 0 }, db);
+  const fb = b.world.food;
+  E.dispatch(b, { type: 'inspect', object: 't_box' }, db);
+  assert.deepStrictEqual([b.pending, b.world.food, b.traces.t_box.st], [null, fb, 'closed'], '거절한 뒤 다시 조사해도 위험 없이 꺼내지 못한다');
+  // 대상(기철)이 역에 있으면 사건이 걸린다
+  const c = walkIn(dayOne(db, 53), db, { region: 'B', floor: 1 });
+  assert.strictEqual(c.people.gicheol.status, 'home');
+  E.dispatch(c, { type: 'inspect', object: 't_note' }, db);
+  assert.deepStrictEqual([c.pending && c.pending.id, c.pending && c.pending.target], ['trip_t_note', 'gicheol']);
+  E.dispatch(c, { type: 'choose', i: 0 }, db);
+  c.people.gicheol.status = 'dead';
+  const wc = c.world.water;
+  E.dispatch(c, { type: 'inspect', object: 't_note' }, db);
+  assert.deepStrictEqual([c.pending, c.world.water, c.traces.t_note.st], [null, wc, 'closed'], '이미 고른 사건은 대상이 사라져도 쥔다(거절한 뒤 새지 않는다)');
+  // 대상이 없으면(기철이 죽었다) 아직 안 고른 사건은 걸 수 없으니 쥐지 않는다 — 수납이 기본 흐름 (난수도 쓰지 않는다)
+  const d = walkIn(dayOne(db, 54), db, { region: 'B', floor: 1 });
+  d.people.gicheol.status = 'dead';
+  const wd = d.world.water, rng = d.rng;
+  E.dispatch(d, { type: 'inspect', object: 't_note' }, db);
+  assert.deepStrictEqual([d.pending, d.world.water, d.traces.t_note.st, d.rng], [null, wd + 1, 'open', rng]);
+});
+
+test('10-25 옛 저장 정규화: 표에 없는 물건의 흔적은 버리고 · 지금 states 에 없는 상태는 첫 상태로 — 닫힌 수납으로 다시 열 수 있다', () => {
+  const db = T.load(tripTables());
+  const s = dayOne(db, 61);
+  const raw = JSON.parse(JSON.stringify(s));
+  raw.traces.t_locker = { st: 'normal', day: 1, by: null, seen: true, late: 0 };   // 옛 표: 사물함이 'normal' 하나뿐이던 때
+  raw.traces.gone_thing = { st: 'x', day: 0, by: null, seen: false, late: 0 };
+  raw.traces.t_drum = 'broken';
+  const o = E.normalize(raw, db);
+  assert.deepStrictEqual(o.traces.t_locker, { st: 'closed', day: 0, by: null, seen: false, late: 0 });
+  assert.strictEqual(o.traces.gone_thing, undefined);
+  assert.strictEqual(o.traces.t_drum.st, 'shut');
+  assert.ok(!E.view(o, db).traces.some((t) => t.id === 'gone_thing'));
+  assert.ok(E.closedHolds(o, db, 't_locker'));
+  const food = o.world.food;
+  E.dispatch(o, { type: 'inspect', object: 't_locker' }, db);
+  assert.strictEqual(o.world.food, food + 2);
+  // 바른 흔적은 그대로
+  assert.deepStrictEqual(E.normalize(JSON.parse(JSON.stringify(o)), db).traces.t_locker.st, 'open');
+});
+
+test('10-25 표 경고 unknownRef(조건식의 없는 물건·사람·상태) · unplaced(지도에 없는 수납·원정 조사 물건) — 실제 표에는 0', () => {
+  const w = (edit) => T.warnings(tripTables(edit)).filter((x) => x.kind === 'unknownRef' || x.kind === 'unplaced').map((x) => `${x.kind} ${x.table}:${x.id} ${x.msg}`);
+  assert.deepStrictEqual(w(), [], '바른 픽스처는 경고 없음');
+  const got = w((t) => {
+    const e = t.events.find((x) => x.id === 'trip_t_crate');
+    e.when = 'region==B & floor==1 & inspect:t_crat & trace:t_crate==shut & alive:nobody';
+    e.choices[0].req = { cond: 'talk:nobody' };
+    e.choices[1].swap = { when: 'trace:t_locker!=opened', warn: '' };
+    t.phases.find((p) => p.id === 'evening').skipIf = 'trace:nothing==x';
+    t.objects.push({ id: 't_far', name: '먼 함', states: ['closed', 'open'], solid: 1, resetOn: 'never', holds: { effects: { food: 1 } } });
+    t.objects.push({ id: 't_far2', name: '먼 상자', states: ['closed', 'open'], solid: 1, resetOn: 'never' });
+    t.objects.push({ id: 't_empty', name: '빈 함', states: ['closed', 'open'], solid: 1, resetOn: 'never', holds: {} });
+    t.events.push(ev('trip_t_far2', 'trip', 'region==A & inspect:t_far2', [pass('둔다')]));
+  });
+  assert.deepStrictEqual(got, [
+    'unknownRef events:trip_t_crate when: "inspect:t_crat" — objects 표에 없는 물건',
+    'unknownRef events:trip_t_crate when: "trace:t_crate==shut" — t_crate 의 states(closed/open)에 없는 상태',
+    'unknownRef events:trip_t_crate when: "alive:nobody" — people 표에 없는 사람',
+    'unknownRef events:trip_t_crate choices[0].req.cond: "talk:nobody" — people 표에 없는 사람',
+    'unknownRef events:trip_t_crate choices[1].swap[0].when: "trace:t_locker!=opened" — t_locker 의 states(closed/open)에 없는 상태',
+    'unknownRef phases:evening skipIf: "trace:nothing" — objects 표에 없는 물건',
+    'unplaced objects:t_far 수납 내용(holds)이 있는 물건인데 어느 지도에도 없다 — 걸어가 열 수 없다 (maps[].objects 에 놓는다)',
+    'unplaced objects:t_far2 조사로 걸리는 원정 사건이 가리키는 물건인데 어느 지도에도 없다 — 걸어가 열 수 없다 (maps[].objects 에 놓는다)',
+  ]);
+  assert.deepStrictEqual(errs(tripTables((t) => { t.events.find((x) => x.id === 'trip_t_crate').when = 'inspect:t_crat'; })), [], '경고일 뿐 — 표는 읽힌다');
+  const real = T.loadDir(path.join(__dirname, '..', 'data'));
+  assert.deepStrictEqual(real.warnings.filter((x) => x.kind === 'unknownRef' || x.kind === 'unplaced').map((x) => x.text), [], '실제 표(v4/data) — 원정 수납 데이터의 이름·상태 오타');
+});

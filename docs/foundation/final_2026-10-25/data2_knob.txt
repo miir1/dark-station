@@ -1,0 +1,32 @@
+# 2차 손잡이·고침 시험 (data2_variant.js, 5블록 × 200판, 사본 id 합친 사인) — fix2 = 2차 고침(손잡이 없음) · k_pump60 · k_stock60 · k_both(= 지금 표) · nolocker/nopharm = k_both 에서 사물함·약국 고침만 뺀 표
+# 열: 정책 · 표 · 생존% · 블록별 · D1~D4 생존 · D5까지 사망 · D6 그날 사건 사망 · 아슬함(≥2) · 사인(합침) · 원인(합침) · platform_one%
+balanced    fix2       40.9  [37.5, 44, 42.5, 43, 37.5] D4 94.7 D5 25.9 D6 6 rf2 1.7 | d5_flood 31.5% | starve_you 31.6% | pf1 19.7
+balanced    k_both     40.9  [37.5, 44, 42.5, 43, 37.5] D4 94.7 D5 25.9 D6 6 rf2 1.7 | d5_flood 31.5% | starve_you 31.6% | pf1 19.7
+balanced    k_pump60   40.9  [37.5, 44, 42.5, 43, 37.5] D4 94.7 D5 25.9 D6 6 rf2 1.7 | d5_flood 31.5% | starve_you 31.6% | pf1 19.7
+balanced    k_stock60  40.9  [37.5, 44, 42.5, 43, 37.5] D4 94.7 D5 25.9 D6 6 rf2 1.7 | d5_flood 31.5% | starve_you 31.6% | pf1 19.7
+child       fix2       10.8  [12, 7.5, 9.5, 14, 11] D4 99.3 D5 14.9 D6 259 rf2 76.9 | called_up 22.5% | called_up 23.5% | pf1 0
+child       k_both     10.8  [12, 7.5, 9.5, 14, 11] D4 99.3 D5 14.9 D6 259 rf2 76.9 | called_up 22.5% | called_up 23.5% | pf1 0
+child       k_pump60   10.8  [12, 7.5, 9.5, 14, 11] D4 99.3 D5 14.9 D6 259 rf2 76.9 | called_up 22.5% | called_up 23.5% | pf1 0
+child       k_stock60  10.8  [12, 7.5, 9.5, 14, 11] D4 99.3 D5 14.9 D6 259 rf2 76.9 | called_up 22.5% | called_up 23.5% | pf1 0
+diligent    fix2       42.8  [37.5, 47, 41, 44, 44.5] D4 94.6 D5 25.4 D6 0 rf2 0 | fever_night 32.7% | starve_you 38.6% | pf1 22.4
+diligent    k_both     42.8  [37.5, 47, 41, 44, 44.5] D4 94.6 D5 25.4 D6 0 rf2 0 | fever_night 32.7% | starve_you 38.6% | pf1 22.4
+diligent    k_pump60   42.8  [37.5, 47, 41, 44, 44.5] D4 94.6 D5 25.4 D6 0 rf2 0 | fever_night 32.7% | starve_you 38.6% | pf1 22.4
+diligent    k_stock60  42.8  [37.5, 47, 41, 44, 44.5] D4 94.6 D5 25.4 D6 0 rf2 0 | fever_night 32.7% | starve_you 38.6% | pf1 22.4
+lazy        fix2       28.1  [27.5, 26.5, 31.5, 30, 25] D4 94.5 D5 27.7 D6 33 rf2 25.3 | fever_night 27.5% | dawn_strike 33.7% | pf1 13.1
+lazy        k_both     28.1  [27.5, 26.5, 31.5, 30, 25] D4 94.5 D5 27.7 D6 33 rf2 25.3 | fever_night 27.5% | dawn_strike 33.7% | pf1 13.1
+lazy        k_pump60   28.1  [27.5, 26.5, 31.5, 30, 25] D4 94.5 D5 27.7 D6 33 rf2 25.3 | fever_night 27.5% | dawn_strike 33.7% | pf1 13.1
+lazy        k_stock60  28.1  [27.5, 26.5, 31.5, 30, 25] D4 94.5 D5 27.7 D6 33 rf2 25.3 | fever_night 27.5% | dawn_strike 33.7% | pf1 13.1
+risky       fix2       22.5  [21.5, 24.5, 20.5, 22, 24] D4 83.4 D5 39.2 D6 70 rf2 20.9 | fever_night 32.6% | d5_flood 22.6% | pf1 51.2
+risky       k_both     25    [24, 25, 25, 26.5, 24.5] D4 84.7 D5 38.4 D6 65 rf2 23.2 | fever_night 29.7% | d5_flood 24.9% | pf1 50.1
+risky       k_pump60   23.8  [22, 25, 22, 24.5, 25.5] D4 83.7 D5 39.2 D6 64 rf2 22.3 | fever_night 31.9% | d5_flood 23.6% | pf1 50.1
+risky       k_stock60  24    [23.5, 25.5, 24, 24, 23] D4 84.5 D5 38.4 D6 72 rf2 21.3 | fever_night 30.9% | d5_flood 24.1% | pf1 51.5
+selfish_nb  fix2       32    [35, 31, 33.5, 29, 31.5] D4 99.6 D5 2.3 D6 29 rf2 66.3 | called_up 26.3% | called_up 28.7% | pf1 0.6
+selfish_nb  k_both     32    [35, 31, 33.5, 29, 31.5] D4 99.6 D5 2.3 D6 29 rf2 66.3 | called_up 26.3% | called_up 28.7% | pf1 0.6
+selfish_nb  k_pump60   32    [35, 31, 33.5, 29, 31.5] D4 99.6 D5 2.3 D6 29 rf2 66.3 | called_up 26.3% | called_up 28.7% | pf1 0.6
+selfish_nb  k_stock60  32    [35, 31, 33.5, 29, 31.5] D4 99.6 D5 2.3 D6 29 rf2 66.3 | called_up 26.3% | called_up 28.7% | pf1 0.6
+balanced    nolocker   40.9  [37.5, 44, 42.5, 43, 37.5] D4 94.7 D5 25.9 D6 6 rf2 1.7 | d5_flood 31.5% | starve_you 31.6% | pf1 19.7
+balanced    nopharm    40    [38.5, 45, 38, 39, 39.5] D4 94.7 D5 26.5 D6 5 rf2 1.5 | d5_flood 31.8% | d5_flood 31.8% | pf1 17.9
+selfish_nb  nolocker   32    [35, 31, 33.5, 29, 31.5] D4 99.6 D5 2.3 D6 29 rf2 66.3 | called_up 26.3% | called_up 28.7% | pf1 0.6
+selfish_nb  nopharm    28.7  [31.5, 30.5, 28.5, 28, 25] D4 99.6 D5 2.2 D6 33 rf2 62.4 | called_up 25.1% | called_up 27.3% | pf1 0.6
+
+# 비교: 10-28 보고서(2차 전) risky 22.9 [20.5,23.5,23,23.5,24] · balanced 40 · selfish_nb 28.7 · lazy 28.4 · diligent 42.7 · child 12.5

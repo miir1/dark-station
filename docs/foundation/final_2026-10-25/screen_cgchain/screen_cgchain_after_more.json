@@ -1,0 +1,602 @@
+{
+ "tag": "after_more",
+ "seeds": {
+  "14": {
+   "seed": 14,
+   "done": true,
+   "wall_s": 25.6,
+   "rows": 211,
+   "end": "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=1 | D8 trace dawn_strike → 그릇 둘을 내민다 / [D8 food0 water0 hun",
+   "bad": [],
+   "console_errors": []
+  },
+  "15": {
+   "seed": 15,
+   "done": true,
+   "wall_s": 25.2,
+   "rows": 187,
+   "end": "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=8 | D7 trace dawn_strike → 그릇 둘을 내민다 / D7 trace dawn_mob → ",
+   "bad": [],
+   "console_errors": []
+  },
+  "16": {
+   "seed": 16,
+   "done": true,
+   "wall_s": 12.5,
+   "rows": 88,
+   "end": "[ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D2 evening d2_soonrye_bread → 본다 / D2 night d2_night_shutter → 틈으로 말을 ",
+   "bad": [],
+   "console_errors": []
+  },
+  "17": {
+   "seed": 17,
+   "done": true,
+   "wall_s": 23.7,
+   "rows": 205,
+   "end": "[ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=dead food=0 | [꿈 D8] / D9 trace hymn_fire_kept → 불을 쬔다 / D9 trace d9_stairs → 묻는다 /",
+   "bad": [],
+   "console_errors": []
+  },
+  "18": {
+   "seed": 18,
+   "done": true,
+   "wall_s": 26.5,
+   "rows": 217,
+   "end": "[ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=ascended food=0 | D8 ration repay_bowl → 그냥 지나간다 / D8 night fever_night → 남의 담요를 끌어",
+   "bad": [],
+   "console_errors": []
+  },
+  "19": {
+   "seed": 19,
+   "done": true,
+   "wall_s": 33.0,
+   "rows": 235,
+   "end": "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D9 원정 drain_b1 조사 crate_b1 / D9 원정 drain_b1 조사 bag_b1 /",
+   "bad": [],
+   "console_errors": []
+  },
+  "20": {
+   "seed": 20,
+   "done": true,
+   "wall_s": 24.9,
+   "rows": 199,
+   "end": "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D7 day 치료 → 감았다 / D7 evening d7_broadcast → 수첩에 받아 적는다 ",
+   "bad": [],
+   "console_errors": []
+  },
+  "22": {
+   "seed": 22,
+   "done": true,
+   "wall_s": 32.1,
+   "rows": 220,
+   "end": "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=3 | [D9 food6 water0 hunger2] / D9 day trip_b1_valve → 둔다 /",
+   "bad": [],
+   "console_errors": []
+  },
+  "23": {
+   "seed": 23,
+   "done": true,
+   "wall_s": 16.8,
+   "rows": 169,
+   "end": "[ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=dead food=0 | D8 trace trial_d8_key → 순례에게 / D8 trace dawn_mob → 손가락 하나로 갚는다 / [D8 ",
+   "bad": [],
+   "console_errors": []
+  },
+  "24": {
+   "seed": 24,
+   "done": true,
+   "wall_s": 27.5,
+   "rows": 220,
+   "end": "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=2 | D7 day trip_b2_pumproom → 입구 웅덩이만 / D7 원정 drain_b2 조사 l",
+   "bad": [],
+   "console_errors": []
+  },
+  "25": {
+   "seed": 25,
+   "done": true,
+   "wall_s": 20.6,
+   "rows": 169,
+   "end": "[ds4 auto] run end reached=0 D7 ended map=station open=- ended=you_gone you=dead food=1 | D5 원정 drain_b2 조사 locker_b2 / D5 day trip_b2_lockers → 비틀어 연다 / D5 원정 ",
+   "bad": [],
+   "console_errors": []
+  },
+  "26": {
+   "seed": 26,
+   "done": true,
+   "wall_s": 25.8,
+   "rows": 202,
+   "end": "[ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 night called_up → 불을 키우고 밤을 샌다 / [꿈 D6] / D7 trace dawn_strike → 그릇",
+   "bad": [],
+   "console_errors": []
+  }
+ },
+ "rows": 2322,
+ "bad": [],
+ "pairs": {},
+ "shots": [
+  {
+   "seed": 14,
+   "png": "screen_cgchain_after_more_s14_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 14,
+   "png": "screen_cgchain_after_more_s14_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 14,
+   "png": "screen_cgchain_after_more_s14_d9_hoard.png",
+   "row": {
+    "day": 9,
+    "phase": "trace",
+    "ev": "d9_hoard",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 15,
+   "png": "screen_cgchain_after_more_s15_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 15,
+   "png": "screen_cgchain_after_more_s15_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 15,
+   "png": "screen_cgchain_after_more_s15_d9_hoard.png",
+   "row": {
+    "day": 9,
+    "phase": "trace",
+    "ev": "d9_hoard",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 16,
+   "png": "screen_cgchain_after_more_s16_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 16,
+   "png": "screen_cgchain_after_more_s16_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 17,
+   "png": "screen_cgchain_after_more_s17_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 17,
+   "png": "screen_cgchain_after_more_s17_hymn_fire_kept.png",
+   "row": {
+    "day": 9,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 17,
+   "png": "screen_cgchain_after_more_s17_d9_hoard.png",
+   "row": {
+    "day": 9,
+    "phase": "trace",
+    "ev": "d9_hoard",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 18,
+   "png": "screen_cgchain_after_more_s18_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 18,
+   "png": "screen_cgchain_after_more_s18_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 18,
+   "png": "screen_cgchain_after_more_s18_fever_night.png",
+   "row": {
+    "day": 8,
+    "phase": "night",
+    "ev": "fever_night",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 18,
+   "png": "screen_cgchain_after_more_s18_d9_hoard.png",
+   "row": {
+    "day": 9,
+    "phase": "trace",
+    "ev": "d9_hoard",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 19,
+   "png": "screen_cgchain_after_more_s19_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 19,
+   "png": "screen_cgchain_after_more_s19_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 19,
+   "png": "screen_cgchain_after_more_s19_d9_hoard.png",
+   "row": {
+    "day": 9,
+    "phase": "trace",
+    "ev": "d9_hoard",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 20,
+   "png": "screen_cgchain_after_more_s20_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 20,
+   "png": "screen_cgchain_after_more_s20_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 20,
+   "png": "screen_cgchain_after_more_s20_d9_hoard.png",
+   "row": {
+    "day": 9,
+    "phase": "trace",
+    "ev": "d9_hoard",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 22,
+   "png": "screen_cgchain_after_more_s22_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 22,
+   "png": "screen_cgchain_after_more_s22_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 23,
+   "png": "screen_cgchain_after_more_s23_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 23,
+   "png": "screen_cgchain_after_more_s23_hymn_fire_kept.png",
+   "row": {
+    "day": 5,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 23,
+   "png": "screen_cgchain_after_more_s23_fever_night.png",
+   "row": {
+    "day": 9,
+    "phase": "night",
+    "ev": "fever_night",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 24,
+   "png": "screen_cgchain_after_more_s24_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 24,
+   "png": "screen_cgchain_after_more_s24_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 25,
+   "png": "screen_cgchain_after_more_s25_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 25,
+   "png": "screen_cgchain_after_more_s25_hymn_fire_kept.png",
+   "row": {
+    "day": 4,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 26,
+   "png": "screen_cgchain_after_more_s26_d2_night_count.png",
+   "row": {
+    "day": 2,
+    "phase": "night",
+    "ev": "d2_night_count",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 26,
+   "png": "screen_cgchain_after_more_s26_hymn_fire_kept.png",
+   "row": {
+    "day": 6,
+    "phase": "trace",
+    "ev": "hymn_fire_kept",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 26,
+   "png": "screen_cgchain_after_more_s26_fever_night.png",
+   "row": {
+    "day": 7,
+    "phase": "night",
+    "ev": "fever_night",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  },
+  {
+   "seed": 26,
+   "png": "screen_cgchain_after_more_s26_d9_hoard.png",
+   "row": {
+    "day": 9,
+    "phase": "trace",
+    "ev": "d9_hoard",
+    "where": "line",
+    "ok": true,
+    "shown": "",
+    "expect": "",
+    "shot": 1
+   }
+  }
+ ],
+ "summary": {
+  "seeds": 12,
+  "finished": 12,
+  "rows": 2322,
+  "bad": 0,
+  "pairs": {},
+  "console_errors": 0
+ }
+}

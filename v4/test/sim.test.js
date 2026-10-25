@@ -116,3 +116,29 @@ test("재측정 집계: 아침 굶주림 표본·D3 셈 선택이 trace 에 남�
   assert.strictEqual(S.D3_TOGETHER, '함께 센다');
   for (const id of ['trial_d3_count', 'trial_d3_count_b', 'trial_d3_count_c']) if (db.events[id]) assert.ok(db.events[id].choices.some((c) => c.label === S.D3_TOGETHER), `${id} 에 '함께 센다'`);
 });
+
+// (10-25 최종판) run.js 기본 시드 블록: 5블록(1·1001·2001·3001·8001) · A4 정책은 9블록(그 다섯 + 4001~7001 — 10-24~27 의 8블록에 8001 을 더한 것)
+test('run.js 기본 블록 5개 · A4 9개(첫 블록 + 1000씩 빈 시작값) · --blocks 를 주면 옛 규칙과 같다 · 보고서에 원정 수납 표 · A1 아슬함 = 화면 ≤ 85%', () => {
+  const os = require('os');
+  const { spawnSync } = require('child_process');
+  const run = (extra) => {
+    const out = path.join(os.tmpdir(), `ds4_runjs_${process.pid}_${Math.random().toString(36).slice(2)}.json`);
+    const r = spawnSync(process.execPath, [path.join(__dirname, '..', 'sim', 'run.js'), '1', 'balanced,lazy,diligent,selfish_nb', '--workers=1', `--json=${out}`].concat(extra), { encoding: 'utf8', timeout: 120000 });
+    assert.strictEqual(r.status, 0, r.stderr);
+    const j = JSON.parse(fs.readFileSync(out, 'utf8')); fs.unlinkSync(out);
+    return { j, md: r.stdout };
+  };
+  const a = run([]);
+  assert.deepStrictEqual(a.j.blocks, [1, 1001, 2001, 3001, 8001]);
+  assert.deepStrictEqual(a.j.a4Blocks, [1, 1001, 2001, 3001, 8001, 4001, 5001, 6001, 7001]);
+  assert.strictEqual(a.j.byBlock.length, 5);
+  assert.ok(a.md.includes('시드 블록: 시드 1~1, 시드 1001~1001, 시드 2001~2001, 시드 3001~3001, 시드 8001~8001'));
+  assert.ok(a.md.includes('### A4 (블록 9개'), 'A4 표는 9블록');
+  assert.ok(a.md.includes('### 원정 수납 (P1-11'), '원정 수납 표');
+  assert.ok(a.md.includes('| A1 아슬함: 화면 ≤ 85% (죽을 확률 ≥ 15%) 줄타기 넘김/판 (열흘 산 판, selfish_nb) | ≥ 2 |'), 'A1 아슬함 합격선 줄');
+  assert.ok(a.md.includes('|   참고: 줄타기 판정 전부(90% 넘는 판정 포함'), '옛 값은 참고 줄');
+  const b = run(['--blocks=1,1001', '--a4blocks=4']);
+  assert.deepStrictEqual([b.j.blocks, b.j.a4Blocks], [[1, 1001], [1, 1001, 2001, 3001]], '--blocks 를 주면 전처럼 이어서');
+  const c = run(['--seed0=2001', '--a4blocks=3']);
+  assert.deepStrictEqual([c.j.blocks, c.j.a4Blocks], [[2001], [2001, 3001, 4001]]);
+});

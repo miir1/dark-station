@@ -17,8 +17,7 @@
       "priority": 5,
       "fallback": 0,
       "reveal": [
-        "reveal_driver",
-        "end_seat_shoe"
+        "reveal_driver"
       ],
       "dreams": [
         "dream_cab",
@@ -34,8 +33,7 @@
       "priority": 5,
       "fallback": 0,
       "reveal": [
-        "reveal_conductor",
-        "end_two_books"
+        "reveal_conductor"
       ],
       "dreams": [
         "dream_door",
@@ -51,8 +49,7 @@
       "priority": 5,
       "fallback": 0,
       "reveal": [
-        "reveal_inspector",
-        "end_punch_hand"
+        "reveal_inspector"
       ],
       "dreams": [
         "dream_punch",
@@ -68,8 +65,7 @@
       "priority": 1,
       "fallback": 1,
       "reveal": [
-        "reveal_passenger",
-        "end_empty_cab"
+        "reveal_passenger"
       ],
       "dreams": [
         "dream_seat",
@@ -85,8 +81,7 @@
       "priority": 9,
       "fallback": 0,
       "reveal": [
-        "reveal_counted",
-        "end_shoes_stairs"
+        "reveal_counted"
       ],
       "dreams": [
         "dream_stairs",
@@ -102,8 +97,7 @@
       "priority": 6,
       "fallback": 0,
       "reveal": [
-        "reveal_platform",
-        "end_train_passes"
+        "reveal_platform"
       ],
       "dreams": [
         "dream_platform",
@@ -119,8 +113,7 @@
       "priority": 7,
       "fallback": 0,
       "reveal": [
-        "reveal_child",
-        "end_voice_above"
+        "reveal_child"
       ],
       "dreams": [
         "dream_count",

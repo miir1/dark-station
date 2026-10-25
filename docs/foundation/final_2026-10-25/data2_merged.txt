@@ -1,0 +1,19 @@
+# 사본 합친 사인 쏠림 (data2_merged.js) — 데이터 v4\data · 정책 20 × 5블록 × 200판
+
+| 항목 | 시드 1~200 | 1001~1200 | 2001~2200 | 3001~3200 | 8001~8200 |
+|---|---|---|---|---|---|
+| A2 균형 사인 사건 (합침) | d5_flood 28.8% | d5_flood 37.5% | fever_night 30.4% | d5_flood 34.2% | fever_night 28% |
+| A2 균형 사인 사건 (id 그대로 = run.js) | d5_flood 28.8% | d5_flood 37.5% | d5_flood 29.6% | d5_flood 34.2% | d5_flood 28% |
+| A2 균형 원인 사건 (합침) | d5_flood 28.8% | d5_flood 37.5% | starve_you 40.9% | d5_flood 34.2% | starve_you 31.2% |
+| A2 균형 원인 사건 (id 그대로 = run.js) | d5_flood 28.8% | d5_flood 37.5% | d5_flood 29.6% | d5_flood 34.2% | d5_flood 28% |
+| A1 selfish_nb 사인 (합침) | dawn_mob 30% | called_up 29% | dawn_strike 27.8% | called_up 28.2% | dawn_strike 29.2% |
+| A1 selfish_nb 사인 (id 그대로) | called_up_r2 16.9% | dawn_strike 15.9% | dawn_strike 16.5% | called_up 17.6% | dawn_strike 19.7% |
+| A1 selfish_rt0 사인 (합침) | called_up 35.1% | dawn_mob 31.9% | dawn_mob 32.8% | dawn_mob 31.7% | dawn_mob 33.3% |
+| A1 selfish_rt0 사인 (id 그대로) | dawn_mob 21.8% | dawn_mob 24.3% | dawn_mob 24.7% | dawn_mob 20.6% | dawn_mob 22.6% |
+| A1 selfish 사인 (합침) | called_up 29.7% | called_up 31.4% | called_up 35.1% | called_up 35.9% | called_up 30.5% |
+| A1 selfish 사인 (id 그대로) | called_up_r2 20% | called_up_r2 18.6% | called_up_r2 17.6% | called_up_r2 22.5% | dawn_strike 19.1% |
+| A1 selfish_rt 사인 (합침) | called_up 35.5% | called_up 33.9% | dawn_mob 32.6% | called_up 33.7% | called_up 33% |
+| A1 selfish_rt 사인 (id 그대로) | dawn_mob 22% | dawn_mob 23.3% | dawn_mob 25.1% | dawn_mob 20.9% | dawn_mob 20.7% |
+
+사망 원인 중 굶주림 (전 정책 합산): 합침 2.3% (319/14051) · id 그대로(run.js) 0.9% (131/14051)
+모험 봇 사망 중 굶주림: 합침 0% (0/750)

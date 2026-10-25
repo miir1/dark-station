@@ -1,0 +1,1855 @@
+[
+  {
+    "id": "fire",
+    "name": "화로",
+    "states": [
+      "lit",
+      "low",
+      "wet",
+      "kept"
+    ],
+    "overlay": {
+      "low": "fire_low_ov",
+      "wet": "fire_wet_ov",
+      "kept": "footprints"
+    },
+    "inspectLine": {
+      "lit": "insp_fire_lit",
+      "low": "insp_fire_low",
+      "wet": "insp_fire_wet",
+      "kept": "insp_fire_kept"
+    },
+    "ledgerFact": {
+      "kept": "D{day} 밤. 누가 불가에서 밤을 지켰다."
+    },
+    "solid": 1,
+    "light": 4,
+    "resetOn": "morning"
+  },
+  {
+    "id": "board",
+    "name": "게시판",
+    "states": [
+      "intact",
+      "torn"
+    ],
+    "overlay": {
+      "torn": "board_torn_ov"
+    },
+    "inspectLine": {
+      "intact": "insp_board",
+      "torn": "insp_board_torn"
+    },
+    "ledgerFact": {
+      "torn": "D{day}. 게시판을 뜯었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "bench1",
+    "name": "승강장 의자",
+    "states": [
+      "intact",
+      "torn"
+    ],
+    "overlay": {
+      "torn": "bench_torn_ov"
+    },
+    "inspectLine": {
+      "intact": "insp_bench",
+      "torn": "insp_bench_torn"
+    },
+    "ledgerFact": {
+      "torn": "D{day}. 의자를 뜯었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "bench2",
+    "name": "승강장 의자",
+    "states": [
+      "intact",
+      "torn"
+    ],
+    "overlay": {
+      "torn": "bench_torn_ov"
+    },
+    "inspectLine": {
+      "intact": "insp_bench",
+      "torn": "insp_bench_torn"
+    },
+    "ledgerFact": {
+      "torn": "D{day}. 의자를 뜯었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "crate_food",
+    "name": "창고 상자",
+    "states": [
+      "closed",
+      "open",
+      "empty",
+      "moved"
+    ],
+    "overlay": {
+      "open": "crate_open_ov",
+      "empty": "crate_empty_ov",
+      "moved": "crate_moved_ov"
+    },
+    "inspectLine": {
+      "closed": "insp_crate_closed",
+      "open": "insp_crate_open",
+      "empty": "insp_crate_empty",
+      "moved": "insp_crate_moved"
+    },
+    "ledgerFact": {
+      "open": "D{day} 밤. 창고 상자 열림, 봉지 하나 빔.",
+      "empty": "D{day} 밤. 창고가 비었다.",
+      "moved": "D{day}. 창고 상자를 역무실로 옮겼다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "parts_crate",
+    "name": "부품 상자",
+    "states": [
+      "storage",
+      "office",
+      "hidden"
+    ],
+    "overlay": {
+      "office": "parts_office_ov",
+      "hidden": "parts_gone_ov"
+    },
+    "inspectLine": {
+      "storage": "insp_parts_storage",
+      "office": "insp_parts_office",
+      "hidden": "insp_parts_hidden"
+    },
+    "ledgerFact": {
+      "hidden": "D{day}. 부품 상자가 창고에 없다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "office_door",
+    "name": "역무실 문",
+    "states": [
+      "locked",
+      "open"
+    ],
+    "overlay": {
+      "open": "door_open_ov"
+    },
+    "inspectLine": {
+      "locked": "insp_office_locked",
+      "open": "insp_office_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "chalk_wall",
+    "name": "분필 벽",
+    "states": [
+      "blank",
+      "lines",
+      "names"
+    ],
+    "overlay": {
+      "lines": "chalk_lines_ov",
+      "names": "chalk_names_ov"
+    },
+    "inspectLine": {
+      "blank": "insp_chalk_blank",
+      "lines": "insp_chalk_lines",
+      "names": "insp_chalk_names"
+    },
+    "ledgerFact": {
+      "names": "D{day}. 벽에 이름이 적혔다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "stairs_ash",
+    "name": "출구 계단",
+    "states": [
+      "dry",
+      "ash",
+      "deep",
+      "blocked"
+    ],
+    "overlay": {
+      "ash": "ash1_ov",
+      "deep": "ash2_ov",
+      "blocked": "ash3_ov"
+    },
+    "inspectLine": {
+      "dry": "insp_stairs_dry",
+      "ash": "insp_stairs_ash",
+      "deep": "insp_stairs_deep",
+      "blocked": "insp_stairs_blocked"
+    },
+    "ledgerFact": {
+      "dry": "D{day}. 계단에 재가 없다.",
+      "ash": "D{day}. 계단 재가 한 칸 내려왔다.",
+      "deep": "D{day}. 계단 재가 발목까지 쌓였다.",
+      "blocked": "D{day}. 계단이 재로 막혔다."
+    },
+    "solid": 1,
+    "light": 1,
+    "resetOn": "never"
+  },
+  {
+    "id": "shoes_stairs",
+    "name": "계단의 신발",
+    "states": [
+      "none",
+      "one",
+      "pair"
+    ],
+    "overlay": {
+      "one": "shoe_one_ov",
+      "pair": "shoe_pair_ov"
+    },
+    "inspectLine": {
+      "none": "insp_shoes_none",
+      "one": "insp_shoes_one",
+      "pair": "insp_shoes_pair"
+    },
+    "ledgerFact": {
+      "one": "D{day}. 계단 아래 신발 한 짝.",
+      "pair": "D{day}. 계단 아래 신발이 가지런했다."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "stairs_line",
+    "name": "분필 줄",
+    "states": [
+      "drawn"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "drawn": "insp_stairs_line"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "shutter_gap",
+    "name": "지하상가 셔터",
+    "states": [
+      "shut",
+      "can",
+      "blood",
+      "open"
+    ],
+    "overlay": {
+      "can": "shutter_can_ov",
+      "blood": "shutter_blood_ov",
+      "open": "shutter_open_ov"
+    },
+    "inspectLine": {
+      "shut": "insp_shutter_shut",
+      "can": "insp_shutter_can",
+      "blood": "insp_shutter_blood",
+      "open": "insp_shutter_open"
+    },
+    "ledgerFact": {
+      "can": "D{day}. 셔터 밑에 통조림 하나.",
+      "blood": "D{day}. 셔터 밑에 피."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "speaker",
+    "name": "기둥 스피커",
+    "states": [
+      "on",
+      "cut"
+    ],
+    "overlay": {
+      "cut": "speaker_cut_ov"
+    },
+    "inspectLine": {
+      "on": "insp_speaker_on",
+      "cut": "insp_speaker_cut"
+    },
+    "ledgerFact": {
+      "cut": "D{day}. 스피커 선을 끊었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "train_seat",
+    "name": "전동차 좌석",
+    "states": [
+      "intact",
+      "torn"
+    ],
+    "overlay": {
+      "torn": "seat_torn_ov"
+    },
+    "inspectLine": {
+      "intact": "insp_seat",
+      "torn": "insp_seat_torn"
+    },
+    "ledgerFact": {
+      "torn": "D{day}. 전동차 좌석을 뜯었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "cab_window",
+    "name": "운전실 유리창",
+    "states": [
+      "normal"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "normal": "cab_window"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "radio",
+    "name": "운전실 무전기",
+    "states": [
+      "idle",
+      "on"
+    ],
+    "overlay": {
+      "on": "radio_on_ov"
+    },
+    "inspectLine": {
+      "idle": "insp_radio_idle",
+      "on": "insp_radio_on"
+    },
+    "ledgerFact": {
+      "on": "D{day} 밤. 무전기가 혼자 켜졌다."
+    },
+    "solid": 1,
+    "light": 1,
+    "resetOn": "never"
+  },
+  {
+    "id": "body_rail",
+    "name": "선로의 사람",
+    "states": [
+      "none",
+      "whole",
+      "cut",
+      "buried"
+    ],
+    "overlay": {
+      "whole": "body_whole_ov",
+      "cut": "body_cut_ov",
+      "buried": "body_buried_ov"
+    },
+    "inspectLine": {
+      "none": "insp_body_none",
+      "whole": "insp_body_whole",
+      "cut": "insp_body_cut",
+      "buried": "insp_body_buried"
+    },
+    "ledgerFact": {
+      "whole": "D{day}. 선로에 사람이 떠내려왔다.",
+      "cut": "D{day} 밤. 선로의 사람에게 누가 손댔다.",
+      "buried": "D{day}. 선로의 사람을 묻었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "grave",
+    "name": "무덤",
+    "states": [
+      "none",
+      "one",
+      "two",
+      "three"
+    ],
+    "overlay": {
+      "one": "grave1_ov",
+      "two": "grave2_ov",
+      "three": "grave3_ov"
+    },
+    "inspectLine": {
+      "none": "insp_grave_none",
+      "one": "insp_grave",
+      "two": "insp_grave",
+      "three": "insp_grave"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "pipe",
+    "name": "쇠파이프",
+    "states": [
+      "clean",
+      "blood"
+    ],
+    "overlay": {
+      "blood": "pipe_blood_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_pipe",
+      "blood": "insp_pipe_blood"
+    },
+    "ledgerFact": {
+      "blood": "D{day} 밤. 파이프에 피."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "scissors",
+    "name": "가위",
+    "states": [
+      "clean",
+      "blood"
+    ],
+    "overlay": {
+      "blood": "scissors_blood_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_scissors",
+      "blood": "insp_scissors_blood"
+    },
+    "ledgerFact": {
+      "blood": "D{day}. 가위에 피."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect",
+    "owner": "mari"
+  },
+  {
+    "id": "pillow_gicheol",
+    "name": "기철 베개",
+    "states": [
+      "normal",
+      "moved",
+      "blood"
+    ],
+    "overlay": {
+      "moved": "pillow_moved_ov",
+      "blood": "pillow_blood_ov"
+    },
+    "inspectLine": {
+      "normal": "insp_pillow",
+      "moved": "insp_pillow_moved",
+      "blood": "insp_pillow_blood"
+    },
+    "ledgerFact": {
+      "moved": "D{day} 밤. 기철 베개 자리가 옮겨졌다.",
+      "blood": "D{day} 밤. 기철 베개에 피."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "notebook_you",
+    "name": "당신 수첩",
+    "states": [
+      "inplace",
+      "moved"
+    ],
+    "overlay": {
+      "moved": "notebook_moved_ov"
+    },
+    "inspectLine": {
+      "inplace": "insp_notebook",
+      "moved": "insp_notebook_moved"
+    },
+    "ledgerFact": {
+      "moved": "D{day} 밤. 수첩 옆 연필이 옮겨졌다."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "repair_rubble",
+    "name": "무너진 통로",
+    "states": [
+      "blocked",
+      "working",
+      "open"
+    ],
+    "overlay": {
+      "working": "rubble_work_ov",
+      "open": "rubble_open_ov"
+    },
+    "inspectLine": {
+      "blocked": "insp_rubble",
+      "working": "insp_rubble_work",
+      "open": "insp_rubble_open"
+    },
+    "ledgerFact": {
+      "open": "D{day}. 통로가 이어졌다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "bottle_soonrye",
+    "name": "순례 물통",
+    "states": [
+      "full",
+      "empty",
+      "wet"
+    ],
+    "overlay": {
+      "empty": "bottle_empty_ov",
+      "wet": "bottle_wet_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bottle_full",
+      "empty": "insp_bottle_empty",
+      "wet": "insp_bottle_wet"
+    },
+    "ledgerFact": {
+      "empty": "D{day} 밤. 순례 물통 빔."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bottle_seoha",
+    "name": "서하 물통",
+    "states": [
+      "full",
+      "empty",
+      "wet"
+    ],
+    "overlay": {
+      "empty": "bottle_empty_ov",
+      "wet": "bottle_wet_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bottle_full",
+      "empty": "insp_bottle_empty",
+      "wet": "insp_bottle_wet"
+    },
+    "ledgerFact": {
+      "empty": "D{day} 밤. 서하 물통 빔."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bottle_gicheol",
+    "name": "기철 물통",
+    "states": [
+      "full",
+      "empty",
+      "wet"
+    ],
+    "overlay": {
+      "empty": "bottle_empty_ov",
+      "wet": "bottle_wet_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bottle_full",
+      "empty": "insp_bottle_empty",
+      "wet": "insp_bottle_wet"
+    },
+    "ledgerFact": {
+      "empty": "D{day} 밤. 기철 물통 빔."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bottle_eunji",
+    "name": "은지 물통",
+    "states": [
+      "full",
+      "empty",
+      "wet"
+    ],
+    "overlay": {
+      "empty": "bottle_empty_ov",
+      "wet": "bottle_wet_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bottle_full",
+      "empty": "insp_bottle_empty",
+      "wet": "insp_bottle_wet"
+    },
+    "ledgerFact": {
+      "empty": "D{day} 밤. 은지 물통 빔."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bottle_dongha",
+    "name": "동하 물통",
+    "states": [
+      "full",
+      "empty",
+      "wet"
+    ],
+    "overlay": {
+      "empty": "bottle_empty_ov",
+      "wet": "bottle_wet_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bottle_full",
+      "empty": "insp_bottle_empty",
+      "wet": "insp_bottle_wet"
+    },
+    "ledgerFact": {
+      "empty": "D{day} 밤. 동하 물통 빔."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bottle_mari",
+    "name": "마리 물통",
+    "states": [
+      "full",
+      "empty",
+      "wet"
+    ],
+    "overlay": {
+      "empty": "bottle_empty_ov",
+      "wet": "bottle_wet_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bottle_full",
+      "empty": "insp_bottle_empty",
+      "wet": "insp_bottle_wet"
+    },
+    "ledgerFact": {
+      "empty": "D{day} 밤. 마리 물통 빔."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bottle_you",
+    "name": "당신 물통",
+    "states": [
+      "full",
+      "empty",
+      "wet"
+    ],
+    "overlay": {
+      "empty": "bottle_empty_ov",
+      "wet": "bottle_wet_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bottle_full",
+      "empty": "insp_bottle_empty",
+      "wet": "insp_bottle_wet"
+    },
+    "ledgerFact": {
+      "empty": "D{day} 밤. 내 물통 빔."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bowl_soonrye",
+    "name": "순례 그릇",
+    "states": [
+      "full",
+      "empty",
+      "meat"
+    ],
+    "overlay": {
+      "empty": "bowl_empty_ov",
+      "meat": "bowl_meat_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bowl_full",
+      "empty": "insp_bowl_empty",
+      "meat": "insp_bowl_meat"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 순례 그릇 빔.",
+      "meat": "D{day}. 순례 그릇에 통조림 아닌 것."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "morning"
+  },
+  {
+    "id": "bowl_seoha",
+    "name": "서하 그릇",
+    "states": [
+      "full",
+      "empty",
+      "meat"
+    ],
+    "overlay": {
+      "empty": "bowl_empty_ov",
+      "meat": "bowl_meat_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bowl_full",
+      "empty": "insp_bowl_empty",
+      "meat": "insp_bowl_meat"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 서하 그릇 빔.",
+      "meat": "D{day}. 서하 그릇에 통조림 아닌 것."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "morning"
+  },
+  {
+    "id": "bowl_gicheol",
+    "name": "기철 그릇",
+    "states": [
+      "full",
+      "empty",
+      "meat"
+    ],
+    "overlay": {
+      "empty": "bowl_empty_ov",
+      "meat": "bowl_meat_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bowl_full",
+      "empty": "insp_bowl_empty",
+      "meat": "insp_bowl_meat"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 기철 그릇 빔.",
+      "meat": "D{day}. 기철 그릇에 통조림 아닌 것."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "morning"
+  },
+  {
+    "id": "bowl_eunji",
+    "name": "은지 그릇",
+    "states": [
+      "full",
+      "empty",
+      "meat"
+    ],
+    "overlay": {
+      "empty": "bowl_empty_ov",
+      "meat": "bowl_meat_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bowl_full",
+      "empty": "insp_bowl_empty",
+      "meat": "insp_bowl_meat"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 은지 그릇 빔.",
+      "meat": "D{day}. 은지 그릇에 통조림 아닌 것."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "morning"
+  },
+  {
+    "id": "bowl_dongha",
+    "name": "동하 그릇",
+    "states": [
+      "full",
+      "empty",
+      "meat"
+    ],
+    "overlay": {
+      "empty": "bowl_empty_ov",
+      "meat": "bowl_meat_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bowl_full",
+      "empty": "insp_bowl_empty",
+      "meat": "insp_bowl_meat"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 동하 그릇 빔.",
+      "meat": "D{day}. 동하 그릇에 통조림 아닌 것."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "morning"
+  },
+  {
+    "id": "bowl_mari",
+    "name": "마리 그릇",
+    "states": [
+      "full",
+      "empty",
+      "meat"
+    ],
+    "overlay": {
+      "empty": "bowl_empty_ov",
+      "meat": "bowl_meat_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bowl_full",
+      "empty": "insp_bowl_empty",
+      "meat": "insp_bowl_meat"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 마리 그릇 빔.",
+      "meat": "D{day}. 마리 그릇에 통조림 아닌 것."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "morning"
+  },
+  {
+    "id": "bowl_you",
+    "name": "당신 그릇",
+    "states": [
+      "full",
+      "empty",
+      "meat",
+      "pushed"
+    ],
+    "overlay": {
+      "empty": "bowl_empty_ov",
+      "meat": "bowl_meat_ov"
+    },
+    "inspectLine": {
+      "full": "insp_bowl_full",
+      "empty": "insp_bowl_empty",
+      "meat": "insp_bowl_meat",
+      "pushed": "insp_bowl_pushed"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 내 그릇 빔.",
+      "meat": "D{day}. 내 그릇에 통조림 아닌 것."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "morning"
+  },
+  {
+    "id": "blanket_soonrye",
+    "name": "순례 담요",
+    "states": [
+      "folded",
+      "rolled",
+      "paired",
+      "empty"
+    ],
+    "overlay": {
+      "rolled": "blanket_rolled_ov",
+      "paired": "blanket_paired_ov",
+      "empty": "blanket_empty_ov"
+    },
+    "inspectLine": {
+      "folded": "insp_blanket",
+      "rolled": "insp_blanket_rolled",
+      "paired": "insp_blanket_paired",
+      "empty": "insp_blanket_empty"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 순례 담요가 비었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "blanket_seoha",
+    "name": "서하 담요",
+    "states": [
+      "folded",
+      "rolled",
+      "paired",
+      "empty"
+    ],
+    "overlay": {
+      "rolled": "blanket_rolled_ov",
+      "paired": "blanket_paired_ov",
+      "empty": "blanket_empty_ov"
+    },
+    "inspectLine": {
+      "folded": "insp_blanket",
+      "rolled": "insp_blanket_rolled",
+      "paired": "insp_blanket_paired",
+      "empty": "insp_blanket_empty"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 서하 담요가 비었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "blanket_gicheol",
+    "name": "기철 담요",
+    "states": [
+      "folded",
+      "rolled",
+      "paired",
+      "empty"
+    ],
+    "overlay": {
+      "rolled": "blanket_rolled_ov",
+      "paired": "blanket_paired_ov",
+      "empty": "blanket_empty_ov"
+    },
+    "inspectLine": {
+      "folded": "insp_blanket",
+      "rolled": "insp_blanket_rolled",
+      "paired": "insp_blanket_paired",
+      "empty": "insp_blanket_empty"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 기철 담요가 비었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "blanket_eunji",
+    "name": "은지 담요",
+    "states": [
+      "folded",
+      "rolled",
+      "paired",
+      "empty"
+    ],
+    "overlay": {
+      "rolled": "blanket_rolled_ov",
+      "paired": "blanket_paired_ov",
+      "empty": "blanket_empty_ov"
+    },
+    "inspectLine": {
+      "folded": "insp_blanket",
+      "rolled": "insp_blanket_rolled",
+      "paired": "insp_blanket_paired",
+      "empty": "insp_blanket_empty"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 은지 담요가 비었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "blanket_dongha",
+    "name": "동하 담요",
+    "states": [
+      "folded",
+      "rolled",
+      "paired",
+      "empty"
+    ],
+    "overlay": {
+      "rolled": "blanket_rolled_ov",
+      "paired": "blanket_paired_ov",
+      "empty": "blanket_empty_ov"
+    },
+    "inspectLine": {
+      "folded": "insp_blanket",
+      "rolled": "insp_blanket_rolled",
+      "paired": "insp_blanket_paired",
+      "empty": "insp_blanket_empty"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 동하 담요가 비었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "blanket_mari",
+    "name": "마리 담요",
+    "states": [
+      "folded",
+      "rolled",
+      "paired",
+      "empty"
+    ],
+    "overlay": {
+      "rolled": "blanket_rolled_ov",
+      "paired": "blanket_paired_ov",
+      "empty": "blanket_empty_ov"
+    },
+    "inspectLine": {
+      "folded": "insp_blanket",
+      "rolled": "insp_blanket_rolled",
+      "paired": "insp_blanket_paired",
+      "empty": "insp_blanket_empty"
+    },
+    "ledgerFact": {
+      "empty": "D{day}. 마리 담요가 비었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "lever",
+    "name": "비상 레버",
+    "states": [
+      "up",
+      "pulled"
+    ],
+    "overlay": {
+      "pulled": "lever_pulled_ov"
+    },
+    "inspectLine": {
+      "up": "insp_lever",
+      "pulled": "insp_lever_pulled"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "bag",
+    "name": "좌석 밑 가방",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {
+      "open": "bag_open_ov"
+    },
+    "inspectLine": {
+      "closed": "insp_bag",
+      "open": "insp_bag_open"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "cab_door",
+    "name": "운전실 문",
+    "states": [
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "open": "insp_cab_door"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "radio_cab",
+    "name": "운전실 무전기",
+    "states": [
+      "idle",
+      "used"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "idle": "insp_radio_cab",
+      "used": "insp_radio_cab_used"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 1,
+    "resetOn": "never"
+  },
+  {
+    "id": "medkit",
+    "name": "운전실 구급함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {
+      "open": "medkit_open_ov"
+    },
+    "inspectLine": {
+      "closed": "insp_medkit",
+      "open": "insp_medkit_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "notebook_dash",
+    "name": "계기판 위 수첩",
+    "states": [
+      "there",
+      "taken"
+    ],
+    "overlay": {
+      "taken": "notebook_gone_ov"
+    },
+    "inspectLine": {
+      "there": "insp_notebook_dash",
+      "taken": "insp_notebook_taken"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 2,
+    "resetOn": "never"
+  },
+  {
+    "id": "shoe_cab",
+    "name": "구두 한 짝",
+    "states": [
+      "there"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "there": "insp_shoe_cab"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "car_shoes",
+    "name": "가지런한 신발",
+    "states": [
+      "there"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "there": "insp_car_shoes"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "shelter_box",
+    "name": "대피 공간 비상 상자",
+    "states": [
+      "closed",
+      "open",
+      "left"
+    ],
+    "overlay": {
+      "open": "box_open_ov"
+    },
+    "inspectLine": {
+      "closed": "insp_shelter",
+      "open": "insp_shelter_open",
+      "left": "insp_shelter_left"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "vent_shaft",
+    "name": "환기 통로",
+    "states": [
+      "grey"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "grey": "insp_vent"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 1,
+    "resetOn": "never"
+  },
+  {
+    "id": "rubble",
+    "name": "무너진 구간",
+    "states": [
+      "blocked",
+      "crossed"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "blocked": "insp_rubble_tunnel",
+      "crossed": "insp_rubble_crossed"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "pharmacy_shutter",
+    "name": "약국 셔터",
+    "states": [
+      "closed",
+      "half",
+      "open",
+      "dark"
+    ],
+    "overlay": {
+      "half": "pharm_half_ov",
+      "open": "pharm_open_ov",
+      "dark": "pharm_dark_ov"
+    },
+    "inspectLine": {
+      "closed": "insp_pharm_closed",
+      "half": "insp_pharm_half",
+      "open": "insp_pharm_open",
+      "dark": "insp_pharm_dark"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 1,
+    "resetOn": "never"
+  },
+  {
+    "id": "phonebooth",
+    "name": "공중전화",
+    "states": [
+      "card",
+      "taken"
+    ],
+    "overlay": {
+      "taken": "booth_taken_ov"
+    },
+    "inspectLine": {
+      "card": "insp_booth",
+      "taken": "insp_booth_taken"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "stall_cart",
+    "name": "노점 수레",
+    "states": [
+      "normal"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "normal": "insp_cart"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "bone_pile",
+    "name": "뼈 무더기",
+    "states": [
+      "normal",
+      "scattered"
+    ],
+    "overlay": {
+      "scattered": "bones_scat_ov"
+    },
+    "inspectLine": {
+      "normal": "insp_bones",
+      "scattered": "insp_bones_scat"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "bodybag_a2",
+    "name": "시체 자루",
+    "states": [
+      "normal",
+      "zipped",
+      "taken"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "normal": "insp_bodybag",
+      "zipped": "insp_bodybag_zipped",
+      "taken": "insp_bodybag_taken"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "valve",
+    "name": "수문 밸브",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {
+      "open": "valve_open_ov"
+    },
+    "inspectLine": {
+      "closed": "insp_valve",
+      "open": "insp_valve_open"
+    },
+    "ledgerFact": {
+      "open": "D{day}. 밸브를 열었다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "pump_room",
+    "name": "펌프실",
+    "states": [
+      "locked",
+      "open"
+    ],
+    "overlay": {
+      "open": "pump_open_ov"
+    },
+    "inspectLine": {
+      "locked": "insp_pump_locked",
+      "open": "insp_pump_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 1,
+    "resetOn": "never"
+  },
+  {
+    "id": "worker_pipe",
+    "name": "배수관",
+    "states": [
+      "bodies",
+      "stripped"
+    ],
+    "overlay": {
+      "stripped": "pipe_stripped_ov"
+    },
+    "inspectLine": {
+      "bodies": "insp_workers",
+      "stripped": "insp_workers_stripped"
+    },
+    "ledgerFact": {
+      "stripped": "D{day}. 배수관의 사람들 신발이 없어졌다."
+    },
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "cistern",
+    "name": "저수조",
+    "states": [
+      "normal"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "normal": "insp_cistern"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "ladder_b2",
+    "name": "잠긴 사다리",
+    "states": [
+      "normal"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "normal": "insp_ladder"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "bandage_soonrye",
+    "name": "순례 붕대",
+    "states": [
+      "clean",
+      "wet",
+      "rot"
+    ],
+    "overlay": {
+      "wet": "bandage_wet_ov",
+      "rot": "bandage_rot_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_bandage_clean",
+      "wet": "insp_bandage_wet",
+      "rot": "insp_bandage_rot"
+    },
+    "ledgerFact": {
+      "wet": "D{day} 밤. 순례 붕대가 피에 젖었다.",
+      "rot": "D{day} 밤. 순례 붕대에서 썩는 냄새."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bandage_seoha",
+    "name": "서하 붕대",
+    "states": [
+      "clean",
+      "wet",
+      "rot"
+    ],
+    "overlay": {
+      "wet": "bandage_wet_ov",
+      "rot": "bandage_rot_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_bandage_clean",
+      "wet": "insp_bandage_wet",
+      "rot": "insp_bandage_rot"
+    },
+    "ledgerFact": {
+      "wet": "D{day} 밤. 서하 붕대가 피에 젖었다.",
+      "rot": "D{day} 밤. 서하 붕대에서 썩는 냄새."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bandage_gicheol",
+    "name": "기철 붕대",
+    "states": [
+      "clean",
+      "wet",
+      "rot"
+    ],
+    "overlay": {
+      "wet": "bandage_wet_ov",
+      "rot": "bandage_rot_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_bandage_clean",
+      "wet": "insp_bandage_wet",
+      "rot": "insp_bandage_rot"
+    },
+    "ledgerFact": {
+      "wet": "D{day} 밤. 기철 붕대가 피에 젖었다.",
+      "rot": "D{day} 밤. 기철 붕대에서 썩는 냄새."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bandage_eunji",
+    "name": "은지 붕대",
+    "states": [
+      "clean",
+      "wet",
+      "rot"
+    ],
+    "overlay": {
+      "wet": "bandage_wet_ov",
+      "rot": "bandage_rot_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_bandage_clean",
+      "wet": "insp_bandage_wet",
+      "rot": "insp_bandage_rot"
+    },
+    "ledgerFact": {
+      "wet": "D{day} 밤. 은지 붕대가 피에 젖었다.",
+      "rot": "D{day} 밤. 은지 붕대에서 썩는 냄새."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bandage_dongha",
+    "name": "동하 붕대",
+    "states": [
+      "clean",
+      "wet",
+      "rot"
+    ],
+    "overlay": {
+      "wet": "bandage_wet_ov",
+      "rot": "bandage_rot_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_bandage_clean",
+      "wet": "insp_bandage_wet",
+      "rot": "insp_bandage_rot"
+    },
+    "ledgerFact": {
+      "wet": "D{day} 밤. 동하 붕대가 피에 젖었다.",
+      "rot": "D{day} 밤. 동하 붕대에서 썩는 냄새."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bandage_mari",
+    "name": "마리 붕대",
+    "states": [
+      "clean",
+      "wet",
+      "rot"
+    ],
+    "overlay": {
+      "wet": "bandage_wet_ov",
+      "rot": "bandage_rot_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_bandage_clean",
+      "wet": "insp_bandage_wet",
+      "rot": "insp_bandage_rot"
+    },
+    "ledgerFact": {
+      "wet": "D{day} 밤. 마리 붕대가 피에 젖었다.",
+      "rot": "D{day} 밤. 마리 붕대에서 썩는 냄새."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "bandage_you",
+    "name": "당신 붕대",
+    "states": [
+      "clean",
+      "wet",
+      "rot"
+    ],
+    "overlay": {
+      "wet": "bandage_wet_ov",
+      "rot": "bandage_rot_ov"
+    },
+    "inspectLine": {
+      "clean": "insp_bandage_clean",
+      "wet": "insp_bandage_wet",
+      "rot": "insp_bandage_rot"
+    },
+    "ledgerFact": {
+      "wet": "D{day} 밤. 내 붕대가 피에 젖었다.",
+      "rot": "D{day} 밤. 내 붕대에서 썩는 냄새."
+    },
+    "solid": 0,
+    "light": 0,
+    "resetOn": "inspect"
+  },
+  {
+    "id": "drawer_a1",
+    "name": "계산대 서랍장",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_drawer_a1",
+      "open": "insp_drawer_a1_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "성냥 두 갑과 신문 뭉치가 있었다.",
+      "effects": [
+        {
+          "verb": "number",
+          "id": "fuel",
+          "n": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "shelf_a1",
+    "name": "매점 선반",
+    "states": [
+      "closed",
+      "empty"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_shelf_a1",
+      "empty": "insp_shelf_a1_empty"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "선반 밑에 음료 캔 둘. 하나는 터져 있었다.",
+      "effects": [
+        {
+          "verb": "number",
+          "id": "water",
+          "n": 1
+        }
+      ],
+      "state": "empty"
+    }
+  },
+  {
+    "id": "locker_a1",
+    "name": "관리실 사물함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_locker_a1",
+      "open": "insp_locker_a1_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "사물함 안에 밧줄 한 타래가 감겨 있었다.",
+      "effects": [
+        {
+          "verb": "flag",
+          "id": "has_rope",
+          "set": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "shelf_a2",
+    "name": "기운 선반",
+    "states": [
+      "closed",
+      "picked",
+      "empty"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_shelf_a2",
+      "picked": "insp_shelf_a2_picked",
+      "empty": "insp_shelf_a2_empty"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "barrel_a2",
+    "name": "끼인 드럼통",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_barrel_a2",
+      "open": "insp_barrel_a2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "locker_a2",
+    "name": "구석 사물함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_locker_a2",
+      "open": "insp_locker_a2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "누가 먼저 열었다. 안쪽 문에 손톱자국이 길게 나 있었다."
+    }
+  },
+  {
+    "id": "crate_b1",
+    "name": "쌓인 상자",
+    "states": [
+      "closed",
+      "empty"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_crate_b1",
+      "empty": "insp_crate_b1_empty"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "barrel_b1",
+    "name": "녹슨 드럼통",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_barrel_b1",
+      "open": "insp_barrel_b1_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "비닐에 싼 무전기가 들어 있었다. 아직 지직거린다.",
+      "effects": [
+        {
+          "verb": "flag",
+          "id": "has_radio",
+          "set": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "bag_b1",
+    "name": "걸린 가방",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_bag_b1",
+      "open": "insp_bag_b1_open"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "toolbox_b2",
+    "name": "펌프 공구함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_toolbox_b2",
+      "open": "insp_toolbox_b2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "퓨즈 두 개와 절연 테이프가 있었다.",
+      "effects": [
+        {
+          "verb": "number",
+          "id": "parts",
+          "n": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "locker_b2",
+    "name": "잠긴 사물함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_locker_b2",
+      "open": "insp_locker_b2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "barrel_b2",
+    "name": "잠긴 드럼통",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_barrel_b2",
+      "open": "insp_barrel_b2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "드럼통 안은 흙탕물뿐이었다. 바닥에서 무엇이 한 번 뒤척였다."
+    }
+  }
+]

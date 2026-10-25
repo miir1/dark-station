@@ -15,6 +15,7 @@
   let viewPeople = {};                    // 마지막 view 의 사람 행 (엔진이 signs 를 주면 그것을 쓴다)
   let endShown = false;                   // 결말 화면은 판마다 한 번
   const missing = new Set();              // 그림이 없어 글만 나간 장면 (캡처 보고용, 화면에는 안 나온다)
+  const snd = (kind, o) => { if (window.SND) SND.play(kind, o); };   // 소리 (v4/sound.js — 효과음·앰비언트만. 첫 입력 전·?fast=1·캡처에서는 무음)
 
   // ── 조작: dispatch 한 줄 + 저장 ──
   function act(a) {
@@ -94,6 +95,7 @@
     const key = E.heardKey(db, id, row);
     if (!key) return;
     act({ type: 'heard', key, quiet: true });
+    if (how === 'bark' || how === 'topic') snd('bubble');                     // 말풍선이 뜬다 (아주 작게)
     hearLog.push({ key, day: state.day, phase: state.phase, how: how || 'line', map: scene.map ? scene.map.id : '', steps: scene.steps });
   }
 
@@ -294,6 +296,7 @@
       if (mo.id === 'grave' && st === 'none') hidden = true;
       if (mo.id === 'shoes_stairs' && st === 'none') hidden = true;
       if (mo.id === 'notebook_dash' && st === 'taken') hidden = true;          // 수첩은 이제 당신 주머니에
+      if (mo.id === 'bodybag_a2' && st === 'taken') hidden = true;            // (10-25 P1-11) 시체 자루를 가져갔다(taken) — 지도에서 사라진다
       const who = ownerOf(mo.id);
       if (who && /^(bottle|bowl|bandage)_/.test(mo.id) && person(who).status === 'away') hidden = true;   // 주인이 아직 역 밖(away)인 그릇·물통·붕대는 숨긴다 (P0-S5)
       if (who && /^bowl_/.test(mo.id) && !met(who)) hidden = true;            // 만나기 전에는 그 사람 그릇이 없다 (역 안에 숨은 서하, D0 마리)
@@ -481,7 +484,8 @@
     if (p) return p.name || '누군가';
     const os = objectsAt(tx, ty);
     if (os.length) return os.map((o) => o.name).join(' · ');
-    return EXIT_NAMES[tileAt(tx, ty)] || '';
+    const te = onTrip() ? tripStair(tileAt(tx, ty)) : null;                  // 원정 층의 계단 (들어온 계단 E · 내려가는 계단 v)
+    return (te ? te.name : EXIT_NAMES[tileAt(tx, ty)]) || '';
   }
 
   // ── 걸어서 밟는 곳 ──
@@ -490,6 +494,7 @@
     if (scene.map.id === 'car' && t === 'E') { flow(() => enterMap('tunnel')); return; }
     if (scene.map.id === 'tunnel' && t === 'E') { flow(() => enterMap('station')); return; }
     if (scene.map.id === 'station' && (t === 'A' || t === 'B')) { if (state.phase === 'day') UI.toast(`${EXIT_NAMES[t]} — 조사하면 원정`, 1500); }
+    if (onTrip() && tripStair(t)) UI.toast(t === 'v' ? '내려가는 계단 — 조사하면 아래층' : '들어온 계단 — 조사하면 역으로', 1500);
   }
   // 지도에 들어선다: move 로 자리를 옮긴다. 그 지도에 걸린 고정 장면(눈을 뜬다·승강장)은 엔진 move 가 바로 건다(checkEvents).
   async function enterMap(mapId) {
@@ -507,7 +512,9 @@
   // 조사할 것: 앞 칸 사람 → 앞 칸 물건 전부(없으면 내 칸) → 한 칸 건너 화로 → 출구. 안내줄 = 'Space <동사> — <이름>' (P0-S6)
   //   닫힌 수납이면 '열기', 사람이면 '말 걸기 — <이름표>', 그 밖은 '조사'. 한 칸에 물건이 여럿이면 이름을 다 적고 한 번에 차례로 조사한다
   const CLOSED = { crate_food: 'closed', bag: 'closed', medkit: 'closed', shelter_box: 'closed', lever: 'up' };
-  const isClosed = (o) => CLOSED[o.id] === o.state;
+  // (10-25 P1-11) 원정 지도 수납 가구: 엔진 closedHolds(닫힌 수납 — 조사 한 번에 열린다) 또는 닫힌(closed) 가구(내용이 사건 결과인 것 — 상자·가방·끼인 드럼통·잠긴 사물함·기운 선반)
+  const FURNITURE = /^(locker|shelf|drawer|barrel|toolbox|crate|bag)_/;
+  const isClosed = (o) => CLOSED[o.id] === o.state || !!(E.closedHolds && E.closedHolds(state, db, o.id)) || (FURNITURE.test(o.id) && o.state === 'closed');
   const fireVerb = () => (preMeet('soonrye') ? '조사' : fireLabel());          // 순례를 만나기 전의 화로 = 순례에게 말 걸기
   function target() {
     if (scene.moving || !scene.map) return null;
@@ -527,12 +534,15 @@
     const [ddx, ddy] = DIRS[scene.face];
     const far = !blocked(fx, fy) ? objectsAt(fx + ddx, fy + ddy).find((q) => q.id === 'fire') : null;
     if (far) return { x: far.x, y: far.y, kind: 'obj', id: far.id, ids: [far.id], label: fireVerb(), verb: fireVerb(), name: far.name };
+    const te = onTrip() ? tripStair(tileAt(scene.px, scene.py)) : null;    // 원정 층: 선 칸이 계단이면 'Space 돌아간다 — 들어온 계단' · 'Space 내려간다 — 내려가는 계단'
+    if (te) return { x: scene.px, y: scene.py, kind: 'exit', id: te.id, label: te.verb, verb: te.verb, name: te.name };
     const ex = exitHere();
-    if (ex) { const v = state.phase === 'day' ? '원정' : '통로'; return { x: scene.px, y: scene.py, kind: 'exit', id: ex, label: v, verb: v, name: EXIT_NAMES[ex] }; }
+    if (ex) { const v = state.phase === 'day' && !state.trip ? '원정' : '통로'; return { x: scene.px, y: scene.py, kind: 'exit', id: ex, label: v, verb: v, name: EXIT_NAMES[ex] }; }
     return null;
   }
   function interact() {
     if (busy || UI.isOpen() || scene.moving) return;
+    if (tripW && tripW.hold) { releaseArrival(); return; }                     // 원정 층에 막 들어섰다: 도착 사건이 먼저 (지도를 본 다음)
     const tg = target();
     if (!tg) { UI.toast('아무것도 없다.', 900); return; }
     if (tg.kind === 'npc') flow(() => talkTo(tg.id));
@@ -561,6 +571,7 @@
 
   // 걸린 사건이 있으면 전부 보여 준다 (하나가 끝나고 또 걸릴 수 있다)
   async function pendingFlow() {
+    if (tripW && tripW.hold && !state.ended) return;                         // 원정 도착 사건은 지도를 먼저 보인 뒤에 (두 칸 걷기 · 1.5초 · Space — releaseArrival)
     let guard = 0;
     while (state.pending && !state.ended && guard++ < 10) await showEvent();
     if (state.ended) await endingScreen();
@@ -585,13 +596,16 @@
   // 눈먼 새벽: 줄타기 칸 rope.blind 가 붙은 사건이 그 깃발(기본 strike_blind — 못 본 원한이 터진 밤)이 선 채 걸렸다 (엔진 choose 의 blind 와 같은 판정)
   const blindNow = (ev) => !!(ev && DS4.schema && DS4.schema.ropeBlindFlag && ev.choices.some((x) => x.rope && x.rope.blind && x.rope.kind !== 'fight' && state.flags[DS4.schema.ropeBlindFlag(x.rope)] === true));
   const BLIND_HEAD = '못 본 일이 커져서 왔다.';   // 대사표 rope_blind_head 가 있으면 그것
-  // 장면 그림: v4 cg/<image> → v4 cg/<사건 id> → v3 대체 (art.js). 없으면 그림 층을 열지 않는다
+  // 장면 그림: v4 cg/<image> → v4 cg/<사건 id> → v3 대체 (art.js). 없으면 그림 층을 열지 않는다 — 열려 있던 층도 걷는다
+  //   (10-25 최종 점검) 걸린 사건이 이어서 뜰 때(pendingFlow) 층을 걷는 곳은 '뒤에 걸린 사건이 없을 때'뿐이라, 그림 없는 사건이 앞 사건·앞 결과 글의 그림을
+  //   그대로 이고 떴다(d2_night_count 위 잘린 팔 d2_shutter_arm · hymn_fire_kept 위 story_ticket · fever_night 위 death_starve). 그림이 없으면 그 사건은 글만 — 지도가 보인다
   function eventCg(v) {
     const src = ART.cgSrc(v.image, v.id);
-    if (src) UI.cg(src);
-    else if (v.image) missing.add(v.image + '@' + v.id);
-    else if (v.explicit) missing.add('@' + v.id);                     // 그림 칸이 빈 적나라 사건(새 위기·카르마 사건) — 그림이 생기면 v4 cg/<사건 id> 로 바로 잡힌다(A5). 그 전에는 글만
-    return !!src;
+    if (src) { UI.cg(src); return true; }
+    UI.cgClear();
+    if (v.image) missing.add(v.image + '@' + v.id);
+    else if (v.explicit) missing.add('@' + v.id);                   // 그림 칸이 빈 적나라 사건(새 위기·카르마 사건) — 그림이 생기면 v4 cg/<사건 id> 로 바로 잡힌다(A5). 그 전에는 글만
+    return false;
   }
   // 수납 열기 (P0-S6): 사건 결과로 이 지도 물건이 닫힘(closed·up) → 열림(open·empty·pulled)이 됐는가
   const OPEN_SHAKE_MS = 400;
@@ -630,10 +644,39 @@
     const branch = r.roll ? (r.roll.success ? 'ok' : 'fail') : 'out';
     const fx = FOUND[evId + '#' + i];
     if (fx && branch !== 'fail' && ART.iconSrc(fx)) return fx;
-    const text = String(r.text || '');
+    return wordIcon(r.text, newFlags, gained);
+  }
+  // 글 속 물건 낱말(FOUND_WORDS) 가운데 실제로 얻은 것(새 깃발·늘어난 자원)의 아이콘 — 사건 결과 글과 연 수납 글(holds.text, P1-11)이 같은 규칙
+  function wordIcon(text0, newFlags, gained) {
+    const text = String(text0 || '');
     const hits = FOUND_WORDS.map(([re, icon, got]) => { const m = re.exec(text); return m && got(newFlags, gained) && ART.iconSrc(icon) ? { icon, at: m.index } : null; }).filter(Boolean);
     hits.sort((a, b) => a.at - b.at);
     return hits.length ? hits[0].icon : '';
+  }
+  // 수납 열기 (P1-11 · 엔진 openHolds → state.found = view.found): 닫힌 수납을 조사하면 한 번에 닫힘 → 얻음 → 열림. 사건으로 여는 수납과 같은 3박자 —
+  //   ① 열린 그림으로 바로 바뀌고(지도가 흔적 상태를 그린다) ② 0.4초 동안 1px 흔들림(입력은 이 흐름이 막는다) · 앞 칸 바닥 가구면 쪼그려 앉는다
+  //   ③ 결과 글 = holds.text. 얼굴 칸 = 찾은 물건 아이콘: 글의 밧줄·성냥·퓨즈·무전기… 낱말 + 실제로 얻었나(깃발 has_rope·has_radio · 늘어난 땔감·부품, wordIcon)
+  //      → 없으면 늘어난 자원(땔감 빼고) 아이콘 → 없으면 글만. 늘어난 자원은 패널 숫자가 두 번 깜빡인다(땔감 포함 — 판단 정보)
+  async function foundFlow(id, f, worldBefore, flagsBefore) {
+    const gained = RES_ORDER.filter((k) => (state.world[k] || 0) > (worldBefore[k] || 0));
+    if (gained.length) blinkRes(gained);
+    const newFlags = Object.keys(state.flags).filter((k) => state.flags[k] === true && flagsBefore[k] !== true);
+    const [fx0, fy0] = front();
+    const ob = objectsOnMap().find((q) => q.id === id);
+    const floorOpen = !!ob && ob.x === fx0 && ob.y === fy0 && !(RENDER.wallClear && RENDER.wallClear(scene, ob));
+    shake = { ids: [id], until: performance.now() + OPEN_SHAKE_MS };
+    snd('open', { ids: [id] });                                                  // 삐걱·덜컥 (가구마다 — sound.js)
+    if (floorOpen) scene.crouch = true;
+    openLog.push({ ids: [id], event: 'holds:' + id, day: state.day, gained, crouch: floorOpen, state: f.state });
+    if (!E.isFast || !E.isFast()) await wait(OPEN_SHAKE_MS);
+    const word = wordIcon(f.text, newFlags, gained);
+    const res = gained.filter((k) => k !== 'fuel').sort((a, b) => (state.world[b] - worldBefore[b]) - (state.world[a] - worldBefore[a]))[0];
+    const icon = word || (res ? RES_ICON[res] : '');
+    const src = icon ? ART.iconSrc(icon) : '';
+    foundLog.push({ event: 'holds:' + id, choice: null, icon: src ? icon : '', day: state.day, text: f.text || '', gained, flags: newFlags });
+    const text = f.text ? maskNames(f.text) : `${josa(objName(id), '을를')} 열었다.`;
+    await UI.lines(text, src ? { tag: 'found:' + id, face: src, faceCls: 'icon' } : { tag: 'found:' + id });
+    scene.crouch = false;
   }
   const foundLog = [];
   const MEET_EV = { pro_platform: 'soonrye', pro_gicheol: 'gicheol', pro_mari: 'mari', d0_mari_fire: 'mari', d1_shutter_knock: 'eunji', d0_gicheol_notebook: 'gicheol', d1_gicheol_arrive: 'gicheol', d1_gicheol_arrive_b: 'gicheol' };
@@ -651,6 +694,7 @@
   async function showEvent() {
     const v = E.eventView(state, db);
     if (!v) return;
+    snd('event', { id: v.id, text: v.text });                                   // 본문이 말하는 소리 (스피커·무전기 지직 · 셔터 두드림)
     const black = v.id === 'pro_cold';
     if (!black) eventCg(v);
     const whoId = eventFaceId(v);
@@ -705,6 +749,7 @@
     if (opened.length && !black) {
       if (!r.image) UI.cgClear();                                         // 그림 층을 걷어 지도에서 열리는 것을 보인다
       shake = { ids: opened, until: performance.now() + OPEN_SHAKE_MS };
+      snd('open', { ids: opened });                                               // 삐걱·덜컥
       if (floorOpen) scene.crouch = true;
       openLog.push({ ids: opened, event: v.id, day: state.day, gained, crouch: floorOpen });
       if (!E.isFast || !E.isFast()) await wait(OPEN_SHAKE_MS);
@@ -714,6 +759,7 @@
       if (src) UI.cg(src); else missing.add(r.image + '@' + v.id + ':out');
     }
     // 판정 줄: 실패가 당신을 죽이는 판정을 넘겼으면 '살았다.' + 상자가 한 번 크게 뛴다 (줄타기의 아슬함 — 죽을 뻔한 판정을 넘긴 것이 보이게)
+    if (r.roll) snd(r.roll.success ? 'ok' : 'fail', { close: r.roll.success && deadlyRoll });
     if (r.roll) await UI.line(`판정 ${r.roll.chance}% — ${r.roll.success ? (deadlyRoll ? '살았다.' : '됐다.') : '안 됐다.'}`, { black, tag: 'roll', cls: r.roll.success && deadlyRoll ? 'close' : '' });
     // 결과 글 얼굴 칸 = 찾은 물건 아이콘(40px 을 2배 = 80): 사건이 손에 쥐여 준 물건(foundIcon — 케이블·수첩·건빵·생수·장갑·열쇠·전화카드…)이 먼저, 없으면 연 수납에서 늘어난 자원
     const newFlags = Object.keys(state.flags).filter((f) => state.flags[f] === true && flagsBefore[f] !== true);
@@ -758,6 +804,7 @@
   const treatable = () => ['you'].concat(db.peopleOrder.filter((id) => id !== 'you' && met(id))).filter((id) => !treatWhy(id));
   async function doTreat(id) {
     if (!act({ type: 'treat', who: id })) return false;
+    snd('inspect', { id: 'bandage_' + id });                                     // 붕대를 감는 천 소리
     await UI.lines(id === 'you' ? '상처를 씻고 붕대를 새로 감았다.' : `${nameOf(id)}의 상처를 씻고 붕대를 새로 감았다.`, id === 'you' ? {} : { name: nameOf(id), face: faceOf(id) });
     return true;
   }
@@ -887,9 +934,13 @@
       if (preMeet('soonrye')) return talkTo('soonrye');                       // 순례를 만나기 전: 화로를 조사하면 순례에게 말 걸기 → pro_platform (P0-S5)
       return useFire();
     }
+    const worldBefore = Object.assign({}, state.world), flagsBefore = Object.assign({}, state.flags);
     if (!act({ type: 'inspect', object: id })) return;
+    const found = !state.pending && state.found && state.found.object === id ? state.found : null;   // (P1-11) 닫힌 수납을 열었다 (엔진 openHolds — view.found)
+    if (!found) snd('inspect', { id, st: traceSt(id), ev: !!state.pending });   // 손이 닿는 소리 (재료별) · 수납을 열었으면 여는 소리(foundFlow)
     noticeToast();                                                              // (10-24 E3) 그날 첫 조사 + 어젯밤 못 본 흔적이 있다 → '어제 못 본 자리가 그대로다.' (사건이 걸려도 먼저)
     if (state.pending) return;
+    if (found) { inspectLog.push({ id, st: traceSt(id), lid: 'found', day: state.day, notice: state.notice || '' }); await foundFlow(id, found, worldBefore, flagsBefore); await offerFact(id); return; }
     const o = db.objects[id];
     const st = traceSt(id);
     // 조사 글 줄: 엔진 inspectLineId — 못 본 밤이 바꾼 흔적(late)이면 '<줄id>_late'(어제부터 그대로라는 글), 아니면 inspectLine[지금 상태]
@@ -921,7 +972,7 @@
     const txtShown = factText(id);
     if (!txtShown) return;
     const w = await UI.open(`<p class="who">수첩</p><p>${esc(txtShown)}</p>`, { kind: 'write', options: [{ label: '수첩에 적는다', value: true }, { label: '둔다', value: false }], cancel: true, cancelValue: false });
-    if (w && act({ type: 'writeFact', object: id })) UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab');
+    if (w && act({ type: 'writeFact', object: id })) { snd('inspect', { id: 'notebook_you' }); UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab'); }   // 수첩 넘기는 종이 소리
   }
   function fireLabel() { return { trace: '배식으로', ration: '배식', seat: '자리', day: '저녁으로', evening: '밤으로', night: '잠든다', aftermath: '아침으로' }[state.phase] || '조사'; }
   // 화로: 단계를 넘기는 곳이면서 흔적이 남는 물건이다 (젖은 화로 = 누가 물을 흘렸다 · 지킨 불 = 누가 밤을 지켰다).
@@ -933,6 +984,7 @@
   const FIRE_PLAIN = '드럼통 안에서 불이 탄다.';
   async function lookFire() {
     if (!act({ type: 'inspect', object: 'fire', quiet: true })) return false;
+    snd('inspect', { id: 'fire', st: traceSt('fire'), ev: !!state.pending });   // 장작을 뒤적인다 (sound.js)
     noticeToast();
     const lid = (E.inspectLineId && E.inspectLineId(state, db, 'fire')) || 'insp_fire_' + traceSt('fire');
     inspectLog.push({ id: 'fire', st: traceSt('fire'), lid, day: state.day, notice: state.notice || '' });
@@ -957,38 +1009,60 @@
         .concat([{ label: '아직', value: false }]);
       const go = await UI.open(`<p class="who">화로</p><p>${esc(NEXT[ph][0])}</p>`, { kind: 'fire', options: opts, cancel: true, cancelValue: false });
       if (go === 'look') { const r = await lookFire(); if (r === 'event' || r === false) return; looked = true; continue; }
-      if (go === 'write') { if (act({ type: 'writeFact', object: 'fire' })) UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab'); continue; }
+      if (go === 'write') { if (act({ type: 'writeFact', object: 'fire' })) { snd('inspect', { id: 'notebook_you' }); UI.toast(lineOf('toast_ledger_line') || '명부에 한 줄 — Tab'); } continue; }
       if (!go) return;
       break;
     }
     await nextPhase();
   }
 
-  // ── 원정: 통로 → 1층 사건 → (더 내려가거나 돌아온다) → 역. 지도는 그 층으로 바뀌고, 그림은 그 위에 ──
+  // ── 원정 (P1-11 원정을 걸어서 뒤지기, 10-25 최종판): 통로 → 그 층 지도에 선다 → 걸어서 가구를 연다(닫힌 수납 = 조사 한 번에 열림 · 위험한 수납 = 조사로 걸리는 사건)
+  //   → 내려가는 계단(v)을 조사하면 아래층 · 들어온 계단(E)을 조사하면 역으로. 그림은 지도 위에.
+  //   옛 흐름은 도착하자마자 사건을 걸고 곧장 '더 내려가나'를 물어 지도를 걷지 못했다(도착 사건이 없는 층은 '아무것도 없었다'). 이제 엔진 trip walk:true 로 그 층에 서서 걷는다.
+  //   그 층의 도착 사건(엔진이 trip 때 거는 것 — 약국·좌판·수문·쥐·뼈·물에 빠진 사람)은 바로 띄우지 않는다: 지도를 먼저 보이고,
+  //   두 칸을 걷거나(ARRIVE_STEPS) 1.5초가 지나거나(ARRIVE_MS) Space 를 누르면 그때 띄운다(tripW.hold → releaseArrival). 그 층을 떠나기 전에 반드시 지나간다(엔진은 걸린 사건이 있으면 못 내려간다)
+  //   저장은 역 자리 그대로다(원정 지도에서 'move' 하지 않는다) — 원정 도중 다시 열면 역에 서 있고, 그날 원정은 이미 다녀온 것이다
   const TRIP_MAPS = { A: ['mall_a1', 'mall_a2'], B: ['drain_b1', 'drain_b2'] };
+  const ARRIVE_STEPS = 2, ARRIVE_MS = 1500;
+  let tripW = null;                       // 원정 중인 층 { region, floor, back:[x,y] 역 통로 칸, hold: 도착 사건을 아직 안 띄움, steps0, at }
+  const onTrip = () => !!(tripW && scene.map && TRIP_MAPS[tripW.region] && TRIP_MAPS[tripW.region][tripW.floor - 1] === scene.map.id);
+  const TRIP_EXIT = { E: { id: 'up', verb: '돌아간다', name: '들어온 계단' }, v: { id: 'down', verb: '내려간다', name: '내려가는 계단' } };
+  const tripStair = (t) => { const te = TRIP_EXIT[t]; return te && !(te.id === 'down' && !TRIP_MAPS[tripW.region][tripW.floor]) ? te : null; };   // 아래층이 없는 층의 v 는 계단이 아니다
+  function releaseArrival() { if (!tripW || !tripW.hold) return; tripW.hold = false; flow(async () => {}); }   // flow 끝의 pendingFlow 가 도착 사건을 띄운다
   function tripScene(mapId) { const m = db.maps[mapId]; if (m) setScene(mapId, m.start[0], m.start[1]); }
+  async function enterTripFloor(region, floor) {
+    const mapId = TRIP_MAPS[region][floor - 1];
+    if (!mapId || !db.maps[mapId]) return false;
+    await UI.card(db.maps[mapId].displayName, floor === 1 ? '원정' : '원정 · 아래층');
+    if (!act(floor === 1 ? { type: 'trip', region, floor: 1, walk: true, quiet: true } : { type: 'trip', floor, walk: true, quiet: true })) return false;   // 엔진이 거절하면 지도는 그대로
+    tripScene(mapId);
+    Object.assign(tripW, { region, floor, hold: !!state.pending, steps0: scene.steps, at: performance.now() });
+    return true;
+  }
   async function useExit(region) {
+    if (region === 'up' || region === 'down') { await tripExit(region); return; }
     if (state.phase !== 'day') { await UI.line(`${EXIT_NAMES[region]}. 낮에 조사하면 나갈 수 있다.`); return; }
     if (state.trip) { await UI.line('오늘은 이미 다녀왔다. 다리가 말을 듣지 않는다.'); return; }
     const go = await UI.open(`<p class="who">${esc(EXIT_NAMES[region])}</p><p>${region === 'A' ? '셔터 너머가 어둡다. 발소리가 여럿이다.' : '물소리가 난다. 아래가 젖어 있다.'}</p>`, { kind: 'trip', options: [{ label: '나간다', value: true }, { label: '돌아선다', value: false }], cancel: true, cancelValue: false });
     if (!go) return;
-    const back = [scene.px, scene.py];
-    const [m1, m2] = TRIP_MAPS[region];
-    await UI.card(db.maps[m1].displayName, '원정');
-    tripScene(m1);
-    if (!act({ type: 'trip', region, floor: 1, quiet: true })) await UI.line('아무것도 없었다. 누가 먼저 다녀갔다.');
-    await pendingFlow();
-    if (!state.ended && db.maps[m2]) {
-      const deeper = await UI.open(`<p class="who">${esc(db.maps[m1].displayName)}</p><p>계단이 아래로 이어진다. 아래는 덜 뒤져졌다. 돌아오는 길은 멀다.</p>`,
-        { kind: 'deeper', options: [{ label: '아래층으로 내려간다', sub: '<small class="warn">더 많고, 더 다친다</small>', value: true }, { label: '역으로 돌아간다', value: false }] });
-      if (deeper) {
-        await UI.card(db.maps[m2].displayName, '원정 · 아래층');
-        tripScene(m2);
-        if (!act({ type: 'trip', floor: 2, quiet: true })) await UI.line('아무것도 없었다. 물이 발목까지 찼다.');
-        await pendingFlow();
-      }
+    tripW = { region, floor: 0, back: [scene.px, scene.py], hold: false, steps0: 0, at: 0 };
+    if (!(await enterTripFloor(region, 1))) { const b = tripW.back; tripW = null; setScene('station', b[0], b[1]); await UI.line('통로가 막혀 있다. 오늘은 나갈 수 없다.'); }
+    // 이 흐름은 여기서 끝난다 — 당신이 그 층을 걷는다
+  }
+  async function tripExit(dir) {
+    if (!onTrip()) return;
+    const name = db.maps[scene.map.id].displayName;
+    if (dir === 'down') {
+      const go = await UI.open(`<p class="who">${esc(name)}</p><p>계단이 아래로 이어진다. 아래는 덜 뒤져졌다. 돌아오는 길은 멀다.</p>`,
+        { kind: 'deeper', cancel: true, cancelValue: false, options: [{ label: '아래층으로 내려간다', sub: '<small class="warn">더 많고, 더 다친다 · 이 층으로는 다시 못 온다</small>', value: true }, { label: '아직', value: false }] });
+      if (go && !(await enterTripFloor(tripW.region, tripW.floor + 1))) await UI.line('계단이 물에 잠겨 있다. 내려갈 수 없다.');
+      return;
     }
-    if (state.ended) return;
+    const go = await UI.open(`<p class="who">${esc(name)}</p><p>${tripW.floor > 1 ? '역까지 올라간다. 오늘은 다시 내려올 수 없다.' : '올라가면 역이다. 오늘은 다시 나올 수 없다.'}</p>`,
+      { kind: 'tripup', cancel: true, cancelValue: false, options: [{ label: '역으로 돌아간다', value: true }, { label: '아직', value: false }] });
+    if (!go) return;
+    const back = tripW.back;
+    tripW = null;
     await UI.card(PLACE.station, '');
     setScene('station', back[0], back[1]);
     await UI.line('역으로 돌아왔다.');
@@ -1133,6 +1207,7 @@
     const cand = e.identity ? db.identity.candidates.find((c) => c.id === e.identity) : null;
     if (youGone()) {
       // 당신 사망: 사망 그림 + 한 줄 → 수첩을 주운 사람이 명부를 읽는다
+      snd('death');                                                             // 낮은 충격 뒤 침묵 (새 판까지)
       UI.cg(deathSrc());
       await UI.line(deathLine(deathKind()), { tag: 'death' });
       const rd = pickResident();
@@ -1182,6 +1257,7 @@
     const m = scene.map.id;
     if (m === 'car') return traceSt('lever') === 'pulled' ? '오른쪽 끝 열린 문으로 나간다' : '전동차 안을 살핀다';
     if (m === 'tunnel') return traceSt('rubble') === 'crossed' ? '터널 끝 승강장으로' : '앞쪽 불빛으로';
+    if (onTrip()) return tripStair('v') ? '원정 — 가구를 열어 뒤진다 · 내려가는 계단을 조사하면 아래층 · 들어온 계단은 역으로' : '원정 아래층 — 가구를 열어 뒤진다 · 들어온 계단을 조사하면 역으로';
     if (m !== 'station') return '';
     if (state.day === 0 && state.phase === 'day') return '승강장을 둘러본다 · 화로를 조사하면 저녁';   // D0 저녁·밤은 아래 단계 글 그대로
     return { trace: '아침 — 흔적을 살피고 말을 건다 · 화로를 조사하면 배식', day: state.trip ? '낮 — 다녀왔다 · 화로를 조사하면 저녁' : '낮 — 통로를 조사하면 원정 · 화로를 조사하면 저녁', evening: lineOf('toast_fire_night') ? '저녁 — 한 사람과 이야기할 수 있다 · ' + lineOf('toast_fire_night') : '저녁', night: '밤 — 화로를 조사하면 잠든다' }[state.phase] || '';
@@ -1189,7 +1265,10 @@
 
   // ── 일시정지(Esc)·수첩(Tab)·타이틀 ──
   async function pauseMenu() {
-    const a = await UI.open('<p class="title">멈춤</p>', { kind: 'pause', cancel: true, cancelValue: 'go', cls: 'wide', options: [{ label: '계속', value: 'go' }, { label: '전체화면', value: 'full' }, { label: '저장 코드 복사', value: 'export' }, { label: '타이틀로', value: 'title' }] });
+    let a;
+    do {                                                                        // 소리 켜기·끄기 / 크기(작게·보통·크게)를 고르면 메뉴로 돌아온다 (sound.js 가 저장)
+      a = await UI.open('<p class="title">멈춤</p>', { kind: 'pause', cancel: true, cancelValue: 'go', cls: 'wide', options: [{ label: '계속', value: 'go' }, { label: '전체화면', value: 'full' }].concat(window.SND ? SND.menu() : [], [{ label: '저장 코드 복사', value: 'export' }, { label: '타이틀로', value: 'title' }]) });
+    } while (window.SND && SND.menuPick(a));
     if (a === 'full') toggleFull();
     else if (a === 'export') { try { const code = store.exportCode(state); if (navigator.clipboard) await navigator.clipboard.writeText(code); UI.toast('저장 코드를 복사했다.'); } catch (e) { UI.toast('복사하지 못했다.'); } }
     else if (a === 'title') await titleScreen(false);
@@ -1206,6 +1285,7 @@
     const sure = await UI.open(`<p class="who">되돌릴 수 없다</p><p>${esc(nm)} — ${c === '__blank' ? '___' : esc(maskNames(c))}</p>`, { kind: 'confirm2', sel: 1, options: [{ label: '그렇게 적는다', value: true, danger: true }, { label: '다시 고른다', value: false }] });
     if (!sure) return;
     if (!act({ type: 'writeCause', who: id, line: c === '__blank' ? null : c, quiet: true })) UI.toast('지금은 적을 수 없다 — 아침·저녁·새벽에');
+    else snd('inspect', { id: 'notebook_you' });                                 // 사인 칸에 적는다 (종이)
   }
   async function notebook() {
     for (;;) {
@@ -1231,7 +1311,7 @@
   function toggleFull() { if (document.fullscreenElement) document.exitFullscreen(); else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
 
   function startGame(s) {
-    state = s; endShown = false;
+    state = s; endShown = false; tripW = null;
     resetBarks(); for (const k of Object.keys(lastTalk)) delete lastTalk[k];
     if (!state.pos.map || !db.maps[state.pos.map]) { setScene('car', db.maps.car.start[0], db.maps.car.start[1]); }
     else {
@@ -1340,6 +1420,9 @@
     if (!state || !scene.map) return;
     update();
     updateBarks(now); updateBeam(now, frameDt);
+    if (window.SND) SND.frame(scene, state, now, { knock: bark.live.has('shutter') });   // 앰비언트·발걸음·셔터 두드림·다침 (sound.js)
+    // 원정 층 도착 사건: 지도를 먼저 보인 뒤 — 두 칸을 걸었거나 1.5초가 지났으면 띄운다 (Space 는 interact 가)
+    if (tripW && tripW.hold && !busy && !UI.isOpen() && !scene.moving && (scene.steps - tripW.steps0 >= ARRIVE_STEPS || now - tripW.at >= ARRIVE_MS)) releaseArrival();
     if (AUTO_OPEN_AT_2 && !busy && !UI.isOpen() && !scene.moving) {          // (기본 꺼짐) 만나기 전 사람이 2칸 안이면 말 걸기를 연다
       const s2 = ladderSubjects().find((q) => q.who !== 'shutter' && distTo(q.x, q.y) <= 2);
       if (s2) flow(() => talkTo(s2.who));
@@ -1388,7 +1471,7 @@
   const autoLog = [];
   async function autoRun(target) {
     const wantDeath = target === 'death';
-    let holding = false, boardTried = false;
+    let holding = false, boardTried = false, botDeeper = false;
     // reached=1 = 캡처 지점에 닿았다(그 창을 붙잡았거나, 그 지도·단계에 섰다). shot.py 는 이 표시가 있어야 ok 로 친다 — 게임이 안 떴거나 지점에 못 닿은 캡처를 성공으로 세지 않게 (검증 #8)
     const report = (why, reached) => { console.log(`[ds4 auto] ${target} ${why} reached=${reached ? 1 : 0} D${state.day} ${state.phase} map=${scene.map ? scene.map.id : '-'} open=${UI.openKind() || '-'}${state.ended ? ' ended=' + state.ended.why : ''} you=${person('you').status} food=${state.world.food} | ${autoLog.slice(-16).join(' / ')}`); if (missing.size) console.log('[ds4 missing] ' + Array.from(missing).join(' ')); };
     const onMap = (id) => !!(scene.map && scene.map.id === id);
@@ -1456,7 +1539,8 @@
       }
       if (kind === 'board') { const bi = info.options.findIndex((o) => / 태운다$/.test(o.label)); return target === 'train' && bi >= 0 ? bi : info.options.length - 1; }
       if (kind === 'trip') return wantDeath ? 1 : 0;
-      if (kind === 'deeper') return !wantDeath && state.day >= 4 && (person('you').n.injury || 0) === 0 && (state.world.food || 0) <= 3 ? 0 : 1;
+      if (kind === 'deeper') return botDeeper ? 0 : 1;                      // 원정 층 계단 창 (P1-11): 봇이 걸어가 고른 쪽 — 내려가는 계단은 내려가려고 갔을 때만
+      if (kind === 'tripup') return 0;
       if (kind === 'ration') { const you = person('you'); return wantDeath && info.options[0] && /뺀다/.test(info.options[0].label) && (you.n.hunger || 0) < 8 ? 0 : info.options.length - 1; }
       if (kind === 'confirm2') return 0;
       if (kind === 'treat') { const i = info.options.findIndex((o) => o.value === 'you' && !o.disabled); return i >= 0 && (person('you').n.injury || 0) >= 2 ? i : info.options.length - 1; }
@@ -1468,6 +1552,33 @@
       if ((person('you').n.injury || 0) < 2 || treatWhy('you')) return;
       await idle(); await new Promise((res) => { flow(treatMenu).then(res); }); await idle();
       autoLog.push(`D${state.day} ${state.phase} 치료 → ${flagOn('treated_you') ? '감았다' : '못 감았다'}`);
+    }
+    // 원정 층 (P1-11): 도착 사건부터(Space) → 그 층의 '열 것' — 닫힌 수납(E.closedHolds) · 조사로 걸리는 원정 사건의 물건 — 을 지도 순서대로 걸어가 연다
+    //   (시뮬 봇 tripSearch 와 같은 고르기) → 1층이고 D4 이후·크게 안 다쳤으면(부상 < 2, 시뮬 봇과 같다) 내려가는 계단 → 아니면 들어온 계단으로 역에
+    const gatedIds = new Set();
+    for (const ev of db.eventsList) if (ev.kind === 'trip' && E.inspectGated(ev)) for (const n of E.cond.names(E.cond.compile(ev.when))) if (E.cond.prefixOf(n) === 'inspect') gatedIds.add(n.slice(n.indexOf(':') + 1));
+    const tripTried = new Set();
+    let tripSteps = 0, tripAt = '';
+    async function botTrip() {
+      await idle();
+      if (!onTrip() || state.ended) return;
+      if (tripW.hold) { interact(); await idle(); return; }
+      const key = (id) => `${state.day}:${scene.map.id}:${id}`;
+      if (tripAt !== key('')) { tripAt = key(''); tripSteps = 0; }             // 층마다 새로 센다
+      const next = objectsOnMap().find((o) => !o.hidden && !tripTried.has(key(o.id)) && (E.closedHolds(state, db, o.id) || gatedIds.has(o.id)));
+      if (next && tripSteps++ < 40) {
+        tripTried.add(key(next.id));
+        autoLog.push(`D${state.day} 원정 ${scene.map.id} 조사 ${next.id}`);
+        await use(next.id);
+        return;
+      }
+      botDeeper = !wantDeath && !!tripStair('v') && state.day >= 4 && (person('you').n.injury || 0) < 2;
+      const ex = (scene.map.exits || {})[botDeeper ? 'v' : 'E'] || scene.map.start;
+      autoLog.push(`D${state.day} 원정 ${scene.map.id} → ${botDeeper ? '아래층' : '역'}`);
+      const floor0 = tripW.floor;
+      await goto(ex[0], ex[1]);
+      if (onTrip() && scene.px === ex[0] && scene.py === ex[1]) { interact(); await idle(); }
+      if (onTrip() && tripW.floor === floor0 && tripSteps++ > 60) { autoLog.push('[원정 봇이 계단에 못 갔다 — 역으로]'); const b = tripW.back; tripW = null; setScene('station', b[0], b[1]); }   // 막힘 방지(그럴 일은 없어야 한다)
     }
     UI.setBot(bot);
     // ?state=<주소>: 시뮬 봇이 만든 저장(v4/tools/fixture.js)에서 시작 — 처음부터 가면 닿지 않는 지점(열차 결말)용. 못 읽으면 처음부터 간다
@@ -1506,6 +1617,17 @@
       if (holding || state.ended) break;
       const ph = state.phase, d = state.day;
       if (once('day' + d)) autoLog.push('[D' + d + ' food' + state.world.food + ' water' + state.world.water + ' hunger' + person('you').n.hunger + ']');
+      // 원정 층 (P1-11): 걸어서 뒤진다 · trip<A|B> = 화면 확인용(v4/tools/screen_check.py final) — 그 층에 막 들어선 지도(도착 사건은 아직 안 뜬다)에서 봇이 손을 뗀다
+      if (onTrip()) {
+        if (/^trip[AB]$/.test(target) && d >= 4 && tripW.region === target.slice(4) && once('tripStop')) { UI.setBot(null); report(`stop floor=${tripW.floor} hold=${tripW.hold ? 1 : 0} pending=${state.pending ? state.pending.id : '-'}`, onMap(TRIP_MAPS[tripW.region][0]) && !UI.isOpen()); return; }
+        await botTrip(); continue;
+      }
+      if (/^trip[AB]$/.test(target) && ph === 'day' && d >= 4 && !state.trip && once('tripGo')) {   // 확인용 지점: D4 이후 첫 낮에 그 통로로 (봇의 원정 조건과 상관없이)
+        const region = target.slice(4);
+        await goto(EXIT_AT[region][0], EXIT_AT[region][1]);
+        if (exitHere()) { interact(); await idle(); }
+        continue;
+      }
       if (target === 'morning3' && d === 3 && ph === 'trace') { await use('notebook_you'); await goto(13, 12); scene.face = 'up'; UI.setBot(null); report('stop', onMap('station') && state.day === 3 && state.phase === 'trace'); return; }
       // 밤 잠자리: 밤 고정 사건이 다 지나간 뒤 지도 — 잠든 사람이 잠자리 위에 누워 있다 (D2 밤)
       if (target === 'beds' && d === 2 && ph === 'night') { await goto(16, 10); scene.face = 'right'; UI.setBot(null); report('stop', onMap('station') && state.day === 2 && state.phase === 'night'); return; }
@@ -1523,7 +1645,7 @@
       }
       if (ph === 'trace' && d > 0 && once('trace' + d)) { await use('notebook_you'); continue; }
       if (ph === 'day' && d >= 1 && !wantDeath && !state.trip && once('trip' + d) && (person('you').n.injury || 0) === 0 && ((state.world.food || 0) <= 5 || (state.world.water || 0) <= 5)) {
-        const region = d % 2 === 0 ? 'A' : 'B';
+        const region = /^trip[AB]$/.test(target) ? (target === 'tripA' ? 'B' : 'A') : d % 2 === 0 ? 'A' : 'B';   // 확인용 지점이면 그 지역은 D4 까지 아껴 둔다 (닫힌 가구를 처음 보게)
         await goto(EXIT_AT[region][0], EXIT_AT[region][1]);
         if (exitHere()) { interact(); await idle(); }
         continue;
@@ -1536,7 +1658,8 @@
 
   // ── 시작 ──
   window.__ds4 = { get state() { return state; }, get db() { return db; }, get scene() { return scene; }, dispatch: act, walkTo, pick: UI.pick, interact, frame, flow, use, goto, idle, autoRun, autoLog,
-    hearLog, talkLog, cellLog, openLog, foundLog, inspectLog, bark, nameOf, met, peopleOnMap, objectsOnMap, target, talkTo, objective, hoverName, maskPeople, foundIcon, hud, callOf, withCall, reasonKo, eventFaceId,
+    hearLog, talkLog, cellLog, openLog, foundLog, inspectLog, bark, nameOf, met, peopleOnMap, objectsOnMap, target, talkTo, objective, hoverName, maskPeople, foundIcon, wordIcon, hud, callOf, withCall, reasonKo, eventFaceId,
+    get trip() { return tripW; }, onTrip, isClosed: (id) => { const o = objectsOnMap().find((q) => q.id === id); return !!(o && isClosed(o)); },
     missing: () => Array.from(missing), setBot: (fn) => { bot = fn; UI.setBot(fn); }, store: () => store, E, UI };
   (async () => {
     try {

@@ -1,0 +1,32 @@
+selfish_nb: survival 28.7% (287/1000) · blocks 1: 31.5% / 1001: 30.5% / 2001: 28.5% / 3001: 28.0% / 8001: 25.0%
+death day: {"4":4,"5":18,"6":33,"7":193,"8":133,"9":113,"10":219}
+ 112 called_up | 손등을 깨물며 버틴다 | roped=1 | chance=83
+  92 dawn_strike | 축 늘어진다 | roped=1 | chance=75
+  54 dawn_mob | 손가락 하나로 갚는다 | roped=1 | chance=85
+  42 dawn_strike | 옆 담요를 가리킨다 | roped=1 | chance=87
+  36 called_up | 손등을 깨물며 버틴다 | roped=1 | chance=78
+  34 dawn_mob | 맞고 버틴다 | roped=1 | chance=83
+  33 d10_walk_weak | 옆 사람 물병을 비운다 | roped=1 | chance=75
+  26 d10_walk_weak | 옆 사람 물병을 비운다 | roped=1 | chance=70
+  24 dawn_mob | 맞고 버틴다 | roped=1 | chance=78
+  21 dawn_mob | 다른 사람을 가리킨다 | roped=1 | chance=87
+  20 d10_hold | 끌려가며 버틴다 | roped=1 | chance=83
+  19 dawn_strike | 축 늘어진다 | roped=1 | chance=70
+  18 d10_hold | 끌려가며 버틴다 | roped=1 | chance=78
+  17 fever_night | 불가에서 땀을 뺀다 | roped=0 | chance=70
+  12 d10_grab | 끌려 넘어진다 | roped=1 | chance=70
+  10 called_up | 손등을 깨물며 버틴다 | roped=1 | chance=75
+  10 dawn_strike | 축 늘어진다 | roped=0 | chance=75
+  10 d10_grab | 물병을 돌려준다 | roped=1 | chance=85
+  10 d10_grab | 끌려 넘어진다 | roped=1 | chance=75
+  10 dawn_mob_d6 | 맞고 버틴다 | roped=1 | chance=93
+   9 d10_walk_weak | 옆 사람 물병을 비운다 | roped=1 | chance=87
+   9 fever_night | 썩은 데를 도려낸다 | roped=0 | chance=85
+   9 d10_grab | 끌려 넘어진다 | roped=1 | chance=83
+   9 called_up | 손등을 깨물며 버틴다 | roped=1 | chance=93
+   8 d10_hold | 끌려가며 버틴다 | roped=1 | chance=75
+   7 dawn_mob | 맞고 버틴다 | roped=1 | chance=75
+   7 d10_walk_weak | 옆 사람 물병을 비운다 | roped=1 | chance=82
+   5 d10_hold | 끌려가며 버틴다 | roped=1 | chance=70
+   5 d10_grab | 물병을 돌려준다 | roped=1 | chance=80
+   3 called_up | 귀를 막는다 | roped=1 | chance=70

@@ -1,0 +1,798 @@
+{
+ "run": "fgrab",
+ "policy": "selfish",
+ "real": false,
+ "rseed": 812,
+ "finished": "title",
+ "wall_s": 7.7,
+ "keys": 19,
+ "steps": 0,
+ "click_fallback": 0,
+ "fallback_to": [],
+ "days": {
+  "-1": {
+   "lines": 0,
+   "chars": 0,
+   "choices": 0,
+   "steps": 0,
+   "keys": 1,
+   "events": 0,
+   "wall_s": 0.2,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  },
+  "10": {
+   "lines": 14,
+   "chars": 166,
+   "choices": 3,
+   "steps": 0,
+   "keys": 18,
+   "events": 1,
+   "wall_s": 6.6,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  }
+ },
+ "deaths": [
+  {
+   "day": 10,
+   "phase": "ended",
+   "why": "you_gone",
+   "text": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.\n\n당신\n갔다 · D10 ___\n청소원 조끼의 할머니\n남았다\n담요 속 여학생\n남았다\n헤드램프의 남자\n남았다\n셔터의 여자\n남았다\n큰 청년\n남았다\n담요의 여자\n남았다",
+   "cg": [
+    {
+     "src": "http://127.0.0.1:19141/v4/img/cg/death_beaten.png",
+     "cls": "big",
+     "ok": true,
+     "w": 384,
+     "vis": false
+    },
+    {
+     "src": "http://127.0.0.1:19141/v4/img/cg_s/death_beaten.png",
+     "cls": "small",
+     "ok": true,
+     "w": 256,
+     "vis": true
+    }
+   ]
+  }
+ ],
+ "ending": null,
+ "issues": [],
+ "rope": [
+  {
+   "id": "d10_grab",
+   "day": 10,
+   "karma": 8,
+   "boxCls": "opts  rope hb4",
+   "blind": "",
+   "opts": [
+    {
+     "label": "물병을 돌려준다",
+     "subs": [
+      [
+       "",
+       "85%물 −1물이 준다. 받고도 안 놓으면 끝이다",
+       ""
+      ],
+      [
+       "chance",
+       "85%",
+       "2"
+      ],
+      [
+       "cost",
+       "물 −1",
+       ""
+      ],
+      [
+       "warn",
+       "물이 준다. 받고도 안 놓으면 끝이다",
+       "2"
+      ]
+     ],
+     "disabled": false
+    },
+    {
+     "label": "끌려 넘어진다",
+     "subs": [
+      [
+       "",
+       "78%크게 다친다. 못 버티면 끝이다",
+       ""
+      ],
+      [
+       "chance",
+       "78%",
+       "2"
+      ],
+      [
+       "warn",
+       "크게 다친다. 못 버티면 끝이다",
+       "2"
+      ]
+     ],
+     "disabled": false
+    },
+    {
+     "label": "발을 빼낸다",
+     "subs": [
+      [
+       "",
+       "60%넘어지면 끝이다",
+       ""
+      ],
+      [
+       "chance",
+       "60%",
+       "3"
+      ],
+      [
+       "warn",
+       "넘어지면 끝이다",
+       "3"
+      ]
+     ],
+     "disabled": false
+    }
+   ],
+   "surv": [
+    0.85,
+    0.78,
+    0.6
+   ]
+  }
+ ],
+ "unseen": [],
+ "nocg_events": [],
+ "events_shown": [
+  "d10_grab"
+ ],
+ "missing": [],
+ "sound": {
+  "status": {
+   "off": false,
+   "test": true,
+   "eager": true,
+   "broken": "",
+   "gestured": true,
+   "ctx": "running",
+   "on": true,
+   "level": 1,
+   "levelName": "보통",
+   "hidden": false,
+   "deathHush": true,
+   "nodes": 83,
+   "nodeKinds": {
+    "createBuffer": 11,
+    "createGain": 32,
+    "createDynamicsCompressor": 1,
+    "createAnalyser": 1,
+    "createConvolver": 1,
+    "createBiquadFilter": 13,
+    "createOscillator": 12,
+    "createBufferSource": 9,
+    "createStereoPanner": 3
+   },
+   "counts": {
+    "drip": 1,
+    "crackle": 0,
+    "hiss": 0
+   },
+   "master": 0.5,
+   "amb": {
+    "map": "station",
+    "night": false,
+    "hum": 1,
+    "humF": 1,
+    "air": 0.5,
+    "fire": 0,
+    "water": 0,
+    "hiss": 0,
+    "amb": 0
+   }
+  },
+  "n": 10,
+  "hist": {
+   "start": 1,
+   "pick": 2,
+   "event": 1,
+   "amb": 3,
+   "fail": 1,
+   "death": 1,
+   "pick:no:hush": 1
+  },
+  "last": [
+   {
+    "t": 1364,
+    "id": "d10_grab",
+    "played": true,
+    "nodes": 57,
+    "kind": "event"
+   },
+   {
+    "t": 1468,
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0,
+    "kind": "amb"
+   },
+   {
+    "t": 3551,
+    "danger": true,
+    "played": true,
+    "nodes": 61,
+    "kind": "pick"
+   },
+   {
+    "t": 3553,
+    "close": false,
+    "played": true,
+    "nodes": 66,
+    "kind": "fail"
+   },
+   {
+    "t": 3570,
+    "map": "station",
+    "night": false,
+    "amb": 0.5,
+    "fire": 0,
+    "water": 0,
+    "kind": "amb"
+   },
+   {
+    "t": 4668,
+    "played": true,
+    "nodes": 74,
+    "kind": "death"
+   },
+   {
+    "t": 4768,
+    "map": "station",
+    "night": false,
+    "amb": 0,
+    "fire": 0,
+    "water": 0,
+    "kind": "amb"
+   },
+   {
+    "t": 5674,
+    "danger": false,
+    "played": false,
+    "why": "hush",
+    "nodes": 83,
+    "kind": "pick"
+   }
+  ]
+ },
+ "final_state": {
+  "day": 10,
+  "phase": "ended",
+  "seed": 54,
+  "ended": {
+   "why": "you_gone",
+   "identity": "counting_child",
+   "reader": "resident",
+   "readerId": "soonrye",
+   "ledger": [
+    {
+     "line": 0,
+     "id": "you",
+     "name": "당신",
+     "status": "dead",
+     "day": 10,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 1,
+     "id": "soonrye",
+     "name": "김순례",
+     "status": "stayed",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 2,
+     "id": "seoha",
+     "name": "윤서하",
+     "status": "stayed",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 3,
+     "id": "gicheol",
+     "name": "박기철",
+     "status": "stayed",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 4,
+     "id": "eunji",
+     "name": "최은지",
+     "status": "stayed",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 5,
+     "id": "dongha",
+     "name": "한동하",
+     "status": "stayed",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 6,
+     "id": "mari",
+     "name": "정마리",
+     "status": "stayed",
+     "day": null,
+     "cause": null,
+     "written": []
+    }
+   ],
+   "cause": {
+    "event": "d10_grab",
+    "choice": "끌려 넘어진다",
+    "warned": true,
+    "forced": false,
+    "free": {
+     "event": "d10_grab",
+     "choice": "끌려 넘어진다",
+     "day": 10
+    },
+    "image": "",
+    "night": false,
+    "warn": "크게 다친다. 못 버티면 끝이다",
+    "swapped": true,
+    "roped": true,
+    "blind": false,
+    "noSafe": true
+   }
+  },
+  "you": "dead",
+  "people": {
+   "soonrye": "home",
+   "seoha": "home",
+   "gicheol": "home",
+   "eunji": "home",
+   "dongha": "home",
+   "mari": "home",
+   "eunchae": "outside",
+   "dohyeon": "outside",
+   "you": "dead@D10"
+  },
+  "stats": {
+   "decisions": 252,
+   "nights": 10,
+   "deaths": 0,
+   "neglect": 6,
+   "ropeRolls": 4,
+   "ropeClose": 3,
+   "ropeFeltRolls": 3,
+   "ropeFelt": 2,
+   "deathRolls": 4,
+   "closeCalls": 3,
+   "blindMet": 0,
+   "holds": 7
+  }
+ },
+ "console_errors": [],
+ "windows": [
+  {
+   "n": 1,
+   "kind": "line",
+   "tag": "d10_grab",
+   "text": "몇 걸음 못 가서 발목이 잡혔다.",
+   "black": false,
+   "cls": "",
+   "name": "큰 청년",
+   "face": "http://127.0.0.1:19141/v4/img/portraits80_hurt/dongha.png",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_grab",
+   "opts": null,
+   "t": 1792876554705,
+   "map": "station"
+  },
+  {
+   "n": 2,
+   "kind": "line",
+   "tag": "d10_grab",
+   "text": "물병을 빼앗긴 사람이다.",
+   "black": false,
+   "cls": "",
+   "name": "큰 청년",
+   "face": "http://127.0.0.1:19141/v4/img/portraits80_hurt/dongha.png",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_grab",
+   "opts": null,
+   "t": 1792876554989,
+   "map": "station"
+  },
+  {
+   "n": 3,
+   "kind": "line",
+   "tag": "d10_grab",
+   "text": "손톱이 살에 박힌다.",
+   "black": false,
+   "cls": "",
+   "name": "큰 청년",
+   "face": "http://127.0.0.1:19141/v4/img/portraits80_hurt/dongha.png",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_grab",
+   "opts": null,
+   "t": 1792876555357,
+   "map": "station"
+  },
+  {
+   "n": 4,
+   "kind": "event",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_grab",
+   "opts": [
+    "물병을 돌려준다",
+    "끌려 넘어진다",
+    "발을 빼낸다"
+   ],
+   "t": 1792876555739,
+   "map": "station"
+  },
+  {
+   "n": 5,
+   "kind": "line",
+   "tag": "roll",
+   "text": "판정 78% — 안 됐다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876556891,
+   "map": "station"
+  },
+  {
+   "n": 6,
+   "kind": "line",
+   "tag": "d10_grab:out",
+   "text": "얼굴부터 레일에 박혔다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876557256,
+   "map": "station"
+  },
+  {
+   "n": 7,
+   "kind": "line",
+   "tag": "d10_grab:out",
+   "text": "일어나지 못했다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876557623,
+   "map": "station"
+  },
+  {
+   "n": 8,
+   "kind": "line",
+   "tag": "death",
+   "text": "당신은 일어나지 않았다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876558007,
+   "map": "station"
+  },
+  {
+   "n": 9,
+   "kind": "death_ledger",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": [
+    "덮는다"
+   ],
+   "t": 1792876558371,
+   "map": "station"
+  },
+  {
+   "n": 10,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "계단 위에서 세는 소리가 났다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876559005,
+   "map": "station"
+  },
+  {
+   "n": 11,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "당신 목소리였다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876559139,
+   "map": "station"
+  },
+  {
+   "n": 12,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "하나.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876559522,
+   "map": "station"
+  },
+  {
+   "n": 13,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "둘.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876559889,
+   "map": "station"
+  },
+  {
+   "n": 14,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "명부의 글씨는 당신 것이 아니었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876560255,
+   "map": "station"
+  },
+  {
+   "n": 15,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "계단 위에서 세는 소리가 난다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876560640,
+   "map": "station"
+  },
+  {
+   "n": 16,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "당신 목소리다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792876561005,
+   "map": "station"
+  },
+  {
+   "n": 17,
+   "kind": "title",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": [
+    "새로 시작",
+    "저장 코드 불러오기",
+    "전체화면"
+   ],
+   "t": 1792876561405,
+   "map": "station"
+  }
+ ],
+ "choices": [
+  {
+   "kind": "title",
+   "day": null,
+   "phase": null,
+   "text": "어두운 역\n\n묵현역 · 열차까지 열흘 · 18+\n유혈·시체·살해 묘사가 직접 나옵니다",
+   "opts": [
+    "계속 (D10)",
+    "새로 시작",
+    "저장 코드 불러오기",
+    "전체화면"
+   ],
+   "boxCls": "opts wide",
+   "pend": null,
+   "picked": "계속 (D10)"
+  },
+  {
+   "kind": "event",
+   "day": 10,
+   "phase": "day",
+   "text": "큰 청년\n\n몇 걸음 못 가서 발목이 잡혔다. 물병을 빼앗긴 사람이다. 손톱이 살에 박힌다.",
+   "opts": [
+    "물병을 돌려준다",
+    "끌려 넘어진다",
+    "발을 빼낸다"
+   ],
+   "boxCls": "opts  rope hb4",
+   "pend": "d10_grab",
+   "ev": {
+    "id": "d10_grab",
+    "kind": "trial",
+    "choices": [
+     {
+      "i": 0,
+      "label": "물병을 돌려준다",
+      "locked": false,
+      "chance": 85,
+      "warn": "물이 준다. 받고도 안 놓으면 끝이다",
+      "taboo": false,
+      "karma": -0.85,
+      "surv": 0.85,
+      "cost": {
+       "water": 1
+      },
+      "rope": true,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 1,
+      "label": "끌려 넘어진다",
+      "locked": false,
+      "chance": 78,
+      "warn": "크게 다친다. 못 버티면 끝이다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 0.78,
+      "cost": {},
+      "rope": true,
+      "hurt": 2,
+      "food": 0
+     },
+     {
+      "i": 2,
+      "label": "발을 빼낸다",
+      "locked": false,
+      "chance": 60,
+      "warn": "넘어지면 끝이다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 0.6,
+      "cost": {},
+      "rope": true,
+      "hurt": 1,
+      "food": 0
+     }
+    ]
+   },
+   "cg": [
+    {
+     "src": "http://127.0.0.1:19141/v4/img/cg_s/d10_grab.png",
+     "cls": "small",
+     "ok": true,
+     "w": 256,
+     "vis": true
+    }
+   ],
+   "picked": "끌려 넘어진다"
+  },
+  {
+   "kind": "death_ledger",
+   "day": 10,
+   "phase": "ended",
+   "text": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.\n\n당신\n갔다 · D10 ___\n청소원 조끼의 할머니\n남았다\n담요 속 여학생\n남았다\n헤드램프의 남자\n남았다\n셔터의 여자\n남았다\n큰 청년\n남았다\n담요의 여자\n남았다",
+   "opts": [
+    "덮는다"
+   ],
+   "boxCls": "opts",
+   "pend": "",
+   "ledger": "청소원 조끼의 할머니가 당신 주머니에서 수첩을 꺼내 읽는다.\n\n당신\n갔다 · D10 ___\n청소원 조끼의 할머니\n남았다\n담요 속 여학생\n남았다\n헤드램프의 남자\n남았다\n셔터의 여자\n남았다\n큰 청년\n남았다\n담요의 여자\n남았다",
+   "cgPage": "",
+   "picked": "덮는다"
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+0bf52a23196645d5fd75ffd2ab5b8b1e *v4/data/events.json
+4a64446e4f6cc21338d97d3ee4b8d394 *v4/data/identity.json
+e475c5c9e52f4ba7c9affc205cbec5be *v4/data/lines.json
+eacb2c33fa8105f75fe2445d6bd134fe *v4/data/maps.json
+392a54256e418b6ad194d03050703578 *v4/data/nightEvents.json
+c8ea4433976512a7c8e2c6e547433044 *v4/data/numbers.json
+e3d8900094fe7643bbba13335302c043 *v4/data/objects.json
+43a4ef1f2bbe39c1ecb35811b2d6046d *v4/data/people.json
+daea1a9cea1929a83203269b76f37895 *v4/data/phases.json

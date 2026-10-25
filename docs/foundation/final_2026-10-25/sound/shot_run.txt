@@ -1,0 +1,46 @@
+manifest 239
+fixture d10_train=OK, d10_walk=OK [fixture] 551 games, 240.2s, time cap 240s (best so far); found d10_train,d10_walk; missing -
+OK   01_car (console errors 0)
+    [ds4 auto] car stop reached=1 D0 day map=car open=- you=home food=6 | D0 day pro_cold \u2192 \ub208\uc744 \ub72c\ub2e4
+OK   02_morning3 (console errors 0)
+    [ds4 auto] morning3 stop reached=1 D3 trace map=station open=- you=home food=2 | [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls \u2192 \ub611\uac19\uc774 \uc870\uae08\uc529 / D1 day d1_shutter_knock \u2192 \ub450\ub4dc\ub824 \ub2f5\ud55c\ub2e4 / D1 evening d1_names_quiet \u2192 \uc801\ub294\u
+OK   03_night3 (console errors 0)
+    [ds4 auto] night3 hold reached=1 D3 night map=station open=line you=home food=0 | D1 day d1_shutter_knock \u2192 \ub450\ub4dc\ub824 \ub2f5\ud55c\ub2e4 / D1 evening d1_names_quiet \u2192 \uc801\ub294\ub2e4 / D1 night d1_night_storage \u2192 \ubd88\uac00\uc5d0 \uc788\ub294\ub2e4 / D2 trace d2_key \u21
+OK   04_night5 (console errors 0)
+    [ds4 auto] night5 hold reached=1 D5 night map=station open=line you=home food=0 | [D3 food2 water4 hunger2] / D3 ration share_back \u2192 \ubaa8\ub978 \ucc99\ud55c\ub2e4 / D3 day trip_b1_gate \u2192 \ubb3c\uc5d0 \ub4e4\uc5b4\uac00 \ub04c\uc5b4\ub0b8\ub2e4 / D3 night trial_d3_count \u2192 \uc228\uc74
+    [ds4 missing] trip_a1_backroom@trip_a1_backroom
+OK   05_night8 (console errors 0)
+    [ds4 auto] night8 hold reached=1 D8 night map=station open=event you=home food=0 | D6 evening d6_dohyeon_back \u2192 \ud544\uc694 \uc5c6\ub2e4 \ud55c\ub2e4 / D6 evening d6_vent_voice \u2192 \ub4e3\ub294\ub2e4 / D6 night d6_shutter \u2192 \uc544\ubb34\uac83\ub3c4 \ud558\uc9c0 \uc54a\ub294\ub2e4 / [\u
+    [ds4 missing] trip_a1_backroom@trip_a1_backroom
+OK   06_ending (console errors 0)
+    [ds4 auto] ending hold reached=1 D10 ended map=station open=ending ended=d10_walk you=walked food=0 | [\uc800\uc7a5\uc5d0\uc11c \uc2dc\uc791 D10 day d10_walk seed167] / D10 day d10_walk \u2192 \uac77\ub294\ub2e4
+OK   07_death (console errors 0)
+    [ds4 auto] death hold reached=1 D3 ended map=station open=death_ledger ended=you_gone you=ascended food=0 | D1 ration trial_d1_bowls \u2192 \ub0a8\uc758 \uadf8\ub987\uc744 \ube44\uc6b4\ub2e4 / D1 day d1_shutter_knock \u2192 \uc5f0\ub2e4 / D1 evening d1_names \u2192 \uc801\ub294\ub2e4 / D1 night d1_n
+OK   08_evening5 (console errors 0)
+    [ds4 auto] evening5 hold reached=1 D5 evening map=station open=line you=home food=0 | [D3 food2 water4 hunger2] / D3 ration share_back \u2192 \ubaa8\ub978 \ucc99\ud55c\ub2e4 / D3 day trip_b1_gate \u2192 \ubb3c\uc5d0 \ub4e4\uc5b4\uac00 \ub04c\uc5b4\ub0b8\ub2e4 / D3 night trial_d3_count \u2192 \uc228\
+    [ds4 missing] trip_a1_backroom@trip_a1_backroom
+OK   09_reveal (console errors 0)
+    [ds4 auto] reveal hold reached=1 D10 ended map=station open=line ended=you_gone you=dead food=0 | D9 trace dawn_strike \u2192 \uadf8\ub987 \ub458\uc744 \ub0b4\ubbfc\ub2e4 / [D9 food1 water0 hunger8] / D9 ration repay_bowl \u2192 \uadf8\ub0e5 \uc9c0\ub098\uac04\ub2e4 / D9 evening d9_inspection \u2192
+    [ds4 missing] trip_a1_backroom@trip_a1_backroom
+OK   10_called3 (console errors 0)
+    [ds4 auto] called3 hold reached=1 D3 night map=station open=event you=home food=0 | D1 evening d1_names_quiet \u2192 \uc801\ub294\ub2e4 / D1 night d1_night_storage \u2192 \ubd88\uac00\uc5d0 \uc788\ub294\ub2e4 / D2 trace d2_key \u2192 \ubc1b\ub294\ub2e4 / D2 trace d2_soonrye_shutter \u2192 \ubcf8\ub2
+OK   11_train (console errors 0)
+    [ds4 auto] train hold reached=1 D10 ended map=station open=ending ended=d10_train you=boarded food=0 | [\uc800\uc7a5\uc5d0\uc11c \uc2dc\uc791 D10 day d10_train seed58] / [\uc9c0\ub984\uae38 fare_hoard] / D10 day d10_train \u2192 \ucc59\uae34 \uc6b4\uc784\uc73c\ub85c \ud0c4\ub2e4
+OK   12_beds (console errors 0)
+    [ds4 auto] beds stop reached=1 D2 night map=station open=- you=home food=2 | D0 day pro_mari \u2192 \uc190\uc744 \ub0b4\ubbfc\ub2e4 / [D0 food9 water11 hunger3] / D0 evening d0_ledger \u2192 \ub9d0\uc5c6\uc774 \uc801\ub294\ub2e4 / [D1 food9 water11 hunger5] / D1 ration trial_d1_bowls \u2192 \ub611\u
+    13_run seed 3: D9 you_gone
+    13_run seed 21: D10 you_gone
+    13_run seed 6: D7 you_gone
+    13_run seed 8: D10 you_gone
+    13_run seed 1: D9 you_gone
+    13_run seed 7: D10 you_gone
+    13_run seed 11: D6 you_gone
+    13_run seed 5: D10 you_gone
+    13_run seed 13: D10 you_gone
+    13_run seed 2: D10 you_gone
+    13_run seed 4: D4 you_gone
+    13_run seed 9: D10 you_gone
+FAIL 13_run (console errors 0, try 12) - 처음부터 끝까지 간 판이 없다 (시드 12개 모두 D10 결말 전에 멈췄다: 3=D9 you_gone, 21=D10 you_gone, 6=D7 you_gone, 8=D10 you_gone, 1=D9 you_gone, 7=D10 you_gone, 11=D6 you_gone, 5=D10 you_gone, 13=D10 you_gone, 2=D10 you_gone, 4=D4 you_gone, 9=D10 you_gone) / 지점에 닿지 못했다 (reached=1 없음): [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=dead food=0 | D8 day 치료 → 감았다 / D8 night starve_you → 남의 그릇을 뺏는
+    [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=dead food=0 | D8 day \uce58\ub8cc \u2192 \uac10\uc558\ub2e4 / D8 night starve_you \u2192 \ub0a8\uc758 \uadf8\ub987\uc744 \ube8f\ub294\ub2e4 / [\uafc8 D8] / D9 trace dawn_strike \u2192 \ubb3c\ubcd1 \ub458\uc744 \ub0b4\ubbfc\
+shots 12/13 ok · console errors 0 · FAIL 13_run
+exit 1

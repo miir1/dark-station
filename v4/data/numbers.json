@@ -324,7 +324,7 @@
     "owner": "world",
     "min": 0,
     "max": 100,
-    "start": 88,
+    "start": 80,
     "perDay": 0,
     "visible": "never"
   },
@@ -360,7 +360,7 @@
     "owner": "world",
     "min": 0,
     "max": 100,
-    "start": 80,
+    "start": 78,
     "perDay": 0,
     "visible": "never"
   },
@@ -488,6 +488,60 @@
     "max": 100,
     "start": 65,
     "perDay": 0,
+    "visible": "never"
+  },
+  {
+    "id": "lock_starve",
+    "owner": "world",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": -1,
+    "visible": "never"
+  },
+  {
+    "id": "lock_wound",
+    "owner": "world",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": -1,
+    "visible": "never"
+  },
+  {
+    "id": "lock_fever",
+    "owner": "world",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": -1,
+    "visible": "never"
+  },
+  {
+    "id": "lock_strike",
+    "owner": "world",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": -1,
+    "visible": "never"
+  },
+  {
+    "id": "lock_mob",
+    "owner": "world",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": -1,
+    "visible": "never"
+  },
+  {
+    "id": "lock_called",
+    "owner": "world",
+    "min": 0,
+    "max": 1,
+    "start": 0,
+    "perDay": -1,
     "visible": "never"
   }
 ]

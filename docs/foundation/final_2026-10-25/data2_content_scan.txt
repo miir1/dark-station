@@ -1,0 +1,237 @@
+# 최종 점검 — 화면 글 전수 검사 (qa_content_scan.js, 2026-10-25)
+모은 글: 2691개 (events 1820 · lines 339 · objects 162 · people 77 · maps/numbers/identity 17 · 화면 코드 276)
+
+## 신 이름: 0건
+
+## 신 단독: 0건
+
+## 호(신) 단독: 0건
+
+## 실존 종교: 0건
+
+## 실존 지명: 0건
+
+## 수치 노출: 0건
+
+## 수치 낱말: 0건
+
+## 성적: 0건
+
+## 자해: 0건
+
+## 식인 직접: 0건
+
+## 식인 낱말(검토): 23건
+- events:d1_rats c0.out — "뒤에서 씹는 소리가 이어졌다."
+- events:d2_seoha c1.out — "건빵을 틈으로 넣었다. 씹는 소리 뒤에 문이 열렸다. 여학생이 휴대폰을 뒤집어 들고 있었다."
+- events:starve_you_r4 c1.out — "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다."
+- events:starve_you_r4 c1/v2.ok — "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다."
+- events:starve_you_r4 c1/v2.fail — "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다."
+- events:starve_you_r4 c1.rope.fail — "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다."
+- events:starve_you_r3 c1.out — "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다."
+- events:starve_you_r3 c1/v2.ok — "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다."
+- events:starve_you_r3 c1/v2.fail — "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다."
+- events:starve_you_r3 c1.rope.fail — "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다."
+- events:starve_you_r2 c1.out — "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다."
+- events:starve_you_r2 c1/v2.ok — "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다."
+- events:starve_you_r2 c1/v2.fail — "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다."
+- events:starve_you_r2 c1.rope.fail — "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다."
+- events:starve_you c1.out — "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다."
+- events:starve_you c1/v2.ok — "어둠 속에서 봉지를 뜯었다. 씹는 소리가 당신 것이었다. 뚜껑을 닫지 못했다."
+- events:starve_you c1/v2.fail — "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다."
+- events:starve_you c1.rope.fail — "씹던 입이 멎었다. 어둠 속 누군가는 끝까지 보기만 했다."
+- events:drink_flood c0.out — "드럼통에 물을 끓였다. 물 넷. 불이 한 단 낮아졌다."
+- events:drink_flood c1.out — "물 셋을 길었다. 흙이 씹혔다. 밤에 배가 뒤틀렸다."
+- events:flood_sick_end c0.out — "알약을 씹어 삼켰다. 새벽에 배가 가라앉았다."
+- events:flood_sick_end c1.label — "끓인 소금물을 마신다"
+- lines:insp_scissors_blood narrator|- — "가위 날 사이에 살점이 끼어 있다."
+
+## 용어(§2): 1건
+- code:game.js:1673 — "표 ${B.dropped.length}줄을 읽지 못해 빼고 시작했다 — 표 담당에게 알릴 것"
+
+## 이유 낱말: 0건
+
+## 문장 규칙(31 §3) 위반: 0건
+
+## {…} 서식: 0건
+
+## explicit=0 인데 피·시체·칼 3개 이상(경고): 0건
+
+## 안 만난 사람 이름 — 가리지 않는 줄 가운데 '만남 깃발도, 만남이 끝난 날 조건도' 없는 것: 8건 (깃발은 있으나 증언 전일 수 있는 날: 0건 · 날은 되나 깃발 없음: 3건 — 날 조건만으로 충분)
+- [깃발 X] lines:rum_dongha_did (seoha) ctx="" 최소 D0 → 한동하(dongha, 만남 보장 D3) — "동하가 그랬대요."
+- [깃발 X] lines:dongha_sit (dongha) ctx="phase==evening" 최소 D0 → 최은지(eunji, 만남 보장 D3) — "은지 누나가 저를 거둬 줬어요. 갚아야죠. 형이 그랬어요. 이름은 빌려도 된다고."
+- [깃발 X] lines:seoha_card (seoha) ctx="region==A" 최소 D0 → 김순례(soonrye, 만남 보장 D1) — "…순례 할머니, 아들이 남주랬죠."
+- [깃발 X] lines:rum_seoha_shouted ({who}) ctx="" 최소 D0 → 윤서하(seoha, 만남 보장 D4) — "서하가 제 이름을 소리쳤어. 그래서 내가 안 올라갔어."
+- [깃발 X] lines:rum_dongha_pipe ({who}) ctx="" 최소 D0 → 한동하(dongha, 만남 보장 D3) — "동하가 파이프로 누굴 때렸어. 그 사람은 안 일어났어."
+- [깃발 X] lines:rum_dongha_carried ({who}) ctx="" 최소 D0 → 한동하(dongha, 만남 보장 D3) — "동하가 밤새 다친 사람 옆에 앉아 있었어."
+- [깃발 X] lines:rum_gave_seat ({who}) ctx="" 최소 D0 → 윤서하(seoha, 만남 보장 D4) — "아저씨가 제 자리를 서하한테 준대요."
+- [깃발 X] lines:rum_dongha_over_you ({who}) ctx="" 최소 D0 → 한동하(dongha, 만남 보장 D3) — "동하는 밤새 잤어. 코를 골았어."
+
+## 바깥사람 이름(가림 없음)이 나오는 글
+- 문은채(eunchae): 3곳
+    events:trip_a1_backroom text — "약국 뒷방 문이 반쯤 열려 있다. 은채는 계산대에 있다. 안에서 냄새가 난다." | when=day>=2 & region==A & floor==1 & flag:met_eunchae & !flag:saw_backroom
+    events:trip_a1_backroom c0.out — "은채의 어머니는 침대에 있었다. 이불 밑이 움직였다, 구더기였다. 은채가 문을 닫았다. "주무세요."" | when=day>=2 & region==A & floor==1 & flag:met_eunchae & !flag:saw_backroom
+    events:trip_a1_backroom c1.out — "은채가 문을 닫았다. "주무세요."" | when=day>=2 & region==A & floor==1 & flag:met_eunchae & !flag:saw_backroom
+- 권도현(dohyeon): 22곳
+    events:d4_dohyeon_key text — "도현이 바지가 젖은 채 역에 와 있다. "이 열쇠로 통로를 열 수 있어. 낡아서 같이 고쳐야 해." 통로가 없으면 열차는 서지 않는다." | when=day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_gone
+    events:d4_dohyeon_key c0.out — ""이을게요." 도현이 연장을 풀었다. 흥얼거렸다. 아무도 못 알아들었다." | when=day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_gone
+    events:d4_dohyeon_key c1.out — "도현은 이틀 뒤에 오겠다고 했다. 계단을 오르며 흥얼거렸다." | when=day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_gone
+    events:d4_dohyeon_key c2.out — "도현이 열쇠를 도로 넣었다. 터덜터덜 올라갔다." | when=day==4 & phase==evening & flag:met_dohyeon & !flag:dohyeon_gone
+    events:d6_dohyeon_back text — "도현이 다시 왔다. 바지가 젖어 있다. "기다렸지. 부품 셋이면 오늘부터 잇지."" | when=day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & !flag:dohyeon_price_up
+    events:d6_dohyeon_back c0.out — ""이을게요." 도현이 연장을 풀었다. 흥얼거렸다." | when=day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & !flag:dohyeon_price_up
+    events:d6_dohyeon_back c1.out — "도현이 계단을 올랐다. 물이 한 뼘 더 찼다." | when=day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & !flag:dohyeon_price_up
+    events:d6_dohyeon_back c2.out — "도현이 열쇠를 도로 넣었다. 다시 오지 않았다." | when=day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & !flag:dohyeon_price_up
+    events:d6_dohyeon_price text — "도현이 다시 왔다. 바지가 젖어 있다. "값이 올랐어. 부품 다섯."" | when=day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & flag:dohyeon_price_up
+    events:d6_dohyeon_price c0.out — ""이을게요." 도현이 연장을 풀었다. 흥얼거렸다." | when=day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & flag:dohyeon_price_up
+    events:d6_dohyeon_price c1.out — "도현이 계단을 올랐다. 물이 한 뼘 더 찼다." | when=day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & flag:dohyeon_price_up
+    events:d6_dohyeon_price c2.out — "도현이 열쇠를 도로 넣었다. 다시 오지 않았다." | when=day>=6 & phase==evening & flag:dohyeon_wait & !flag:dohyeon_gone & !flag:passage_work & flag:dohyeon_price_up
+    events:trip_b1_gate c0.ok — "남자는 권도현이라 했다. "이틀 뒤에 보답하지." 바지를 안 짰다." | when=day>=2 & region==B & floor==1 & !flag:met_dohyeon & !flag:skipped_dohyeon
+    events:trip_b1_gate c1.out — "배수관에 밧줄을 걸어 끌어냈다. "권도현. 이틀 뒤에 보답하지."" | when=day>=2 & region==B & floor==1 & !flag:met_dohyeon & !flag:skipped_dohyeon
+    events:passage_day1 text — "무너진 통로. 도현이 연장을 풀어 놓았다. "일손 둘이면 오늘 반, 내일 반." 당신 손도 세고 있다." | when=day>=5 & phase==day & flag:passage_work & !flag:passage_half & !flag:passage_wait & !flag:dohyeon_gone
+    events:passage_day1 c1.out — "도현이 연장을 도로 쌌다. 통로 바닥에 물이 한 뼘 더 찼다." | when=day>=5 & phase==day & flag:passage_work & !flag:passage_half & !flag:passage_wait & !flag:dohyeon_gone
+    lines:insp_rubble_work narrator|- — "공사 중이다. 도현의 연장이 놓여 있다." | ctx=
+    lines:insp_pump_open narrator|- — "펌프실이다. 도현의 젖은 옷이 걸려 있다." | ctx=
+    lines:rum_gicheol_hit dongha|- — "아저씨가 도현 씨를 때렸어요." | ctx=
+    lines:dohyeon_meet dohyeon|region==B — "권도현. 이틀 뒤에 보답하지. 물속이 조용해. 바깥보다." | ctx=region==B
+    lines:rum_dohyeon_price gicheol|- — "도현이 값을 다시 불렀소. 어제와 다르오." | ctx=
+    lines:rum_valve_shut {who}|- — "밤에 물소리가 멎었어. 도현 씨가 내려간 뒤였어." | ctx=
+
+## 그림 연결 — image 칸이 있는데 그림 파일이 없음(v4·v3 대체 모두 없음): 2건
+- pro_cold (image="title_dark", explicit=0, kind=fixed) → 없음
+- ending_ledger (image="cg_ledger", explicit=0, kind=ending) → 없음
+## 그림 연결 — v3 프로토타입 그림으로 대체되는 사건: 0건
+## 그림 연결 — 적나라(explicit=1)인데 image 칸이 비고 v4 cg/<사건 id> 도 없음(글만): 0건
+## 그림 연결 — v4 그림이 잡히는 사건: 78건
+- pro_notebook (image="cg_notebook", explicit=0, kind=fixed) → v4:cg_notebook
+- pro_gicheol (image="cg_gicheol", explicit=0, kind=fixed) → v4:cg_gicheol
+- pro_stairs (image="pro_stairs", explicit=1, kind=fixed) → v4:pro_stairs
+- pro_stairs_b (image="pro_stairs", explicit=1, kind=fixed) → v4:pro_stairs
+- pro_speaker (image="cg_speaker", explicit=0, kind=fixed) → v4:cg_speaker
+- d0_ledger (image="d0_ledger", explicit=0, kind=fixed) → v4:d0_ledger
+- d1_rats (image="d1_rats", explicit=1, kind=fixed) → v4:d1_rats
+- d2_shutter_arm (image="d2_shutter_arm", explicit=1, kind=trial) → v4:d2_shutter_arm
+- d3_bottle (image="cg_bottles", explicit=0, kind=fixed) → v4:cg_bottles
+- trial_d3_count (image="trial_d3_count", explicit=1, kind=fixed) → v4:trial_d3_count
+- trial_d3_count_c (image="trial_d3_count", explicit=1, kind=fixed) → v4:trial_d3_count
+- trial_d3_count_b (image="trial_d3_count", explicit=1, kind=fixed) → v4:trial_d3_count
+- d3_called_you (image="d3_called_you", explicit=0, kind=fixed) → v4:d3_called_you
+- d3_rat_fever (image="d3_rat_fever", explicit=1, kind=trial) → v4:d3_rat_fever
+- d3_guess (image="cg_notebook_back", explicit=0, kind=fixed) → v4:cg_notebook_back
+- d4_spanner (image="d4_spanner", explicit=1, kind=trial) → v4:d4_spanner
+- d4_dohyeon_key (image="cg_dohyeon", explicit=0, kind=fixed) → v4:cg_dohyeon
+- d6_dohyeon_back (image="cg_dohyeon", explicit=0, kind=trial) → v4:cg_dohyeon
+- d6_dohyeon_price (image="cg_dohyeon", explicit=0, kind=trial) → v4:cg_dohyeon
+- d5_rail_body (image="d5_rail", explicit=1, kind=fixed) → v4:d5_rail
+- d5_rail_body_c (image="d5_rail", explicit=1, kind=fixed) → v4:d5_rail
+- d5_rail_body_b (image="d5_rail", explicit=1, kind=fixed) → v4:d5_rail
+- d5_flood (image="cg_flood", explicit=0, kind=fixed) → v4:cg_flood
+- d5_lullaby (image="d5_lullaby", explicit=0, kind=fixed) → v4:d5_lullaby
+- d6_shutter (image="d6_shutter", explicit=1, kind=fixed) → v4:d6_shutter
+- d6_shutter_b (image="d6_shutter_b", explicit=1, kind=fixed) → v4:d6_shutter_b
+- d7_fingers (image="d7_fingers", explicit=1, kind=fixed) → v4:d7_fingers
+- d7_fingers_self (image="d7_fingers", explicit=1, kind=fixed) → v4:d7_fingers
+- d7_fingers_dead (image="d7_fingers_dead", explicit=1, kind=fixed) → v4:d7_fingers_dead
+- d7_broadcast (image="d7_broadcast", explicit=0, kind=fixed) → v4:d7_broadcast
+- d7_rot (image="d7_rot", explicit=1, kind=trial) → v4:d7_rot
+- d8_pillow (image="d8_pillow", explicit=1, kind=fixed) → v4:d8_pillow
+- d8_patrol_return (image="d8_patrol_return", explicit=1, kind=fixed) → v4:d8_patrol_return
+- d9_stairs (image="d9_stairs", explicit=0, kind=fixed) → v4:d9_stairs
+- d9_inspection (image="d9_inspection", explicit=1, kind=fixed) → v4:d9_inspection
+- d9_inspection_b (image="d9_inspection", explicit=1, kind=fixed) → v4:d9_inspection
+- d9_night_stand (image="d9_night_stand", explicit=0, kind=fixed) → v4:d9_night_stand
+- starve_you_r4 (image="death_starve", explicit=0, kind=trial) → v4:death_starve
+- starve_you_r3 (image="death_starve", explicit=0, kind=trial) → v4:death_starve
+- starve_you_r2 (image="death_starve", explicit=0, kind=trial) → v4:death_starve
+- starve_you (image="death_starve", explicit=0, kind=trial) → v4:death_starve
+- trip_a1_pharmacy (image="cg_pharmacy", explicit=0, kind=trip) → v4:cg_pharmacy
+- trip_a1_backroom (image="trip_a1_backroom", explicit=1, kind=trip) → v4:trip_a1_backroom
+- trip_b1_gate (image="cg_gate", explicit=0, kind=trip) → v4:cg_gate
+- trip_b1_workers (image="trip_b1_workers", explicit=1, kind=trip) → v4:trip_b1_workers
+- trip_a2_bones (image="trip_a2_bones", explicit=1, kind=trip) → v4:trip_a2_bones
+- trip_b2_drowned (image="trip_b2_drowned", explicit=1, kind=trip) → v4:trip_b2_drowned
+- d10_hold (image="d10_hold", explicit=1, kind=trial) → v4:d10_hold
+- d10_train (image="cg_train", explicit=0, kind=ending) → v4:cg_train
+- d10_grab (image="d10_grab", explicit=1, kind=trial) → v4:d10_grab
+- d10_walk (image="d10_walk", explicit=1, kind=ending) → v4:d10_walk
+- d10_walk_other (image="d10_walk_other", explicit=1, kind=ending) → v4:d10_walk_other
+- d10_walk_alone (image="d10_walk_alone", explicit=1, kind=ending) → v4:d10_walk_alone
+- d2_rat_blanket (image="d2_rat_blanket", explicit=1, kind=fixed) → v4:d2_rat_blanket
+- d4_shoes_home (image="d4_shoes_home", explicit=1, kind=fixed) → v4:d4_shoes_home
+- trip_a2_bodybag (image="trip_a2_bodybag", explicit=1, kind=trip) → v4:trip_a2_bodybag
+- flood_sick (image="flood_sick", explicit=1, kind=trial) → v4:flood_sick
+- flood_sick_end (image="death_flux", explicit=0, kind=trial) → v4:death_flux
+- wound_critical_r4 (image="wound_critical", explicit=0, kind=trial) → v4:wound_critical
+- wound_critical_r3 (image="wound_critical", explicit=0, kind=trial) → v4:wound_critical
+- wound_critical_r2 (image="wound_critical", explicit=0, kind=trial) → v4:wound_critical
+- wound_critical (image="wound_critical", explicit=1, kind=trial) → v4:wound_critical
+- dawn_strike_r3 (image="dawn_strike", explicit=0, kind=trial) → v4:dawn_strike
+- dawn_strike_r2 (image="dawn_strike", explicit=0, kind=trial) → v4:dawn_strike
+- dawn_strike_d3 (image="dawn_strike", explicit=1, kind=trial) → v4:dawn_strike
+- dawn_strike_d6 (image="dawn_strike", explicit=1, kind=trial) → v4:dawn_strike
+- dawn_strike (image="dawn_strike", explicit=1, kind=trial) → v4:dawn_strike
+- dawn_mob_r2 (image="dawn_mob", explicit=0, kind=trial) → v4:dawn_mob
+- dawn_mob_d3 (image="dawn_mob", explicit=1, kind=trial) → v4:dawn_mob
+- dawn_mob_d6 (image="dawn_mob", explicit=1, kind=trial) → v4:dawn_mob
+- dawn_mob (image="dawn_mob", explicit=1, kind=trial) → v4:dawn_mob
+- dawn_dongha (image="dawn_dongha", explicit=1, kind=trial) → v4:dawn_dongha
+- dawn_dongha2 (image="dawn_dongha2", explicit=1, kind=trial) → v4:dawn_dongha2
+- called_up_r2 (image="d3_called_you", explicit=0, kind=trial) → v4:d3_called_you
+- called_up_d3 (image="d3_called_you", explicit=0, kind=trial) → v4:d3_called_you
+- called_up_d6 (image="d3_called_you", explicit=0, kind=trial) → v4:d3_called_you
+- called_up (image="d3_called_you", explicit=0, kind=trial) → v4:d3_called_you
+- rail_killed (image="rail_killed", explicit=1, kind=trial) → v4:rail_killed
+## 결과 그림(out/ok/fail.image): 52건
+- pro_stairs c1.out.image="death_counted" → v4:death_counted
+- pro_stairs_b c1.out.image="death_counted" → v4:death_counted
+- d2_night_shutter c1.fail.image="death_beaten" → v4:death_beaten
+- d3_called_you c1.out.image="death_counted" → v4:death_counted
+- d8_patrol_return c1.out.image="death_beaten" → v4:death_beaten
+- d9_night_stand c1.out.image="death_counted" → v4:death_counted
+- starve_you_r4 c3.out.image="death_starve" → v4:death_starve
+- starve_you_r3 c3.out.image="death_starve" → v4:death_starve
+- starve_you_r2 c3.out.image="death_starve" → v4:death_starve
+- starve_you c3.out.image="death_starve" → v4:death_starve
+- d10_train c3.out.image="death_counted" → v4:death_counted
+- d10_walk_weak c2.fail.image="death_counted" → v4:death_counted
+- d10_walk c1.out.image="death_counted" → v4:death_counted
+- d10_walk_other c1.out.image="death_counted" → v4:death_counted
+- d10_walk_alone c1.out.image="death_counted" → v4:death_counted
+- flood_sick_end c1.fail.image="death_flux" → v4:death_flux
+- fever_night_r4 c2.fail.image="death_starve" → v4:death_starve
+- fever_night_r4 c3.fail.image="death_starve" → v4:death_starve
+- fever_night_r3 c2.fail.image="death_starve" → v4:death_starve
+- fever_night_r3 c3.fail.image="death_starve" → v4:death_starve
+- fever_night_r2 c2.fail.image="death_starve" → v4:death_starve
+- fever_night_r2 c3.fail.image="death_starve" → v4:death_starve
+- fever_night_d3 c2.fail.image="death_starve" → v4:death_starve
+- fever_night_d3 c3.fail.image="death_starve" → v4:death_starve
+- fever_night c2.fail.image="death_starve" → v4:death_starve
+- fever_night c3.fail.image="death_starve" → v4:death_starve
+- dawn_strike_r3 c2.fail.image="death_starve" → v4:death_starve
+- dawn_strike_r3 c3.fail.image="death_starve" → v4:death_starve
+- dawn_strike_r3 c4.fail.image="death_starve" → v4:death_starve
+- dawn_strike_r2 c2.fail.image="death_starve" → v4:death_starve
+- dawn_strike_r2 c3.fail.image="death_starve" → v4:death_starve
+- dawn_strike_r2 c4.fail.image="death_starve" → v4:death_starve
+- dawn_strike_d3 c2.fail.image="death_starve" → v4:death_starve
+- dawn_strike_d3 c3.fail.image="death_starve" → v4:death_starve
+- dawn_strike_d3 c4.fail.image="death_starve" → v4:death_starve
+- dawn_strike_d6 c2.fail.image="death_starve" → v4:death_starve
+- dawn_strike_d6 c3.fail.image="death_starve" → v4:death_starve
+- dawn_strike_d6 c4.fail.image="death_starve" → v4:death_starve
+- dawn_strike c2.fail.image="death_starve" → v4:death_starve
+- dawn_strike c3.fail.image="death_starve" → v4:death_starve
+- dawn_strike c4.fail.image="death_starve" → v4:death_starve
+- dawn_dongha2 c1.fail.image="death_beaten" → v4:death_beaten
+- dawn_dongha2 c2.fail.image="death_beaten" → v4:death_beaten
+- dawn_dongha2 c3.fail.image="death_beaten" → v4:death_beaten
+- called_up_r2 c1.fail.image="death_counted" → v4:death_counted
+- called_up_r2 c4.out.image="death_counted" → v4:death_counted
+- called_up_d3 c1.fail.image="death_counted" → v4:death_counted
+- called_up_d3 c4.out.image="death_counted" → v4:death_counted
+- called_up_d6 c1.fail.image="death_counted" → v4:death_counted
+- called_up_d6 c4.out.image="death_counted" → v4:death_counted
+- called_up c1.fail.image="death_counted" → v4:death_counted
+- called_up c4.out.image="death_counted" → v4:death_counted
+## 그림 없는 보통 사건(image 빈칸·explicit 0): 67건 (목록 생략)
+## 어느 사건에도 안 잡히는 v4 cg (death_·꿈 제외): 0건 — 

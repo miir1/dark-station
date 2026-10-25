@@ -1,11 +1,13 @@
-// node v4/sim/run.js [판수=200] [정책,정책…] [--report] [--suffix=b] [--out=v4/sim/report_x.md] [--compare=report_x.md,다른보고서.md] [--peek] [--inject=numbers:trip_party=2,objects:fire.resetOn=morning] [--blocks=1,1001] [--seed0=2001] [--a4blocks=8] [--workers=8] [--all-objects] [--lazy-blank]
+// node v4/sim/run.js [판수=200] [정책,정책…] [--report] [--suffix=b] [--out=v4/sim/report_x.md] [--compare=report_x.md,다른보고서.md] [--peek] [--inject=numbers:trip_party=2,objects:fire.resetOn=morning] [--blocks=1,1001] [--seed0=2001] [--a4blocks=9] [--workers=8] [--all-objects] [--lazy-blank]
 // 정책 × 판수 × 시드 블록을 돌려 표를 찍고, --report 면 v4/sim/report_<날짜><suffix>.md 에 쓴다 (C:\dev\dark_station 에서 실행).
 //   정책 이름 = bots.POLICIES 의 키(밑줄 허용: selfish_rt0,h_random). 기본 = 전부(성향 봇·조사·모험·이기적 4종·사람 흉내 6종)
-//   --blocks   시드 블록 시작값들(쉼표). 기본 1,1001,2001,3001 (10-24 검토 지적 12: 4블록 이상). 합격선은 블록마다 따로 재서 범위로 보고한다
+//   --blocks   시드 블록 시작값들(쉼표). 기본 1,1001,2001,3001,8001 (10-24 검토 지적 12: 4블록 이상 · 10-25 최종판: 표본 운을 줄이려 새 블록 8001 을 더해 5블록 —
+//              8001 은 10-27 보고서 §3-1 의 '새 블록'이다. A4 정책만 더 도는 4001~7001 과 겹치지 않게 골랐다). 합격선은 블록마다 따로 재서 범위로 보고한다
 //   --workers  정책을 나눠 동시에 돌리는 프로세스 수(기본 = 정책 수와 CPU−1 중 작은 것, 1 = 한 프로세스). 결과는 같다(정책마다 시드가 같다)
 //   --seed0    블록 하나만, 이 시드부터 N판 (예: --seed0=2001 → 2001~2000+N). --blocks 가 있으면 무시
-//   --a4blocks A4 게으름의 값을 재는 정책(보통·게으름·부지런 — bots.GROUPS.a4)만 블록을 이만큼까지 더 돈다(기본 8, 10-24 검증 A4-5: 4블록에서 ✓ 이던 줄이 8블록에서 깨졌다).
-//              더 도는 블록 = 마지막 블록 + 1000씩. 합격선 표의 A4 줄은 이 블록 전부로 판정하고, 블록 값은 따로 'A4 (블록 N개)' 표에 싣는다. 1 이하·블록 수 이하면 더 돌지 않는다
+//   --a4blocks A4 게으름의 값을 재는 정책(보통·게으름·부지런 — bots.GROUPS.a4)만 블록을 이만큼까지 더 돈다(기본 9, 10-24 검증 A4-5: 4블록에서 ✓ 이던 줄이 8블록에서 깨졌다 · 10-25 기본 블록이 5개가 되어 8 → 9).
+//              더 도는 블록 = 첫 블록 + 1000씩 올라가며 아직 안 쓴 시작값(10-25: 전에는 마지막 블록 + 1000씩 — 기본 블록에 8001 이 들어가 4001~7001 이 빠지지 않게).
+//              기본이면 4001·5001·6001·7001 → A4 블록 9개 = 1~8001 (10-24~27 의 8블록 + 8001). 합격선 표의 A4 줄은 이 블록 전부로 판정하고, 블록 값은 따로 'A4 (블록 N개)' 표에 싣는다. 1 이하·블록 수 이하면 더 돌지 않는다
 //   --all-objects  봇 아침 조사가 화면에서 못 닿는 물건(화로·역무실 안·서하 머리맡)도 본다 — 10-24 검증 전 판단(비교용)
 //   --lazy-blank   게으름 봇이 명부를 늘 빈칸으로 둔다 — 10-24 검증 전 규칙(비교용)
 //              판정: 모든 블록 통과·합격선 ±5%p 밖 = ✓ / 모든 블록 미달 = ✗ / 그 밖(블록마다 다름·±5%p 안) = △ (확정 안 함)
@@ -47,12 +49,13 @@ if (opt('inject')) {
 const unknown = only.filter((p) => !POLICIES[p]);
 if (unknown.length) throw new Error('모르는 정책: ' + unknown.join(',') + ' (있는 정책: ' + Object.keys(POLICIES).join(',') + ')');
 const names = Object.keys(POLICIES).filter((p) => !only.length || only.includes(p));
-const blocks = (opt('blocks') ? opt('blocks').split(',') : opt('seed0') ? [opt('seed0')] : ['1', '1001', '2001', '3001']).map((x) => Math.max(1, Math.floor(+x))).filter((x, i, a) => Number.isFinite(x) && a.indexOf(x) === i);
+const DEFAULT_BLOCKS = ['1', '1001', '2001', '3001', '8001'];   // (10-25) 5블록 — 머리 설명 참고
+const blocks = (opt('blocks') ? opt('blocks').split(',') : opt('seed0') ? [opt('seed0')] : DEFAULT_BLOCKS).map((x) => Math.max(1, Math.floor(+x))).filter((x, i, a) => Number.isFinite(x) && a.indexOf(x) === i);
 if (!blocks.length) throw new Error('--blocks / --seed0: 시드 시작값이 없다');
-// A4 정책만 더 도는 블록 (10-24 검증 A4-5)
-const A4_N = opt('a4blocks') ? Math.max(1, Math.floor(+opt('a4blocks')) || 1) : 8;
+// A4 정책만 더 도는 블록 (10-24 검증 A4-5) — 첫 블록 + 1000씩, 아직 안 쓴 시작값 (10-25)
+const A4_N = opt('a4blocks') ? Math.max(1, Math.floor(+opt('a4blocks')) || 1) : 9;
 const a4Extra = [];
-for (let b = blocks[blocks.length - 1] + 1000; blocks.length + a4Extra.length < A4_N; b += 1000) if (!blocks.includes(b)) a4Extra.push(b);
+for (let b = blocks[0] + 1000; blocks.length + a4Extra.length < A4_N; b += 1000) if (!blocks.includes(b)) a4Extra.push(b);
 const a4Blocks = blocks.concat(a4Extra);
 const isA4 = (name) => GROUPS.a4.includes(name);
 const blocksOf = (name) => (isA4(name) ? a4Blocks : blocks);
@@ -168,7 +171,11 @@ const ALIAS = { '찬가 발견율 (부지런)': ['찬가 발견율 (부지런 / 
   'A1 이기적 사인 쏠림 (버릇 없는 이기적, 사망 ≥ 10%인 정책만)': ['A1 이기적 4종 사인 쏠림 (한 사건 비중)'],
   // (10-24 tightrope) 정의가 바뀐 줄 — 옛 값은 옛 정의(강제 = 위험 0 출구 없음 · A2 = D2~D6 날마다)로 잰 것
   '강제 사망 = 확정 사망 (고를 때 열린 선택지 전부 살 확률 0, 전 정책 합산)': ['강제 사망 (전 정책 합산)', '강제 사망 비율 (전 정책 합산)'],
-  'A2 D2·D4·D5 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)': ['A2 D2~D6 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)', 'A2 D2~D6 날마다 그날 사건으로 죽은 판 (정책 합산, 깔때기 사건 뺌)'] };
+  'A2 D2·D4·D5 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)': ['A2 D2~D6 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌)', 'A2 D2~D6 날마다 그날 사건으로 죽은 판 (정책 합산, 깔때기 사건 뺌)'],
+  // (10-25 최종판) A1 아슬함 합격선 = 화면 ≤ 85% 줄타기만 — 옛 보고서의 측정 줄 '느껴지는 아슬함'이 같은 값이다. 옛 합격선(줄타기 전부)은 참고 줄로
+  'A1 아슬함: 화면 ≤ 85% (죽을 확률 ≥ 15%) 줄타기 넘김/판 (열흘 산 판, selfish_nb)': ['A1 느껴지는 아슬함: 화면 ≤ 85% (죽을 확률 ≥ 15%) 줄타기 넘김/판 (열흘 산 판, selfish_nb)'],
+  'A1 아슬함: 산 판 중 화면 ≤ 85% 줄타기 ≥ 2번 넘김 (selfish_nb)': ['A1 느껴지는 아슬함: 산 판 중 화면 ≤ 85% 줄타기 ≥ 2번 넘김 (selfish_nb)'],
+  '참고: 줄타기 판정 전부(90% 넘는 판정 포함 — 10-24 옛 A1 아슬함) 넘김/판 · 산 판 중 ≥ 2번 (selfish_nb)': ['A1 아슬함: 줄타기 판정 넘김/판 (열흘 산 판, selfish_nb)'] };
 // 조심형 봇 사망 줄은 이름에 정책 목록이 들어 있어(10-24 selfish_nb 가 더해짐) 앞머리로 찾는다
 const prevOf = (cmp, k0) => { const k = k0.trim(); if (cmp.gate[k] !== undefined) return cmp.gate[k]; const a = (ALIAS[k] || []).map((x) => cmp.gate[x]).find((v) => v !== undefined); if (a !== undefined) return a; if (k.startsWith('조심형 봇 사망 (')) { const o = Object.keys(cmp.gate).find((x) => x.startsWith('조심형 봇 사망 (')); if (o) return `${cmp.gate[o]} (옛 묶음 ${o.slice(10, -1)})`; } return '—'; };
 
@@ -212,7 +219,11 @@ const dash = (v, u) => (v == null || !Number.isFinite(v) ? '-' : `${v}${u || ''}
 const FELT = require('../engine/engine.js').ROPE_FELT_MAX;   // (tightrope 검증) 느껴지는 줄타기 = 화면 % ≤ 85
 md += `\n### 줄타기·발견 지표 (10-24 tightrope, 블록 합산 — '산 판' = 열흘을 산 판)\n| 정책 | 확정 사망 | 옛 강제(위험 0 출구 없음) | 경고 없는 사망 | 줄타기 굴림/판 | 줄타기 넘김/판 (산 판) | 산 판 중 줄타기 ≥2번% | 느껴지는 줄타기(≤${FELT}%) 넘김/판 (산 판) · 넘김 중 비중 | 산 판 중 느껴지는 줄타기 ≥2번% | 죽음 판정 넘김/판 (산 판) | 줄타기로 죽은 판 | 눈먼 새벽/판 · 그 죽음 | 실제 발견% | 옛 발견% | 누구나 아는 밤/판 · 숨은 밤/판 |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
 for (const name of names) { const a = aggs[name]; md += `| ${name} | ${a.forced} | ${a.noSafeDeaths} | ${a.unwarned} | ${dash(a.ropeRolls)} | ${dash(a.ropeCloseSurv)} | ${dash(a.ropeClose2, '%')} | ${dash(a.ropeFeltSurv)} · ${dash(a.ropeFeltShare, '%')} | ${dash(a.ropeFelt2, '%')} | ${dash(a.closeCallsSurv)} | ${a.ropeDeaths} | ${dash(a.blindMet)} · ${a.blindDeaths} | ${dash(a.discReal, '%')} | ${dash(a.discovery, '%')} | ${dash(a.pubNights)} · ${dash(a.privNights)} |\n`; }
-md += `\n확정 사망 = 고를 때 열린 선택지 전부 살 확률 0 (R1 — 엔진 ended.cause.forced). 옛 강제 = 당신이 죽지 않는 열린 선택지 0개(카르마 판의 줄타기는 일부러 그렇다). 줄타기 = rope 칸이 얹힌 판정(엔진 s.stats.ropeRolls·ropeClose), 느껴지는 줄타기 = 그중 화면 % ≤ ${FELT}(죽을 확률 ≥ ${100 - FELT}%)인 판정(ropeFeltRolls·ropeFelt — 90% 넘는 판정은 넘겨도 아슬하게 느껴지기 어렵다, 10-24 tightrope 검증) · 넘김 중 비중 = 산 판 줄타기 넘김 가운데 느껴지는 줄타기의 몫, 죽음 판정 = 실패가 당신을 죽이는 모든 판정(deathRolls·closeCalls). 실제 발견% = 누구나 아는 밤(public·kill)을 뺀 주민 사건 가운데 발견한 비율 — 옛 발견%(발견%) 옆에 싣는다.\n`;
+md += `\n확정 사망 = 고를 때 열린 선택지 전부 살 확률 0 (R1 — 엔진 ended.cause.forced). 옛 강제 = 당신이 죽지 않는 열린 선택지 0개(카르마 판의 줄타기는 일부러 그렇다). 줄타기 = rope 칸이 얹힌 판정(엔진 s.stats.ropeRolls·ropeClose), 느껴지는 줄타기 = 그중 화면 % ≤ ${FELT}(죽을 확률 ≥ ${100 - FELT}%)인 판정(ropeFeltRolls·ropeFelt — 90% 넘는 판정은 넘겨도 아슬하게 느껴지기 어렵다, 10-24 tightrope 검증 · **10-25 부터 A1 아슬함 합격선은 이 값**) · 넘김 중 비중 = 산 판 줄타기 넘김 가운데 느껴지는 줄타기의 몫, 죽음 판정 = 실패가 당신을 죽이는 모든 판정(deathRolls·closeCalls). 실제 발견% = 누구나 아는 밤(public·kill)을 뺀 주민 사건 가운데 발견한 비율 — 옛 발견%(발견%) 옆에 싣는다.\n`;
+// ── 10-25 P1-11 원정 수납 표 (표에 수납·조사 원정 사건이 없으면 모두 0) ──
+md += `\n### 원정 수납 (P1-11, 블록 합산 — 판 평균)\n| 정책 | 원정 | 원정 조사 물건 | 연 수납 | 조사로 걸린 원정 사건 |\n|---|---|---|---|---|\n`;
+for (const name of names) { const a = aggs[name]; md += `| ${name} | ${a.trips} | ${dash(a.searched)} | ${dash(a.holdsOpened)} | ${dash(a.tripGated)} |\n`; }
+md += `\n원정 = 원정을 나간 날 · 원정 조사 물건 = 원정 지도에서 조사한 물건(봇 tripSearch: 닫힌 수납·조사 원정 사건이 가리키는 물건) · 연 수납 = holds 를 열어 얻은 횟수(엔진 s.stats.holds) · 조사로 걸린 원정 사건 = when 에 inspect: 가 있는 원정 사건을 고른 횟수.\n`;
 md += `\n원인 = 깔때기 사건(when 이 당신 부상을 보는 사건 — fever_night 등 — 과 새벽 위독)으로 죽었으면, 그 자리까지 당신을 다치게 한 출처(사건·night:밤 사건·neglect:방치 판정) 가운데 가장 많이 다치게 한 것. 아니면 사인 사건 그대로.\n`;
 for (const name of names.filter((k) => aggs[k].deaths)) md += `- ${name} 원인 사건: ` + Object.entries(aggs[name].byRoot).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([k, v]) => `${k} ${v}`).join(' · ') + '\n';
 md += `\n### 정체 묶음 평균 (A3 분석 §5: 성향 봇 ${GROUPS.personality.filter((k) => aggs[k]).length}종 · 사람 흉내 ${GROUPS.human.filter((k) => aggs[k]).length}종, 블록 합산)\n| 묶음 | ${candIds.join(' | ')} |\n|---|${candIds.map(() => '---').join('|')}|\n`;

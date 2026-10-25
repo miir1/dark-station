@@ -1,0 +1,321 @@
+# 봇 보고서 — 정책 20 × 200판 × 시드 블록 5 (2026-10-25)
+
+데이터: v4/data (밤 사건 54, 사건 134, 후보 7). 시드 블록: 시드 1~200, 시드 1001~1200, 시드 2001~2200, 시드 3001~3200, 시드 8001~8200. 걸린 시간 897.5초. 규칙·데이터는 손대지 않았다. A4 정책(balanced·lazy·diligent)은 블록 9개(더 돈 블록: 시드 4001~4200, 시드 5001~5200, 시드 6001~6200, 시드 7001~7200) — 정책별 표·블록별 표는 기본 블록만, A4 줄 판정과 'A4 (블록 9개)' 표는 전부.
+
+## 1. 정책별 표 (블록 5개를 합친 1000판)
+| 정책 | 생존% | 사망% | 굶주림비중% | 실질경고% | 강제% | 열차% | 전멸% | 밤사건 | 시계 | malice | hymn | 발견% | 모름≥1% | 찬가발견% | explicit | 결정/일 | 빈칸% | 원정 | 날 | 굶주림 | D3셈% | 함께센다% |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 40 | 60 | 0 | 100 | 0 | 0 | 11 | 14.37 | 12.56 | 5.84 | 3.54 | 67.8 | 93.4 | 94.2 | 11.85 | 26.93 | 63 | 4.96 | 8.08 | 6.27 | 95.8 | 0 |
+| selfish | 28.8 | 71.2 | 0 | 100 | 0 | 0 | 7.5 | 22.43 | 14.2 | 12.71 | 3.82 | 67 | 100 | 92.9 | 12.93 | 26.04 | 66.8 | 7.59 | 8.73 | 4.47 | 100 | 0 |
+| devoted | 20.4 | 79.6 | 0 | 100 | 0 | 4 | 1.1 | 10.85 | 10.4 | 3.71 | 3.47 | 65.8 | 88.3 | 93.9 | 9.86 | 29.07 | 22.5 | 3.48 | 6.83 | 6.68 | 94.4 | 0 |
+| silent | 40.9 | 59.1 | 0 | 100 | 0 | 0 | 9.7 | 14.46 | 12.31 | 5.76 | 3.56 | 67.5 | 93.9 | 95 | 11.87 | 26.79 | 62.4 | 4.98 | 8.12 | 6.29 | 95.9 | 0 |
+| caller | 30.1 | 69.9 | 0 | 100 | 0 | 0 | 8.9 | 12.88 | 11.9 | 5.25 | 3.32 | 67.3 | 90.2 | 95.5 | 11 | 28.17 | 61.2 | 4.74 | 7.5 | 6.08 | 95.4 | 0 |
+| lazy | 28.4 | 71.6 | 0 | 100 | 0 | 0 | 9.1 | 14.87 | 11.9 | 6.43 | 3.37 | 47.2 | 97.4 | 78.9 | 11.64 | 23.94 | 61.5 | 4.55 | 7.67 | 6.2 | 95.9 | 0 |
+| diligent | 42.7 | 57.3 | 0 | 100 | 0 | 0 | 9 | 13.21 | 12.94 | 5.09 | 3.66 | 95.6 | 45.2 | 100 | 12.68 | 69.01 | 28 | 5.03 | 8.21 | 6.4 | 95.7 | 0 |
+| risky | 22.9 | 77.1 | 0 | 100 | 0 | 9.1 | 4.9 | 14.5 | 10.18 | 4.48 | 5.09 | 66.5 | 92.6 | 90.1 | 13.09 | 36.44 | 57.7 | 6.44 | 6.8 | 5.04 | 95.1 | 0 |
+| steward | 37.7 | 62.3 | 0 | 100 | 0 | 0 | 10.7 | 13.53 | 12.01 | 5.19 | 3.48 | 66.8 | 93.4 | 95.3 | 10.94 | 27.32 | 26.2 | 4.62 | 7.94 | 6.98 | 94.3 | 0 |
+| counter | 11.2 | 88.8 | 11.9 | 100 | 0 | 4.1 | 3.1 | 15.54 | 10.69 | 7.93 | 3.26 | 66.9 | 92.2 | 91.8 | 10.36 | 29.51 | 57.8 | 4.17 | 6.7 | 4.64 | 94.1 | 0 |
+| child | 12.5 | 87.5 | 1.9 | 100 | 0 | 0 | 8.2 | 17.96 | 11.59 | 9.65 | 3.38 | 66.3 | 99.6 | 92.1 | 11.29 | 28.01 | 61.4 | 6.16 | 7.37 | 3.93 | 99.8 | 0 |
+| selfish_nb | 28.7 | 71.3 | 0 | 100 | 0 | 0 | 7 | 22.63 | 14.57 | 12.86 | 3.83 | 67.3 | 100 | 93.2 | 13.18 | 25.54 | 66.4 | 7 | 8.77 | 4.39 | 100 | 0 |
+| selfish_rt | 6.5 | 93.5 | 1.4 | 100 | 0 | 0 | 4.7 | 16.96 | 10.94 | 9.33 | 3.2 | 63.9 | 99.9 | 92.1 | 11.08 | 28.84 | 61.9 | 6.29 | 6.93 | 3.84 | 100 | 0 |
+| selfish_rt0 | 6.3 | 93.7 | 1.4 | 100 | 0 | 0 | 4.9 | 17.21 | 11.03 | 9.53 | 3.2 | 63.6 | 99.9 | 91.9 | 11.12 | 28.71 | 61.9 | 6.22 | 6.96 | 3.83 | 100 | 0 |
+| h_random | 0.4 | 99.6 | 15.3 | 100 | 0 | 0 | 0.2 | 4.05 | 3.02 | 1.65 | 1.32 | 69.5 | 36.6 | 93.9 | 4.5 | 35.73 | 59.3 | 1.95 | 2.49 | 4.8 | 45.4 | 48.5 |
+| h_wary | 6.9 | 93.1 | 0 | 100 | 0 | 1.1 | 1 | 8.76 | 5.69 | 4.1 | 2.11 | 65.4 | 50.7 | 91.3 | 6.86 | 30.33 | 58.3 | 2.36 | 3.98 | 6.11 | 51.1 | 0 |
+| h_first | 68 | 32 | 0 | 100 | 0 | 14.6 | 2.6 | 19.56 | 11.72 | 7.71 | 5.52 | 65.6 | 99.7 | 90.2 | 13.98 | 22.61 | 67.2 | 4.34 | 9.56 | 6.96 | 100 | 0 |
+| h_cautious | 73.1 | 26.9 | 0 | 100 | 0 | 0 | 28.3 | 19.66 | 15.86 | 8.01 | 4.69 | 70 | 99.9 | 93.8 | 14.35 | 23.84 | 61.1 | 6.38 | 9.66 | 7.14 | 100 | 0 |
+| h_cautious2 | 42.5 | 57.5 | 0 | 100 | 0 | 2.7 | 12.1 | 16.71 | 13.83 | 6.68 | 4.14 | 67 | 97.6 | 92.4 | 12.82 | 25.49 | 62.4 | 5.5 | 8.6 | 6.7 | 99.3 | 0 |
+| h_mixed | 33 | 67 | 0 | 100 | 0 | 0.7 | 9.5 | 15.84 | 10.76 | 7.26 | 3.65 | 66.9 | 80.6 | 91.4 | 11.59 | 26.87 | 62.3 | 4.84 | 7.21 | 6.56 | 80.7 | 0 |
+
+굶주림 = 아침마다 잰 당신 굶주림의 판 평균(10-24 추가) · D3셈% = D3 밤 셈(trial_d3_count·_b·_c)까지 간 판 · 함께센다% = 그중 '함께 센다'를 고른 비율. 아침 조사는 칸 단위(10-24 P0-E2: 그 칸의 물건 전부, 조사 수 = 칸 수).
+
+정책: balanced 축 중립·보통 조사 / selfish 몫−손− / devoted 몫+손+ / silent 이름− / caller 이름+ / lazy 게으른 조사(1곳·말 0) / diligent 부지런(상한 보고용) / risky 모험(판정+경고 선택 우선 ≥35%, 원정 매일 1층→2층, 거래·협정·범람수는 자원 + 최대) / steward 몫+손−이름+(정체 inspector 쪽 성향, 10-23 추가). 조심형(합격선 따로 집계) = balanced·silent·lazy·diligent·steward·selfish_nb.
+- balanced 사망 원인: d5_flood 191 · fever_night 162 · d10_walk_weak 129 · dawn_strike 50 · d2_shutter_arm 42 · dawn_mob 8 · called_up 7 · d4_spanner 6 · dawn_strike_d6 5
+- selfish 사망 원인: called_up 216 · dawn_mob 161 · dawn_strike 157 · d10_hold 64 · d10_walk_weak 58 · d10_grab 35 · fever_night 14 · dawn_strike_d6 6 · called_up_d6 1
+- devoted 사망 원인: fever_night 302 · d5_flood 148 · d4_spanner 98 · d10_walk_weak 74 · d2_shutter_arm 56 · dawn_strike 53 · d6_shutter_b 27 · dawn_strike_d6 22 · fever_night_d3 16 [평범한 대안 두고 죽음 글 선택 220]
+- silent 사망 원인: d5_flood 191 · fever_night 161 · d10_walk_weak 128 · dawn_strike 41 · d2_shutter_arm 41 · d4_spanner 9 · dawn_mob 9 · dawn_strike_d6 8 · called_up 3
+- caller 사망 원인: fever_night 185 · d5_flood 176 · dawn_strike 93 · d10_walk_weak 92 · d4_spanner 57 · d2_shutter_arm 46 · dawn_strike_d6 13 · d6_shutter_b 10 · called_up 8 · dawn_mob 8 · fever_night_d3 5 · called_up_d6 3 · d10_walk_other 3 [평범한 대안 두고 죽음 글 선택 130]
+- lazy 사망 원인: fever_night 200 · d5_flood 181 · dawn_strike 144 · d10_walk_weak 92 · d2_shutter_arm 41 · dawn_strike_d6 32 · dawn_mob 14 · d4_spanner 9 · called_up 3
+- diligent 사망 원인: fever_night 187 · d5_flood 180 · d10_walk_weak 136 · d2_shutter_arm 43 · d4_spanner 11 · called_up 9 · dawn_mob 5 · dawn_strike 2
+- risky 사망 원인: fever_night 240 · d5_flood 175 · d4_spanner 70 · dawn_strike 50 · d2_shutter_arm 49 · d10_walk_weak 44 · d6_shutter_b 41 · called_up 32 · dawn_mob 24 · fever_night_d3 17 · d6_shutter 16 · dawn_strike_d6 12 · called_up_d6 1 [평범한 대안 두고 죽음 글 선택 554]
+- steward 사망 원인: fever_night 228 · d5_flood 171 · d10_walk_weak 118 · d2_shutter_arm 57 · dawn_strike 42 · dawn_strike_d6 7
+- counter 사망 원인: called_up 128 · fever_night 127 · dawn_strike 116 · d5_flood 116 · starve_you 106 · d4_spanner 97 · dawn_mob 77 · d2_shutter_arm 59 · dawn_strike_d6 30 · d10_walk_weak 11 · d10_hold 10 · dawn_mob_d6 8 · called_up_d6 2 · fever_night_d3 1 [평범한 대안 두고 죽음 글 선택 322]
+- child 사망 원인: called_up 200 · d6_shutter_b 156 · dawn_strike 154 · dawn_mob 130 · d5_flood 102 · d10_walk_weak 43 · d10_hold 21 · dawn_mob_d6 19 · starve_you 17 · fever_night 16 · d10_walk_other 6 · d10_grab 5 · dawn_strike_d6 4 · dawn_strike_d3 2 [평범한 대안 두고 죽음 글 선택 312]
+- selfish_nb 사망 원인: called_up 179 · dawn_strike 167 · dawn_mob 146 · d10_walk_weak 77 · d10_hold 55 · d10_grab 48 · fever_night 26 · dawn_mob_d6 10 · dawn_strike_d6 5 [평범한 대안 두고 죽음 글 선택 10]
+- selfish_rt 사망 원인: called_up 305 · dawn_mob 286 · dawn_strike 220 · d5_flood 51 · dawn_mob_d6 23 · d10_walk_weak 14 · starve_you 13 · dawn_strike_d6 8 · d10_grab 5 · d10_hold 5 · called_up_d6 4 · fever_night 1 [평범한 대안 두고 죽음 글 선택 99]
+- selfish_rt0 사망 원인: dawn_mob 296 · called_up 289 · dawn_strike 225 · d5_flood 50 · dawn_mob_d6 23 · d10_walk_weak 16 · starve_you 13 · fever_night 9 · dawn_strike_d6 8 · d10_hold 4 · called_up_d6 4 [평범한 대안 두고 죽음 글 선택 105]
+- h_random 사망 원인: pro_stairs 489 · starve_you 152 · d3_called_you 94 · fever_night 38 · d2_night_shutter 37 · dawn_mob 32 · called_up 25 · d6_shutter 24 · d5_flood 22 · dawn_strike 19 · d4_spanner 18 · d6_shutter_b 11 · dawn_mob_d6 7 · dawn_strike_d6 6 · d8_patrol_return 4 · called_up_d6 4 · d2_shutter_arm 3 · d10_walk_weak 2 · dawn_strike_d3 2 · d10_hold 2 · d10_walk 1 · d9_night_stand 1 · called_up_d3 1 · fever_night_d3 1 · d10_grab 1 [평범한 대안 두고 죽음 글 선택 413]
+- h_wary 사망 원인: pro_stairs 489 · dawn_mob 110 · called_up 109 · dawn_strike 83 · fever_night 62 · d10_walk_weak 21 · d5_flood 18 · d8_patrol_return 15 · d10_grab 11 · d10_hold 9 · dawn_strike_d6 2 · called_up_d6 1 · dawn_mob_d6 1
+- h_first 사망 원인: fever_night 124 · dawn_strike 63 · d10_grab 42 · d10_walk_weak 23 · dawn_mob 22 · called_up 21 · d10_hold 18 · dawn_strike_d6 7
+- h_cautious 사망 원인: d10_walk_weak 55 · d10_grab 50 · dawn_strike 46 · fever_night 45 · d10_hold 35 · called_up 18 · dawn_mob 18 · dawn_strike_d6 2
+- h_cautious2 사망 원인: dawn_strike 136 · fever_night 112 · d5_flood 92 · dawn_mob 71 · d10_walk_weak 70 · d10_grab 34 · called_up 28 · dawn_strike_d6 11 · d10_hold 11 · d2_shutter_arm 7 · d4_spanner 2 · called_up_d6 1
+- h_mixed 사망 원인: pro_stairs 193 · dawn_mob 117 · called_up 98 · dawn_strike 75 · fever_night 59 · d10_walk_weak 47 · d10_grab 33 · d10_hold 29 · d8_patrol_return 13 · d5_flood 6
+
+강제 = 확정 사망 — 고를 때 열린 선택지 전부 살 확률 0 (10-24 tightrope R1, 살 확률 > 0 인 주사위가 하나라도 열려 있으면 강제가 아니다 · 옛 정의 '죽지 않는 열린 선택지 0개'는 아래 '줄타기·발견 지표' 표의 '옛 강제'). "←" 뒤는 그 전 마지막 자유 경고 선택(대안이 있었는데 고른 경고 선택). 실질경고% = 사망 중 '경고 글이 있고 강제가 아닌' 선택으로 죽은 비율(10-22 리드 결정: 강제 사망은 경고 있음으로 세지 않는다). 둘 다 엔진의 사인 기록(ended.cause.forced·free)에서 읽는다.
+
+### 블록별 (생존% / 사망% / 열차% / 강제%)
+| 정책 | 시드 1~200 | 시드 1001~1200 | 시드 2001~2200 | 시드 3001~3200 | 시드 8001~8200 |
+|---|---|---|---|---|---|
+| balanced | 38.5 / 61.5 / 0 / 0 | 45 / 55 / 0 / 0 | 38 / 62 / 0 / 0 | 39 / 61 / 0 / 0 | 39.5 / 60.5 / 0 / 0 |
+| selfish | 28 / 72 / 0 / 0 | 31.5 / 68.5 / 0 / 0 | 28 / 72 / 0 / 0 | 27.5 / 72.5 / 0 / 0 | 29 / 71 / 0 / 0 |
+| devoted | 20.5 / 79.5 / 4.5 / 0 | 23 / 77 / 4 / 0 | 19.5 / 80.5 / 2.5 / 0 | 20 / 80 / 4 / 0 | 19 / 81 / 5 / 0 |
+| silent | 38 / 62 / 0 / 0 | 40 / 60 / 0 / 0 | 44.5 / 55.5 / 0 / 0 | 42 / 58 / 0 / 0 | 40 / 60 / 0 / 0 |
+| caller | 29 / 71 / 0 / 0 | 29 / 71 / 0 / 0 | 34.5 / 65.5 / 0 / 0 | 30.5 / 69.5 / 0 / 0 | 27.5 / 72.5 / 0 / 0 |
+| lazy | 26 / 74 / 0 / 0 | 25.5 / 74.5 / 0 / 0 | 30.5 / 69.5 / 0 / 0 | 33 / 67 / 0 / 0 | 27 / 73 / 0 / 0 |
+| diligent | 40 / 60 / 0 / 0 | 45 / 55 / 0 / 0 | 42 / 58 / 0 / 0 | 43 / 57 / 0 / 0 | 43.5 / 56.5 / 0 / 0 |
+| risky | 20.5 / 79.5 / 11.5 / 0 | 23.5 / 76.5 / 9 / 0 | 23 / 77 / 7 / 0 | 23.5 / 76.5 / 10.5 / 0 | 24 / 76 / 7.5 / 0 |
+| steward | 38 / 62 / 0 / 0 | 30.5 / 69.5 / 0 / 0 | 42.5 / 57.5 / 0 / 0 | 40 / 60 / 0 / 0 | 37.5 / 62.5 / 0 / 0 |
+| counter | 11.5 / 88.5 / 3 / 0 | 12.5 / 87.5 / 4.5 / 0 | 10 / 90 / 5.5 / 0 | 11.5 / 88.5 / 4.5 / 0 | 10.5 / 89.5 / 3 / 0 |
+| child | 10.5 / 89.5 / 0 / 0 | 11.5 / 88.5 / 0 / 0 | 12 / 88 / 0 / 0 | 15 / 85 / 0 / 0 | 13.5 / 86.5 / 0 / 0 |
+| selfish_nb | 31.5 / 68.5 / 0 / 0 | 30.5 / 69.5 / 0 / 0 | 28.5 / 71.5 / 0 / 0 | 28 / 72 / 0 / 0 | 25 / 75 / 0 / 0 |
+| selfish_rt | 6 / 94 / 0 / 0 | 7.5 / 92.5 / 0 / 0 | 6.5 / 93.5 / 0 / 0 | 5 / 95 / 0 / 0 | 7.5 / 92.5 / 0 / 0 |
+| selfish_rt0 | 4.5 / 95.5 / 0 / 0 | 7.5 / 92.5 / 0 / 0 | 5.5 / 94.5 / 0 / 0 | 6.5 / 93.5 / 0 / 0 | 7.5 / 92.5 / 0 / 0 |
+| h_random | 0 / 100 / 0 / 0 | 0 / 100 / 0 / 0 | 0.5 / 99.5 / 0 / 0 | 0 / 100 / 0 / 0 | 1.5 / 98.5 / 0 / 0 |
+| h_wary | 9 / 91 / 2.5 / 0 | 6.5 / 93.5 / 0.5 / 0 | 6.5 / 93.5 / 1.5 / 0 | 7.5 / 92.5 / 1 / 0 | 5 / 95 / 0 / 0 |
+| h_first | 63.5 / 36.5 / 14.5 / 0 | 70 / 30 / 15 / 0 | 69 / 31 / 14 / 0 | 64 / 36 / 15 / 0 | 73.5 / 26.5 / 14.5 / 0 |
+| h_cautious | 68.5 / 31.5 / 0 / 0 | 78.5 / 21.5 / 0 / 0 | 74.5 / 25.5 / 0 / 0 | 73 / 27 / 0 / 0 | 71 / 29 / 0 / 0 |
+| h_cautious2 | 45 / 55 / 4 / 0 | 40.5 / 59.5 / 2 / 0 | 45.5 / 54.5 / 4 / 0 | 41.5 / 58.5 / 2 / 0 | 40 / 60 / 1.5 / 0 |
+| h_mixed | 29 / 71 / 1.5 / 0 | 32 / 68 / 0 / 0 | 35.5 / 64.5 / 1.5 / 0 | 38.5 / 61.5 / 0 / 0 | 30 / 70 / 0.5 / 0 |
+
+### 정체 분포 (정책별 %)
+| 정책 | driver | conductor | inspector | passenger | counted | platform_one | counting_child |
+|---|---|---|---|---|---|---|---|
+| balanced | 0.5 | 41.5 | 0 | 37.4 | 0.3 | 17.9 | 2.4 |
+| selfish | 0 | 0 | 0 | 98.3 | 0 | 0.3 | 1.4 |
+| devoted | 70 | 30 | 0 | 0 | 0 | 0 | 0 |
+| silent | 0 | 48 | 0 | 37.8 | 0 | 14.2 | 0 |
+| caller | 56.8 | 0 | 38 | 0 | 3.8 | 0 | 1.4 |
+| lazy | 0.6 | 47.5 | 0.1 | 36.4 | 0.1 | 12.9 | 2.4 |
+| diligent | 0.5 | 42.2 | 0.2 | 35.2 | 0.3 | 19.3 | 2.3 |
+| risky | 2.4 | 32.4 | 0 | 9.9 | 1.6 | 51.1 | 2.6 |
+| steward | 1.9 | 0 | 98.1 | 0 | 0 | 0 | 0 |
+| counter | 0 | 0 | 0 | 0 | 100 | 0 | 0 |
+| child | 0 | 0 | 0 | 0 | 0 | 0 | 100 |
+| selfish_nb | 0 | 0 | 0 | 98.4 | 0 | 0.6 | 1 |
+| selfish_rt | 0 | 0 | 0 | 90.5 | 0 | 0.2 | 9.3 |
+| selfish_rt0 | 0 | 0 | 0 | 91.1 | 0 | 0.2 | 8.7 |
+| h_random | 9.5 | 3.1 | 5.8 | 37.2 | 12.5 | 22.9 | 9 |
+| h_wary | 8.5 | 8.4 | 1.7 | 37.5 | 12.2 | 29.3 | 2.4 |
+| h_first | 79.2 | 3.2 | 0.5 | 0 | 15.9 | 1.1 | 0.1 |
+| h_cautious | 0.3 | 17.8 | 0.9 | 69.3 | 0.2 | 11.1 | 0.4 |
+| h_cautious2 | 1 | 32.1 | 0.4 | 33.9 | 0.8 | 30.6 | 1.2 |
+| h_mixed | 7 | 18.5 | 3.8 | 37.2 | 5.2 | 25.9 | 2.4 |
+
+### 당신 사망 원인 (balanced, 판 수)
+- d5_flood: 191
+- fever_night: 162
+- d10_walk_weak: 129
+- dawn_strike: 50
+- d2_shutter_arm: 42
+- dawn_mob: 8
+- called_up: 7
+- d4_spanner: 6
+- dawn_strike_d6: 5
+
+### 날별 당신 사망 (판 수, 1000판 중 · 괄호 = 그날 사건으로 죽은 판, 깔때기 사건(열병·새벽 위독 등) 뺌)
+| 정책 | D0 | D1 | D2 | D3 | D4 | D5 | D6 | D7 | D8 | D9 | D10 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 0 | 0 | 42 (42) | 0 | 11 (6) | 212 (201) | 27 (5) | 50 (21) | 54 (12) | 66 (13) | 138 (9) |
+| selfish | 0 | 0 | 0 | 0 | 4 (4) | 19 (19) | 17 (17) | 199 (197) | 172 (169) | 120 (111) | 181 (123) |
+| devoted | 0 | 0 | 56 (56) | 16 (0) | 135 (98) | 194 (158) | 97 (49) | 74 (14) | 79 (14) | 64 (8) | 81 (7) |
+| silent | 0 | 0 | 41 (41) | 0 | 9 (9) | 205 (198) | 28 (8) | 53 (17) | 55 (13) | 67 (11) | 133 (5) |
+| caller | 0 | 0 | 46 (46) | 5 (0) | 66 (57) | 206 (192) | 52 (28) | 76 (37) | 70 (22) | 73 (22) | 105 (13) |
+| lazy | 0 | 0 | 41 (41) | 0 | 14 (13) | 227 (215) | 61 (32) | 81 (32) | 93 (38) | 81 (27) | 118 (26) |
+| diligent | 0 | 0 | 43 (43) | 0 | 11 (11) | 194 (180) | 21 (0) | 47 (12) | 52 (2) | 68 (1) | 137 (1) |
+| risky | 0 | 0 | 49 (49) | 17 (0) | 100 (73) | 226 (181) | 116 (70) | 117 (65) | 51 (18) | 44 (7) | 51 (7) |
+| steward | 0 | 0 | 57 (57) | 0 | 10 (0) | 201 (180) | 29 (7) | 71 (14) | 59 (10) | 74 (5) | 122 (4) |
+| counter | 0 | 0 | 59 (59) | 1 (0) | 115 (97) | 157 (134) | 106 (79) | 183 (158) | 128 (110) | 94 (78) | 45 (34) |
+| child | 0 | 0 | 0 | 2 (2) | 6 (6) | 146 (145) | 241 (240) | 179 (173) | 103 (100) | 99 (94) | 99 (56) |
+| selfish_nb | 0 | 0 | 0 | 0 | 4 (4) | 18 (18) | 33 (33) | 193 (191) | 133 (125) | 113 (97) | 219 (142) |
+| selfish_rt | 0 | 0 | 0 | 0 | 6 (6) | 80 (80) | 371 (371) | 271 (271) | 117 (116) | 55 (55) | 35 (21) |
+| selfish_rt0 | 0 | 0 | 0 | 0 | 6 (6) | 79 (79) | 358 (358) | 275 (275) | 121 (116) | 70 (66) | 28 (12) |
+| h_random | 489 (489) | 7 (2) | 48 (47) | 110 (109) | 71 (65) | 75 (66) | 96 (89) | 49 (42) | 29 (28) | 14 (12) | 8 (6) |
+| h_wary | 489 (489) | 0 | 0 | 0 | 8 (5) | 44 (39) | 67 (60) | 121 (108) | 86 (66) | 63 (49) | 53 (32) |
+| h_first | 0 | 0 | 0 | 0 | 0 | 12 (10) | 15 (7) | 33 (25) | 60 (26) | 100 (28) | 100 (77) |
+| h_cautious | 0 | 0 | 0 | 0 | 0 | 6 (6) | 2 (2) | 30 (27) | 23 (14) | 54 (21) | 154 (99) |
+| h_cautious2 | 0 | 0 | 7 (7) | 0 | 2 (2) | 123 (114) | 32 (16) | 100 (80) | 82 (56) | 83 (42) | 146 (76) |
+| h_mixed | 193 (193) | 0 | 0 | 0 | 0 | 30 (28) | 38 (35) | 71 (63) | 102 (89) | 94 (61) | 142 (95) |
+
+### A1·A2·A4 지표 (블록 합산)
+| 정책 | 생존% | D1~D4 생존% | D5까지 사망% | 산 날 | 카르마(끝) | 못 본 일/판 | 방치 줄/판 | D9 주민 | D7 자원 | 사인 1위 | 원인 1위 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 40 | 94.7 | 26.5 | 8.08 | 2.14 | 2.51 | 6.68 | 3.16 | 2.62 | d5_flood 31.8% | d5_flood 31.8% |
+| selfish | 28.8 | 99.6 | 2.3 | 8.73 | 9.04 | 2.32 | 7.61 | 3.04 | 4.54 | called_up 30.3% | called_up 30.3% |
+| devoted | 20.4 | 79.3 | 40.1 | 6.83 | 0 | 1.98 | 5.2 | 4.14 | 2.03 | fever_night 37.9% | starve_you 18.8% |
+| silent | 40.9 | 95 | 25.5 | 8.12 | 2.17 | 2.57 | 6.61 | 3.19 | 2.68 | d5_flood 32.3% | starve_you 35% |
+| caller | 30.1 | 88.3 | 32.3 | 7.5 | 2.13 | 2.22 | 5.92 | 3.16 | 2.61 | fever_night 26.5% | d5_flood 25.2% |
+| lazy | 28.4 | 94.5 | 28.2 | 7.67 | 1.94 | 4.41 | 6.43 | 2.98 | 2.36 | fever_night 27.9% | dawn_strike 27.8% |
+| diligent | 42.7 | 94.6 | 24.8 | 8.21 | 2.26 | 0.44 | 5.92 | 3.23 | 2.79 | fever_night 32.6% | starve_you 40.1% |
+| risky | 22.9 | 83.4 | 39.2 | 6.8 | 4.16 | 1.63 | 3.8 | 3.18 | 10.17 | fever_night 31.1% | d5_flood 22.7% |
+| steward | 37.7 | 93.3 | 26.8 | 7.94 | 2.08 | 2.57 | 6.38 | 3.03 | 1.77 | fever_night 36.6% | starve_you 40.8% |
+| counter | 11.2 | 82.5 | 33.2 | 6.7 | 7.29 | 1.58 | 4.98 | 2.86 | 4.43 | called_up 14.4% | called_up 15.2% |
+| child | 12.5 | 99.2 | 15.4 | 7.37 | 12.14 | 1.7 | 5.74 | 2.4 | 7.69 | called_up 22.9% | called_up 23.7% |
+| selfish_nb | 28.7 | 99.6 | 2.2 | 8.77 | 9.34 | 2.31 | 7.69 | 3.06 | 4.83 | called_up 25.1% | called_up 27.8% |
+| selfish_rt | 6.5 | 99.4 | 8.6 | 6.93 | 13.5 | 1.57 | 5.17 | 2.05 | 6.23 | called_up 32.6% | called_up 32.6% |
+| selfish_rt0 | 6.3 | 99.4 | 8.5 | 6.96 | 13.63 | 1.59 | 5.22 | 2.22 | 6.13 | dawn_mob 31.6% | dawn_mob 32.3% |
+| h_random | 0.4 | 27.5 | 80 | 2.49 | 2.47 | 0.46 | 1.39 | 3.58 | 4.12 | pro_stairs 49.1% | pro_stairs 49.1% |
+| h_wary | 6.9 | 50.3 | 54.1 | 3.98 | 4.58 | 1.18 | 3.08 | 3.55 | 3.36 | pro_stairs 52.5% | pro_stairs 52.5% |
+| h_first | 68 | 100 | 1.2 | 9.56 | 4.86 | 2.97 | 7.45 | 4.38 | 2.63 | fever_night 38.8% | dawn_strike 21.3% |
+| h_cautious | 73.1 | 100 | 0.6 | 9.66 | 6.31 | 3.1 | 7.95 | 2.57 | 4.1 | d10_walk_weak 20.4% | starve_you 34.6% |
+| h_cautious2 | 42.5 | 99.1 | 13.2 | 8.6 | 4.32 | 2.75 | 7.17 | 3.02 | 2.81 | dawn_strike 23.7% | dawn_strike 25% |
+| h_mixed | 33 | 80.7 | 22.3 | 7.21 | 6.19 | 2.37 | 5.98 | 3.23 | 4.27 | pro_stairs 28.8% | pro_stairs 28.8% |
+
+### 줄타기·발견 지표 (10-24 tightrope, 블록 합산 — '산 판' = 열흘을 산 판)
+| 정책 | 확정 사망 | 옛 강제(위험 0 출구 없음) | 경고 없는 사망 | 줄타기 굴림/판 | 줄타기 넘김/판 (산 판) | 산 판 중 줄타기 ≥2번% | 느껴지는 줄타기(≤85%) 넘김/판 (산 판) · 넘김 중 비중 | 산 판 중 느껴지는 줄타기 ≥2번% | 죽음 판정 넘김/판 (산 판) | 줄타기로 죽은 판 | 눈먼 새벽/판 · 그 죽음 | 실제 발견% | 옛 발견% | 누구나 아는 밤/판 · 숨은 밤/판 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| balanced | 0 | 116 | 0 | 0.55 | 0.67 | 16% | 0.22 · 33% | 1.5% | 3.51 | 70 | 0.29 · 53 | 59.8% | 67.8% | 2.83 · 11.54 |
+| selfish | 0 | 712 | 0 | 3.51 | 3.97 | 76.4% | 3.22 · 80.9% | 70.5% | 4.08 | 682 | 0.26 · 53 | 53.4% | 67% | 6.57 · 15.86 |
+| devoted | 0 | 68 | 0 | 0.05 | 0.08 | 0% | 0.04 · 47.1% | 0% | 5.18 | 5 | 0.18 · 68 | 61.7% | 65.8% | 1.16 · 9.69 |
+| silent | 0 | 106 | 0 | 0.52 | 0.57 | 15.4% | 0.22 · 38.7% | 4.6% | 3.47 | 61 | 0.29 · 48 | 59.8% | 67.5% | 2.75 · 11.71 |
+| caller | 0 | 160 | 0 | 0.37 | 0.44 | 11% | 0.14 · 31.8% | 1.7% | 4.35 | 70 | 0.23 · 91 | 60% | 67.3% | 2.35 · 10.53 |
+| lazy | 0 | 231 | 0 | 1.24 | 1.59 | 46.8% | 0.92 · 57.6% | 26.1% | 4.78 | 193 | 1.03 · 166 | 30.6% | 47.2% | 3.56 · 11.3 |
+| diligent | 0 | 77 | 0 | 0.18 | 0.22 | 6.6% | 0 · 0% | 0% | 3.13 | 16 | 0 · 0 | 94.8% | 95.6% | 2.19 · 11.02 |
+| risky | 0 | 100 | 0 | 1.02 | 1.67 | 32.3% | 0.59 · 35.1% | 17.9% | 5.69 | 141 | 0.18 · 29 | 58.7% | 66.5% | 2.74 · 11.76 |
+| steward | 0 | 49 | 0 | 0.05 | 0.07 | 0% | 0.03 · 48% | 0% | 3.32 | 5 | 0.23 · 49 | 60.4% | 66.8% | 2.18 · 11.35 |
+| counter | 0 | 431 | 0 | 1.97 | 3.11 | 74.1% | 1.68 · 54% | 34.8% | 5.3 | 438 | 0.16 · 72 | 55.2% | 66.9% | 4.07 · 11.47 |
+| child | 0 | 563 | 0 | 3.17 | 4.38 | 82.4% | 4.06 · 92.7% | 80.8% | 5.47 | 731 | 0.17 · 39 | 53.7% | 66.3% | 4.87 · 13.09 |
+| selfish_nb | 0 | 703 | 0 | 3.84 | 4.2 | 73.5% | 3.09 · 73.6% | 62.4% | 4.35 | 672 | 0.25 · 53 | 53.4% | 67.3% | 6.73 · 15.9 |
+| selfish_rt | 0 | 836 | 0 | 2.71 | 2.69 | 63.1% | 2.12 · 78.9% | 56.9% | 2.69 | 935 | 0.13 · 42 | 51.5% | 63.9% | 4.32 · 12.64 |
+| selfish_rt0 | 0 | 832 | 0 | 2.81 | 2.68 | 61.9% | 2.17 · 81.1% | 57.1% | 2.68 | 937 | 0.13 · 38 | 51.1% | 63.6% | 4.41 · 12.8 |
+| h_random | 0 | 76 | 0 | 0.35 | 2.75 | 50% | 1.25 · 45.5% | 25% | 4.5 | 92 | 0.03 · 12 | 63.8% | 69.5% | 0.64 · 3.41 |
+| h_wary | 0 | 427 | 0 | 1.1 | 2.43 | 56.5% | 1.9 · 78% | 44.9% | 3.13 | 341 | 0.09 · 36 | 54.9% | 65.4% | 2.04 · 6.72 |
+| h_first | 0 | 320 | 0 | 1.62 | 1.49 | 36.3% | 0.66 · 44.1% | 18.5% | 1.55 | 196 | 0.41 · 63 | 57.8% | 65.6% | 3.62 · 15.94 |
+| h_cautious | 0 | 269 | 0 | 2.3 | 2.09 | 53.5% | 0.8 · 38.2% | 24.1% | 2.22 | 230 | 0.4 · 41 | 57.9% | 70% | 5.67 · 13.99 |
+| h_cautious2 | 0 | 356 | 0 | 0.96 | 0.87 | 17.2% | 0.56 · 64.7% | 11.8% | 2.09 | 234 | 0.36 · 111 | 57.3% | 67% | 3.78 · 12.93 |
+| h_mixed | 0 | 464 | 0 | 2.16 | 2.65 | 64.2% | 1.45 · 54.9% | 37.6% | 3.07 | 398 | 0.26 · 49 | 54.7% | 66.9% | 4.25 · 11.59 |
+
+확정 사망 = 고를 때 열린 선택지 전부 살 확률 0 (R1 — 엔진 ended.cause.forced). 옛 강제 = 당신이 죽지 않는 열린 선택지 0개(카르마 판의 줄타기는 일부러 그렇다). 줄타기 = rope 칸이 얹힌 판정(엔진 s.stats.ropeRolls·ropeClose), 느껴지는 줄타기 = 그중 화면 % ≤ 85(죽을 확률 ≥ 15%)인 판정(ropeFeltRolls·ropeFelt — 90% 넘는 판정은 넘겨도 아슬하게 느껴지기 어렵다, 10-24 tightrope 검증 · **10-25 부터 A1 아슬함 합격선은 이 값**) · 넘김 중 비중 = 산 판 줄타기 넘김 가운데 느껴지는 줄타기의 몫, 죽음 판정 = 실패가 당신을 죽이는 모든 판정(deathRolls·closeCalls). 실제 발견% = 누구나 아는 밤(public·kill)을 뺀 주민 사건 가운데 발견한 비율 — 옛 발견%(발견%) 옆에 싣는다.
+
+### 원정 수납 (P1-11, 블록 합산 — 판 평균)
+| 정책 | 원정 | 원정 조사 물건 | 연 수납 | 조사로 걸린 원정 사건 |
+|---|---|---|---|---|
+| balanced | 4.96 | 22.04 | 6.16 | 10.57 |
+| selfish | 7.59 | 34.38 | 6.92 | 17.24 |
+| devoted | 3.48 | 14.46 | 4.99 | 6.28 |
+| silent | 4.98 | 22.16 | 6.16 | 10.66 |
+| caller | 4.74 | 20.83 | 5.94 | 9.88 |
+| lazy | 4.55 | 19.95 | 5.91 | 9.35 |
+| diligent | 5.03 | 22.43 | 6.15 | 10.82 |
+| risky | 6.44 | 36.29 | 7 | 11.32 |
+| steward | 4.62 | 20.3 | 5.92 | 9.68 |
+| counter | 4.17 | 17.88 | 5.43 | 8.16 |
+| child | 6.16 | 27.86 | 6.87 | 13.6 |
+| selfish_nb | 7 | 31.72 | 6.91 | 15.75 |
+| selfish_rt | 6.29 | 28.52 | 6.94 | 13.97 |
+| selfish_rt0 | 6.22 | 28.22 | 6.94 | 13.81 |
+| h_random | 1.95 | 8.29 | 2.51 | 3.58 |
+| h_wary | 2.36 | 10.35 | 2.82 | 4.52 |
+| h_first | 4.34 | 18.52 | 5.6 | 6.9 |
+| h_cautious | 6.38 | 28.79 | 6.79 | 15.16 |
+| h_cautious2 | 5.5 | 24.55 | 6.42 | 12.62 |
+| h_mixed | 4.84 | 21.72 | 5.33 | 10.51 |
+
+원정 = 원정을 나간 날 · 원정 조사 물건 = 원정 지도에서 조사한 물건(봇 tripSearch: 닫힌 수납·조사 원정 사건이 가리키는 물건) · 연 수납 = holds 를 열어 얻은 횟수(엔진 s.stats.holds) · 조사로 걸린 원정 사건 = when 에 inspect: 가 있는 원정 사건을 고른 횟수.
+
+원인 = 깔때기 사건(when 이 당신 부상을 보는 사건 — fever_night 등 — 과 새벽 위독)으로 죽었으면, 그 자리까지 당신을 다치게 한 출처(사건·night:밤 사건·neglect:방치 판정) 가운데 가장 많이 다치게 한 것. 아니면 사인 사건 그대로.
+- balanced 원인 사건: d5_flood 191 · starve_you 191 · d2_shutter_arm 67 · dawn_strike 64 · d7_rot 17 · dawn_mob 14 · d9_inspection_b 11 · called_up 10
+- selfish 원인 사건: called_up 216 · dawn_strike 163 · dawn_mob 161 · d10_hold 68 · d10_grab 35 · starve_you 33 · d1_night_storage 14 · d9_inspection 6
+- devoted 원인 사건: starve_you 150 · d5_flood 148 · d2_shutter_arm 129 · d4_spanner 102 · patrol_pact 58 · dawn_strike 54 · d7_rot 35 · d5_rail_body 27
+- silent 원인 사건: starve_you 207 · d5_flood 191 · dawn_strike 65 · d2_shutter_arm 60 · dawn_mob 13 · d7_rot 11 · d4_spanner 9 · dawn_strike_d6 8
+- caller 원인 사건: d5_flood 176 · starve_you 164 · dawn_strike 100 · d2_shutter_arm 76 · d4_spanner 57 · d7_rot 21 · d9_inspection_b 17 · d9_inspection 16
+- lazy 원인 사건: dawn_strike 199 · d5_flood 181 · starve_you 158 · d2_shutter_arm 61 · dawn_strike_d6 43 · dawn_mob 20 · d9_inspection 12 · d7_rot 12
+- diligent 원인 사건: starve_you 230 · d5_flood 180 · d2_shutter_arm 71 · d9_inspection 21 · d7_rot 18 · d4_spanner 11 · called_up 11 · d1_night_storage 6
+- risky 원인 사건: d5_flood 175 · trip_b2_pumproom 72 · d4_spanner 70 · trip_a2_stockroom 57 · d2_shutter_arm 53 · dawn_strike 51 · d6_shutter_b 41 · called_up 40
+- steward 원인 사건: starve_you 254 · d5_flood 171 · d2_shutter_arm 90 · dawn_strike 50 · d9_inspection 22 · d9_inspection_b 11 · patrol_pact 9 · dawn_strike_d6 8
+- counter 원인 사건: called_up 135 · dawn_strike 124 · d5_flood 116 · starve_you 115 · d2_shutter_arm 100 · d4_spanner 98 · dawn_mob 93 · dawn_strike_d6 30
+- child 원인 사건: called_up 207 · dawn_strike 157 · d6_shutter_b 156 · dawn_mob 148 · d5_flood 102 · d10_hold 26 · starve_you 21 · dawn_mob_d6 19
+- selfish_nb 원인 사건: called_up 198 · dawn_strike 172 · dawn_mob 170 · d10_hold 58 · d10_grab 48 · starve_you 17 · d1_night_storage 17 · dawn_mob_d6 14
+- selfish_rt 원인 사건: called_up 305 · dawn_mob 287 · dawn_strike 220 · d5_flood 51 · dawn_mob_d6 23 · starve_you 16 · dawn_strike_d6 8 · d10_hold 7
+- selfish_rt0 원인 사건: dawn_mob 303 · called_up 292 · dawn_strike 225 · d5_flood 50 · dawn_mob_d6 23 · starve_you 16 · dawn_strike_d6 8 · d10_hold 7
+- h_random 원인 사건: pro_stairs 489 · starve_you 158 · d3_called_you 94 · d2_night_shutter 37 · dawn_mob 34 · called_up 25 · d6_shutter 24 · d5_flood 22
+- h_wary 원인 사건: pro_stairs 489 · dawn_mob 115 · called_up 110 · dawn_strike 85 · starve_you 19 · d5_flood 18 · d8_patrol_return 15 · d1_night_storage 12
+- h_first 원인 사건: dawn_strike 68 · trip_a2_stockroom 64 · d10_grab 42 · dawn_mob 31 · starve_you 23 · called_up 21 · d10_hold 18 · d1_night_storage 9
+- h_cautious 원인 사건: starve_you 93 · d10_grab 50 · dawn_strike 48 · d10_hold 35 · dawn_mob 20 · called_up 18 · dawn_strike_d6 2 · night:steal_meds_again 1
+- h_cautious2 원인 사건: dawn_strike 144 · starve_you 125 · d5_flood 92 · dawn_mob 74 · d10_grab 34 · called_up 29 · d7_rot 14 · d2_shutter_arm 12
+- h_mixed 원인 사건: pro_stairs 193 · dawn_mob 120 · called_up 98 · dawn_strike 79 · starve_you 51 · d10_grab 33 · d10_hold 29 · d8_patrol_return 13
+
+### 정체 묶음 평균 (A3 분석 §5: 성향 봇 8종 · 사람 흉내 5종, 블록 합산)
+| 묶음 | driver | conductor | inspector | passenger | counted | platform_one | counting_child |
+|---|---|---|---|---|---|---|---|
+| 성향 봇 (balanced·selfish·devoted·silent·caller·steward·counter·child) | 16.2 | 14.9 | 17 | 21.7 | 13 | 4.1 | 13.2 |
+| 사람 흉내 (h_random·h_wary·h_cautious·h_cautious2·h_mixed) | 9 | 19.1 | 4.1 | 28.8 | 11.2 | 22.4 | 5.4 |
+
+## 2. 합격선 대비 (블록마다 따로 잰다 — ✓ 모든 블록 통과·합격선 ±5%p 밖 / △ 블록마다 다르거나 ±5%p 안, 확정 안 함 / ✗ 모든 블록 미달)
+정체 '각 후보 ≥ 3%' 줄의 경계는 합격선의 절반(±1.5%p). '합산' 열은 모든 블록을 합친 실측(참고, 판정은 블록별).
+| 항목 | 합격선 | 실측 시드 1~200 | 실측 시드 1001~1200 | 실측 시드 2001~2200 | 실측 시드 3001~3200 | 실측 시드 8001~8200 | 합산 | 판정 |
+|---|---|---|---|---|---|---|---|---|
+| 당신 사망(올라감 포함) | ≥ 50% | 61.5% | 55% | 62% | 61% | 60.5% | 60% | △ |
+| 사망 중 경고 있던 선택 (실질: 강제 사망은 경고 없음) | 100% | 100% (형식 기준 100%) | 100% (형식 기준 100%) | 100% (형식 기준 100%) | 100% (형식 기준 100%) | 100% (형식 기준 100%) | 100% (형식 기준 100%) | △ |
+| 강제 사망 = 확정 사망 (고를 때 열린 선택지 전부 살 확률 0, 전 정책 합산) | 0 판 (10-24 tightrope R1: 살 확률 > 0 인 주사위는 강제가 아니다) | 0 판 (0%, 0/2885) | 0 판 (0%, 0/2820) | 0 판 (0%, 0/2807) | 0 판 (0%, 0/2822) | 0 판 (0%, 0/2856) | 0 판 (0%, 0/14190) | ✓ |
+|   강제 사망 중 앞선 자유 경고 선택 없음 (전 정책) | 0 판 | 0 판 | 0 판 | 0 판 | 0 판 | 0 판 | 0 판 | ✓ |
+|   참고: 위험 0 출구가 없던 죽음 (옛 강제 정의 — 카르마 판의 줄타기는 일부러 그렇다, 전 정책) | 측정 | 1424 판 (그중 줄타기 판정 1290) | 1366 판 (그중 줄타기 판정 1294) | 1335 판 (그중 줄타기 판정 1265) | 1376 판 (그중 줄타기 판정 1291) | 1395 판 (그중 줄타기 판정 1307) | 6896 판 (그중 줄타기 판정 6447) | ✓ |
+| 조심형 봇 사망 (balanced·silent·lazy·diligent·steward·selfish_nb 합산) | 측정 | 64.7% (776/1200), 그중 강제 0% | 63.9% (767/1200), 그중 강제 0% | 62.3% (748/1200), 그중 강제 0% | 62.5% (750/1200), 그중 강제 0% | 64.6% (775/1200), 그중 강제 0% | 63.6% (3816/6000), 그중 강제 0% | ✓ |
+|   봇 버릇 점검: 조심형이 평범한 대안(안 죽고·금기 아니고·죽음 글 없음)을 두고 죽음 글 선택지로 죽음 | 0 판 | 0 판 (전 정책 425) | 4 판 (전 정책 413) | 4 판 (전 정책 442) | 1 판 (전 정책 453) | 1 판 (전 정책 432) | 10 판 (전 정책 2165) | △ |
+|   참고: 몸 꺼림 정책(selfish·selfish_rt)의 같은 죽음 — 조심형이 아니다(10-24 검증) | 측정 | selfish 0 · selfish_rt 16 판 | selfish 0 · selfish_rt 18 판 | selfish 0 · selfish_rt 30 판 | selfish 0 · selfish_rt 19 판 | selfish 0 · selfish_rt 16 판 | selfish 0 · selfish_rt 99 판 | ✓ |
+| 전멸 | ≤ 25% | 9% | 14% | 10% | 14% | 8% | 11% | ✓ |
+| 밤 사건 수 / 판 (주민 사건만 — 시계·방치 판정 줄 뺌) | ≥ 6 | 14.28 (방치 판정 줄 6.84) | 14.38 (방치 판정 줄 6.64) | 14.68 (방치 판정 줄 6.7) | 14.16 (방치 판정 줄 6.58) | 14.34 (방치 판정 줄 6.65) | 14.37 (방치 판정 줄 6.68) | ✓ |
+|   그중 malice / hymn | ≥ 2 / ≥ 1 | 5.91 / 3.6 | 5.85 / 3.46 | 5.98 / 3.51 | 5.56 / 3.55 | 5.91 / 3.6 | 5.84 / 3.54 | ✓ |
+| 발견율 (보통) | 측정만 (10-24 A4: 하한 폐기) | 67.9% | 66.3% | 67% | 69.2% | 68.5% | 67.8% | ✓ |
+| 발견율 (게으름) | 측정만 (10-24 A4: 하한 폐기) | 47.6% | 47.8% | 46.3% | 47.9% | 46.6% | 47.2% | ✓ |
+| 끝까지 모르는 사건 ≥1 (게으름) | 100% 판 | 97.5% | 96.5% | 97.5% | 97.5% | 98% | 97.4% | ✓ |
+| 찬가 발견율 (부지런) | ≥ 70% | 100% | 100% | 100% | 100% | 100% | 100% | ✓ |
+| 찬가 발견율 (게으름) | 측정만 (10-24 A4: 하한 폐기) | 78.6% | 79.5% | 80.8% | 79.5% | 76.4% | 78.9% | ✓ |
+| 정체 — 성향 봇 평균, 각 후보 (A3) | 각 ≥ 3% | passenger 21.7 · conductor 14.8 · counting_child 13.1 · platform_one 4.3 · driver 15.8 · counted 13.1 · inspector 17.3 (8종) | platform_one 4.2 · passenger 22.2 · conductor 14.2 · driver 16.1 · counted 13.1 · counting_child 13.4 · inspector 16.9 (8종) | platform_one 4.1 · passenger 21.2 · conductor 15.6 · driver 16.2 · counted 13.1 · counting_child 12.9 · inspector 16.9 (8종) | passenger 21.3 · conductor 15.1 · platform_one 4.1 · counting_child 13.1 · driver 16.5 · inspector 16.9 · counted 13 (8종) | conductor 15 · passenger 22.1 · platform_one 3.6 · counting_child 13.2 · driver 16.2 · counted 12.8 · inspector 17.1 (8종) | passenger 21.7 · conductor 14.9 · counting_child 13.2 · platform_one 4.1 · driver 16.2 · counted 13 · inspector 17 (8종) | △ |
+| 정체 — 성향 봇 평균, 가장 큰 후보 (A3) | ≤ 40% | passenger 21.7% | passenger 22.2% | passenger 21.2% | passenger 21.3% | passenger 22.1% | passenger 21.7% | ✓ |
+| 정체 — 사람 흉내 평균, 각 후보 (A3, 프롤로그 사망 판 뺌) | 각 ≥ 3% | counted 10.7 · platform_one 22.3 · driver 8.5 · conductor 17.1 · counting_child 6 · inspector 5.4 · passenger 30 (5종) | conductor 19.6 · driver 8.2 · inspector 3.9 · counted 12.1 · platform_one 22 · passenger 27.1 · counting_child 7.2 (5종) | driver 10.2 · platform_one 22.4 · counted 11.6 · passenger 28.2 · counting_child 3.5 · inspector 4.3 · conductor 19.7 (5종) | counted 11.1 · passenger 30.5 · driver 9 · platform_one 21.7 · counting_child 5.2 · inspector 3.4 · conductor 19.1 (5종) | counting_child 5 · counted 10.3 · driver 9.3 · inspector 3.8 · passenger 28.4 · platform_one 23.5 · conductor 19.7 (5종) | counted 11.2 · platform_one 22.4 · driver 9 · conductor 19.1 · counting_child 5.4 · inspector 4.1 · passenger 28.8 (5종) | △ |
+| 정체 — 사람 흉내 평균, 가장 큰 후보 (A3, 프롤로그 사망 판 뺌) | 측정 (디렉터 확인: 승객이 가장 흔한 결말) | passenger 30% | passenger 27.1% | passenger 28.2% | passenger 30.5% | passenger 28.4% | passenger 28.8% | ✓ |
+|   참고: 사람 흉내 평균 (옛 방식 — 프롤로그 사망 포함) · 프롤로그(D0) 사망 판 비율 | 측정 | counted 5.5 · passenger 45.8 · platform_one 23.2 · driver 4.8 · conductor 14.4 · counting_child 3.3 · inspector 3 · 가장 큰 passenger 45.8% ‖ D0 사망 h_random 51.5% · h_wary 51.5% · h_cautious 0% · h_cautious2 0% · h_mixed 22% | conductor 16 · passenger 42 · driver 4.7 · inspector 2.5 · counted 6.6 · platform_one 24 · counting_child 4.2 · 가장 큰 passenger 42% ‖ D0 사망 h_random 50% · h_wary 50% · h_cautious 0% · h_cautious2 0% · h_mixed 20% | driver 5.8 · passenger 42.4 · platform_one 23.3 · counted 6.7 · counting_child 2 · inspector 2.7 · conductor 17.1 · 가장 큰 passenger 42.4% ‖ D0 사망 h_random 48% · h_wary 48% · h_cautious 0% · h_cautious2 0% · h_mixed 17% | platform_one 23.7 · passenger 43.6 · counted 6.1 · driver 5.4 · counting_child 3 · inspector 2 · conductor 16.2 · 가장 큰 passenger 43.6% ‖ D0 사망 h_random 49% · h_wary 49% · h_cautious 0% · h_cautious2 0% · h_mixed 17% | platform_one 25.6 · counting_child 2.9 · passenger 41.3 · counted 6 · driver 5.6 · inspector 2.4 · conductor 16.2 · 가장 큰 passenger 41.3% ‖ D0 사망 h_random 46% · h_wary 46% · h_cautious 0% · h_cautious2 0% · h_mixed 20.5% | counted 6.2 · passenger 43 · platform_one 24 · driver 5.3 · conductor 16 · counting_child 3.1 · inspector 2.5 · 가장 큰 passenger 43% ‖ D0 사망 h_random 48.9% · h_wary 48.9% · h_cautious 0% · h_cautious2 0% · h_mixed 19.3% | ✓ |
+| 정체 분포 (옛 방식: 정책 전체 평균, 각 후보) | 측정 (옛 합격선 ≥ 7.1%) | passenger 37.6% · conductor 15.5% · counting_child 7.9% · platform_one 12.2% · driver 11.8% · counted 7.4% · inspector 7.7% | platform_one 12% · passenger 37.3% · conductor 16.1% · driver 11.8% · counted 7.8% · counting_child 7.7% · inspector 7.4% | platform_one 11.2% · passenger 37.4% · conductor 17.3% · driver 12% · counted 7.8% · counting_child 6.9% · inspector 7.5% | passenger 37.8% · conductor 16.1% · platform_one 11.7% · counting_child 7.5% · driver 12% · inspector 7.4% · counted 7.7% | conductor 16.3% · passenger 37.5% · platform_one 12.4% · counting_child 6.8% · driver 11.9% · counted 7.5% · inspector 7.5% | passenger 37.5% · conductor 16.2% · counting_child 7.4% · platform_one 11.9% · driver 11.9% · counted 7.6% · inspector 7.5% | ✓ |
+|   옛 방식: 7후보 중 ≥7% 인 후보 수 | 측정 (옛 합격선 ≥ 5) | 7 후보 | 7 후보 | 6 후보 | 7 후보 | 6 후보 | 7 후보 | ✓ |
+| explicit 사건 / 판 | ≥ 7 | 11.87 | 11.9 | 11.94 | 11.84 | 11.73 | 11.85 | ✓ |
+| 하루 결정 수 | ≥ 5 | 26.89 | 27.07 | 26.56 | 26.92 | 27.2 | 26.93 | ✓ |
+| 명부 사인 빈칸 비율 | 측정만 | 66.2% | 65.2% | 60.3% | 63.1% | 60% | 63% | ✓ |
+| 모험 봇 열흘 생존 | ≥ 25% (10-24 바꿈 ≥40 → 25, 디렉터 확인) | 20.5% | 23.5% | 23% | 23.5% | 24% | 22.9% | ✗ |
+| 모험 봇 사망 중 굶주림 | < 50% | 0% | 0% | 0% | 0% | 0% | 0% | ✓ |
+| 열차 결말 도달 (모험 / 균형) | > 0% | 11.5% / 0% | 9% / 0% | 7% / 0% | 10.5% / 0% | 7.5% / 0% | 9.1% / 0% | ✓ |
+| A2 D5까지 당신 사망 (균형) | ≥ 10% | 27.5% | 27% | 24.5% | 26% | 27.5% | 26.5% | ✓ |
+| A2 균형 사망 중 한 사건 비중 (사인 사건) | ≤ 40% | d5_flood 29.3% | d5_flood 34.5% | d5_flood 29.8% | d5_flood 34.4% | d5_flood 31.4% | d5_flood 31.8% | ✓ |
+| A2 균형 사망 중 한 사건 비중 (원인 사건 = 부상 출처) | ≤ 40% | starve_you 31.7% | d5_flood 34.5% | starve_you 37.9% | d5_flood 34.4% | d5_flood 31.4% | d5_flood 31.8% | △ |
+| A2 D2·D4·D5 날마다 그날 사건으로 죽은 판 (조심형 합산 — 신중한 플레이어, 깔때기 사건 뺌) | 날마다 > 0 | D2 43 · D4 14 · D5 186 | D2 48 · D4 13 · D5 201 | D2 42 · D4 3 · D5 184 | D2 50 · D4 3 · D5 193 | D2 41 · D4 10 · D5 228 | D2 224 · D4 43 · D5 992 | ✓ |
+|   A2 D3·D6 그날 사건으로 죽은 판 (조심형 합산 — D3 규칙을 배우는 날 · D6 값을 치르면 사는 날, 10-24 디렉터) | 측정 | D3 0 · D6 12 | D3 0 · D6 25 | D3 0 · D6 22 | D3 0 · D6 14 | D3 0 · D6 12 | D3 0 · D6 85 | ✓ |
+|   참고: 같은 값 — 성향 봇 8종 / 사람 흉내(h_random 뺌) / 전 정책 합산(옛 줄) | 측정 | 성향 D2 44 · D3 0 · D4 58 · D5 233 · D6 88 ‖ 사람 D2 3 · D3 0 · D4 1 · D5 37 · D6 21 ‖ 전 D2 94 · D3 22 · D4 90 · D5 427 · D6 305 | 성향 D2 63 · D3 0 · D4 51 · D5 247 · D6 93 ‖ 사람 D2 2 · D3 0 · D4 2 · D5 33 · D6 22 ‖ 전 D2 102 · D3 21 · D4 96 · D5 449 · D6 309 | 성향 D2 66 · D3 1 · D4 58 · D5 238 · D6 78 ‖ 사람 D2 1 · D3 0 · D4 2 · D5 41 · D6 23 ‖ 전 D2 97 · D3 21 · D4 95 · D5 468 · D6 287 | 성향 D2 69 · D3 0 · D4 50 · D5 241 · D6 91 ‖ 사람 D2 1 · D3 0 · D4 1 · D5 43 · D6 24 ‖ 전 D2 110 · D3 21 · D4 77 · D5 453 · D6 306 | 성향 D2 59 · D3 1 · D4 60 · D5 268 · D6 83 ‖ 사람 D2 0 · D3 0 · D4 1 · D5 33 · D6 23 ‖ 전 D2 85 · D3 26 · D4 104 · D5 446 · D6 299 | 성향 D2 301 · D3 2 · D4 277 · D5 1227 · D6 433 ‖ 사람 D2 7 · D3 0 · D4 7 · D5 187 · D6 113 ‖ 전 D2 488 · D3 111 · D4 462 · D5 2243 · D6 1506 | ✓ |
+| A1 이른 안전: D1~D4 생존 − 균형 (버릇 없는 이기적 각각) | ≥ +5%p | selfish_nb +4.5 / selfish_rt0 +4.5%p (균형 94.5) | selfish_nb +7 / selfish_rt0 +7%p (균형 93) | selfish_nb +4 / selfish_rt0 +3.5%p (균형 96) | selfish_nb +4 / selfish_rt0 +4%p (균형 95.5) | selfish_nb +5 / selfish_rt0 +4.5%p (균형 94.5) | selfish_nb +4.9 / selfish_rt0 +4.7%p (균형 94.7) | △ |
+| A1 이기심의 값: 열흘 생존 − 균형 (버릇 없는 이기적 각각 — selfish_nb·selfish_rt0) | < 0 (모든 정책) | selfish_nb -7 / selfish_rt0 -34%p | selfish_nb -14.5 / selfish_rt0 -37.5%p | selfish_nb -9.5 / selfish_rt0 -32.5%p | selfish_nb -11 / selfish_rt0 -32.5%p | selfish_nb -14.5 / selfish_rt0 -32%p | selfish_nb -11.3 / selfish_rt0 -33.7%p | ✓ |
+|   참고: 몸 꺼림 버릇이 있는 이기적(selfish·selfish_rt) 열흘 생존 − 균형 — 이기심의 값이 아니다(10-24 검증 A1) | 측정 | selfish -10.5 / selfish_rt -32.5%p | selfish -13.5 / selfish_rt -37.5%p | selfish -10 / selfish_rt -31.5%p | selfish -11.5 / selfish_rt -34%p | selfish -10.5 / selfish_rt -32%p | selfish -11.2 / selfish_rt -33.5%p | ✓ |
+| A1 이기적 사인 쏠림 (버릇 없는 이기적, 사망 ≥ 10%인 정책만) | ≤ 60% | selfish_nb dawn_mob 26.3% / selfish_rt0 called_up 36.6% | selfish_nb dawn_strike 25.2% / selfish_rt0 dawn_mob 34.1% | selfish_nb dawn_strike 28.7% / selfish_rt0 dawn_mob 31.2% | selfish_nb called_up 28.5% / selfish_rt0 called_up 31% | selfish_nb called_up 28% / selfish_rt0 called_up 34.6% | selfish_nb called_up 25.1% / selfish_rt0 dawn_mob 31.6% | ✓ |
+|   참고: 몸 꺼림 이기적 사인 쏠림 | 측정 | selfish dawn_mob 29.9% / selfish_rt called_up 36.2% | selfish called_up 27.7% / selfish_rt dawn_strike 30.8% | selfish dawn_strike 26.4% / selfish_rt dawn_mob 32.6% | selfish called_up 39.3% / selfish_rt called_up 34.7% | selfish called_up 32.4% / selfish_rt called_up 35.7% | selfish called_up 30.3% / selfish_rt called_up 32.6% | ✓ |
+|   카르마 (판 끝 평균: 균형 / 이기적 4종) | 측정 | 2.01 / 9.05 · 9.54 · 13.84 · 14.1 | 2.09 / 8.71 · 9.02 · 13.24 · 13.19 | 2.32 / 9.03 · 9.55 · 13.47 · 13.71 | 2.14 / 9.36 · 9.22 · 13.53 · 13.55 | 2.17 / 9.08 · 9.4 · 13.41 · 13.62 | 2.14 / 9.04 · 9.34 · 13.5 · 13.63 | ✓ |
+| A1 아슬함: 화면 ≤ 85% (죽을 확률 ≥ 15%) 줄타기 넘김/판 (열흘 산 판, selfish_nb) | ≥ 2 | 3 (산 판 63 · 산 판 줄타기 넘김 중 72.4% · 전체 판 2.48) | 2.69 (산 판 61 · 산 판 줄타기 넘김 중 71% · 전체 판 2.13) | 3.26 (산 판 57 · 산 판 줄타기 넘김 중 75.3% · 전체 판 2.33) | 3.21 (산 판 56 · 산 판 줄타기 넘김 중 74.1% · 전체 판 2.27) | 3.34 (산 판 50 · 산 판 줄타기 넘김 중 75.2% · 전체 판 2.31) | 3.09 (산 판 287 · 산 판 줄타기 넘김 중 73.6% · 전체 판 2.3) | ✓ |
+| A1 아슬함: 산 판 중 화면 ≤ 85% 줄타기 ≥ 2번 넘김 (selfish_nb) | ≥ 60% | 60.3% | 57.4% | 66.7% | 66.1% | 62% | 62.4% | △ |
+|   참고: 줄타기 판정 전부(90% 넘는 판정 포함 — 10-24 옛 A1 아슬함) 넘김/판 · 산 판 중 ≥ 2번 (selfish_nb) | 측정 (옛 합격선 ≥ 2 · ≥ 60%) | 4.14 · 65.1% (산 판 63 · 전체 판 3.39) | 3.79 · 75.4% (산 판 61 · 전체 판 2.99) | 4.33 · 80.7% (산 판 57 · 전체 판 3.15) | 4.34 · 73.2% (산 판 56 · 전체 판 3.16) | 4.44 · 74% (산 판 50 · 전체 판 3.19) | 4.2 · 73.5% (산 판 287 · 전체 판 3.17) | ✓ |
+|   죽음 판정 넘김/판 (산 판 — 당신을 죽이는 모든 판정) | 측정 | balanced 3.58 · lazy 5 · selfish_nb 4.3 | balanced 3.23 · lazy 4.78 · selfish_nb 3.93 | balanced 3.91 · lazy 4.93 · selfish_nb 4.49 | balanced 3.31 · lazy 4.52 · selfish_nb 4.43 | balanced 3.58 · lazy 4.7 · selfish_nb 4.66 | balanced 3.51 · lazy 4.78 · selfish_nb 4.35 | ✓ |
+|   줄타기 판정 굴림/판 (그중 줄타기로 죽은 판) | 측정 | balanced 0.45 (15판) · lazy 1.23 (34판) · selfish_nb 4.04 (131판) | balanced 0.48 (16판) · lazy 1.2 (49판) · selfish_nb 3.63 (127판) | balanced 0.65 (13판) · lazy 1.22 (35판) · selfish_nb 3.83 (137판) | balanced 0.5 (10판) · lazy 1.35 (38판) · selfish_nb 3.83 (134판) | balanced 0.68 (16판) · lazy 1.19 (37판) · selfish_nb 3.9 (143판) | balanced 0.55 (70판) · lazy 1.24 (193판) · selfish_nb 3.84 (672판) | ✓ |
+| A4 게으름의 값 — 생존 (보통−게으름 주 지표 / 부지런−게으름) | ≥ +5%p | 보통−게으름 +12.5 / 부지런−게으름 +14%p | 보통−게으름 +19.5 / 부지런−게으름 +19.5%p | 보통−게으름 +7.5 / 부지런−게으름 +11.5%p | 보통−게으름 +6 / 부지런−게으름 +10%p | 보통−게으름 +12.5 / 부지런−게으름 +16.5%p | 보통−게으름 +12.3 / 부지런−게으름 +13.8%p (A4 블록 9개 합산) | △ (블록 9개) |
+| A4 게으름의 값 — D9 아침 주민 수 차 | > 0 | 보통−게으름 +0.13 / 부지런−게으름 +0.16 | 보통−게으름 +0.46 / 부지런−게으름 +0.51 | 보통−게으름 +0.29 / 부지런−게으름 +0.3 | 보통−게으름 -0.01 / 부지런−게으름 +0.19 | 보통−게으름 +0.04 / 부지런−게으름 +0.15 | 보통−게으름 +0.14 / 부지런−게으름 +0.23 (A4 블록 9개 합산) | △ (블록 9개) |
+| A4 게으름의 값 — D7 아침 식량+물+약 차 | ≥ +0.2 | 보통−게으름 +0.3 / 부지런−게으름 +0.32 | 보통−게으름 +0.16 / 부지런−게으름 +0.36 | 보통−게으름 +0.2 / 부지런−게으름 +0.7 | 보통−게으름 +0.13 / 부지런−게으름 +0.36 | 보통−게으름 +0.54 / 부지런−게으름 +0.44 | 보통−게으름 +0.26 / 부지런−게으름 +0.38 (A4 블록 9개 합산) | △ (블록 9개) |
+|   못 본 일(missed 적용) / 판 (게으름 / 보통 / 부지런) | 측정 | 4.52 / 2.52 / 0.45 | 4.09 / 2.61 / 0.43 | 4.45 / 2.63 / 0.45 | 4.58 / 2.42 / 0.46 | 4.42 / 2.41 / 0.44 | 4.41 / 2.51 / 0.44 | ✓ |
+|   A4 측정: 실제 발견율 — 누구나 아는 밤 뺌 (게으름 / 보통 / 부지런) | 측정 | 30.9% / 60.3% / 94.6% (옛 발견율 47.6% / 67.9% / 95.4%) | 31.1% / 58% / 95.1% (옛 발견율 47.8% / 66.3% / 95.9%) | 29.4% / 59% / 95.1% (옛 발견율 46.3% / 67% / 95.9%) | 31.1% / 61.4% / 94.5% (옛 발견율 47.9% / 69.2% / 95.4%) | 30.5% / 60.6% / 94.5% (옛 발견율 46.6% / 68.5% / 95.4%) | 30.5% / 59.6% / 95% (옛 발견율 47.2% / 67.6% / 95.8%) (A4 블록 9개 합산) | ✓ (블록 9개) |
+|   A4 측정: 누구나 아는 밤/판 · 숨은 밤/판 (게으름 / 보통 / 부지런) | 측정 | 3.7 / 2.72 / 2.01 · 11.59 / 11.56 / 10.71 | 3.43 / 2.86 / 2.31 · 10.77 / 11.52 / 11.22 | 3.57 / 2.87 / 2.24 · 11.33 / 11.81 / 11.29 | 3.75 / 2.85 / 2.19 · 11.64 / 11.31 / 11.16 | 3.37 / 2.86 / 2.19 · 11.2 / 11.48 / 10.74 | 3.58 / 2.88 / 2.2 · 11.28 / 11.61 / 11 (A4 블록 9개 합산) | ✓ (블록 9개) |
+|   A4 측정: 눈먼 새벽/판 · 그 죽음 판 (게으름 / 보통 / 부지런) | 측정 | 1.04 / 0.31 / 0 · 33 / 13 / 0 | 1.06 / 0.3 / 0 · 42 / 11 / 0 | 0.96 / 0.26 / 0 · 29 / 9 / 0 | 1.12 / 0.24 / 0 · 30 / 10 / 0 | 0.98 / 0.36 / 0 · 32 / 10 / 0 | 1.05 / 0.3 / 0 · 316 / 92 / 0 (A4 블록 9개 합산) | ✓ (블록 9개) |
+|   위기 때 값 길(비용 있는 선택)이 열린 비율 (균형) | 측정 (디렉터 확인) | d2_shutter_arm 16.4% (11/67) · d4_spanner 84.3% (97/115) · d5_flood 3.8% (7/185) | d2_shutter_arm 10.8% (7/65) · d4_spanner 86.7% (85/98) · d5_flood 5.9% (11/185) | d2_shutter_arm 17.2% (11/64) · d4_spanner 82% (82/100) · d5_flood 2.6% (5/191) | d2_shutter_arm 17.5% (11/63) · d4_spanner 89.2% (83/93) · d5_flood 6.8% (13/190) | d2_shutter_arm 10.3% (7/68) · d4_spanner 85.7% (72/84) · d5_flood 7.5% (14/186) | d2_shutter_arm 14.4% (47/327) · d4_spanner 85.5% (419/490) · d5_flood 5.3% (50/937) | ✓ |
+| 헌신 봇 생존 | 측정 (> 0%) | 20.5% | 23% | 19.5% | 20% | 19% | 20.4% | ✓ |
+| 사망 원인 중 굶주림 (전 정책 합산) | < 50% | 2% (57/2885) | 2.1% (59/2820) | 2.1% (60/2807) | 2.4% (68/2822) | 2% (57/2856) | 2.1% (301/14190) | ✓ |
+| 경고 없는 사망 (전 정책 합산, 강제 사망 포함) | 0 판 | 0 판 (그중 강제 0) | 0 판 (그중 강제 0) | 0 판 (그중 강제 0) | 0 판 (그중 강제 0) | 0 판 (그중 강제 0) | 0 판 (그중 강제 0) | ✓ |
+
+### A4 (블록 9개 — balanced·lazy·diligent만 더 돌았다, 판정은 이 표의 블록 전부)
+| 항목 | 합격선 | 실측 시드 1~200 | 실측 시드 1001~1200 | 실측 시드 2001~2200 | 실측 시드 3001~3200 | 실측 시드 8001~8200 | 실측 시드 4001~4200 | 실측 시드 5001~5200 | 실측 시드 6001~6200 | 실측 시드 7001~7200 | 합산 | 판정 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| A4 게으름의 값 — 생존 (보통−게으름 주 지표 / 부지런−게으름) | ≥ +5%p | 보통−게으름 +12.5 / 부지런−게으름 +14%p | 보통−게으름 +19.5 / 부지런−게으름 +19.5%p | 보통−게으름 +7.5 / 부지런−게으름 +11.5%p | 보통−게으름 +6 / 부지런−게으름 +10%p | 보통−게으름 +12.5 / 부지런−게으름 +16.5%p | 보통−게으름 +18 / 부지런−게으름 +17%p | 보통−게으름 +17.5 / 부지런−게으름 +10%p | 보통−게으름 +8.5 / 부지런−게으름 +14%p | 보통−게으름 +9 / 부지런−게으름 +12%p | 보통−게으름 +12.3 / 부지런−게으름 +13.8%p | △ |
+| A4 게으름의 값 — D9 아침 주민 수 차 | > 0 | 보통−게으름 +0.13 / 부지런−게으름 +0.16 | 보통−게으름 +0.46 / 부지런−게으름 +0.51 | 보통−게으름 +0.29 / 부지런−게으름 +0.3 | 보통−게으름 -0.01 / 부지런−게으름 +0.19 | 보통−게으름 +0.04 / 부지런−게으름 +0.15 | 보통−게으름 +0.27 / 부지런−게으름 +0.55 | 보통−게으름 -0.07 / 부지런−게으름 -0.06 | 보통−게으름 +0.01 / 부지런−게으름 +0.15 | 보통−게으름 +0.2 / 부지런−게으름 +0.25 | 보통−게으름 +0.14 / 부지런−게으름 +0.23 | △ |
+| A4 게으름의 값 — D7 아침 식량+물+약 차 | ≥ +0.2 | 보통−게으름 +0.3 / 부지런−게으름 +0.32 | 보통−게으름 +0.16 / 부지런−게으름 +0.36 | 보통−게으름 +0.2 / 부지런−게으름 +0.7 | 보통−게으름 +0.13 / 부지런−게으름 +0.36 | 보통−게으름 +0.54 / 부지런−게으름 +0.44 | 보통−게으름 +0.58 / 부지런−게으름 +0.31 | 보통−게으름 +0.05 / 부지런−게으름 +0.22 | 보통−게으름 +0.21 / 부지런−게으름 +0.38 | 보통−게으름 +0.11 / 부지런−게으름 +0.29 | 보통−게으름 +0.26 / 부지런−게으름 +0.38 | △ |
+|   못 본 일(missed 적용) / 판 (게으름 / 보통 / 부지런) | 측정 | 4.52 / 2.52 / 0.45 | 4.09 / 2.61 / 0.43 | 4.45 / 2.63 / 0.45 | 4.58 / 2.42 / 0.46 | 4.42 / 2.41 / 0.44 | 4.44 / 2.57 / 0.43 | 4.62 / 2.71 / 0.3 | 4.31 / 2.5 / 0.4 | 4.46 / 2.6 / 0.4 | 4.43 / 2.55 / 0.42 | ✓ |
+|   A4 측정: 실제 발견율 — 누구나 아는 밤 뺌 (게으름 / 보통 / 부지런) | 측정 | 30.9% / 60.3% / 94.6% (옛 발견율 47.6% / 67.9% / 95.4%) | 31.1% / 58% / 95.1% (옛 발견율 47.8% / 66.3% / 95.9%) | 29.4% / 59% / 95.1% (옛 발견율 46.3% / 67% / 95.9%) | 31.1% / 61.4% / 94.5% (옛 발견율 47.9% / 69.2% / 95.4%) | 30.5% / 60.6% / 94.5% (옛 발견율 46.6% / 68.5% / 95.4%) | 29.5% / 60% / 94.8% (옛 발견율 46.5% / 68% / 95.7%) | 30.2% / 59% / 95.8% (옛 발견율 46.7% / 67.3% / 96.5%) | 30.9% / 59% / 95% (옛 발견율 47.3% / 67.3% / 95.8%) | 30.8% / 59.3% / 95.3% (옛 발견율 48.4% / 67.3% / 96.1%) | 30.5% / 59.6% / 95% (옛 발견율 47.2% / 67.6% / 95.8%) | ✓ |
+|   A4 측정: 누구나 아는 밤/판 · 숨은 밤/판 (게으름 / 보통 / 부지런) | 측정 | 3.7 / 2.72 / 2.01 · 11.59 / 11.56 / 10.71 | 3.43 / 2.86 / 2.31 · 10.77 / 11.52 / 11.22 | 3.57 / 2.87 / 2.24 · 11.33 / 11.81 / 11.29 | 3.75 / 2.85 / 2.19 · 11.64 / 11.31 / 11.16 | 3.37 / 2.86 / 2.19 · 11.2 / 11.48 / 10.74 | 3.63 / 3 / 2.15 · 11.4 / 11.92 / 10.83 | 3.53 / 3.07 / 2.15 · 11.43 / 11.99 / 10.7 | 3.45 / 2.89 / 2.26 · 11.09 / 11.42 / 10.87 | 3.79 / 2.82 / 2.32 · 11.11 / 11.46 / 11.48 | 3.58 / 2.88 / 2.2 · 11.28 / 11.61 / 11 | ✓ |
+|   A4 측정: 눈먼 새벽/판 · 그 죽음 판 (게으름 / 보통 / 부지런) | 측정 | 1.04 / 0.31 / 0 · 33 / 13 / 0 | 1.06 / 0.3 / 0 · 42 / 11 / 0 | 0.96 / 0.26 / 0 · 29 / 9 / 0 | 1.12 / 0.24 / 0 · 30 / 10 / 0 | 0.98 / 0.36 / 0 · 32 / 10 / 0 | 1.06 / 0.26 / 0 · 39 / 10 / 0 | 1.09 / 0.3 / 0 · 32 / 7 / 0 | 1.02 / 0.31 / 0 · 37 / 17 / 0 | 1.13 / 0.34 / 0 · 42 / 5 / 0 | 1.05 / 0.3 / 0 · 316 / 92 / 0 | ✓ |
+
+A4 정책 합산 (블록 9개): balanced 생존 40.7% · D9 주민 3.13 · D7 자원 2.64 · 못 본 일/판 2.55 · 발견 67.6% / lazy 생존 28.4% · D9 주민 2.99 · D7 자원 2.38 · 못 본 일/판 4.43 · 발견 47.2% / diligent 생존 42.2% · D9 주민 3.22 · D7 자원 2.76 · 못 본 일/판 0.42 · 발견 95.8%
+
+
+real	14m57.810s
+user	0m0.000s
+sys	0m0.031s
+EXIT 0

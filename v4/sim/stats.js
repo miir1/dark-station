@@ -126,6 +126,9 @@ function measure(db, s, trace) {
     ropeDeath: dead && !!(cause && cause.roped), blindDeath: dead && !!(cause && cause.blind), noSafe: dead && !!(cause && cause.noSafe),
     // (tightrope §2-3) 실제 발견: 누구나 아는 밤(public·kill)을 뺀 주민 사건 수·그중 발견 · 누구나 아는 밤 수
     privTotal: priv.length, privFound: priv.filter((e) => e.discovered).length, pubTotal: resident.length - priv.length,
+    // (10-25 최종판 · P1-11 원정 수납) 원정에서 조사한 물건 수(봇 trace.searched) · 연 수납 수(엔진 s.stats.holds) · 조사로 걸린 원정 사건을 고른 횟수(s.fired 중 inspect: 원정 사건)
+    searched: trace.searched || 0, holdsOpened: st.holds || 0,
+    tripGated: Object.entries(s.fired || {}).reduce((n, [id, k]) => n + (db.events[id] && db.events[id].kind === 'trip' && E.inspectGated(db.events[id]) ? k || 0 : 0), 0),
   };
 }
 
@@ -197,6 +200,8 @@ function aggregate(db, runs) {
     ropeDeaths: deaths.filter((r) => r.ropeDeath).length, noSafeDeaths: deaths.filter((r) => r.noSafe).length,
     // (tightrope §2-3) 실제 발견율 = Σ 숨은 밤 발견 / Σ 숨은 밤 (옛 discovery 는 그대로 둔다) · 누구나 아는 밤/판 · 숨은 밤/판
     discReal: pct(sumOf(runs, 'privFound'), sumOf(runs, 'privTotal')), pubNights: avg(runs.map((r) => r.pubTotal || 0)), privNights: avg(runs.map((r) => r.privTotal || 0)),
+    // (10-25 P1-11) 원정 수납 — 판 평균: 원정 조사 물건 · 연 수납 · 조사로 걸린 원정 사건
+    searched: avg(runs.map((r) => r.searched || 0)), holdsOpened: avg(runs.map((r) => r.holdsOpened || 0)), tripGated: avg(runs.map((r) => r.tripGated || 0)),
   };
 }
 const sumOf = (runs, k) => runs.reduce((a, r) => a + (r[k] || 0), 0);
@@ -289,9 +294,10 @@ function gate(aggs, candidates, careful, opts) {
   const rpName = (G.rope || ['selfish_nb']).join('·');
   const ROPE_CLOSE_MIN = 2, ROPE_CLOSE2_MIN = 60;
   const rpOk = !!rp && rp.survN > 0 && rp.ropeCloseSurv != null;
-  // (tightrope 검증) 느껴지는 아슬함 — 화면 ≤ 85% 줄타기만. 같은 참고선(≥ 2 · ≥ 60%)에 대어 표시만 한다: 측정 줄, 합격선이 아니다(디렉터 확인 전). 옛 집계(칸 없음)는 '-'
+  // (10-25 최종판 — tightrope 검증 지적) 합격선은 '느껴지는' 줄타기만 센다: 화면 % ≤ E.ROPE_FELT_MAX(85) = 죽을 확률 ≥ 15% 인 판정을 넘긴 횟수.
+  //   옛 합격선(줄타기 판정 전부)은 넘김의 절반쯤인 90% 넘는 판정까지 세어 '아슬하다'를 부풀렸다 → 옛 값은 참고 줄(측정)로 내린다. 옛 집계(칸 없음)는 '-'(미달)
   const FELT = E.ROPE_FELT_MAX;
-  const rfOk = rpOk && rp.ropeFeltSurv != null && Number.isFinite(rp.ropeFeltSurv);
+  const rfOk = rpOk && rp.ropeFeltSurv != null && Number.isFinite(rp.ropeFeltSurv) && Number.isFinite(rp.ropeFelt2);
   const val = (a, k, unit) => (a && a[k] != null && Number.isFinite(a[k]) ? `${a[k]}${unit || ''}` : '-');
   const tri = (k, unit) => [lazy, b, dil].map((a) => val(a, k, unit)).join(' / ');
   const someOf = (names, f) => names.filter((k) => aggs[k]).map((k) => `${k} ${f(aggs[k])}`).join(' · ') || '-';
@@ -340,11 +346,10 @@ function gate(aggs, candidates, careful, opts) {
     [`A1 이기적 사인 쏠림 (버릇 없는 이기적, 사망 ≥ ${SIGN_MIN_RATE}%인 정책만)`, '≤ 60%', sTop.length ? sTop.map(([k, t, j]) => `${k} ${t.k} ${t.share}%` + (j ? '' : ` (사망 ${aggs[k].deaths || 0}판 — 판정 안 함)`)).join(' / ') : '-', sJudged.every(([, t]) => t.share <= 60), !sJudged.length || nearAny(sJudged.map(([, t]) => [t.share, 60]))],
     ['  참고: 몸 꺼림 이기적 사인 쏠림', '측정', quirk.length ? quirk.map((k) => `${k} ${topOf(k).k} ${topOf(k).share}%`).join(' / ') : '-', true, false],
     ['  카르마 (판 끝 평균: 균형 / 이기적 4종)', '측정', `${b.karma != null ? b.karma : '-'} / ${selfs.map((k) => aggs[k].karma).join(' · ') || '-'}`, true, false],
-    // ── 줄타기 아슬함 (10-24 tightrope §1-7) ──
-    [`A1 아슬함: 줄타기 판정 넘김/판 (열흘 산 판, ${rpName})`, `≥ ${ROPE_CLOSE_MIN}`, rpOk ? `${rp.ropeCloseSurv} (산 판 ${rp.survN} · 전체 판 ${rp.ropeClose})` : '-', rpOk && rp.ropeCloseSurv >= ROPE_CLOSE_MIN, false],
-    [`A1 아슬함: 산 판 중 줄타기 판정 ≥ 2번 넘김 (${rpName})`, `≥ ${ROPE_CLOSE2_MIN}%`, rpOk ? `${rp.ropeClose2}%` : '-', rpOk && rp.ropeClose2 >= ROPE_CLOSE2_MIN, rpOk && nearAny([[rp.ropeClose2, ROPE_CLOSE2_MIN]])],
-    [`  A1 느껴지는 아슬함: 화면 ≤ ${FELT}% (죽을 확률 ≥ ${100 - FELT}%) 줄타기 넘김/판 (열흘 산 판, ${rpName})`, `측정 — 참고선 ≥ ${ROPE_CLOSE_MIN} (합격선 아님, 디렉터 확인)`, rfOk ? `${rp.ropeFeltSurv} (산 판 넘김 중 ${rp.ropeFeltShare != null ? rp.ropeFeltShare : '-'}% · 전체 판 ${rp.ropeFelt})` : '-', rfOk && rp.ropeFeltSurv >= ROPE_CLOSE_MIN, false],
-    [`  A1 느껴지는 아슬함: 산 판 중 화면 ≤ ${FELT}% 줄타기 ≥ 2번 넘김 (${rpName})`, `측정 — 참고선 ≥ ${ROPE_CLOSE2_MIN}% (합격선 아님, 디렉터 확인)`, rfOk ? `${rp.ropeFelt2}%` : '-', rfOk && rp.ropeFelt2 >= ROPE_CLOSE2_MIN, rfOk && nearAny([[rp.ropeFelt2, ROPE_CLOSE2_MIN]])],
+    // ── 줄타기 아슬함 (10-24 tightrope §1-7 · 10-25 최종판: 화면 ≤ 85% 판정만 — 검증 지적) ──
+    [`A1 아슬함: 화면 ≤ ${FELT}% (죽을 확률 ≥ ${100 - FELT}%) 줄타기 넘김/판 (열흘 산 판, ${rpName})`, `≥ ${ROPE_CLOSE_MIN}`, rfOk ? `${rp.ropeFeltSurv} (산 판 ${rp.survN} · 산 판 줄타기 넘김 중 ${rp.ropeFeltShare != null ? rp.ropeFeltShare : '-'}% · 전체 판 ${rp.ropeFelt})` : '-', rfOk && rp.ropeFeltSurv >= ROPE_CLOSE_MIN, false],
+    [`A1 아슬함: 산 판 중 화면 ≤ ${FELT}% 줄타기 ≥ 2번 넘김 (${rpName})`, `≥ ${ROPE_CLOSE2_MIN}%`, rfOk ? `${rp.ropeFelt2}%` : '-', rfOk && rp.ropeFelt2 >= ROPE_CLOSE2_MIN, rfOk && nearAny([[rp.ropeFelt2, ROPE_CLOSE2_MIN]])],
+    [`  참고: 줄타기 판정 전부(90% 넘는 판정 포함 — 10-24 옛 A1 아슬함) 넘김/판 · 산 판 중 ≥ 2번 (${rpName})`, '측정 (옛 합격선 ≥ 2 · ≥ 60%)', rpOk ? `${rp.ropeCloseSurv} · ${rp.ropeClose2}% (산 판 ${rp.survN} · 전체 판 ${rp.ropeClose})` : '-', true, false],
     ['  죽음 판정 넘김/판 (산 판 — 당신을 죽이는 모든 판정)', '측정', someOf(ropeShow, (a) => val(a, 'closeCallsSurv')), true, false],
     ['  줄타기 판정 굴림/판 (그중 줄타기로 죽은 판)', '측정', someOf(ropeShow, (a) => `${val(a, 'ropeRolls')} (${a.ropeDeaths != null ? a.ropeDeaths : '-'}판)`), true, false],
     // ── A4 게으름 = 처벌 ──

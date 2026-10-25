@@ -1,0 +1,6 @@
+# 소문 줄의 안 만난 사람 이름 — 봇 판 실측 (qa_content_rumor_sim.js)
+정책 20개 × 30판 = 600판 · 생긴 소문 4617개
+
+## 소문이 생길 때 그 글의 이름이 안 만난 사람/역에 없는 사람: 1종
+- rum_saw_shadow#1 → 한동하(dongha) 안 만남 역에 없음(away) · 10번 (D1 10) · 밤 사건 steal_food · 예: balanced 시드 8 밤 사건 steal_food · 목격자 gicheol
+    "동하가 밤에 창고 쪽으로 갔어."

@@ -1,0 +1,7 @@
+정책 20개 × 20판 = 400판
+- passage_alone · 도현 안 만남: 135번 (예: balanced 시드 2 D6)
+- passage_alone · 도현 만남: 111번 (예: balanced 시드 5 D6)
+- passage_alone_b · 도현 만남: 43번 (예: balanced 시드 12 D6)
+- passage_alone_b · 도현 안 만남: 35번 (예: balanced 시드 17 D6)
+글: 무너진 통로. 도현은 없다. 기철: "부품 다섯이면 우리끼리도 되오. 사람이 다치오." / 무너진 통로. 도현은 없다. 돌무더기가 사람 키만 하다. 부품 다섯이면 우리끼리도 될 것 같다.
+when: day>=6 & phase==day & (!flag:met_dohyeon | flag:dohyeon_gone | flag:dohyeon_refused) & !flag:passage_half & !flag:walk_decided & !flag:passage_wait & alive:gicheol

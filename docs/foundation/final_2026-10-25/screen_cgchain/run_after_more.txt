@@ -1,0 +1,13 @@
+cgchain after_more seed 14 | rows 211 | bad 0 | 25.6 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=1 | D8 trace dawn_s
+cgchain after_more seed 15 | rows 187 | bad 0 | 25.2 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=8 | D7 trace dawn_s
+cgchain after_more seed 16 | rows 88 | bad 0 | 12.5 s | [ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D2 evening d2_soonrye_bread → 
+cgchain after_more seed 17 | rows 205 | bad 0 | 23.7 s | [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=dead food=0 | [꿈 D8] / D9 trace hymn_fire_k
+cgchain after_more seed 18 | rows 217 | bad 0 | 26.5 s | [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=ascended food=0 | D8 ration repay_bowl → 그냥
+cgchain after_more seed 19 | rows 235 | bad 0 | 33.0 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D9 원정 drain_b1 
+cgchain after_more seed 20 | rows 199 | bad 0 | 24.9 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D7 day 치료 → 감았다
+cgchain after_more seed 22 | rows 220 | bad 0 | 32.1 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=3 | [D9 food6 water
+cgchain after_more seed 23 | rows 169 | bad 0 | 16.8 s | [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=dead food=0 | D8 trace trial_d8_key → 순례에게 
+cgchain after_more seed 24 | rows 220 | bad 0 | 27.5 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=2 | D7 day trip_b2_
+cgchain after_more seed 25 | rows 169 | bad 0 | 20.6 s | [ds4 auto] run end reached=0 D7 ended map=station open=- ended=you_gone you=dead food=1 | D5 원정 drain_b2 조사 locker_b2 / 
+cgchain after_more seed 26 | rows 202 | bad 0 | 25.8 s | [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=dead food=1 | D6 night called_up → 불을 키우고 밤을
+cgchain summary {"seeds": 12, "finished": 12, "rows": 2322, "bad": 0, "pairs": {}, "console_errors": 0}

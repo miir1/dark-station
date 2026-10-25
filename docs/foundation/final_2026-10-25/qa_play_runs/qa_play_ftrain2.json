@@ -1,0 +1,1009 @@
+{
+ "run": "ftrain2",
+ "policy": "survivor",
+ "real": false,
+ "rseed": 606,
+ "finished": "title",
+ "wall_s": 14.6,
+ "keys": 31,
+ "steps": 0,
+ "click_fallback": 0,
+ "fallback_to": [],
+ "days": {
+  "-1": {
+   "lines": 0,
+   "chars": 0,
+   "choices": 0,
+   "steps": 0,
+   "keys": 1,
+   "events": 0,
+   "wall_s": 0.2,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  },
+  "10": {
+   "lines": 12,
+   "chars": 169,
+   "choices": 10,
+   "steps": 0,
+   "keys": 30,
+   "events": 2,
+   "wall_s": 13.5,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  }
+ },
+ "deaths": [],
+ "ending": {
+  "day": 10,
+  "why": "d10_train",
+  "page": "승객 명부\n\n당신\n탔다\n청소원 조끼의 할머니\n갔다\nD9\n밤에 갔다\n담요 속 여학생\n탔다\n헤드램프의 남자\n갔다\nD7\n밤에 갔다\n셔터의 여자\n탔다\n큰 청년\n탔다\n담요의 여자\n탔다\n권도현\n갔다\nD8\n___",
+  "text": "당신이 명부를 읽는다.\n\n수첩을 덮기 전에 한 장을 더 넘겼다. 날짜를 적은 줄이 있고, 끝내 아무것도 적지 못한 칸이 있었다."
+ },
+ "issues": [],
+ "rope": [],
+ "unseen": [],
+ "nocg_events": [],
+ "events_shown": [
+  "d10_train",
+  "d10_train"
+ ],
+ "missing": [],
+ "sound": {
+  "status": {
+   "off": false,
+   "test": true,
+   "eager": true,
+   "broken": "",
+   "gestured": true,
+   "ctx": "running",
+   "on": true,
+   "level": 1,
+   "levelName": "보통",
+   "hidden": false,
+   "deathHush": false,
+   "nodes": 114,
+   "nodeKinds": {
+    "createBuffer": 11,
+    "createGain": 45,
+    "createDynamicsCompressor": 1,
+    "createAnalyser": 1,
+    "createConvolver": 1,
+    "createBiquadFilter": 17,
+    "createOscillator": 19,
+    "createBufferSource": 14,
+    "createStereoPanner": 5
+   },
+   "counts": {
+    "drip": 3,
+    "crackle": 0,
+    "hiss": 0
+   },
+   "master": 0.5,
+   "amb": {
+    "map": "station",
+    "night": false,
+    "hum": 1,
+    "humF": 1,
+    "air": 0.5,
+    "fire": 0,
+    "water": 0,
+    "hiss": 0,
+    "amb": 0.5
+   }
+  },
+  "n": 14,
+  "hist": {
+   "start": 1,
+   "pick": 10,
+   "event": 1,
+   "amb": 2
+  },
+  "last": [
+   {
+    "t": 5782,
+    "danger": false,
+    "played": true,
+    "nodes": 71,
+    "kind": "pick"
+   },
+   {
+    "t": 6917,
+    "danger": false,
+    "played": true,
+    "nodes": 80,
+    "kind": "pick"
+   },
+   {
+    "t": 8065,
+    "danger": false,
+    "played": true,
+    "nodes": 85,
+    "kind": "pick"
+   },
+   {
+    "t": 8669,
+    "danger": false,
+    "played": true,
+    "nodes": 90,
+    "kind": "pick"
+   },
+   {
+    "t": 9861,
+    "danger": true,
+    "played": true,
+    "nodes": 95,
+    "kind": "pick"
+   },
+   {
+    "t": 10916,
+    "danger": true,
+    "played": true,
+    "nodes": 104,
+    "kind": "pick"
+   },
+   {
+    "t": 11000,
+    "map": "station",
+    "night": false,
+    "amb": 0.5,
+    "fire": 0,
+    "water": 0,
+    "kind": "amb"
+   },
+   {
+    "t": 12710,
+    "danger": false,
+    "played": true,
+    "nodes": 109,
+    "kind": "pick"
+   }
+  ]
+ },
+ "final_state": {
+  "day": 10,
+  "phase": "ended",
+  "seed": 58,
+  "ended": {
+   "why": "d10_train",
+   "identity": "conductor",
+   "reader": "you",
+   "readerId": "you",
+   "ledger": [
+    {
+     "line": 0,
+     "id": "you",
+     "name": "당신",
+     "status": "boarded",
+     "day": 10,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 1,
+     "id": "soonrye",
+     "name": "김순례",
+     "status": "dead",
+     "day": 9,
+     "cause": "밤에 갔다",
+     "written": []
+    },
+    {
+     "line": 2,
+     "id": "seoha",
+     "name": "윤서하",
+     "status": "boarded",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 3,
+     "id": "gicheol",
+     "name": "박기철",
+     "status": "dead",
+     "day": 7,
+     "cause": "밤에 갔다",
+     "written": []
+    },
+    {
+     "line": 4,
+     "id": "eunji",
+     "name": "최은지",
+     "status": "boarded",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 5,
+     "id": "dongha",
+     "name": "한동하",
+     "status": "boarded",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 6,
+     "id": "mari",
+     "name": "정마리",
+     "status": "boarded",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 7,
+     "id": "dohyeon",
+     "name": "권도현",
+     "status": "dead",
+     "day": 8,
+     "cause": null,
+     "written": []
+    }
+   ],
+   "cause": null
+  },
+  "you": "boarded",
+  "people": {
+   "soonrye": "dead@D9",
+   "seoha": "boarded",
+   "gicheol": "dead@D7",
+   "eunji": "boarded",
+   "dongha": "boarded",
+   "mari": "boarded",
+   "eunchae": "outside",
+   "dohyeon": "dead@D8",
+   "you": "boarded@D10"
+  },
+  "stats": {
+   "decisions": 301,
+   "nights": 10,
+   "deaths": 0,
+   "neglect": 3,
+   "ropeRolls": 2,
+   "ropeClose": 2,
+   "ropeFeltRolls": 1,
+   "ropeFelt": 1,
+   "deathRolls": 10,
+   "closeCalls": 10,
+   "blindMet": 2,
+   "holds": 7
+  }
+ },
+ "console_errors": [],
+ "windows": [
+  {
+   "n": 1,
+   "kind": "line",
+   "tag": "d10_train",
+   "text": "정오, 선로 끝에서 불빛이 온다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": null,
+   "t": 1792875604363,
+   "map": "station"
+  },
+  {
+   "n": 2,
+   "kind": "line",
+   "tag": "d10_train",
+   "text": "문이 열리고 안은 보이지 않는다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": null,
+   "t": 1792875604597,
+   "map": "station"
+  },
+  {
+   "n": 3,
+   "kind": "line",
+   "tag": "d10_train",
+   "text": "차장이 손을 내민다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": null,
+   "t": 1792875604980,
+   "map": "station"
+  },
+  {
+   "n": 4,
+   "kind": "line",
+   "tag": "d10_train",
+   "text": "\"명부의 첫 이름은 당신입니다. 다시 모시겠습니까.\"",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": null,
+   "t": 1792875605346,
+   "map": "station"
+  },
+  {
+   "n": 5,
+   "kind": "event",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": [
+    "탄다",
+    "챙긴 운임으로 탄다",
+    "남는다",
+    "운임 없이 탄다",
+    "태울 사람 (0/4)"
+   ],
+   "t": 1792875605722,
+   "map": "station"
+  },
+  {
+   "n": 6,
+   "kind": "board",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": [
+    "담요 속 여학생 태운다",
+    "셔터의 여자 태운다",
+    "큰 청년 태운다",
+    "담요의 여자 태운다",
+    "됐다"
+   ],
+   "t": 1792875606678,
+   "map": "station"
+  },
+  {
+   "n": 7,
+   "kind": "board",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": [
+    "담요 속 여학생 내린다",
+    "셔터의 여자 태운다",
+    "큰 청년 태운다",
+    "담요의 여자 태운다",
+    "됐다"
+   ],
+   "t": 1792875607661,
+   "map": "station"
+  },
+  {
+   "n": 8,
+   "kind": "board",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": [
+    "담요 속 여학생 내린다",
+    "셔터의 여자 내린다",
+    "큰 청년 태운다",
+    "담요의 여자 태운다",
+    "됐다"
+   ],
+   "t": 1792875608728,
+   "map": "station"
+  },
+  {
+   "n": 9,
+   "kind": "board",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": [
+    "담요 속 여학생 내린다",
+    "셔터의 여자 내린다",
+    "큰 청년 내린다",
+    "담요의 여자 태운다",
+    "됐다"
+   ],
+   "t": 1792875609862,
+   "map": "station"
+  },
+  {
+   "n": 10,
+   "kind": "board",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": [
+    "담요 속 여학생 내린다",
+    "셔터의 여자 내린다",
+    "큰 청년 내린다",
+    "담요의 여자 내린다",
+    "됐다"
+   ],
+   "t": 1792875611012,
+   "map": "station"
+  },
+  {
+   "n": 11,
+   "kind": "event",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": [
+    "탄다",
+    "챙긴 운임으로 탄다",
+    "남는다",
+    "운임 없이 탄다",
+    "태울 사람 (4/4)"
+   ],
+   "t": 1792875611610,
+   "map": "station"
+  },
+  {
+   "n": 12,
+   "kind": "confirm2",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_train",
+   "opts": [
+    "그렇게 한다",
+    "다시 고른다"
+   ],
+   "t": 1792875612794,
+   "map": "station"
+  },
+  {
+   "n": 13,
+   "kind": "line",
+   "tag": "d10_train:out",
+   "text": "손잡이를 잡았다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875613860,
+   "map": "station"
+  },
+  {
+   "n": 14,
+   "kind": "line",
+   "tag": "d10_train:out",
+   "text": "구멍 난 손이었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875614228,
+   "map": "station"
+  },
+  {
+   "n": 15,
+   "kind": "ending",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": [
+    "덮는다"
+   ],
+   "t": 1792875614606,
+   "map": "station"
+  },
+  {
+   "n": 16,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "차장이 수첩을 내밀었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875615644,
+   "map": "station"
+  },
+  {
+   "n": 17,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "당신 것과 같은 수첩이었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875616028,
+   "map": "station"
+  },
+  {
+   "n": 18,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "바꿔 들었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875616377,
+   "map": "station"
+  },
+  {
+   "n": 19,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "문을 닫는 건 당신이었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875616760,
+   "map": "station"
+  },
+  {
+   "n": 20,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "수첩 두 권이 나란히 놓여 있다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875617127,
+   "map": "station"
+  },
+  {
+   "n": 21,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "글씨가 같다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875617510,
+   "map": "station"
+  },
+  {
+   "n": 22,
+   "kind": "title",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": [
+    "새로 시작",
+    "저장 코드 불러오기",
+    "전체화면"
+   ],
+   "t": 1792875617928,
+   "map": "station"
+  }
+ ],
+ "choices": [
+  {
+   "kind": "title",
+   "day": null,
+   "phase": null,
+   "text": "어두운 역\n\n묵현역 · 열차까지 열흘 · 18+\n유혈·시체·살해 묘사가 직접 나옵니다",
+   "opts": [
+    "계속 (D10)",
+    "새로 시작",
+    "저장 코드 불러오기",
+    "전체화면"
+   ],
+   "boxCls": "opts wide",
+   "pend": null,
+   "picked": "계속 (D10)"
+  },
+  {
+   "kind": "event",
+   "day": 10,
+   "phase": "day",
+   "text": "정오, 선로 끝에서 불빛이 온다. 문이 열리고 안은 보이지 않는다. 차장이 손을 내민다. \"명부의 첫 이름은 당신입니다. 다시 모시겠습니까.\"",
+   "opts": [
+    "탄다",
+    "챙긴 운임으로 탄다",
+    "남는다",
+    "운임 없이 탄다",
+    "태울 사람 (0/4)"
+   ],
+   "boxCls": "opts wide",
+   "pend": "d10_train",
+   "ev": {
+    "id": "d10_train",
+    "kind": "ending",
+    "choices": [
+     {
+      "i": 0,
+      "label": "탄다",
+      "locked": false,
+      "chance": null,
+      "warn": "자리 하나가 준다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {
+       "food": 1,
+       "water": 1
+      },
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 1,
+      "label": "챙긴 운임으로 탄다",
+      "locked": true,
+      "chance": null,
+      "warn": "자리 하나가 준다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 2,
+      "label": "남는다",
+      "locked": false,
+      "chance": null,
+      "warn": "열차는 기관사 없이 간다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 3,
+      "label": "운임 없이 탄다",
+      "locked": false,
+      "chance": null,
+      "warn": "세어진 사람은 올라간다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 0,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     }
+    ]
+   },
+   "cg": [
+    {
+     "src": "http://127.0.0.1:19011/v4/img/cg_s/story_ticket.png",
+     "cls": "small",
+     "ok": true,
+     "w": 256,
+     "vis": true
+    }
+   ],
+   "picked": "태울 사람 (0/4)"
+  },
+  {
+   "kind": "board",
+   "day": 10,
+   "phase": "day",
+   "text": "태울 사람\n\n담요 속 여학생\n셔터의 여자\n큰 청년\n담요의 여자",
+   "opts": [
+    "담요 속 여학생 태운다",
+    "셔터의 여자 태운다",
+    "큰 청년 태운다",
+    "담요의 여자 태운다",
+    "됐다"
+   ],
+   "boxCls": "opts wide",
+   "pend": "d10_train",
+   "picked": "담요 속 여학생 태운다"
+  },
+  {
+   "kind": "board",
+   "day": 10,
+   "phase": "day",
+   "text": "태울 사람\n\n담요 속 여학생\n셔터의 여자\n큰 청년\n담요의 여자",
+   "opts": [
+    "담요 속 여학생 내린다",
+    "셔터의 여자 태운다",
+    "큰 청년 태운다",
+    "담요의 여자 태운다",
+    "됐다"
+   ],
+   "boxCls": "opts wide",
+   "pend": "d10_train",
+   "picked": "셔터의 여자 태운다"
+  },
+  {
+   "kind": "board",
+   "day": 10,
+   "phase": "day",
+   "text": "태울 사람\n\n담요 속 여학생\n셔터의 여자\n큰 청년\n담요의 여자",
+   "opts": [
+    "담요 속 여학생 내린다",
+    "셔터의 여자 내린다",
+    "큰 청년 태운다",
+    "담요의 여자 태운다",
+    "됐다"
+   ],
+   "boxCls": "opts wide",
+   "pend": "d10_train",
+   "picked": "큰 청년 태운다"
+  },
+  {
+   "kind": "board",
+   "day": 10,
+   "phase": "day",
+   "text": "태울 사람\n\n담요 속 여학생\n셔터의 여자\n큰 청년\n담요의 여자",
+   "opts": [
+    "담요 속 여학생 내린다",
+    "셔터의 여자 내린다",
+    "큰 청년 내린다",
+    "담요의 여자 태운다",
+    "됐다"
+   ],
+   "boxCls": "opts wide",
+   "pend": "d10_train",
+   "picked": "담요의 여자 태운다"
+  },
+  {
+   "kind": "board",
+   "day": 10,
+   "phase": "day",
+   "text": "태울 사람\n\n담요 속 여학생\n셔터의 여자\n큰 청년\n담요의 여자",
+   "opts": [
+    "담요 속 여학생 내린다",
+    "셔터의 여자 내린다",
+    "큰 청년 내린다",
+    "담요의 여자 내린다",
+    "됐다"
+   ],
+   "boxCls": "opts wide",
+   "pend": "d10_train",
+   "picked": "됐다"
+  },
+  {
+   "kind": "event",
+   "day": 10,
+   "phase": "day",
+   "text": "정오, 선로 끝에서 불빛이 온다. 문이 열리고 안은 보이지 않는다. 차장이 손을 내민다. \"명부의 첫 이름은 당신입니다. 다시 모시겠습니까.\"",
+   "opts": [
+    "탄다",
+    "챙긴 운임으로 탄다",
+    "남는다",
+    "운임 없이 탄다",
+    "태울 사람 (4/4)"
+   ],
+   "boxCls": "opts wide",
+   "pend": "d10_train",
+   "ev": {
+    "id": "d10_train",
+    "kind": "ending",
+    "choices": [
+     {
+      "i": 0,
+      "label": "탄다",
+      "locked": false,
+      "chance": null,
+      "warn": "자리 하나가 준다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {
+       "food": 1,
+       "water": 1
+      },
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 1,
+      "label": "챙긴 운임으로 탄다",
+      "locked": true,
+      "chance": null,
+      "warn": "자리 하나가 준다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 2,
+      "label": "남는다",
+      "locked": false,
+      "chance": null,
+      "warn": "열차는 기관사 없이 간다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 3,
+      "label": "운임 없이 탄다",
+      "locked": false,
+      "chance": null,
+      "warn": "세어진 사람은 올라간다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 0,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     }
+    ]
+   },
+   "cg": [
+    {
+     "src": "http://127.0.0.1:19011/v4/img/cg_s/story_ticket.png",
+     "cls": "small",
+     "ok": true,
+     "w": 256,
+     "vis": true
+    }
+   ],
+   "picked": "탄다"
+  },
+  {
+   "kind": "confirm2",
+   "day": 10,
+   "phase": "day",
+   "text": "되돌릴 수 없다\n\n탄다 — 자리 하나가 준다\n\n태울 사람: 담요 속 여학생 · 셔터의 여자 · 큰 청년 · 담요의 여자",
+   "opts": [
+    "그렇게 한다",
+    "다시 고른다"
+   ],
+   "boxCls": "opts",
+   "pend": "d10_train",
+   "picked": "그렇게 한다"
+  },
+  {
+   "kind": "ending",
+   "day": 10,
+   "phase": "ended",
+   "text": "당신이 명부를 읽는다.\n\n수첩을 덮기 전에 한 장을 더 넘겼다. 날짜를 적은 줄이 있고, 끝내 아무것도 적지 못한 칸이 있었다.",
+   "opts": [
+    "덮는다"
+   ],
+   "boxCls": "opts short",
+   "pend": "",
+   "ledger": "당신이 명부를 읽는다.\n\n수첩을 덮기 전에 한 장을 더 넘겼다. 날짜를 적은 줄이 있고, 끝내 아무것도 적지 못한 칸이 있었다.",
+   "cgPage": "승객 명부\n\n당신\n탔다\n청소원 조끼의 할머니\n갔다\nD9\n밤에 갔다\n담요 속 여학생\n탔다\n헤드램프의 남자\n갔다\nD7\n밤에 갔다\n셔터의 여자\n탔다\n큰 청년\n탔다\n담요의 여자\n탔다\n권도현\n갔다\nD8\n___",
+   "picked": "덮는다"
+  }
+ ]
+}

@@ -1308,11 +1308,15 @@
     "id": "bodybag_a2",
     "name": "시체 자루",
     "states": [
-      "normal"
+      "normal",
+      "zipped",
+      "taken"
     ],
     "overlay": {},
     "inspectLine": {
-      "normal": "insp_bodybag"
+      "normal": "insp_bodybag",
+      "zipped": "insp_bodybag_zipped",
+      "taken": "insp_bodybag_taken"
     },
     "ledgerFact": {},
     "solid": 0,
@@ -1584,5 +1588,273 @@
     "solid": 0,
     "light": 0,
     "resetOn": "inspect"
+  },
+  {
+    "id": "drawer_a1",
+    "name": "계산대 서랍장",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_drawer_a1",
+      "open": "insp_drawer_a1_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "성냥 두 갑과 신문 뭉치가 있었다.",
+      "effects": [
+        {
+          "verb": "number",
+          "id": "fuel",
+          "n": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "shelf_a1",
+    "name": "매점 선반",
+    "states": [
+      "closed",
+      "empty"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_shelf_a1",
+      "empty": "insp_shelf_a1_empty"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "선반 밑에 음료 캔 둘. 하나는 터져 있었다.",
+      "effects": [
+        {
+          "verb": "number",
+          "id": "water",
+          "n": 1
+        }
+      ],
+      "state": "empty"
+    }
+  },
+  {
+    "id": "locker_a1",
+    "name": "관리실 사물함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_locker_a1",
+      "open": "insp_locker_a1_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "사물함 안에 밧줄 한 타래와 퓨즈 상자가 있었다.",
+      "effects": [
+        {
+          "verb": "flag",
+          "id": "has_rope",
+          "set": 1
+        },
+        {
+          "verb": "number",
+          "id": "parts",
+          "n": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "shelf_a2",
+    "name": "기운 선반",
+    "states": [
+      "closed",
+      "picked",
+      "empty"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_shelf_a2",
+      "picked": "insp_shelf_a2_picked",
+      "empty": "insp_shelf_a2_empty"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "barrel_a2",
+    "name": "끼인 드럼통",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_barrel_a2",
+      "open": "insp_barrel_a2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "locker_a2",
+    "name": "구석 사물함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_locker_a2",
+      "open": "insp_locker_a2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "누가 먼저 열었다. 안쪽 문에 손톱자국이 길게 나 있었다."
+    }
+  },
+  {
+    "id": "crate_b1",
+    "name": "쌓인 상자",
+    "states": [
+      "closed",
+      "empty"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_crate_b1",
+      "empty": "insp_crate_b1_empty"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "barrel_b1",
+    "name": "녹슨 드럼통",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_barrel_b1",
+      "open": "insp_barrel_b1_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "비닐에 싼 무전기가 들어 있었다. 아직 지직거린다.",
+      "effects": [
+        {
+          "verb": "flag",
+          "id": "has_radio",
+          "set": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "bag_b1",
+    "name": "걸린 가방",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_bag_b1",
+      "open": "insp_bag_b1_open"
+    },
+    "ledgerFact": {},
+    "solid": 0,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "toolbox_b2",
+    "name": "펌프 공구함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_toolbox_b2",
+      "open": "insp_toolbox_b2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "퓨즈 두 개와 절연 테이프가 있었다.",
+      "effects": [
+        {
+          "verb": "number",
+          "id": "parts",
+          "n": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "locker_b2",
+    "name": "잠긴 사물함",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_locker_b2",
+      "open": "insp_locker_b2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never"
+  },
+  {
+    "id": "barrel_b2",
+    "name": "잠긴 드럼통",
+    "states": [
+      "closed",
+      "open"
+    ],
+    "overlay": {},
+    "inspectLine": {
+      "closed": "insp_barrel_b2",
+      "open": "insp_barrel_b2_open"
+    },
+    "ledgerFact": {},
+    "solid": 1,
+    "light": 0,
+    "resetOn": "never",
+    "holds": {
+      "text": "드럼통 안은 흙탕물뿐이었다. 바닥에서 무엇이 한 번 뒤척였다."
+    }
   }
 ]

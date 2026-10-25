@@ -375,7 +375,7 @@ test('§1-7·§2-3 통계: 아슬함(산 판만) · 실제 발견율(누구나 �
   assert.strictEqual(ST.aggregate(db, [dead]).ropeCloseSurv, null, '산 판이 없으면 없음');
 });
 
-test('검증: 느껴지는 아슬함 집계(산 판만 · ≥2번% · 넘김 중 비중) · 측정 줄 둘(참고선 ≥ 2 · ≥ 60% 에 대어 표시 — 판정 줄 이름은 그대로)', () => {
+test('10-25 A1 아슬함 합격선 = 화면 ≤ 85% 줄타기만(검증 지적): 집계(산 판만 · ≥2번% · 넘김 중 비중) · 판정 줄 둘 · 옛 값(줄타기 전부)은 참고 줄', () => {
   const db = T.load(withKarma());
   const sv = (ropeClose, ropeFelt) => ({ survived: true, dead: false, ropeRolls: ropeClose, ropeClose, ropeFeltRolls: ropeFelt, ropeFelt });
   const dead = { survived: false, dead: true, ropeRolls: 9, ropeClose: 8, ropeFeltRolls: 9, ropeFelt: 8, ropeDeath: true };
@@ -383,23 +383,32 @@ test('검증: 느껴지는 아슬함 집계(산 판만 · ≥2번% · 넘김 중
   assert.deepStrictEqual([a.survN, a.ropeCloseSurv, a.ropeFeltSurv, a.ropeFelt2, a.ropeFeltShare, a.ropeFelt, a.ropeFeltRolls], [4, 4, 1.5, 50, 37.5, 2.8, 3], '산 판 4: 느껴지는 넘김 3·1·0·2 → 평균 1.5 · ≥2 는 둘 = 50% · 넘김 16 중 6 = 37.5% · 전체 판 (3+1+0+2+8)/5 = 2.8');
   assert.deepStrictEqual([ST.aggregate(db, [dead]).ropeFeltSurv, ST.aggregate(db, [dead]).ropeFelt2, ST.aggregate(db, [dead]).ropeFeltShare], [null, null, null], '산 판이 없으면 없음');
   assert.strictEqual(ST.aggregate(db, [sv(0, 0)]).ropeFeltShare, null, '넘김이 0 이면 비중 없음');
-  // 합격선 표: 기존 'A1 아슬함' 판정 줄 둘은 그대로, 바로 밑에 측정 줄 둘
+  // 합격선 표: 'A1 아슬함' 판정 줄 둘 = 화면 ≤ 85% 줄타기 · 바로 밑에 옛 값(줄타기 전부) 참고 줄 하나
   const base = { n: 200, deaths: 100, deathRate: 50, warnedRate: 100, identity: {}, topCause: { k: 'x', share: 30 }, topRoot: { k: 'x', share: 30 }, survN: 121, ropeClose: 3.3, ropeCloseSurv: 5.06, ropeClose2: 87, ropeFelt: 1.4, ropeFeltSurv: 2.48, ropeFelt2: 58.7, ropeFeltShare: 49 };
   const aggs = { balanced: Object.assign({}, base), selfish_nb: Object.assign({}, base) };
   const g = ST.gate(aggs, ['a'], ['balanced']);
-  const i0 = g.rows.findIndex((r) => r[0].startsWith('A1 아슬함: 줄타기 판정 넘김/판'));
-  assert.deepStrictEqual(g.rows.slice(i0, i0 + 4).map((r) => r[0]), [
-    'A1 아슬함: 줄타기 판정 넘김/판 (열흘 산 판, selfish_nb)', 'A1 아슬함: 산 판 중 줄타기 판정 ≥ 2번 넘김 (selfish_nb)',
-    '  A1 느껴지는 아슬함: 화면 ≤ 85% (죽을 확률 ≥ 15%) 줄타기 넘김/판 (열흘 산 판, selfish_nb)', '  A1 느껴지는 아슬함: 산 판 중 화면 ≤ 85% 줄타기 ≥ 2번 넘김 (selfish_nb)']);
-  assert.deepStrictEqual(g.rows.slice(i0 + 2, i0 + 4).map((r) => r.slice(1, 5)), [
-    ['측정 — 참고선 ≥ 2 (합격선 아님, 디렉터 확인)', '2.48 (산 판 넘김 중 49% · 전체 판 1.4)', true, false],
-    ['측정 — 참고선 ≥ 60% (합격선 아님, 디렉터 확인)', '58.7%', false, true]], '58.7% 는 참고선 밑 · ±5 안 — 측정 줄이라도 ✓ 로 가리지 않는다');
+  const i0 = g.rows.findIndex((r) => r[0].startsWith('A1 아슬함: 화면 ≤ 85%'));
+  assert.ok(i0 > 0);
+  assert.deepStrictEqual(g.rows.slice(i0, i0 + 3).map((r) => r[0]), [
+    'A1 아슬함: 화면 ≤ 85% (죽을 확률 ≥ 15%) 줄타기 넘김/판 (열흘 산 판, selfish_nb)', 'A1 아슬함: 산 판 중 화면 ≤ 85% 줄타기 ≥ 2번 넘김 (selfish_nb)',
+    '  참고: 줄타기 판정 전부(90% 넘는 판정 포함 — 10-24 옛 A1 아슬함) 넘김/판 · 산 판 중 ≥ 2번 (selfish_nb)']);
+  assert.deepStrictEqual(g.rows.slice(i0, i0 + 3).map((r) => r.slice(1, 5)), [
+    ['≥ 2', '2.48 (산 판 121 · 산 판 줄타기 넘김 중 49% · 전체 판 1.4)', true, false],
+    ['≥ 60%', '58.7%', false, true],
+    ['측정 (옛 합격선 ≥ 2 · ≥ 60%)', '5.06 · 87% (산 판 121 · 전체 판 3.3)', true, false]], '58.7% 는 합격선 밑 · ±5 안 — 옛 값(87%)이 넘어도 판정은 화면 ≤ 85% 값으로');
   const g62 = ST.gate(Object.assign({}, aggs, { selfish_nb: Object.assign({}, base, { ropeFelt2: 62 }) }), ['a'], ['balanced']);
-  assert.deepStrictEqual([ST.combine([g])[i0 + 3].mark, ST.combine([g, g62])[i0 + 3].mark, ST.combine([g])[i0 + 2].mark], ['✗', '△', '✓'], '모든 블록 참고선 밑 = ✗ · 블록마다 다름 = △ · 2.48 ≥ 2 = ✓');
-  assert.strictEqual(g.rows.filter((r) => r[0].startsWith('A1 아슬함')).length, 2, '판정 줄은 둘 그대로');
-  // 옛 집계(새 칸 없음)는 '-'
+  const g70 = ST.gate(Object.assign({}, aggs, { selfish_nb: Object.assign({}, base, { ropeFelt2: 70 }) }), ['a'], ['balanced']);
+  assert.deepStrictEqual([ST.combine([g])[i0 + 1].mark, ST.combine([g, g62])[i0 + 1].mark, ST.combine([g62])[i0 + 1].mark, ST.combine([g70])[i0 + 1].mark, ST.combine([g])[i0].mark], ['✗', '△', '△', '✓', '✓'],
+    '모든 블록 합격선 밑 = ✗ · 블록마다 다름 = △ · 62% 는 통과지만 ±5 안 = △ · 70% = ✓ · 2.48 ≥ 2 = ✓');
+  const g19 = ST.gate(Object.assign({}, aggs, { selfish_nb: Object.assign({}, base, { ropeFeltSurv: 1.9 }) }), ['a'], ['balanced']);
+  assert.deepStrictEqual(g19.rows[i0].slice(3, 5), [false, false], '1.9 < 2 = 미달 (옛 값 5.06 이 넘어도)');
+  assert.strictEqual(g.rows.filter((r) => r[0].startsWith('A1 아슬함')).length, 2, '판정 줄은 둘');
+  assert.ok(!g.rows.some((r) => r[0].includes('느껴지는 아슬함')), '옛 측정 줄(느껴지는 아슬함)은 판정 줄이 되어 없어졌다');
+  // 옛 집계(화면 ≤ 85% 칸 없음)는 판정 줄 '-' (미달) · 참고 줄은 옛 값을 그대로 보인다 · selfish_nb 가 없으면 셋 다 '-'
   const old = ST.gate({ balanced: aggs.balanced, selfish_nb: Object.assign({}, base, { ropeFeltSurv: undefined, ropeFelt2: undefined }) }, ['a'], ['balanced']);
-  assert.deepStrictEqual(old.rows.slice(i0 + 2, i0 + 4).map((r) => r.slice(2, 4)), [['-', false], ['-', false]]);
+  assert.deepStrictEqual(old.rows.slice(i0, i0 + 3).map((r) => r.slice(2, 4)), [['-', false], ['-', false], ['5.06 · 87% (산 판 121 · 전체 판 3.3)', true]]);
+  const none = ST.gate({ balanced: aggs.balanced }, ['a'], ['balanced']);
+  assert.deepStrictEqual(none.rows.slice(i0, i0 + 3).map((r) => r[2]), ['-', '-', '-']);
 });
 
 test('합격선 새 줄 (tightrope): 아슬함 selfish_nb ≥2·≥60% · 확정 사망 줄 이름 · 옛 강제 참고 줄 · A4 측정 줄(실제 발견율·누구나 아는 밤·눈먼 새벽)', () => {
@@ -407,13 +416,14 @@ test('합격선 새 줄 (tightrope): 아슬함 selfish_nb ≥2·≥60% · 확정
     topCause: { k: 'x', share: 30 }, topRoot: { k: 'x', share: 30 }, dayEvent: { 2: 1, 4: 1, 5: 1 }, home9: 3, home9N: 100, res7: 4, res7N: 100, neglect: 1, karma: 2, identity: {},
     survN: 90, ropeRolls: 0.8, ropeClose: 0.7, ropeCloseSurv: 0.76, ropeClose2: 20, closeCalls: 3, closeCallsSurv: 3.8, blindMet: 0.31, blindDeaths: 94, ropeDeaths: 10, noSafeDeaths: 40, discReal: 60.5, pubNights: 2.6, privNights: 7 };
   const mk = (o) => Object.assign({}, base, o);
-  const aggs = { balanced: mk({}), lazy: mk({ discReal: 32, blindMet: 1.02, blindDeaths: 286 }), diligent: mk({ discReal: 94.5, blindMet: 0 }), selfish_nb: mk({ survN: 58, ropeCloseSurv: 5, ropeClose2: 87.4 }) };
+  const aggs = { balanced: mk({}), lazy: mk({ discReal: 32, blindMet: 1.02, blindDeaths: 286 }), diligent: mk({ discReal: 94.5, blindMet: 0 }), selfish_nb: mk({ survN: 58, ropeCloseSurv: 5, ropeClose2: 87.4, ropeFelt: 2.1, ropeFeltSurv: 3.1, ropeFelt2: 71.2, ropeFeltShare: 62 }) };
   const g = ST.gate(aggs, ['a'], ['balanced']);
   const row = (p) => g.rows.find((r) => r[0].startsWith(p));
-  assert.deepStrictEqual(row('A1 아슬함: 줄타기 판정 넘김/판').slice(1, 5), ['≥ 2', '5 (산 판 58 · 전체 판 0.7)', true, false]);
-  assert.deepStrictEqual(row('A1 아슬함: 산 판 중').slice(2, 5), ['87.4%', true, false]);
-  const g2 = ST.gate(Object.assign({}, aggs, { selfish_nb: mk({ ropeCloseSurv: 1.9, ropeClose2: 62 }) }), ['a'], ['balanced']);
-  assert.deepStrictEqual(g2.rows.filter((r) => r[0].startsWith('A1 아슬함')).map((r) => r.slice(3, 5)), [[false, false], [true, true]], '1.9 < 2 · 62% = 통과지만 ±5 안');
+  assert.deepStrictEqual(row('A1 아슬함: 화면 ≤ 85%').slice(1, 5), ['≥ 2', '3.1 (산 판 58 · 산 판 줄타기 넘김 중 62% · 전체 판 2.1)', true, false]);
+  assert.deepStrictEqual(row('A1 아슬함: 산 판 중').slice(2, 5), ['71.2%', true, false]);
+  assert.strictEqual(row('  참고: 줄타기 판정 전부')[2], '5 · 87.4% (산 판 58 · 전체 판 0.7)');
+  const g2 = ST.gate(Object.assign({}, aggs, { selfish_nb: mk({ ropeCloseSurv: 9, ropeClose2: 99, ropeFelt: 1, ropeFeltSurv: 1.9, ropeFelt2: 62 }) }), ['a'], ['balanced']);
+  assert.deepStrictEqual(g2.rows.filter((r) => r[0].startsWith('A1 아슬함')).map((r) => r.slice(3, 5)), [[false, false], [true, true]], '1.9 < 2 · 62% = 통과지만 ±5 안 (옛 값 9번 · 99% 는 판정에 안 든다)');
   const g3 = ST.gate({ balanced: aggs.balanced }, ['a'], ['balanced']);
   assert.deepStrictEqual(g3.rows.filter((r) => r[0].startsWith('A1 아슬함')).map((r) => r.slice(2, 4)), [['-', false], ['-', false]], 'selfish_nb 가 없으면 미달');
   assert.strictEqual(row('강제 사망 = 확정 사망')[2].startsWith('0 판'), true);

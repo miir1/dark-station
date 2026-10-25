@@ -1,0 +1,13 @@
+cgchain after seed 3 | rows 187 | bad 0 | 24.6 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=8 | [꿈 D6] / D7 tra
+cgchain after seed 21 | rows 151 | bad 0 | 15.9 s | [ds4 auto] run end reached=0 D8 ended map=station open=- ended=you_gone you=dead food=1 | D6 ration repay_bowl → 그냥 지나간다
+cgchain after seed 6 | rows 151 | bad 0 | 16.5 s | [ds4 auto] run end reached=0 D9 ended map=station open=- ended=you_gone you=ascended food=0 | [D7 food1 water0 hunger4] 
+cgchain after seed 8 | rows 208 | bad 0 | 25.5 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D8 ration repay
+cgchain after seed 1 | rows 214 | bad 0 | 25.0 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=0 | D8 trace trial_
+cgchain after seed 7 | rows 178 | bad 0 | 23.4 s | [ds4 auto] run end reached=0 D8 ended map=station open=- ended=you_gone you=dead food=5 | D6 원정 mall_a2 조사 shelf_a2 / D6
+cgchain after seed 11 | rows 178 | bad 0 | 23.4 s | [ds4 auto] run end reached=0 D8 ended map=station open=- ended=you_gone you=dead food=0 | D6 day trip_g_rats → 맞선다 / D6 
+cgchain after seed 5 | rows 88 | bad 0 | 12.8 s | [ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D2 evening d2_soonrye_bread → 
+cgchain after seed 13 | rows 145 | bad 0 | 15.2 s | [ds4 auto] run end reached=0 D7 ended map=station open=- ended=you_gone you=dead food=1 | D5 night d5_rail_body → 받는다 / 
+cgchain after seed 2 | rows 217 | bad 0 | 27.4 s | [ds4 auto] run end reached=0 D10 ended map=station open=- ended=you_gone you=ascended food=0 | D7 evening d7_broadcast →
+cgchain after seed 4 | rows 91 | bad 0 | 12.8 s | [ds4 auto] run end reached=0 D4 ended map=station open=- ended=you_gone you=dead food=0 | D2 night d2_night_shutter → 틈으
+cgchain after seed 9 | rows 229 | bad 0 | 33.0 s | [ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=1 | D9 ration repay
+cgchain summary {"seeds": 12, "finished": 12, "rows": 2037, "bad": 0, "pairs": {}, "console_errors": 0}

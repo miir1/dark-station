@@ -13,7 +13,9 @@
     pillow_gicheol: 'tr:pillow', notebook_you: 'pr:notebook', repair_rubble: 'rubble', lever: 'lever', bag: 'sack', cab_door: null, radio_cab: 'radio', medkit: 'medkit', notebook_dash: 'pr:notebook',
     shoe_cab: 'heel', shelter_box: 'crate', vent_shaft: 'pr:vent', rubble: 'rubble', pharmacy_shutter: 'kiosk', phonebooth: 'phone', stall_cart: 'cart', bone_pile: 'bones', bodybag_a2: 'bodybag',
     valve: 'valve', pump_room: 'chaindoor', worker_pipe: 'sludge', cistern: 'tank', ladder_b2: 'ladder', car_shoes: 'shoes', stairs_line: 'pr:chalk' };
-  const propFor = (id) => { if (/^blanket_/.test(id)) return 'bed'; if (/^(bottle|bowl|bandage)_/.test(id)) return null; return PROP[id] === undefined ? id : PROP[id]; };
+  // (10-25 최종판 · P1-11) 원정 지도 수납 가구(<앞머리>_<층>: locker_a1 · shelf_a2 · drawer_a1 · barrel_b1 · toolbox_b2 · crate_b1 · bag_b1)의 옛 대체 그림 — v4 그림(V4P)이 없을 때만
+  const PROP_PREFIX = { locker: 'door', shelf: 'stall', drawer: 'crate', barrel: 'leakbarrel', toolbox: 'crate', crate: 'crate', bag: 'sack' };
+  const propFor = (id) => { if (/^blanket_/.test(id)) return 'bed'; if (/^(bottle|bowl|bandage)_/.test(id)) return null; if (PROP[id] !== undefined) return PROP[id]; const pre = PROP_PREFIX[String(id).split('_')[0]]; return pre || id; };
   // ── v4 소품 그림 (P0-A2·A3, 원래 크기): 물건 id(또는 bottle_·bowl_·bandage_ 앞머리) → { 상태: 그림 이름, _: 기본 } ──
   // 상태가 표에 적혀 있으면 그 그림이 그 상태를 보여 준다 → 그 상태의 덧그림(OVERLAY)은 얹지 않는다. 열린 상태는 '<이름>_open' 바꿔치기.
   const V4P = {
@@ -30,20 +32,32 @@
     shelter_box: { _: 'shelter_box', open: 'shelter_box_open' },
     medkit: { _: 'medkit', open: 'medkit_open' },
     lever: { _: 'lever_box', pulled: 'lever_box_open' },
-    bag: { _: 'bag', open: 'bag_open' },
+    bag: { _: 'bag', open: 'bag_open' },                                       // 전동차 가방 · 원정 걸린 가방(bag_b1 — 앞머리 bag)
     stairs_line: { _: 'chalk_line' },
+    // (10-25 최종판 · P1-11) 원정 지도 수납 가구 — 물건 id 앞머리로 잡힌다(locker_a1 → locker). 크기는 P0-A2 기준표(사물함 32×48 몸통 · 서랍장 32×28 · 드럼통 28×24 · 공구함 20×18 · 상자 24×20)
+    //   기운 선반 shelf_a2 의 'picked'(바닥 것만 주움)는 표에 없어 기본 shelf 그림 · 녹슨·잠긴 드럼통(barrel_)은 불 드럼통(drum_open)과 다른 그림
+    locker: { _: 'locker', open: 'locker_open' },
+    shelf: { _: 'shelf', empty: 'shelf_empty' },
+    drawer: { _: 'drawer', open: 'drawer_open' },
+    barrel: { _: 'barrel', open: 'barrel_open' },
+    toolbox: { _: 'toolbox', open: 'toolbox_open' },
+    crate: { _: 'crate', open: 'crate_open', empty: 'crate_empty' },
+    phonebooth: { _: 'phonebooth', taken: 'phonebooth_taken' },                // 공중전화 부스(32×64, 2칸 높이) — 옛 대체 'phone' 은 바닥에 떨어진 휴대폰 그림이었다(검수 audit_items #16)
   };
   const v4Table = (id) => V4P[id] || V4P[String(id).split('_')[0]] || null;
   // 손 물건: v4 그림이 없으면 옛 32px 그림을 정확히 ½ 로 그린다 (원래 크기로는 절대 그리지 않는다)
   const HAND = /^(bottle|bowl|bandage)_|^(notebook_you|notebook_dash|scissors|knife|shoes_stairs|shoe_cab|car_shoes|radio|radio_cab|medkit)$/;
   // 연 상태(열린 그림이 없으면 닫힌 그림을 30% 어둡게 + 위쪽 2px 검은 틈 — art.js opened)
-  const OPEN_ST = { crate_food: ['open', 'empty'], parts_crate: ['hidden'], shelter_box: ['open'], medkit: ['open'], lever: ['pulled'], bag: ['open'], phonebooth: ['taken'] };
+  //   원정 수납 가구는 앞머리로 (locker_a1 → locker) — 열린 그림이 없을 때의 대체만 고른다
+  const OPEN_ST = { crate_food: ['open', 'empty'], parts_crate: ['hidden'], shelter_box: ['open'], medkit: ['open'], lever: ['pulled'], bag: ['open'], phonebooth: ['taken'],
+    locker: ['open'], shelf: ['empty'], drawer: ['open'], barrel: ['open'], toolbox: ['open'], crate: ['open', 'empty'] };
+  const openStOf = (id) => OPEN_ST[id] || OPEN_ST[String(id).split('_')[0]] || null;
   // 물건 하나의 그림: { im(v4 그림 또는 연 수납 대체), absorb(그 상태 덧그림을 안 얹는다), small(손 물건 — 바닥 줄·자리 표), openSt, v4 }
   function lookOf(o) {
     const tb = v4Table(o.id);
     const want = tb ? (tb[o.state] !== undefined ? tb[o.state] : tb._) : null;
     let im = want ? ART.v4prop(want) : null, absorb = !!(im && tb && tb[o.state] !== undefined), small = false;
-    const openSt = !!(OPEN_ST[o.id] && OPEN_ST[o.id].includes(o.state));
+    const os = openStOf(o.id), openSt = !!(os && os.includes(o.state));
     if (!im && tb && openSt) { const closed = ART.v4prop(tb._); if (closed) { im = ART.opened(closed); absorb = true; } }   // 열린 그림이 없다 → 닫힌 v4 그림을 어둡게
     if (im) small = HAND.test(o.id) || (im.width <= 14 && im.height <= 12);
     return { im, absorb, small, openSt, v4: !!im };

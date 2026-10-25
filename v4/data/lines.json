@@ -1075,7 +1075,7 @@
     "speaker": "{who}",
     "context": "",
     "grade": "normal",
-    "text": "동하가 밤에 창고 쪽으로 갔어.",
+    "text": "밤에 덩치 큰 사람이 창고 쪽으로 갔어.",
     "rumor": 1,
     "truth": 0
   },
@@ -2214,123 +2214,6 @@
     "truth": 1
   },
   {
-    "id": "end_seat_shoe",
-    "speaker": "narrator",
-    "context": "",
-    "grade": "normal",
-    "text": "운전석에 구두 한 짝이 놓여 있다. 당신 발에 맞는다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_seat_shoe",
-    "speaker": "narrator",
-    "context": "flag:walked_out",
-    "grade": "normal",
-    "text": "고가 아래 지나간 열차의 운전석이 비어 있다. 당신 발에 맞는 구두 한 짝이 거기 있다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_two_books",
-    "speaker": "narrator",
-    "context": "",
-    "grade": "normal",
-    "text": "수첩 두 권이 나란히 놓여 있다. 글씨가 같다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_two_books",
-    "speaker": "narrator",
-    "context": "flag:walked_out",
-    "grade": "normal",
-    "text": "주머니에 수첩이 두 권 있다. 글씨가 같다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_punch_hand",
-    "speaker": "narrator",
-    "context": "",
-    "grade": "normal",
-    "text": "당신 손에 펀치가 들려 있다. 읽을 사람은 당신뿐이다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_empty_cab",
-    "speaker": "narrator",
-    "context": "",
-    "grade": "normal",
-    "text": "운전석에 누가 앉아 있다. 당신 자리는 좌석이다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_empty_cab",
-    "speaker": "narrator",
-    "context": "flag:walked_out",
-    "grade": "normal",
-    "text": "좌석 하나가 비어 있다. 손님이 걸어서 가는 동안.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_empty_cab",
-    "speaker": "narrator",
-    "context": "flag:you_answered | !flag:you_boarded & !flag:you_stayed & !flag:walked_out & !alive:you",
-    "grade": "normal",
-    "text": "좌석 하나가 비어 있다. 손님은 오지 않았다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_shoes_stairs",
-    "speaker": "narrator",
-    "context": "",
-    "grade": "normal",
-    "text": "계단 아래 신발 한 켤레가 가지런하다. 발끝이 위를 본다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_train_passes",
-    "speaker": "narrator",
-    "context": "",
-    "grade": "normal",
-    "text": "열차가 서지 않고 지나간다. 창 안의 얼굴들이 당신을 보지 않는다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_train_passes",
-    "speaker": "narrator",
-    "context": "flag:you_stayed",
-    "grade": "normal",
-    "text": "열차가 떠난 자리에 당신만 서 있다. 아무도 돌아보지 않았다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_train_passes",
-    "speaker": "narrator",
-    "context": "flag:you_boarded",
-    "grade": "normal",
-    "text": "창밖으로 승강장이 지나간다. 거기 서 있는 사람이 당신을 보지 않는다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
-    "id": "end_voice_above",
-    "speaker": "narrator",
-    "context": "",
-    "grade": "normal",
-    "text": "계단 위에서 세는 소리가 난다. 당신 목소리다.",
-    "rumor": 0,
-    "truth": 1
-  },
-  {
     "id": "insp_fire_wet",
     "speaker": "narrator",
     "context": "",
@@ -2907,6 +2790,249 @@
     "context": "",
     "grade": "choice",
     "text": "안 통하면 끝이다",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_drawer_a1",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "계산대 뒤 서랍장이다. 맨 아래 칸이 닫혀 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_drawer_a1_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "열어 본 서랍장이다. 영수증만 남았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelf_a1",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "쓰러진 자판기 옆 선반이다. 밑에 무엇이 굴러 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelf_a1_empty",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 선반이다. 터진 캔 냄새가 남았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_locker_a1",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "관리실 사물함이다. 문이 조금 벌어져 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_locker_a1_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 사물함이다. 옷걸이 하나가 흔들린다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelf_a2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "기운 선반이다. 위에 상자가 쌓여 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelf_a2_picked",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "기운 선반이다. 바닥은 비었고 위 상자는 그대로다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_shelf_a2_empty",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "넘어진 선반이다. 상자는 다 뜯겼다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_barrel_a2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "멈춘 에스컬레이터 밑에 드럼통이 끼어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_barrel_a2_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빼낸 드럼통이다. 비었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_locker_a2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "구석 사물함이다. 손잡이에 마른 피가 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_locker_a2_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 사물함이다. 안쪽 문에 손톱자국이 길다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_crate_b1",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "쌓인 상자다. 하나가 뜯겨 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_crate_b1_empty",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "뜯은 상자다. 쥐똥만 남았다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_barrel_b1",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "녹슨 드럼통이다. 뚜껑이 철사로 묶여 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_barrel_b1_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 드럼통이다. 비닐 조각이 붙어 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bag_b1",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "배수관에 가방이 걸려 있다. 물 밑이 보이지 않는다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bag_b1_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 가방이 물에 떠 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_toolbox_b2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "펌프 관리용 공구함이다. 걸쇠가 녹슬었다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_toolbox_b2_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "빈 공구함이다. 기름 냄새가 난다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_locker_b2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "펌프실 옆 사물함이다. 안에서 물소리가 난다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_locker_b2_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "열린 사물함이다. 바닥에 물이 고였다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_barrel_b2",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "반쯤 물에 잠긴 드럼통이다. 뚜껑이 떠 있다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_barrel_b2_open",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "흙탕물이 찬 드럼통이다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bodybag_zipped",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "지퍼를 닫은 시체 자루다. 냄새는 그대로다.",
+    "rumor": 0,
+    "truth": 1
+  },
+  {
+    "id": "insp_bodybag_taken",
+    "speaker": "narrator",
+    "context": "",
+    "grade": "normal",
+    "text": "자루가 있던 자리에 젖은 자국만 남았다.",
     "rumor": 0,
     "truth": 1
   }

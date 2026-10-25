@@ -1,0 +1,1438 @@
+[
+ {
+  "run": "farm",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": true,
+  "finished": "time_limit",
+  "ending": null,
+  "death": [],
+  "death_cause": null,
+  "wall_s": 25.7,
+  "keys": 181,
+  "steps": 115,
+  "click_fallback": 0,
+  "totals": {
+   "lines": 39,
+   "chars": 457,
+   "choices": 6,
+   "steps": 115,
+   "events": 3
+  },
+  "console_errors": 0,
+  "issues": [
+   "time_limit: 25.0초 안에 끝나지 않았다"
+  ],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 7,
+    "event": 3,
+    "amb": 2,
+    "hurt": 1,
+    "bubble": 1,
+    "inspect": 9
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "fgrab",
+  "policy": "selfish",
+  "real_time": false,
+  "from_save": true,
+  "finished": "title",
+  "ending": null,
+  "death": [
+   [
+    10,
+    "ended"
+   ]
+  ],
+  "death_cause": {
+   "event": "d10_grab",
+   "choice": "끌려 넘어진다",
+   "warned": true,
+   "forced": false,
+   "free": {
+    "event": "d10_grab",
+    "choice": "끌려 넘어진다",
+    "day": 10
+   },
+   "image": "",
+   "night": false,
+   "warn": "크게 다친다. 못 버티면 끝이다",
+   "swapped": true,
+   "roped": true,
+   "blind": false,
+   "noSafe": true
+  },
+  "wall_s": 7.7,
+  "keys": 19,
+  "steps": 0,
+  "click_fallback": 0,
+  "totals": {
+   "lines": 14,
+   "chars": 166,
+   "choices": 3,
+   "steps": 0,
+   "events": 1
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [
+   {
+    "id": "d10_grab",
+    "day": 10,
+    "box": "opts  rope hb4",
+    "blind": "",
+    "pct": [
+     [
+      "85%"
+     ],
+     [
+      "78%"
+     ],
+     [
+      "60%"
+     ]
+    ]
+   }
+  ],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 2,
+    "event": 1,
+    "amb": 3,
+    "fail": 1,
+    "death": 1,
+    "pick:no:hush": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "fhold",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": true,
+  "finished": "title",
+  "ending": null,
+  "death": [
+   [
+    10,
+    "ended"
+   ]
+  ],
+  "death_cause": {
+   "event": "d10_grab",
+   "choice": "끌려 넘어진다",
+   "warned": true,
+   "forced": false,
+   "free": {
+    "event": "d10_grab",
+    "choice": "끌려 넘어진다",
+    "day": 10
+   },
+   "image": "",
+   "night": false,
+   "warn": "크게 다친다. 못 버티면 끝이다",
+   "swapped": true,
+   "roped": true,
+   "blind": false,
+   "noSafe": true
+  },
+  "wall_s": 9.9,
+  "keys": 23,
+  "steps": 0,
+  "click_fallback": 0,
+  "totals": {
+   "lines": 19,
+   "chars": 255,
+   "choices": 4,
+   "steps": 0,
+   "events": 2
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [
+   {
+    "id": "d10_hold",
+    "day": 10,
+    "box": "opts wide rope hb4",
+    "blind": "",
+    "pct": [
+     [
+      "85%"
+     ],
+     [
+      "78%"
+     ],
+     [
+      "85%"
+     ],
+     [
+      "65%"
+     ]
+    ]
+   },
+   {
+    "id": "d10_grab",
+    "day": 10,
+    "box": "opts  rope hb3",
+    "blind": "",
+    "pct": [
+     [
+      "97%"
+     ],
+     [
+      "88%"
+     ],
+     [
+      "60%"
+     ]
+    ]
+   }
+  ],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 3,
+    "event": 2,
+    "amb": 3,
+    "ok": 1,
+    "fail": 1,
+    "death": 1,
+    "pick:no:hush": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "ftrain",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": true,
+  "finished": "title",
+  "ending": null,
+  "death": [
+   [
+    10,
+    "ended"
+   ]
+  ],
+  "death_cause": {
+   "event": "d10_train",
+   "choice": "운임 없이 탄다",
+   "warned": true,
+   "forced": false,
+   "free": {
+    "event": "d10_train",
+    "choice": "운임 없이 탄다",
+    "day": 10
+   },
+   "image": "death_counted",
+   "night": false,
+   "warn": "세어진 사람은 올라간다",
+   "swapped": false,
+   "roped": false,
+   "blind": false,
+   "noSafe": false
+  },
+  "wall_s": 15.1,
+  "keys": 31,
+  "steps": 0,
+  "click_fallback": 0,
+  "totals": {
+   "lines": 13,
+   "chars": 188,
+   "choices": 10,
+   "steps": 0,
+   "events": 2
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {
+   "d10_train": 2
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 9,
+    "event": 1,
+    "amb": 3,
+    "death": 1,
+    "pick:no:hush": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "ftrain2",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": true,
+  "finished": "title",
+  "ending": "d10_train",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 14.6,
+  "keys": 31,
+  "steps": 0,
+  "click_fallback": 0,
+  "totals": {
+   "lines": 12,
+   "chars": 169,
+   "choices": 10,
+   "steps": 0,
+   "events": 2
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {
+   "d10_train": 2
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 10,
+    "event": 1,
+    "amb": 2
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "fwalk",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": true,
+  "finished": "title",
+  "ending": "d10_walk",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 8.5,
+  "keys": 18,
+  "steps": 0,
+  "click_fallback": 0,
+  "totals": {
+   "lines": 13,
+   "chars": 198,
+   "choices": 4,
+   "steps": 0,
+   "events": 1
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 4,
+    "event": 1,
+    "amb": 2
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "fwalk_k12",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": true,
+  "finished": "title",
+  "ending": "d10_walk",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 9.7,
+  "keys": 20,
+  "steps": 0,
+  "click_fallback": 0,
+  "totals": {
+   "lines": 14,
+   "chars": 213,
+   "choices": 4,
+   "steps": 0,
+   "events": 1
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 4,
+    "event": 1,
+    "amb": 2,
+    "fail": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "fwalk_k6",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": true,
+  "finished": "title",
+  "ending": "d10_walk",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 9.2,
+  "keys": 19,
+  "steps": 0,
+  "click_fallback": 0,
+  "totals": {
+   "lines": 14,
+   "chars": 213,
+   "choices": 4,
+   "steps": 0,
+   "events": 1
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 4,
+    "event": 1,
+    "amb": 2,
+    "fail": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "k1",
+  "policy": "risky",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": null,
+  "death": [
+   [
+    0,
+    "ended"
+   ]
+  ],
+  "death_cause": {
+   "event": "pro_stairs_b",
+   "choice": "구두를 가지러 오른다",
+   "warned": true,
+   "forced": false,
+   "free": {
+    "event": "pro_stairs_b",
+    "choice": "구두를 가지러 오른다",
+    "day": 0
+   },
+   "image": "death_counted",
+   "night": false,
+   "warn": "발자국이 줄 앞에서 끊겼다",
+   "swapped": false,
+   "roped": false,
+   "blind": false,
+   "noSafe": false
+  },
+  "wall_s": 80.6,
+  "keys": 313,
+  "steps": 186,
+  "click_fallback": 3,
+  "totals": {
+   "lines": 76,
+   "chars": 1051,
+   "choices": 14,
+   "steps": 186,
+   "events": 11
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 13,
+    "event": 11,
+    "amb": 5,
+    "inspect": 13,
+    "open": 4,
+    "event_sound": 2,
+    "bubble": 6,
+    "death": 1,
+    "pick:no:hush": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "l1",
+  "policy": "lazy",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": null,
+  "death": [
+   [
+    7,
+    "ended"
+   ]
+  ],
+  "death_cause": {
+   "event": "dawn_strike",
+   "choice": "맞고 버틴다",
+   "warned": true,
+   "forced": false,
+   "free": {
+    "event": "dawn_strike",
+    "choice": "맞고 버틴다",
+    "day": 7
+   },
+   "image": "",
+   "night": false,
+   "warn": "귀를 잃는다. 못 버티면 끝이다",
+   "swapped": true,
+   "roped": true,
+   "blind": true,
+   "noSafe": true
+  },
+  "wall_s": 306.3,
+  "keys": 1203,
+  "steps": 592,
+  "click_fallback": 3,
+  "totals": {
+   "lines": 377,
+   "chars": 5308,
+   "choices": 93,
+   "steps": 592,
+   "events": 46
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [
+   {
+    "id": "dawn_strike",
+    "day": 4,
+    "box": "opts wide rope hb3",
+    "blind": "못 본 일이 커져서 왔다.",
+    "pct": [
+     [
+      "90%"
+     ],
+     [
+      "80%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "55%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "70%"
+     ]
+    ]
+   },
+   {
+    "id": "dawn_strike",
+    "day": 5,
+    "box": "opts wide rope hb3",
+    "blind": "못 본 일이 커져서 왔다.",
+    "pct": [
+     [
+      "90%"
+     ],
+     [
+      "80%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "55%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "70%"
+     ]
+    ]
+   },
+   {
+    "id": "dawn_strike",
+    "day": 7,
+    "box": "opts wide rope hb4",
+    "blind": "못 본 일이 커져서 왔다.",
+    "pct": [
+     [
+      "90%"
+     ],
+     [
+      "80%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "55%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "70%"
+     ]
+    ]
+   }
+  ],
+  "night_unseen": [],
+  "repeats": {
+   "dawn_strike": 3
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 92,
+    "event": 46,
+    "amb": 25,
+    "inspect": 29,
+    "open": 12,
+    "event_sound": 3,
+    "bubble": 9,
+    "knock": 4,
+    "fail": 6,
+    "hurt": 4,
+    "ok": 4,
+    "death": 1,
+    "pick:no:hush": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "n1",
+  "policy": "normal",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": "d10_walk",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 633.1,
+  "keys": 3094,
+  "steps": 1819,
+  "click_fallback": 12,
+  "totals": {
+   "lines": 765,
+   "chars": 10136,
+   "choices": 159,
+   "steps": 1819,
+   "events": 66
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [],
+  "night_unseen": [
+   {
+    "day": 5,
+    "text": "어제 못 본 손이 또 왔다."
+   },
+   {
+    "day": 5,
+    "text": "약이 비어 상처가 덧났다."
+   }
+  ],
+  "repeats": {
+   "wound_critical": 3,
+   "passage_day1": 3,
+   "starve_you": 2
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 159,
+    "event": 66,
+    "amb": 31,
+    "inspect": 137,
+    "open": 14,
+    "event_sound": 4,
+    "bubble": 10,
+    "knock": 14,
+    "fail": 7,
+    "ok": 12,
+    "hurt": 5
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "n2",
+  "policy": "normal",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": null,
+  "death": [
+   [
+    5,
+    "ended"
+   ]
+  ],
+  "death_cause": {
+   "event": "d5_flood",
+   "choice": "모두 매달려 퍼낸다",
+   "warned": true,
+   "forced": false,
+   "free": {
+    "event": "d5_flood",
+    "choice": "모두 매달려 퍼낸다",
+    "day": 5
+   },
+   "image": "",
+   "night": false,
+   "warn": "쓸려 가면 끝이다",
+   "swapped": false,
+   "roped": false,
+   "blind": false,
+   "noSafe": false
+  },
+  "wall_s": 399.6,
+  "keys": 2146,
+  "steps": 1402,
+  "click_fallback": 6,
+  "totals": {
+   "lines": 439,
+   "chars": 5936,
+   "choices": 94,
+   "steps": 1402,
+   "events": 41
+  },
+  "console_errors": 0,
+  "issues": [
+   "repeat_line: 같은 줄이 연달아 3번: 담요가 개어 있다.",
+   "missing_art: flood_sick@flood_sick"
+  ],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 93,
+    "event": 41,
+    "amb": 23,
+    "inspect": 79,
+    "open": 14,
+    "event_sound": 3,
+    "bubble": 11,
+    "knock": 11,
+    "ok": 4,
+    "fail": 3,
+    "hurt": 1,
+    "death": 1,
+    "pick:no:hush": 1
+   }
+  },
+  "missing_art": [
+   "flood_sick@flood_sick"
+  ]
+ },
+ {
+  "run": "real1",
+  "policy": "normal",
+  "real_time": true,
+  "from_save": false,
+  "finished": "title",
+  "ending": null,
+  "death": [
+   [
+    2,
+    "ended"
+   ]
+  ],
+  "death_cause": {
+   "event": "d2_shutter_arm",
+   "choice": "팔을 비틀어 뺀다",
+   "warned": true,
+   "forced": false,
+   "free": {
+    "event": "d2_shutter_arm",
+    "choice": "팔을 비틀어 뺀다",
+    "day": 2
+   },
+   "image": "",
+   "night": false,
+   "warn": "못 빼면 끝이다",
+   "swapped": false,
+   "roped": false,
+   "blind": false,
+   "noSafe": false
+  },
+  "wall_s": 494.1,
+  "keys": 1267,
+  "steps": 787,
+  "click_fallback": 1,
+  "totals": {
+   "lines": 260,
+   "chars": 3482,
+   "choices": 52,
+   "steps": 787,
+   "events": 27
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {},
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 51,
+    "event": 27,
+    "amb": 14,
+    "step": 823,
+    "inspect": 39,
+    "open": 10,
+    "event_sound": 3,
+    "bubble": 11,
+    "knock": 45,
+    "fail": 4,
+    "death": 1,
+    "pick:no:hush": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "rl1",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": "d10_walk_other",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 513.7,
+  "keys": 3206,
+  "steps": 1876,
+  "click_fallback": 4,
+  "totals": {
+   "lines": 780,
+   "chars": 10469,
+   "choices": 172,
+   "steps": 1876,
+   "events": 73
+  },
+  "console_errors": 0,
+  "issues": [
+   "repeat_event: passage_alone 가 4 번째 떴다"
+  ],
+  "rope_windows": [
+   {
+    "id": "dawn_strike",
+    "day": 9,
+    "box": "opts wide rope hb4",
+    "blind": "못 본 일이 커져서 왔다.",
+    "pct": [
+     [
+      "85%"
+     ],
+     [
+      "80%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "65%"
+     ]
+    ]
+   },
+   {
+    "id": "d10_grab",
+    "day": 10,
+    "box": "opts  rope hb2",
+    "blind": "",
+    "pct": [
+     [
+      "92%"
+     ],
+     [
+      "93%"
+     ],
+     [
+      "65%"
+     ]
+    ]
+   }
+  ],
+  "night_unseen": [],
+  "repeats": {
+   "share_back": 3,
+   "repay_bowl": 2,
+   "passage_alone": 4,
+   "starve_you": 2,
+   "wound_critical": 3,
+   "fever_night": 2
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 127,
+    "amb": 21,
+    "event": 49,
+    "event_sound": 2,
+    "ok": 10,
+    "bubble": 1,
+    "inspect": 94,
+    "fail": 8,
+    "open": 3,
+    "hurt": 4
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "s1",
+  "policy": "selfish",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": null,
+  "death": [
+   [
+    5,
+    "ended"
+   ]
+  ],
+  "death_cause": {
+   "event": "dawn_strike",
+   "choice": "옆 담요를 가리킨다",
+   "warned": true,
+   "forced": false,
+   "free": {
+    "event": "dawn_strike",
+    "choice": "옆 담요를 가리킨다",
+    "day": 5
+   },
+   "image": "",
+   "night": false,
+   "warn": "아무도 안 돌아서면 끝이다",
+   "swapped": true,
+   "roped": true,
+   "blind": false,
+   "noSafe": true
+  },
+  "wall_s": 315.4,
+  "keys": 1563,
+  "steps": 920,
+  "click_fallback": 3,
+  "totals": {
+   "lines": 383,
+   "chars": 5032,
+   "choices": 84,
+   "steps": 920,
+   "events": 37
+  },
+  "console_errors": 0,
+  "issues": [],
+  "rope_windows": [
+   {
+    "id": "dawn_strike",
+    "day": 4,
+    "box": "opts wide rope hb4",
+    "blind": "못 본 일이 커져서 왔다.",
+    "pct": [
+     [
+      "90%"
+     ],
+     [
+      "80%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "55%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "70%"
+     ]
+    ]
+   },
+   {
+    "id": "dawn_strike",
+    "day": 5,
+    "box": "opts wide rope hb4",
+    "blind": "",
+    "pct": [
+     [
+      "85%"
+     ],
+     [
+      "83%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "55%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "55%"
+     ]
+    ]
+   }
+  ],
+  "night_unseen": [],
+  "repeats": {
+   "repay_bowl": 3,
+   "dawn_strike": 2
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 83,
+    "event": 37,
+    "amb": 17,
+    "inspect": 59,
+    "open": 6,
+    "event_sound": 3,
+    "bubble": 11,
+    "knock": 12,
+    "ok": 3,
+    "hurt": 1,
+    "fail": 2,
+    "death": 1,
+    "pick:no:hush": 1
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "v1",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": "d10_walk_other",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 463.9,
+  "keys": 2629,
+  "steps": 1452,
+  "click_fallback": 4,
+  "totals": {
+   "lines": 705,
+   "chars": 9019,
+   "choices": 144,
+   "steps": 1452,
+   "events": 62
+  },
+  "console_errors": 0,
+  "issues": [
+   "repeat_event: starve_you 가 4 번째 떴다"
+  ],
+  "rope_windows": [
+   {
+    "id": "dawn_strike",
+    "day": 7,
+    "box": "opts wide rope hb1",
+    "blind": "",
+    "pct": [
+     [
+      "97%"
+     ],
+     [
+      "93%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "55%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "87%"
+     ]
+    ]
+   },
+   {
+    "id": "dawn_strike",
+    "day": 8,
+    "box": "opts wide rope hb4",
+    "blind": "못 본 일이 커져서 왔다.",
+    "pct": [
+     [
+      "85%"
+     ],
+     [
+      "80%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "65%"
+     ]
+    ]
+   },
+   {
+    "id": "d10_grab",
+    "day": 10,
+    "box": "opts  rope hb3",
+    "blind": "",
+    "pct": [
+     [
+      "92%"
+     ],
+     [
+      "88%"
+     ],
+     [
+      "60%"
+     ]
+    ]
+   }
+  ],
+  "night_unseen": [],
+  "repeats": {
+   "starve_you": 4,
+   "fever_night": 3,
+   "dawn_strike": 2,
+   "wound_critical": 3
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 144,
+    "event": 62,
+    "amb": 26,
+    "inspect": 120,
+    "open": 9,
+    "event_sound": 4,
+    "bubble": 10,
+    "knock": 12,
+    "ok": 12,
+    "fail": 7,
+    "hurt": 6
+   }
+  },
+  "missing_art": []
+ },
+ {
+  "run": "v2",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": "d10_walk_other",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 537.0,
+  "keys": 3396,
+  "steps": 2051,
+  "click_fallback": 8,
+  "totals": {
+   "lines": 799,
+   "chars": 10452,
+   "choices": 169,
+   "steps": 2051,
+   "events": 74
+  },
+  "console_errors": 0,
+  "issues": [
+   "missing_art: flood_sick@flood_sick",
+   "repeat_event: fever_night 가 4 번째 떴다",
+   "repeat_event: starve_you 가 4 번째 떴다",
+   "repeat_event: fever_night 가 5 번째 떴다",
+   "repeat_event: wound_critical 가 4 번째 떴다"
+  ],
+  "rope_windows": [
+   {
+    "id": "dawn_strike",
+    "day": 7,
+    "box": "opts wide rope hb2",
+    "blind": "",
+    "pct": [
+     [
+      "92%"
+     ],
+     [
+      "93%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "50%"
+     ],
+     [
+      "75%"
+     ],
+     [
+      "82%"
+     ]
+    ]
+   },
+   {
+    "id": "dawn_mob",
+    "day": 7,
+    "box": "opts wide rope hb2",
+    "blind": "",
+    "pct": [
+     [
+      "92%"
+     ],
+     [
+      "93%"
+     ],
+     [
+      "92%"
+     ],
+     [
+      "82%"
+     ],
+     [
+      "45%"
+     ],
+     [
+      "35%"
+     ]
+    ]
+   },
+   {
+    "id": "dawn_mob",
+    "day": 9,
+    "box": "opts wide rope hb2",
+    "blind": "",
+    "pct": [
+     [
+      "92%"
+     ],
+     [
+      "93%"
+     ],
+     [
+      "92%"
+     ],
+     [
+      "82%"
+     ],
+     [
+      "45%"
+     ],
+     [
+      "35%"
+     ]
+    ]
+   },
+   {
+    "id": "fever_night",
+    "day": 9,
+    "box": "opts wide rope hb4",
+    "blind": "",
+    "pct": [
+     [],
+     [
+      "40%"
+     ],
+     [
+      "70%"
+     ],
+     [
+      "80%"
+     ],
+     [],
+     [],
+     [
+      "82%"
+     ]
+    ]
+   },
+   {
+    "id": "d10_walk_weak",
+    "day": 10,
+    "box": "opts  rope hb4",
+    "blind": "",
+    "pct": [
+     [],
+     [
+      "82%"
+     ],
+     [
+      "70%"
+     ]
+    ]
+   }
+  ],
+  "night_unseen": [
+   {
+    "day": 4,
+    "text": "어제 못 본 손이 또 왔다."
+   },
+   {
+    "day": 4,
+    "text": "약이 비어 상처가 덧났다."
+   }
+  ],
+  "repeats": {
+   "repay_bowl": 2,
+   "starve_you": 4,
+   "fever_night": 5,
+   "flood_sick_end": 2,
+   "wound_critical": 4,
+   "dawn_mob": 2
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 169,
+    "event": 74,
+    "amb": 31,
+    "inspect": 136,
+    "open": 15,
+    "event_sound": 4,
+    "bubble": 9,
+    "knock": 3,
+    "fail": 13,
+    "ok": 8,
+    "hurt": 4
+   }
+  },
+  "missing_art": [
+   "flood_sick@flood_sick"
+  ]
+ },
+ {
+  "run": "v3",
+  "policy": "survivor",
+  "real_time": false,
+  "from_save": false,
+  "finished": "title",
+  "ending": "d10_walk_other",
+  "death": [],
+  "death_cause": null,
+  "wall_s": 470.6,
+  "keys": 2726,
+  "steps": 1554,
+  "click_fallback": 6,
+  "totals": {
+   "lines": 699,
+   "chars": 9035,
+   "choices": 150,
+   "steps": 1554,
+   "events": 63
+  },
+  "console_errors": 0,
+  "issues": [
+   "repeat_event: starve_you 가 4 번째 떴다",
+   "repeat_event: starve_you 가 5 번째 떴다"
+  ],
+  "rope_windows": [],
+  "night_unseen": [],
+  "repeats": {
+   "share_back": 2,
+   "starve_you": 5,
+   "fever_night": 3,
+   "wound_critical": 3
+  },
+  "sound": {
+   "ctx": "running",
+   "broken": "",
+   "hist": {
+    "start": 1,
+    "pick": 150,
+    "event": 63,
+    "amb": 26,
+    "inspect": 120,
+    "open": 8,
+    "event_sound": 4,
+    "bubble": 10,
+    "knock": 12,
+    "fail": 8,
+    "hurt": 5,
+    "ok": 7
+   }
+  },
+  "missing_art": []
+ }
+]

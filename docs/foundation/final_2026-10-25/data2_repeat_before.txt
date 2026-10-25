@@ -1,0 +1,19 @@
+데이터 docs\foundation\final_2026-10-25\data_round1 · 정책 balanced,risky,selfish_nb,lazy,h_cautious,h_first,devoted × 100판 = 700판
+사건(사본 합침) | 뜬 판 | 판당 평균 | 최대 | 3번 이상 뜬 판 | 같은 글 최대 | 같은 글 3번 이상 판
+starve_you | 526 | 3.87 | 7 | 407 | 7 | 407
+wound_critical | 559 | 3.40 | 9 | 343 | 9 | 343
+repay_bowl | 477 | 3.57 | 9 | 304 | 9 | 304
+fever_night | 503 | 2.51 | 7 | 230 | 7 | 230
+share_back | 572 | 1.91 | 7 | 128 | 7 | 128
+passage_alone | 339 | 1.49 | 4 | 35 | 4 | 35
+dawn_strike | 284 | 1.47 | 4 | 34 | 4 | 34
+passage_day2 | 74 | 2.05 | 4 | 25 | 4 | 25
+called_up | 420 | 1.24 | 5 | 19 | 5 | 19
+dawn_mob | 202 | 1.45 | 5 | 16 | 5 | 16
+passage_alone_b | 107 | 1.52 | 4 | 16 | 4 | 16
+passage_day1 | 41 | 2.24 | 5 | 12 | 5 | 12
+flood_sick | 90 | 1.30 | 3 | 2 | 3 | 2
+crate_lid | 700 | 1.00 | 1 | 0 | 1 | 0
+d6_dohyeon_back | 108 | 1.00 | 1 | 0 | 1 | 0
+flood_sick_end | 13 | 1.46 | 2 | 0 | 2 | 0
+dawn_dongha2 | 2 | 1.00 | 1 | 0 | 1 | 0

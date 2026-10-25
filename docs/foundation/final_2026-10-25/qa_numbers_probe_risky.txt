@@ -1,0 +1,32 @@
+risky: survival 22.9% (229/1000) · blocks 1: 20.5% / 1001: 23.5% / 2001: 23.0% / 3001: 23.5% / 8001: 24.0%
+death day: {"2":49,"3":17,"4":100,"5":226,"6":116,"7":117,"8":51,"9":44,"10":51}
+ 217 fever_night | 불가에서 땀을 뺀다 | roped=0 | chance=70
+ 109 d5_flood | 모두 매달려 퍼낸다 | roped=0 | chance=75
+  66 d5_flood | 모두 매달려 퍼낸다 | roped=0 | chance=80
+  43 d4_spanner | 스패너를 막는다 | roped=0 | chance=80
+  41 d6_shutter_b | 아무것도 하지 않는다 | roped=1 | chance=87
+  39 d10_walk_weak | 이를 악물고 걷는다 | roped=0 | chance=70
+  27 d2_shutter_arm | 팔을 비틀어 뺀다 | roped=0 | chance=85
+  27 d4_spanner | 스패너를 막는다 | roped=0 | chance=85
+  23 fever_night | 썩은 데를 도려낸다 | roped=0 | chance=85
+  22 d2_shutter_arm | 팔을 비틀어 뺀다 | roped=0 | chance=80
+  18 dawn_strike | 그릇 둘을 내민다 | roped=1 | chance=85
+  16 d6_shutter | 동하와 덤빈다 | roped=0 | chance=55
+  13 fever_night_d3 | 불가에서 땀을 뺀다 | roped=0 | chance=70
+  11 called_up | 귀를 막는다 | roped=0 | chance=75
+  10 dawn_mob | 가진 것을 다 내놓는다 | roped=1 | chance=85
+  10 called_up | 손등을 깨물며 버틴다 | roped=1 | chance=78
+   9 dawn_mob | 손가락 하나로 갚는다 | roped=1 | chance=85
+   9 dawn_strike | 물병 둘을 내민다 | roped=1 | chance=90
+   6 dawn_strike | 맞고 버틴다 | roped=1 | chance=83
+   6 dawn_strike_d6 | 맞고 버틴다 | roped=1 | chance=75
+   5 d10_walk_weak | 이를 악물고 걷는다 | roped=0 | chance=75
+   5 dawn_strike_d6 | 맞고 버틴다 | roped=1 | chance=80
+   5 dawn_strike | 축 늘어진다 | roped=0 | chance=70
+   5 called_up | 손등을 깨물며 버틴다 | roped=1 | chance=83
+   5 called_up | 손등을 깨물며 버틴다 | roped=1 | chance=88
+   4 fever_night_d3 | 썩은 데를 도려낸다 | roped=0 | chance=85
+   4 dawn_strike | 그릇 둘을 내민다 | roped=1 | chance=90
+   3 dawn_mob | 가진 것을 다 내놓는다 | roped=1 | chance=97
+   2 dawn_strike | 맞고 버틴다 | roped=1 | chance=80
+   2 dawn_strike | 물병 둘을 내민다 | roped=1 | chance=85

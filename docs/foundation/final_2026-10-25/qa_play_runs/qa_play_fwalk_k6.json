@@ -1,0 +1,780 @@
+{
+ "run": "fwalk_k6",
+ "policy": "survivor",
+ "real": false,
+ "rseed": 706,
+ "finished": "title",
+ "wall_s": 9.2,
+ "keys": 19,
+ "steps": 0,
+ "click_fallback": 0,
+ "fallback_to": [],
+ "days": {
+  "-1": {
+   "lines": 0,
+   "chars": 0,
+   "choices": 0,
+   "steps": 0,
+   "keys": 1,
+   "events": 0,
+   "wall_s": 0.6,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  },
+  "10": {
+   "lines": 14,
+   "chars": 213,
+   "choices": 4,
+   "steps": 0,
+   "keys": 18,
+   "events": 1,
+   "wall_s": 7.7,
+   "cards": 0,
+   "trips": 0,
+   "opened": 0
+  }
+ },
+ "deaths": [],
+ "ending": {
+  "day": 10,
+  "why": "d10_walk",
+  "page": "승객 명부\n\n당신\n걸어 나갔다\n청소원 조끼의 할머니\n걸어 나갔다\n담요 속 여학생\n걸어 나갔다\n헤드램프의 남자\n걸어 나갔다\n셔터의 여자\n걸어 나갔다\n큰 청년\n올라갔다\nD10\n___\n담요의 여자\n걸어 나갔다",
+  "text": "청소원 조끼의 할머니가 수첩을 주워 읽는다.\n\n수첩을 덮기 전에 한 장을 더 넘겼다. 날짜를 적은 줄이 있고, 끝내 아무것도 적지 못한 칸이 있었다."
+ },
+ "issues": [],
+ "rope": [
+  {
+   "id": "d10_walk",
+   "day": 10,
+   "karma": 6,
+   "boxCls": "opts",
+   "blind": "",
+   "opts": [
+    {
+     "label": "청년을 붙잡는다",
+     "subs": [
+      [
+       "",
+       "45%잡은 손이 재가 된다",
+       ""
+      ],
+      [
+       "chance",
+       "45%",
+       ""
+      ],
+      [
+       "warn",
+       "잡은 손이 재가 된다",
+       ""
+      ]
+     ],
+     "disabled": false
+    },
+    {
+     "label": "대신 대답한다",
+     "subs": [
+      [
+       "",
+       "대답한 사람은 올라간다",
+       ""
+      ],
+      [
+       "warn",
+       "대답한 사람은 올라간다",
+       "4"
+      ]
+     ],
+     "disabled": false
+    },
+    {
+     "label": "걷는다",
+     "subs": [
+      [
+       "",
+       "82%소매를 잡히면 끝이다",
+       ""
+      ],
+      [
+       "chance",
+       "82%",
+       "2"
+      ],
+      [
+       "warn",
+       "소매를 잡히면 끝이다",
+       "2"
+      ]
+     ],
+     "disabled": false
+    }
+   ],
+   "surv": [
+    1,
+    0,
+    0.82
+   ]
+  }
+ ],
+ "unseen": [],
+ "nocg_events": [],
+ "events_shown": [
+  "d10_walk"
+ ],
+ "missing": [],
+ "sound": {
+  "status": {
+   "off": false,
+   "test": true,
+   "eager": true,
+   "broken": "",
+   "gestured": true,
+   "ctx": "running",
+   "on": true,
+   "level": 1,
+   "levelName": "보통",
+   "hidden": false,
+   "deathHush": false,
+   "nodes": 88,
+   "nodeKinds": {
+    "createBuffer": 11,
+    "createGain": 34,
+    "createDynamicsCompressor": 1,
+    "createAnalyser": 1,
+    "createConvolver": 1,
+    "createBiquadFilter": 13,
+    "createOscillator": 14,
+    "createBufferSource": 9,
+    "createStereoPanner": 4
+   },
+   "counts": {
+    "drip": 2,
+    "crackle": 0,
+    "hiss": 0
+   },
+   "master": 0.5,
+   "amb": {
+    "map": "station",
+    "night": false,
+    "hum": 1,
+    "humF": 1,
+    "air": 0.5,
+    "fire": 0,
+    "water": 0,
+    "hiss": 0,
+    "amb": 0.5
+   }
+  },
+  "n": 9,
+  "hist": {
+   "start": 1,
+   "pick": 4,
+   "event": 1,
+   "amb": 2,
+   "fail": 1
+  },
+  "last": [
+   {
+    "t": 6198,
+    "danger": false,
+    "played": true,
+    "nodes": 52,
+    "kind": "pick"
+   },
+   {
+    "t": 6204,
+    "id": "d10_walk",
+    "played": true,
+    "nodes": 57,
+    "kind": "event"
+   },
+   {
+    "t": 6301,
+    "map": "station",
+    "night": false,
+    "amb": 1,
+    "fire": 0,
+    "water": 0,
+    "kind": "amb"
+   },
+   {
+    "t": 8442,
+    "danger": true,
+    "played": true,
+    "nodes": 61,
+    "kind": "pick"
+   },
+   {
+    "t": 9492,
+    "danger": true,
+    "played": true,
+    "nodes": 66,
+    "kind": "pick"
+   },
+   {
+    "t": 9496,
+    "close": false,
+    "played": true,
+    "nodes": 71,
+    "kind": "fail"
+   },
+   {
+    "t": 9508,
+    "map": "station",
+    "night": false,
+    "amb": 0.5,
+    "fire": 0,
+    "water": 0,
+    "kind": "amb"
+   },
+   {
+    "t": 12126,
+    "danger": false,
+    "played": true,
+    "nodes": 83,
+    "kind": "pick"
+   }
+  ]
+ },
+ "final_state": {
+  "day": 10,
+  "phase": "ended",
+  "seed": 167,
+  "ended": {
+   "why": "d10_walk",
+   "identity": "platform_one",
+   "reader": "resident",
+   "readerId": "soonrye",
+   "ledger": [
+    {
+     "line": 0,
+     "id": "you",
+     "name": "당신",
+     "status": "walked",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 1,
+     "id": "soonrye",
+     "name": "김순례",
+     "status": "walked",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 2,
+     "id": "seoha",
+     "name": "윤서하",
+     "status": "walked",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 3,
+     "id": "gicheol",
+     "name": "박기철",
+     "status": "walked",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 4,
+     "id": "eunji",
+     "name": "최은지",
+     "status": "walked",
+     "day": null,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 5,
+     "id": "dongha",
+     "name": "한동하",
+     "status": "ascended",
+     "day": 10,
+     "cause": null,
+     "written": []
+    },
+    {
+     "line": 6,
+     "id": "mari",
+     "name": "정마리",
+     "status": "walked",
+     "day": null,
+     "cause": null,
+     "written": []
+    }
+   ],
+   "cause": null
+  },
+  "you": "walked",
+  "people": {
+   "soonrye": "walked",
+   "seoha": "walked",
+   "gicheol": "walked",
+   "eunji": "walked",
+   "dongha": "ascended@D10",
+   "mari": "walked",
+   "eunchae": "outside",
+   "dohyeon": "outside",
+   "you": "walked"
+  },
+  "stats": {
+   "decisions": 222,
+   "nights": 10,
+   "deaths": 0,
+   "neglect": 2,
+   "ropeRolls": 0,
+   "ropeClose": 0,
+   "ropeFeltRolls": 0,
+   "ropeFelt": 0,
+   "deathRolls": 3,
+   "closeCalls": 3,
+   "blindMet": 0,
+   "holds": 7
+  }
+ },
+ "console_errors": [],
+ "windows": [
+  {
+   "n": 1,
+   "kind": "line",
+   "tag": "d10_walk",
+   "text": "열차는 서지 않았다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_walk",
+   "opts": null,
+   "t": 1792875713926,
+   "map": "station"
+  },
+  {
+   "n": 2,
+   "kind": "line",
+   "tag": "d10_walk",
+   "text": "선로를 따라 걷는다, 고가 구간까지 한 역 반.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_walk",
+   "opts": null,
+   "t": 1792875714092,
+   "map": "station"
+  },
+  {
+   "n": 3,
+   "kind": "line",
+   "tag": "d10_walk",
+   "text": "둘씩 붙어 걷는다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_walk",
+   "opts": null,
+   "t": 1792875714476,
+   "map": "station"
+  },
+  {
+   "n": 4,
+   "kind": "line",
+   "tag": "d10_walk",
+   "text": "환기구 아래서 청년의 이름이 불렸다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_walk",
+   "opts": null,
+   "t": 1792875714860,
+   "map": "station"
+  },
+  {
+   "n": 5,
+   "kind": "line",
+   "tag": "d10_walk",
+   "text": "진짜 이름이었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_walk",
+   "opts": null,
+   "t": 1792875715209,
+   "map": "station"
+  },
+  {
+   "n": 6,
+   "kind": "event",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_walk",
+   "opts": [
+    "청년을 붙잡는다",
+    "대신 대답한다",
+    "걷는다"
+   ],
+   "t": 1792875715585,
+   "map": "station"
+  },
+  {
+   "n": 7,
+   "kind": "confirm2",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "day",
+   "pend": "d10_walk",
+   "opts": [
+    "그렇게 한다",
+    "다시 고른다"
+   ],
+   "t": 1792875716142,
+   "map": "station"
+  },
+  {
+   "n": 8,
+   "kind": "line",
+   "tag": "roll",
+   "text": "판정 45% — 안 됐다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875717194,
+   "map": "station"
+  },
+  {
+   "n": 9,
+   "kind": "line",
+   "tag": "d10_walk:out",
+   "text": "청년이 대답했다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875717558,
+   "map": "station"
+  },
+  {
+   "n": 10,
+   "kind": "line",
+   "tag": "d10_walk:out",
+   "text": "신발을 벗었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875717926,
+   "map": "station"
+  },
+  {
+   "n": 11,
+   "kind": "line",
+   "tag": "d10_walk:out",
+   "text": "당신 손끝이 재가 됐다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875718292,
+   "map": "station"
+  },
+  {
+   "n": 12,
+   "kind": "ending",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": [
+    "덮는다"
+   ],
+   "t": 1792875718685,
+   "map": "station"
+  },
+  {
+   "n": 13,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "고가 아래로 열차가 지나갔다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875719826,
+   "map": "station"
+  },
+  {
+   "n": 14,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "창 안의 사람들이 당신을 보지 못했다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875720192,
+   "map": "station"
+  },
+  {
+   "n": 15,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "당신은 승강장에 서 있던 사람이었다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875720575,
+   "map": "station"
+  },
+  {
+   "n": 16,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "열차가 서지 않고 지나간다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875720959,
+   "map": "station"
+  },
+  {
+   "n": 17,
+   "kind": "line",
+   "tag": "reveal",
+   "text": "창 안의 얼굴들이 당신을 보지 않는다.",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": null,
+   "t": 1792875721309,
+   "map": "station"
+  },
+  {
+   "n": 18,
+   "kind": "title",
+   "tag": "",
+   "text": "",
+   "black": false,
+   "cls": "",
+   "name": "",
+   "face": "",
+   "faceCls": "",
+   "day": 10,
+   "phase": "ended",
+   "pend": "",
+   "opts": [
+    "새로 시작",
+    "저장 코드 불러오기",
+    "전체화면"
+   ],
+   "t": 1792875721725,
+   "map": "station"
+  }
+ ],
+ "choices": [
+  {
+   "kind": "title",
+   "day": null,
+   "phase": null,
+   "text": "어두운 역\n\n묵현역 · 열차까지 열흘 · 18+\n유혈·시체·살해 묘사가 직접 나옵니다",
+   "opts": [
+    "계속 (D10)",
+    "새로 시작",
+    "저장 코드 불러오기",
+    "전체화면"
+   ],
+   "boxCls": "opts wide",
+   "pend": null,
+   "picked": "계속 (D10)"
+  },
+  {
+   "kind": "event",
+   "day": 10,
+   "phase": "day",
+   "text": "열차는 서지 않았다. 선로를 따라 걷는다, 고가 구간까지 한 역 반. 둘씩 붙어 걷는다. 환기구 아래서 청년의 이름이 불렸다. 진짜 이름이었다.",
+   "opts": [
+    "청년을 붙잡는다",
+    "대신 대답한다",
+    "걷는다"
+   ],
+   "boxCls": "opts",
+   "pend": "d10_walk",
+   "ev": {
+    "id": "d10_walk",
+    "kind": "ending",
+    "choices": [
+     {
+      "i": 0,
+      "label": "동하를 붙잡는다",
+      "locked": false,
+      "chance": 45,
+      "warn": "잡은 손이 재가 된다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 1,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 1,
+      "label": "대신 대답한다",
+      "locked": false,
+      "chance": null,
+      "warn": "대답한 사람은 올라간다",
+      "taboo": true,
+      "karma": 0,
+      "surv": 0,
+      "cost": {},
+      "rope": false,
+      "hurt": 0,
+      "food": 0
+     },
+     {
+      "i": 2,
+      "label": "걷는다",
+      "locked": false,
+      "chance": 82,
+      "warn": "소매를 잡히면 끝이다",
+      "taboo": false,
+      "karma": 0,
+      "surv": 0.82,
+      "cost": {},
+      "rope": true,
+      "hurt": 0,
+      "food": 0
+     }
+    ]
+   },
+   "cg": [
+    {
+     "src": "http://127.0.0.1:19026/v4/img/cg_s/d10_walk.png",
+     "cls": "small",
+     "ok": true,
+     "w": 256,
+     "vis": true
+    }
+   ],
+   "picked": "청년을 붙잡는다"
+  },
+  {
+   "kind": "confirm2",
+   "day": 10,
+   "phase": "day",
+   "text": "되돌릴 수 없다\n\n청년을 붙잡는다 — 잡은 손이 재가 된다",
+   "opts": [
+    "그렇게 한다",
+    "다시 고른다"
+   ],
+   "boxCls": "opts",
+   "pend": "d10_walk",
+   "picked": "그렇게 한다"
+  },
+  {
+   "kind": "ending",
+   "day": 10,
+   "phase": "ended",
+   "text": "청소원 조끼의 할머니가 수첩을 주워 읽는다.\n\n수첩을 덮기 전에 한 장을 더 넘겼다. 날짜를 적은 줄이 있고, 끝내 아무것도 적지 못한 칸이 있었다.",
+   "opts": [
+    "덮는다"
+   ],
+   "boxCls": "opts short",
+   "pend": "",
+   "ledger": "청소원 조끼의 할머니가 수첩을 주워 읽는다.\n\n수첩을 덮기 전에 한 장을 더 넘겼다. 날짜를 적은 줄이 있고, 끝내 아무것도 적지 못한 칸이 있었다.",
+   "cgPage": "승객 명부\n\n당신\n걸어 나갔다\n청소원 조끼의 할머니\n걸어 나갔다\n담요 속 여학생\n걸어 나갔다\n헤드램프의 남자\n걸어 나갔다\n셔터의 여자\n걸어 나갔다\n큰 청년\n올라갔다\nD10\n___\n담요의 여자\n걸어 나갔다",
+   "picked": "덮는다"
+  }
+ ]
+}

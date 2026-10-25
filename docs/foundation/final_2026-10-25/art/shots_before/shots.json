@@ -1,0 +1,24 @@
+[
+ {
+  "shot": "13_run",
+  "ok": true,
+  "why": [],
+  "png_scale": 2.0,
+  "tries": [
+   {
+    "attempt": 1,
+    "ok": true,
+    "why": [],
+    "png_scale": 2.0,
+    "console_errors": 0,
+    "seed": 3,
+    "end": "D10 d10_walk_other"
+   }
+  ],
+  "console_errors": [],
+  "auto": [
+   "[ds4 auto] run hold reached=1 D10 ended map=station open=ending ended=d10_walk_other you=walked food=8 | [꿈 D6] / D7 trace dawn_strike → 그릇 둘을 내민다 / [D7 food8 water0 hunger2] / D7 ration repay_bowl → 그냥 지나간다 / D7 evening d7_broadcast → 수첩에 받아 적는다 / D8 trace trial_d8_key → 순례에게 / D8 trace hymn_names → 마리를 눕힌다 / [D8 food8 water0 hunger4] / [꿈 D8] / D9 trace d9_stairs → 묻는다 / [D9 food8 water0 hunger6] / D9 evening d9_inspection_b → 고개를 돌린다 / [D10 food8 water0 hunger8] / D10 day d10_walk_weak → 옆 사람 물병을 비운다 / D10 day d10_grab → 끌려 넘어진다 / D10 day d10_walk_other → 붙잡는다",
+   "[ds4 missing] trip_a1_backroom@trip_a1_backroom"
+  ]
+ }
+]

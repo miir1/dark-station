@@ -1,0 +1,9 @@
+## D3 — 카르마 0~7 · 깃발 strike_blind 없음
+- 살 확률 100% 인 열린 선택지가 없는 사건(그날·카르마 <8): 0건
+- 살 확률 100% 인데 '끝이다' 경고가 붙은 선택지: 0건
+
+## D6 — 카르마 0~7 · 깃발 strike_blind 없음
+- 살 확률 100% 인 열린 선택지가 없는 사건(그날·카르마 <8): 0건
+- 살 확률 100% 인데 '끝이다' 경고가 붙은 선택지: 0건
+
+검사한 (죽음 길이 있는) 사건: 3:d3_called_you, 3:starve_you, 3:flood_sick_end, 3:fever_night_d3, 3:dawn_strike_d3, 3:dawn_mob_d3, 3:dawn_dongha2, 3:called_up_d3, 6:d6_shutter, 6:d6_shutter_b, 6:starve_you, 6:flood_sick_end, 6:fever_night, 6:dawn_strike_d6, 6:dawn_mob_d6, 6:dawn_dongha2, 6:called_up_d6

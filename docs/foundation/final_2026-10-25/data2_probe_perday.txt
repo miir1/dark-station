@@ -1,0 +1,8 @@
+데이터 docs\foundation\final_2026-10-25\data_round1 · balanced,risky,selfish_nb,lazy,h_cautious,counter,child × 60판
+사건 | 고른 횟수 | 고른 뒤 같은 단계에서 조건이 또 참 | 같은 날 두 번 이상 뜬 (판·날) | 단계별
+dawn_strike | 255 | 0 | 0 | {"trace":255}
+wound_critical | 788 | 0 | 0 | {"trace":681,"evening":22,"day":85}
+starve_you | 849 | 444 | 0 | {"night":849}
+fever_night | 532 | 0 | 0 | {"night":532}
+called_up | 334 | 0 | 0 | {"night":334}
+dawn_mob | 235 | 0 | 0 | {"trace":235}

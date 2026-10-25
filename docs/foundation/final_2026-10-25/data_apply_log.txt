@@ -1,0 +1,131 @@
+그림: d10_walk_other → d10_walk_other · d10_walk_alone → d10_walk_alone
+그림(같은 동작, 이름만 적음): d0_ledger → d0_ledger
+그림(같은 동작, 이름만 적음): d2_shutter_arm → d2_shutter_arm
+그림(같은 동작, 이름만 적음): d3_rat_fever → d3_rat_fever
+그림(같은 동작, 이름만 적음): d4_spanner → d4_spanner
+그림(같은 동작, 이름만 적음): d6_shutter_b → d6_shutter_b
+그림(같은 동작, 이름만 적음): d7_fingers_dead → d7_fingers_dead
+그림(같은 동작, 이름만 적음): d10_hold → d10_hold
+그림(같은 동작, 이름만 적음): d10_grab → d10_grab
+그림(같은 동작, 이름만 적음): dawn_strike → dawn_strike
+그림(같은 동작, 이름만 적음): dawn_mob → dawn_mob
+지도 mall_a1: m(9,2) → . · drawer_a1 @ (9,1)
+지도 mall_a1: m(16,3) → . · shelf_a1 @ (15,1)
+지도 mall_a1: m(3,7) → . · locker_a1 @ (1,6)
+지도 mall_a2: m(12,2) → . · shelf_a2 @ (12,1)
+지도 mall_a2: m(4,4) → . · locker_a2 @ (4,4)
+지도 mall_a2: m(12,6) → . · barrel_a2 @ (12,6)
+지도 drain_b1: m(10,2) → . · crate_b1 @ (11,1)
+지도 drain_b1: m(17,2) → . · barrel_b1 @ (15,1)
+지도 drain_b1: m(2,7) → w · bag_b1 @ (2,7)
+지도 drain_b2: m(9,2) → . · toolbox_b2 @ (9,1)
+지도 drain_b2: m(16,2) → . · locker_b2 @ (16,1)
+지도 drain_b2: m(4,5) → . · barrel_b2 @ (4,5)
+물건 drawer_a1 (계산대 서랍장) closed/open · holds: 성냥 두 갑과 신문 뭉치가 있었다. [{"verb":"number","id":"fuel","n":1}]
+물건 shelf_a1 (매점 선반) closed/empty · holds: 선반 밑에 음료 캔 둘. 하나는 터져 있었다. [{"verb":"number","id":"water","n":1}]
+물건 locker_a1 (관리실 사물함) closed/open · holds: 사물함 안에 밧줄 한 타래가 감겨 있었다. [{"verb":"flag","id":"has_rope","set":1}]
+물건 shelf_a2 (기운 선반) closed/picked/empty · 사건 수납
+물건 barrel_a2 (끼인 드럼통) closed/open · 사건 수납
+물건 locker_a2 (구석 사물함) closed/open · holds: 누가 먼저 열었다. 안쪽 문에 손톱자국이 길게 나 있었다.
+물건 crate_b1 (쌓인 상자) closed/empty · 사건 수납
+물건 barrel_b1 (녹슨 드럼통) closed/open · holds: 비닐에 싼 무전기가 들어 있었다. 아직 지직거린다. [{"verb":"flag","id":"has_radio","set":1}]
+물건 bag_b1 (걸린 가방) closed/open · 사건 수납
+물건 toolbox_b2 (펌프 공구함) closed/open · holds: 퓨즈 두 개와 절연 테이프가 있었다. [{"verb":"number","id":"parts","n":1}]
+물건 locker_b2 (잠긴 사물함) closed/open · 사건 수납
+물건 barrel_b2 (잠긴 드럼통) closed/open · holds: 드럼통 안은 흙탕물뿐이었다. 바닥에서 무엇이 한 번 뒤척였다.
+물건 bodybag_a2: states normal → normal/zipped/taken (한 판에 한 번)
+원정 사건 trip_a1_phone: when "day>=2 & region==A & floor==1 & trace:phonebooth==card" → "day>=2 & region==A & floor==1 & inspect:phonebooth & trace:phonebooth==card"
+원정 사건 trip_a1_vending 지움 → shelf_a1 holds (선택지 하나·위험 없음 = 수납 내용)
+원정 사건 trip_a2_stockroom: when "day>=2 & region==A & floor==2" → "day>=2 & region==A & floor==2 & inspect:shelf_a2 & trace:shelf_a2!=empty"
+원정 사건 trip_a2_escalator: when "day>=1 & region==A & floor==2" → "day>=1 & region==A & floor==2 & inspect:barrel_a2 & trace:barrel_a2==closed"
+원정 사건 trip_a2_bodybag: when "day>=3 & region==A & floor==2 & trace:bodybag_a2==normal" → "day>=3 & region==A & floor==2 & inspect:bodybag_a2 & trace:bodybag_a2==normal"
+원정 사건 trip_g_crates: when "day>=1 & floor==1 & region==B" → "day>=1 & floor==1 & region==B & inspect:crate_b1 & trace:crate_b1==closed"
+원정 사건 trip_b1_debris: when "day>=1 & region==B & floor==1" → "day>=1 & region==B & floor==1 & inspect:bag_b1 & trace:bag_b1==closed"
+원정 사건 trip_b1_workers: when "day>=4 & region==B & floor==1 & trace:worker_pipe==bodies" → "day>=4 & region==B & floor==1 & inspect:worker_pipe & trace:worker_pipe==bodies"
+원정 사건 trip_b2_lockers: when "day>=1 & region==B & floor==2" → "day>=1 & region==B & floor==2 & inspect:locker_b2 & trace:locker_b2==closed"
+원정 사건 trip_b2_pumproom: when "day>=2 & region==B & floor==2" → "day>=2 & region==B & floor==2 & inspect:cistern"
+d7_broadcast: 선택지 + "무전기 주파수를 맞춘다" (req has_radio · fare_known · 이름 축 −1 = "받아 적는다"와 같은 축 · 두려움 −1). 축이 같아 정체 분포를 흔들지 않는다
+줄타기 + d6_shutter / 아무것도 하지 않는다: point · 실패 "횃불이 기둥 뒤를 비췄다. 쇠파이프가 당신 쪽으로 왔다." · 경고(카르마 판) "기철이 밟히고 창고가 빈다. 눈에 띄면 끝이다"
+줄타기 + d6_shutter_b / 아무것도 하지 않는다: point · 실패 "횃불이 기둥 뒤를 비췄다. 쇠파이프가 당신 쪽으로 왔다." · 경고(카르마 판) "창고가 비고 또 온다. 눈에 띄면 끝이다"
+줄타기 + d10_walk / 걷는다: point · 실패 "동하가 당신 소매를 잡았다. 당신 이름도 불렸다." · 경고(카르마 판) "소매를 잡히면 끝이다"
+줄타기 + d10_walk_other / 걷는다: point · 실패 "그 사람이 당신 소매를 잡았다. 당신 이름도 불렸다." · 경고(카르마 판) "소매를 잡히면 끝이다"
+꼬리 d10_hold (늘 줄타기 — 사건 조건 karma>=9): 경고 칸을 바로 "…받고도 안 놓으면 끝이다" · "손가락을 잃는다. 그래도 안 놓으면 끝이다"
+손잡이 rope_pay_2: 88 → 80 (화면 93% → 85%)
+손잡이 rope_endure_2: 80 → 78 (화면 85% → 83%)
+사본 dawn_strike_d3: when "(phase==trace & flag:dawn_strike) & day==3 & karma<8" · 줄타기 뗌 그릇 둘을 내민다(pay), 맞고 버틴다(endure), 밀쳐 낸다(fight), 소리친다(fight), 축 늘어진다(fight), 옆 담요를 가리킨다(point)
+사본 dawn_strike_d6: when "(phase==trace & flag:dawn_strike) & day==6 & karma<8" · 줄타기 뗌 그릇 둘을 내민다(pay)
+원래 dawn_strike: when → "(phase==trace & flag:dawn_strike) & !((day==3 | day==6) & karma<8)"
+사본 dawn_mob_d3: when "(phase==trace & flag:dawn_mob) & day==3 & karma<8" · 줄타기 뗌 가진 것을 다 내놓는다(pay), 맞고 버틴다(endure), 손가락 하나로 갚는다(pay), 다른 사람을 가리킨다(point), 밀치고 달아난다(fight), 무릎을 꿇고 빈다(fight)
+사본 dawn_mob_d6: when "(phase==trace & flag:dawn_mob) & day==6 & karma<8" · 줄타기 뗌 가진 것을 다 내놓는다(pay), 손가락 하나로 갚는다(pay)
+원래 dawn_mob: when → "(phase==trace & flag:dawn_mob) & !((day==3 | day==6) & karma<8)"
+사본 called_up_d3: when "(phase==night & flag:named_you) & day==3 & karma<8" · 줄타기 뗌 불을 키우고 밤을 샌다(pay), 귀를 막는다(fight), 손등을 깨물며 버틴다(endure), 다른 이름을 댄다(point)
+사본 called_up_d6: when "(phase==night & flag:named_you) & day==6 & karma<8" · 줄타기 뗌 불을 키우고 밤을 샌다(pay)
+원래 called_up: when → "(phase==night & flag:named_you) & !((day==3 | day==6) & karma<8)"
+사본 fever_night_d3: when "((phase==night | phase==aftermath) & injury_you>=3 & !flag:treated_you) & day==3 & karma<8" · 줄타기 뗌 남의 담요를 끌어온다(point)
+원래 fever_night: when → "((phase==night | phase==aftermath) & injury_you>=3 & !flag:treated_you) & !(day==3 & karma<8)"
+fired:dawn_strike·dawn_mob·called_up>=1 → 사본 사건(_d3·_d6)에서 고른 것도 센다
+꼬리 d6_shutter / 아무것도 하지 않는다: 줄타기가 걸릴 때(karma>=5) 경고 "기철이 밟히고 창고가 빈다. 눈에 띄면 끝이다"
+꼬리 d6_shutter_b / 아무것도 하지 않는다: 줄타기가 걸릴 때(karma>=5) 경고 "창고가 비고 또 온다. 눈에 띄면 끝이다"
+꼬리 starve_you / 창고를 턴다: 줄타기가 걸릴 때(karma>=8) 경고 "들키면 아침에 안다. 누가 지키고 있으면 끝이다"
+꼬리 d10_grab / 물병을 돌려준다: 줄타기가 걸릴 때(karma>=5) 경고 "물이 준다. 받고도 안 놓으면 끝이다"
+꼬리 d10_walk / 걷는다: 줄타기가 걸릴 때(karma>=5) 경고 "소매를 잡히면 끝이다"
+꼬리 d10_walk_other / 걷는다: 줄타기가 걸릴 때(karma>=5) 경고 "소매를 잡히면 끝이다"
+꼬리 dawn_strike / 그릇 둘을 내민다: 줄타기가 걸릴 때((karma>=5 | flag:strike_blind)) 경고 "받고도 안 놓으면 끝이다"
+꼬리 dawn_mob / 가진 것을 다 내놓는다: 줄타기가 걸릴 때(karma>=5) 경고 "식량과 물이 다 나간다. 그래도 안 멎으면 끝이다"
+꼬리 dawn_mob / 손가락 하나로 갚는다: 줄타기가 걸릴 때(karma>=5) 경고 "손가락을 잃는다. 그래도 안 멎으면 끝이다"
+꼬리 called_up / 불을 키우고 밤을 샌다: 줄타기가 걸릴 때(karma>=5) 경고 "불이 먼저 꺼지면 끝이다"
+── 2차 (최종 점검 지적) ──
+정체 driver: reveal [reveal_driver, end_seat_shoe] → [reveal_driver]
+정체 conductor: reveal [reveal_conductor, end_two_books] → [reveal_conductor]
+정체 inspector: reveal [reveal_inspector, end_punch_hand] → [reveal_inspector]
+정체 passenger: reveal [reveal_passenger, end_empty_cab] → [reveal_passenger]
+정체 counted: reveal [reveal_counted, end_shoes_stairs] → [reveal_counted]
+정체 platform_one: reveal [reveal_platform, end_train_passes] → [reveal_platform]
+정체 counting_child: reveal [reveal_child, end_voice_above] → [reveal_child]
+줄 end_seat_shoe 지움 (2행, 쓰는 데 없음)
+줄 end_two_books 지움 (2행, 쓰는 데 없음)
+줄 end_punch_hand 지움 (1행, 쓰는 데 없음)
+줄 end_empty_cab 지움 (3행, 쓰는 데 없음)
+줄 end_shoes_stairs 지움 (1행, 쓰는 데 없음)
+줄 end_train_passes 지움 (3행, 쓰는 데 없음)
+줄 end_voice_above 지움 (1행, 쓰는 데 없음)
+물건 locker_a1 holds: "사물함 안에 밧줄 한 타래와 퓨즈 상자가 있었다." [{"verb":"flag","id":"has_rope","set":1},{"verb":"number","id":"parts","n":1}]
+passage_alone 본문: "무너진 통로. 도현은 없다. 기철: "부품 다섯이면 우리끼리도 되오. 사람이 다치오."" → "무너진 통로. 길을 아는 사람은 없다. 기철: "부품 다섯이면 우리끼리도 되오. 사람이 다치오.""
+passage_alone_b 본문: "무너진 통로. 도현은 없다. 돌무더기가 사람 키만 하다. 부품 다섯이면 우리끼리도 될 것 같다." → "무너진 통로. 길을 아는 사람은 없다. 돌무더기가 사람 키만 하다. 부품 다섯이면 우리끼리도 될 것 같다."
+소문 rum_saw_shadow 거짓 행: "동하가 밤에 창고 쪽으로 갔어." → "밤에 덩치 큰 사람이 창고 쪽으로 갔어."
+called_up_d3 / 손등을 깨물며 버틴다: "피 맛이 날 때까지 깨물었다. 이름은 새벽에 그쳤다." → "이름은 새벽에 그쳤다. 손등에 잇자국이 깊게 남았다." (1곳)
+called_up_d3 / 손등을 깨물며 버틴다: "피 맛이 날 때까지 깨물었다. 이름은 새벽까지 그치지 않았다." → "이름은 새벽까지 그치지 않았다. 손등에 잇자국이 깊게 남았다." (1곳)
+called_up_d3 / 손등을 깨물며 버틴다: "손가락 한 마디를 물어뜯었다. 이름은 새벽에 그쳤다." → "이름은 새벽에 그쳤다. 날이 밝자 손가락 한 마디가 없었다." (1곳)
+called_up_d3 / 손등을 깨물며 버틴다: "손가락 한 마디를 물어뜯었다. 이름은 새벽까지 그치지 않았다." → "이름은 새벽까지 그치지 않았다. 날이 밝자 손가락 한 마디가 없었다." (1곳)
+called_up_d6 / 손등을 깨물며 버틴다: "피 맛이 날 때까지 깨물었다. 이름은 새벽에 그쳤다." → "이름은 새벽에 그쳤다. 손등에 잇자국이 깊게 남았다." (1곳)
+called_up_d6 / 손등을 깨물며 버틴다: "피 맛이 날 때까지 깨물었다. 이름은 새벽까지 그치지 않았다." → "이름은 새벽까지 그치지 않았다. 손등에 잇자국이 깊게 남았다." (1곳)
+called_up_d6 / 손등을 깨물며 버틴다: "손가락 한 마디를 물어뜯었다. 이름은 새벽에 그쳤다." → "이름은 새벽에 그쳤다. 날이 밝자 손가락 한 마디가 없었다." (1곳)
+called_up_d6 / 손등을 깨물며 버틴다: "손가락 한 마디를 물어뜯었다. 이름은 새벽까지 그치지 않았다." → "이름은 새벽까지 그치지 않았다. 날이 밝자 손가락 한 마디가 없었다." (1곳)
+called_up / 손등을 깨물며 버틴다: "피 맛이 날 때까지 깨물었다. 이름은 새벽에 그쳤다." → "이름은 새벽에 그쳤다. 손등에 잇자국이 깊게 남았다." (1곳)
+called_up / 손등을 깨물며 버틴다: "피 맛이 날 때까지 깨물었다. 이름은 새벽까지 그치지 않았다." → "이름은 새벽까지 그치지 않았다. 손등에 잇자국이 깊게 남았다." (1곳)
+called_up / 손등을 깨물며 버틴다: "손가락 한 마디를 물어뜯었다. 이름은 새벽에 그쳤다." → "이름은 새벽에 그쳤다. 날이 밝자 손가락 한 마디가 없었다." (1곳)
+called_up / 손등을 깨물며 버틴다: "손가락 한 마디를 물어뜯었다. 이름은 새벽까지 그치지 않았다." → "이름은 새벽까지 그치지 않았다. 날이 밝자 손가락 한 마디가 없었다." (1곳)
+trip_a1_pharmacy when: "day>=2 & region==A & floor==1 & !flag:met_eunchae" → "day>=2 & region==A & floor==1 & !flag:met_eunchae & !flag:skipped_eunchae"
+starve_you 본문(첫 글): "사흘째 빈 그릇이다. 손이 떨려 연필을 못 쥔다. 눈앞이 어둡다." → "며칠째 제대로 먹지 못했다. 손이 떨려 연필을 못 쥔다. 눈앞이 어둡다."
+사다리 starve_you: 자물쇠 lock_starve(하루 한 번) · 사본 starve_you_r4 · starve_you_r3 · starve_you_r2 — 글 4개
+  starve_you_r2: when "(day>=2 & phase==night & hunger_you>=8) & lock_starve==0 & (fired:starve_you>=1)" · "또 빈속으로 누웠다. 침이 고이지 않는다. 남의 그릇 쪽으로 눈이 간다."
+  starve_you_r3: when "(day>=2 & phase==night & hunger_you>=8) & lock_starve==0 & fired:starve_you_r2>=1" · "배가 더는 아프지 않다. 그게 더 무섭다. 손톱 밑이 하얗게 질렸다."
+  starve_you_r4: when "(day>=2 & phase==night & hunger_you>=8) & lock_starve==0 & fired:starve_you_r3>=1" · "일어서면 벽이 기운다. 굶주림이 몸에 붙었다. 다들 잠든 척한다."
+wound_critical 본문(첫 글): "붕대 밑이 검게 부었다. 고름 냄새가 난다. 열이 머리까지 올랐다. 오늘을 넘기면 끝이다." → "붕대 밑이 검게 부었다. 고름 냄새가 난다. 열이 머리까지 올랐다. 오늘 밤 안에 못 고치면 끝이다."
+사다리 wound_critical: 자물쇠 lock_wound(하루 한 번) · 사본 wound_critical_r4 · wound_critical_r3 · wound_critical_r2 — 글 4개
+  wound_critical_r2: when "(injury_you>=3 & !flag:treated_you & !flag:enduring_you & (phase==trace | phase==day | phase==evening)) & lock_wound==0 & (fired:wound_critical>=1)" · "붕대를 풀자 고름이 흘렀다. 넘긴 고비가 다시 왔다. 오늘도 못 고치면 끝이다."
+  wound_critical_r3: when "(injury_you>=3 & !flag:treated_you & !flag:enduring_you & (phase==trace | phase==day | phase==evening)) & lock_wound==0 & fired:wound_critical_r2>=1" · "상처 가장자리가 까맣게 죽었다. 썩는 냄새를 다들 맡는다. 오늘도 못 고치면 끝이다."
+  wound_critical_r4: when "(injury_you>=3 & !flag:treated_you & !flag:enduring_you & (phase==trace | phase==day | phase==evening)) & lock_wound==0 & fired:wound_critical_r3>=1" · "상처가 낫지도 터지지도 않는다. 열은 그대로다. 고치지 못한 날 밤이 마지막이다."
+사다리 fever_night: 자물쇠 lock_fever(하루 한 번) · 사본 fever_night_r4 · fever_night_r3 · fever_night_r2 — 글 4개
+  fever_night_r2: when "(((phase==night | phase==aftermath) & injury_you>=3 & !flag:treated_you) & !(day==3 & karma<8)) & lock_fever==0 & (fired:fever_night>=1 | fired:fever_night_d3>=1)" · "열이 또 오른다. 담요가 땀에 젖었다. 아무도 깨지 않는다."
+  fever_night_r3: when "(((phase==night | phase==aftermath) & injury_you>=3 & !flag:treated_you) & !(day==3 & karma<8)) & lock_fever==0 & fired:fever_night_r2>=1" · "열이 내리지 않는다. 천장이 가까워졌다 멀어진다. 숨소리가 남의 것 같다."
+  fever_night_r4: when "(((phase==night | phase==aftermath) & injury_you>=3 & !flag:treated_you) & !(day==3 & karma<8)) & lock_fever==0 & fired:fever_night_r3>=1" · "밤마다 열이다. 몸이 떨리다가 뜨거워진다. 화로 불빛이 멀다."
+사다리 dawn_strike: 자물쇠 lock_strike(하루 한 번) · 사본 dawn_strike_r3 · dawn_strike_r2 — 글 3개
+  dawn_strike_r2: when "((phase==trace & flag:dawn_strike) & !((day==3 | day==6) & karma<8)) & lock_strike==0 & (fired:dawn_strike>=1 | fired:dawn_strike_d3>=1 | fired:dawn_strike_d6>=1)" · "또 그 무게에 깼다. 가슴 위에 누가 앉아 목을 누른다. 손이 지난번보다 차다. 얼굴은 어둠 속이다."
+  dawn_strike_r3: when "((phase==trace & flag:dawn_strike) & !((day==3 | day==6) & karma<8)) & lock_strike==0 & fired:dawn_strike_r2>=1" · "숨이 막혀 깼다. 가슴 위의 무게가 익숙하다. 목을 누르는 손이 이제 망설이지 않는다. 얼굴은 끝내 어둠 속이다."
+사다리 dawn_mob: 자물쇠 lock_mob(하루 한 번) · 사본 dawn_mob_r2 — 글 2개
+  dawn_mob_r2: when "((phase==trace & flag:dawn_mob) & !((day==3 | day==6) & karma<8)) & lock_mob==0 & (fired:dawn_mob>=1 | fired:dawn_mob_d3>=1 | fired:dawn_mob_d6>=1)" · "새벽에 또 둘러섰다. 이번엔 아무도 눈을 피하지 않는다. 누가 당신 봉지를 들고 있다. 손마다 무엇이 들려 있다."
+사다리 called_up: 자물쇠 lock_called(하루 한 번) · 사본 called_up_r2 — 글 2개
+  called_up_r2: when "((phase==night & flag:named_you) & !((day==3 | day==6) & karma<8)) & lock_called==0 & (fired:called_up>=1 | fired:called_up_d3>=1 | fired:called_up_d6>=1)" · "자정. 그 목소리가 또 당신 이름을 부른다. 지난번보다 한 칸 가깝다. 아무도 뒤척이지 않는다."
+손잡이 trip_b2_pumproom / 탱크까지 간다: check.base 45 → 60
+손잡이 trip_a2_stockroom / 상자를 끌어내린다: check.base 50 → 60

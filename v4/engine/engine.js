@@ -83,9 +83,9 @@
       v: SAVE_V, seed, rng: seed, day: world.day != null ? world.day : 0, phase: null, ended: null,
       world, people: {}, pos: { map: null, x: 0, y: 0 },
       flags: {}, traces: {}, axes, nightLog: [], rumors: [], onceNight: {}, done: {}, fired: {}, phaseSeen: [], critical: null, trip: null, lastFree: null, heard: {}, found: null,
-      pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0, neglect: 0, ropeRolls: 0, ropeClose: 0, ropeFeltRolls: 0, ropeFelt: 0, deathRolls: 0, closeCalls: 0, blindMet: 0 },
+      pending: null, lastResult: null, ledger: { causes: {}, written: [] }, log: [], stats: { decisions: 0, nights: 0, deaths: 0, neglect: 0, ropeRolls: 0, ropeClose: 0, ropeFeltRolls: 0, ropeFelt: 0, deathRolls: 0, closeCalls: 0, blindMet: 0, holds: 0 },
       hurt: [], notice: null, noticeDay: null,
-    };   // (10-24 tightrope R4) stats.ropeRolls·ropeClose = 줄타기 판정을 굴림·넘김 · ropeFeltRolls·ropeFelt = 그중 화면 % ≤ ROPE_FELT_MAX(85) 인 판정(느껴지는 아슬함)을 굴림·넘김 · deathRolls·closeCalls = 당신을 죽이는 모든 판정을 굴림·넘김 · blindMet = 눈먼 새벽(rope.blind 깃발이 선 사건)을 만남
+    };   // (10-24 tightrope R4) stats.ropeRolls·ropeClose = 줄타기 판정을 굴림·넘김 · ropeFeltRolls·ropeFelt = 그중 화면 % ≤ ROPE_FELT_MAX(85) 인 판정(느껴지는 아슬함)을 굴림·넘김 · deathRolls·closeCalls = 당신을 죽이는 모든 판정을 굴림·넘김 · blindMet = 눈먼 새벽(rope.blind 깃발이 선 사건)을 만남 · holds = 연 수납 수(P1-11, 10-25 집계용)
     // (10-24) hurt = 당신 부상의 출처 [{day, src, n}](통계용) · notice = 방금 조작에 붙은 토스트 줄 id(toast_late) · noticeDay = 그 토스트를 띄운 날 · stats.neglect = 적용한 missed 수   // fired = 고른 적 있는 사건 id → 횟수(once:0 포함, 집계용) · phaseSeen = 이번 단계에 이미 고른 사건(되풀이 사건도 한 단계에 한 번) · critical = 그날 마지막 치료 기회 때의 위독자(아침 판정용) · lastFree = 마지막 자유 경고 선택 {event, choice, day}(사인 기록용) · heard = 들은 줄 '<줄id>#<행번호>' → 마지막으로 들은 날 · found = 방금 연 수납의 결과(P1-11, 다음 조사·next 에 지워진다)
     if (!db.people.you) throw new Error('people 표에 you 가 없음');
     for (const o of Object.values(db.objects)) s.traces[o.id] = { st: o.states[0], day: 0, by: null, seen: false, late: 0 };   // 물건의 첫 상태 = states[0]
@@ -143,15 +143,16 @@
   // (나이로 거르지 않는다 — 10-22 디렉터 결정 '미성년 처리 금지': 서하(17)도 다른 주민과 똑같다)
   // 무작위·mostInjured·most: 는 만난 사람(known)만 — 안 만난 사람의 이름이 사건에 나오지 않게(10-24 P0-E1)
   // ifCond (사건 targetIf 열, 10-24) = 후보가 맞아야 하는 조건식. 그 사람의 수치(grudge·injury…·grudge_target)·self(그 사람 id)·bond·flag:x_target·물건 x_target
-  function eventTarget(s, db, spec, ifCond) {
+  //   dry = true: 난수를 쓰지 않고 '지금 대상을 정할 수 있나'만 본다(무작위·동점이면 첫 후보를 돌려준다 — claimedByEvent 용, 10-25)
+  function eventTarget(s, db, spec, ifCond, dry) {
     if (!spec) return null;
     const fits = (id) => !ifCond || targetFits(s, db, id, ifCond);
     if (db.people[spec]) return s.people[spec] && s.people[spec].status === 'home' && fits(spec) ? spec : null;
     const res = db.peopleOrder.filter((id) => id !== 'you' && s.people[id].status === 'home' && known(s, db, id) && fits(id));
-    if (EVENT_RANDOM.includes(spec)) return R.pick(s, res) || null;
+    if (EVENT_RANDOM.includes(spec)) return dry ? res[0] || null : R.pick(s, res) || null;
     if (spec === 'mostInjured') { const hurt = res.filter((id) => (s.people[id].n.injury || 0) > 0).sort((a, b) => (s.people[b].n.injury || 0) - (s.people[a].n.injury || 0)); return hurt[0] || null; }
     const most = S.MOST_TARGET.exec(spec);
-    if (most) { const v = (id) => s.people[id].n[most[1]] || 0; const top = res.reduce((m, id) => Math.max(m, v(id)), 0); if (top <= 0) return null; const tied = res.filter((id) => v(id) === top); return tied.length === 1 ? tied[0] : R.pick(s, tied); }
+    if (most) { const v = (id) => s.people[id].n[most[1]] || 0; const top = res.reduce((m, id) => Math.max(m, v(id)), 0); if (top <= 0) return null; const tied = res.filter((id) => v(id) === top); return tied.length === 1 || dry ? tied[0] : R.pick(s, tied); }
     if (spec === 'bond') { const b = s.people.you.needs.bond; return b && s.people[b] && s.people[b].status === 'home' && fits(b) ? b : null; }
     return null;
   }
@@ -404,10 +405,18 @@
   // 사건이 쥔 물건: when 에 inspect:<그 물건> 이 나오는 사건(어느 kind 든) 가운데 지금 조건이 맞는 것이 있다 — 이미 고른 사건(done·phaseSeen·trip.done)도 센다.
   //   그 동안은 holds 를 열지 않는다. 위험한 수납 사건('비틀어 연다 / 지나간다')을 거절하고 다시 조사해서 내용을 위험 없이 꺼내지 못하게(10-21 위험 대 보상).
   //   사건 조건이 더는 맞지 않으면(그날이 지났다·깃발이 섰다) holds 가 기본 흐름이 된다.
+  //   (10-25 최종판) 걸 수 없는 사건은 쥐지 않는다 — 원정 사건인데 원정 중이 아니다 · 아직 안 고른 사건인데 지금 대상(target 열, targetOptional 아님)을 못 정한다.
+  //   전에는 이때 사건도 안 걸리고 수납도 안 열려 조사가 아무 일 없이 끝났다(데이터 담당이 원정 수납에 target 을 달 때 막힘)
   function claimedByEvent(s, db, objId) {
     const ctx = phaseCtx(s, { inspect: { [objId]: 1 } });
     const name = 'inspect:' + objId;
-    return db.eventsList.some((ev) => inspectGated(ev) && C.names(C.compile(ev.when)).includes(name) && C.test(ev.when, ctx));
+    return db.eventsList.some((ev) => {
+      if (!inspectGated(ev) || !C.names(C.compile(ev.when)).includes(name) || !C.test(ev.when, ctx)) return false;
+      if (ev.kind === 'trip' && !s.trip) return false;
+      const taken = has(s.done, ev.id) || s.phaseSeen.includes(ev.id) || !!(s.trip && (s.trip.done || []).includes(ev.id));
+      if (!taken && ev.target && !ev.targetOptional && !eventTarget(s, db, ev.target, ev.targetIf, true)) return false;
+      return true;
+    });
   }
   function openHolds(s, db, objId) {
     if (!closedHolds(s, db, objId) || claimedByEvent(s, db, objId)) return false;
@@ -421,6 +430,7 @@
     s.traces[objId].seen = true;                                             // 당신이 한 일이라 본 것(배식 그릇과 같다)
     arrive(s, db);                                                           // 내용에 만남 깃발이 있으면 역에 온다
     s.found = { object: objId, state: st, day: s.day, text: o.holds.text || '', lines };
+    s.stats.holds = (s.stats.holds || 0) + 1;                                // (10-25) 연 수납 수 — 봇 통계용
     say(s, o.name, 'found');
     return true;
   }
@@ -526,6 +536,7 @@
       if (floors.includes(a.floor) || !floors.includes(a.floor - 1)) return false;
       s.trip.floor = a.floor; s.trip.floors = floors.concat([a.floor]);
     }
+    s.found = null;                                                          // (10-25) 새 층에 들어서면 윗층에서 연 수납 결과는 지운다(화면이 새 층에서 옛 '찾음'을 다시 띄우지 않게)
     const got = startTripEvent(s, db);
     return a.walk === true ? true : got;
   }
@@ -609,11 +620,18 @@
     for (const k of ['world', 'flags', 'traces', 'axes', 'onceNight', 'done', 'fired', 'stats']) s[k] = Object.assign({}, base[k], raw[k] || {});
     s.heard = raw.heard && typeof raw.heard === 'object' && !Array.isArray(raw.heard) ? Object.assign({}, raw.heard) : {};   // 옛 저장(heard 없음)은 빈 기록
     for (const tr of Object.values(s.traces)) if (tr && typeof tr === 'object') tr.late = tr.late ? 1 : 0;                      // (10-24 E3) 옛 저장 흔적은 late 0
+    // (10-25 최종판 · P1-11) 표가 바뀐 뒤의 옛 저장: 표에 없는 물건의 흔적은 버리고, 지금 states 에 없는 상태(예: 원정 물건이 'normal' → 닫힘/열림 수납으로 바뀜)는 첫 상태로 —
+    //   그대로 두면 닫힌 수납으로 안 보여 영영 못 연다(closedHolds 는 states[0] 만 닫힘으로 본다)
+    for (const [id, tr] of Object.entries(s.traces)) {
+      const o = db.objects[id];
+      if (!o) { delete s.traces[id]; continue; }
+      if (!tr || typeof tr !== 'object' || !o.states.includes(tr.st)) s.traces[id] = { st: o.states[0], day: 0, by: null, seen: false, late: 0 };
+    }
     s.hurt = Array.isArray(raw.hurt) ? raw.hurt.filter((h) => h && typeof h === 'object' && typeof h.src === 'string').slice(-FX.HURT_MAX) : [];
     s.notice = typeof raw.notice === 'string' && db.lines[raw.notice] ? raw.notice : null;
     s.noticeDay = Number.isInteger(raw.noticeDay) ? raw.noticeDay : null;
     if (!Number.isFinite(s.stats.neglect)) s.stats.neglect = 0;
-    for (const k of ['ropeRolls', 'ropeClose', 'ropeFeltRolls', 'ropeFelt', 'deathRolls', 'closeCalls', 'blindMet']) if (!Number.isFinite(s.stats[k])) s.stats[k] = 0;   // (10-24 tightrope R4 · 검증 ropeFelt) 옛 저장은 0
+    for (const k of ['ropeRolls', 'ropeClose', 'ropeFeltRolls', 'ropeFelt', 'deathRolls', 'closeCalls', 'blindMet', 'holds']) if (!Number.isFinite(s.stats[k])) s.stats[k] = 0;   // (10-24 tightrope R4 · 검증 ropeFelt · 10-25 holds) 옛 저장은 0
     if (!Array.isArray(s.phaseSeen)) s.phaseSeen = [];
     if (!s.critical || typeof s.critical !== 'object' || !Array.isArray(s.critical.ids)) s.critical = null;
     if (!s.lastFree || typeof s.lastFree !== 'object' || typeof s.lastFree.event !== 'string') s.lastFree = null;

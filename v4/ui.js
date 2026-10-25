@@ -166,6 +166,7 @@
     const op = cur.options[i];
     if (!op || op.disabled) return;
     if (!force && Date.now() - openedAt < BLOCK_MS) return;
+    if (window.SND) SND.play('pick', { danger: danger(op) });                  // 선택 확정 (위험한 것은 낮게 — sound.js)
     close(op.value === undefined ? i : op.value);
   }
   // 위험한 선택지: 경고·금기가 붙었거나(부제의 경고 글 포함) 부른 쪽이 danger 로 표시한 것(되돌릴 수 없는 확인창의 '그렇게 한다')

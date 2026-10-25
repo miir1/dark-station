@@ -20,6 +20,12 @@
 #   python v4/tools/screen_check.py rope --out=docs/foundation/meeting_2026-10-24/tightrope
 #                                                           (2026-10-24 줄타기·게으름 처벌 화면 몫) 카르마 구간별 선택 창(%·경고·비용·위험 단계 색·심장 박동) · 눈먼 새벽 한 줄 ·
 #                                                           죽을 뻔한 판정 '살았다' · 실패 글·사망 화면 · 못 본 도둑이 당신에게 온 아침 밤 보고·조사 글 — screen_rope_*.png · screen_rope.json
+#   python v4/tools/screen_check.py final --out=docs/foundation/final_2026-10-25 [--events=0]
+#                                                           (10-25 최종판) 원정 걸어서 뒤지기(A·B 1·2층: 도착 사건이 지도 뒤에 · 수납 닫힘/열림 · 열기 안내줄 · 결과 글·찾은 물건 아이콘 · 계단) ·
+#                                                           새 장면 그림이 그 사건에서 뜨는가 · 꼬리 글·잠김 이유 — screen_trip_*.png · screen_final_*.png · screen_final.json
+#   python v4/tools/screen_check.py cgchain --out=docs/foundation/final_2026-10-25/screen_cgchain --tag=after [--seeds=3,21,6] [--shots=8]
+#                                                           (10-25 최종 점검) 처음부터 끝까지 가는 판(auto=run, 시드 여러 개)에서 사건 첫 줄·선택 창·결과 글마다 그림 층이 그 사건의
+#                                                           그림(또는 빈 층·결과 그림)인가 — 그림 없는 사건이 앞 사건 그림을 물려받으면 bad · screen_cgchain_<tag>.json · *.png
 #   공통 --out=<폴더> : 결과와 헤드리스 프로필(.profile, 끝나면 지움)을 그 폴더에 (기본 after_shots)
 #   컴퓨터가 바쁠 때 (2026-10-24 검증 #8·#10): 페이지가 덜 뜨면(스크립트·표를 못 받음) 세 번까지 다시 연다(CDP.open → booted) · 로컬 서버 대기열 128 ·
 #     fixture.js 는 FIXTURE_SEC(240초)에 찾은 만큼으로 멈추고, FIXTURE_TIMEOUT 을 넘으면 저장 없이 간다(그 검사는 'fixture 없음'으로 결과에 남는다)
@@ -1999,6 +2005,456 @@ def spec_variants():
         FIXTURES['dawn_mob_notarget_finger'] = s
 
 
+# ══ 10-25 최종판 화면 몫 (final): ① 원정 걸어서 뒤지기(P1-11) ② 새 장면 그림 ③ 소리 연결 ④ 꼬리 글·잠김 이유 ══
+#   python v4/tools/screen_check.py final --out=docs/foundation/final_2026-10-25
+#   ① ?auto=tripA / tripB (캡처 봇이 D4 이후 첫 낮에 그 통로로 → 1층에 막 들어선 지도에서 손을 뗀다) → 도착 사건이 바로 안 뜨는가(지도 먼저) · Space/1.5초/두 칸 걷기로 뜨는가 ·
+#      그 층 수납 가구마다 닫힘 그림 → 'Space 열기' 안내줄 → 조사 → (닫힌 수납) 결과 글 + 찾은 물건 아이콘 / (위험한 수납) 사건 창 → 열림 그림 · 내려가는 계단 · 들어온 계단 → 역
+#   ② 새 그림 사건: 시뮬 저장(fixture)에서 그 사건의 첫 줄(큰 그림)과 선택 창(작은 그림) — 화면이 띄운 그림 파일 = v4/img/cg/<이름>
+#   ④ 데이터가 바꾼 꼬리 글(줄타기 경고)·잠김 이유: 카르마·깃발만 바꾼 저장 변형으로 선택 창의 부제 글
+FINAL_CG = {'d2_shutter_arm': 'd2_shutter_arm', 'd4_spanner': 'd4_spanner', 'd6_shutter_b': 'd6_shutter_b', 'dawn_strike': 'dawn_strike', 'dawn_mob': 'dawn_mob',
+            'dawn_dongha': 'dawn_dongha', 'dawn_dongha2': 'dawn_dongha2', 'd10_hold': 'd10_hold', 'd10_grab': 'd10_grab', 'd5_lullaby': 'd5_lullaby', 'd5_flood': 'cg_flood',
+            'trip_a2_bones': 'trip_a2_bones', 'wound_critical': 'wound_critical', 'd3_bottle': 'cg_bottles', 'd10_walk_other': 'd10_walk_other', 'd10_walk_alone': 'd10_walk_alone',
+            'd0_ledger': 'd0_ledger'}
+# (이름, 사건, 바꿀 것) — 꼬리 글·잠김 이유를 보는 창 (카르마·깃발·자원만 바꾼 저장 변형)
+FINAL_TAILS = [('gate_norope', 'trip_b1_gate', {'flags_off': ['has_rope']}), ('gate_rope', 'trip_b1_gate', {'flags': ['has_rope']}),
+               ('radio_none', 'd7_broadcast', {'flags_off': ['has_radio']}), ('radio_have', 'd7_broadcast', {'flags': ['has_radio']}),
+               ('mob_k5', 'dawn_mob', {'karma': 5, 'food': 2, 'water': 2}), ('mob_empty', 'dawn_mob', {'karma': 9, 'food': 0, 'water': 0}),
+               ('hold_k9', 'd10_hold', {'karma': 9, 'food': 0, 'water': 4}), ('called_k5', 'called_up', {'karma': 5}), ('shutterb_k5', 'd6_shutter_b', {'karma': 5}),
+               ('walk_other_k5', 'd10_walk_other', {'karma': 5}), ('strike_k5', 'dawn_strike', {'karma': 5, 'food': 3})]
+FINAL_EVENTS = sorted(set(FINAL_CG) | {ev for _, ev, _ in FINAL_TAILS})
+GATED_PICK = {'trip_a2_stockroom': 1, 'trip_b2_pumproom': 1}   # 위험한 수납 사건에서 고를 선택 (그 밖은 0 = 뒤진다·꺼낸다·연다)
+
+FN_STATE_JS = r"""(() => { const D = __ds4, t = D.trip, s = D.state; return { map: D.scene.map ? D.scene.map.id : null, onTrip: D.onTrip(), floor: t ? t.floor : null, hold: t ? !!t.hold : null,
+  pending: s.pending ? s.pending.id : null, open: D.UI.openKind(), goal: document.getElementById('goal').textContent, hint: document.getElementById('hint').textContent, day: s.day, phase: s.phase,
+  you: [D.scene.px, D.scene.py], ended: s.ended ? s.ended.why : null, trip: s.trip ? { region: s.trip.region, floor: s.trip.floor, done: (s.trip.done || []).slice() } : null,
+  world: Object.fromEntries(['food', 'water', 'fuel', 'meds', 'parts'].map((k) => [k, s.world[k]])), injury: s.people.you.n.injury || 0,
+  box: (document.querySelector('#box .tw') || document.querySelector('#box .body') || {}).textContent || '', face: ((document.querySelector('#box img.face') || {}).src || '').split('/').slice(-2).join('/'),
+  faceIcon: !!document.querySelector('#box img.face.icon'), cgShown: !document.getElementById('cg').hidden }; })()"""
+# 이 층의 수납 가구·조사 물건: 닫힌 수납(holds) · 조사로 걸리는 원정 사건의 물건 · 가구 앞머리 — 지도 순서
+FN_FURN_JS = r"""(() => { const D = __ds4, db = D.db, s = D.state, gated = new Set();
+  for (const ev of db.eventsList) if (ev.kind === 'trip' && D.E.inspectGated(ev)) for (const n of D.E.cond.names(D.E.cond.compile(ev.when))) if (D.E.cond.prefixOf(n) === 'inspect') gated.add(n.slice(n.indexOf(':') + 1));
+  return D.objectsOnMap().filter((o) => !o.hidden && (D.E.closedHolds(s, db, o.id) || gated.has(o.id) || /^(locker|shelf|drawer|barrel|toolbox|crate|bag)_/.test(o.id)))
+    .map((o) => ({ id: o.id, name: o.name, x: o.x, y: o.y, state: o.state, holds: !!D.E.closedHolds(s, db, o.id), gated: gated.has(o.id), closed: D.isClosed(o.id) })); })()"""
+# 서는 칸: 물건 옆(아래 → 왼 → 오른 → 위, 그 물건을 보는 방향) · 멀리 선 칸(3~6칸 떨어진 빈칸 — 닫힘·열림 그림을 몸이 안 가리게)
+FN_STAND_JS = r"""((x, y, far) => { const D = __ds4, sc = D.scene, objs = D.objectsOnMap();
+  const free = (cx, cy) => cx >= 0 && cy >= 0 && cx < sc.w && cy < sc.h && !'#tRhDC'.includes((sc.rows[cy] || '')[cx] || '#') && !objs.some((o) => !o.hidden && o.solid && o.x === cx && o.y === cy);
+  if (!far) { for (const [dx, dy, face] of [[0, 1, 'up'], [-1, 0, 'right'], [1, 0, 'left'], [0, -1, 'down']]) if (free(x + dx, y + dy)) return [x + dx, y + dy, face]; return null; }
+  let best = null; for (let cy = 0; cy < sc.h; cy++) for (let cx = 0; cx < sc.w; cx++) { const dx = Math.abs(cx - x), dy = Math.abs(cy - y); if (!free(cx, cy) || Math.max(dx, dy) < 3 || dx > 6 || dy > 4 || (dx < 2 && cy < y)) continue; const d = dx + dy * 1.5; if (!best || d < best[3]) best = [cx, cy, 'down', d]; }
+  return best ? best.slice(0, 3) : null; })"""
+# 확인용 봇: 한 줄은 넘기되 cfg.holdTag 로 시작하는 줄·cfg.holdEvent 창은 붙잡는다 · 사건은 cfg.pick(번호) 또는 경고·판정 없는 첫 열린 선택 · 계단 창은 cfg.deeper/tripup
+FN_BOT_JS = r"""(() => { window.__cfg = window.__cfg || {}; window.__seen = []; __ds4.setBot((k, info) => {
+  const cfg = window.__cfg || {};
+  if (k === 'line') { const tag = (info.opts && info.opts.tag) || ''; window.__seen.push({ text: info.text, tag, icon: !!(info.opts && info.opts.faceCls === 'icon') });
+    if (cfg.holdTag && tag.startsWith(cfg.holdTag)) return 'hold'; return undefined; }
+  if (k === 'event') { if (cfg.holdEvent) return 'hold'; const o = info.options; if (Number.isInteger(cfg.pick) && o[cfg.pick] && !o[cfg.pick].disabled) return cfg.pick;
+    let i = o.findIndex((x) => !x.disabled && !x.warn && !/chance|warn/.test(String(x.subRaw || ''))); if (i < 0) i = o.findIndex((x) => !x.disabled); return i; }
+  if (k === 'deeper' || k === 'tripup') return cfg.holdStair ? 'hold' : (cfg[k] != null ? cfg[k] : 1);
+  if (k === 'confirm2') return 0;
+  if (k === 'write' || k === 'tend') return info.options.length - 1;
+  return undefined; }); return 1; })()"""
+FN_IDLE = "!__ds4.UI.isOpen() && !__ds4.scene.auto && !__ds4.scene.moving && !document.querySelector('#fade:not([hidden])')"
+
+
+async def fn_cfg(c, **kw):
+    await c.ev(f"(() => {{ window.__cfg = {json.dumps(kw)}; return 1; }})()", False)
+
+
+async def fn_crop(c, path, x, y, w=1, up=2, k=4):
+    """지도 칸 (x-w..x+w, y-up..y) 을 캔버스에서 잘라 k 배로 (HTML 층 없이 — 가구 그림만)."""
+    im = await canvas(c)
+    cm = await cam(c)
+    box = (max(0, (x - w) * T + cm['ox']), max(0, (y - up) * T + cm['oy']), min(480, (x + w + 1) * T + cm['ox']), min(320, (y + 1) * T + cm['oy']))
+    zoom(im, box, k, path)
+    return path
+
+
+async def fn_far(c, o):
+    far = await c.ev(f"{FN_STAND_JS}({o['x']}, {o['y']}, true)", False)
+    if far:
+        await place(c, far[0], far[1], far[2])
+        await asyncio.sleep(0.3)
+    return far
+
+
+async def fn_floor(c, region, res, rel):
+    """원정 한 층: 수납 가구마다 닫힘 → 안내줄 → 조사(결과 글·아이콘 / 사건 창) → 열림. rel = 이 층 도착 사건을 푸는 방법(space·time·steps)."""
+    st = await c.ev(FN_STATE_JS, False)
+    tag = f"{region}{st['floor']}"
+    fl = {'arrive': st, 'release': rel}
+    await app_shot(c, out(f'screen_trip_{tag}_arrive.png'))                    # 막 들어선 지도 (도착 사건이 있어도 아직 창이 없다)
+    if st['pending'] and st['hold']:
+        await fn_cfg(c, holdTag=st['pending'])                                    # 도착 사건의 첫 줄에서 붙잡는다 (뜬 것을 찍는다)
+        if rel == 'space':
+            await c.ev("__ds4.interact(); 1", False)
+        elif rel == 'steps':
+            for _ in range(2):
+                await c.key('ArrowRight', 'keyDown')
+                await asyncio.sleep(0.12)
+                await c.key('ArrowRight', 'keyUp')
+                await asyncio.sleep(0.12)
+        t0 = time.time()
+        await until(c, f"__ds4.UI.openKind() === 'line' && ((document.querySelector('#box .tw') || {{}}).textContent || '').length > 0", 6)
+        fl['release_sec'] = round(time.time() - t0, 2)
+        fl['release_open'] = await c.ev(FN_STATE_JS, False)
+        await app_shot(c, out(f'screen_trip_{tag}_arrival_event.png'))
+        await fn_cfg(c)
+        await c.ev("__ds4.UI.key('ok'); 1", False)                           # 붙잡힌 줄을 넘긴다 (봇이 이어 받는다)
+        await until(c, FN_IDLE, 30)
+        await asyncio.sleep(0.3)
+        fl['after_arrival'] = await c.ev(FN_STATE_JS, False)
+    furn = await c.ev(FN_FURN_JS, False)
+    fl['furniture'] = []
+    for o in furn:
+        r = {'id': o['id'], 'name': o['name'], 'at': [o['x'], o['y']], 'state0': o['state'], 'holds': o['holds'], 'gated': o['gated'], 'closed': o['closed']}
+        await fn_far(c, o)
+        await fn_crop(c, out(f'screen_trip_{o["id"]}_0closed.png'), o['x'], o['y'])
+        stand = await c.ev(f"{FN_STAND_JS}({o['x']}, {o['y']}, false)", False)
+        if not stand:
+            r['error'] = '설 칸이 없다'
+            fl['furniture'].append(r)
+            continue
+        await place(c, stand[0], stand[1], stand[2])
+        await asyncio.sleep(0.3)
+        r['hint'] = await c.ev("document.getElementById('hint').textContent", False)
+        tg = await c.ev("(() => { const t = __ds4.target(); return t ? { verb: t.verb, name: t.name, ids: t.ids } : null; })()", False)
+        r['target'] = tg
+        n_found, n_open = await c.ev('__ds4.foundLog.length', False), await c.ev('__ds4.openLog.length', False)
+        before = await c.ev(FN_STATE_JS, False)
+        await fn_cfg(c, holdTag='found:', holdEvent=True)
+        await c.ev("window.__seen = []; __ds4.interact(); 1", False)
+        await until(c, "__ds4.UI.isOpen()", 8)
+        await asyncio.sleep(0.5)
+        kind = await c.ev("__ds4.UI.openKind()", False)
+        if kind == 'event':                                                      # 위험한 수납: 조사로 걸린 사건 창
+            box = await c.ev(SP_BOX_JS, False)
+            r['event'] = {'id': box['pending'], 'opts': box['opts'], 'text': box['text'][:160], 'tight': box['tight'], 'overflow': box['overflow']}
+            await app_shot(c, out(f'screen_trip_{o["id"]}_1event.png'))
+            pick = GATED_PICK.get(box['pending'], 0)
+            if pick >= len(box['opts']) or box['opts'][pick]['disabled']:
+                pick = next((i for i, x in enumerate(box['opts']) if not x['disabled']), 0)
+            r['event']['picked'] = box['opts'][pick]['text'] if box['opts'] else None
+            await fn_cfg(c, holdTag=box['pending'] + ':out', holdEvent=False)
+            await c.ev(f"__ds4.UI.pick({pick}); 1", False)
+            # 결과 글(찾은 물건 아이콘이 있으면 그 줄)에서 한 번 멈춘다
+            await until(c, f"__ds4.UI.openKind() === 'line' && ((__ds4.state.lastResult || {{}}).event === '{box['pending']}')", 8)
+            await asyncio.sleep(0.25)
+            r['event']['result'] = await c.ev(FN_STATE_JS, False)
+            await app_shot(c, out(f'screen_trip_{o["id"]}_2result.png'))
+        elif kind == 'line':
+            r['line'] = await c.ev(FN_STATE_JS, False)
+            await app_shot(c, out(f'screen_trip_{o["id"]}_1{"found" if r["line"]["faceIcon"] or o["holds"] else "line"}.png'))
+        await fn_cfg(c, holdTag='', holdEvent=False)
+        for _ in range(40):                                                      # 남은 줄·이어 걸린 사건은 봇으로
+            if await c.ev(FN_IDLE, False):
+                break
+            if await c.ev("__ds4.UI.openKind() === 'line'", False):
+                await c.ev("__ds4.UI.key('ok'); 1", False)
+            await asyncio.sleep(0.2)
+        after = await c.ev(FN_STATE_JS, False)
+        r['state1'] = await c.ev(f"__ds4.state.traces['{o['id']}'] ? __ds4.state.traces['{o['id']}'].st : null", False)
+        r['found'] = (await c.ev(f'__ds4.foundLog.slice({n_found})', False))
+        r['opened'] = (await c.ev(f'__ds4.openLog.slice({n_open})', False))
+        r['seen'] = [x['text'] for x in (await c.ev('window.__seen || []', False))][:6]
+        r['gain'] = {k: (after['world'][k] or 0) - (before['world'][k] or 0) for k in after['world'] if (after['world'][k] or 0) != (before['world'][k] or 0)}
+        r['hint_after'] = await c.ev("(() => { const t = __ds4.target(); return t ? t.verb + ' — ' + t.name : ''; })()", False)
+        await fn_far(c, o)
+        await fn_crop(c, out(f'screen_trip_{o["id"]}_3open.png'), o['x'], o['y'])
+        r['ended'] = after['ended']
+        fl['furniture'].append(r)
+        print('trip', tag, o['id'], o['state'], '→', r['state1'], '| hint', r['hint'], '| event', (r.get('event') or {}).get('id'), '| found', [(f.get('icon'), f.get('text', '')[:24]) for f in r['found']], '| gain', r['gain'])
+        if after['ended']:
+            break
+    res[tag] = fl
+
+
+async def fn_trip(c, region, res):
+    for seed in (7, 3, 21, 8, 1):
+        await c.open(f'/v4/index.html?fast=1&auto=trip{region}&seed={seed}&sc={int(time.time())}')
+        ok = await until(c, "__ds4.state && (__ds4.onTrip() && !__ds4.UI.bot && !__ds4.UI.isOpen() || __ds4.state.ended || (!__ds4.UI.bot && !__ds4.onTrip()))", 420)
+        if ok and await c.ev("__ds4.onTrip() && !__ds4.state.ended", False):
+            break
+        print('trip', region, 'seed', seed, '닿지 못함', await c.ev("__ds4.autoLog.slice(-4).join(' / ')", False))
+    else:
+        res[region] = {'error': '원정 층에 닿지 못했다'}
+        return
+    await c.ev(FN_BOT_JS, False)
+    res[region] = {'seed': seed}
+    # 1층 (A1 = Space 로 · B1 = 1.5초 기다려 도착 사건)
+    await fn_floor(c, region, res[region], 'space' if region == 'A' else 'time')
+    st = await c.ev(FN_STATE_JS, False)
+    if st['ended']:
+        return
+    # 내려가는 계단: 걸어가 선다 → 안내줄 → 창 → 내려간다
+    v = await c.ev("__ds4.scene.map.exits && __ds4.scene.map.exits.v", False)
+    if v:
+        await c.ev(f"__ds4.goto({v[0]}, {v[1]})", True)
+        await asyncio.sleep(0.3)
+        stair = {'hint': await c.ev("document.getElementById('hint').textContent", False), 'goal': await c.ev("document.getElementById('goal').textContent", False), 'at': await c.ev('[__ds4.scene.px, __ds4.scene.py]', False)}
+        await fn_cfg(c, holdStair=True)
+        await c.ev("__ds4.interact(); 1", False)
+        await until(c, "__ds4.UI.openKind() === 'deeper'", 8)
+        await asyncio.sleep(0.5)
+        stair['box'] = await c.ev(SP_BOX_JS, False)
+        await app_shot(c, out(f'screen_trip_{region}1_stairs_down.png'))
+        await fn_cfg(c, deeper=0)
+        await c.ev("__ds4.UI.pick(0); 1", False)
+        await until(c, f"__ds4.trip && __ds4.trip.floor === 2 && {FN_IDLE}", 30)
+        await asyncio.sleep(0.2)
+        res[region]['down'] = stair
+        await fn_floor(c, region, res[region], 'steps' if region == 'A' else 'time')
+        st = await c.ev(FN_STATE_JS, False)
+        if st['ended']:
+            return
+    # 들어온 계단 → 역
+    e = await c.ev("__ds4.scene.map.exits && __ds4.scene.map.exits.E || __ds4.scene.map.start", False)
+    await c.ev(f"__ds4.goto({e[0]}, {e[1]})", True)
+    await asyncio.sleep(0.3)
+    up = {'hint': await c.ev("document.getElementById('hint').textContent", False), 'goal': await c.ev("document.getElementById('goal').textContent", False)}
+    await fn_cfg(c, holdStair=True)
+    await c.ev("__ds4.interact(); 1", False)
+    await until(c, "__ds4.UI.openKind() === 'tripup'", 8)
+    await asyncio.sleep(0.5)
+    up['box'] = await c.ev(SP_BOX_JS, False)
+    await app_shot(c, out(f'screen_trip_{region}_stairs_up.png'))
+    await fn_cfg(c, tripup=0)
+    await c.ev("__ds4.UI.pick(0); 1", False)
+    await until(c, f"__ds4.scene.map.id === 'station' && {FN_IDLE}", 30)
+    await asyncio.sleep(0.3)
+    up['after'] = await c.ev(FN_STATE_JS, False)
+    up['seen'] = [x['text'] for x in (await c.ev('window.__seen || []', False))][-3:]
+    await app_shot(c, out(f'screen_trip_{region}_home.png'))
+    res[region]['home'] = up
+    res[region]['console_errors'] = c.errors()
+
+
+def fn_sheet(res):
+    """가구마다 닫힘 | 열림 크롭을 한 장에 (이름·상태 글)."""
+    from PIL import ImageFont
+    try:
+        font = ImageFont.truetype(r'C:\Windows\Fonts\malgun.ttf', 14)
+    except Exception:
+        font = None
+    rows = []
+    for region in ('A', 'B'):
+        for tag in (region + '1', region + '2'):
+            for r in (res.get(region) or {}).get(tag, {}).get('furniture', []):
+                a, b = out(f'screen_trip_{r["id"]}_0closed.png'), out(f'screen_trip_{r["id"]}_3open.png')
+                if os.path.exists(a) and os.path.exists(b):
+                    rows.append((tag, r, Image.open(a).convert('RGBA'), Image.open(b).convert('RGBA')))
+    if not rows:
+        return None
+    cw = max(max(x[2].width, x[3].width) for x in rows)
+    ch = max(max(x[2].height, x[3].height) for x in rows)
+    cols = 3
+    W = cols * (cw * 2 + 30) + 20
+    H = ((len(rows) + cols - 1) // cols) * (ch + 46) + 20
+    sheet = Image.new('RGBA', (W, H), (24, 21, 18, 255))
+    d = ImageDraw.Draw(sheet)
+    for i, (tag, r, a, b) in enumerate(rows):
+        x0 = 10 + (i % cols) * (cw * 2 + 30)
+        y0 = 10 + (i // cols) * (ch + 46)
+        sheet.alpha_composite(a, (x0, y0 + 22))
+        sheet.alpha_composite(b, (x0 + cw + 8, y0 + 22))
+        d.text((x0, y0), f'{tag} {r["id"]} ({r["name"]})  {r["state0"]} → {r.get("state1")}', fill=(240, 220, 170, 255), font=font)
+    p = out('screen_trip_furniture_sheet.png')
+    sheet.save(p)
+    return p
+
+
+def final_variants():
+    """꼬리 글·잠김 이유 창 저장: 사건이 걸린 순간의 저장에서 카르마·깃발·자원만 바꾼다 (FINAL_TAILS)."""
+    import copy
+    for name, ev, ch in FINAL_TAILS:
+        if ev not in FIXTURES:
+            continue
+        s = copy.deepcopy(FIXTURES[ev])
+        if 'karma' in ch:
+            s['world']['karma'] = ch['karma']
+        for k in ('food', 'water'):
+            if k in ch:
+                s['world'][k] = ch[k]
+        for f in ch.get('flags', []):
+            s['flags'][f] = True
+        for f in ch.get('flags_off', []):
+            s['flags'].pop(f, None)
+        FIXTURES['final_' + name] = s
+
+
+CG_SHOWN_JS = r"""(() => { const el = document.getElementById('cg'); const big = el.querySelector('img.big'), small = el.querySelector('img.small');
+  const f = (im) => (im ? decodeURIComponent(im.src).split('/v4/')[1] || im.src : '');
+  return { hidden: el.hidden, cls: el.className, big: f(big), small: f(small), smallShown: !!(small && getComputedStyle(small).display !== 'none'), bigShown: !!(big && getComputedStyle(big).display !== 'none') }; })()"""
+
+
+async def fn_event(c, key, ev, res, want_cg=None):
+    r = {'event': ev}
+    try:
+        await c.open(f'/v4/index.html?fast=1&auto=evline&state=/__fixture/{key}.json&sc={int(time.time())}')
+        ok = await until(c, "__ds4.state && __ds4.UI.openKind() === 'line'", 60)
+        if not ok:
+            r['error'] = '첫 줄에 닿지 못했다 ' + str(await c.ev("__ds4.autoLog.slice(-3).join(' / ')", False))
+            res[key] = r
+            return
+        await asyncio.sleep(0.5)
+        r['line'] = await c.ev(SP_BOX_JS, False)
+        r['cg_line'] = await c.ev(CG_SHOWN_JS, False)
+        r['cgKey'] = await c.ev(f"(() => {{ const e = __ds4.db.events['{ev}']; return ART.cgKey(e.image, e.id); }})()", False)
+        await stage_shot(c, out(f'screen_final_{key}_line.png'))
+        await c.ev("(() => { __ds4.setBot((k) => (k === 'event' ? 'hold' : undefined)); __ds4.UI.key('ok'); return 1; })()", False)
+        await until(c, "__ds4.UI.openKind() === 'event'", 30)
+        await asyncio.sleep(0.6)
+        r['box'] = await c.ev(SP_BOX_JS, False)
+        r['cg_box'] = await c.ev(CG_SHOWN_JS, False)
+        r['subs'] = await c.ev("[...document.querySelectorAll('#box .opt')].map((b) => ({ label: (b.querySelector('.ol') || b).childNodes[0].textContent, chance: (b.querySelector('small.chance') || {}).textContent || '', cost: (b.querySelector('small.cost') || {}).textContent || '', warn: (b.querySelector('small.warn') || {}).textContent || '', hint: [...b.querySelectorAll('small small')].filter((x) => !x.className).map((x) => x.textContent).join(' '), lock: (b.querySelector('small.lock') || {}).textContent || '', disabled: b.disabled, tier: ((b.querySelector('[data-r]') || {}).dataset || {}).r || '' }))", False)
+        await stage_shot(c, out(f'screen_final_{key}_box.png'))
+        if want_cg:
+            r['cg_ok'] = r['cgKey'] == 'v4/cg/' + want_cg and (r['cg_line']['big'] or '').endswith('img/cg/' + want_cg + '.png')
+        r['console_errors'] = c.errors()
+    except BaseException as e:
+        r['error'] = str(e)[:300]
+    res[key] = r
+    print('final', key, ev, '| cg', r.get('cgKey'), (r.get('cg_line') or {}).get('big'), (r.get('cg_box') or {}).get('small'), r.get('cg_ok'),
+          '| subs', [(s['label'][:10], s['warn'], s['lock']) for s in (r.get('subs') or [])], '| err', r.get('error'))
+
+
+async def task_final(c, opts):
+    res = {'trip': {}, 'cg': {}, 'tails': {}}
+    # ① 원정 걸어서 뒤지기
+    for region in ('A', 'B'):
+        try:
+            await fn_trip(c, region, res['trip'])
+        except BaseException as e:
+            res['trip'][region] = dict(res['trip'].get(region) or {}, error=str(e)[:300])
+            print('trip', region, 'error', str(e)[:300])
+    res['trip']['sheet'] = fn_sheet(res['trip'])
+    # ② 새 장면 그림 ④ 꼬리 글·잠김 이유
+    for ev, name in FINAL_CG.items():
+        if ev not in FIXTURES:
+            res['cg'][ev] = {'skip': 'fixture 없음'}
+            print('final cg', ev, 'fixture 없음')
+            continue
+        await fn_event(c, ev, ev, res['cg'], name)
+    for name, ev, ch in FINAL_TAILS:
+        key = 'final_' + name
+        if key not in FIXTURES:
+            res['tails'][name] = {'skip': 'fixture 없음'}
+            continue
+        await fn_event(c, key, ev, res['tails'])
+    # 다 본 사건 그림 표: 그림 칸(image)·사건 id 로 v4 cg 가 잡히는 사건 전부 (fixture 없이 표만으로)
+    await c.open(f'/v4/index.html?fast=1&auto=car&seed=7&sc={int(time.time())}')
+    await until(c, "__ds4.state && __ds4.db", 60)
+    res['cg_table'] = await c.ev(r"""(() => { const db = __ds4.db, out = {};
+      for (const ev of db.eventsList) { const k = ART.cgKey(ev.image, ev.id); if (/^v4\/cg\//.test(k)) out[ev.id] = k.slice(6); }
+      const used = new Set(Object.values(out)); const files = Object.keys(ART.IMG).filter((k) => /^v4\/cg\//.test(k)).map((k) => k.slice(6));
+      return { events: out, unusedFiles: files.filter((f) => !used.has(f) && !/^(death_|dream_|title)/.test(f)) }; })()""", False)
+    res['summary'] = {
+        'trip_floors': {r: sorted(k for k in (res['trip'].get(r) or {}) if k[:1] == r) for r in ('A', 'B')},
+        'arrive_no_box': {f'{r}{k[1:]}': v['arrive']['open'] == '' for r in ('A', 'B') for k, v in (res['trip'].get(r) or {}).items() if isinstance(v, dict) and 'arrive' in v},
+        'furniture_opened': {x['id']: [x['state0'], x.get('state1')] for r in ('A', 'B') for k, v in (res['trip'].get(r) or {}).items() if isinstance(v, dict) for x in v.get('furniture', [])},
+        'found_icons': {x['id']: [f.get('icon') for f in x.get('found', [])] for r in ('A', 'B') for k, v in (res['trip'].get(r) or {}).items() if isinstance(v, dict) for x in v.get('furniture', []) if x.get('found')},
+        'cg_ok': {k: v.get('cg_ok') for k, v in res['cg'].items()},
+        'console_errors': sum(len((res['trip'].get(r) or {}).get('console_errors') or []) for r in ('A', 'B')) + sum(len(v.get('console_errors') or []) for v in list(res['cg'].values()) + list(res['tails'].values())),
+    }
+    with open(out('screen_final.json'), 'w', encoding='utf-8') as f:
+        json.dump(res, f, ensure_ascii=False, indent=1)
+    print('final summary', json.dumps(res['summary'], ensure_ascii=False)[:2000])
+
+
+# ── (10-25 최종 점검) 사건 그림 물려받기: 그림이 없는 사건이 바로 앞 사건(·앞 결과 글·꿈)의 그림을 그대로 이고 뜨는가 ──
+#   캡처 봇 판(auto=run, 시드 여러 개)을 처음부터 끝까지 돌리며, 사건의 첫 줄·선택 창·결과 글이 뜨는 순간 그림 층(#cg)이 무엇을 보이는지 적는다.
+#   기대: 첫 줄·선택 창 = 그 사건의 그림(ART.cgSrc(image, id)) 또는 빈 층 · 결과 글 = 빈 층 · 그 사건 그림 · 결과 그림(lastResult.image) 가운데 하나.
+#   어긋난 순간(다른 장면 그림)과 WATCH 사건의 첫 줄은 봇을 잠깐 붙잡고 화면을 찍는다 — screen_cgchain_<tag>_s<시드>_<사건>.png · screen_cgchain_<tag>.json
+#   쓰기: python v4/tools/screen_check.py cgchain --out=docs/foundation/final_2026-10-25 --tag=after [--seeds=3,21,6] [--shots=8]
+CGCHAIN_WATCH = ['d2_night_count', 'fever_night', 'hymn_fire_kept', 'flood_sick', 'passage_day1', 'd9_hoard']
+CGCHAIN_HOOK = r"""(() => {
+  const C = window.__cg = { log: [], hold: null, held: null, watch: new Set(%s), watched: {}, pairs: {}, shots: 0, maxShots: %d };
+  let ui, rev = null;
+  const nm = (s) => { if (!s) return ''; const A = window.ART; if (!rev && A && A.IMG) { rev = new Map(); for (const k of Object.keys(A.IMG)) rev.set(A.IMG[k].src, k); } return (rev && rev.get(s)) || s; };
+  const shown = () => { const el = document.getElementById('cg'); if (!el || el.hidden || el.classList.contains('haspage')) return ''; const im = el.querySelector('img.big'); return im ? im.getAttribute('src') || '' : ''; };
+  function rec(kind, opts) {
+    const D = window.__ds4, A = window.ART;
+    if (!D || !D.state || !D.db || !A || !opts || opts.black) return;
+    const s = D.state;
+    let id = '', where = kind;
+    if (kind === 'box') { if (opts.kind !== 'event' || !s.pending) return; id = s.pending.id; }
+    else { const tag = String(opts.tag || ''); if (/:out$/.test(tag)) { id = tag.slice(0, -4); where = 'out'; } else id = tag; }
+    const ev = D.db.events[id]; if (!ev) return;
+    const own = A.cgSrc(ev.image, ev.id) || '', now = shown();
+    let ok, expect = own;
+    if (where === 'out') { const r = s.lastResult || {}; const rs = r.image ? (A.cgSrc(r.image) || (/^death_/.test(r.image) ? A.deathSrc(r.image) : '')) : ''; ok = now === '' || now === own || now === rs; expect = rs || own; }
+    else ok = now === own;
+    const row = { day: s.day, phase: s.phase, ev: id, where, ok, shown: nm(now), expect: nm(expect) };
+    C.log.push(row);
+    if (where !== 'line') return;
+    const pair = id + '<' + row.shown;
+    if ((!ok && !C.pairs[pair] && C.shots < C.maxShots) || (C.watch.has(id) && !C.watched[id])) { C.pairs[pair] = 1; C.watched[id] = 1; C.shots++; C.hold = opts.tag; row.shot = 1; }
+  }
+  const wrapBot = (fn) => (fn ? function (k, info) { if (C.hold && k === 'line' && info && info.opts && info.opts.tag === C.hold) { C.held = { tag: C.hold, row: C.log[C.log.length - 1] }; C.hold = null; return 'hold'; } return fn.apply(this, arguments); } : fn);
+  Object.defineProperty(window, 'UI', { configurable: true, enumerable: true, get() { return ui; }, set(v) {
+    ui = v;
+    if (!v || v.__cgWrapped) return;
+    v.__cgWrapped = true;
+    const L = v.lines, L1 = v.line, O = v.open, SB = v.setBot;
+    v.lines = function (t, o) { try { rec('line', o || {}); } catch (e) {} return L.apply(this, arguments); };
+    v.line = function (t, o) { try { rec('line', o || {}); } catch (e) {} return L1.apply(this, arguments); };
+    v.open = function (h, o) { try { rec('box', o || {}); } catch (e) {} return O.apply(this, arguments); };
+    v.setBot = function (fn) { return SB.call(this, wrapBot(fn)); };
+  } });
+})();"""
+
+
+async def task_cgchain(c, opts):
+    tag = opts.get('tag', 'after')
+    seeds = [int(x) for x in str(opts.get('seeds', '3,21,6,8,1,7,11,5,13,2,4,9')).split(',') if x.strip()]
+    limit = float(opts.get('limit', '1500'))
+    hook = (await c.send('Page.addScriptToEvaluateOnNewDocument', {'source': CGCHAIN_HOOK % (json.dumps(CGCHAIN_WATCH), int(opts.get('shots', '8')))}))['identifier']
+    res = {'tag': tag, 'seeds': {}, 'rows': 0, 'bad': [], 'pairs': {}, 'shots': []}
+    try:
+        for sd in seeds:
+            r = {'seed': sd}
+            t0 = time.time()
+            try:
+                if not await c.open(f'/v4/index.html?fast=1&auto=run&seed={sd}&sc={int(time.time())}'):
+                    r['error'] = '페이지가 뜨지 않았다'
+                    res['seeds'][sd] = r
+                    continue
+                done = False
+                while time.time() - t0 < limit:
+                    held = await c.ev('window.__cg && window.__cg.held', False)
+                    if held:
+                        await asyncio.sleep(0.5)                     # 그림이 다 읽히게
+                        row = held.get('row') or {}
+                        p = out(f'screen_cgchain_{tag}_s{sd}_{row.get("ev", "x")}.png')
+                        await c.shot(p)
+                        res['shots'].append({'seed': sd, 'png': os.path.basename(p), 'row': row})
+                        await c.ev("(() => { window.__cg.held = null; __ds4.UI.key('ok'); return 1; })()", False)
+                        continue
+                    if any('[ds4 auto]' in x for x in c.console):
+                        done = True
+                        break
+                    await asyncio.sleep(0.3)
+                log = await c.ev('window.__cg ? window.__cg.log : []', False) or []
+                last = next((x for x in reversed(c.console) if '[ds4 auto]' in x), '')
+                r.update(done=done, wall_s=round(time.time() - t0, 1), rows=len(log), end=last[last.find('[ds4 auto]'):][:160] if last else '',
+                         bad=[x for x in log if not x['ok']], console_errors=c.errors())
+                res['rows'] += len(log)
+                for x in r['bad']:
+                    res['bad'].append(dict(x, seed=sd))
+                    k = f"{x['ev']} 위 {x['shown'].split('/')[-1] or '(빈 층)'} ({x['where']})"
+                    res['pairs'][k] = res['pairs'].get(k, 0) + 1
+            except BaseException as e:
+                r['error'] = str(e)[:300]
+            res['seeds'][sd] = r
+            print('cgchain', tag, 'seed', sd, '| rows', r.get('rows'), '| bad', len(r.get('bad') or []), '|', r.get('wall_s'), 's |', (r.get('end') or r.get('error') or '')[:120])
+    finally:
+        await c.send('Page.removeScriptToEvaluateOnNewDocument', {'identifier': hook})
+    res['summary'] = {'seeds': len(seeds), 'finished': sum(1 for v in res['seeds'].values() if v.get('done')), 'rows': res['rows'], 'bad': len(res['bad']),
+                      'pairs': dict(sorted(res['pairs'].items(), key=lambda kv: -kv[1])),
+                      'console_errors': sum(len(v.get('console_errors') or []) for v in res['seeds'].values())}
+    with open(out(f'screen_cgchain_{tag}.json'), 'w', encoding='utf-8') as f:
+        json.dump(res, f, ensure_ascii=False, indent=1)
+    print('cgchain summary', json.dumps(res['summary'], ensure_ascii=False)[:2000])
+
+
 def load_fixtures(ids):
     # (2026-10-24 검증 #8) 컴퓨터가 바쁘면 fixture.js 가 시간 제한에 걸려 TimeoutExpired 로 도구 전체가 죽고 결과 json 도 안 남았다
     #   → fixture.js 는 FIXTURE_SEC 초에 찾은 만큼으로 멈추고, 그래도 넘으면 저장 없이 간다(그 사건 검사는 'fixture 없음'으로 결과에 남는다)
@@ -2024,6 +2480,9 @@ async def amain(tasks, opts):
     if 'rope' in tasks:
         load_fixtures(ROPE_EVENTS)
         rope_variants()
+    if 'final' in tasks and opts.get('events', '1') != '0':                    # final --events=0 = 원정만 (저장 없이)
+        load_fixtures(FINAL_EVENTS)
+        final_variants()
     httpd = serve()
     prof = os.path.join(OUTD, '.profile')            # 헤드리스 프로필 = 결과 폴더 아래 (.profile 은 git 제외 · 끝나면 지운다) — 프로젝트 밖에 만들지 않는다
     shutil.rmtree(prof, ignore_errors=True)
